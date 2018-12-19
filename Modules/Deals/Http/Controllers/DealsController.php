@@ -1,0 +1,803 @@
+<?php
+
+namespace Modules\Deals\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+use App\Http\Controllers\Controller;
+use App\Lib\MyHelper;
+use Session;
+
+use Illuminate\Pagination\LengthAwarePaginator;
+use Modules\Deals\Http\Requests\Create;
+
+class DealsController extends Controller
+{
+    function __construct() {
+        date_default_timezone_set('Asia/Jakarta');
+    }
+
+    
+
+    /* IDENTIFIER */
+    function identifier($type="") {
+
+        if ($type == "prev") {
+            $url = explode(url('/'), url()->previous());
+            $url = explode("/", $url[1]);
+            $url = ucwords(str_replace("-", " ", $url[1]));
+
+            return $url;
+        }
+        else {
+            $identifier = explode(url('/'), url()->current());
+            $dealsType  = explode("/", $identifier[1]);
+
+            return $dealsType[1];
+        }
+        
+    }
+
+    /* SAVE DEAL */
+    function saveDefaultDeals($post) {
+        // print_r($post);
+        if ($post['deals_promo_id_type'] == "promoid") {
+            $post['deals_promo_id'] = $post['deals_promo_id_promoid'];
+        }
+        else {
+            $post['deals_promo_id'] = $post['deals_promo_id_nominal'];
+        }
+        
+        unset($post['deals_promo_id_promoid']);
+        unset($post['deals_promo_id_nominal']);
+
+        if ($post['deals_voucher_type'] == "List Vouchers") {
+            if (!isset($post['voucher_code'])) {
+                return back()->withErrors(['Voucher code required while Voucher Type is List Voucher']);
+            }
+        }
+
+        if (isset($post['deals_start']) && !empty($post['deals_start'])) {
+            $post['deals_start']         = date('Y-m-d', strtotime($post['deals_start']));
+        }
+
+        if (isset($post['deals_end']) && !empty($post['deals_end'])) {
+            $post['deals_end']           = date('Y-m-d', strtotime($post['deals_end']));
+        }
+
+        if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
+            $post['deals_publish_start'] = date('Y-m-d', strtotime($post['deals_publish_start']));
+        }
+
+        if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
+            $post['deals_publish_end']   = date('Y-m-d', strtotime($post['deals_publish_end']));
+        }
+        
+        if (isset($post['deals_image'])) {
+            $post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
+        }
+        // $post['deals_type']          = 'Deals';
+
+        if (isset($post['deals_voucher_expired']) && !empty($post['deals_voucher_expired'])) {
+            $post['deals_voucher_expired'] = date('Y-m-d', strtotime($post['deals_voucher_expired']));
+        }
+
+        $save = MyHelper::post('deals/create', $post);
+
+        if (isset($save['status']) && $save['status'] == "success") {
+            if ($post['deals_voucher_type'] == "List Vouchers") {
+                return parent::redirect($this->saveVoucherList($save['result']['id_deals'], $post['voucher_code']), "Deals has been created.");
+            }
+        }
+
+        return parent::redirect($save, 'Deals has been created.');
+    }
+
+    /* SAVE HIDDEN DEALS */
+    function saveHiddenDeals($post) {
+
+        if ($post['deals_promo_id_type'] == "promoid") {
+            $post['deals_promo_id'] = $post['deals_promo_id_promoid'];
+        }
+        else {
+            $post['deals_promo_id'] = $post['deals_promo_id_nominal'];
+        }
+
+        unset($post['deals_promo_id_promoid']);
+        unset($post['deals_promo_id_nominal']);
+        
+        // $post['deals_voucher_type']  = "Auto generated"; 
+        $post['deals_start']         = date('Y-m-d', strtotime($post['deals_start']));
+        $post['deals_end']           = date('Y-m-d', strtotime($post['deals_end']));
+        $post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
+
+        if (isset($post['deals_voucher_expired']) && !empty($post['deals_voucher_expired'])) {
+            $post['deals_voucher_expired'] = date('Y-m-d', strtotime($post['deals_voucher_expired']));
+        }
+
+        $save = MyHelper::post('hidden-deals/create', $post);
+
+        return parent::redirect($save, 'Hidden Deals has been created.');
+    }
+
+    /* IMPORT DATA FROM EXCEL */
+    function importDataExcel($fileExcel, $redirect=null) {
+
+        $path = $fileExcel->getRealPath();
+        $data = \Excel::load($path)->get()->toArray();
+
+        if (!empty($data)) {
+            $data = array_unique(array_pluck($data, 'phone'));
+            $data = implode(",", $data);
+
+            // SET SESSION
+            Session::flash('deals_recipient', $data); 
+
+            if (is_null($redirect)) {
+                return back()->with('success', ['Data customer has been added.']);
+            }
+            else {
+                return redirect($redirect)->with('success', ['Data customer has been added.']);
+            }
+
+        }
+        else {
+            return back()->withErrors(['Data customer is empty.']);
+        }
+    }
+
+    function dataDeals($identifier, $type="") {
+
+        switch ($identifier) {
+            case 'deals':
+                if ($type == "") {
+                    $data = [
+                        'title'          => 'Deals',
+                        'sub_title'      => 'Deals List',
+                        'menu_active'    => 'deals',
+                        'submenu_active' => 'deals-list'
+                    ];
+                }
+                else {
+                    $data = [
+                        'title'          => 'Deals',
+                        'sub_title'      => 'Deals Create',
+                        'menu_active'    => 'deals',
+                        'submenu_active' => 'deals-create'
+                    ];
+                }
+
+                // IDENTIFIER
+                $post['deals_type'] = "Deals";
+                $data['deals_type'] = "Deals";
+
+            break;
+            case 'hidden-deals': 
+                if ($type == "") {
+                    $data = [
+                        'title'          => 'Hidden Deals',
+                        'sub_title'      => 'Hidden Deals List',
+                        'menu_active'    => 'hidden-deals',
+                        'submenu_active' => 'hidden-deals-list'
+                    ];
+                }
+                else {
+                    $data = [
+                        'title'          => 'Hidden Deals',
+                        'sub_title'      => 'Hidden Deals Create',
+                        'menu_active'    => 'hidden-deals',
+                        'submenu_active' => 'hidden-deals-create'
+                    ];
+                }
+
+                // IDENTIFIER
+                $post['deals_type'] = "Hidden";
+                $data['deals_type'] = "Hidden";
+            break;
+            case 'deals-subscription':
+                if ($type == "") {
+                    $data = [
+                        'title'          => 'Deals Subscription',
+                        'sub_title'      => 'Deals Subscription List',
+                        'menu_active'    => 'deals-subscription',
+                        'submenu_active' => 'deals-subscription-list'
+                    ];
+                }
+                else {
+                    $data = [
+                        'title'          => 'Deals Subscription',
+                        'sub_title'      => 'Deals Subscription Create',
+                        'menu_active'    => 'deals-subscription',
+                        'submenu_active' => 'deals-subscription-create'
+                    ];
+                }
+
+                // IDENTIFIER
+                $post['deals_type'] = "Subscription";
+                $data['deals_type'] = "Subscription";
+
+            break;
+            default:
+                if ($type == "") {
+                    $data = [
+                        'title'          => 'Deals',
+                        'sub_title'      => 'Deals Point List',
+                        'menu_active'    => 'deals',
+                        'submenu_active' => 'deals-point-list'
+                    ];
+                }
+                else {
+                    $data = [
+                        'title'          => 'Deals',
+                        'sub_title'      => 'Deals Point Create',
+                        'menu_active'    => 'deals',
+                        'submenu_active' => 'deals-point-create'
+                    ];
+                }
+
+                // IDENTIFIER
+                $post['deals_type'] = "Point";
+                $data['deals_type'] = "Point";
+            break;
+        }
+
+        return $kembali = [
+            'data' => $data,
+            'post' => $post
+        ];
+
+    }
+
+    /* CREATE DEALS */
+    function create(Create $request) {
+        $post = $request->except('_token');
+
+        if (empty($post)) {
+            $identifier = $this->identifier();
+            $dataDeals  = $this->dataDeals($identifier, "create");
+            $data       = $dataDeals['data'];
+
+            // DATA PRODUCT
+            $data['product'] = parent::getData(MyHelper::get('product/list'));
+
+            // DATA OUTLET
+            $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+
+            if ($identifier == "deals-point") {
+                return view('deals::point.create', $data);
+            }
+
+            return view('deals::deals.create', $data);
+        }
+        else {
+            // print_r($post); exit();
+            /* IF HAS IMPORT DATA */
+            if (isset($post['import_file']) && !empty($post['import_file'])) {
+                return $this->importDataExcel($post['import_file']);
+            }
+
+            /* SAVE DEALS */
+            return $this->saveDefaultDeals($post);
+
+            // IF HAS RECIPIENT IN FORM CREATE
+            // if ($post['deals_type'] == "Deals") {
+            //     return $this->saveDefaultDeals($post);
+            // }
+            // else {
+            //     return $this->saveHiddenDeals($post);
+            // }
+        }
+    }
+
+    /* LIST */
+    function deals(Request $request) {
+        
+        $identifier = $this->identifier();
+        $dataDeals  = $this->dataDeals($identifier);
+        
+        $data       = $dataDeals['data'];
+        $post       = $dataDeals['post'];
+
+        $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
+
+        return view('deals::deals.list', $data);
+    }
+
+    /* DETAIL */
+    function detail(Request $request, $id, $promo) {
+        $post = $request->except('_token');
+
+        $identifier             = $this->identifier();
+
+        // print_r($identifier); exit();
+        $dataDeals              = $this->dataDeals($identifier);
+        $data                   = $dataDeals['data'];
+        $post                   = $dataDeals['post'];
+        $post['id_deals']       = $id;
+        $post['deals_promo_id'] = $promo;
+
+        // DEALS
+        $data['deals']   = parent::getData(MyHelper::post('deals/list', $post));
+
+        if (empty($data['deals'])) {
+            return back()->withErrors(['Data deals not found.']);
+        }
+        
+        // DEALS USER VOUCHER
+        $user = $this->voucherUserList($id, $request->get('page'));
+
+        foreach ($user as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        // VOUCHER
+        $voucher = $this->voucherList($id, $request->get('page'));
+
+        foreach ($voucher as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        // DATA PRODUCT
+        $data['product'] = parent::getData(MyHelper::get('product/list'));
+
+        // DATA OUTLET
+        $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+
+        return view('deals::deals.detail', $data);
+    } 
+
+    /* */
+
+    /* UPDATE REQUEST */  
+    function updateReq(Create $request) {
+        $post = $request->except('_token');
+        $url  = explode(url('/'), url()->previous());
+
+        // IMPORT FILE
+        if (isset($post['import_file'])) {
+            return $this->importDataExcel($post['import_file'], $url[1].'#participate');
+        }
+
+        // ADD VOUCHER CODE
+        if (isset($post['voucher_code'])) {
+            return parent::redirect($this->saveVoucherList($post['id_deals'], $post['voucher_code']), "Voucher has been added.");
+        }
+
+        // ASSIGN USER TO VOUCHER
+        if (isset($post['to'])) {
+            return parent::redirect($this->autoAssignVoucher($post['id_deals'], $post['to']), "Voucher has been added.", $url[1].'#participate');
+        }
+
+        // UPDATE DATA DEALS
+        $post = $this->update($post);
+
+        // SAVE
+        $update = MyHelper::post('deals/update', $post);
+
+        return parent::redirect($update, $this->identifier('prev').' has been updated.', str_replace(" ", "-", strtolower($this->identifier('prev'))));
+    }
+
+    /* AUTO ASSIGN VOUCHER */
+    function autoAssignVoucher($id_deals, $to) {
+        $post = [
+            'phone'    => $to,
+            'id_deals' => $id_deals
+        ];
+
+        $save = MyHelper::post('hidden-deals/create/autoassign', $post);
+
+        return $save;
+    }
+
+    /* SAVE VOUCHER LIST */
+    function saveVoucherList($id_deals, $voucher_code) {
+        $voucher['type']         = "list";
+        $voucher['id_deals']     = $id_deals;
+        $voucher['voucher_code'] = array_filter(explode("\n", $voucher_code));
+
+        $saveVoucher = MyHelper::post('deals/voucher/create', $voucher);
+
+        return $saveVoucher;
+    }
+
+    /* LIST VOUCHER */
+    function voucherList($id, $page) {
+        $voucher = parent::getData(MyHelper::post('deals/voucher?page='.$page, ['id_deals' => $id]));
+        // print_r($voucher); exit();
+        if (!empty($voucher['data'])) {
+            $data['voucher']          = $voucher['data'];
+            $data['voucherTotal']     = $voucher['total'];
+            $data['voucherPerPage']   = $voucher['from'];
+            $data['voucherUpTo']      = $voucher['from'] + count($voucher['data'])-1;
+            $data['voucherPaginator'] = new LengthAwarePaginator($voucher['data'], $voucher['total'], $voucher['per_page'], $voucher['current_page'], ['path' => url()->current()]);
+        }
+        else {
+            $data['voucher']          = [];
+            $data['voucherTotal']     = 0;
+            $data['voucherPerPage']   = 0;
+            $data['voucherUpTo']      = 0;
+            $data['voucherPaginator'] = false;
+        }
+
+        return $data;
+    }
+
+    /* LIST VOUCHER */
+    function voucherUserList($id, $page) {
+        $user = parent::getData(MyHelper::post('deals/user?page='.$page, ['id_deals' => $id]));
+        // print_r($user); exit();
+        if (!empty($user['data'])) {
+            $data['user']          = $user['data'];
+            $data['userTotal']     = $user['total'];
+            $data['userPerPage']   = $user['from'];
+            $data['userUpTo']      = $user['from'] + count($user['data'])-1;
+            $data['userPaginator'] = new LengthAwarePaginator($user['data'], $user['total'], $user['per_page'], $user['current_page'], ['path' => url()->current()]);
+        }
+        else {
+            $data['user']          = [];
+            $data['userTotal']     = 0;
+            $data['userPerPage']   = 0;
+            $data['userUpTo']      = 0;
+            $data['userPaginator'] = false;
+        }
+
+        return $data;
+    }
+
+    /* UPDATE DATA DEALS */
+    function update($post) {
+        // print_r($post); exit();
+        if (isset($post['deals_promo_id_type'])) {
+            if ($post['deals_promo_id_type'] == "promoid") {
+                $post['deals_promo_id'] = $post['deals_promo_id_promoid'];
+            }
+            else {
+                $post['deals_promo_id'] = $post['deals_promo_id_nominal'];
+            }    
+        }
+        
+        unset($post['deals_promo_id_promoid']);
+        unset($post['deals_promo_id_nominal']);
+
+        $post['deals_start']         = date('Y-m-d', strtotime($post['deals_start']));
+        $post['deals_end']           = date('Y-m-d', strtotime($post['deals_end']));
+
+        if (isset($post['deals_publish_start'])) {
+            $post['deals_publish_start'] = date('Y-m-d', strtotime($post['deals_publish_start']));
+        }
+
+        if (isset($post['deals_publish_end'])) {
+            $post['deals_publish_end']   = date('Y-m-d', strtotime($post['deals_publish_end']));
+        }
+
+        if (isset($post['deals_image'])) {
+            $post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
+        }
+
+        if (isset($post['deals_voucher_expired']) && !empty($post['deals_voucher_expired'])) {
+            $post['deals_voucher_expired'] = date('Y-m-d', strtotime($post['deals_voucher_expired']));
+        }
+
+        if (isset($post['id_outlet'])) {
+            $post['id_outlet'] = array_filter($post['id_outlet']);
+        }
+
+        if (isset($post['deals_voucher_duration'])) {
+            if (empty($post['deals_voucher_duration'])) {
+                $post['deals_voucher_duration'] = null;
+            }
+        }
+
+        if (isset($post['deals_voucher_expired'])) {
+            if (empty($post['deals_voucher_expired'])) {
+                $post['deals_voucher_expired'] = null;
+            }
+        }
+
+        if (isset($post['deals_voucher_price_point'])) {
+            if (empty($post['deals_voucher_price_point'])) {
+                $post['deals_voucher_price_point'] = null;
+            }
+        }
+
+        if (isset($post['deals_voucher_price_cash'])) {
+            if (empty($post['deals_voucher_price_cash'])) {
+                $post['deals_voucher_price_cash'] = null;
+            }
+        }
+
+        return $post;
+    }
+
+    /* DELETE VOUCHER */
+    function deleteVoucher(Request $request) {
+        $post    = $request->except('_token');
+        $voucher = MyHelper::post('deals/voucher/delete', ['id_deals_voucher' => $post['id_deals_voucher']]);
+
+        if (isset($voucher['status']) && $voucher['status'] == "success") {
+            return "success";
+        }
+        else {
+            return "fail";
+        }
+    }
+
+    /* DELETE DEAL */
+    function deleteDeal(Request $request) {
+        $post    = $request->except('_token');
+        $voucher = MyHelper::post('deals/delete', ['id_deals' => $post['id_deals']]);
+
+        if (isset($voucher['status']) && $voucher['status'] == "success") {
+            return "success";
+        }
+        else {
+            return "fail";
+        }
+    }
+    
+    /* TRX DEALS */
+    function transaction(Request $request) {
+        $data = [
+            'title'          => 'Deals',
+            'sub_title'      => 'Deals Transaction',
+            'menu_active'    => 'deals-transaction',
+            'submenu_active' => ''
+        ];
+
+        $request->session()->forget('date_start');
+        $request->session()->forget('date_end');
+        $request->session()->forget('id_outlet');
+        $request->session()->forget('id_deals');
+
+        $post = [
+            'date_start' => date('Y-m-d', strtotime("- 7 days")),
+            'date_end'   => date('Y-m-d')
+        ];
+
+        // TRX
+        $trx = $this->getDataDealsTrx($request->get('page'), $post);
+
+        foreach ($trx as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        $data['outlet']    = parent::getData(MyHelper::get('outlet/list'));
+        // $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => "Deals"]));
+        $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
+        
+        foreach ($post as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        // print_r($data); exit();
+        return view('deals::deals.transaction', $data);
+    }
+
+    function transactionFilter(Request $request) {
+        $data = [
+            'title'          => 'Deals',
+            'sub_title'      => 'Deals Transaction',
+            'menu_active'    => 'deals-transaction',
+            'submenu_active' => ''
+        ];
+
+        $post = $request->except('_token');
+
+        if (empty($post)) {
+            return redirect('deals/transaction');
+        }
+        
+        if (isset($post['page'])) {
+            $post['date_start'] = session('date_start');
+            $post['date_end']   = session('date_end');
+            $post['id_outlet']  = session('id_outlet');
+            $post['id_deals']   = session('id_deals');
+        }
+        else {
+            session(['date_start' => $post['date_start']]);
+            session(['date_end'   => $post['date_end']]);
+            session(['id_outlet'  => $post['id_outlet']]);
+            session(['id_deals'   => $post['id_deals']]);
+        }
+
+        $trx = $this->getDataDealsTrx($request->get('page'), $post);
+
+        foreach ($trx as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        foreach ($post as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        $data['outlet']    = parent::getData(MyHelper::get('outlet/list'));
+        // $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => "Deals"]));
+        $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
+
+        return view('deals::deals.transaction', $data);
+    }
+
+    /* TRX */
+    function getDataDealsTrx($page, $post) {
+        $post['date_start'] = date('Y-m-d', strtotime($post['date_start']));
+        $post['date_end']   = date('Y-m-d', strtotime($post['date_end']));
+
+        if (isset($post['id_outlet'])) {
+            if ($post['id_outlet'] == "all") {
+                unset($post['id_outlet']);
+            }
+        }
+
+        if (isset($post['id_deals'])) {
+            if ($post['id_deals'] == "all") {
+                unset($post['id_deals']);
+            }
+        }
+
+        $post  = array_filter($post);
+        $deals = parent::getData(MyHelper::post('deals/transaction?page='.$page, $post));
+
+        if (!empty($deals['data'])) {
+            $data['deals']          = $deals['data'];
+            $data['dealsTotal']     = $deals['total'];
+            $data['dealsPerPage']   = $deals['from'];
+            $data['dealsUpTo']      = $deals['from'] + count($deals['data'])-1;
+            $data['dealsPaginator'] = new LengthAwarePaginator($deals['data'], $deals['total'], $deals['per_page'], $deals['current_page'], ['path' => url()->current()]);
+        }
+        else {
+            $data['deals']          = [];
+            $data['dealsTotal']     = 0;
+            $data['dealsPerPage']   = 0;
+            $data['dealsUpTo']      = 0;
+            $data['dealsPaginator'] = false;
+        }
+
+        return $data;
+    }
+
+    /*** DEALS SUBSCRIPTION ***/
+    // create deals subscription
+    public function subscriptionCreate(Create $request) {
+        $post = $request->except('_token');
+
+        if (empty($post)) {
+            $identifier = $this->identifier();
+            $dataDeals  = $this->dataDeals($identifier, "create");
+            $data       = $dataDeals['data'];
+
+            // DATA PRODUCT
+            $data['products'] = parent::getData(MyHelper::get('product/list'));
+
+            // DATA OUTLET
+            $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+
+            return view('deals::subscription.subscription_create', $data);
+        }
+        else {
+            /* SAVE DEALS */
+            $post = $this->checkDealsSubscriptionInput($post);
+            // dd($post);
+
+            // call api
+            $save = MyHelper::post('deals-subscription/create', $post);
+            // dd($save);
+
+            return parent::redirect($save, 'Deals has been created.');
+        }
+    }
+
+    // check deals subscription
+    private function checkDealsSubscriptionInput($post) {
+        if (isset($post['deals_voucher_type']) && $post['deals_voucher_type']=="Unlimited") {
+            $post['deals_total_voucher'] = 0;
+        }
+
+        if (isset($post['deals_start']) && !empty($post['deals_start'])) {
+            $post['deals_start']         = date('Y-m-d', strtotime($post['deals_start']));
+        }
+        if (isset($post['deals_end']) && !empty($post['deals_end'])) {
+            $post['deals_end']           = date('Y-m-d', strtotime($post['deals_end']));
+        }
+
+        if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
+            $post['deals_publish_start'] = date('Y-m-d', strtotime($post['deals_publish_start']));
+        }
+        if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
+            $post['deals_publish_end']   = date('Y-m-d', strtotime($post['deals_publish_end']));
+        }
+        
+        if (isset($post['deals_image'])) {
+            $post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
+        }
+
+        $post['deals_type'] = 'Subscription';
+        $post['deals_promo_id_type'] = null;
+
+        return $post;
+    }
+
+    // list deals subscription
+    public function subscriptionDeals(Request $request) {
+        
+        $identifier = $this->identifier();
+        $dataDeals  = $this->dataDeals($identifier);
+        
+        $data       = $dataDeals['data'];
+        $post       = $dataDeals['post'];
+
+        $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
+        // dd($data, $post);
+
+        return view('deals::subscription.subscription_list', $data);
+    }
+
+    // detail deals subscription
+    public function subscriptionDetail(Request $request, $id_deals) {
+        $post = $request->except('_token');
+
+        $identifier             = $this->identifier();
+        $dataDeals              = $this->dataDeals($identifier);
+
+        $data                   = $dataDeals['data'];
+        $post                   = $dataDeals['post'];
+        $post['id_deals']       = $id_deals;
+        $post['deals_type']     = "Subscription";
+
+        // DEALS
+        $data['deals']   = parent::getData(MyHelper::post('deals/list', $post));
+        if (empty($data['deals'])) {
+            return back()->withErrors(['Data deals not found.']);
+        }
+        $data['subscriptions_count'] = count($data['deals'][0]['deals_subscriptions']);
+        // dd($data['deals'], $data['subscriptions_count']);
+
+        // DEALS USER VOUCHER
+        $user = $this->voucherUserList($id_deals, $request->get('page'));
+        foreach ($user as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        // VOUCHER
+        $voucher = $this->voucherList($id_deals, $request->get('page'));
+        foreach ($voucher as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        // DATA PRODUCT
+        $data['products'] = parent::getData(MyHelper::get('product/list'));
+
+        // DATA OUTLET
+        $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+
+        // dd($data);
+        return view('deals::subscription.subscription_detail', $data);
+    }
+
+    // update deals subscription
+    public function subscriptionUpdate(Create $request) {
+        $post = $request->except('_token');
+        $url  = explode(url('/'), url()->previous());
+
+        // CHECK DATA DEALS
+        $post = $this->checkDealsSubscriptionInput($post);
+
+        // UPDATE
+        $update = MyHelper::post('deals-subscription/update', $post);
+
+        return parent::redirect($update, $this->identifier('prev').' has been updated.', str_replace(" ", "-", strtolower($this->identifier('prev'))));
+    }
+
+    public function deleteSubscriptionDeal($id_deals)
+    {
+        $delete = MyHelper::get('deals-subscription/delete/'.$id_deals);
+
+        if (isset($delete['status']) && $delete['status'] == "success") {
+            return "success";
+        }
+        else {
+            return $delete;
+        }
+    }
+}
+

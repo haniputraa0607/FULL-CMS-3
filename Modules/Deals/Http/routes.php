@@ -1,0 +1,60 @@
+<?php
+
+Route::group(['middleware' => ['web', 'validate_session', 'config_control:25'], 'prefix' => 'deals', 'namespace' => 'Modules\Deals\Http\Controllers'], function()
+{
+    Route::get('/', ['middleware' => 'feature_control:72', 'uses' => 'DealsController@deals']);
+    Route::any('create', ['middleware' => 'feature_control:74', 'uses' => 'DealsController@create']);
+    Route::any('detail/{id}/{promo}', ['middleware' => 'feature_control:73', 'uses' => 'DealsController@detail']);
+    Route::any('update', ['middleware' => 'feature_control:75', 'uses' => 'DealsController@updateReq']);
+    Route::any('delete', ['middleware' => 'feature_control:76', 'uses' => 'DealsController@deleteDeal']);
+    Route::any('voucher/delete', 'DealsController@deleteVoucher');
+
+    /* TRANSACTION */
+    Route::any('transaction', 'DealsController@transaction');
+    Route::any('transaction/filter', 'DealsController@transactionFilter');
+
+    /* MANUAL PAYMENT */
+    
+    Route::group(['prefix' => 'manualpayment'], function()
+    {
+        Route::any('/list/{type?}', 'DealsPaymentManualController@manualPaymentList');
+        Route::any('/reset/{type?}', 'DealsPaymentManualController@resetFilter');
+        Route::any('/confirm/{id}', ['middleware' => 'feature_control:65', 'uses' => 'DealsPaymentManualController@manualPaymentConfirm']);
+    });
+
+});
+
+/* POINT */
+Route::group(['middleware' => ['web', 'validate_session', 'config_control:26'], 'prefix' => 'deals-point', 'namespace' => 'Modules\Deals\Http\Controllers'], function()
+{
+        Route::any('create', ['middleware' => 'feature_control:74', 'uses' => 'DealsController@create']);
+        Route::any('/', ['middleware' => 'feature_control:74', 'uses' => 'DealsController@deals']);
+        Route::any('detail/{id}/{promo}', ['middleware' => 'feature_control:73', 'uses' => 'DealsController@detail']);
+});
+
+/* HIDDEN */
+Route::group(['middleware' => ['web', 'validate_session', 'config_control:26'], 'prefix' => 'hidden-deals', 'namespace' => 'Modules\Deals\Http\Controllers'], function()
+{
+    Route::get('/', ['middleware' => 'feature_control:77', 'uses' => 'DealsController@deals']);
+    Route::any('create', ['middleware' => 'feature_control:79', 'uses' => 'DealsController@create']);
+    Route::any('detail/{id}/{promo}', ['middleware' => 'feature_control:78', 'uses' => 'DealsController@detail']);
+    Route::any('update', ['middleware' => 'feature_control:80', 'uses' => 'DealsController@updateReq']);
+    Route::any('delete', ['middleware' => 'feature_control:81', 'uses' => 'DealsController@deleteDeal']);
+    Route::any('voucher/delete', 'DealsController@deleteVoucher');
+});
+
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'deals', 'namespace' => 'Modules\Advert\Http\Controllers'], function()
+{
+    /* ADVERT */
+    Route::any('advert', 'AdvertController@index');
+});
+
+
+Route::group(['middleware' => ['web', 'validate_session', 'config_control:25'], 'prefix' => 'deals-subscription', 'namespace' => 'Modules\Deals\Http\Controllers'], function()
+{
+    Route::get('/', ['middleware' => 'feature_control:139', 'uses' => 'DealsController@subscriptionDeals']);
+    Route::any('create', ['middleware' => 'feature_control:141', 'uses' => 'DealsController@subscriptionCreate']);
+    Route::any('detail/{id_deals}', ['middleware' => 'feature_control:140', 'uses' => 'DealsController@subscriptionDetail']);
+    Route::any('update', ['middleware' => 'feature_control:142', 'uses' => 'DealsController@subscriptionUpdate']);
+    Route::get('delete/{id_deals}', ['middleware' => 'feature_control:143', 'uses' => 'DealsController@deleteSubscriptionDeal']);
+});

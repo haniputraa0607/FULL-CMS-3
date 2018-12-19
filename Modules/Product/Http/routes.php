@@ -1,0 +1,68 @@
+<?php
+
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product', 'namespace' => 'Modules\Product\Http\Controllers'], function()
+{
+	/**
+	 * product
+	 */
+	Route::get('/', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProduct']);
+	Route::any('/visible/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
+	Route::any('/hidden/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
+	Route::post('/id_visibility', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addIdVisibility']);
+	Route::get('import', ['middleware' => ['feature_control:56,57', 'config_control:10,11,or'], 'uses' => 'ProductController@importProduct']);
+	Route::post('import/save', ['middleware' => ['feature_control:56', 'config_control:10'], 'uses' => 'ProductController@importProductSave']);
+	Route::get('ajax', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProductAjax']);
+	Route::any('create', ['middleware' => 'feature_control:50', 'uses' => 'ProductController@create']);
+	Route::any('update', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@update']);
+	Route::post('update/allow_sync', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@updateAllowSync']);
+	Route::any('delete', ['middleware' => 'feature_control:52', 'uses' => 'ProductController@delete']);
+	Route::any('detail/{product_code}', ['middleware' => 'feature_control:49', 'uses' => 'ProductController@detail']);
+	Route::any('example', ['middleware' => ['feature_control:57', 'config_control:11'], 'uses' => 'ProductController@example']);
+	Route::any('price/{key?}', ['middleware' => ['feature_control:57', 'config_control:11'], 'uses' => 'ProductController@price']);
+	Route::any('category/assign', ['middleware' => ['feature_control:44', 'config_control:11'], 'uses' => 'ProductController@categoryAssign']);
+	
+	/**
+	 * photo
+	 */
+	Route::group(['prefix' => 'photo'], function() {
+    	Route::any('delete', ['middleware' => 'feature_control:55', 'uses' => 'ProductController@deletePhoto']);
+	});
+
+	/**
+	 * category
+	 */
+	Route::group(['prefix' => 'category'], function() {
+    	Route::get('/', ['middleware' => 'feature_control:43', 'uses' => 'CategoryController@categoryList']);
+    	Route::any('edit/{id}', ['middleware' => 'feature_control:44', 'uses' => 'CategoryController@update']);
+    	Route::any('create', ['middleware' => 'feature_control:45', 'uses' => 'CategoryController@create']);
+    	Route::post('delete', ['middleware' => 'feature_control:47', 'uses' => 'CategoryController@delete']);
+	});
+
+	/**
+	 * discount
+	 */
+	Route::group(['prefix' => 'discount'], function() {
+    	Route::any('delete', 'ProductController@deleteDiscount');
+	});
+	
+	/**
+	 * tag
+	 */
+	Route::group(['prefix' => 'tag'], function() {
+    	Route::get('/', ['middleware' => 'feature_control:43', 'uses' => 'TagController@list']);
+    	Route::post('create', ['middleware' => 'feature_control:45', 'uses' => 'TagController@create']);
+    	Route::post('update', ['middleware' => 'feature_control:44', 'uses' => 'TagController@update']);
+    	Route::post('delete', ['middleware' => 'feature_control:47', 'uses' => 'TagController@delete']);
+    	Route::get('detail/{id}', ['middleware' => 'feature_control:47', 'uses' => 'TagController@listProductTag']);
+    	Route::post('delete/product-tag', ['middleware' => 'feature_control:47', 'uses' => 'TagController@deleteProductTag']);
+    	Route::post('create/product-tag', ['middleware' => 'feature_control:47', 'uses' => 'TagController@createTagProduct']);
+	});
+
+});
+
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product', 'namespace' => 'Modules\Advert\Http\Controllers'], function()
+{
+    /* ADVERT */
+    Route::any('advert', 'AdvertController@index');
+});
+

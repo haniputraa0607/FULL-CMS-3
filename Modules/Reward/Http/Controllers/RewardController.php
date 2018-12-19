@@ -1,0 +1,141 @@
+<?php
+
+namespace Modules\Reward\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
+
+use App\Lib\MyHelper;
+
+class RewardController extends Controller
+{
+    function create(Request $request) {
+        $post = $request->except('_token');
+
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Reward',
+                'sub_title'      => 'New Reward',
+                'menu_active'    => 'reward',
+                'submenu_active' => 'reward-create',
+            ];
+
+            return view('reward::create', $data);
+        }
+        else {
+            $post['reward_image'] = MyHelper::encodeImage($post['reward_image']);
+            $save = MyHelper::post('reward/create', $post);
+
+            if (isset($save['status']) && $save['status'] == "success") {
+                return redirect('reward/create')->withSuccess(['Reward has been created.']);
+            }else {
+                if (isset($save['errors'])) {
+                    return back()->withErrors($save['errors'])->withInput();
+                }
+
+                if (isset($save['status']) && $save['status'] == "fail") {
+                    return back()->withErrors($save['messages'])->withInput();
+                }
+                return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+            }
+        }
+    }
+
+    function list(){
+        $data = [
+            'title'          => 'Reward',
+            'sub_title'      => 'Reward List',
+            'menu_active'    => 'reward',
+            'submenu_active' => 'reward-list',
+        ];
+
+        $reward = MyHelper::get('reward/list');
+        
+        if (isset($reward['status']) && $reward['status'] == "success") {
+            $data['reward'] = $reward['result'];
+        }
+        else {
+            $data['reward'] = [];
+        }
+        return view('reward::list', $data);
+    }
+
+    function detail(Request $request, $id){
+        $post = $request->except('_token');
+
+        $data = [
+            'title'          => 'Reward',
+            'sub_title'      => 'Reward List',
+            'menu_active'    => 'reward',
+            'submenu_active' => 'reward-list',
+        ];
+
+        if(empty($post)){
+            $reward = MyHelper::post('reward/list', ['id_reward' => $id]);
+            
+            if (isset($reward['status']) && $reward['status'] == "success") {
+                $data['reward'] = $reward['result'];
+            }
+            else {
+                return back()->withErrors(['Reward not found.']);
+            }
+            return view('reward::detail', $data);
+        }else{
+            if(isset($post['reward_image'])){
+                $post['reward_image'] = MyHelper::encodeImage($post['reward_image']);
+            }
+            
+            $save = MyHelper::post('reward/update', $post);
+
+            if (isset($save['status']) && $save['status'] == "success") {
+                return redirect('reward/detail/'.$post['id_reward'])->withSuccess(['Reward has been updated.']);
+            }else {
+                if (isset($save['errors'])) {
+                    return back()->withErrors($save['errors'])->withInput();
+                }
+
+                if (isset($save['status']) && $save['status'] == "fail") {
+                    return back()->withErrors($save['messages'])->withInput();
+                }
+                return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+            }
+        }
+
+    }
+
+    function delete(Request $request) {
+        $post    = $request->except('_token');
+        $reward = MyHelper::post('reward/delete', ['id_reward' => $post['id_reward']]);
+
+        if (isset($reward['status']) && $reward['status'] == "success") {
+            return "success";
+        }
+        elseif (isset($reward['status']) && $reward['status'] == "fail" && isset($reward['messages']) && $reward['messages'][0] == 'Reward already used.') {
+            return "used";
+        }
+        else {
+            return "fail";
+        }
+    }
+
+    function setWinner(Request $request){
+        $post = $request->except('_token');
+
+        $save = MyHelper::post('reward/winner', $post);
+        
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('reward/detail/'.$post['id_reward'].'#winner')->withSuccess(['Winner has been updated.']);
+        }else {
+            if (isset($save['errors'])) {
+                return back()->withErrors($save['errors'])->withInput();
+            }
+
+            if (isset($save['status']) && $save['status'] == "fail") {
+                return back()->withErrors($save['messages'])->withInput();
+            }
+            return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+        }
+    }
+
+}

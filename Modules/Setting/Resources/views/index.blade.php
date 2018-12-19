@@ -1,0 +1,93 @@
+@extends('layouts.main')
+
+@section('page-style')
+    <link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+@endsection
+    
+@section('page-script')
+    <script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $('.summernote').summernote({
+            placeholder: 'Product Description',
+            tabsize: 2,
+            height: 350
+          });
+        });
+    </script>
+
+@endsection
+
+@section('content')
+	<div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="/">Home</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>{{ $title }}</span>
+                @if (!empty($sub_title))
+                    <i class="fa fa-circle"></i>
+                @endif
+            </li>
+            @if (!empty($sub_title))
+            <li>
+                <span>{{ $sub_title }}</span>
+            </li>
+            @endif
+        </ul>
+    </div><br>
+    
+    @include('layouts.notifications')
+
+    <div class="portlet light form-fit bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class=" icon-layers font-green"></i>
+                <span class="caption-subject font-green bold uppercase">{{ $subTitle }}</span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal form-bordered" action="{{ url('setting/update', $id) }}" method="post">
+            	{{ csrf_field() }}
+                <div class="form-body">
+                    <div class="form-group last">
+                    	<input type="hidden" name="key" value="{{ $key }}">
+                        <label class="control-label col-md-{{$colLabel}}">
+                            {{ $label }}
+                            <i class="fa fa-question-circle tooltips" data-original-title="@if($label == 'TOS') kebijakan TOS dari perusahaan @elseif($label == 'About') dapat diisi dengan profil perusahaan @elseif($label == 'Contact Us') dapat diisi dengan contact perusahaan @elseif($label == 'QR Code expires in') batas waktu qrcode valid @elseif($label == 'Time') waktu minimum yang dibutuhkan untuk menyiapkan pesanan @endif" data-container="body"></i>
+                        </label>
+                        <div class="col-md-{{$colInput}}">
+                            @if($key == 'value_text')
+                                <textarea class="form-control summernote" name="value">{!! $value !!}</textarea>
+                            @else
+
+                                @if(isset($span))
+                                    <div class="input-group">
+                                @endif
+                                    <input type="text" name="value" class="form-control" value="{{ $value }}">
+                                @if(isset($span))
+                                    <span class="input-group-addon">
+                                        {{$span}}
+                                    </span>
+                                @endif
+                                @if(isset($span))
+                                    </div>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn green">
+                                <i class="fa fa-check"></i> Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection

@@ -1,0 +1,33 @@
+<?php
+
+Route::group(['middleware' => 'web', 'prefix' => 'report', 'namespace' => 'Modules\Report\Http\Controllers'], function()
+{
+    // Route::any('/global', ['middleware' => 'feature_control:114', 'uses' => 'ReportController@reportGlobal']);
+    // Route::any('/product', ['middleware' => 'feature_control:116', 'uses' => 'ReportController@reportProduct']);
+    // Route::any('/product/detail', ['middleware' => 'feature_control:116', 'uses' => 'ReportController@reportProductDetail']);
+    // Route::any('/customer/summary', ['middleware' => 'feature_control:115', 'uses' => 'ReportController@customerSummary']);
+    // Route::any('/customer/detail/{id}', ['middleware' => 'feature_control:115', 'uses' => 'ReportController@customerDetail']);
+
+    Route::any('/global', [ 'uses' => 'ReportController@reportGlobal']);
+    Route::any('/product', [ 'uses' => 'ReportController@reportProduct']);
+    Route::any('/product/detail', [ 'uses' => 'ReportController@reportProductDetail']);
+    
+    
+    Route::any('/global', ['middleware' => 'feature_control:125', 'uses' => 'ReportDuaController@reportGlobal']);
+    Route::any('/product', ['middleware' => 'feature_control:127', 'uses' => 'ReportDuaController@reportProductAll']);
+    Route::any('/product/detail/{id}/{start}/{end}', ['middleware' => 'feature_control:127', 'uses' => 'ReportDuaController@reportProductDetail']);
+    
+    
+    Route::any('/customer/summary', ['middleware' => 'feature_control:126','uses' => 'ReportController@customerSummary']);
+    Route::any('/customer/detail/{id}/{type}', ['middleware' => 'feature_control:126', 'uses' => 'ReportController@customerDetail']);
+    
+    Route::any('/outlet', [ 'middleware' => 'feature_control:128', 'uses' => 'ReportDuaController@reportOutletAll']);
+    Route::any('/outlet/detail/{id}/{start}/{end}', ['middleware' => 'feature_control:128', 'uses' => 'ReportDuaController@reportOutletDetail']);
+
+    // MAGIC REPORT
+    Route::any('/magic', ['middleware' => 'feature_control:84', 'uses' => 'MagicReportController@magicReport']);
+    Route::get('/other/recommendation/{exclude_rec}', ['middleware' => 'feature_control:84', 'uses' => 'MagicReportController@otherRecommedantion']);
+    Route::any('/tag/detail/{id}/{start}/{end}/{id_outlet}', ['middleware' => 'feature_control:84', 'uses' => 'MagicReportController@reportTagDetail']);
+    Route::post('newtop', ['middleware' => 'feature_control:84', 'uses' => 'MagicReportController@newTop']);
+    
+});

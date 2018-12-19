@@ -1,0 +1,652 @@
+<?php
+
+namespace Modules\Users\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+// use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
+use App\Lib\MyHelper;
+use Session;
+use Excel;
+
+class UsersController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function listPhoneUser(){
+		$query = MyHelper::get('users/list/phone', $post);
+		// print_r($query);exit;
+		if (isset($query['status']) && $query['status'] == "success") {
+            $data = $query['result'];
+        }
+        else {
+            $data = [];
+        }
+		return response()->json($data);
+	}
+	
+	public function listEmailUser(){
+		$query = MyHelper::post('users/list/email', $post);
+		
+		if (isset($query['status']) && $query['status'] == "success") {
+            $data = $query['result'];
+        }
+        else {
+            $data = [];
+        }
+		return response()->json($data);
+	}
+	
+	public function listNameUser(){
+		$query = MyHelper::post('users/list/name', $post);
+		
+		if (isset($query['status']) && $query['status'] == "success") {
+            $data = $query['result'];
+        }
+        else {
+            $data = [];
+        }
+		return response()->json($data);
+	}
+	
+    public function autoResponse(Request $request, $subject){
+		$data = [ 'title'             => 'User Auto Response '.ucfirst(str_replace('-',' ',$subject)),
+				  'menu_active'       => 'user',
+				  'submenu_active'    => 'user-autoresponse-'.$subject
+				];
+		$query = MyHelper::get('autocrm/list');
+		$test = MyHelper::get('autocrm/textreplace');
+		$auto = null;
+
+		$getApiKey = MyHelper::get('setting/whatsapp');
+		if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+			$data['api_key_whatsapp'] = $getApiKey['result']['value'];
+		}else{
+			$data['api_key_whatsapp'] = null;
+		}
+		
+		$post = $request->except('_token');
+		if(!empty($post)){
+			if (isset($post['autocrm_push_image'])) {
+				$post['autocrm_push_image'] = MyHelper::encodeImage($post['autocrm_push_image']);
+			}
+
+			if (isset($post['whatsapp_content'])) {
+				foreach($post['whatsapp_content'] as $key => $content){
+					if($content['content'] || isset($content['content_file']) && $content['content_file']){
+						if($content['content_type'] == 'image'){
+							$post['whatsapp_content'][$key]['content'] = MyHelper::encodeImage($content['content']);
+						}
+						else if($content['content_type'] == 'file'){
+							$post['whatsapp_content'][$key]['content'] = base64_encode(file_get_contents($content['content_file']));
+							$post['whatsapp_content'][$key]['content_file_name'] = pathinfo($content['content_file']->getClientOriginalName(), PATHINFO_FILENAME);
+							$post['whatsapp_content'][$key]['content_file_ext'] = pathinfo($content['content_file']->getClientOriginalName(), PATHINFO_EXTENSION);
+							unset($post['whatsapp_content'][$key]['content_file']);
+						}
+					}
+				}
+			}
+
+			$query = MyHelper::post('autocrm/update', $post);
+			// print_r($query);exit;
+			return back()->withSuccess(['Response updated']);
+		}
+		foreach($query['result'] as $autonya){
+			if($autonya['autocrm_title'] == ucwords(str_replace('-',' ',$subject))){
+				$auto = $autonya;
+			}
+		}
+		
+		if($auto == null) return back()->withErrors(['No such response']);
+		$data['data'] = $auto;
+		if($test['status'] == 'success'){
+			$data['textreplaces'] = $test['result'];
+			$data['subject'] = $subject;
+		}
+
+		$custom = [];
+        if (isset($data['data']['custom_text_replace'])) {
+            $custom = explode(';', $data['data']['custom_text_replace']);
+
+            unset($custom[count($custom) - 1]);
+        }
+
+        $data['custom'] = $custom;
+		// print_r($data);exit;
+        return view('users::response', $data);
+	}
+	
+	public function create(Request $request){
+		$post = $request->except('_token');
+		if(isset($post) && !empty($post)){
+			// print_r($post);exit;
+			$query = MyHelper::post('users/create', $post);
+			// print_r($query);exit;
+			if(isset($query['status']) && $query['status'] == 'success'){
+				return back()->withSuccess(['User Create Success']);
+			} else{
+				return back()->withErrors($query['messages']);
+			}
+			
+		} else {
+			$data = [ 'title'             => 'New User',
+					  'menu_active'       => 'user',
+					  'submenu_active'    => 'user-new'
+					];
+					
+			$getCity = MyHelper::get('city/list');
+			
+			if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
+			
+			$getProvince = MyHelper::get('province/list');
+			if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
+			
+			$getOutlet = MyHelper::get('outlet/list');
+			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
+			
+			
+			// print_r($data);exit;
+			return view('users::create', $data);
+		}
+	}
+	
+	public function deleteAdminOutlet($phone, $id_outlet){
+		if(!empty($phone) && !empty($id_outlet)){
+			$query = MyHelper::post('users/adminoutlet/delete', ['phone' => $phone, 'id_outlet' => $id_outlet]);
+
+			if(isset($query['status']) && $query['status'] == 'success'){
+				return back()->withSuccess(['Admin Outlet Delete Success']);
+			} else{
+				return back()->withErrors($query['messages']);
+			}
+			
+		} else {
+			return back()->withErrors(['Admin Outlet not found']);
+		}
+	}
+	
+	public function createAdminOutlet(Request $request){
+		$post = $request->except('_token');
+		if(isset($post) && !empty($post)){
+			// print_r($post);exit;
+			$query = MyHelper::post('users/adminoutlet/create', $post);
+
+			if(isset($query['status']) && $query['status'] == 'success'){
+				return back()->withSuccess(['Admin Outlet Create Success']);
+			} else{
+				return back()->withErrors($query['messages']);
+			}
+			
+		} else {
+			$data = [ 'title'             => 'New Admin Outlet',
+					  'menu_active'       => 'admin-outlet',
+					  'submenu_active'    => 'admin-outlet-create'
+					];
+					
+			$getOutlet = MyHelper::get('outlet/list');
+			// print_r($getOutlet);exit;
+			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
+			return view('users::create_admin_outlet', $data);
+		}
+	}
+	
+	public function updateAdminOutlet(Request $request, $phone, $id_outlet){
+		$post = $request->except('_token');
+		if(isset($post) && !empty($post)){
+			$post['phone'] = $phone;
+			$post['id_outlet'][0] = $id_outlet;
+
+			$query = MyHelper::post('users/adminoutlet/create', $post);
+
+			if(isset($query['status']) && $query['status'] == 'success'){
+				return back()->withSuccess(['Admin Outlet Update Success']);
+			} else{
+				return back()->withErrors($query['messages']);
+			}
+			
+		} else {
+			$data = [ 'title'             => 'Update Admin Outlet',
+					  'menu_active'       => 'admin-outlet',
+					  'submenu_active'    => 'admin-outlet-list'
+					];
+
+			$query = MyHelper::post('users/adminoutlet/detail', ['phone' => $phone, 'id_outlet' => $id_outlet]);
+			
+			if($query['status'] == 'success') $data['details'] = $query['result']; else $data['details'] = null;
+
+			return view('users::update_admin_outlet', $data);
+		}
+	}
+	
+    public function indexAdminOutlet(Request $request){
+		$post = $request->except('_token');
+		$data = [ 'title'             => 'User',
+				  'menu_active'       => 'admin-outlet',
+				  'submenu_active'    => 'admin-outlet-list'
+				];
+				
+		$query = MyHelper::post('users/adminoutlet/list', $post);
+		// print_r($query);exit;
+		if(isset($query) && $query['status'] == 'success'){
+			$data['result'] = $query['result'];
+		} else {
+			$data['result'] = null;
+		}
+		
+		return view('users::index-admin-outlet', $data);
+	}
+	
+    public function index(Request $request, $page = 1)
+    {
+		$post = $request->except('_token');
+		if(!empty(Session::get('form'))){
+			if(isset($post['take'])) $takes = $post['take'];
+			if(isset($post['order_field'])) $order_fields = $post['order_field'];
+			if(isset($post['order_method'])) $order_methods = $post['order_method'];
+			$sessionnya = Session::get('form');
+
+			if(isset($post) && !empty($post)){
+				$post = $post;
+				if(isset($post['conditions'])){
+					$con = $post['conditions'];
+					$post['conditions'] = $con;
+				} else {
+					$post['conditions'] = [];
+					if(isset($sessionnya['conditions'])){
+						$post['conditions'] = $sessionnya['conditions'];
+					}
+					// if(isset($sessionnya['rule'])){
+					// 	$post['rule'] = $sessionnya['rule'];
+					// }
+				}
+				Session::put('form',$post);
+			} else{
+				$post = $sessionnya;
+			}
+			if(isset($takes) && isset($order_fields) && isset($order_methods)){
+				$post['take'] = $takes;
+				$post['order_field'] = $order_fields;
+				$post['order_method'] = $order_methods;
+				Session::put('form',$post);
+			}
+		}
+
+		if(!empty($post)){
+			if(isset($post['action']) && isset($post['users'])){
+				//Bulk action
+				$phone = [];
+				foreach($post['users'] as $key => $code){
+					array_push($phone, $key);
+				}
+				
+				if($post['action'] == 'delete'){
+					$action = MyHelper::post('users/delete', ['phone' => $phone]);
+					if($action['status'] == 'success'){
+						return back()->withSuccess($action['result']);
+					} else{
+						return back()->withErrors($action['messages']);
+					}
+				}
+				
+				if($post['action'] == 'phone verified'){
+					$action = MyHelper::post('users/phone/verified', ['phone' => $phone]);
+					if($action['status'] == 'success'){
+						return back()->withSuccess($action['result']);
+					} else{
+						return back()->withErrors($action['messages']);
+					}
+				}
+				
+				if($post['action'] == 'phone not verified'){
+					$action = MyHelper::post('users/phone/unverified', ['phone' => $phone]);
+					if($action['status'] == 'success'){
+						return back()->withSuccess($action['result']);
+					} else{
+						return back()->withErrors($action['messages']);
+					}
+				}
+				
+				if($post['action'] == 'email verified'){
+					$action = MyHelper::post('users/email/verified', ['phone' => $phone]);
+					if($action['status'] == 'success'){
+						return back()->withSuccess($action['result']);
+					} else{
+						return back()->withErrors($action['messages']);
+					}
+				}
+				
+				if($post['action'] == 'email not verified'){
+					$action = MyHelper::post('users/email/unverified', ['phone' => $phone]);
+					if($action['status'] == 'success'){
+						return back()->withSuccess($action['result']);
+					} else{
+						return back()->withErrors($action['messages']);
+					}
+				}
+			}
+				
+			Session::put('form',$post);
+		}
+
+		$data = [ 'title'             => 'User',
+				  'menu_active'       => 'user',
+				  'submenu_active'    => 'user-list'
+				];
+
+		if(!isset($post['order_field'])) $post['order_field'] = 'id';
+		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
+		if(!isset($post['take'])) $post['take'] = 10;
+		$post['skip'] = 0 + (($page-1) * $post['take']);
+		
+		
+		// print_r($post);exit;
+		$getUser = MyHelper::post('users/list', $post);
+		// print_r($getUser);exit;
+		if($getUser['status'] == 'success') $data['content'] = $getUser['result']; else $data['content'] = null;
+		if($getUser['status'] == 'success') $data['total'] = $getUser['total']; else $data['total'] = null;
+		
+		$data['begin'] = $post['skip'] + 1;
+		$data['last'] = $post['take'] + $post['skip'];
+			if($data['total'] <= $data['last']) $data['last'] = $data['total'];
+		$data['page'] = $page;
+		if($data['content'])
+			$data['jumlah'] = count($data['content']);
+		else $data['jumlah'] = 0;
+		foreach($post as $key => $row){
+			$data[$key] = $row;
+		}
+		
+		
+		$getCity = MyHelper::get('city/list');
+		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
+		
+		$getProvince = MyHelper::get('province/list');
+		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
+		
+		$getCourier = MyHelper::get('courier/list');
+		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
+		
+		$getOutlet = MyHelper::get('outlet/list');
+		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
+			
+		$getProduct = MyHelper::get('product/list');
+		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
+		
+		$getTag = MyHelper::get('product/tag/list');
+		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
+
+		$getMembership = MyHelper::post('membership/list',[]);
+		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
+		
+		$data['table_title'] = "User list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']." data)";
+		
+		// print_r($data);exit;
+		// print_r(Session::get('form'));exit;
+		return view('users::index', $data);
+    }
+	
+	public function searchReset()
+    {
+		Session::forget('form');
+		return back();
+	}
+	
+	public function getExport(Request $request) {
+		$post = $request->except('_token');
+	
+		if(!empty(Session::get('form'))){
+			$post = Session::get('form');
+		}
+		
+		if(!isset($post['order_field'])) $post['order_field'] = 'id';
+		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
+		if(!isset($post['take'])) $post['take'] = 999999999;
+		$post['skip'] = 0;
+		
+		
+		// print_r($post);exit;
+		$export = MyHelper::post('users/list', $post);
+		// print_r($export);exit;
+		if($export['status'] == 'success'){
+			$data = $export['result'];
+			$x = 1;
+			foreach($data as $key => $row){
+				unset($data[$key]['id']);
+				unset($data[$key]['password_k']);
+				unset($data[$key]['id_city']);
+				unset($data[$key]['id_province']);
+				unset($data[$key]['level_range_start']);
+				unset($data[$key]['level_range_end']);
+				unset($data[$key]['id_level']);
+				unset($data[$key]['level_name']);
+				unset($data[$key]['level_parameters']);
+			}
+			Excel::create('Users List-'.date('Y-m-d'), function($excel) use($data) {
+				$excel->sheet('Sheet1', function($sheet) use($data) {
+					$sheet->fromArray($data);
+				});
+			})->export('xls');
+		}
+	}
+	
+	public function getExportActivities(Request $request) {
+		$post = $request->except('_token');
+		
+		if(!empty(Session::get('form'))){
+			$post = Session::get('form');
+		}
+		
+		if(!isset($post['order_field'])) $post['order_field'] = 'id';
+		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
+		if(!isset($post['take'])) $post['take'] = 999999999;
+		$post['skip'] = 0;
+		
+		
+		// print_r($post);exit;
+		$export = MyHelper::post('users/activity', $post);
+		
+		if($export['status'] == 'success'){
+			$data = $export['result'];
+			$x = 1;
+			Excel::create('Log Activity List-'.date('Y-m-d'), function($excel) use($data) {
+				$excel->sheet('Sheet1', function($sheet) use($data) {
+					$sheet->fromArray($data);
+				});
+			})->export('xls');
+		}
+	}
+	
+
+    /**
+     * Store a newly created resource in storage.
+     * @param  Request $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+    }
+
+    /**
+     * Show the specified resource.
+     * @return Response
+     */
+    public function show($phone, Request $request)
+    {
+		$post = $request->except('_token');
+		// print_r($post);exit;
+		if(isset($post['password'])){
+			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password']));
+			/* print_r($checkpin);exit;
+			if($checkpin['status'] != "success")
+				return redirect('login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
+			else */
+				Session::put('secure','yes');
+		} 
+		
+		if(isset($post['phone'])){
+			if(isset($post['birthday'])){
+				$post['birthday'] = date('Y-m-d', strtotime($post['birthday']));
+			}
+			$update = MyHelper::post('users/update', ['phone' => $phone, 'update' => $post]);
+			return parent::redirect($update, 'Profile has been updated');
+		}
+		
+		if (isset($post['photo'])) {
+            $photo = MyHelper::encodeImage($post['photo']);
+			$update = MyHelper::post('users/update/photo', ['phone' => $phone, 'photo' => $photo]);
+			return parent::redirect($update, 'Profile Photo has been updated');
+        }
+		
+		if (isset($post['password_new'])) {
+			$post['phone'] = $phone;
+			$update = MyHelper::post('users/update/password', $post);
+			return parent::redirect($update, 'Password has been changed.');
+        }
+		
+		if (isset($post['password_level'])) {
+			$post['phone'] = $phone;
+			// print_r($post);exit;
+			$update = MyHelper::post('users/update/level', $post);
+			// print_r($update);exit;
+			return parent::redirect($update, 'Account Level has been changed.');
+        }
+		
+		if (isset($post['password_permission'])) {
+			$post['phone'] = $phone;
+			$update = MyHelper::post('users/update/permission', $post);
+			return parent::redirect($update, 'Account Permission has been changed.');
+        }
+		
+		if(empty(Session::get('secure'))){
+			$data = [ 'title'             => 'User',
+					  'menu_active'       => 'user',
+					  'submenu_active'    => 'user-list',
+					  'phone'    		  => $phone
+					];
+			return view('users::password', $data);
+		}
+		
+		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
+		// print_r($getUser);exit;
+		$getLog = MyHelper::post('users/log', ['phone' => $phone, 'skip' => 0, 'take' => 300]);
+		$getFeature = MyHelper::post('users/granted-feature', ['phone' => $phone]);
+		// print_r($getFeature);exit;
+		$getFeatureAll = MyHelper::get('feature');
+		
+
+		$getFeatureModule = MyHelper::get('feature-module');
+		
+		$data = [ 'title'             => 'User',
+				  'menu_active'       => 'user',
+				  'submenu_active'    => 'user-list'
+				];
+		$data['profile'] = null;
+		$data['log'] = null;
+		$data['features'] = null;
+		$data['featuresall'] = null;
+		$data['featuresmodule'] = null;
+		
+		if(isset($getUser['result'])){
+			$data['profile'] = $getUser['result'];
+			$data['trx'] = $getUser['trx'];
+			$data['voucher'] = $getUser['voucher'];
+		}
+		if(isset($getLog['result'])) $data['log'] = $getLog['result'];
+		if(isset($getFeature['result'])) $data['features'] = $getFeature['result'];
+		if(isset($getFeatureAll['result'])) $data['featuresall'] = $getFeatureAll['result'];
+		if(isset($getFeatureModule['result'])) $data['featuresmodule'] = $getFeatureModule['result'];
+
+		$getCity = MyHelper::get('city/list');
+		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
+		
+		$getProvince = MyHelper::get('province/list');
+		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
+		
+		$getCourier = MyHelper::get('courier/list');
+		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
+		// print_r($data);exit;
+        return view('users::detail', $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param  Request $request
+     * @return Response
+     */
+    public function update(Request $request)
+    {
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @return Response
+     */
+    public function delete($phone)
+    {
+		$deleteUser = MyHelper::post('users/delete', ['phone' => $phone]);
+		// print_r($deleteUser);exit;
+		if($deleteUser['status'] == 'success'){
+			return back()->withSuccess($deleteUser['result']);
+		} else{
+			return back()->withErrors($deleteUser['messages']);
+		}
+    }
+	
+	public function activity(Request $request, $page = 1){
+		$post = $request->except('_token');
+
+		if(!empty(Session::get('form'))){
+			if(isset($post['take'])) $takes = $post['take'];
+			if(isset($post['order_field'])) $order_fields = $post['order_field'];
+			if(isset($post['order_method'])) $order_methods = $post['order_method'];
+			$post = Session::get('form');
+			
+			if(isset($takes) && isset($order_fields) && isset ($order_methods)){
+				$post['take'] = $takes;
+				$post['order_field'] = $order_fields;
+				$post['order_method'] = $order_methods;
+			}
+		}
+		
+		if(!empty($post)){
+			Session::put('form',$post);
+		}
+		
+		$data = [ 'title'             => 'User',
+				  'menu_active'       => 'user',
+				  'submenu_active'    => 'user-log'
+				];
+				
+		if(!isset($post['order_field'])) $post['order_field'] = 'id_log_activity';
+		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
+		if(!isset($post['take'])) $post['take'] = 10;
+		$post['skip'] = 0 + (($page-1) * $post['take']);
+		
+		// print_r($post);exit;
+		$getLog = MyHelper::post('users/activity', $post);
+
+		if(isset($getLog['status']) && $getLog['status'] == 'success') $data['content'] = $getLog['result']; else $data['content'] = null;
+		if(isset($getLog['status']) && $getLog['status'] == 'success') $data['total'] = $getLog['total']; else $data['total'] = null;
+		
+		$data['begin'] = $post['skip'] + 1;
+		$data['last'] = $post['take'] + $post['skip'];
+			if($data['total'] <= $data['last']) $data['last'] = $data['total'];
+		$data['page'] = $page;
+		if(!is_array($data['content'])){
+			$data['jumlah'] = null;
+		}else{
+			$data['jumlah'] = count($data['content']);
+		}
+		foreach($post as $key => $row){
+			$data[$key] = $row;
+		}
+		
+		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']." data)";
+		
+		// print_r($data);exit;
+		return view('users::log', $data);
+	}
+}
