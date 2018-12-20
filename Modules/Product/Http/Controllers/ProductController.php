@@ -18,6 +18,52 @@ class ProductController extends Controller
         $this->tag  = "Modules\Product\Http\Controllers\TagController";
     }
 
+    // get category and position
+    public function positionAssign(Request $request) {
+        $data = [
+            'title'          => 'Manage Product Position',
+            'sub_title'      => 'Assign Products Position',
+            'menu_active'    => 'product',
+            'submenu_active' => 'product-position',
+        ];
+        
+        $catParent = MyHelper::get('product/category/list');
+
+        if (isset($catParent['status']) && $catParent['status'] == "success") {
+            $data['category'] = $catParent['result'];
+        }
+        else {
+            $data['category'] = [];
+        }
+        
+        $product = MyHelper::get('product/list');
+        
+        if (isset($product['status']) && $product['status'] == "success") {
+            $data['product'] = $product['result'];
+        }
+        else {
+            $data['product'] = [];
+        }
+        // dd($data);
+        
+        return view('product::product.product-position', $data);
+    }
+
+    // ajax sort product
+    public function positionProductAssign(Request $request)
+    {
+        $post = $request->except('_token');
+        if (!isset($post['product_ids'])) {
+            return [
+                'status' => 'fail',
+                'messages' => ['Product id is required']
+            ];
+        }
+        $result = MyHelper::post('product/position/assign', $post);
+
+        return $result;
+    }
+
     public function categoryAssign(Request $request) {
 		$post = $request->except('_token');
 		
@@ -217,7 +263,6 @@ class ProductController extends Controller
             $post['product_visibility'] = 'Visible';
 			// print_r($post);exit;
             $save = MyHelper::post('product/create', $post);
-            // return $save;
 
             if (isset($save['status']) && $save['status'] == 'success') {
                 if (isset($post['id_tag']))  {
@@ -253,6 +298,7 @@ class ProductController extends Controller
         else {
             $data['product'] = [];
         }
+        // dd($data);
 
         return view('product::product.list', $data);
 
@@ -467,8 +513,8 @@ class ProductController extends Controller
     public function price(Request $request, $key = null) 
     {
         $data = [
-            'title'          => 'Transaction',
-            'sub_title'      => 'Product Price',
+            'title'          => 'Order',
+            'sub_title'      => 'Outlet Product Price',
             'menu_active'    => 'product-price',
             'submenu_active' => 'product-price',
         ];
@@ -527,11 +573,11 @@ class ProductController extends Controller
                     'id_product'         => $post['id_product'][$key],
                     'product_price'      => $value,
                     'product_visibility' => $post['visible'][$key],
+                    'product_sold_out'   => $post['product_sold_out'][$key],
                     'id_outlet'          => $post['id_outlet'],
                 ];
 
                 $save = MyHelper::post('product/prices', $data);
-                
                 if (isset($save['status']) && $save['status'] != "success") {
                     return back()->witherrors(['Product price failed to update']);
                 }

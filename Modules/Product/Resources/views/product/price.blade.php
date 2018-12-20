@@ -98,6 +98,7 @@
 											<th> Product </th>
 											<th> Price </th>
 											<th> Visible </th>
+											<th> Sold Out </th>
 											<th> POS Status </th>
 										</tr>
 									</thead>
@@ -106,7 +107,7 @@
 											@foreach ($product as $col => $pro)
 												<tr>
 													<td> {{ $pro['product_name'] }} </td>
-													<td> 
+													<td style="width: 20%"> 
 														<input type="hidden" name="id_outlet" value="{{ $key }}">
 														<input type="hidden" name="id_product[]" value="{{ $pro['id_product'] }}">
 														@if (!empty($data['product_prices']))
@@ -162,6 +163,36 @@
 																@php
 																	$marker = 1;
 																@endphp
+																<select class="form-control" name="product_sold_out[]">
+																	<option value="Available" @if($dpp['product_sold_out'] == 'Available') selected @endif>Available</option>
+																	<option value="Sold Out" @if($dpp['product_sold_out'] == 'Sold Out') selected @endif>Sold Out</option>
+																</select>
+															@endif
+														@endforeach
+
+														@if ($marker == 0)
+															<select class="form-control" name="product_sold_out[]">
+																<option value="Available">Available</option>
+																<option value="Sold Out" selected>Sold Out</option>
+															</select>
+														@endif
+													@else
+														<select class="form-control" name="product_sold_out[]">
+																<option value="Available">Available</option>
+																<option value="Sold Out" selected>Sold Out</option>
+															</select>
+													@endif
+													</td>
+													<td style="width: 15%">
+													@if (!empty($data['product_prices']))
+														@php
+															$marker = 0;
+														@endphp
+														@foreach ($data['product_prices'] as $dpp)
+															@if ($dpp['id_product'] == $pro['id_product'])
+																@php
+																	$marker = 1;
+																@endphp
 																<input type="text" value="{{ $dpp['product_status'] }}" class="form-control mt-repeater-input-inline" disabled>
 															@endif
 														@endforeach
@@ -187,7 +218,7 @@
 										</div>
 										@endif
 										<div class="col-md-2">
-											<button type="submit" class="btn blue pull-right" style="margin:10px 0">Save Price</button>
+											<button type="submit" class="btn blue pull-right" style="margin:10px 0">Save</button>
 										</div>
 									</div>
 								</div>

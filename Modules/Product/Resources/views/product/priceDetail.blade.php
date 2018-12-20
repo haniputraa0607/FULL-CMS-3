@@ -1,24 +1,30 @@
 <?php
 $id_product = $product[0]['id_product'];
 ?>
-<form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
+<form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data" id="formWithPrice">
   <div class="form-body">
 		@foreach($outlet as $key => $ou)
 		<?php $marker = 0; ?>
         <div class="form-group">
             <label class="col-md-3 control-label">{{$ou['outlet_name']}}</label>
 			@foreach($ou['product_prices'] as $keyPrice => $price)
-				@if($price['id_product'] == $id_product)
+			@if($price['id_product'] == $id_product)
 					<?php $marker = 1;?>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<input type="hidden" name="id_product_price[]" value="{{ $price['id_product_price'] }}">
 						<input type="hidden" name="id_outlet[]" value="{{ $ou['id_outlet'] }}">
-						<input type="text" class="form-control nominal" name="product_price[]" value="{{ $price['product_price'] }}">
+						<input type="text" class="form-control nominal price" name="product_price[]" value="{{ $price['product_price'] }}">
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<select class="form-control" name="product_visibility[]">
 							<option value="Visible" @if($price['product_visibility'] == 'Visible') selected @endif>Visible</option>
 							<option value="Hidden" @if($price['product_visibility'] != 'Visible') selected @endif>Hidden</option>
+						</select>
+					</div>
+					<div class="col-md-2">
+						<select class="form-control" name="product_sold_out[]">
+							<option value="Available" @if($price['product_sold_out'] == 'Available') selected @endif>Available</option>
+							<option value="Sold Out" @if($price['product_sold_out'] != 'Available') selected @endif>Sold Out</option>
 						</select>
 					</div>
 					<div class="col-md-2">
@@ -27,15 +33,21 @@ $id_product = $product[0]['id_product'];
 				@endif
 			@endforeach
 			@if($marker == 0)
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<input type="hidden" name="id_product_price[]" value="0">
 					<input type="hidden" name="id_outlet[]" value="{{ $ou['id_outlet'] }}">
-					<input type="text" class="form-control nominal" name="product_price[]" value="0">
+					<input type="text" class="form-control nominal price" name="product_price[]" value="0">
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<select class="form-control" name="product_visibility[]">
 						<option value="Visible" selected>Visible</option>
 						<option value="Hidden">Hidden</option>
+					</select>
+				</div>
+				<div class="col-md-2">
+					<select class="form-control" name="product_sold_out[]">
+						<option value="Available" selected>Available</option>
+						<option value="Sold Out">Sold Out</option>
 					</select>
 				</div>
 				<div class="col-md-2">
@@ -50,7 +62,7 @@ $id_product = $product[0]['id_product'];
       <div class="row">
           <div class="col-md-offset-3 col-md-9">
             <input type="hidden" name="id_product" value="{{ $id_product }}">
-            <button type="submit" class="btn green">Submit</button>
+            <button type="submit" class="btn green" id="submit">Submit</button>
           </div>
       </div>
   </div>
