@@ -135,6 +135,7 @@ class OutletController extends Controller
             ];
 
             $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code, 'admin' => 1]);
+            // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
@@ -146,7 +147,7 @@ class OutletController extends Controller
 
             // province
             $data['province'] = $this->getPropinsi();
-
+            // return $data;
             // print_r($data); exit();
             return view('outlet::detail', $data);
         }
@@ -599,5 +600,17 @@ class OutletController extends Controller
         $user = parent::getData(MyHelper::post('users/list', $post));
 
         return $user;
+    }
+
+    public function scheduleSave(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $save = MyHelper::post('outlet/schedule/save', $post);
+        if (isset($save['status']) && $save['status'] == 'success') {
+            return back()->with(['success' => ['Update schedule success']]);
+        }
+
+        return back()->withErrors(['Update failed']);
     }
 }

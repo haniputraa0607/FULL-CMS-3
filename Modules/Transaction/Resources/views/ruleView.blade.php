@@ -29,10 +29,11 @@
 @endsection
 
 @section('content')
+<input type="hidden" id="url" value="{{ env('APP_URL') }}transaction/setting/rule/update">
 @php
     // print_r($default);die();
 @endphp
-	<div class="page-bar">
+    <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
                 <a href="/">Home</a>
@@ -96,51 +97,51 @@
                         {{ csrf_field() }}
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_0">
-	                            <div class="portlet light bordered" style="padding-bottom: 40px">
-	                            	Grand total calculation of transactions (<b>Swap the button as you wish</b>)
+                                <div class="portlet light bordered" style="padding-bottom: 40px">
+                                    Grand total calculation of transactions (<b>Swap the button as you wish</b>)
                                     <i class="fa fa-question-circle tooltips" data-original-title="Urutan perhitungan dalam menghitung grand total dari setiap transaksi" data-container="body"></i>
-	                                <div class="portlet-body form">
-	                                    <div class="form-body">
-	                                        <div class="col-md-2">
-			                                	<div id="item1" class="div-drag" >
-													{!! $button[0] !!}
-												</div>
-			                                </div>
-			                                <div class="col-md-2">
-			                                	<div id="item2" draggable="true" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
-													{!! $button[1] !!}
-												</div>
-			                                </div>
-			                                <div class="col-md-2">
-			                                	<div id="item3" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
-													{!! $button[2] !!}
-												</div>
-			                                </div>
-			                                <div class="col-md-2">
-			                                	<div id="item4" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
-													{!! $button[3] !!}
-												</div>
-			                                </div>
-			                                <div class="col-md-2">
-			                                	<div id="item5" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
-													{!! $button[4] !!}
-												</div>
-			                                </div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="portlet light bordered" style="padding-bottom: 40px">
-	                            	<i class="icon-trash" style="margin: 10px"> Trash (<b>Remove the unnecessary in the trash column</b>)
+                                    <div class="portlet-body form">
+                                        <div class="form-body">
+                                            <div class="col-md-2">
+                                                <div id="item1" class="div-drag" >
+                                                    {!! $button[0] !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="item2" draggable="true" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                                    {!! $button[1] !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="item3" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                                    {!! $button[2] !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="item4" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                                    {!! $button[3] !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="item5" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                                    {!! $button[4] !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet light bordered" style="padding-bottom: 40px">
+                                    <i class="icon-trash" style="margin: 10px"> Trash (<b>Remove the unnecessary in the trash column</b>)
                                         <i class="fa fa-question-circle tooltips" data-original-title="kolom yang digunakan untuk membuang value tidak terpakai pada kolom diatas dalam menghitung grand total transaksi" data-container="body"></i></i>
-	                            	<div id="trash" ondrop="drop(event)" ondragover="allowDrop(event)" style="padding-bottom: 40px">
-	                            		@if (isset($trash))
-	                            			@foreach ($trash as $key => $row)
-	                            				{!! $row !!}
-	                            			@endforeach
-	                            		@endif
-	                            	</div>
+                                    <div id="trash" ondrop="drop(event)" ondragover="allowDrop(event)" style="padding-bottom: 40px">
+                                        @if (isset($trash))
+                                            @foreach ($trash as $key => $row)
+                                                {!! $row !!}
+                                            @endforeach
+                                        @endif
+                                    </div>
 
-	                            </div>
+                                </div>
                             </div>
                             <div class="tab-pane" id="tab_1">
                                 <div class="portlet light bordered">
@@ -267,7 +268,7 @@
                                             <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Result
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Hasil akhir yang akan digunakan untuk menghitung diskon transaksi" data-container="body"></i>
                                             </div>
-                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-10">
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-6">
                                                 <div id="targetDiscount">
                                                     @if (isset($discount['data']))
                                                         @foreach ($discount['data'] as $key => $result)
@@ -276,6 +277,21 @@
                                                             @endif
                                                         @endforeach
                                                     @endif
+                                                </div>
+                                            </div>
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Percent
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Diskon persen yang didapat user" data-container="body"></i>
+                                                <div class="input-group" style="margin: 20px">
+                                                    <input id="persen" type="text" class="form-control discountPercent" placeholder="value" value="{{ $discount['percent'] }}">
+                                                    <span class="input-group-addon">
+                                                        %
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Nominal
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Diskon nominal yang didapat user" data-container="body"></i>
+                                                <div class="input-group" style="margin: 20px">
+                                                    <input id="cashbackMax" type="text" class="form-control discountNominal" placeholder="value" value="{{ $discount['nominal'] }}">
                                                 </div>
                                             </div>
                                         </div>

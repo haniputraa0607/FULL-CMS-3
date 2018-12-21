@@ -16,6 +16,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     
     // photo
     Route::post('photo/delete', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@deletePhoto']);
+    Route::post('schedule/save', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@scheduleSave']);
     
     // holiday
     Route::group(['middleware' => 'config_control:4'], function()
@@ -42,3 +43,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::any('advert', 'AdvertController@index');
 });
 
+Route::group(['prefix' => 'outlet', 'namespace' => 'Modules\Outlet\Http\Controllers'], function()
+{
+    Route::any('webview/{id}', 'WebviewController@detailWebview');
+});

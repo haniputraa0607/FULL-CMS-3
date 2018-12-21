@@ -22,6 +22,34 @@ function checkDiscountAwal() {
     }
 }
 
+$(document).on('keyup', '.discountPercent', function() {
+    var checkNominal = $('.discountNominal').val();
+    if (checkNominal != '0' && checkNominal !== '') {
+        alert('if you want to fill in percent discount field, you have to empty the nominal discount');
+        $(this).val('');
+        $('.discountNominal').focus();
+        return false;
+    }
+});
+
+$(document).on('keyup', '.discountNominal', function() {
+    var checkPer = $('.discountPercent').val();
+    if (checkPer != '0' && checkPer !== '') {
+        alert('if you want to fill in nominal discount field, you have to empty the percent discount');
+        $(this).val('');
+        $('.discountPercent').focus();
+        return false;
+    }
+});
+
+$(document).on('change', '.discountPercent', function() {
+    count();
+});
+
+$(document).on('change', '.discountNominal', function() {
+    count();
+});
+
 function setDiscount(ev, key) {
     if (key == 'subtotal') {
         var text = 'Subtotal';
@@ -93,7 +121,7 @@ $('.discountKtutup').click(function() {
 });
 
 $('.discountDelete').click(function() {
-    var check = checkServiceJumlah();
+    var check = checkDiscountJumlah();
     console.log(check);
     var back = check - 2;
 
@@ -126,7 +154,7 @@ function checkDiscountJumlah() {
 }
 
 function clickdiscountvalue() {
-    var check = checkServiceJumlah();
+    var check = checkDiscountJumlah();
 
     $('.discountValue').prop('disabled', true);
     $('.discountOperator').prop('disabled', false);
@@ -165,6 +193,8 @@ function count() {
     var checkShow = $("#targetDiscount button").length;
     // var value = $(this).val();
     var testing = $("#targetDiscount button");
+    var percent = $('.discountPercent').val();
+    var nominal = $('.discountNominal').val();
     // console.log(testing);
     for (i = 0; i < checkShow; i++) {
         item.push(testing[i].id);
@@ -178,6 +208,8 @@ function count() {
             'key'   : 'discount',
             // 'value'   : value,
             'item': item,
+            'percent': percent,
+            'nominal': nominal,
         },
         success: function(data) {
             console.log(data);
