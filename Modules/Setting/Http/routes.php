@@ -11,6 +11,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modu
     Route::get('faq/edit/{id}', 'SettingController@faqEdit');
     Route::post('faq/update/{id}', 'SettingController@faqUpdate');
     Route::any('faq/delete/{id}', 'SettingController@faqDelete');
+    Route::any('faq/webview', 'SettingController@faqWebview');
 
     Route::get('level', 'SettingController@levelList');
     Route::get('level/create', 'SettingController@levelCreate');

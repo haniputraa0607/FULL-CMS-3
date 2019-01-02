@@ -193,14 +193,14 @@
 
                 <div class="form-body">
                     <div class="form-group">
-		                <div class="col-md-4">Item
+		                <div class="col-md-8">Item
 		                	<span class="required" aria-required="true"> *
 	                        </span>
 		                </div>
 		                <div class="col-md-4">Chance
 		                	<span class="required" aria-required="true"> *
 	                        </span>
-	                        <i class="fa fa-question-circle tooltips" data-original-title="Bobot atau kesempatan memenangkan sebuah item. Isi dengan angka 1-100. Jumlah keseluruhan item tidak boleh lebih dari 100." data-container="body"></i>
+	                        <i class="fa fa-question-circle tooltips" data-original-title="Bobot atau kesempatan memenangkan sebuah item. Isi dengan angka 0-100. Jumlah keseluruhan item harus = 100." data-container="body"></i>
 		                </div>
 	                </div>
 
@@ -210,7 +210,7 @@
 			                @foreach($spin_weighted_items as $key => $spin_item)
 			                <div class="mt-repeater-item mt-overflow" data-repeater-item>
 			                	<input type="hidden" name="id_spin_the_wheel" value="{{ $spin_item['id_spin_the_wheel'] }}">
-				                <div class="col-md-4">
+				                <div class="col-md-8">
 			                        <div class="input-icon right">
 			                            <select class="form-control select2" name="id_deals" data-placeholder="Select Item" required>
 			                            <optgroup label="Item List">
@@ -223,7 +223,7 @@
 			                            </select>
 			                        </div>
 			                    </div>
-			                    <div class="col-md-4">
+			                    <div class="col-md-2">
 			                    	<input type="text" name="value" class="form-control spin-value" required value="{{ $spin_item['value'] }}">
 			                    </div>
 	                            <div class="col-md-2">
@@ -269,7 +269,7 @@
                 <div class="form-actions">
                     {{ csrf_field() }}
                     <div class="row">
-                        <div class="col-md-offset-3 col-md-9">
+                        <div class="text-center">
                             <button type="submit" class="btn blue">Submit</button>
                         </div>
                     </div>

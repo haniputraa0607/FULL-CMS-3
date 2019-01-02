@@ -208,9 +208,51 @@
                     onFocus: function() {
                         $('#tutorial1').attr('src', "{{url('img/news/news3.png')}}")
                         $('#tutorial2').attr('src', "{{url('img/news/content-long.png')}}")
+                    },
+                    onImageUpload: function(files){
+                        sendFile(files[0], $(this).attr('id'));
+                    },
+                    onMediaDelete: function(target){
+                        var name = target[0].src;
+                        token = "<?php echo csrf_token(); ?>";
+                        $.ajax({
+                            type: 'post',
+                            data: 'filename='+name+'&_token='+token,
+                            url: "{{url('summernote/picture/delete/news')}}",
+                            success: function(data){
+                                // console.log(data);
+                            }
+                        });
                     }
                 }
             });
+
+            function sendFile(file, id){
+                token = "<?php echo csrf_token(); ?>";
+                var data = new FormData();
+                data.append('image', file);
+                data.append('_token', token);
+                // document.getElementById('loadingDiv').style.display = "inline";
+                $.ajax({
+                    url : "{{url('summernote/picture/upload/news')}}",
+                    data: data,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function(url) {
+                        if (url['status'] == "success") {
+                            $('#'+id).summernote('editor.saveRange');
+							$('#'+id).summernote('editor.restoreRange');
+							$('#'+id).summernote('editor.focus');
+                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                        }
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    },
+                    error: function(data){
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    }
+                })
+            }
 
             /* INIT JS */
             // $('.featureOutlet').hide();

@@ -173,12 +173,15 @@
                                 </td>
                                 <td>{{ substr($value['news_content_short'], 0, 60) }} ...</td>
                                 @if(MyHelper::hasAccess([20,22,23], $grantedFeature))
-                                    <td style="width: 80px;"> 
+                                    <td style="width: 125px;"> 
                                         @if(MyHelper::hasAccess([23], $grantedFeature))
                                             <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_news'] }}"><i class="fa fa-trash-o"></i></a> 
                                         @endif
                                         @if(MyHelper::hasAccess([20,22], $grantedFeature))
                                             <a href="{{ url('news/detail') }}/{{ $value['id_news'] }}/{{ $value['news_slug'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
+                                        @endif
+                                        @if($value['news_button_form_text']!="" && MyHelper::hasAccess([20], $grantedFeature))
+                                            <a href="{{ url('news/form-data') }}/{{ $value['id_news'] }}/{{ $value['news_slug'] }}" class="btn btn-sm green"><i class="fa fa-file-text-o"></i></a> 
                                         @endif
                                     </td>
                                 @endif

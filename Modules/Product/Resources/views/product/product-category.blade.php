@@ -429,7 +429,7 @@
 			<div class="row">
 			{{ csrf_field() }}
 				<div class="col-md-offset-5 col-md-6">
-					<button type="submit" class="btn blue">Upate Data</button>
+					<button type="submit" class="btn blue">Update Data</button>
 				</div>
 			</div>
 			</form>

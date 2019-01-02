@@ -5,12 +5,10 @@
     <link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
@@ -20,29 +18,18 @@
     <script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>    
     <script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    
-    <script>   
-    $('.datepicker').datepicker({
-        'format' : 'd-M-yyyy',
-        'todayHighlight' : true,
-        'autoclose' : true
-    }); 
-    $('.timepicker').timepicker(); 
-        
-    </script>
+    <script src="{{ url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>    
     
     <script type="text/javascript">
+        $(".form_datetime").datetimepicker({
+            format: "d-M-yyyy hh:ii",
+            autoclose: true,
+            todayBtn: true
+        });
+
         $(document).ready(function() {
             var _URL = window.URL || window.webkitURL;
-
-            $('.summernote').summernote({
-                placeholder: '',
-                tabsize: 2,
-                height: 120
-            });
 
             /* EXPIRY */
             $('.expiry').click(function() {
@@ -58,6 +45,53 @@
                 $('.'+nilai+'Opp').val('');
             });
 
+            // upload & delete image on summernote
+            $('.summernote').summernote({
+                placeholder: 'Deals Content Long',
+                tabsize: 2,
+                height: 120,
+                callbacks: {
+                    onImageUpload: function(files){
+                        sendFile(files[0]);
+                    },
+                    onMediaDelete: function(target){
+                        var name = target[0].src;
+                        token = "{{ csrf_token() }}";
+                        $.ajax({
+                            type: 'post',
+                            data: 'filename='+name+'&_token='+token,
+                            url: "{{url('summernote/picture/delete/spin-the-wheel')}}",
+                            success: function(data){
+                                // console.log(data);
+                            }
+                        });
+                    }
+                }
+            });
+
+            function sendFile(file){
+                token = "{{ csrf_token() }}";
+                var data = new FormData();
+                data.append('image', file);
+                data.append('_token', token);
+                // document.getElementById('loadingDiv').style.display = "inline";
+                $.ajax({
+                    url : "{{url('summernote/picture/upload/spin-the-wheel')}}",
+                    data: data,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function(url) {
+                        if (url['status'] == "success") {
+                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                        }
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    },
+                    error: function(data){
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    }
+                })
+            }
         });
     </script>
 @endsection
@@ -134,7 +168,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="deals_description" class="form-control summernote">{{ $item['deals_description'] }}</textarea>
+                                <textarea name="deals_description" id="field_content_long" class="form-control summernote">{{ $item['deals_description'] }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -183,7 +217,7 @@
                             </div>
                             <div class="col-md-9 voucherTime" id="dates" @if ($item['duration'] == "dates") style="display: block;" @else style="display: none;" @endif>
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control dates durationOpp" name="deals_voucher_expired" value="{{ $item['deals_voucher_expired'] }}">
+                                    <input type="text" class="form_datetime form-control dates durationOpp" name="deals_voucher_expired" value="{{ $item['deals_voucher_expired'] }}">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>

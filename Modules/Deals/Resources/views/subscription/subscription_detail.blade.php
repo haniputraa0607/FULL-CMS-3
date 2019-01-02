@@ -10,6 +10,7 @@
     <link href="{{ url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
@@ -45,6 +46,7 @@
     <script src="{{ url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>    
+    <script src="{{ url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>    
     <script src="{{ url('js/prices.js')}}"></script>
 
     <script>   
@@ -54,6 +56,11 @@
         'autoclose' : true
     }); 
     $('.timepicker').timepicker(); 
+    $(".form_datetime").datetimepicker({
+        format: "d-M-yyyy hh:ii",
+        autoclose: true,
+        todayBtn: true
+    });
         
     </script>
     <script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
@@ -157,12 +164,6 @@
         $(document).ready(function() {
             token = '<?php echo csrf_token();?>';
             
-            $('.summernote').summernote({
-                placeholder: 'Deals Content Long',
-                tabsize: 2,
-                height: 120
-            });
-
             /* TYPE VOUCHER */
             $('.voucherType').click(function() {
                 var nilai = $(this).val();
@@ -220,7 +221,54 @@
                 $('.'+nilai+'Opp').removeAttr('required');
                 $('.'+nilai+'Opp').val('');
             });
+            
+            // upload & delete image on summernote
+            $('.summernote').summernote({
+                placeholder: 'Deals Content Long',
+                tabsize: 2,
+                height: 120,
+                callbacks: {
+                    onImageUpload: function(files){
+                        sendFile(files[0]);
+                    },
+                    onMediaDelete: function(target){
+                        var name = target[0].src;
+                        token = "{{ csrf_token() }}";
+                        $.ajax({
+                            type: 'post',
+                            data: 'filename='+name+'&_token='+token,
+                            url: "{{url('summernote/picture/delete/deals')}}",
+                            success: function(data){
+                                // console.log(data);
+                            }
+                        });
+                    }
+                }
+            });
 
+            function sendFile(file){
+                token = "{{ csrf_token() }}";
+                var data = new FormData();
+                data.append('image', file);
+                data.append('_token', token);
+                // document.getElementById('loadingDiv').style.display = "inline";
+                $.ajax({
+                    url : "{{url('summernote/picture/upload/deals')}}",
+                    data: data,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function(url) {
+                        if (url['status'] == "success") {
+                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                        }
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    },
+                    error: function(data){
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    }
+                })
+            }
 
             $('.fileinput-preview').bind('DOMSubtreeModified', function() {
                 var mentah    = $(this).find('img')

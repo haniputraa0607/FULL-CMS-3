@@ -10,11 +10,11 @@ Route::group(['middleware' => 'web', 'prefix' => 'spinthewheel', 'namespace' => 
     Route::any('/setting', ['middleware' => 'feature_control:134', 'uses' => 'SpinTheWheelController@setting']);
 });
 
-/* CUSTOMER */
-Route::group(['middleware' => 'web', 'prefix' => 'customer/spin-the-wheel', 'namespace' => 'Modules\SpinTheWheel\Http\Controllers'], function()
+/* Webview */
+Route::group(['middleware' => 'web', 'prefix' => 'webview/spin-the-wheel', 'namespace' => 'Modules\SpinTheWheel\Http\Controllers'], function()
 {
-    Route::get('/{user_phone}', 'CustomerSpinTheWheelController@index');
-    // ajax for get spin prize
-    Route::get('/spin/{user_phone}', 'CustomerSpinTheWheelController@spin');
+    Route::get('/{user_phone}', 'WebviewSpinTheWheelController@index');
+    // ajax for claim spin prize
+    Route::get('/spin/{user_phone}', 'WebviewSpinTheWheelController@spin');
 
 });

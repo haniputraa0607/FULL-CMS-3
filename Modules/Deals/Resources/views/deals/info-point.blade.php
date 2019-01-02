@@ -20,7 +20,7 @@
             </label>
         </div>
         <div class="col-md-9">
-            <input type="text" class="form-control" name="deals_second_title" value="{{ $val['deals_second_title'] }}" placeholder="Second Title" required>
+            <input type="text" class="form-control" name="deals_second_title" value="{{ $val['deals_second_title'] }}" placeholder="Second Title">
         </div>
     </div>
 
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    {{-- <div class="form-group">
         <div class="input-icon right">
             <label class="col-md-3 control-label">
             Content Short
@@ -49,7 +49,7 @@
         <div class="col-md-9">
             <textarea name="deals_short_description" class="form-control" required>{{ $val['deals_short_description'] }}</textarea>
         </div>
-    </div>
+    </div> --}}
 
     <div class="form-group">
         <div class="input-icon right">
@@ -60,7 +60,7 @@
             </label>
         </div>
         <div class="col-md-9">
-            <textarea name="deals_description" class="form-control summernote">{{ $val['deals_description'] }}</textarea>
+            <textarea name="deals_description" id="field_content_long" class="form-control summernote">{{ $val['deals_description'] }}</textarea>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
         <div class="col-md-4">
             <div class="input-icon right">
                 <div class="input-group">
-                    <input type="text" class="datepicker form-control" name="deals_start" value="{{ date('d-M-Y', strtotime($val['deals_start'])) }}" required>
+                    <input type="text" class="form_datetime form-control" name="deals_start" value="{{ date('d-M-Y', strtotime($val['deals_start'])) }}" required>
                     <span class="input-group-btn">
                         <button class="btn default" type="button">
                             <i class="fa fa-calendar"></i>
@@ -84,7 +84,7 @@
         <div class="col-md-4">
             <div class="input-icon right">
                 <div class="input-group">
-                    <input type="text" class="datepicker form-control" name="deals_end" value="{{ date('d-M-Y', strtotime($val['deals_end'])) }}" required>
+                    <input type="text" class="form_datetime form-control" name="deals_end" value="{{ date('d-M-Y', strtotime($val['deals_end'])) }}" required>
                     <span class="input-group-btn">
                         <button class="btn default" type="button">
                             <i class="fa fa-calendar"></i>
@@ -103,7 +103,7 @@
         <div class="col-md-4">
             <div class="input-icon right">
                 <div class="input-group">
-                    <input type="text" class="datepicker form-control" name="deals_publish_start" value="{{ date('d-M-Y', strtotime($val['deals_publish_start'])) }}" required>
+                    <input type="text" class="form_datetime form-control" name="deals_publish_start" value="{{ date('d-M-Y', strtotime($val['deals_publish_start'])) }}" required>
                     <span class="input-group-btn">
                         <button class="btn default" type="button">
                             <i class="fa fa-calendar"></i>
@@ -118,7 +118,7 @@
         <div class="col-md-4">
             <div class="input-icon right">
                 <div class="input-group">
-                    <input type="text" class="datepicker form-control" name="deals_publish_end" value="{{ date('d-M-Y', strtotime($val['deals_publish_end'])) }}" required>
+                    <input type="text" class="form_datetime form-control" name="deals_publish_end" value="{{ date('d-M-Y', strtotime($val['deals_publish_end'])) }}" required>
                     <span class="input-group-btn">
                         <button class="btn default" type="button">
                             <i class="fa fa-calendar"></i>
@@ -271,7 +271,7 @@
             </div>
             <div class="col-md-9 voucherTime" id="dates"  @if (empty($val['deals_voucher_expired'])) style="display: none;" @endif>
                 <div class="input-group">
-                    <input type="text" class="datepicker form-control dates durationOpp" name="deals_voucher_expired" @if (!empty($val['deals_voucher_expired'])) value="{{ date('d-M-Y', strtotime($val['deals_voucher_expired'])) }}" @endif>
+                    <input type="text" class="form_datetime form-control dates durationOpp" name="deals_voucher_expired" @if (!empty($val['deals_voucher_expired'])) value="{{ date('d-M-Y', strtotime($val['deals_voucher_expired'])) }}" @endif>
                     <span class="input-group-btn">
                         <button class="btn default" type="button">
                             <i class="fa fa-calendar"></i>

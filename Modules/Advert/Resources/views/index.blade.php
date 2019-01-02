@@ -30,10 +30,56 @@
             token = '<?php echo csrf_token();?>';
             
             $('.summernote').summernote({
-                placeholder: '',
+                placeholder: 'Advert',
                 tabsize: 2,
-                height: 370
+                height: 120,
+                callbacks: {
+                    onImageUpload: function(files){
+                        sendFile(files[0], $(this).attr('id'));
+                    },
+                    onMediaDelete: function(target){
+                        var name = target[0].src;
+                        token = "<?php echo csrf_token(); ?>";
+                        $.ajax({
+                            type: 'post',
+                            data: 'filename='+name+'&_token='+token,
+                            url: "{{url('summernote/picture/delete/advert')}}",
+                            success: function(data){
+                                // console.log(data);
+                            }
+                        });
+                    }
+                }
             });
+
+
+            function sendFile(file, id){
+                token = "<?php echo csrf_token(); ?>";
+                var data = new FormData();
+                data.append('image', file);
+                data.append('_token', token);
+                // document.getElementById('loadingDiv').style.display = "inline";
+                $.ajax({
+                    url : "{{url('summernote/picture/upload/advert')}}",
+                    data: data,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function(url) {
+                        if (url['status'] == "success") {
+                            console.log(url);
+                            $('#'+id).summernote('editor.saveRange');
+							$('#'+id).summernote('editor.restoreRange');
+							$('#'+id).summernote('editor.focus');
+                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
+                        }
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    },
+                    error: function(data){
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    }
+                })
+            }
 
             $(".file").change(function(e) {
                 var _URL = window.URL || window.webkitURL;
@@ -66,7 +112,7 @@
             $(".delete").click(function() {
                 var token = "{{ csrf_token() }}";
                 var id    = $(this).data('id');
-                var ortu  = $(this).parent().parent().parent();
+                var ortu  = $(this).parent().parent();
 
                 $.ajax({
                     type : "POST",
@@ -119,15 +165,15 @@
                 <li class="active" id="infoOutlet">
                     <a href="#pictontop" data-toggle="tab" > Picture On Top </a>
                 </li>
-                <!--<li id="infoOutlet">
+                <li id="infoOutlet">
                     <a href="#textontop" data-toggle="tab" > Text On Top </a>
-                </li>-->
+                </li>
                 <li id="infoOutlet">
                     <a href="#piconbottom" data-toggle="tab" > Picture On Bottom </a>
                 </li>
-                <!--<li>
+                <li>
                     <a href="#textonbottom" data-toggle="tab"> Text On Bottom </a>
-                </li>-->
+                </li>
             </ul>
         </div>
         <div class="portlet-body">

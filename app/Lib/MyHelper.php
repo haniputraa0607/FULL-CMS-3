@@ -55,7 +55,6 @@ class MyHelper
   public static function postLogin($request){
     $api = env('APP_API_URL');
     $client = new Client;
-    
     try {
       $response = $client->request('POST',$api.'oauth/token', [
           'form_params' => [
@@ -66,7 +65,6 @@ class MyHelper
               'password'      => $request->input('password')
           ],
       ]);
-      
       return json_decode($response->getBody(), true);
     }catch (\GuzzleHttp\Exception\RequestException $e) {
       try{
@@ -125,9 +123,9 @@ class MyHelper
 
     $content = array(
       'headers' => [
-        'Authorization' => $ses,
-        'Accept'        => 'application/json',
-        'Content-Type'  => 'application/json',
+        'Authorization'   => $ses,
+        'Accept'          => 'application/json',
+        'Content-Type'    => 'application/json',
         'ip-address-view' => $_SERVER["REMOTE_ADDR"],
         'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
       ]
@@ -529,6 +527,22 @@ class MyHelper
   {
     if($is_required == 1){
       return '<span class="required" aria-required="true"> * </span>';
+    }
+  }
+
+  // news form data: check if string contain image or file link
+  public static function checkFormData($string)
+  {
+    if (strpos($string, 'img/news-custom-form') !== false) {
+      $link = env('APP_API_URL') . $string;
+      return '<img src="'.$link.'" height="100px" alt="">';
+    }
+    elseif (strpos($string, 'upload/news-custom-form') !== false) {
+      $link = env('APP_API_URL') . $string;
+      return '<a href="'.$link.'" target="_blank">Download File</a>';
+    }
+    else {
+      return $string;
     }
   }
 }

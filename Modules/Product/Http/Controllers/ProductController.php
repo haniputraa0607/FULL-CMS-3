@@ -570,11 +570,11 @@ class ProductController extends Controller
         if (!empty($price)) {
             foreach ($price as $key => $value) {
                 $data = [
-                    'id_product'         => $post['id_product'][$key],
-                    'product_price'      => $value,
-                    'product_visibility' => $post['visible'][$key],
-                    'product_sold_out'   => $post['product_sold_out'][$key],
-                    'id_outlet'          => $post['id_outlet'],
+                    'id_product'            => $post['id_product'][$key],
+                    'product_price'         => $value,
+                    'product_visibility'    => $post['visible'][$key],
+                    'product_stock_status'   => $post['product_stock_status'][$key],
+                    'id_outlet'             => $post['id_outlet'],
                 ];
 
                 $save = MyHelper::post('product/prices', $data);

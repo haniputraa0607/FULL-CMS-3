@@ -5,112 +5,35 @@
     <link href="{{ url('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
 
     <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
 
-    <!-- <script src="{{ url('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
     <script src="{{ url('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>    
     <script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    {{-- <script src="{{ url('js/prices.js')}}"></script> --}}
+    <script src="{{ url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>    
     
-    <script>   
-    $('.datepicker').datepicker({
-        'format' : 'd-M-yyyy',
-        'todayHighlight' : true,
-        'autoclose' : true
-    }); 
-    $('.timepicker').timepicker(); 
-        
-    </script>
     
     <script type="text/javascript">
+        $(".form_datetime").datetimepicker({
+            format: "d-M-yyyy hh:ii",
+            autoclose: true,
+            todayBtn: true
+        });
+
         $(document).ready(function() {
             var _URL = window.URL || window.webkitURL;
-
-            /*$('.price').each(function() {
-                var input = $(this).val();
-                var input = input.replace(/[\D\s\._\-]+/g, "");
-                input = input ? parseInt( input, 10 ) : 0;
-
-                $(this).val( function() {
-                    return ( input === 0 ) ? "" : input.toLocaleString( "id" );
-                });
-            });*/
-            
-            $('.summernote').summernote({
-                placeholder: '',
-                tabsize: 2,
-                height: 120
-            });
-
-            /* TYPE VOUCHER */
-            /*$('.voucherType').click(function() {
-                // tampil duluk
-                var nilai = $(this).val();
-
-                // alert(nilai);
-
-                if (nilai == "List Vouchers") {
-                    $('#listVoucher').show();
-                    $('.listVoucher').prop('required', true);
-
-                    $('#generateVoucher').hide();
-                    $('.generateVoucher').removeAttr('required');
-                }
-                else if(nilai == "Unlimited") {
-                    $('.generateVoucher').val('');
-                    $('.listVoucher').val('');
-                    $('.listVoucher').removeAttr('required');
-
-                    $('#listVoucher').hide();
-                    $('#generateVoucher').hide();
-                    $('.generateVoucher').removeAttr('required');
-                }
-                else {
-                    $('#generateVoucher').show();
-                    $('.generateVoucher').prop('required', true);
-
-                    $('#listVoucher').hide();
-                    $('.listVoucher').removeAttr('required');
-                }
-            });*/
-
-            /* PRICES */
-           /* $('.prices').click(function() {
-                var nilai = $(this).val();
-
-                if (nilai != "free") {
-                    $('#prices').show();
-
-                    $('.payment').hide();
-
-                    $('#'+nilai).show();
-                    $('.'+nilai).prop('required', true);
-                    $('.'+nilai+'Opp').removeAttr('required');
-                    $('.'+nilai+'Opp').val('');
-                }
-                else {
-                    $('#prices').hide();
-                    $('.freeOpp').removeAttr('required');
-                    $('.freeOpp').val('');
-                }
-            });*/
 
             /* EXPIRY */
             $('.expiry').click(function() {
@@ -126,79 +49,54 @@
                 $('.'+nilai+'Opp').val('');
             });
 
-            /*$('.dealsPromoType').click(function() {
-                $('.dealsPromoTypeShow').show();
-                var nilai = $(this).val();
-
-                if (nilai == "promoid") {
-                    $('.dealsPromoTypeValuePromo').show();
-                    $('.dealsPromoTypeValuePromo').prop('required', true);
-
-                    $('.dealsPromoTypeValuePrice').val('');
-                    $('.dealsPromoTypeValuePrice').hide();
-                    $('.dealsPromoTypeValuePrice').removeAttr('required', true);
+            // upload & delete image on summernote
+            $('.summernote').summernote({
+                placeholder: 'Deals Content Long',
+                tabsize: 2,
+                height: 120,
+                callbacks: {
+                    onImageUpload: function(files){
+                        sendFile(files[0]);
+                    },
+                    onMediaDelete: function(target){
+                        var name = target[0].src;
+                        token = "{{ csrf_token() }}";
+                        $.ajax({
+                            type: 'post',
+                            data: 'filename='+name+'&_token='+token,
+                            url: "{{url('summernote/picture/delete/spin-the-wheel')}}",
+                            success: function(data){
+                                // console.log(data);
+                            }
+                        });
+                    }
                 }
-                else {
-                    $('.dealsPromoTypeValuePrice').show();
-                    $('.dealsPromoTypeValuePrice').prop('required', true);
-                    
-                    $('.dealsPromoTypeValuePromo').val('');
-                    $('.dealsPromoTypeValuePromo').hide();
-                    $('.dealsPromoTypeValuePromo').removeAttr('required', true);
-                }
-            });*/
+            });
 
-            // $("#file").change(function(e) {
-                
-            //     var image, file;
-            //     if ((file = this.files[0])) {
-            //         image = new Image();
+            function sendFile(file){
+                token = "{{ csrf_token() }}";
+                var data = new FormData();
+                data.append('image', file);
+                data.append('_token', token);
+                // document.getElementById('loadingDiv').style.display = "inline";
+                $.ajax({
+                    url : "{{url('summernote/picture/upload/spin-the-wheel')}}",
+                    data: data,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function(url) {
+                        if (url['status'] == "success") {
+                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                        }
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    },
+                    error: function(data){
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    }
+                })
+            }
 
-            //         if (this.width != 300 && this.height != 300) {
-            //             toastr.warning("Please check dimension of your photo.");
-            //             $('#file').val("");
-            //         }
-
-            //         image.onload = function() {
-            //             if (this.width != 300 && this.height != 300) {
-            //                 toastr.warning("Please check dimension of your photo.");
-            //                 $('#file').val("");
-            //             }
-            //             else {
-            //                 image.src = _URL.createObjectURL(file);
-            //             }
-            //         };
-
-            //     }
-            //     else {
-            //         $('#file').val("");
-            //     }
-            // });
-
-            // $("#file").change(function(e) {
-            //     var file = $(this)[0].files[0];
-
-            //     img = new Image();
-
-            //     var maxwidth  = 300;
-            //     var maxheight = 300;
-
-
-            //     img.src = _URL.createObjectURL(file);
-            //     img.onload = function() {
-            //         imgwidth  = this.width;
-            //         imgheight = this.height;
-                    
-            //         if(imgwidth == maxwidth && imgheight == maxheight){
-                        
-            //         }else{
-            //             toastr.warning("Please check dimension of your photo. Image size must be "+maxwidth+" X "+maxheight);
-            //             // img.src = _URL.createObjectURL('http://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image');
-            //             $('#file').val("");
-            //             $('#file').removeAttr('src');
-            //         }
-            //     };
-            // });
         });
     </script>
 @endsection
@@ -274,7 +172,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="deals_description" class="form-control summernote">{{ old('deals_description') }}</textarea>
+                                <textarea name="deals_description" id="field_content_long" class="form-control summernote">{{ old('deals_description') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -323,7 +221,7 @@
                             </div>
                             <div class="col-md-9 voucherTime" id="dates" @if (old('duration') == "dates") style="display: block;" @else style="display: none;" @endif>
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control dates durationOpp" name="deals_voucher_expired" value="{{ old('deals_voucher_expired') }}">
+                                    <input type="text" class="form_datetime form-control dates durationOpp" name="deals_voucher_expired" value="{{ old('deals_voucher_expired') }}">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>

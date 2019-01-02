@@ -59,19 +59,19 @@ class DealsController extends Controller
         }
 
         if (isset($post['deals_start']) && !empty($post['deals_start'])) {
-            $post['deals_start']         = date('Y-m-d', strtotime($post['deals_start']));
+            $post['deals_start']         = date('Y-m-d H:i:s', strtotime($post['deals_start']));
         }
 
         if (isset($post['deals_end']) && !empty($post['deals_end'])) {
-            $post['deals_end']           = date('Y-m-d', strtotime($post['deals_end']));
+            $post['deals_end']           = date('Y-m-d H:i:s', strtotime($post['deals_end']));
         }
 
         if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
-            $post['deals_publish_start'] = date('Y-m-d', strtotime($post['deals_publish_start']));
+            $post['deals_publish_start'] = date('Y-m-d H:i:s', strtotime($post['deals_publish_start']));
         }
 
         if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
-            $post['deals_publish_end']   = date('Y-m-d', strtotime($post['deals_publish_end']));
+            $post['deals_publish_end']   = date('Y-m-d H:i:s', strtotime($post['deals_publish_end']));
         }
         
         if (isset($post['deals_image'])) {
@@ -80,11 +80,10 @@ class DealsController extends Controller
         // $post['deals_type']          = 'Deals';
 
         if (isset($post['deals_voucher_expired']) && !empty($post['deals_voucher_expired'])) {
-            $post['deals_voucher_expired'] = date('Y-m-d', strtotime($post['deals_voucher_expired']));
+            $post['deals_voucher_expired'] = date('Y-m-d H:i:s', strtotime($post['deals_voucher_expired']));
         }
 
         $save = MyHelper::post('deals/create', $post);
-
         if (isset($save['status']) && $save['status'] == "success") {
             if ($post['deals_voucher_type'] == "List Vouchers") {
                 return parent::redirect($this->saveVoucherList($save['result']['id_deals'], $post['voucher_code']), "Deals has been created.");
@@ -108,12 +107,12 @@ class DealsController extends Controller
         unset($post['deals_promo_id_nominal']);
         
         // $post['deals_voucher_type']  = "Auto generated"; 
-        $post['deals_start']         = date('Y-m-d', strtotime($post['deals_start']));
-        $post['deals_end']           = date('Y-m-d', strtotime($post['deals_end']));
+        $post['deals_start']         = date('Y-m-d H:i:s', strtotime($post['deals_start']));
+        $post['deals_end']           = date('Y-m-d H:i:s', strtotime($post['deals_end']));
         $post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
 
         if (isset($post['deals_voucher_expired']) && !empty($post['deals_voucher_expired'])) {
-            $post['deals_voucher_expired'] = date('Y-m-d', strtotime($post['deals_voucher_expired']));
+            $post['deals_voucher_expired'] = date('Y-m-d H:i:s', strtotime($post['deals_voucher_expired']));
         }
 
         $save = MyHelper::post('hidden-deals/create', $post);
@@ -460,15 +459,15 @@ class DealsController extends Controller
         unset($post['deals_promo_id_promoid']);
         unset($post['deals_promo_id_nominal']);
 
-        $post['deals_start']         = date('Y-m-d', strtotime($post['deals_start']));
-        $post['deals_end']           = date('Y-m-d', strtotime($post['deals_end']));
+        $post['deals_start']         = date('Y-m-d H:i:s', strtotime($post['deals_start']));
+        $post['deals_end']           = date('Y-m-d H:i:s', strtotime($post['deals_end']));
 
         if (isset($post['deals_publish_start'])) {
-            $post['deals_publish_start'] = date('Y-m-d', strtotime($post['deals_publish_start']));
+            $post['deals_publish_start'] = date('Y-m-d H:i:s', strtotime($post['deals_publish_start']));
         }
 
         if (isset($post['deals_publish_end'])) {
-            $post['deals_publish_end']   = date('Y-m-d', strtotime($post['deals_publish_end']));
+            $post['deals_publish_end']   = date('Y-m-d H:i:s', strtotime($post['deals_publish_end']));
         }
 
         if (isset($post['deals_image'])) {
@@ -476,7 +475,7 @@ class DealsController extends Controller
         }
 
         if (isset($post['deals_voucher_expired']) && !empty($post['deals_voucher_expired'])) {
-            $post['deals_voucher_expired'] = date('Y-m-d', strtotime($post['deals_voucher_expired']));
+            $post['deals_voucher_expired'] = date('Y-m-d H:i:s', strtotime($post['deals_voucher_expired']));
         }
 
         if (isset($post['id_outlet'])) {
@@ -694,17 +693,17 @@ class DealsController extends Controller
         }
 
         if (isset($post['deals_start']) && !empty($post['deals_start'])) {
-            $post['deals_start']         = date('Y-m-d', strtotime($post['deals_start']));
+            $post['deals_start']         = date('Y-m-d H:i:s', strtotime($post['deals_start']));
         }
         if (isset($post['deals_end']) && !empty($post['deals_end'])) {
-            $post['deals_end']           = date('Y-m-d', strtotime($post['deals_end']));
+            $post['deals_end']           = date('Y-m-d H:i:s', strtotime($post['deals_end']));
         }
 
         if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
-            $post['deals_publish_start'] = date('Y-m-d', strtotime($post['deals_publish_start']));
+            $post['deals_publish_start'] = date('Y-m-d H:i:s', strtotime($post['deals_publish_start']));
         }
         if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
-            $post['deals_publish_end']   = date('Y-m-d', strtotime($post['deals_publish_end']));
+            $post['deals_publish_end']   = date('Y-m-d H:i:s', strtotime($post['deals_publish_end']));
         }
         
         if (isset($post['deals_image'])) {

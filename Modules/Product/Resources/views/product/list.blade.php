@@ -83,7 +83,7 @@
                         target: "tr"
                     }
                 },
-                order: [2, "asc"],
+                order: [0, "asc"],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "All"]
@@ -203,6 +203,7 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
+                        <th> No </th>
                         <th> Code </th>
                         <th> Category </th>
                         <th> Name </th>
@@ -214,8 +215,9 @@
                 </thead>
                 <tbody>
                     @if (!empty($product))
-                        @foreach($product as $value)
+                        @foreach($product as $key => $value)
                             <tr>
+                                <td>{{ $key+1 }}</td>
                                 <td>{{ $value['product_code'] }}</td>
                                 @if (empty($value['category']))
                                     <td>Uncategorize</td>

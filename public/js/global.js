@@ -6,7 +6,18 @@ $( "#form" ).submit(function( event ) {
 $( "#formWithPrice" ).submit(function() {
   $( "#submit" ).attr("disabled", true);
   $( "#submit" ).addClass("m-loader m-loader--light m-loader--right");
+  $( ".price" ).each(function() {
+	var number = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+	$(this).val(number);
+  });
 
+  $(".exchange").val($(".exchange").replace(',', '.'));
+    
+});
+
+$( "#formWithPrice2" ).submit(function() {
+  $( "#submit" ).attr("disabled", true);
+  $( "#submit" ).addClass("m-loader m-loader--light m-loader--right");
   $( ".price" ).each(function() {
 	var number = $( this ).val().replace(/[($)\s\._\-]+/g, '');
 	$(this).val(number);

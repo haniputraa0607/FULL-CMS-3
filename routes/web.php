@@ -35,5 +35,7 @@ Route::group(['middleware' => 'web'], function(){
     Route::post('profile', 'Controller@updateProfile');
     Route::any('textreplace', ['middleware' => 'feature_control:82', 'uses' =>'Controller@getTextReplace']);
     Route::any('email-header-footer', ['middleware' => 'feature_control:97', 'uses' =>'Controller@getEmailHeaderFooter']);
+    Route::post('summernote/picture/upload/{type}', 'Controller@uploadImageSummernote');
+    Route::post('summernote/picture/delete/{type}', 'Controller@deleteImageSummernote');
   });
 });

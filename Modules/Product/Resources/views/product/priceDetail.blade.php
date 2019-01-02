@@ -1,7 +1,7 @@
 <?php
 $id_product = $product[0]['id_product'];
 ?>
-<form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data" id="formWithPrice">
+<form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data" id="formWithPrice2">
   <div class="form-body">
 		@foreach($outlet as $key => $ou)
 		<?php $marker = 0; ?>
@@ -22,9 +22,9 @@ $id_product = $product[0]['id_product'];
 						</select>
 					</div>
 					<div class="col-md-2">
-						<select class="form-control" name="product_sold_out[]">
-							<option value="Available" @if($price['product_sold_out'] == 'Available') selected @endif>Available</option>
-							<option value="Sold Out" @if($price['product_sold_out'] != 'Available') selected @endif>Sold Out</option>
+						<select class="form-control" name="product_stock_status[]">
+							<option value="Available" @if($price['product_stock_status'] == 'Available') selected @endif>Available</option>
+							<option value="Sold Out" @if($price['product_stock_status'] != 'Available') selected @endif>Sold Out</option>
 						</select>
 					</div>
 					<div class="col-md-2">
@@ -45,7 +45,7 @@ $id_product = $product[0]['id_product'];
 					</select>
 				</div>
 				<div class="col-md-2">
-					<select class="form-control" name="product_sold_out[]">
+					<select class="form-control" name="product_stock_status[]">
 						<option value="Available" selected>Available</option>
 						<option value="Sold Out">Sold Out</option>
 					</select>

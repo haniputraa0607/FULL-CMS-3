@@ -139,29 +139,42 @@
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
 
+    $(document).ready(function() {
+		/* on chrome */
+    	$('#modalBanner').on('shown.bs.modal', function () {
+    		$('#modalBanner .select2').select2({ dropdownParent: $("#modalBanner .modal-body") });
+    	});
+    });
+
     // banner: edit
     $('#banner .btn-edit').click(function() {
 		var id = $(this).data('id');
 		var id_news = $(this).data('news');
 		var url = $(this).data('url');
 		var image = $(this).data('img');
+    	
+    	$('#modalBannerUpdate').on('shown.bs.modal', function () {
+    		// on chrome
+    		$('#modalBannerUpdate .select2').select2({ dropdownParent: $("#modalBannerUpdate .modal-body") });
 
-		$('#id_banner').val(id);
-		$('#modalBannerUpdate .click-to-news').val(id_news).trigger('change');
-		$('#modalBannerUpdate .click-to-url').val(url);
-		$('#edit-banner-img').attr('src', image);
+    		// assign value to form
+    		$('#id_banner').val(id);
+			$('#modalBannerUpdate .click-to-news').val(id_news).trigger('change');
+			$('#modalBannerUpdate .click-to-url').val(url);
+			$('#edit-banner-img').attr('src', image);
 
-		if (url != "") {
-			$('#modalBannerUpdate .click-to-radio[value="url"]').prop("checked", true);
-            $('.click-to-url').show();
-		}
-		else if(id_news != "") {
-			$('#modalBannerUpdate .click-to-radio[value="news"]').prop("checked", true);
-            $('.click-to-type').find('.select2-container').show();
-		}
-		else {
-			$('#modalBannerUpdate .click-to-radio[value="none"]').prop("checked", true);
-		}
+			if (url != "") {
+				$('#modalBannerUpdate .click-to-radio[value="url"]').prop("checked", true);
+	            $('.click-to-url').show();
+			}
+			else if(id_news != "") {
+				$('#modalBannerUpdate .click-to-radio[value="news"]').prop("checked", true);
+	            $('.click-to-type').find('.select2-container').show();
+			}
+			else {
+				$('#modalBannerUpdate .click-to-radio[value="none"]').prop("checked", true);
+			}
+    	});
     });
 
     // clear banner edit form when modal close
@@ -170,7 +183,7 @@
 		$('#modalBannerUpdate .click-to-news').val('').trigger('change');
 		$('#modalBannerUpdate .click-to-url').val('');
 		$('#edit-banner-img').attr('src', '');
-		// hide click to input
+		// hide all click to input
 		$('#modalBannerUpdate .click-to-type').children().hide();
 	});
 
@@ -224,11 +237,11 @@
 			</a>
 		@endif
 	@endif
-	@if(MyHelper::hasAccess([145], $grantedFeature))
-		<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBanner"> New Banner 
-			<i class="fa fa-question-circle tooltips" data-original-title="Membuat banner di halaman home aplikasi mobile" data-container="body"></i>
-		</a>
-	@endif
+@endif
+@if(MyHelper::hasAccess([145], $grantedFeature))
+	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBanner"> New Banner 
+		<i class="fa fa-question-circle tooltips" data-original-title="Membuat banner di halaman home aplikasi mobile" data-container="body"></i>
+	</a>
 @endif
 <br>
 <br>
@@ -236,7 +249,7 @@
 	<ul class="nav nav-tabs">
 	@if(MyHelper::hasAccess([30], $configs))
 		@if(MyHelper::hasAccess([31], $configs))
-        <li>
+        <li class="active">
             <a href="#greeting" data-toggle="tab">Greeting</a>
         </li>
 		@endif
@@ -244,7 +257,7 @@
             <a href="#home-background" data-toggle="tab">Home Background</a>
         </li>
 	@endif
-        <li class="active">
+        <li>
             <a href="#splash-screen" data-toggle="tab">Splash Screen</a>
         </li>
 		@if(MyHelper::hasAccess([144], $grantedFeature))
@@ -448,7 +461,7 @@
 	@endif
 
 	{{-- splash screen --}}
-    <div class="tab-pane active" id="splash-screen">
+    <div class="tab-pane" id="splash-screen">
 		<div class="row" style="margin-top:20px">
 			<div class="col-md-12">
 				<div class="portlet light bordered">
@@ -712,7 +725,7 @@
 										<i class="fa fa-question-circle tooltips" data-original-title="Point yang diperoleh user ketika melengkapi data" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_point" value="{{ $complete_profile['complete_profile_point'] }}">
+										<input class="form-control" type="text" name="complete_profile_point" value="{{ $complete_profile['complete_profile_point'] }}" required>
 									</div>
 								</div>
 								<div class="form-group col-md-12">
@@ -721,7 +734,7 @@
 										<i class="fa fa-question-circle tooltips" data-original-title="Cashback yang diperoleh user ketika melengkapi data" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control price" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}">
+										<input class="form-control price" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}" required>
 									</div>
 								</div>
 								<div class="form-group col-md-12">
@@ -730,7 +743,7 @@
 										<i class="fa fa-question-circle tooltips" data-original-title="Berapa kali aplikasi akan menawarkan user untuk melengkapi data" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_count" value="{{ $complete_profile['complete_profile_count'] }}">
+										<input class="form-control" type="text" name="complete_profile_count" value="{{ $complete_profile['complete_profile_count'] }}" required>
 									</div>
 								</div>
 								<div class="form-group col-md-12">
@@ -739,7 +752,7 @@
 										<i class="fa fa-question-circle tooltips" data-original-title="Jarak waktu penawaran hingga penawaran selanjutnya (menit)" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_interval" value="{{ $complete_profile['complete_profile_interval'] }}">
+										<input class="form-control" type="text" name="complete_profile_interval" value="{{ $complete_profile['complete_profile_interval'] }}" required>
 									</div>
 								</div>
 							</div>
@@ -905,7 +918,7 @@
 </div>
 
 @if(MyHelper::hasAccess([145], $grantedFeature))
-<div class="modal fade" id="modalBanner" tabindex="-1" role="basic" aria-hidden="true">
+<div class="modal fade" id="modalBanner" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -983,7 +996,7 @@
 @endif
 
 @if(MyHelper::hasAccess([146], $grantedFeature))
-<div class="modal fade" id="modalBannerUpdate" tabindex="-1" role="basic" aria-hidden="true">
+<div class="modal fade" id="modalBannerUpdate" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

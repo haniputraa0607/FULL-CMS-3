@@ -26,11 +26,56 @@
 	<script type="text/javascript">
         $(document).ready(function() {
 			$.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
 			$('.summernote').summernote({
 				placeholder: 'Email Content',
 				tabsize: 2,
-				height: 120
+				height: 120,
+				callbacks: {
+					onImageUpload: function(files){
+						sendFile(files[0], $(this).attr('id'));
+					},
+					onMediaDelete: function(target){
+						var name = target[0].src;
+						token = "<?php echo csrf_token(); ?>";
+						$.ajax({
+							type: 'post',
+							data: 'filename='+name+'&_token='+token,
+							url: "{{url('summernote/picture/delete/fraud-setting')}}",
+							success: function(data){
+								// console.log(data);
+							}
+						});
+					}
+				}
 			});
+
+			function sendFile(file, id){
+                token = "<?php echo csrf_token(); ?>";
+                var data = new FormData();
+                data.append('image', file);
+                data.append('_token', token);
+                // document.getElementById('loadingDiv').style.display = "inline";
+                $.ajax({
+                    url : "{{url('summernote/picture/upload/fraud-setting')}}",
+                    data: data,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function(url) {
+                        if (url['status'] == "success") {
+							$('#'+id).summernote('editor.saveRange');
+							$('#'+id).summernote('editor.restoreRange');
+							$('#'+id).summernote('editor.focus');
+                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                        }
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    },
+                    error: function(data){
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    }
+                })
+            }
 
 			@if (!empty(old('email_toogle')))
 				visibleDiv('email', "{{old('email_toogle')}}" )
@@ -121,15 +166,17 @@
 		
 		if(apa == 'whatsapp'){
 			@if(MyHelper::hasAccess([74], $configs))
-				if(nilai=='1'){
-					document.getElementById('div_whatsapp_content').style.display = 'block';
-					document.getElementById('div_whatsapp_recipient').style.display = 'block';
-					$('.field_whatsapp').prop('required', true);
-				} else {
-					document.getElementById('div_whatsapp_content').style.display = 'none';
-					document.getElementById('div_whatsapp_recipient').style.display = 'none';
-					$('.field_whatsapp').prop('required', false);
-				}
+				@if($api_key_whatsapp)
+					if(nilai=='1'){
+						document.getElementById('div_whatsapp_content').style.display = 'block';
+						document.getElementById('div_whatsapp_recipient').style.display = 'block';
+						$('.field_whatsapp').prop('required', true);
+					} else {
+						document.getElementById('div_whatsapp_content').style.display = 'none';
+						document.getElementById('div_whatsapp_recipient').style.display = 'none';
+						$('.field_whatsapp').prop('required', false);
+					}
+				@endif
 			@endif
 		}
 	}

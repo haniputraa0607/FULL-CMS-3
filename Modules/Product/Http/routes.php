@@ -21,6 +21,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	Route::any('price/{key?}', ['middleware' => ['feature_control:57', 'config_control:11'], 'uses' => 'ProductController@price']);
 	Route::any('category/assign', ['middleware' => ['feature_control:44', 'config_control:11'], 'uses' => 'ProductController@categoryAssign']);
 	
+	Route::get('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'ProductController@positionAssign']);
+	// ajax for ordering position
+	Route::post('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'ProductController@positionProductAssign']);
+	
 	/**
 	 * photo
 	 */
@@ -36,6 +40,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
     	Route::any('edit/{id}', ['middleware' => 'feature_control:44', 'uses' => 'CategoryController@update']);
     	Route::any('create', ['middleware' => 'feature_control:45', 'uses' => 'CategoryController@create']);
     	Route::post('delete', ['middleware' => 'feature_control:47', 'uses' => 'CategoryController@delete']);
+		/* position/ order */
+		Route::post('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'CategoryController@positionCategoryAssign']);
 	});
 
 	/**

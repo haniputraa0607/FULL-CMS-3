@@ -88,6 +88,7 @@ class Controller extends BaseController
 				if(isset($getConfig['status']) && $getConfig['status'] == 'success' && !empty($getConfig['result'])) {
 					$configs = $getConfig['result'];
 				}
+				
 	          	session([
 	            	'granted_features'  => $features,
 	            	'configs'  			=> $configs,
@@ -312,5 +313,42 @@ class Controller extends BaseController
     	else {
     		return [];
     	}
+	}
+	
+	public function uploadImageSummernote(Request $request, $type) {
+        $post = $request->all();
+        $post['type'] = $type;
+        $post['image'] = MyHelper::encodeImage($post['image']);
+        $myAsk = MyHelper::post('summernote/upload/image', $post);
+
+        return $myAsk;
+	}
+	
+	public function deleteImageSummernote(Request $request, $type) {
+		$post = $request->all();
+
+        $url = explode("/", $post['filename']);
+        unset($url[0]);
+        unset($url[1]);
+        unset($url[2]);
+
+        $image = "";
+
+        foreach ($url as $val) {
+			if($val == 'img'){
+				$image = 'img/';
+			}else{
+				$image .= $val.'/';
+			}
+        }
+
+        $image = substr($image, 0, -1);
+        
+        $post['type'] 	= $type;
+		$post['image']  = $image;
+		
+        $myAsk = MyHelper::post('summernote/delete/image', $post);
+
+        return $myAsk;
     }
 }

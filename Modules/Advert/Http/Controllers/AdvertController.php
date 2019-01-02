@@ -32,7 +32,7 @@ class AdvertController extends Controller
 
                 $data['page']   = $type;
                 $data['advert'] = parent::getData(MyHelper::post('advert', ['page' => $type]));
-
+                $data['news'] = parent::getData(MyHelper::post('news/list', ['admin' => 1]));
                 return view('advert::index', $data);
             }
             else {
@@ -47,13 +47,13 @@ class AdvertController extends Controller
                 if (isset($post['img_bottom'])) {
                     $post['img_bottom'] = MyHelper::encodeImage($post['img_bottom']);
                 }
-
+                
                 if ($post['type'] == "text_top" || $post['type'] == "text_bottom") {
                     if (stristr($post['value'], "<p><br></p>") || empty($post['value'])) {
                         return parent::redirect(MyHelper::post('advert/delete', $post), 'Data advert has been updated', url()->current().'#'.$post['current']);
                     }
                 }
-
+                
                 return parent::redirect(MyHelper::post('advert/create', $post), 'Data advert has been updated.', url()->current().'#'.$post['current']);
             }
         }

@@ -323,6 +323,66 @@
 
         });
     </script>
+    <script type="text/javascript">
+    $(document).on('click', '.same', function() {
+      var open = $(this).parent().parent().parent().find('.kelas-open').val();
+      var close = $(this).parent().parent().parent().find('.kelas-close').val();
+      if (open == '') {
+        alert('Open field cannot be empty');
+        $(this).parent().parent().parent().find('.kelas-open').focus();
+        return false;
+      }
+
+      if (close == '') {
+        alert('Close field cannot be empty');
+        $(this).parent().parent().parent().find('.kelas-close').focus();
+        return false;
+      }
+      
+      if ($(this).is(':checked')) {
+        var check = $('input[name="ampas[]"]:checked').length;
+        var count = $('.same').prop('checked', false);
+        $(this).prop('checked', true);
+
+        if (check == 1) {
+            var all_open = $('.kelas-open');
+            var array_open = [];
+            for (i = 0; i < all_open.length; i++) { 
+              array_open.push(all_open[i]['defaultValue']);
+            }
+            sessionStorage.setItem("item_open", array_open);
+
+            var all_close = $('.kelas-close');
+            var array_close = [];
+            for (i = 0; i < all_close.length; i++) { 
+              array_close.push(all_close[i]['defaultValue']);
+            }
+            sessionStorage.setItem("item_close", array_close);
+        }
+
+        $('.kelas-open').val(open);
+        $('.kelas-close').val(close);
+        
+      } else {
+
+          var item_open = sessionStorage.getItem("item_open");
+          var item_close = sessionStorage.getItem("item_close");
+
+          var myarr_open = item_open.split(",");
+          var myarr_close = item_close.split(",");
+          $('.kelas-open').each(function(i, obj) {
+              $(this).val(myarr_open[i]);
+          });
+
+          $('.kelas-close').each(function(i, obj) {
+              $(this).val(myarr_close[i]);
+          });
+
+          $(this).parent().parent().parent().find('.kelas-open').val(open);
+          $(this).parent().parent().parent().find('.kelas-close').val(close);
+      }
+    });
+  </script>
 @endsection
 
 @section('content')
@@ -380,6 +440,9 @@
                         </li>
                     @endif
                 @endif
+                <li>
+                    <a href="#schedule" data-toggle="tab"> Schedule </a>
+                </li>
             </ul>
         </div>
         <div class="portlet-body">
@@ -398,6 +461,9 @@
                 </div>
                 <div class="tab-pane" id="admin">
                     @include('outlet::admin')
+                </div>
+                <div class="tab-pane" id="schedule">
+                    @include('outlet::schedule_open')
                 </div>
             </div>
         </div>

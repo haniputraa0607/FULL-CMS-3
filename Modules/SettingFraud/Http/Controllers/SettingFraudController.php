@@ -34,6 +34,9 @@ class SettingFraudController extends Controller
 
         //update data
         if($post){
+            if(isset($post['files'])){
+                unset($post['files']);
+            }
             $save = MyHelper::post('setting-fraud/update', $post);
             if (isset($save['status']) && $save['status'] == "success") {
                 return redirect('setting-fraud-detection/detail/'.$id)->withSuccess(['Setting fraud detection has been updated.']);

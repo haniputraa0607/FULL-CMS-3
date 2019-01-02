@@ -10,3 +10,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'voucher'
     Route::any('point', 'PointController@point');
     Route::any('point/detail/{phone}', 'PointController@pointDetail');
 });
+
+/* webview */
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'webview', 'namespace' => 'Modules\Voucher\Http\Controllers'], function()
+{
+    Route::get('/voucher/{id_deals_user}', 'WebviewVoucherController@voucherDetail');
+});

@@ -29,6 +29,7 @@
 @endsection
 
 @section('content')
+<input type="hidden" id="url" value="{{ env('APP_URL') }}transaction/setting/rule/update">
 @php
     // print_r($default);die();
 @endphp
@@ -267,7 +268,7 @@
                                             <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Result
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Hasil akhir yang akan digunakan untuk menghitung diskon transaksi" data-container="body"></i>
                                             </div>
-                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-10">
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-6">
                                                 <div id="targetDiscount">
                                                     @if (isset($discount['data']))
                                                         @foreach ($discount['data'] as $key => $result)
@@ -276,6 +277,21 @@
                                                             @endif
                                                         @endforeach
                                                     @endif
+                                                </div>
+                                            </div>
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Percent
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Diskon persen yang didapat user" data-container="body"></i>
+                                                <div class="input-group" style="margin: 20px">
+                                                    <input id="persen" type="text" class="form-control discountPercent" placeholder="value" value="{{ $discount['percent'] }}">
+                                                    <span class="input-group-addon">
+                                                        %
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Nominal
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Diskon nominal yang didapat user" data-container="body"></i>
+                                                <div class="input-group" style="margin: 20px">
+                                                    <input id="cashbackMax" type="text" class="form-control discountNominal" placeholder="value" value="{{ $discount['nominal'] }}">
                                                 </div>
                                             </div>
                                         </div>

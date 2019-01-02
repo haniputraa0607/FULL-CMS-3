@@ -626,15 +626,11 @@
      * @param {Node} node
      */
     var nodeLength = function (node) {
-	if (node === null) {
-        return 0;
-      } else {
-		  if (isText(node)) {
-			return node.nodeValue.length;
-		  }
+      if (isText(node)) {
+        return node.nodeValue.length;
+      }
 
-		  return node.childNodes.length;
-	  }
+      return node.childNodes.length;
     };
 
     /**

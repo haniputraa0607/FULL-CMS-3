@@ -79,21 +79,25 @@ class TransactionController extends Controller
     }
 	
 	public function autoResponse(Request $request, $subject){
+        // return $subject;
 		$data = [ 'title'             => 'Transaction Auto Response '.ucfirst(str_replace('-',' ',$subject)),
 				  'menu_active'       => 'transaction',
 				  'submenu_active'    => 'transaction-autoresponse-'.$subject
 				];
-		$query = MyHelper::get('autocrm/list');
+        $query = MyHelper::get('autocrm/list');
 		$test = MyHelper::get('autocrm/textreplace');
 		$auto = null;
 		$post = $request->except('_token');
 		if(!empty($post)){
 			if (isset($post['autocrm_push_image'])) {
 				$post['autocrm_push_image'] = MyHelper::encodeImage($post['autocrm_push_image']);
-			}
+            }
+            
+            if(isset($post['files'])){
+                unset($post['files']);
+            }
 			
 			$query = MyHelper::post('autocrm/update', $post);
-
 			return back()->withSuccess(['Response updated']);
         }
         
@@ -126,7 +130,6 @@ class TransactionController extends Controller
 
         $data['custom'] = $custom;
 
-        // return $data;
         return view('users::response', $data);
 	}
 	
@@ -534,7 +537,6 @@ class TransactionController extends Controller
         $post = $request->except('_token');
      
         $update = MyHelper::post('transaction/rule/update', $post);
-        
         if ($post['key'] == 'delivery' || $post['key'] == 'outlet') {
             return parent::redirect($update, 'Setting has been updated.');
         } else {

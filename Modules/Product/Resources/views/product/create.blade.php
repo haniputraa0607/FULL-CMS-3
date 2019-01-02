@@ -21,13 +21,6 @@
     <script src="{{ url('assets/pages/scripts/components-bootstrap-select.min.js') }}"  type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-          $('.summernote').summernote({
-            placeholder: 'Product Description',
-            tabsize: 2,
-            height: 120
-          });
-        });
 
         $('#select_tag').change(function(){
 			var value = $(this).val();
@@ -83,6 +76,57 @@
         $('#select_tag').val(value)
         $('#select_tag').selectpicker('refresh')
 	})
+
+    $('.summernote').summernote({
+        placeholder: 'Product Description',
+        tabsize: 2,
+        height: 120,
+        callbacks: {
+            onImageUpload: function(files){
+                sendFile(files[0], $(this).attr('id'));
+            },
+            onMediaDelete: function(target){
+                var name = target[0].src;
+                token = "<?php echo csrf_token(); ?>";
+                $.ajax({
+                    type: 'post',
+                    data: 'filename='+name+'&_token='+token,
+                    url: "{{url('summernote/picture/delete/product')}}",
+                    success: function(data){
+                        // console.log(data);
+                    }
+                });
+            }
+        }
+    });
+
+
+    function sendFile(file, id){
+        token = "<?php echo csrf_token(); ?>";
+        var data = new FormData();
+        data.append('image', file);
+        data.append('_token', token);
+        // document.getElementById('loadingDiv').style.display = "inline";
+        $.ajax({
+            url : "{{url('summernote/picture/upload/product')}}",
+            data: data,
+            type: "POST",
+            processData: false,
+            contentType: false,
+            success: function(url) {
+                if (url['status'] == "success") {
+                    $('#'+id).summernote('editor.saveRange');
+                    $('#'+id).summernote('editor.restoreRange');
+                    $('#'+id).summernote('editor.focus');
+                    $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
+                }
+                // document.getElementById('loadingDiv').style.display = "none";
+            },
+            error: function(data){
+                // document.getElementById('loadingDiv').style.display = "none";
+            }
+        })
+    }
     </script>
 
 @endsection
@@ -194,7 +238,7 @@
                         </label>
                         <div class="col-md-8">
                             <div class="input-icon right">
-                                <textarea name="product_description" class="form-control summernote">{{ old('product_description') }}</textarea>
+                                <textarea name="product_description" id="text_pro" class="form-control summernote">{{ old('product_description') }}</textarea>
                             </div>
                         </div>
                     </div>

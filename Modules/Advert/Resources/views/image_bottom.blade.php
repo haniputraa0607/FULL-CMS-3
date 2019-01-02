@@ -20,11 +20,33 @@
                             <input type="hidden" name="add" value="1">
                             <input type="hidden" name="type" value="img_bottom">
                             <input type="hidden" name="current" value="piconbottom">
-                            <input type="file" accept="image/*" name="img_bottom" onChange="this.form.submit();">
+                            <input type="file" accept="image/*" name="img_bottom">
                         </span>
                       <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                     </div>
               </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">News</label>
+            <div class="col-md-9">
+                <select id="outlet"  id="field_outlet_select" class="form-control select2" data-placeholder="Select news" name="id_news">
+                    <optgroup label="News List">
+                        @if (!empty($news))
+                        <option value="">-</option>
+                            @foreach($news as $newsItem)
+                                <option value="{{ $newsItem['id_news'] }}">{{ $newsItem['news_title'] }}</option>
+                            @endforeach
+                        @endif
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+        <div class="form-actions" style="margin-bottom:20px">
+            <div class="row">
+                <div class="col-md-offset-3 col-md-4">
+                    <button type="submit" class="btn green">Submit</button>
+                </div>
             </div>
         </div>
   </div>
@@ -38,24 +60,29 @@
     <div class="portlet-body">
     	<form action="{{ url()->current() }}" method="POST">
     	  	<div class="form-body">
-	    	    	<div class="col-md-12 sortable form-group"> 
-	    	    	   @foreach($advert['img_bottom'] as $knc=>$nilai)
-	    	    	     <div class="portlet portlet-sortable light bordered col-md-4">
+                <div class="col-md-12 sortable form-group"> 
+                    @foreach($advert['img_bottom'] as $knc=>$nilai)
+                        <div class="portlet portlet-sortable light bordered col-md-4">
 	    	    	       	<div class="portlet-title">
-	    	    	         <span class="caption-subject bold" style="font-size: 12px !important;">{{ $knc + 1 }}</span>
+	    	    	            <span class="caption-subject bold" style="font-size: 12px !important;">{{ $knc + 1 }}</span>
+                                <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete pull-right" data-id="{{ $nilai['id_advert'] }}"><i class="fa fa-trash-o"></i></a>
 	    	    	       	</div>
 	    	    	       	<div class="portlet-body">
 	    	    	        	<input type="hidden" name="id_advert[]" value="{{ $nilai['id_advert'] }}">
 	    	    	        	<center>
-	    	    	        		<img src="{{ $nilai['value'] }}" alt="{{ $knc + 1 }}" width="150">
-    	    	         			<a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $nilai['id_advert'] }}"><i class="fa fa-trash-o"></i></a>
+                                    <img src="{{ $nilai['value'] }}" alt="{{ $knc + 1 }}" width="150">
+                                    <br>
+                                    <br>
+                                    @if($nilai['news']['news_title'])
+                                        Link news to : {{ $nilai['news']['news_title'] }}
+                                    @endif
     	    	        		</center>
 	    	    	       	</div>
 	    	    	    </div>
 	    	    	   @endforeach
 	    	    	</div> 
-    	  	</div>
-	  		<div class="form-actions">
+    	  	    </div>
+	  		    <div class="form-actions">
     	    	    <div class="col-md-5"></div>
     	    	    <div class="col-md-7">
                         <input type="hidden" name="current" value="piconbottom">

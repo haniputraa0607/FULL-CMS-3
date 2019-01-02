@@ -7,6 +7,7 @@
     <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
 
     <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
@@ -35,6 +36,7 @@
     <script src="{{ url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>    
+    <script src="{{ url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>    
     <script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('js/prices.js')}}"></script>
     
@@ -45,6 +47,13 @@
             'autoclose' : true
         }); 
         $('.timepicker').timepicker();
+
+    
+        $(".form_datetime").datetimepicker({
+            format: "d-M-yyyy hh:ii",
+            autoclose: true,
+            todayBtn: true
+        });
 
         //  form repeater
         var radio_id = 10;
@@ -85,12 +94,6 @@
             });
             token = '<?php echo csrf_token();?>';
             
-            $('.summernote').summernote({
-                placeholder: 'Deals Content Long',
-                tabsize: 2,
-                height: 120
-            });
-
             /* TYPE VOUCHER */
             $('.voucherType').click(function() {
                 // tampil duluk
@@ -236,6 +239,56 @@
                 }
             });
         });
+
+    
+        // upload & delete image on summernote
+        $('.summernote').summernote({
+            placeholder: 'Deals Content Long',
+            tabsize: 2,
+            height: 120,
+            callbacks: {
+                onImageUpload: function(files){
+                    sendFile(files[0]);
+                },
+                onMediaDelete: function(target){
+                    var name = target[0].src;
+                    token = "{{ csrf_token() }}";
+                    $.ajax({
+                        type: 'post',
+                        data: 'filename='+name+'&_token='+token,
+                        url: "{{url('summernote/picture/delete/deals')}}",
+                        success: function(data){
+                            // console.log(data);
+                        }
+                    });
+                }
+            }
+        });
+
+        function sendFile(file){
+            token = "{{ csrf_token() }}";
+            var data = new FormData();
+            data.append('image', file);
+            data.append('_token', token);
+            // document.getElementById('loadingDiv').style.display = "inline";
+            $.ajax({
+                url : "{{url('summernote/picture/upload/deals')}}",
+                data: data,
+                type: "POST",
+                processData: false,
+                contentType: false,
+                success: function(url) {
+                    if (url['status'] == "success") {
+                        $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                    }
+                    // document.getElementById('loadingDiv').style.display = "none";
+                },
+                error: function(data){
+                    // document.getElementById('loadingDiv').style.display = "none";
+                }
+            })
+        }
+
     </script>
 @endsection
 
@@ -310,7 +363,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="deals_description" class="form-control summernote">{{ old('deals_description') }}</textarea>
+                                <textarea name="deals_description" id="field_content_long" class="form-control summernote">{{ old('deals_description') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -320,7 +373,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control" name="deals_start" value="{{ old('deals_start') }}" required>
+                                    <input type="text" class="form_datetime form-control" name="deals_start" value="{{ old('deals_start') }}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -335,7 +388,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control" name="deals_end" value="{{ old('deals_end') }}" required>
+                                    <input type="text" class="form_datetime form-control" name="deals_end" value="{{ old('deals_end') }}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -354,7 +407,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control" name="deals_publish_start" value="{{ old('deals_publish_start') }}" required>
+                                    <input type="text" class="form_datetime form-control" name="deals_publish_start" value="{{ old('deals_publish_start') }}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -369,7 +422,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control" name="deals_publish_end" value="{{ old('deals_publish_end') }}">
+                                    <input type="text" class="form_datetime form-control" name="deals_publish_end" value="{{ old('deals_publish_end') }}">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>

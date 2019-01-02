@@ -49,7 +49,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'deals', 
     Route::any('advert', 'AdvertController@index');
 });
 
-
+/* Deals Subscription */
 Route::group(['middleware' => ['web', 'validate_session', 'config_control:25'], 'prefix' => 'deals-subscription', 'namespace' => 'Modules\Deals\Http\Controllers'], function()
 {
     Route::get('/', ['middleware' => 'feature_control:139', 'uses' => 'DealsController@subscriptionDeals']);
@@ -57,4 +57,10 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:25'], 
     Route::any('detail/{id_deals}', ['middleware' => 'feature_control:140', 'uses' => 'DealsController@subscriptionDetail']);
     Route::any('update', ['middleware' => 'feature_control:142', 'uses' => 'DealsController@subscriptionUpdate']);
     Route::get('delete/{id_deals}', ['middleware' => 'feature_control:143', 'uses' => 'DealsController@deleteSubscriptionDeal']);
+});
+
+/* Webview */
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'webview', 'namespace' => 'Modules\Deals\Http\Controllers'], function()
+{
+    Route::get('deals/{id_deals}/{deals_type}', 'WebviewDealsController@dealsDetail');
 });

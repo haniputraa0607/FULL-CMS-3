@@ -13,9 +13,12 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::get('export', ['middleware' => ['feature_control:33', 'config_control:3'], 'uses' => 'OutletController@exportData']);
     Route::get('import', ['middleware' => ['feature_control:32,33', 'config_control:2,3,or'], 'uses' => 'OutletController@import']);
     Route::post('import', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@importOutlet']);
+    Route::get('qrcode', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@qrcodeView']);
+    Route::get('qrcode/print', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@qrcodePrint']);
     
     // photo
     Route::post('photo/delete', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@deletePhoto']);
+    Route::post('schedule/save', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@scheduleSave']);
     
     // holiday
     Route::group(['middleware' => 'config_control:4'], function()
@@ -42,3 +45,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::any('advert', 'AdvertController@index');
 });
 
+Route::group(['prefix' => 'outlet', 'namespace' => 'Modules\Outlet\Http\Controllers'], function()
+{
+    Route::any('webview/{id}', 'WebviewController@detailWebview');
+});

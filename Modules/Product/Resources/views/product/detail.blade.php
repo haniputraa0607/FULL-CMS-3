@@ -11,7 +11,6 @@
     <link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
@@ -23,7 +22,6 @@
     <script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
@@ -48,8 +46,53 @@
             $('.summernote').summernote({
                 placeholder: 'Product Description',
                 tabsize: 2,
-                height: 120
+                height: 120,
+                callbacks: {
+                    onImageUpload: function(files){
+                        sendFile(files[0], $(this).attr('id'));
+                    },
+                    onMediaDelete: function(target){
+                        var name = target[0].src;
+                        token = "<?php echo csrf_token(); ?>";
+                        $.ajax({
+                            type: 'post',
+                            data: 'filename='+name+'&_token='+token,
+                            url: "{{url('summernote/picture/delete/product')}}",
+                            success: function(data){
+                                // console.log(data);
+                            }
+                        });
+                    }
+                }
             });
+
+
+            function sendFile(file, id){
+                token = "<?php echo csrf_token(); ?>";
+                var data = new FormData();
+                data.append('image', file);
+                data.append('_token', token);
+                // document.getElementById('loadingDiv').style.display = "inline";
+                $.ajax({
+                    url : "{{url('summernote/picture/upload/product')}}",
+                    data: data,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function(url) {
+                        if (url['status'] == "success") {
+                            $('#'+id).summernote('editor.saveRange');
+							$('#'+id).summernote('editor.restoreRange');
+							$('#'+id).summernote('editor.focus');
+                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
+                        }
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    },
+                    error: function(data){
+                        // document.getElementById('loadingDiv').style.display = "none";
+                    }
+                })
+            }
 
             // untuk show atau hide informasi photo
             if ($('.deteksi').data('dis') != 1) {
@@ -323,9 +366,9 @@
                 <li>
                     <a href="#price" data-toggle="tab"> Outlet Setting </a>
                 </li>
-				<!--<li>
+				<li>
                     <a href="#discount" data-toggle="tab"> Discount </a>
-                </li>-->
+                </li>
             </ul>
         </div>
         <div class="portlet-body">

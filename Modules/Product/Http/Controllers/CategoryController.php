@@ -166,4 +166,20 @@ class CategoryController extends Controller
             return "fail";
         }
     }
+
+    // ajax sort category
+    public function positionCategoryAssign(Request $request)
+    {
+        $post = $request->except('_token');
+        if (!isset($post['category_ids'])) {
+            return [
+                'status' => 'fail',
+                'messages' => ['Category id is required']
+            ];
+        }
+
+        $result = MyHelper::post('product/category/position/assign', $post);
+
+        return $result;
+    }
 }

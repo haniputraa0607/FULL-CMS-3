@@ -98,7 +98,7 @@
 											<th> Product </th>
 											<th> Price </th>
 											<th> Visible </th>
-											<th> Sold Out </th>
+											<th> Stock </th>
 											<th> POS Status </th>
 										</tr>
 									</thead>
@@ -163,21 +163,21 @@
 																@php
 																	$marker = 1;
 																@endphp
-																<select class="form-control" name="product_sold_out[]">
-																	<option value="Available" @if($dpp['product_sold_out'] == 'Available') selected @endif>Available</option>
-																	<option value="Sold Out" @if($dpp['product_sold_out'] == 'Sold Out') selected @endif>Sold Out</option>
+																<select class="form-control" name="product_stock_status[]">
+																	<option value="Available" @if($dpp['product_stock_status'] == 'Available') selected @endif>Available</option>
+																	<option value="Sold Out" @if($dpp['product_stock_status'] == 'Sold Out') selected @endif>Sold Out</option>
 																</select>
 															@endif
 														@endforeach
 
 														@if ($marker == 0)
-															<select class="form-control" name="product_sold_out[]">
+															<select class="form-control" name="product_stock_status[]">
 																<option value="Available">Available</option>
 																<option value="Sold Out" selected>Sold Out</option>
 															</select>
 														@endif
 													@else
-														<select class="form-control" name="product_sold_out[]">
+														<select class="form-control" name="product_stock_status[]">
 																<option value="Available">Available</option>
 																<option value="Sold Out" selected>Sold Out</option>
 															</select>

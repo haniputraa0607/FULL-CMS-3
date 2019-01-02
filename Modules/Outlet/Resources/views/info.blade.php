@@ -6,6 +6,20 @@
     @foreach ($outlet as $key => $val)
     <div class="form-body">
         <h4>Info</h4>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                QR Code
+                </label>
+            </div>
+            <div class="col-md-9">
+                <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
+                    <img src="{{$val['qrcode']}}">
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -91,48 +105,6 @@
             </div>
             <div class="col-md-9">
                 <input type="text" class="form-control" name="outlet_phone" value="{{ $val['outlet_phone'] }}" placeholder="Outlet Phone">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                Open Hour
-                <i class="fa fa-question-circle tooltips" data-original-title="Jam buka outlet" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-3">
-                <div class="input-group">
-                    <input type="time" class="form-control" name="outlet_open_hours" value="@if(!empty($val['outlet_open_hours'])){{ date('H:i', strtotime($val['outlet_open_hours'])) }}@endif">
-                    <span class="input-group-btn">
-                        <button class="btn default" type="button">
-                            <i class="fa fa-clock-o"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-9">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                Close Hour
-                <i class="fa fa-question-circle tooltips" data-original-title="Jam tutup outlet" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-3">
-                <div class="input-group">
-                    <input type="time" class="form-control" name="outlet_close_hours" value="@if(!empty($val['outlet_close_hours'])){{ date('H:i', strtotime($val['outlet_close_hours'])) }}@endif">
-                    <span class="input-group-btn">
-                        <button class="btn default" type="button">
-                            <i class="fa fa-clock-o"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-9">
             </div>
         </div>
 

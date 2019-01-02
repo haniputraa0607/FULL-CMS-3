@@ -5,6 +5,7 @@ namespace Modules\Outlet\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Lib\MyHelper;
 use Excel;
@@ -134,7 +135,8 @@ class OutletController extends Controller
                 'submenu_active' => 'outlet-list',
             ];
 
-            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code, 'admin' => 1]);
+            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code, 'qrcode' => 1, 'admin' => 1]);
+            // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
@@ -146,7 +148,7 @@ class OutletController extends Controller
 
             // province
             $data['province'] = $this->getPropinsi();
-
+            // return $data;
             // print_r($data); exit();
             return view('outlet::detail', $data);
         }
@@ -599,5 +601,62 @@ class OutletController extends Controller
         $user = parent::getData(MyHelper::post('users/list', $post));
 
         return $user;
+    }
+
+    public function scheduleSave(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $save = MyHelper::post('outlet/schedule/save', $post);
+        if (isset($save['status']) && $save['status'] == 'success') {
+            return back()->with(['success' => ['Update schedule success']]);
+        }
+
+        return back()->withErrors(['Update failed']);
+    }
+
+    public function qrcodePrint()
+    {
+        $outlet = MyHelper::post('outlet/list', ['qrcode'=>true]);
+        
+        if (isset($outlet['status']) && $outlet['status'] == "success") {
+            $data['outlet'] = $outlet['result'];
+        }
+        else {
+            $data['outlet'] = [];
+        }
+        return view('outlet::qrcode', $data);
+    }
+
+    public function qrcodeView(Request $request)
+    {
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Outlet QRCode',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-qrcode',
+        ];
+
+        if(isset($post['page'])){
+            $outlet = MyHelper::post('outlet/list', ['qrcode'=>true, 'qrcode_paginate'=>true]);
+        }else{
+            $outlet = MyHelper::post('outlet/list', ['qrcode'=>true, 'qrcode_paginate'=>true]);
+        }
+        
+        $data['from'] = 0;
+        $data['to'] = 0;
+        $data['total'] = 0;
+        if (isset($outlet['status']) && $outlet['status'] == "success") {
+            $data['paginator'] = new LengthAwarePaginator($outlet['result']['data'], $outlet['result']['total'], $outlet['result']['per_page'], $outlet['result']['current_page'], ['path' => url()->current()]);
+            $data['outlet'] = $outlet['result']['data'];
+            $data['from'] = $outlet['result']['from'];
+            $data['to'] = $outlet['result']['to'];
+            $data['total'] = $outlet['result']['total'];
+        }
+        else {
+            $data['outlet'] = [];
+        }
+        return view('outlet::qrcode_view', $data);
     }
 }

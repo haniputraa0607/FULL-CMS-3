@@ -57,8 +57,52 @@ $grantedFeature     = session('granted_features');
 		$('.summernote').summernote({
 			placeholder: 'Content',
 			tabsize: 2,
-			height: 120
+			height: 120,
+			callbacks: {
+				onImageUpload: function(files){
+					sendFile(files[0], $(this).attr('id'));
+				},
+				onMediaDelete: function(target){
+					var name = target[0].src;
+					token = "<?php echo csrf_token(); ?>";
+					$.ajax({
+						type: 'post',
+						data: 'filename='+name+'&_token='+token,
+						url: "{{url('summernote/picture/delete/promotion')}}",
+						success: function(data){
+							// console.log(data);
+						}
+					});
+				}
+			}
 		});
+
+		function sendFile(file, id){
+			token = "<?php echo csrf_token(); ?>";
+			var data = new FormData();
+			data.append('image', file);
+			data.append('_token', token);
+			// document.getElementById('loadingDiv').style.display = "inline";
+			$.ajax({
+				url : "{{url('summernote/picture/upload/promotion')}}",
+				data: data,
+				type: "POST",
+				processData: false,
+				contentType: false,
+				success: function(url) {
+					if (url['status'] == "success") {
+						$('#'+id).summernote('editor.saveRange');
+						$('#'+id).summernote('editor.restoreRange');
+						$('#'+id).summernote('editor.focus');
+						$('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+					}
+					// document.getElementById('loadingDiv').style.display = "none";
+				},
+				error: function(data){
+					// document.getElementById('loadingDiv').style.display = "none";
+				}
+			})
+		}
 	  
 		@if(count($result['contents']) > 0)
 			@if($result['promotion_series'] > 0)
@@ -373,6 +417,7 @@ $grantedFeature     = session('granted_features');
 				}
 			@endif
 		@endif
+		return true
     });
 
 	//for whatsapp content
@@ -401,6 +446,7 @@ $grantedFeature     = session('granted_features');
 			$(this).closest('.col-md-4').closest('.row').closest('.item-repeat').find('.type_text').find('.whatsapp-content').prop('required',false);
 		}
 	})
+
 
 	$('.repeat').repeater({
         show: function () {
@@ -473,7 +519,6 @@ $grantedFeature     = session('granted_features');
 						<i class="fa fa-gift"></i>Promotion Info </div>
 				</div>
 				<div class="portlet-body form">
-					<form class="form-horizontal" role="form">
 						<div class="form-body">
 							<div class="row">
 								<div class="col-md-6">
@@ -596,7 +641,6 @@ $grantedFeature     = session('granted_features');
 								</div>
 							</div>
 						</div>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -607,7 +651,6 @@ $grantedFeature     = session('granted_features');
 						<i class="fa fa-gift"></i>Promotion Target </div>
 				</div>
 				<div class="portlet-body form">
-					<form class="form-horizontal" role="form">
 						<div class="form-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -688,7 +731,6 @@ $grantedFeature     = session('granted_features');
 								</div>
 							</div>
 						</div>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -706,530 +748,618 @@ $grantedFeature     = session('granted_features');
 				</div>
 				<div class="portlet-body">
 					<div class="row">
-					<div class="col-md-2 col-sm-2 col-xs-2">
-						<ul class="nav nav-tabs tabs-left">
-							@for($x = 1;$x <= $result['promotion_series']; $x++)
-								<li @if($x == 1) class="active" @endif>
-									<a href="#tab_{{$x}}" data-toggle="tab"> Campaign {{$x}} </a>
-								</li>
-							@endfor
-						</ul>
-					</div>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div class="tab-content">
-							@for($x = 1;$x <= $result['promotion_series']; $x++)
-							<div @if($x == 1) class="tab-pane active" @else class="tab-pane" @endif id="tab_{{$x}}">
-								@if($x > 1)
-								<div class="col-md-12">
-									<div class="portlet light bordered">
-										<div class="portlet-title">
-											<div class="caption font-blue ">
-												<i class="icon-settings font-blue "></i>
-												<span class="caption-subject bold uppercase">Campaign Series Setting</span>
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<ul class="nav nav-tabs tabs-left">
+								@for($x = 1;$x <= $result['promotion_series']; $x++)
+									<li @if($x == 1) class="active" @endif>
+										<a href="#tab_{{$x}}" data-toggle="tab"> Campaign {{$x}} </a>
+									</li>
+								@endfor
+							</ul>
+						</div>
+						<div class="col-md-10 col-sm-10 col-xs-10">
+							<div class="tab-content">
+								@for($x = 1;$x <= $result['promotion_series']; $x++)
+								<div @if($x == 1) class="tab-pane active" @else class="tab-pane" @endif id="tab_{{$x}}">
+									@if($x > 1)
+									<div class="col-md-12">
+										<div class="portlet light bordered">
+											<div class="portlet-title">
+												<div class="caption font-blue ">
+													<i class="icon-settings font-blue "></i>
+													<span class="caption-subject bold uppercase">Campaign Series Setting</span>
+												</div>
 											</div>
-										</div>
-										<div class="portlet-body">
-											<div class="row">
-													Campaign no {{$x}} will be send 
-													<input type="text" 
-														class="form-control" 
-														required 
-														style="display:inline !important;width:10%" 
-														name="promotion_series_days[]" 
-														id="promotion_series_days_{{$x}}" 
-													@if(isset($result['contents'][$x-1]))
-														value={{$result['contents'][$x-1]['promotion_series_days']}}
-													@endif
-													> days after previous campaign (campaign no {{$x-1}}) 
+											<div class="portlet-body">
+												<div class="row">
+														Campaign no {{$x}} will be send 
+														<input type="text" 
+															class="form-control" 
+															required 
+															style="display:inline !important;width:10%" 
+															name="promotion_series_days[]" 
+															id="promotion_series_days_{{$x}}" 
+														@if(isset($result['contents'][$x-1]))
+															value={{$result['contents'][$x-1]['promotion_series_days']}}
+														@endif
+														> days after previous campaign (campaign no {{$x-1}}) 
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								@else
-									<input type="hidden" required name="promotion_series_days[]" id="promotion_series_days_{{$x}}" value=0>
-								@endif
-								<div class="col-md-12">
-									<div class="portlet light bordered">
-										<div class="portlet-title">
-											<div class="caption font-blue ">
-												<i class="icon-settings font-blue "></i>
-												<span class="caption-subject bold uppercase">Promotion Channel</span>
+									@else
+										<input type="hidden" required name="promotion_series_days[]" id="promotion_series_days_{{$x}}" value=0>
+									@endif
+									<div class="col-md-12">
+										<div class="portlet light bordered">
+											<div class="portlet-title">
+												<div class="caption font-blue ">
+													<i class="icon-settings font-blue "></i>
+													<span class="caption-subject bold uppercase">Promotion Channel</span>
+												</div>
 											</div>
-										</div>
-										<div class="portlet-body">
-											@if(isset($result['contents'][$x-1]))
-												@if($result['contents'][$x-1]['promotion_count_voucher_give'] > 0)
-													<div class="alert alert-warning" role="alert">
-														Hidden Deals & Voucher cannot be disabled because voucher have been sent to users
-													</div>
+											<div class="portlet-body">
+												@if(isset($result['contents'][$x-1]))
+													@if($result['contents'][$x-1]['promotion_count_voucher_give'] > 0)
+														<div class="alert alert-warning" role="alert">
+															Hidden Deals & Voucher cannot be disabled because voucher have been sent to users
+														</div>
+													@endif
 												@endif
-											@endif
-											<div class="form-md-checkboxes">
-												<div class="md-checkbox-inline">
-													<div class="md-checkbox">
-														<input type="checkbox" 
-															id="checkbox_{{$x}}_email" 
-															name="promotion_channel[{{$x-1}}][]" 
-															value="email"
-															class="md-check channel_{{$x-1}}" 
-															onClick="campaignChannel('email','{{$x}}')"
-														@if(isset($result['contents'][$x-1]))
-															@if($result['contents'][$x-1]['promotion_channel_email'] == '1')
-																checked
+												<div class="form-md-checkboxes">
+													<div class="md-checkbox-inline">
+														<div class="md-checkbox">
+															<input type="checkbox" 
+																id="checkbox_{{$x}}_email" 
+																name="promotion_channel[{{$x-1}}][]" 
+																value="email"
+																class="md-check channel_{{$x-1}}" 
+																onClick="campaignChannel('email','{{$x}}')"
+															@if(isset($result['contents'][$x-1]))
+																@if($result['contents'][$x-1]['promotion_channel_email'] == '1')
+																	checked
+																@endif
 															@endif
-														@endif
-														>
-														<label for="checkbox_{{$x}}_email">
-															<span></span>
-															<span class="check"></span>
-															<span class="box"></span>Email</label>
-													</div>
-													<div class="md-checkbox">
-														<input type="checkbox" 
-															id="checkbox_{{$x}}_sms" 
-															name="promotion_channel[{{$x-1}}][]" 
-															value="sms" 
-															class="md-check channel_{{$x-1}}" 
-															onClick="campaignChannel('sms','{{$x}}')"
-														@if(isset($result['contents'][$x-1]))
-															@if($result['contents'][$x-1]['promotion_channel_sms'] == '1')
-																checked
+															>
+															<label for="checkbox_{{$x}}_email">
+																<span></span>
+																<span class="check"></span>
+																<span class="box"></span>Email</label>
+														</div>
+														<div class="md-checkbox">
+															<input type="checkbox" 
+																id="checkbox_{{$x}}_sms" 
+																name="promotion_channel[{{$x-1}}][]" 
+																value="sms" 
+																class="md-check channel_{{$x-1}}" 
+																onClick="campaignChannel('sms','{{$x}}')"
+															@if(isset($result['contents'][$x-1]))
+																@if($result['contents'][$x-1]['promotion_channel_sms'] == '1')
+																	checked
+																@endif
 															@endif
-														@endif
-														>
-														<label for="checkbox_{{$x}}_sms">
-															<span></span>
-															<span class="check"></span>
-															<span class="box"></span>SMS</label>
-													</div>
-													<div class="md-checkbox">
-														<input type="checkbox" 
-															id="checkbox_{{$x}}_push" 
-															name="promotion_channel[{{$x-1}}][]" 
-															value="push"
-															class="md-check channel_{{$x-1}}" 
-															onClick="campaignChannel('push','{{$x}}')"
-														@if(isset($result['contents'][$x-1]))
-															@if($result['contents'][$x-1]['promotion_channel_push'] == '1')
-																checked
+															>
+															<label for="checkbox_{{$x}}_sms">
+																<span></span>
+																<span class="check"></span>
+																<span class="box"></span>SMS</label>
+														</div>
+														<div class="md-checkbox">
+															<input type="checkbox" 
+																id="checkbox_{{$x}}_push" 
+																name="promotion_channel[{{$x-1}}][]" 
+																value="push"
+																class="md-check channel_{{$x-1}}" 
+																onClick="campaignChannel('push','{{$x}}')"
+															@if(isset($result['contents'][$x-1]))
+																@if($result['contents'][$x-1]['promotion_channel_push'] == '1')
+																	checked
+																@endif
 															@endif
-														@endif
-														>
-														<label for="checkbox_{{$x}}_push">
-															<span></span>
-															<span class="check"></span>
-															<span class="box"></span>Push Notification</label>
-													</div>
-													<div class="md-checkbox">
-														<input type="checkbox" 
-															id="checkbox_{{$x}}_inbox" 
-															name="promotion_channel[{{$x-1}}][]" 
-															value="inbox"
-															class="md-check channel_{{$x-1}}" 
-															onClick="campaignChannel('inbox','{{$x}}')"
-														@if(isset($result['contents'][$x-1]))
-															@if($result['contents'][$x-1]['promotion_channel_inbox'] == '1')
-																checked
+															>
+															<label for="checkbox_{{$x}}_push">
+																<span></span>
+																<span class="check"></span>
+																<span class="box"></span>Push Notification</label>
+														</div>
+														<div class="md-checkbox">
+															<input type="checkbox" 
+																id="checkbox_{{$x}}_inbox" 
+																name="promotion_channel[{{$x-1}}][]" 
+																value="inbox"
+																class="md-check channel_{{$x-1}}" 
+																onClick="campaignChannel('inbox','{{$x}}')"
+															@if(isset($result['contents'][$x-1]))
+																@if($result['contents'][$x-1]['promotion_channel_inbox'] == '1')
+																	checked
+																@endif
 															@endif
-														@endif
-														>
-														<label for="checkbox_{{$x}}_inbox">
-															<span></span>
-															<span class="check"></span>
-															<span class="box"></span>Inbox</label>
-													</div>
-													<div class="md-checkbox">
-														<input type="checkbox" 
-															id="checkbox_{{$x}}_whatsapp" 
-															name="promotion_channel[{{$x-1}}][]" 
-															value="whatsapp"
-															class="md-check channel_{{$x-1}}" 
-															onClick="campaignChannel('whatsapp','{{$x}}')"
-														@if(isset($result['contents'][$x-1]))
-															@if($result['contents'][$x-1]['promotion_channel_whatsapp'] == '1')
-																checked
+															>
+															<label for="checkbox_{{$x}}_inbox">
+																<span></span>
+																<span class="check"></span>
+																<span class="box"></span>Inbox</label>
+														</div>
+														<div class="md-checkbox">
+															<input type="checkbox" 
+																id="checkbox_{{$x}}_whatsapp" 
+																name="promotion_channel[{{$x-1}}][]" 
+																value="whatsapp"
+																class="md-check channel_{{$x-1}}" 
+																onClick="campaignChannel('whatsapp','{{$x}}')"
+															@if(isset($result['contents'][$x-1]))
+																@if($result['contents'][$x-1]['promotion_channel_whatsapp'] == '1')
+																	checked
+																@endif
 															@endif
-														@endif
-														>
-														<label for="checkbox_{{$x}}_whatsapp">
-															<span></span>
-															<span class="check"></span>
-															<span class="box"></span>WhatsApp</label>
-													</div>
-													<div class="md-checkbox">
-														<input type="checkbox" 
-															id="checkbox_{{$x}}_deals" 
-															name="promotion_channel[{{$x-1}}][]" 
-															value="deals"
-															class="md-check channel_{{$x-1}}" 
-															onClick="campaignChannel('deals','{{$x}}')"
-														@if(isset($result['contents'][$x-1]))
-															@if($result['contents'][$x-1]['id_deals'] != "")
-																checked
+															>
+															<label for="checkbox_{{$x}}_whatsapp">
+																<span></span>
+																<span class="check"></span>
+																<span class="box"></span>WhatsApp</label>
+														</div>
+														<div class="md-checkbox">
+															<input type="checkbox" 
+																id="checkbox_{{$x}}_deals" 
+																name="promotion_channel[{{$x-1}}][]" 
+																value="deals"
+																class="md-check channel_{{$x-1}}" 
+																onClick="campaignChannel('deals','{{$x}}')"
+															@if(isset($result['contents'][$x-1]))
+																@if($result['contents'][$x-1]['id_deals'] != "")
+																	checked
+																@endif
 															@endif
-														@endif
-														@if(isset($result['contents'][$x-1]))
-															@if($result['contents'][$x-1]['promotion_count_voucher_give'] > 0)
-																disabled
+															@if(isset($result['contents'][$x-1]))
+																@if($result['contents'][$x-1]['promotion_count_voucher_give'] > 0)
+																	disabled
+																@endif
 															@endif
-														@endif
-														>
-														<label for="checkbox_{{$x}}_deals">
-															<span></span>
-															<span class="check"></span>
-															<span class="box"></span>Hidden Deals & Voucher</label>
+															>
+															<label for="checkbox_{{$x}}_deals">
+																<span></span>
+																<span class="check"></span>
+																<span class="box"></span>Hidden Deals & Voucher</label>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								@if(isset($result['contents'][$x-1]))
-									@if($result['contents'][$x-1]['promotion_channel_email'] == '1')
-										<div class="col-md-12" style="display:block;" id="content_email_{{$x}}">
+									@if(isset($result['contents'][$x-1]))
+										@if($result['contents'][$x-1]['promotion_channel_email'] == '1')
+											<div class="col-md-12" style="display:block;" id="content_email_{{$x}}">
+										@else
+											<div class="col-md-12" style="display:none;" id="content_email_{{$x}}">
+										@endif
 									@else
 										<div class="col-md-12" style="display:none;" id="content_email_{{$x}}">
 									@endif
-								@else
-									<div class="col-md-12" style="display:none;" id="content_email_{{$x}}">
-								@endif
-									<div class="portlet light bordered">
-										<div class="portlet-title">
-											<div class="caption font-blue ">
-												<i class="icon-settings font-blue "></i>
-												<span class="caption-subject bold uppercase">Email Content</span>
-											</div>
-										</div>
-										<div class="portlet-body">
-											<div class="form-body">
-												<div class="form-group" style="margin-bottom:30px">
-													<label class="col-md-2 control-label">Subject</label>
-													<div class="col-md-10">
-														<input type="text" 
-															placeholder="Email Subject" 
-															class="form-control" 
-															name="promotion_email_subject[]" 
-															id="promotion_email_subject_{{$x}}" 
-															@if(isset($result['contents'][$x-1]['promotion_email_subject']))
-																value="{{$result['contents'][$x-1]['promotion_email_subject']}}"
-															@endif
-														>
-														<br>
-														You can use this variables to display user personalized information:
-														<br><br>
-														<div class="row">
-															@foreach($textreplaces as $key=>$row)
-																<div class="col-md-3" style="margin-bottom:5px;">
-																	<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addEmailSubject('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																</div>
-															@endforeach
-														</div>
-														<br><br>
-													</div>
+										<div class="portlet light bordered">
+											<div class="portlet-title">
+												<div class="caption font-blue ">
+													<i class="icon-settings font-blue "></i>
+													<span class="caption-subject bold uppercase">Email Content</span>
 												</div>
-												<div class="form-group" style="margin-bottom:30px">
-													<label for="multiple" class="control-label col-md-2">Content</label>
-													<div class="col-md-10">
-														<textarea name="promotion_email_content[]" id="promotion_email_content_{{$x}}" class="form-control summernote">@if(isset($result['contents'][$x-1]['promotion_email_content'])){{$result['contents'][$x-1]['promotion_email_content']}}@endif</textarea>
-														You can use this variables to display user personalized information:
-														<br><br>
-														<div class="row">
-															@foreach($textreplaces as $key=>$row)
-																<div class="col-md-3" style="margin-bottom:5px;">
-																	<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addEmailContent('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																</div>
-															@endforeach
+											</div>
+											<div class="portlet-body">
+												<div class="form-body">
+													<div class="form-group" style="margin-bottom:30px">
+														<label class="col-md-2 control-label">Subject</label>
+														<div class="col-md-10">
+															<input type="text" 
+																placeholder="Email Subject" 
+																class="form-control" 
+																name="promotion_email_subject[]" 
+																id="promotion_email_subject_{{$x}}" 
+																@if(isset($result['contents'][$x-1]['promotion_email_subject']))
+																	value="{{$result['contents'][$x-1]['promotion_email_subject']}}"
+																@endif
+															>
+															<br>
+															You can use this variables to display user personalized information:
+															<br><br>
+															<div class="row">
+																@foreach($textreplaces as $key=>$row)
+																	<div class="col-md-3" style="margin-bottom:5px;">
+																		<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addEmailSubject('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																	</div>
+																@endforeach
+															</div>
+															<br><br>
+														</div>
+													</div>
+													<div class="form-group" style="margin-bottom:30px">
+														<label for="multiple" class="control-label col-md-2">Content</label>
+														<div class="col-md-10">
+															<textarea name="promotion_email_content[]" id="promotion_email_content_{{$x}}" class="form-control summernote">@if(isset($result['contents'][$x-1]['promotion_email_content'])){{$result['contents'][$x-1]['promotion_email_content']}}@endif</textarea>
+															You can use this variables to display user personalized information:
+															<br><br>
+															<div class="row">
+																@foreach($textreplaces as $key=>$row)
+																	<div class="col-md-3" style="margin-bottom:5px;">
+																		<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addEmailContent('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																	</div>
+																@endforeach
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								
-								@if(isset($result['contents'][$x-1]))
-									@if($result['contents'][$x-1]['promotion_channel_sms'] == '1')
-										<div class="col-md-12" style="display:block;" id="content_sms_{{$x}}">
+									
+									@if(isset($result['contents'][$x-1]))
+										@if($result['contents'][$x-1]['promotion_channel_sms'] == '1')
+											<div class="col-md-12" style="display:block;" id="content_sms_{{$x}}">
+										@else
+											<div class="col-md-12" style="display:none;" id="content_sms_{{$x}}">
+										@endif
 									@else
 										<div class="col-md-12" style="display:none;" id="content_sms_{{$x}}">
 									@endif
-								@else
-									<div class="col-md-12" style="display:none;" id="content_sms_{{$x}}">
-								@endif
-									<div class="portlet light bordered">
-										<div class="portlet-title">
-											<div class="caption font-blue ">
-												<i class="icon-settings font-blue "></i>
-												<span class="caption-subject bold uppercase">SMS Content</span>
+										<div class="portlet light bordered">
+											<div class="portlet-title">
+												<div class="caption font-blue ">
+													<i class="icon-settings font-blue "></i>
+													<span class="caption-subject bold uppercase">SMS Content</span>
+												</div>
 											</div>
-										</div>
-										<div class="portlet-body">
-											<div class="form-body">
-												<div class="form-group" style="margin-bottom:30px">
-													<label class="col-md-2 control-label">Content</label>
-													<div class="col-md-10">
-														<textarea name="promotion_sms_content[]" id="promotion_sms_content_{{$x}}" class="form-control" placeholder="SMS Content">@if(isset($result['contents'][$x-1]['promotion_sms_content'])){{$result['contents'][$x-1]['promotion_sms_content']}}@endif</textarea>
-														<br>
-														You can use this variables to display user personalized information:
-														<br><br>
-														<div class="row">
-															@foreach($textreplaces as $key=>$row)
-																<div class="col-md-3" style="margin-bottom:5px;">
-																	<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addSmsContent('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																</div>
-															@endforeach
+											<div class="portlet-body">
+												<div class="form-body">
+													<div class="form-group" style="margin-bottom:30px">
+														<label class="col-md-2 control-label">Content</label>
+														<div class="col-md-10">
+															<textarea name="promotion_sms_content[]" id="promotion_sms_content_{{$x}}" class="form-control" placeholder="SMS Content">@if(isset($result['contents'][$x-1]['promotion_sms_content'])){{$result['contents'][$x-1]['promotion_sms_content']}}@endif</textarea>
+															<br>
+															You can use this variables to display user personalized information:
+															<br><br>
+															<div class="row">
+																@foreach($textreplaces as $key=>$row)
+																	<div class="col-md-3" style="margin-bottom:5px;">
+																		<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addSmsContent('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																	</div>
+																@endforeach
+															</div>
+															<br><br>
 														</div>
-														<br><br>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								
-								@if(isset($result['contents'][$x-1]))
-									@if($result['contents'][$x-1]['promotion_channel_push'] == '1')
-										<div class="col-md-12" style="display:block;" id="content_push_{{$x}}">
+									
+									@if(isset($result['contents'][$x-1]))
+										@if($result['contents'][$x-1]['promotion_channel_push'] == '1')
+											<div class="col-md-12" style="display:block;" id="content_push_{{$x}}">
+										@else
+											<div class="col-md-12" style="display:none;" id="content_push_{{$x}}">
+										@endif
 									@else
 										<div class="col-md-12" style="display:none;" id="content_push_{{$x}}">
 									@endif
-								@else
-									<div class="col-md-12" style="display:none;" id="content_push_{{$x}}">
-								@endif
-									<div class="portlet light bordered">
-										<div class="portlet-title">
-											<div class="caption font-blue ">
-												<i class="icon-settings font-blue "></i>
-												<span class="caption-subject bold uppercase">Push Notification Content</span>
+										<div class="portlet light bordered">
+											<div class="portlet-title">
+												<div class="caption font-blue ">
+													<i class="icon-settings font-blue "></i>
+													<span class="caption-subject bold uppercase">Push Notification Content</span>
+												</div>
 											</div>
-										</div>
-										<div class="portlet-body">
-											<div class="form-body">
-												<div class="form-group">
-													<label class="col-md-2 control-label">Subject</label>
-													<div class="col-md-10">
-														<input type="text" 
-															placeholder="Push Notification Subject" 
-															class="form-control" 
-															name="promotion_push_subject[]" 
-															id="promotion_push_subject_{{$x}}" 
-															@if(isset($result['contents'][$x-1]['promotion_push_subject']))
-																value="{{$result['contents'][$x-1]['promotion_push_subject']}}"
-															@endif>
-														<br>
-														You can use this variables to display user personalized information:
-														<br><br>
-														<div class="row">
-															@foreach($textreplaces as $key=>$row)
-																<div class="col-md-3" style="margin-bottom:5px;">
-																	<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addPushSubject('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																</div>
-															@endforeach
-														</div>
-														<br><br>
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="multiple" class="control-label col-md-2">Content</label>
-													<div class="col-md-10">
-														<textarea name="promotion_push_content[]" id="promotion_push_content_{{$x}}" class="form-control">@if(isset($result['contents'][$x-1]['promotion_push_content'])){{$result['contents'][$x-1]['promotion_push_content']}}@endif</textarea>
-														<br>
-														You can use this variables to display user personalized information:
-														<br><br>
-														<div class="row">
-															@foreach($textreplaces as $key=>$row)
-																<div class="col-md-3" style="margin-bottom:5px;">
-																	<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addPushContent('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																</div>
-															@endforeach
-														</div>
-														<br><br>
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="promotion_push_image" class="control-label col-md-2">Gambar</label>
-													<div class="col-md-10">
-														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
-																@if(isset($result['contents'][$x-1]['promotion_push_image']) && $result['contents'][$x-1]['promotion_push_image'] != "")
-																	<img src="{{env('APP_API_URL')}}/{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
-																@else 
-																	<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
-																@endif
+											<div class="portlet-body">
+												<div class="form-body">
+													<div class="form-group">
+														<label class="col-md-2 control-label">Subject</label>
+														<div class="col-md-10">
+															<input type="text" 
+																placeholder="Push Notification Subject" 
+																class="form-control" 
+																name="promotion_push_subject[]" 
+																id="promotion_push_subject_{{$x}}" 
+																@if(isset($result['contents'][$x-1]['promotion_push_subject']))
+																	value="{{$result['contents'][$x-1]['promotion_push_subject']}}"
+																@endif>
+															<br>
+															You can use this variables to display user personalized information:
+															<br><br>
+															<div class="row">
+																@foreach($textreplaces as $key=>$row)
+																	<div class="col-md-3" style="margin-bottom:5px;">
+																		<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addPushSubject('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																	</div>
+																@endforeach
 															</div>
-																
-															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-															<div>
-																<span class="btn default btn-file">
-																	<span class="fileinput-new"> Select image </span>
-																	<span class="fileinput-exists"> Change </span>
-																	<input type="file"  accept="image/*" name="promotion_push_image[]"> </span>
-																<a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
+															<br><br>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="multiple" class="control-label col-md-2">Content</label>
+														<div class="col-md-10">
+															<textarea name="promotion_push_content[]" id="promotion_push_content_{{$x}}" class="form-control">@if(isset($result['contents'][$x-1]['promotion_push_content'])){{$result['contents'][$x-1]['promotion_push_content']}}@endif</textarea>
+															<br>
+															You can use this variables to display user personalized information:
+															<br><br>
+															<div class="row">
+																@foreach($textreplaces as $key=>$row)
+																	<div class="col-md-3" style="margin-bottom:5px;">
+																		<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addPushContent('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																	</div>
+																@endforeach
+															</div>
+															<br><br>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="promotion_push_image" class="control-label col-md-2">Gambar</label>
+														<div class="col-md-10">
+															<div class="fileinput fileinput-new" data-provides="fileinput">
+																<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
+																	@if(isset($result['contents'][$x-1]['promotion_push_image']) && $result['contents'][$x-1]['promotion_push_image'] != "")
+																		<img src="{{env('APP_API_URL')}}/{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
+																	@else 
+																		<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
+																	@endif
+																</div>
+																	
+																<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+																<div>
+																	<span class="btn default btn-file">
+																		<span class="fileinput-new"> Select image </span>
+																		<span class="fileinput-exists"> Change </span>
+																		<input type="file"  accept="image/*" name="promotion_push_image[]"> </span>
+																	<a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-												<div class="form-group">
-													<label for="promotion_push_clickto" class="control-label col-md-2">Click Action</label>
-													<div class="col-md-10">
-														<select name="promotion_push_clickto[]" id="promotion_push_clickto_{{$x}}" class="form-control select2" onChange="fetchDetail('{{$x}}','push',this.value)">
-															<option value="Home" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Home") selected @endif>Home</option>
-															<option value="News" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "New") selected @endif>News</option>
-															<option value="Product" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Product") selected @endif>Product</option>
-															<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Outlet") selected @endif>Outlet</option>
-															<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-															<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option>
-															<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
-															<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
-															<option value="Link" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Link") selected @endif>Link</option>
-															<option value="Logout" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Logout") selected @endif>Logout</option>
-														</select>
+													<div class="form-group">
+														<label for="promotion_push_clickto" class="control-label col-md-2">Click Action</label>
+														<div class="col-md-10">
+															<select name="promotion_push_clickto[]" id="promotion_push_clickto_{{$x}}" class="form-control select2" onChange="fetchDetail('{{$x}}','push',this.value)">
+																<option value="Home" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Home") selected @endif>Home</option>
+																<option value="News" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "New") selected @endif>News</option>
+																<option value="Product" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Product") selected @endif>Product</option>
+																<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Outlet") selected @endif>Outlet</option>
+																<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
+																<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option>
+																<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
+																<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
+																<option value="Link" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Link") selected @endif>Link</option>
+																<option value="Logout" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Logout") selected @endif>Logout</option>
+															</select>
+														</div>
 													</div>
-												</div>
-												<div class="form-group" id="atd_push_{{$x}}" style="display:none;">
-													<label for="promotion_push_id_reference_{{$x}}" class="control-label col-md-2">Action to Detail</label>
-													<div class="col-md-10">
-														<select name="promotion_push_id_reference[]" id="promotion_push_id_reference_{{$x}}" class="form-control select2">
-														</select>
+													<div class="form-group" id="atd_push_{{$x}}" style="display:none;">
+														<label for="promotion_push_id_reference_{{$x}}" class="control-label col-md-2">Action to Detail</label>
+														<div class="col-md-10">
+															<select name="promotion_push_id_reference[]" id="promotion_push_id_reference_{{$x}}" class="form-control select2">
+															</select>
+														</div>
 													</div>
-												</div>
-												<div class="form-group" id="link_push_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
-													<label for="promotion_push_link" class="control-label col-md-2">Link</label>
-													<div class="col-md-10">
-														<input type="text" placeholder="http://" class="form-control" name="promotion_push_link" id="promotion_push_link_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_push_link'])) value="{{$result['contents'][$x-1]['promotion_push_link']}}" @endif>
+													<div class="form-group" id="link_push_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
+														<label for="promotion_push_link" class="control-label col-md-2">Link</label>
+														<div class="col-md-10">
+															<input type="text" placeholder="http://" class="form-control" name="promotion_push_link" id="promotion_push_link_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_push_link'])) value="{{$result['contents'][$x-1]['promotion_push_link']}}" @endif>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								
-								@if(isset($result['contents'][$x-1]))
-									@if($result['contents'][$x-1]['promotion_channel_inbox'] == '1')
-										<div class="col-md-12" style="display:block;" id="content_inbox_{{$x}}">
+									
+									@if(isset($result['contents'][$x-1]))
+										@if($result['contents'][$x-1]['promotion_channel_inbox'] == '1')
+											<div class="col-md-12" style="display:block;" id="content_inbox_{{$x}}">
+										@else
+											<div class="col-md-12" style="display:none;" id="content_inbox_{{$x}}">
+										@endif
 									@else
 										<div class="col-md-12" style="display:none;" id="content_inbox_{{$x}}">
 									@endif
-								@else
-									<div class="col-md-12" style="display:none;" id="content_inbox_{{$x}}">
-								@endif
-									<div class="portlet light bordered">
-										<div class="portlet-title">
-											<div class="caption font-blue ">
-												<i class="icon-settings font-blue "></i>
-												<span class="caption-subject bold uppercase">Inbox Content</span>
+										<div class="portlet light bordered">
+											<div class="portlet-title">
+												<div class="caption font-blue ">
+													<i class="icon-settings font-blue "></i>
+													<span class="caption-subject bold uppercase">Inbox Content</span>
+												</div>
 											</div>
-										</div>
-										<div class="portlet-body">
-											<div class="form-body">
-												<div class="form-group">
-													<label class="col-md-2 control-label">Subject</label>
-													<div class="col-md-10">
-														<input type="text" 
-															placeholder="Inbox Subject" 
-															class="form-control" 
-															name="promotion_inbox_subject[]" 
-															id="promotion_inbox_subject_{{$x}}" 
-															@if(isset($result['contents'][$x-1]['promotion_inbox_subject']))
-																value="{{$result['contents'][$x-1]['promotion_inbox_subject']}}"
-															@endif>
-														<br>
-														You can use this variables to display user personalized information:
-														<br><br>
-														<div class="row">
-															@foreach($textreplaces as $key=>$row)
-																<div class="col-md-3" style="margin-bottom:5px;">
-																	<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addInboxSubject('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																</div>
-															@endforeach
+											<div class="portlet-body">
+												<div class="form-body">
+													<div class="form-group">
+														<label class="col-md-2 control-label">Subject</label>
+														<div class="col-md-10">
+															<input type="text" 
+																placeholder="Inbox Subject" 
+																class="form-control" 
+																name="promotion_inbox_subject[]" 
+																id="promotion_inbox_subject_{{$x}}" 
+																@if(isset($result['contents'][$x-1]['promotion_inbox_subject']))
+																	value="{{$result['contents'][$x-1]['promotion_inbox_subject']}}"
+																@endif>
+															<br>
+															You can use this variables to display user personalized information:
+															<br><br>
+															<div class="row">
+																@foreach($textreplaces as $key=>$row)
+																	<div class="col-md-3" style="margin-bottom:5px;">
+																		<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addInboxSubject('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																	</div>
+																@endforeach
+															</div>
+															<br><br>
 														</div>
-														<br><br>
 													</div>
-												</div>
-												<div class="form-group">
-													<label for="promotion_inbox_clickto" class="control-label col-md-2">Click Action</label>
-													<div class="col-md-10">
-														<select name="promotion_inbox_clickto[]" id="promotion_inbox_clickto_{{$x}}" class="form-control select2" onChange="fetchDetail('{{$x}}','inbox',this.value)">
-															<option value="Home" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Home") selected @endif>Home</option>
-															{{-- <option value="Content" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
-															<option value="News" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "New") selected @endif>News</option>
-															<option value="Product" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>
-															<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
-															<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
-															<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
-															<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
-															<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
-															<option value="Link" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>
-															<option value="Logout" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Logout") selected @endif>Logout</option>
-														</select>
-													</div>
-												</div>
-												<div class="form-group" id="inbox_content_{{$x}}" style="display:none;">
-													<label for="multiple" class="control-label col-md-2">Content</label>
-													<div class="col-md-10">
-														<textarea name="promotion_inbox_content[]" id="promotion_inbox_content_{{$x}}" class="form-control summernote">@if(isset($result['contents'][$x-1]['promotion_inbox_content'])){{$result['contents'][$x-1]['promotion_inbox_content']}}@endif</textarea>
-														You can use this variables to display user personalized information:
-														<br><br>
-														<div class="row">
-															@foreach($textreplaces as $key=>$row)
-																<div class="col-md-3" style="margin-bottom:5px;">
-																	<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addInboxContent('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																</div>
-															@endforeach
+													<div class="form-group">
+														<label for="promotion_inbox_clickto" class="control-label col-md-2">Click Action</label>
+														<div class="col-md-10">
+															<select name="promotion_inbox_clickto[]" id="promotion_inbox_clickto_{{$x}}" class="form-control select2" onChange="fetchDetail('{{$x}}','inbox',this.value)">
+																<option value="Home" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Home") selected @endif>Home</option>
+																{{-- <option value="Content" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
+																<option value="News" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "New") selected @endif>News</option>
+																<option value="Product" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>
+																<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
+																<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
+																<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
+																<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
+																<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
+																<option value="Link" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>
+																<option value="Logout" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Logout") selected @endif>Logout</option>
+															</select>
 														</div>
-														<br><br>
 													</div>
-												</div>
-												<div class="form-group" id="atd_inbox_{{$x}}" style="display:none;">
-													<label for="promotion_inbox_id_reference_{{$x}}" class="control-label col-md-2">Action to Detail</label>
-													<div class="col-md-10">
-														<select name="promotion_inbox_id_reference[]" id="promotion_inbox_id_reference_{{$x}}" class="form-control select2">
-														</select>
+													<div class="form-group" id="inbox_content_{{$x}}" style="display:none;">
+														<label for="multiple" class="control-label col-md-2">Content</label>
+														<div class="col-md-10">
+															<textarea name="promotion_inbox_content[]" id="promotion_inbox_content_{{$x}}" class="form-control summernote">@if(isset($result['contents'][$x-1]['promotion_inbox_content'])){{$result['contents'][$x-1]['promotion_inbox_content']}}@endif</textarea>
+															You can use this variables to display user personalized information:
+															<br><br>
+															<div class="row">
+																@foreach($textreplaces as $key=>$row)
+																	<div class="col-md-3" style="margin-bottom:5px;">
+																		<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addInboxContent('{{$x}}','{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																	</div>
+																@endforeach
+															</div>
+															<br><br>
+														</div>
 													</div>
-												</div>
-												<div class="form-group" id="link_inbox_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
-													<label for="promotion_inbox_link" class="control-label col-md-2">Link</label>
-													<div class="col-md-10">
-														<input type="text" placeholder="http://" class="form-control" name="promotion_inbox_link" id="promotion_inbox_link_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_inbox_link'])) value="{{$result['contents'][$x-1]['promotion_inbox_link']}}" @endif>
+													<div class="form-group" id="atd_inbox_{{$x}}" style="display:none;">
+														<label for="promotion_inbox_id_reference_{{$x}}" class="control-label col-md-2">Action to Detail</label>
+														<div class="col-md-10">
+															<select name="promotion_inbox_id_reference[]" id="promotion_inbox_id_reference_{{$x}}" class="form-control select2">
+															</select>
+														</div>
+													</div>
+													<div class="form-group" id="link_inbox_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
+														<label for="promotion_inbox_link" class="control-label col-md-2">Link</label>
+														<div class="col-md-10">
+															<input type="text" placeholder="http://" class="form-control" name="promotion_inbox_link" id="promotion_inbox_link_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_inbox_link'])) value="{{$result['contents'][$x-1]['promotion_inbox_link']}}" @endif>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
 
-								@if(isset($result['contents'][$x-1]))
-									@if($result['contents'][$x-1]['promotion_channel_whatsapp'] == '1')
-										<div class="col-md-12" style="display:block;" id="content_whatsapp_{{$x}}">
+									@if(isset($result['contents'][$x-1]))
+										@if($result['contents'][$x-1]['promotion_channel_whatsapp'] == '1')
+											<div class="col-md-12" style="display:block;" id="content_whatsapp_{{$x}}">
+										@else
+											<div class="col-md-12" style="display:none;" id="content_whatsapp_{{$x}}">
+										@endif
 									@else
 										<div class="col-md-12" style="display:none;" id="content_whatsapp_{{$x}}">
 									@endif
-								@else
-									<div class="col-md-12" style="display:none;" id="content_whatsapp_{{$x}}">
-								@endif
-									<div class="portlet light bordered">
-										<div class="portlet-title">
-											<div class="caption font-blue ">
-												<i class="icon-settings font-blue "></i>
-												<span class="caption-subject bold uppercase">WhatsApp Content</span>
+										<div class="portlet light bordered">
+											<div class="portlet-title">
+												<div class="caption font-blue ">
+													<i class="icon-settings font-blue "></i>
+													<span class="caption-subject bold uppercase">WhatsApp Content</span>
+												</div>
 											</div>
-										</div>
-										<div class="portlet-body">
-											<div class="form-body">
-												<div class="repeat">
-													<div data-repeater-list="promotion_whatsapp_content[{{$x-1}}]">
-														@if(isset($result['contents'][$x-1]) && count($result['contents'][$x-1]['whatsapp_content']) > 0)
-															@foreach($result['contents'][$x-1]['whatsapp_content'] as $content)
+											<div class="portlet-body">
+												<div class="form-body">
+													<div class="repeat">
+														<div data-repeater-list="promotion_whatsapp_content[{{$x-1}}]">
+															@if(isset($result['contents'][$x-1]) && count($result['contents'][$x-1]['whatsapp_content']) > 0)
+																@foreach($result['contents'][$x-1]['whatsapp_content'] as $content)
+																	<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
+																		<input type="hidden" name="id_whatsapp_content" value="{{$content['id_whatsapp_content']}}">
+																		<div class="form-group row" style="padding:0; margin-bottom:15px">
+																			<label class="col-md-2 control-label" style="text-align:right">Content Type</label>
+																			<div class="col-md-4">
+																				<select name="content_type" class="form-control select content-type" style="width:100%">
+																					<option value="" disabled>Select Content Type</option>
+																					<option value="text" @if($content['content_type'] == 'text') selected @endif>Text</option>
+																					<option value="image" @if($content['content_type'] == 'image') selected @endif>Image</option>
+																					<option value="file" @if($content['content_type'] == 'file') selected @endif>File PDF</option>
+																				</select>
+																			</div>
+																			<div class="col-md-1" style="float:right">
+																				<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																					<i class="fa fa-close"></i>
+																				</a>
+																			</div>
+																		</div>
+																		<div class="form-group type_text row" @if($content['content_type'] != 'text') style="display:none" @endif>
+																			<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																			<div class="col-md-8">
+																				<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if($content['content_type'] == 'text') {{$content['content']}} @endif</textarea>
+																				<br>
+																				You can use this variables to display user personalized information:
+																				<br><br>
+																				<div class="row">
+																					@foreach($textreplaces as $key=>$row)
+																						<div class="col-md-3" style="margin-bottom:5px;">
+																							<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addWhatsappContent('{{ $row['keyword'] }}', this);">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																						</div>
+																					@endforeach
+																				</div>
+																				<br><br>
+																			</div>
+																		</div>
+																		<div class="form-group type_file row" @if($content['content_type'] != 'file') style="display:none" @endif>
+																			<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																			<div class="col-md-9">
+																				@if($content['content_type'] == 'file')
+																					<div class="form-group filename" style="margin-left:0">
+																					@php $file = explode('/', $content['content']) @endphp
+																					<label class="control-label"><a href= "{{$content['content']}}"> <i class="fa fa-file-pdf-o"></i> {{end($file)}} </a> </label>
+																					</div>
+																				@endif
+																				<div class="fileinput fileinput-new" data-provides="fileinput">
+																					<div class="input-group input-large">
+																						<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+																							<i class="fa fa-file fileinput-exists"></i>&nbsp;
+																							<span class="fileinput-filename"> </span>
+																						</div>
+																						<span class="input-group-addon btn default btn-file">
+																							<span class="fileinput-new"> Select file </span>
+																							<span class="fileinput-exists"> Change </span>
+																							<input type="file" class="file whatsapp-content" accept="application/pdf" name="content_file">
+																							</span>
+																						<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="form-group type_image row" @if($content['content_type'] != 'image') style="display:none" @endif>
+																			<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																			<div class="col-md-9">
+																				<div class="fileinput fileinput-new" data-provides="fileinput">
+																					<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+																					@if($content['content_type'] == 'image')
+																						<img src="{{$content['content']}}" alt="">
+																					@else
+																						<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																					@endif
+																					</div>
+																					<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
+																					<div>
+																						<span class="btn default btn-file">
+																						<span class="fileinput-new"> Select image </span>
+																						<span class="fileinput-exists"> Change </span>
+																						<input type="file" class="file whatsapp-content" accept="image/*" name="content">
+																						
+																						</span>
+												
+																						<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																@endforeach
+															@else
 																<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
-																	<input type="hidden" name="id_whatsapp_content" value="{{$content['id_whatsapp_content']}}">
+																	<input type="hidden" name="id_whatsapp_content" value="">
 																	<div class="form-group row" style="padding:0; margin-bottom:15px">
 																		<label class="col-md-2 control-label" style="text-align:right">Content Type</label>
 																		<div class="col-md-4">
-																			<select name="content_type" class="form-control select content-type" style="width:100%" required>
-																				<option value="" disabled>Select Content Type</option>
-																				<option value="text" @if($content['content_type'] == 'text') selected @endif>Text</option>
-																				<option value="image" @if($content['content_type'] == 'image') selected @endif>Image</option>
-																				<option value="file" @if($content['content_type'] == 'file') selected @endif>File PDF</option>
+																			<select name="content_type" class="form-control select content-type" style="width:100%">
+																				<option value="" disabled selected>Select Content Type</option>
+																				<option value="text">Text</option>
+																				<option value="image">Image</option>
+																				<option value="file">File PDF</option>
 																			</select>
 																		</div>
 																		<div class="col-md-1" style="float:right">
@@ -1238,10 +1368,10 @@ $grantedFeature     = session('granted_features');
 																			</a>
 																		</div>
 																	</div>
-																	<div class="form-group type_text row" @if($content['content_type'] != 'text') style="display:none" @endif>
+																	<div class="form-group type_text row" style="display:none">
 																		<label class="col-md-2 control-label" style="text-align:right">Content</label>
 																		<div class="col-md-8">
-																			<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if($content['content_type'] == 'text') {{$content['content']}} @endif</textarea>
+																			<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if(isset($result['campaign_whatsapp_content']) && $result['campaign_whatsapp_content'] != ""){{$result['campaign_whatsapp_content']}}@endif</textarea>
 																			<br>
 																			You can use this variables to display user personalized information:
 																			<br><br>
@@ -1255,15 +1385,9 @@ $grantedFeature     = session('granted_features');
 																			<br><br>
 																		</div>
 																	</div>
-																	<div class="form-group type_file row" @if($content['content_type'] != 'file') style="display:none" @endif>
+																	<div class="form-group type_file row" style="display:none">
 																		<label class="col-md-2 control-label" style="text-align:right">Content</label>
 																		<div class="col-md-9">
-																			@if($content['content_type'] == 'file')
-																				<div class="form-group filename" style="margin-left:0">
-																				@php $file = explode('/', $content['content']) @endphp
-																				<label class="control-label"><a href= "{{$content['content']}}"> <i class="fa fa-file-pdf-o"></i> {{end($file)}} </a> </label>
-																				</div>
-																			@endif
 																			<div class="fileinput fileinput-new" data-provides="fileinput">
 																				<div class="input-group input-large">
 																					<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
@@ -1280,16 +1404,12 @@ $grantedFeature     = session('granted_features');
 																			</div>
 																		</div>
 																	</div>
-																	<div class="form-group type_image row" @if($content['content_type'] != 'image') style="display:none" @endif>
-																		<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																	<div class="form-group type_image row" style="display:none">
+																		<label class="col-md-2 control-label" style="text-align:right">Content Image</label>
 																		<div class="col-md-9">
 																			<div class="fileinput fileinput-new" data-provides="fileinput">
 																				<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-																				@if($content['content_type'] == 'image')
-																					<img src="{{$content['content']}}" alt="">
-																				@else
-																					<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-																				@endif
+																				<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																				</div>
 																				<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 																				<div>
@@ -1306,330 +1426,268 @@ $grantedFeature     = session('granted_features');
 																		</div>
 																	</div>
 																</div>
-															@endforeach
-														@else
-															<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
-																<input type="hidden" name="id_whatsapp_content" value="">
-																<div class="form-group row" style="padding:0; margin-bottom:15px">
-																	<label class="col-md-2 control-label" style="text-align:right">Content Type</label>
-																	<div class="col-md-4">
-																		<select name="content_type" class="form-control select content-type" style="width:100%" required>
-																			<option value="" disabled selected>Select Content Type</option>
-																			<option value="text">Text</option>
-																			<option value="image">Image</option>
-																			<option value="file">File PDF</option>
-																		</select>
-																	</div>
-																	<div class="col-md-1" style="float:right">
-																		<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
-																			<i class="fa fa-close"></i>
-																		</a>
-																	</div>
-																</div>
-																<div class="form-group type_text row" style="display:none">
-																	<label class="col-md-2 control-label" style="text-align:right">Content</label>
-																	<div class="col-md-8">
-																		<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if(isset($result['campaign_whatsapp_content']) && $result['campaign_whatsapp_content'] != ""){{$result['campaign_whatsapp_content']}}@endif</textarea>
-																		<br>
-																		You can use this variables to display user personalized information:
-																		<br><br>
-																		<div class="row">
-																			@foreach($textreplaces as $key=>$row)
-																				<div class="col-md-3" style="margin-bottom:5px;">
-																					<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addWhatsappContent('{{ $row['keyword'] }}', this);">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																				</div>
-																			@endforeach
-																		</div>
-																		<br><br>
-																	</div>
-																</div>
-																<div class="form-group type_file row" style="display:none">
-																	<label class="col-md-2 control-label" style="text-align:right">Content</label>
-																	<div class="col-md-9">
-																		<div class="fileinput fileinput-new" data-provides="fileinput">
-																			<div class="input-group input-large">
-																				<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-																					<i class="fa fa-file fileinput-exists"></i>&nbsp;
-																					<span class="fileinput-filename"> </span>
-																				</div>
-																				<span class="input-group-addon btn default btn-file">
-																					<span class="fileinput-new"> Select file </span>
-																					<span class="fileinput-exists"> Change </span>
-																					<input type="file" class="file whatsapp-content" accept="application/pdf" name="content_file">
-																					</span>
-																				<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-																<div class="form-group type_image row" style="display:none">
-																	<label class="col-md-2 control-label" style="text-align:right">Content Image</label>
-																	<div class="col-md-9">
-																		<div class="fileinput fileinput-new" data-provides="fileinput">
-																			<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-																			<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-																			</div>
-																			<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
-																			<div>
-																				<span class="btn default btn-file">
-																				<span class="fileinput-new"> Select image </span>
-																				<span class="fileinput-exists"> Change </span>
-																				<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																				
-																				</span>
-										
-																				<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														@endif
+															@endif
+														</div>
+														<hr>
+														<label class="col-md-2 control-label" style="text-align:right"></label>
+														<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+															<i class="fa fa-plus"></i> Add Content</a>
+														<br>
+														<br> 
 													</div>
-													<hr>
-													<label class="col-md-2 control-label" style="text-align:right"></label>
-													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
-														<i class="fa fa-plus"></i> Add Content</a>
-													<br>
-													<br> 
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								
-								@if(isset($result['contents'][$x-1]))
-									@if($result['contents'][$x-1]['id_deals'] != '')
-										<div class="col-md-12" style="display:block;" id="content_deals_{{$x}}">
+									
+									@if(isset($result['contents'][$x-1]))
+										@if($result['contents'][$x-1]['id_deals'] != '')
+											<div class="col-md-12" style="display:block;" id="content_deals_{{$x}}">
+										@else
+											<div class="col-md-12" style="display:none;" id="content_deals_{{$x}}">
+										@endif
 									@else
 										<div class="col-md-12" style="display:none;" id="content_deals_{{$x}}">
 									@endif
-								@else
-									<div class="col-md-12" style="display:none;" id="content_deals_{{$x}}">
-								@endif
-									<div class="portlet light bordered">
-										<div class="portlet-title">
-											<div class="caption font-blue ">
-												<i class="icon-settings font-blue "></i>
-												<span class="caption-subject bold uppercase">Deals Setting</span>
+										<div class="portlet light bordered">
+											<div class="portlet-title">
+												<div class="caption font-blue ">
+													<i class="icon-settings font-blue "></i>
+													<span class="caption-subject bold uppercase">Deals Setting</span>
+												</div>
 											</div>
-										</div>
-										<div class="portlet-body">
-											<div class="form-body">
-												<div class="form-group">
-													<label class="col-md-2 control-label">Promo Type</label>
-													<div class="col-md-10">
-														<div class="input-icon right">
-															<div class="col-md-3">
-																<div class="md-radio-inline">
-																	<div class="md-radio">
-																		<input type="radio" id="radio_{{$x}}_dealstype_promoid"  name="deals_promo_id_type[{{$x-1}}]" class="md-radiobtn" onClick="dealsPromoType('promoid','{{$x}}')" value="promoid"
-																		@if(isset($result['contents'][$x-1]['deals']['id_deals']))
-																			@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'promoid')
-																				checked
+											<div class="portlet-body">
+												<div class="form-body">
+													<div class="form-group">
+														<label class="col-md-2 control-label">Promo Type</label>
+														<div class="col-md-10">
+															<div class="input-icon right">
+																<div class="col-md-3">
+																	<div class="md-radio-inline">
+																		<div class="md-radio">
+																			<input type="radio" id="radio_{{$x}}_dealstype_promoid"  name="deals_promo_id_type[{{$x-1}}]" class="md-radiobtn" onClick="dealsPromoType('promoid','{{$x}}')" value="promoid"
+																			@if(isset($result['contents'][$x-1]['deals']['id_deals']))
+																				@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'promoid')
+																					checked
+																				@endif
 																			@endif
-																		@endif
-																		>
-																		<label for="radio_{{$x}}_dealstype_promoid">
-																			<span></span>
-																			<span class="check"></span>
-																			<span class="box"></span> Promo ID </label>
+																			>
+																			<label for="radio_{{$x}}_dealstype_promoid">
+																				<span></span>
+																				<span class="check"></span>
+																				<span class="box"></span> Promo ID </label>
+																		</div>
 																	</div>
 																</div>
-															</div>
-															<div class="col-md-3">
-																<div class="md-radio-inline">
-																	<div class="md-radio">
-																		<input type="radio" id="radio_{{$x}}_dealstype_nominal" name="deals_promo_id_type[{{$x-1}}]" class="md-radiobtn" onClick="dealsPromoType('nominal','{{$x}}')" value="nominal"
-																		@if(isset($result['contents'][$x-1]['deals']['id_deals']))
-																			@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'nominal')
-																				checked
+																<div class="col-md-3">
+																	<div class="md-radio-inline">
+																		<div class="md-radio">
+																			<input type="radio" id="radio_{{$x}}_dealstype_nominal" name="deals_promo_id_type[{{$x-1}}]" class="md-radiobtn" onClick="dealsPromoType('nominal','{{$x}}')" value="nominal"
+																			@if(isset($result['contents'][$x-1]['deals']['id_deals']))
+																				@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'nominal')
+																					checked
+																				@endif
 																			@endif
-																		@endif
-																		>
-																		<label for="radio_{{$x}}_dealstype_nominal">
-																			<span></span>
-																			<span class="check"></span>
-																			<span class="box"></span> Nominal </label>
+																			>
+																			<label for="radio_{{$x}}_dealstype_nominal">
+																				<span></span>
+																				<span class="check"></span>
+																				<span class="box"></span> Nominal </label>
+																		</div>
 																	</div>
 																</div>
-															</div>
-														</div>    
+															</div>    
+														</div>
 													</div>
-												</div>
-												<div class="form-group">
-													<label class="col-md-2 control-label"></label>
-													<div class="col-md-10">
-														@if(isset($result['contents'][$x-1]['deals']['deals_promo_id_type']))
-															@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'promoid')
-																<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_{{$x}}" style="display:block;" value="{{$result['contents'][$x-1]['deals']['deals_promo_id']}}" placeholder="Input Promo ID">
-															
-																<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_{{$x}}" style="display:none;" value="" placeholder="Input Promo nominal" onchange="changeNominalVoucher('{{$x}}')">
-															@elseif($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'nominal')
+													<div class="form-group">
+														<label class="col-md-2 control-label"></label>
+														<div class="col-md-10">
+															@if(isset($result['contents'][$x-1]['deals']['deals_promo_id_type']))
+																@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'promoid')
+																	<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_{{$x}}" style="display:block;" value="{{$result['contents'][$x-1]['deals']['deals_promo_id']}}" placeholder="Input Promo ID">
+																
+																	<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_{{$x}}" style="display:none;" value="" placeholder="Input Promo nominal" onchange="changeNominalVoucher('{{$x}}')">
+																@elseif($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'nominal')
+																	<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_{{$x}}" style="display:none;" value="" placeholder="Input Promo ID">
+																
+																	<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_{{$x}}" style="display:block;" value="{{$result['contents'][$x-1]['deals']['deals_promo_id']}}" placeholder="Input Promo nominal" onchange="changeNominalVoucher('{{$x}}')">
+																@endif
+															@else
 																<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_{{$x}}" style="display:none;" value="" placeholder="Input Promo ID">
-															
-																<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_{{$x}}" style="display:block;" value="{{$result['contents'][$x-1]['deals']['deals_promo_id']}}" placeholder="Input Promo nominal" onchange="changeNominalVoucher('{{$x}}')">
+																
+																<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_{{$x}}" style="display:none;" value="" placeholder="Input Promo nominal" onchange="changeNominalVoucher('{{$x}}')">
 															@endif
-														@else
-															<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_{{$x}}" style="display:none;" value="" placeholder="Input Promo ID">
-															
-															<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_{{$x}}" style="display:none;" value="" placeholder="Input Promo nominal" onchange="changeNominalVoucher('{{$x}}')">
-														@endif
+														</div>
 													</div>
-												</div>
-												
-												<div class="form-group">
-													<label class="col-md-2 control-label">Nominal Voucher</label>
-													<div class="col-md-10">
-														<input type="text" class="form-control price" name="voucher_value[]" id="voucher_value_{{$x}}" style="display:block;" value="@if(isset($result['contents'][$x-1]['voucher_value'])) {{$result['contents'][$x-1]['voucher_value']}} @endif" @if(isset($result['contents'][$x-1]['deals']['deals_promo_id_type']) && $result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'nominal') readonly @endif>
+													
+													<div class="form-group">
+														<label class="col-md-2 control-label">Nominal Voucher</label>
+														<div class="col-md-10">
+															<input type="text" class="form-control price" name="voucher_value[]" id="voucher_value_{{$x}}" style="display:block;" value="@if(isset($result['contents'][$x-1]['voucher_value'])) {{$result['contents'][$x-1]['voucher_value']}} @endif" @if(isset($result['contents'][$x-1]['deals']['deals_promo_id_type']) && $result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'nominal') readonly @endif>
+														</div>
 													</div>
-												</div>
 
-												<div class="form-group">
-													<label class="col-md-2 control-label"> Deals Periode </label>
-													<div class="col-md-4">
-														<div class="input-icon right">
-															<div class="input-group">
-																<input type="text" class="datepicker form-control" name="deals_start[]"
-																@if(isset($result['contents'][$x-1]['deals']['deals_start']))
-																	@if($result['contents'][$x-1]['deals']['deals_start'] != '')
-																		value = "{{date('d-M-Y',strtotime($result['contents'][$x-1]['deals']['deals_start']))}}"
-																	@endif
-																@endif
-																>
-																<span class="input-group-btn">
-																	<button class="btn default" type="button">
-																		<i class="fa fa-calendar"></i>
-																	</button>
-																	<button class="btn default" type="button">
-																		<i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode deals" data-container="body"></i>
-																	</button>
-																</span>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-4">
-														<div class="input-icon right">
-															<div class="input-group">
-																<input type="text" class="datepicker form-control" name="deals_end[]" 
-																@if(isset($result['contents'][$x-1]['deals']['deals_end']))
-																	@if($result['contents'][$x-1]['deals']['deals_end'] != '')
-																		value = "{{date('d-M-Y',strtotime($result['contents'][$x-1]['deals']['deals_end']))}}"
-																	@endif
-																@endif
-																>
-																<span class="input-group-btn">
-																	<button class="btn default" type="button">
-																		<i class="fa fa-calendar"></i>
-																	</button>
-																	<button class="btn default" type="button">
-																		<i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode deals" data-container="body"></i>
-																	</button>
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<label class="col-md-2 control-label"> Outlet Available </label>
-													<div class="col-md-10">
-														<div class="input-icon right">
-															<select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[{{$x-1}}][]" multiple>
-															<optgroup label="Outlet List">
-																<option value="">Select Outlet</option>
-																@if (!empty($outlets))
-																	<?php $ou = array(); $jmlOutlet = count($outlets); $jmlOutletSelected = 0?>
-																	@if(isset($result['contents'][$x-1]['deals']['outlets']))
-																		@foreach($result['contents'][$x-1]['deals']['outlets'] as $o)
-																			<?php
-																			array_push($ou, $o['id_outlet']);
-																			?>
-																		@endforeach
-																		@php
-																			$jmlOutletSelected = count($ou);
-																		@endphp
-																	@endif
-																
-																	@if ($jmlOutlet == $jmlOutletSelected)
-																		<option value="all" selected>All Outlets</option>
-																		@foreach($outlets as $suw)
-																			<option value="{{ $suw['id_outlet'] }}">{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
-																		@endforeach
-																	@else
-																		<option value="all" @if (old('id_outlet')) @if(in_array('all', old('id_outlet'))) selected @endif @endif>All Outlets</option>
-																		@foreach($outlets as $suw)
-																			<option value="{{ $suw['id_outlet'] }}" 
-																				@if(in_array($suw['id_outlet'], $ou)) selected @endif 
-																			>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
-																		@endforeach
-																	@endif
-																@endif
-															</optgroup>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<label class="col-md-2 control-label"> Voucher Expiry  </label>
-													<div class="col-md-10">
-														<div class="input-icon right">
-															<div class="col-md-3">
-																<div class="md-radio-inline">
-																	<div class="md-radio">
-																		<input type="radio" name="duration[{{$x-1}}]" id="voucher_expiry_bydate_{{$x}}" value="dates" class="md-radiobtn" onClick="dealsVoucherExpiry('bydate','{{$x}}')"
-																		@if(isset($result['contents'][$x-1]['deals']['deals_voucher_expired']))
-																			@if($result['contents'][$x-1]['deals']['deals_voucher_expired'] != '')
-																				checked
-																			@endif
+													<div class="form-group">
+														<label class="col-md-2 control-label"> Deals Periode </label>
+														<div class="col-md-4">
+															<div class="input-icon right">
+																<div class="input-group">
+																	<input type="text" class="datepicker form-control" name="deals_start[]"
+																	@if(isset($result['contents'][$x-1]['deals']['deals_start']))
+																		@if($result['contents'][$x-1]['deals']['deals_start'] != '')
+																			value = "{{date('d-M-Y',strtotime($result['contents'][$x-1]['deals']['deals_start']))}}"
 																		@endif
-																		>
-																		<label for="voucher_expiry_bydate_{{$x}}">
-																			<span></span>
-																			<span class="check"></span>
-																			<span class="box"></span> By Date </label>
-																	</div>
+																	@endif
+																	>
+																	<span class="input-group-btn">
+																		<button class="btn default" type="button">
+																			<i class="fa fa-calendar"></i>
+																		</button>
+																		<button class="btn default" type="button">
+																			<i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode deals" data-container="body"></i>
+																		</button>
+																	</span>
 																</div>
 															</div>
-															<div class="col-md-3">
-																<div class="md-radio-inline">
-																	<div class="md-radio">
-																		<input type="radio" name="duration[{{$x-1}}]" id="voucher_expiry_duration_{{$x}}" value="duration" class="md-radiobtn" onClick="dealsVoucherExpiry('duration','{{$x}}')"
-																		@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration']))
-																			@if($result['contents'][$x-1]['deals']['deals_voucher_duration'] != '')
-																				checked
-																			@endif
+														</div>
+														<div class="col-md-4">
+															<div class="input-icon right">
+																<div class="input-group">
+																	<input type="text" class="datepicker form-control" name="deals_end[]" 
+																	@if(isset($result['contents'][$x-1]['deals']['deals_end']))
+																		@if($result['contents'][$x-1]['deals']['deals_end'] != '')
+																			value = "{{date('d-M-Y',strtotime($result['contents'][$x-1]['deals']['deals_end']))}}"
 																		@endif
-																		>
-																		<label for="voucher_expiry_duration_{{$x}}">
-																			<span></span>
-																			<span class="check"></span>
-																			<span class="box"></span> Duration </label>
+																	@endif
+																	>
+																	<span class="input-group-btn">
+																		<button class="btn default" type="button">
+																			<i class="fa fa-calendar"></i>
+																		</button>
+																		<button class="btn default" type="button">
+																			<i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode deals" data-container="body"></i>
+																		</button>
+																	</span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-2 control-label"> Outlet Available </label>
+														<div class="col-md-10">
+															<div class="input-icon right">
+																<select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[{{$x-1}}][]" multiple>
+																<optgroup label="Outlet List">
+																	<option value="">Select Outlet</option>
+																	@if (!empty($outlets))
+																		<?php $ou = array(); $jmlOutlet = count($outlets); $jmlOutletSelected = 0?>
+																		@if(isset($result['contents'][$x-1]['deals']['outlets']))
+																			@foreach($result['contents'][$x-1]['deals']['outlets'] as $o)
+																				<?php
+																				array_push($ou, $o['id_outlet']);
+																				?>
+																			@endforeach
+																			@php
+																				$jmlOutletSelected = count($ou);
+																			@endphp
+																		@endif
+																	
+																		@if ($jmlOutlet == $jmlOutletSelected)
+																			<option value="all" selected>All Outlets</option>
+																			@foreach($outlets as $suw)
+																				<option value="{{ $suw['id_outlet'] }}">{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
+																			@endforeach
+																		@else
+																			<option value="all" @if (old('id_outlet')) @if(in_array('all', old('id_outlet'))) selected @endif @endif>All Outlets</option>
+																			@foreach($outlets as $suw)
+																				<option value="{{ $suw['id_outlet'] }}" 
+																					@if(in_array($suw['id_outlet'], $ou)) selected @endif 
+																				>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
+																			@endforeach
+																		@endif
+																	@endif
+																</optgroup>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-2 control-label"> Voucher Expiry  </label>
+														<div class="col-md-10">
+															<div class="input-icon right">
+																<div class="col-md-3">
+																	<div class="md-radio-inline">
+																		<div class="md-radio">
+																			<input type="radio" name="duration[{{$x-1}}]" id="voucher_expiry_bydate_{{$x}}" value="dates" class="md-radiobtn" onClick="dealsVoucherExpiry('bydate','{{$x}}')"
+																			@if(isset($result['contents'][$x-1]['deals']['deals_voucher_expired']))
+																				@if($result['contents'][$x-1]['deals']['deals_voucher_expired'] != '')
+																					checked
+																				@endif
+																			@endif
+																			>
+																			<label for="voucher_expiry_bydate_{{$x}}">
+																				<span></span>
+																				<span class="check"></span>
+																				<span class="box"></span> By Date </label>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-3">
+																	<div class="md-radio-inline">
+																		<div class="md-radio">
+																			<input type="radio" name="duration[{{$x-1}}]" id="voucher_expiry_duration_{{$x}}" value="duration" class="md-radiobtn" onClick="dealsVoucherExpiry('duration','{{$x}}')"
+																			@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration']))
+																				@if($result['contents'][$x-1]['deals']['deals_voucher_duration'] != '')
+																					checked
+																				@endif
+																			@endif
+																			>
+																			<label for="voucher_expiry_duration_{{$x}}">
+																				<span></span>
+																				<span class="check"></span>
+																				<span class="box"></span> Duration </label>
+																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-			
-												<div class="form-group" style="display: block;">
-													<label class="col-md-2 control-label"></label>
-													<div class="col-md-10">
-														@if(isset($result['contents'][$x-1]['deals']['deals_voucher_expired']))
-															@if($result['contents'][$x-1]['deals']['deals_voucher_expired'] != '')
-																<div class="col-md-4" id="voucher_bydate_{{$x}}" style="display: block;">
-																	<div class="input-group">
-																		<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" value="{{date('d-M-Y',strtotime($result['contents'][$x-1]['deals']['deals_voucher_expired']))}}">
-																		<span class="input-group-btn">
-																			<button class="btn default" type="button">
-																				<i class="fa fa-calendar"></i>
-																			</button>
-																		</span>
+				
+													<div class="form-group" style="display: block;">
+														<label class="col-md-2 control-label"></label>
+														<div class="col-md-10">
+															@if(isset($result['contents'][$x-1]['deals']['deals_voucher_expired']))
+																@if($result['contents'][$x-1]['deals']['deals_voucher_expired'] != '')
+																	<div class="col-md-4" id="voucher_bydate_{{$x}}" style="display: block;">
+																		<div class="input-group">
+																			<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" value="{{date('d-M-Y',strtotime($result['contents'][$x-1]['deals']['deals_voucher_expired']))}}">
+																			<span class="input-group-btn">
+																				<button class="btn default" type="button">
+																					<i class="fa fa-calendar"></i>
+																				</button>
+																			</span>
+																		</div>
 																	</div>
-																</div>
-																
-																<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: none;">
-																	<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day">
-																</div>
+																	
+																	<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: none;">
+																		<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day">
+																	</div>
+																@else
+																	<div class="col-md-4" id="voucher_bydate_{{$x}}" style="display: none;">
+																		<div class="input-group">
+																			<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" >
+																			<span class="input-group-btn">
+																				<button class="btn default" type="button">
+																					<i class="fa fa-calendar"></i>
+																				</button>
+																			</span>
+																		</div>
+																	</div>
+																	
+																	<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: block;">
+																		<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" value="@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration'])){{$result['contents'][$x-1]['deals']['deals_voucher_duration']}}@endif">
+																	</div>
+																@endif
 															@else
 																<div class="col-md-4" id="voucher_bydate_{{$x}}" style="display: none;">
 																	<div class="input-group">
@@ -1646,136 +1704,147 @@ $grantedFeature     = session('granted_features');
 																	<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" value="@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration'])){{$result['contents'][$x-1]['deals']['deals_voucher_duration']}}@endif">
 																</div>
 															@endif
-														@else
-															<div class="col-md-4" id="voucher_bydate_{{$x}}" style="display: none;">
-																<div class="input-group">
-																	<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" >
-																	<span class="input-group-btn">
-																		<button class="btn default" type="button">
-																			<i class="fa fa-calendar"></i>
-																		</button>
-																	</span>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-2 control-label"> Voucher Type  </label>
+														<div class="col-md-10">
+															<div class="input-icon right">
+																<div class="col-md-3">
+																	<div class="md-radio-inline">
+																		<div class="md-radio">
+																			<input type="radio" name="deals_voucher_type[{{$x-1}}]" id="voucher_type_autogenerated_{{$x}}" value="Auto generated" onClick="dealsVoucherType('autogenerated','{{$x}}')"
+																			@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
+																				@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'Auto generated')
+																					checked
+																				@endif
+																			@endif
+																			> 
+																			<label for="voucher_type_autogenerated_{{$x}}">
+																				<span></span>
+																				<span class="check"></span>
+																				<span class="box"></span> Auto Generated </label>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-3">
+																	<div class="md-radio-inline">
+																		<div class="md-radio">
+																			<input type="radio" name="deals_voucher_type[{{$x-1}}]" id="voucher_type_listvoucher_{{$x}}" value="List Vouchers" OnClick="dealsVoucherType('listvoucher','{{$x}}')"
+																			@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
+																				@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'List Vouchers')
+																					checked
+																				@endif
+																			@endif
+																			> 
+																			<label for="voucher_type_listvoucher_{{$x}}">
+																				<span></span>
+																				<span class="check"></span>
+																				<span class="box"></span> List Voucher </label>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-3">
+																	<div class="md-radio-inline">
+																		<div class="md-radio">
+																			<input type="radio" name="deals_voucher_type[{{$x-1}}]" id="voucher_type_unlimited_{{$x}}" value="Unlimited" OnClick="dealsVoucherType('unlimited','{{$x}}')"
+																			@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
+																				@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'Unlimited')
+																					checked
+																				@endif
+																			@endif
+																			> 
+																			<label for="voucher_type_unlimited_{{$x}}">
+																				<span></span>
+																				<span class="check"></span>
+																				<span class="box"></span> Unlimited </label>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
+														@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'Auto generated')
+															<div class="form-group" id="vouchertype_autogenerated_{{$x}}" style="display: block;">
+																<label class="col-md-2 control-label"></label>
+																<div class="col-md-10">
+																	<div class="col-md-3">
+																		<label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
+																	</div>
+																	<div class="col-md-3">
+																		<input type="text" class="form-control" name="voucher_type_autogenerated[]" id="vouchertype_autogenerated_input_{{$x}}" value="{{$result['contents'][$x-1]['deals']['deals_total_voucher']}}" placeholder="Total Voucher">
+																	</div>
 																</div>
 															</div>
 															
-															<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: block;">
-																<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" value="@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration'])){{$result['contents'][$x-1]['deals']['deals_voucher_duration']}}@endif">
+															<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: none;">
+																<label class="col-md-2 control-label"></label>
+																<div class="col-md-10">
+																	<div class="col-md-3">
+																		<label class="control-label">Input Voucher 
+																			<br> <small> Separated by new line </small>
+																		</label>
+																	</div>
+																	<div class="col-md-9">
+																		<textarea name="voucher_type_listvoucher[]" id="vouchertype_listvoucher_input_{{$x}}" class="form-control" rows="10"></textarea>
+																	</div>
+																</div>
+															</div>
+														@elseif($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'List Vouchers')
+															<div class="form-group" id="vouchertype_autogenerated_{{$x}}" style="display: none;">
+																<label class="col-md-2 control-label"></label>
+																<div class="col-md-10">
+																	<div class="col-md-3">
+																		<label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
+																	</div>
+																	<div class="col-md-3">
+																		<input type="text" class="form-control" name="voucher_type_autogenerated[]" id="vouchertype_autogenerated_input_{{$x}}" placeholder="Total Voucher">
+																	</div>
+																</div>
+															</div>
+															
+															<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: block;">
+																<label class="col-md-2 control-label"></label>
+																<div class="col-md-10">
+																	<div class="col-md-3">
+																		<label class="control-label">Input Voucher 
+																			<br> <small> Separated by new line </small>
+																		</label>
+																	</div>
+																	<div class="col-md-9">
+																		<textarea name="voucher_type_listvoucher[]" id="vouchertype_listvoucher_input_{{$x}}" class="form-control" rows="10">@foreach($result['contents'][$x-1]['deals']['deals_vouchers'] as $vouchers){{$vouchers['voucher_code']}}&#13;&#10;@endforeach</textarea>
+																	</div>
+																</div>
+															</div>
+														@else
+															<div class="form-group" id="vouchertype_autogenerated_{{$x}}" style="display: none;">
+																<label class="col-md-2 control-label"></label>
+																<div class="col-md-10">
+																	<div class="col-md-3">
+																		<label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
+																	</div>
+																	<div class="col-md-3">
+																		<input type="text" class="form-control" name="voucher_type_autogenerated[]" id="vouchertype_autogenerated_input_{{$x}}" placeholder="Total Voucher">
+																	</div>
+																</div>
+															</div>
+															
+															<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: none;">
+																<label class="col-md-2 control-label"></label>
+																<div class="col-md-10">
+																	<div class="col-md-3">
+																		<label class="control-label">Input Voucher 
+																			<br> <small> Separated by new line </small>
+																		</label>
+																	</div>
+																	<div class="col-md-9">
+																		<textarea name="voucher_type_listvoucher[]" id="vouchertype_listvoucher_input_{{$x}}" class="form-control listVoucher" rows="10"></textarea>
+																	</div>
+																</div>
 															</div>
 														@endif
-													</div>
-												</div>
-												
-												<div class="form-group">
-													<label class="col-md-2 control-label"> Voucher Type  </label>
-													<div class="col-md-10">
-														<div class="input-icon right">
-															<div class="col-md-3">
-																<div class="md-radio-inline">
-																	<div class="md-radio">
-																		<input type="radio" name="deals_voucher_type[{{$x-1}}]" id="voucher_type_autogenerated_{{$x}}" value="Auto generated" onClick="dealsVoucherType('autogenerated','{{$x}}')"
-																		@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
-																			@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'Auto generated')
-																				checked
-																			@endif
-																		@endif
-																		> 
-																		<label for="voucher_type_autogenerated_{{$x}}">
-																			<span></span>
-																			<span class="check"></span>
-																			<span class="box"></span> Auto Generated </label>
-																	</div>
-																</div>
-															</div>
-															<div class="col-md-3">
-																<div class="md-radio-inline">
-																	<div class="md-radio">
-																		<input type="radio" name="deals_voucher_type[{{$x-1}}]" id="voucher_type_listvoucher_{{$x}}" value="List Vouchers" OnClick="dealsVoucherType('listvoucher','{{$x}}')"
-																		@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
-																			@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'List Vouchers')
-																				checked
-																			@endif
-																		@endif
-																		> 
-																		<label for="voucher_type_listvoucher_{{$x}}">
-																			<span></span>
-																			<span class="check"></span>
-																			<span class="box"></span> List Voucher </label>
-																	</div>
-																</div>
-															</div>
-															<div class="col-md-3">
-																<div class="md-radio-inline">
-																	<div class="md-radio">
-																		<input type="radio" name="deals_voucher_type[{{$x-1}}]" id="voucher_type_unlimited_{{$x}}" value="Unlimited" OnClick="dealsVoucherType('unlimited','{{$x}}')"
-																		@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
-																			@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'Unlimited')
-																				checked
-																			@endif
-																		@endif
-																		> 
-																		<label for="voucher_type_unlimited_{{$x}}">
-																			<span></span>
-																			<span class="check"></span>
-																			<span class="box"></span> Unlimited </label>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
-													@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'Auto generated')
-														<div class="form-group" id="vouchertype_autogenerated_{{$x}}" style="display: block;">
-															<label class="col-md-2 control-label"></label>
-															<div class="col-md-10">
-																<div class="col-md-3">
-																	<label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
-																</div>
-																<div class="col-md-3">
-																	<input type="text" class="form-control" name="voucher_type_autogenerated[]" id="vouchertype_autogenerated_input_{{$x}}" value="{{$result['contents'][$x-1]['deals']['deals_total_voucher']}}" placeholder="Total Voucher">
-																</div>
-															</div>
-														</div>
-														
-														<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: none;">
-															<label class="col-md-2 control-label"></label>
-															<div class="col-md-10">
-																<div class="col-md-3">
-																	<label class="control-label">Input Voucher 
-																		<br> <small> Separated by new line </small>
-																	</label>
-																</div>
-																<div class="col-md-9">
-																	<textarea name="voucher_type_listvoucher[]" id="vouchertype_listvoucher_input_{{$x}}" class="form-control" rows="10"></textarea>
-																</div>
-															</div>
-														</div>
-													@elseif($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'List Vouchers')
-														<div class="form-group" id="vouchertype_autogenerated_{{$x}}" style="display: none;">
-															<label class="col-md-2 control-label"></label>
-															<div class="col-md-10">
-																<div class="col-md-3">
-																	<label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
-																</div>
-																<div class="col-md-3">
-																	<input type="text" class="form-control" name="voucher_type_autogenerated[]" id="vouchertype_autogenerated_input_{{$x}}" placeholder="Total Voucher">
-																</div>
-															</div>
-														</div>
-														
-														<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: block;">
-															<label class="col-md-2 control-label"></label>
-															<div class="col-md-10">
-																<div class="col-md-3">
-																	<label class="control-label">Input Voucher 
-																		<br> <small> Separated by new line </small>
-																	</label>
-																</div>
-																<div class="col-md-9">
-																	<textarea name="voucher_type_listvoucher[]" id="vouchertype_listvoucher_input_{{$x}}" class="form-control" rows="10">@foreach($result['contents'][$x-1]['deals']['deals_vouchers'] as $vouchers){{$vouchers['voucher_code']}}&#13;&#10;@endforeach</textarea>
-																</div>
-															</div>
-														</div>
 													@else
 														<div class="form-group" id="vouchertype_autogenerated_{{$x}}" style="display: none;">
 															<label class="col-md-2 control-label"></label>
@@ -1798,71 +1867,44 @@ $grantedFeature     = session('granted_features');
 																	</label>
 																</div>
 																<div class="col-md-9">
-																	<textarea name="voucher_type_listvoucher[]" id="vouchertype_listvoucher_input_{{$x}}" class="form-control listVoucher" rows="10"></textarea>
+																	<textarea name="voucher_type_listvoucher[]" id="vouchertype_listvoucher_input_{{$x}}" class="form-control" rows="10"></textarea>
 																</div>
 															</div>
 														</div>
 													@endif
-												@else
-													<div class="form-group" id="vouchertype_autogenerated_{{$x}}" style="display: none;">
-														<label class="col-md-2 control-label"></label>
-														<div class="col-md-10">
-															<div class="col-md-3">
-																<label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
-															</div>
-															<div class="col-md-3">
-																<input type="text" class="form-control" name="voucher_type_autogenerated[]" id="vouchertype_autogenerated_input_{{$x}}" placeholder="Total Voucher">
-															</div>
-														</div>
-													</div>
-													
-													<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: none;">
-														<label class="col-md-2 control-label"></label>
-														<div class="col-md-10">
-															<div class="col-md-3">
-																<label class="control-label">Input Voucher 
-																	<br> <small> Separated by new line </small>
-																</label>
-															</div>
-															<div class="col-md-9">
-																<textarea name="voucher_type_listvoucher[]" id="vouchertype_listvoucher_input_{{$x}}" class="form-control" rows="10"></textarea>
-															</div>
-														</div>
-													</div>
-												@endif
 
-												<div class="form-group">
-													<label class="col-md-2 control-label">Every user receives</label>
-													<div class="col-md-3">
-														<div class="input-group">
-															<input type="text" class="form-control price" name="voucher_given[{{$x-1}}]" id="voucher_given[]" value="@if(isset($result['contents'][$x-1]['voucher_given'])){{$result['contents'][$x-1]['voucher_given']}}@endif">
-															<span class="input-group-addon">
-																vouchers
-															</span>
+													<div class="form-group">
+														<label class="col-md-2 control-label">Every user receives</label>
+														<div class="col-md-3">
+															<div class="input-group">
+																<input type="text" class="form-control price" name="voucher_given[{{$x-1}}]" id="voucher_given[]" value="@if(isset($result['contents'][$x-1]['voucher_given'])){{$result['contents'][$x-1]['voucher_given']}}@endif">
+																<span class="input-group-addon">
+																	vouchers
+																</span>
+															</div>
 														</div>
 													</div>
+
 												</div>
-
 											</div>
 										</div>
 									</div>
 								</div>
+								<input type="hidden" 
+								name="id_deals[]" 
+								id="id_deals_{{$x}}" 
+								@if(isset($result['contents'][$x-1]['deals']['id_deals']))
+									value={{$result['contents'][$x-1]['deals']['id_deals']}}
+								@endif>
+								<input type="hidden" 
+								name="id_promotion_content[]" 
+								id="id_promotion_content_{{$x}}" 
+								@if(isset($result['contents'][$x-1]['id_promotion_content']))
+									value={{$result['contents'][$x-1]['id_promotion_content']}}
+								@endif>
+								@endfor
 							</div>
-							<input type="hidden" 
-							name="id_deals[]" 
-							id="id_deals_{{$x}}" 
-							@if(isset($result['contents'][$x-1]['deals']['id_deals']))
-								value={{$result['contents'][$x-1]['deals']['id_deals']}}
-							@endif>
-							<input type="hidden" 
-							name="id_promotion_content[]" 
-							id="id_promotion_content_{{$x}}" 
-							@if(isset($result['contents'][$x-1]['id_promotion_content']))
-								value={{$result['contents'][$x-1]['id_promotion_content']}}
-							@endif>
-							@endfor
 						</div>
-					</div>
 				
 					</div>
 				</div>

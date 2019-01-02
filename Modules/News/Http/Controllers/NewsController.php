@@ -26,6 +26,7 @@ class NewsController extends Controller
 
         // get outlet
         $data['news']    = parent::getData(MyHelper::post('news/list', ['admin'=> 1]));
+
         return view('news::index', $data);
     }
 	
@@ -545,4 +546,28 @@ class NewsController extends Controller
         $data['messages'] = ["Submit form success", "Thank you"];
         return view('news::news_custom_form_success', $data);
     }*/
+
+    public function formData($id, $slug)
+    {
+        $data = [
+            'title'          => 'News',
+            'sub_title'      => 'News Form Data',
+            'menu_active'    => 'news',
+            'submenu_active' => 'news-list',
+            'news_form_structures' => [],
+            'news_form_data' => [],
+        ];
+
+        $result = parent::getData(MyHelper::post('news/form-data', ['id_news' => $id]));
+
+        if (empty($result)) {
+            return back()->withErrors(['Form data news not found.']);
+        }
+        else {
+            $data['news_form_structures'] = $result['news_form_structures'];
+            $data['news_form_data'] = $result['news_form_data'];
+        }
+
+        return view('news::form_data', $data);
+    }
 }

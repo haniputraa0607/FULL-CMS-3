@@ -198,6 +198,8 @@
     @php
       // print_r($news[0]);die();
     @endphp
+
+    @if (isset($news[0]['news_event_date_start']) || isset($news[0]['news_event_location_name']) || isset($news[0]['news_event_location_address']) || isset($news[0]['news_event_location_phone']) || isset($news[0]['news_event_location_map']))
   	<div class="kotak1">
   		<div class="container line-bottom">
         @if (isset($news[0]['news_event_date_start']))
@@ -205,7 +207,6 @@
   	   			<div class="col-12 text-grey-black text-13-3px open-sans-font"><img class="logo-img" src="{{ url('img/webview/calendar.png') }}"> <span> {{ date('d F', strtotime($news[0]['news_event_date_start'])) }} - {{ date('d F Y', strtotime($news[0]['news_event_date_end'])) }} </span></div>
   	   		</div>
         @endif
-
         @if (isset($news[0]['news_event_location_name']))
   	   		<div class="row space-bottom">
   	   			<div class="col-12 text-grey-black text-13-3px open-sans-font"><img class="logo-img" src="{{ url('img/webview/outlet.png') }}"> <span> {{ $news[0]['news_event_location_name'] }} </span></div>
@@ -224,7 +225,7 @@
   	   		</div>
         @endif
 
-        @if (isset($news[0]['news_event_latitude']))
+        @if (isset($news[0]['news_event_location_map']))
   	   		<div class="row space-bottom">
   	   			<div class="col-12 text-grey-black text-13-3px open-sans-font"><div id="map-canvas" style="width:500;height:180px;"></div></div>
   	   		</div>
@@ -232,6 +233,7 @@
 
 	   	</div>
   	</div>
+    @endif
 
   	<div class="kotak2">
   		<div class="container">

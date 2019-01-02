@@ -10,6 +10,12 @@ use App\Lib\MyHelper;
 
 class SettingController extends Controller
 {
+    public function faqWebview()
+    {
+        $faqList = MyHelper::get('setting/faq');
+        return view('setting::webview.faq', ['faq' => $faqList['result']]);
+    }
+
 	public function appLogoSave(Request $request){
         $post = $request->except('_token');
         if(isset($post['app_logo'])){
@@ -488,10 +494,10 @@ class SettingController extends Controller
         }
         else {
             $data['complete_profile'] = [
-                'complete_profile_point'    => 0,
-                'complete_profile_cashback' => 0,
-                'complete_profile_count'    => 0,
-                'complete_profile_interval' => 0,
+                'complete_profile_point'    => '',
+                'complete_profile_cashback' => '',
+                'complete_profile_count'    => '',
+                'complete_profile_interval' => '',
             ];
         }
 
@@ -839,6 +845,13 @@ class SettingController extends Controller
     // complete user profile settings
     public function completeProfile(Request $request)
     {
+        $validatedData = $request->validate([
+            'complete_profile_point'    => 'required',
+            'complete_profile_cashback' => 'required',
+            'complete_profile_count'    => 'required',
+            'complete_profile_interval' => 'required'
+        ]);
+
         $post = $request->except('_token');
 
         // update complete profile
