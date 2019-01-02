@@ -93,7 +93,7 @@ $('.cashbackKtutup').click(function() {
 });
 
 $('.cashbackDelete').click(function() {
-    var check = checkServiceJumlah();
+    var check = checkCashbackJumlah();
     console.log(check);
     var back = check - 2;
 
@@ -126,7 +126,7 @@ function checkCashbackJumlah() {
 }
 
 function clickcashbackvalue() {
-    var check = checkServiceJumlah();
+    var check = checkCashbackJumlah();
 
     $('.cashbackValue').prop('disabled', true);
     $('.cashbackOperator').prop('disabled', false);

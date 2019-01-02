@@ -33,7 +33,7 @@
 @php
     // print_r($default);die();
 @endphp
-	<div class="page-bar">
+    <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
                 <a href="/">Home</a>
@@ -97,51 +97,51 @@
                         {{ csrf_field() }}
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_0">
-	                            <div class="portlet light bordered" style="padding-bottom: 40px">
-	                            	Grand total calculation of transactions (<b>Swap the button as you wish</b>)
+                                <div class="portlet light bordered" style="padding-bottom: 40px">
+                                    Grand total calculation of transactions (<b>Swap the button as you wish</b>)
                                     <i class="fa fa-question-circle tooltips" data-original-title="Urutan perhitungan dalam menghitung grand total dari setiap transaksi" data-container="body"></i>
-	                                <div class="portlet-body form">
-	                                    <div class="form-body">
-	                                        <div class="col-md-2">
-			                                	<div id="item1" class="div-drag" >
-													{!! $button[0] !!}
-												</div>
-			                                </div>
-			                                <div class="col-md-2">
-			                                	<div id="item2" draggable="true" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
-													{!! $button[1] !!}
-												</div>
-			                                </div>
-			                                <div class="col-md-2">
-			                                	<div id="item3" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
-													{!! $button[2] !!}
-												</div>
-			                                </div>
-			                                <div class="col-md-2">
-			                                	<div id="item4" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
-													{!! $button[3] !!}
-												</div>
-			                                </div>
-			                                <div class="col-md-2">
-			                                	<div id="item5" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
-													{!! $button[4] !!}
-												</div>
-			                                </div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="portlet light bordered" style="padding-bottom: 40px">
-	                            	<i class="icon-trash" style="margin: 10px"> Trash (<b>Remove the unnecessary in the trash column</b>)
+                                    <div class="portlet-body form">
+                                        <div class="form-body">
+                                            <div class="col-md-2">
+                                                <div id="item1" class="div-drag" >
+                                                    {!! $button[0] !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="item2" draggable="true" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                                    {!! $button[1] !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="item3" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                                    {!! $button[2] !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="item4" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                                    {!! $button[3] !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div id="item5" class="div-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                                    {!! $button[4] !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet light bordered" style="padding-bottom: 40px">
+                                    <i class="icon-trash" style="margin: 10px"> Trash (<b>Remove the unnecessary in the trash column</b>)
                                         <i class="fa fa-question-circle tooltips" data-original-title="kolom yang digunakan untuk membuang value tidak terpakai pada kolom diatas dalam menghitung grand total transaksi" data-container="body"></i></i>
-	                            	<div id="trash" ondrop="drop(event)" ondragover="allowDrop(event)" style="padding-bottom: 40px">
-	                            		@if (isset($trash))
-	                            			@foreach ($trash as $key => $row)
-	                            				{!! $row !!}
-	                            			@endforeach
-	                            		@endif
-	                            	</div>
+                                    <div id="trash" ondrop="drop(event)" ondragover="allowDrop(event)" style="padding-bottom: 40px">
+                                        @if (isset($trash))
+                                            @foreach ($trash as $key => $row)
+                                                {!! $row !!}
+                                            @endforeach
+                                        @endif
+                                    </div>
 
-	                            </div>
+                                </div>
                             </div>
                             <div class="tab-pane" id="tab_1">
                                 <div class="portlet light bordered">

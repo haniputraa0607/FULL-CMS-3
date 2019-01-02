@@ -1,5 +1,4 @@
-// var url = 'http://crmsys.staging.co.id/transaction/setting/rule/update';
-var url = 'http://localhost/crmsys-view/public/transaction/setting/rule/update';
+var url = $('#url').val();
 
 function allowDrop(ev) {
     ev.preventDefault();
