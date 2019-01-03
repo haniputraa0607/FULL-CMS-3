@@ -70,6 +70,9 @@ class OutletController extends Controller
             return view('outlet::create', $data);
         }
         else {
+            if(isset($post['ampas'])){
+                unset($post['ampas']);
+            }
             if (isset($post['next'])) {
                 $next = 1;
                 unset($post['next']);

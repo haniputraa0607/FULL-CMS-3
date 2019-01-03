@@ -29,7 +29,7 @@
     	}
 
     	.brown div {
-    		color: brown;
+    		color: #7a361a;
     	}
 
     	.completed {
@@ -89,6 +89,10 @@
     	.text-grey-black {
     		color: #4c4c4c;
     	}
+
+		.text-grey-2{
+			color: #a9a9a9;
+		}
 
     	.text-grey-red {
     		color: #9a0404;
@@ -201,8 +205,21 @@
       }
 
       .cf_videoshare_referral {
-   display: none !important;
-}
+		display: none !important;
+	}
+
+	.day-alphabet{
+		margin: 0 10px;
+		border-radius: 50%;
+		width: 20px;
+		height: 20px;
+		text-align: center;
+	}
+
+	.day-alphabet-today{
+		background: #7a361a;
+		color: white !important;
+	}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
@@ -213,11 +230,11 @@
   		<div class="container">
 	   		<div class="row">
 	   			<div class="col-12 text-black text-14px open-sans-font space-bottom">{{ $data[0]['outlet_name'] }}</div>
-	   			<div class="col-1 text-grey-black text-13-3px open-sans-font space-text"><img class="logo-img" src="{{ url('img/webview/calendar.png') }}"></div>
+	   			<div class="col-1 text-grey-black text-13-3px open-sans-font space-text"><img class="logo-img" src="{{ url('img/webview/location.png') }}"></div>
 	   			<div class="col-10 text-grey-black text-13-3px open-sans-font space-text"><span> {{ $data[0]['outlet_address'] }} </span></div>
 	   		</div>
 	   		<div class="row space-bottom line-bottom">
-	   			<div class="col-1 text-grey-black text-13-3px open-sans-font space-text"><img class="logo-img" src="{{ url('img/webview/calendar.png') }}"></div>
+	   			<div class="col-1 text-grey-black text-13-3px open-sans-font space-text"><img class="logo-img" src="{{ url('img/webview/phone.png') }}"></div>
 	   			<div class="col-10 text-grey-black text-13-3px open-sans-font space-text"><span> {{ $data[0]['call'] }} </span></div>
 	   		</div>
 	   	</div>
@@ -261,9 +278,9 @@
   			@endphp
   			@foreach ($data[0]['outlet_schedules'] as $key => $val)
 		   		<div class="row space-sch @if ($val['day'] == $hari_ini) brown @endif">
-		   			<div class="col-1 text-grey-black text-13-3px open-sans-font">{{ substr($val['day'], 0,1) }}</div>
-		   			<div class="col-2 text-grey-black text-13-3px open-sans-font min-left"> {{ $val['day'] }} </div>
-		   			<div class="col-5 text-grey-black text-13-3px open-sans-font"> 10.00 - 22.00 </div>
+		   			<div class="text-grey-2 text-13-3px open-sans-font day-alphabet @if ($val['day'] == $hari_ini) day-alphabet-today @endif">{{ substr($val['day'], 0,1) }}</div>
+		   			<div class="col-2 text-grey-2 text-13-3px open-sans-font min-left"> {{ $val['day'] }} </div>
+		   			<div class="col-5 text-grey-2 text-13-3px open-sans-font"> 10.00 - 22.00 </div>
 		   		</div>
 		   	@endforeach
 	   	</div>

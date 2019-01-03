@@ -237,6 +237,68 @@
             });
         });
     </script>
+
+<script type="text/javascript">
+    $(document).on('click', '.same', function() {
+      var open = $(this).parent().parent().parent().find('.kelas-open').val();
+      var close = $(this).parent().parent().parent().find('.kelas-close').val();
+      if (open == '') {
+        alert('Open Hour field cannot be empty');
+        $(this).parent().parent().parent().find('.kelas-open').focus();
+        return false;
+      }
+
+      if (close == '') {
+        alert('Close Hour field cannot be empty');
+        $(this).parent().parent().parent().find('.kelas-close').focus();
+        return false;
+      }
+      
+      if ($(this).is(':checked')) {
+        var check = $('input[name="ampas[]"]:checked').length;
+        var count = $('.same').prop('checked', false);
+        $(this).prop('checked', true);
+
+        if (check == 1) {
+            var all_open = $('.kelas-open');
+            var array_open = [];
+            for (i = 0; i < all_open.length; i++) { 
+              array_open.push(all_open[i]['defaultValue']);
+            }
+            sessionStorage.setItem("item_open", array_open);
+
+            var all_close = $('.kelas-close');
+            var array_close = [];
+            for (i = 0; i < all_close.length; i++) { 
+              array_close.push(all_close[i]['defaultValue']);
+            }
+            sessionStorage.setItem("item_close", array_close);
+        }
+
+        $('.kelas-open').val(open);
+        $('.kelas-close').val(close);
+        
+      } else {
+
+          var item_open = sessionStorage.getItem("item_open");
+          var item_close = sessionStorage.getItem("item_close");
+
+          var myarr_open = item_open.split(",");
+          var myarr_close = item_close.split(",");
+          $('.kelas-open').each(function(i, obj) {
+              $(this).val(myarr_open[i]);
+          });
+
+          $('.kelas-close').each(function(i, obj) {
+              $(this).val(myarr_close[i]);
+          });
+
+          $(this).parent().parent().parent().find('.kelas-open').val(open);
+          $(this).parent().parent().parent().find('.kelas-close').val(close);
+      }
+    });
+  </script>
+
 @endsection
 
 @section('content')
@@ -388,42 +450,50 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Open Hour
-                            <i class="fa fa-question-circle tooltips" data-original-title="Jam buka outlet" data-container="body"></i>
+                            Schedule Open & Close Hour
+                            <i class="fa fa-question-circle tooltips" data-original-title="Jadwal jam buka dan jam tutup outlet" data-container="body"></i>
                             </label>
                         </div>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <input type="time" class="form-control" name="outlet_open_hours" value="@if(old('outlet_open_hours')){{ old('outlet_open_hours', date('H:i')) }}@endif">
-                                <span class="input-group-btn">
-                                    <button class="btn default" type="button">
-                                        <i class="fa fa-clock-o"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
                         <div class="col-md-9">
-                        </div>
-                    </div>
+                            <div class="row" style="margin:20px 0">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Open Hour</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Close Hour</label>
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Close Hour
-                            <i class="fa fa-question-circle tooltips" data-original-title="Jam tutup outlet" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <input type="time" class="form-control" name="outlet_close_hours" value="@if(old('outlet_open_hours')){{ old('outlet_close_hours', date('H:i')) }}@endif">
-                                <span class="input-group-btn">
-                                    <button class="btn default" type="button">
-                                        <i class="fa fa-clock-o"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-md-9">
+                            @php
+                                $sch = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+                            @endphp
+
+                            @foreach ($sch as $val)
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label style="margin-top: 5px;margin-left: 15px;">{{ $val }}</label>
+                                        <input type="hidden" name="day[]" value="{{ $val }}">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label style="margin-top: 5px;margin-left: 15px;">:</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="time" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open" name="open[]" value="{{ old('open') }}">
+                                    </div>
+                                    <div class="col-md-4" style="padding-bottom: 5px">
+                                        <input type="time" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close" name="close[]" value="{{ old('close') }}">
+                                    </div>
+                                    <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
+                                        <label class="mt-checkbox mt-checkbox-outline"> Same all
+                                            <input type="checkbox" name="ampas[]" class="same" data-check="ampas"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-12" style="border-bottom: 1px solid #eee;margin-bottom: 5px;margin-left: 15px;width: 95%"></div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 

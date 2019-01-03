@@ -713,7 +713,6 @@ class ProductController extends Controller
         } else {
             return back()->witherrors(['Product Not Found']);
         }
-
         return view('product::product.visibility', $data);
     }
 

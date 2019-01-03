@@ -97,7 +97,7 @@ class UsersController extends Controller
 		foreach($query['result'] as $autonya){
 			if($autonya['autocrm_title'] == ucwords(str_replace('-',' ',$subject))){
 				$auto = $autonya;
-				if(strpos($subject, 'pin') !== false){
+				if($subject == 'pin-sent'){
 					if($auto['autocrm_sms_content']){
 						$cut1 = substr($auto['autocrm_sms_content'], -12);
 						$cut2 = substr($auto['autocrm_sms_content'], 0, 4);
