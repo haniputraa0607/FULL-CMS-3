@@ -168,10 +168,10 @@
                                     <td>{{ $value['city']['city_name'] }}</td>
                                 @endif
                                 <td>
-                                    @if(!empty($value['outlet_open_hours'])){{ date('H:i', strtotime($value['outlet_open_hours'])) }}@endif
+                                    @if(!empty($value['today']['open'])){{ date('H:i', strtotime($value['today']['open'])) }}@endif
                                 </td>
                                 <td>
-                                    @if(!empty($value['outlet_close_hours'])){{ date('H:i', strtotime($value['outlet_close_hours'])) }}@endif
+                                    @if(!empty($value['today']['close'])){{ date('H:i', strtotime($value['today']['close'])) }}@endif
                                 </td>
                                 @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                     <td style="width: 85px;">
