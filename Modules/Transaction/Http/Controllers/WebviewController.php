@@ -16,7 +16,7 @@ class WebviewController extends Controller
     	$data = json_decode(base64_decode($request->get('data')), true);
     	$data['check'] = 1;
     	$check = MyHelper::post('transaction/detail/webview', $data);
-    	// return $check;
+        
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data = $check['result'];
     	} elseif (isset($check['status']) && $check['status'] == 'success') {
@@ -41,11 +41,13 @@ class WebviewController extends Controller
     		$view = 'detail_transaction_voucher';
     	}
 
+        if (isset($data['success'])) {
+            $view = 'transaction_success';
+        }
     	if (isset($data['order_label_v2'])) {
     		$data['order_label_v2'] = explode(',', $data['order_label_v2']);
     		$data['order_v2'] = explode(',', $data['order_v2']);
     	}
-    	
         return view('transaction::webview.'.$view.'')->with(compact('data'));
     }
 
@@ -73,5 +75,10 @@ class WebviewController extends Controller
         }
 
         return view('transaction::webview.'.$view.'')->with(compact('data'));
+    }
+
+    public function success()
+    {
+        return view('transaction::webview.transaction_success');
     }
 }

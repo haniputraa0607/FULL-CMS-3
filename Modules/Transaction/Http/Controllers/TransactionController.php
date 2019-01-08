@@ -82,7 +82,8 @@ class TransactionController extends Controller
         // return $subject;
 		$data = [ 'title'             => 'Transaction Auto Response '.ucfirst(str_replace('-',' ',$subject)),
 				  'menu_active'       => 'transaction',
-				  'submenu_active'    => 'transaction-autoresponse-'.$subject
+                  'submenu_active'    => 'transaction-autoresponse-'.$subject,
+                  'type'              => 'trx'  
 				];
         $query = MyHelper::get('autocrm/list');
 		$test = MyHelper::get('autocrm/textreplace');
@@ -1049,7 +1050,21 @@ class TransactionController extends Controller
             return parent::redirect($detail, 'Data not valid');
         }
 
-        return view('transaction::transactionDetail', $data);
+        $grand_total = MyHelper::post('transaction/grand-total', []);
+        if (empty($grand_total)) {
+            return view('transaction::not_found', ['messages' => ['Setting Not Found']]);
+        } else {
+            foreach ($grand_total as $key => $value) {
+                if ($value == 'shipping') {
+                    $grand_total[$key] = 'shipment';
+                }
+
+            }
+        }
+
+        $data['setting'] = $grand_total;
+        // return view('transaction::transactionDetail', $data);
+        return view('transaction::transactionDetail2', $data);
     }
 
     public function transactionDelete($id) {
