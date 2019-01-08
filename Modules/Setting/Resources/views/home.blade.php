@@ -712,10 +712,6 @@
 						</div>
 					</div>
 					<div class="portlet-body">
-						<div class="alert alert-info">
-							When register, user only fill some data.
-							App will pop-ups a form when it launch to completes user profile.
-						</div>
 
 						<form id="form" role="form" class="form-horizontal" action="{{url('setting/complete-profile')}}" method="POST" enctype="multipart/form-data">
 							<div class="form-body">
@@ -932,7 +928,7 @@
 							<label class="control-label">Banner Image <span class="required" aria-required="true"> * </span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/400x300/EFEFEF/AAAAAA&amp;text=400+x+300" alt="">
+									<img src="http://www.placehold.it/800x600/EFEFEF/AAAAAA&amp;text=400+x+300" alt="">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1011,7 +1007,7 @@
 							<label class="control-label">Banner Image <span class="required" aria-required="true"> * </span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/400x300/EFEFEF/AAAAAA&amp;text=400+x+300" alt="" id="edit-banner-img">
+									<img src="http://www.placehold.it/800x600/EFEFEF/AAAAAA&amp;text=400+x+300" alt="" id="edit-banner-img">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>

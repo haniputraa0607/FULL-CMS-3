@@ -784,7 +784,7 @@ class SettingController extends Controller
     public function createBanner(Request $request)
     {
         $validatedData = $request->validate([
-            'banner_image' => 'required|dimensions:width=400,height=300'
+            'banner_image' => 'required|dimensions:width=800,height=600'
         ]);
 
         $post = $request->except('_token');
@@ -805,7 +805,7 @@ class SettingController extends Controller
     {
         $validatedData = $request->validate([
             'id_banner'    => 'required',
-            'banner_image' => 'sometimes|dimensions:width=400,height=300'
+            'banner_image' => 'sometimes|dimensions:width=800,height=600'
         ]);
 
         $post = $request->except('_token');
