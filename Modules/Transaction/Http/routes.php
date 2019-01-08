@@ -65,5 +65,6 @@ Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => '
 {
     Route::get('/web/view/detail', 'WebviewController@detail');
     Route::get('/web/view/detail/point', 'WebviewController@detailPoint');
+    Route::get('/web/view/detail/balance', 'WebviewController@detailBalance');
     Route::get('/web/view/trx', 'WebviewController@success');
 });

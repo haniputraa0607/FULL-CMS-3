@@ -340,7 +340,7 @@
                         <div class="col-12 text-13-3px text-grey-white space-nice text-center ">{{ $data['outlet']['outlet_address'] }}</div>
                     </div>
                         <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan diproses pada</div>
-                        <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['detail']['pickup_at'])) }}</div>
+                        <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['transaction_date']['pickup_at'])) }}</div>
                     @if ($data['detail']['pickup_type'] == 'set time')
                         <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
                     @elseif($data['detail']['pickup_type'] == 'at arrival')

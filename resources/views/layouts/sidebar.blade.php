@@ -342,7 +342,7 @@
 							<span class="title">Offline</span>
 						</a>
 					</li>
-					@if(MyHelper::hasAccess([14], $configs)) 
+					@if(MyHelper::hasAccess([12], $configs)) 
 					<li class="nav-item {{($submenu_active == 'transaction-pickup order') ? 'active open' : ''}}">
 						<a href="{{url('transaction/pickup order/'.date('YmdHis'))}}" class="nav-link ">
 							<span class="title">Pickup Order</span>
