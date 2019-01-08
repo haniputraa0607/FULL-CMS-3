@@ -9,13 +9,12 @@
         <title>User Profile</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Kopi Kenangan" name="description" />
+        <meta content="Technopartner Indonesia CRM System" name="description" />
         <meta content="" name="author" />
         
         <link href="{{ url('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
         <script src="{{ url('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{ url('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN THEME GLOBAL STYLES -->
@@ -28,9 +27,14 @@
         <link rel="shortcut icon" href="favicon.ico" /> 
 
         <style type="text/css">
+            @font-face {
+                font-family: "Seravek";
+                src: url('{{ url('/fonts/Seravek.otf') }}');
+            }
             body{
                 background-color: #fff;
-                font-size: 15px;
+                font-size: 14px;
+                font-family: "Seravek", sans-serif;
             }
         </style>
     </head>

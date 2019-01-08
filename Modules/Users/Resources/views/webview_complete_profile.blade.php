@@ -9,13 +9,12 @@
         <title>User Profile</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Kopi Kenangan" name="description" />
+        <meta content="Technopartner Indonesia CRM System" name="description" />
         <meta content="" name="author" />
         
         <link href="{{ url('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
         <script src="{{ url('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{ url('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ url('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ url('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -37,21 +36,29 @@
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="favicon.ico" /> 
         <style type="text/css">
+            @font-face {
+              font-family: "Seravek";
+              src: url('{{ url('/fonts/Seravek.otf') }}');
+            }
             body{
                 background-color: #fff;
-                font-size: 15px;
+                font-size: 14px;
+                font-family: "Seravek", sans-serif;
             }
             .text-brown{
-                color: #7A361A;
+                color: #6C5648;
             }
-            .birthday input,
-            .birthday input::placeholder{
+            .form-group label{
+              color: #666666;
+              font-size: 13px;
+            }
+            .birthday input{
                 color: #000 !important;
                 font-size: 15px;
             }
             .birthday-img{
               position: absolute;
-              top: 30px;
+              top: 50px;
               right: 3px;
               width: 17px;
               height: 17px;
@@ -63,29 +70,25 @@
             .city {
               position: relative;
             }
-
             .gender-select {
               display: none; /*hide original SELECT element:*/
             }
-
             .select-selected {
               color: #000;
-              border-bottom: 1px solid #D9D6D6;
-              padding: 6px 0px;
+              /*border-bottom: 1px solid #D9D6D6;*/
+              padding: 8px 0px;
             }
-
             /* the arrow inside the select element: */
             .select-img{
               position: absolute;
-              top: 34px;
+              top: 55px;
               right: 3px;
               width: 17px;
               height: 17px;
             }
-
             /*style the items (options), including the selected item:*/
-            .select-items div,
             .select-selected {
+              border: 1px solid #c2cad8;
               border: 1px solid transparent;
               border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
               cursor: pointer;
@@ -93,26 +96,25 @@
             }
             .select-items div{
               color: #333;
-              padding: 6px 8px;
+              padding: 8px;
             }
-
             /*style items (options):*/
             .select-items {
+              border: 1px solid #c2cad8;
               position: absolute;
-              background-color: #fafafa;
-              top: 100%;
+              background-color: #fff;
+              top: 99%;
               left: 0;
               right: 0;
               z-index: 99;
             }
-
             /*hide the items when the select box is closed:*/
             .select-hide {
               display: none;
             }
-
             .select-items div:hover, .same-as-selected {
-              background-color: #f0f0f0;
+              color: #fff !important;
+              background-color: #6C5648;
             }
             /* end of custom select */
 
@@ -133,30 +135,41 @@
             }
             .select2-container--default,
             .select2-results__option--highlighted[aria-selected] {
-                background-color: #7A361A !important;
+                background-color: #6C5648 !important;
             }
             .select2-selection__arrow{
                 display: none;
             }
-            .city .select-img{
-                top: 30px;
-            }
 
+            .button-wrapper {
+              position: absolute;
+              bottom: 30px;
+              left: 0;
+              right: 0;
+            }
             .button-wrapper .btn{
-                width: 230px;
+                width: 75%;
+                max-width: 500px;
                 font-size: 16px;
             }
             .btn-round{
                 border-radius: 25px !important;
             }
             .btn-outline.brown{
-                border-color: #7A361A;
-                color: #7A361A;
+                border-color: #6C5648;
+                color: #6C5648;
                 background-color: #fff;
             }
             .button-wrapper .btn-default{
                 border-color: #000;
                 color: #000;
+            }
+
+            .datepicker .active {
+                background-color: #6C5648 !important;
+            }
+            .datepicker .active:hover{
+                background-color: #907462 !important;
             }
         </style>
 
@@ -164,11 +177,11 @@
     <!-- END HEAD -->
 
     <body>
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-4 col-md-offset-4" style="position: unset;">
             @include('layouts.notifications')
             
             <div class="text-brown" style="margin-top: 50px; margin-bottom: 20px; text-align: justify;">
-                Silahkan lengkapi data dibawah ini dan dapatkan Kopi Points
+                Silahkan lengkapi data di bawah ini dan dapatkan Kopi Points
             </div>
 
             @if($user != null)
@@ -180,32 +193,32 @@
                     <div class="form-body">
                         @if($user['gender'] == null)
                         <div class="form-group form-md-line-input gender-wrapper">
+                            <label>Jenis Kelamin</label>
                             <select class="form-control gender-select" name="gender" required>
-                                <option value="">Jenis Kelamin</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
+                                <option value="Male" selected>Laki-laki</option>
+                                <option value="Female">Perempuan</option>
                             </select>
-                            <img class="select-img" src="{{ asset('img/webview/arrow-down-brown.png') }}" alt="">
+                            <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
                         </div>
                         @endif
 
                         @if($user['birthday'] == null)
                         <div class="form-group form-md-line-input birthday">
-                            <input type="text" class="form-control datepicker" placeholder="Tanggal Lahir" name="birthday" value="{{ old('birthday') }}" required>
-                            <img class="birthday-img" src="{{ asset('img/webview/calendar-brown.png') }}" alt="">
+                            <label>Tanggal Lahir</label>
+                            <input type="text" class="form-control datepicker" name="birthday" value="{{ old('birthday') }}" required>
+                            <img class="birthday-img" src="{{ asset('img/webview/calendar-o.png') }}" alt="">
                         </div>
                         @endif
 
-
                         @if($user['id_city'] == null)
                         <div class="form-group form-md-line-input city">
+                            <label>Kota</label>
                             <select class="form-control select2" placeholder="Select City" name="id_city" required style="width: 100%;">
-                                <option value="">Kota</option>
-                                @foreach ($cities as $city)
-                                    <option value="{{$city['id_city']}}" {{ (old('id_city')==$city['id_city'] ? "selected" : "") }}>{{ $city['city_type']. " " .$city['city_name'] }}</option>
+                                @foreach ($cities as $city)152
+                                    <option value="{{$city['id_city']}}" @if(old('id_city')==$city['id_city']) selected @elseif($city['id_city']=="152") selected @endif>{{ $city['city_type']. " " .$city['city_name'] }}</option>
                                 @endforeach
                             </select>
-                            <img class="select-img" src="{{ asset('img/webview/arrow-down-brown.png') }}" alt="">
+                            <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
                         </div>
                         @endif
 
@@ -213,19 +226,15 @@
                             <div class="button-wrapper text-center">
                                 <input type="submit" value="SIMPAN" class="btn btn-round btn-outline brown">
                             </div>
-
-                            <div class="button-wrapper text-center" style="margin-top: 20px;">
-                                <a href="{{ url('webview/complete-profile/later', $user['phone']) }}" class="btn btn-round btn-outline btn-default">LEWATI</a>
-                            </div>
                         </div>
                     </div>
                 </form>
                 {{-- end form --}}
                 @else
-                    <div class="alert alert-warning">Data is completed</div>
+                    <div class="alert alert-warning text-brown">Data is completed</div>
                 @endif
             @else
-                <div class="alert alert-warning">Data not found</div>
+                <div class="alert alert-warning text-brown">Data not found</div>
             @endif
         </div>
                             

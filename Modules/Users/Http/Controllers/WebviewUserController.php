@@ -12,11 +12,24 @@ use App\Lib\MyHelper;
 class WebviewUserController extends Controller
 {
     // get webview form
-    public function completeProfile($user_phone)
+    public function completeProfile(Request $request)
     {
-        $user = parent::getData(MyHelper::postBiasa('users/get', ['phone' => $user_phone]));
+        $bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return abort(404);
+        }
+
+        $user = parent::getData(MyHelper::getWithBearer('users/get', $bearer));
+        if (empty($user)) {
+            return [
+                'status' => 'fail',
+                'messages' => 'Unauthorize.'
+            ];
+        }
+
         $data['cities'] = parent::getData(MyHelper::get('city/list'));
 
+        $data['user'] = [];
         // get only some data
         if ($user) {
             $user_data['phone']    = $user['phone'];
@@ -26,10 +39,7 @@ class WebviewUserController extends Controller
             
             $data['user'] = $user_data;
         }
-        else{
-            $data['user'] = [];
-        }
-
+        
         return view('users::webview_complete_profile', $data);
     }
 
@@ -44,23 +54,14 @@ class WebviewUserController extends Controller
         }
         
         $result = MyHelper::post('users/complete-profile', $post);
-        // dd($result);
 
         if ($result['status']=="success") {
             $data['messages'] = ["Save data success", "Thank you"];
             return view('users::webview_complete_profile_success', $data);
         }
         else{
-            return back()->withInput()->withErrors(['Save data fail', 'Please check again your input']);
+            return back()->withInput()->withErrors(['Save data fail']);
         }
     }
-    
-    // when user skip profile form
-    public function completeProfileLater($user_phone)
-    {
-        $post['phone'] = $user_phone;
-        $result = MyHelper::post('users/complete-profile/later', $post);
 
-        return $result;
-    }
 }

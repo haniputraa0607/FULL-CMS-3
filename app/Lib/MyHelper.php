@@ -115,6 +115,48 @@ class MyHelper
     }
   }
 
+  public static function getWithBearer($url, $bearer){
+    $api = env('APP_API_URL');
+    $client = new Client;
+
+
+    $content = array(
+      'headers' => [
+        'Authorization'   => $bearer,
+        'Accept'          => 'application/json',
+        'Content-Type'    => 'application/json',
+        'ip-address-view' => $_SERVER["REMOTE_ADDR"],
+        'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
+      ]
+    );
+ 
+    try {
+      $response =  $client->request('GET',$api.'api/'.$url, $content);
+      return json_decode($response->getBody(), true);
+    }
+    catch (\GuzzleHttp\Exception\RequestException $e) {
+      try{
+        
+        if($e->getResponse()){
+          $response = $e->getResponse()->getBody()->getContents();
+          $error = json_decode($response, true);
+
+          if(!$error) {
+            return $e->getResponse()->getBody();
+          }
+          else {
+           return $error;
+          }
+        }
+        else return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+
+      }
+      catch(Exception $e){
+        return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+      }
+    }
+  }
+
   public static function get($url){
     $api = env('APP_API_URL');
     $client = new Client;
@@ -221,6 +263,43 @@ class MyHelper
 
     try {
       $response = $client->post($api.'api/'.$url,$content);
+      if(!is_array(json_decode($response->getBody(), true)));
+      return json_decode($response->getBody(), true);
+    }catch (\GuzzleHttp\Exception\RequestException $e) {
+        try{
+          //print_r($e);
+          if($e->getResponse()){
+            $response = $e->getResponse()->getBody()->getContents();
+            if(!is_array($response));
+            return json_decode($response, true);
+          }
+          else  return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+
+        }
+        catch(Exception $e){
+          return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+        }
+    }
+  }
+
+  public static function postWithBearer($url, $post, $bearer){
+    $api = env('APP_API_URL');
+    $client = new Client;
+
+    $content = array(
+      'headers' => [
+        'Authorization' => $bearer,
+        'Accept'        => 'application/json',
+        'Content-Type'  => 'application/json',
+        'ip-address-view' => $_SERVER["REMOTE_ADDR"],
+        'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
+      ],
+      'json' => (array) $post
+    );
+
+    try {
+      $response = $client->post($api.'api/'.$url,$content);
+      // echo "a"; exit();
       if(!is_array(json_decode($response->getBody(), true)));
       return json_decode($response->getBody(), true);
     }catch (\GuzzleHttp\Exception\RequestException $e) {

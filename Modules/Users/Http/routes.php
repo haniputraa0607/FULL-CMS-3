@@ -35,8 +35,6 @@ Route::group(['middleware' => 'web', 'prefix' => 'user', 'namespace' => 'Modules
 /* Webview */
 Route::group(['middleware' => 'web', 'prefix' => 'webview/complete-profile', 'namespace' => 'Modules\Users\Http\Controllers'], function()
 {
-    Route::get('/{user_phone}', 'WebviewUserController@completeProfile');
-    Route::post('/{user_phone}', 'WebviewUserController@completeProfileSubmit');
-    // if user skip the form
-    Route::get('/later/{user_phone}', 'WebviewUserController@completeProfileLater');
+    Route::get('/', 'WebviewUserController@completeProfile');
+    Route::post('/', 'WebviewUserController@completeProfileSubmit');
 });
