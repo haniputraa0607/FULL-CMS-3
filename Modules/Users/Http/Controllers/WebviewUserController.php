@@ -43,10 +43,9 @@ class WebviewUserController extends Controller
         return view('users::webview_complete_profile', $data);
     }
 
-    public function completeProfileSubmit(Request $request, $user_phone)
+    public function completeProfileSubmit(Request $request)
     {
         $post = $request->except('_token');
-        $post['phone'] = $user_phone;
 
         // convert date format
         if (isset($post['birthday'])) {

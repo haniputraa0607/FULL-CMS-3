@@ -1156,7 +1156,7 @@
                                 
                             </div>
                             <div class="col-md-9">
-                                <a href="{{url('/')}}/news_form/{{$value['id_news']}}/form" target="_BLANK">Klik disini untuk melihat form</a> 
+                                <a href="{{url('/news/form-preview', $value['id_news'])}}" target="_BLANK">Klik disini untuk melihat form</a> 
                             </div>
                         </div>
                     </div>

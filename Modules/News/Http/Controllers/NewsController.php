@@ -481,25 +481,33 @@ class NewsController extends Controller
     }
 
     /* WEB VIEW CUSTOM FORM */
-    function customFormView(Request $request, $id_news, $phone=null) {
-        $news = parent::getData(MyHelper::postBiasa('news/get', ['id_news' => $id_news]));
+    function customFormView(Request $request, $id_news) {
+        $bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return abort(404);
+        }
+
+        $post = $request->except('_token');
+
+        $news = parent::getData(MyHelper::postWithBearer('news/get', ['id_news' => $id_news], $bearer));
 
         if (empty($news)) {
-            return back()->withErrors(['Data news not found.']);
+            return [
+                'status' => 'fail',
+                'messages' => 'Data news not found.'
+            ];
         }
         else {
-            $post = $request->except('_token');
-            if ($phone != "") {
-                $data['form_action'] = "news_form/". $news['id_news'] ."/form/" . $phone;
-                // get user profile
-                $user = parent::getData(MyHelper::postBiasa('users/get', ['phone' => $phone]));
+            $data['form_action'] = "news_form/". $news['id_news'] ."/form";
+            $data['id_user'] = "";
+            $data['user'] = [];
+
+            // get user profile
+            $user = parent::getData(MyHelper::getWithBearer('users/get', $bearer));
+            if (!empty($user)) {
+                // $data['form_action'] = "news_form/". $news['id_news'] ."/form/" . $phone;
                 $data['user'] = $user;
                 $data['id_user'] = $user['id'];
-            }
-            else{
-                $data['form_action'] = "news_form/". $news['id_news'] ."/form";
-                $data['id_user'] = "";
-                $data['user'] = [];
             }
 
             if (empty($post)) {
@@ -508,7 +516,6 @@ class NewsController extends Controller
                 return view('news::news_custom_form', $data);
             }
             else{
-                // dd($post, $request);
                 foreach ($post['news_form'] as $key => $news_form) {
                     // if field is null
                     if (!isset($news_form['input_value'])) {
@@ -523,7 +530,7 @@ class NewsController extends Controller
                         $path = $news_form['input_value']->getRealPath(); 
                         $filename = $news_form['input_value']->getClientOriginalName(); 
                         // upload file
-                        $file = MyHelper::postBiasaFile('news/custom-form/file', 'news_form_file', $path, $filename);
+                        $file = MyHelper::postFile('news/custom-form/file', 'news_form_file', $path, $filename);
 
                         if ($file['status'] == 'success') {
                             $post['news_form'][$key]['input_value'] = $file['filename'];
@@ -531,7 +538,7 @@ class NewsController extends Controller
                     }
                 }
 
-                $result = MyHelper::postBiasa('news/custom-form', $post);
+                $result = MyHelper::post('news/custom-form', $post);
                 if ($result['status']=="success") {
                     $data['messages'] = $result['messages'];
                     if ($result['messages'] == "") {
@@ -545,6 +552,24 @@ class NewsController extends Controller
             }
         }
         
+    }
+
+    // method for preview news custom form from admin
+    public function customFormPreview($id_news)
+    {
+        $news = parent::getData(MyHelper::post('news/get', ['id_news' => $id_news]));
+        
+        if (empty($news)) {
+            return redirect()->back()->withErrors(['Data news not found.']);
+        }
+        else {
+            $data['form_action'] = "";
+            $data['id_user'] = "";
+            $data['user'] = [];
+            $data['news'] = $news;
+
+            return view('news::news_custom_form', $data);
+        }
     }
 
     // method for preview success page
