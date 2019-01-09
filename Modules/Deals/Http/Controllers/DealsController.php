@@ -270,6 +270,10 @@ class DealsController extends Controller
             return view('deals::deals.create', $data);
         }
         else {
+            if (isset($post['deals_description'])) {
+                // remove tag <font>
+                $post['deals_description'] = preg_replace("/<\\/?font(.|\\s)*?>/", '', $post['deals_description']);
+            }
             // print_r($post); exit();
             /* IF HAS IMPORT DATA */
             if (isset($post['import_file']) && !empty($post['import_file'])) {
@@ -468,6 +472,11 @@ class DealsController extends Controller
 
         if (isset($post['deals_publish_end'])) {
             $post['deals_publish_end']   = date('Y-m-d H:i:s', strtotime($post['deals_publish_end']));
+        }
+
+        if (isset($post['deals_description'])) {
+            // remove tag <font>
+            $post['deals_description'] = preg_replace("/<\\/?font(.|\\s)*?>/", '', $post['deals_description']);
         }
 
         if (isset($post['deals_image'])) {

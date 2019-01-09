@@ -66,6 +66,9 @@ class NewsController extends Controller
             $news = $request->except('_token', 'id_outlet', 'id_product');
             $news['news_content_long'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%', $news['news_content_long']);
 
+            // remove tag <font>
+            $news['news_content_long'] = preg_replace("/<\\/?font(.|\\s)*?>/", '', $news['news_content_long']);
+
             // slug news otomatis
             $news['news_slug'] = str_slug($news['news_title'], '_');
 
@@ -264,6 +267,10 @@ class NewsController extends Controller
             }
             
             $news['news_content_long'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%' ,$news['news_content_long']);
+            
+            // remove tag <font>
+            $news['news_content_long'] = preg_replace("/<\\/?font(.|\\s)*?>/", '', $news['news_content_long']);
+
             // update data master news
 			// print_r($news);exit;
             $update = MyHelper::post('news/update', $news);
