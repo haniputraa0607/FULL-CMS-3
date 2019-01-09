@@ -107,7 +107,7 @@
         }
 
         .line-bottom {
-            border-bottom: 1px solid #eee;
+            border-bottom: 0.3px solid #dbdbdb;
         }
 
         .text-grey {
@@ -154,6 +154,27 @@
             color: rgba(4,154,74,1);
         }
 
+        @font-face {
+            font-family: 'Seravek';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Seravek Light';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+        }
+
+        .seravek-font {
+            font-family: 'Seravek';
+        }
+
+        .seravek-light-font {
+            font-family: 'Seravek Light';
+        }
         .open-sans-font {
             font-family: 'Open Sans', sans-serif;
         }
@@ -209,8 +230,8 @@
 	    <div class="kotak-full line-bottom div-panah" data-toggle="collapse" data-target=".multi-collapse{{ $key }}" aria-expanded="false">
 	        <div class="container">
 	            <div class="row">
-	                <div class="col-10 text-14-3px">{{ $value['question'] }}</div>
-	                <div class="col-2 text-14-3px panah text-right"> <i class="fa fa-angle-down kelas-panah add"></i></div>
+	                <div class="col-10 text-13-3px seravek-light-font text-grey-white">{{ $value['question'] }}</div>
+	                <div class="col-2 text-13-3px panah text-right"> <i class="fa fa-angle-down kelas-panah add"></i></div>
 	            </div>
 	        </div>
 	    </div>
@@ -218,7 +239,7 @@
 	    <div class="kotak-biasa collapse space-top multi-collapse{{ $key }}">
 	        <div class="container">
 	            <div class="row">
-	                <div class="col-10 questrial-font text-15px space-text text-grey space-left">{{ $value['answer'] }}</div>
+	                <div class="col-10 text-13-3px space-text text-black space-left seravek-font">{{ $value['answer'] }}</div>
 	                
 	            </div>
 	        </div>

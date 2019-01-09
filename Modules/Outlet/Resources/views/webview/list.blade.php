@@ -62,7 +62,7 @@
     	}
 
     	.line-bottom {
-    		border-bottom: 1px solid #eee;
+    		border-bottom: 0.3px solid #dbdbdb;
     		margin-bottom: 5px;
     	}
 
@@ -114,6 +114,41 @@
     		color: rgba(4,154,74,1);
     	}
 
+		@font-face {
+            font-family: 'Seravek';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Seravek Light';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Seravek Medium';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Seravek Italic';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Roboto Regular';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+        }
+
     	.open-sans-font {
     		font-family: 'Open Sans', sans-serif;
     	}
@@ -121,6 +156,25 @@
     	.questrial-font {
     		font-family: 'Questrial', sans-serif;
     	}
+		.seravek-font {
+            font-family: 'Seravek';
+        }
+
+        .seravek-light-font {
+            font-family: 'Seravek Light';
+        }
+
+        .seravek-medium-font {
+            font-family: 'Seravek Medium';
+        }
+
+        .seravek-italic-font {
+            font-family: 'Seravek Italic';
+        }
+
+        .roboto-regular-font {
+            font-family: 'Roboto Regular';
+        }
 
     	.text-14-3px {
     		font-size: 14.3px;
@@ -214,12 +268,15 @@
 		width: 20px;
 		height: 20px;
 		text-align: center;
+		background: #d9d6d6;
+		color: white !important;
+		padding-top: 1px;
 	}
 
 	.day-alphabet-today{
 		background: #7a361a;
-		color: white !important;
 	}
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
@@ -229,13 +286,13 @@
   	<div class="kotak1">
   		<div class="container">
 	   		<div class="row">
-	   			<div class="col-12 text-black text-14px open-sans-font space-bottom">{{ $data[0]['outlet_name'] }}</div>
-	   			<div class="col-1 text-grey-black text-13-3px open-sans-font space-text"><img class="logo-img" src="{{ url('img/webview/location.png') }}"></div>
-	   			<div class="col-10 text-grey-black text-13-3px open-sans-font space-text"><span> {{ $data[0]['outlet_address'] }} </span></div>
+	   			<div class="col-12 text-black text-15px seravek-font space-bottom">{{ $data[0]['outlet_name'] }}</div>
+	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ url('img/webview/location.png') }}"></div>
+	   			<div class="col-10 text-grey-black text-13-3px seravek-light-font space-text"><span> {{ $data[0]['outlet_address'] }} </span></div>
 	   		</div>
 	   		<div class="row space-bottom line-bottom">
-	   			<div class="col-1 text-grey-black text-13-3px open-sans-font space-text"><img class="logo-img" src="{{ url('img/webview/phone.png') }}"></div>
-	   			<div class="col-10 text-grey-black text-13-3px open-sans-font space-text"><span> {{ $data[0]['call'] }} </span></div>
+	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ url('img/webview/phone.png') }}"></div>
+	   			<div class="col-10 text-grey-black text-13-3px seravek-light-font space-text"><span> {{ $data[0]['call'] }} </span></div>
 	   		</div>
 	   	</div>
   	</div>
@@ -278,9 +335,9 @@
   			@endphp
   			@foreach ($data[0]['outlet_schedules'] as $key => $val)
 		   		<div class="row space-sch @if ($val['day'] == $hari_ini) brown @endif">
-		   			<div class="text-grey-2 text-13-3px open-sans-font day-alphabet @if ($val['day'] == $hari_ini) day-alphabet-today @endif">{{ substr($val['day'], 0,1) }}</div>
-		   			<div class="col-2 text-grey-2 text-13-3px open-sans-font min-left"> {{ $val['day'] }} </div>
-		   			<div class="col-5 text-grey-2 text-13-3px open-sans-font"> 10.00 - 22.00 </div>
+		   			<div class="text-grey-2 text-13-3px seravek-light-font day-alphabet @if ($val['day'] == $hari_ini) day-alphabet-today @endif">{{ substr($val['day'], 0,1) }}</div>
+		   			<div class="col-2 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) seravek-font @else seravek-light-font @endif min-left "> {{ $val['day'] }} </div>
+		   			<div class="col-5 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) seravek-font @else seravek-light-font @endif"> 10.00 - 22.00 </div>
 		   		</div>
 		   	@endforeach
 	   	</div>
