@@ -38,12 +38,12 @@
         <style type="text/css">
             @font-face {
               font-family: "Seravek";
-              src: url('{{ url('/fonts/Seravek.otf') }}');
+              src: url('{{ url('/fonts/Seravek.ttf') }}');
             }
             body{
                 background-color: #fff;
                 font-size: 14px;
-                font-family: "Seravek", sans-serif;
+                font-family: "Seravek", sans-serif !important;
             }
             .text-brown{
                 color: #6C5648;
@@ -165,6 +165,9 @@
                 color: #000;
             }
 
+            .datepicker table td, .datepicker table th, .datetimepicker table td, .datetimepicker table th{
+                font-family: "Seravek", sans-serif !important;
+            }
             .datepicker .active {
                 background-color: #6C5648 !important;
             }
@@ -255,11 +258,25 @@
         {{-- <script src="{{ url('assets/layouts/layout4/scripts/demo.min.js') }}" type="text/javascript"></script> --}}
         <!-- END THEME LAYOUT SCRIPTS -->
         <script>
-            $('.datepicker').datepicker({
-                'format' : 'd-M-yyyy',
-                'autoclose' : true
+            var date = new Date();
+            var year = date.getFullYear();
+            var default_year = year - 17;
+            var month = date.getMonth();
+            var day = date.getDate();
+            
+            $(document).ready(function() {
+              $('.datepicker').datepicker({
+                  'format' : 'd-M-yyyy',
+                  'autoclose' : true,
+                  'defaultViewDate' : {
+                    'year' : default_year,
+                    'month': month,
+                    'day': day
+                  }
+              });
+              $('.select2').select2();
             });
-            $('.select2').select2();
+            
         </script>
 
         <script>

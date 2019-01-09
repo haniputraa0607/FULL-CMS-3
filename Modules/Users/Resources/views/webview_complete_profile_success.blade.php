@@ -29,7 +29,7 @@
         <style type="text/css">
             @font-face {
                 font-family: "Seravek";
-                src: url('{{ url('/fonts/Seravek.otf') }}');
+                src: url('{{ url('/fonts/Seravek.ttf') }}');
             }
             body{
                 background-color: #fff;

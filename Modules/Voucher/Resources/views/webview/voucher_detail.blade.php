@@ -23,10 +23,14 @@
     <link rel="shortcut icon" href="favicon.ico" /> 
 
     <style type="text/css">
+        @font-face {
+                font-family: "Seravek";
+                src: url('{{ url('/fonts/Seravek.ttf') }}');
+        }
         body{
             background-color: #fff;
             color: #858585;
-            /*font-family: "sans-serif";*/
+            font-family: "Seravek", sans-serif !important;
         }
         p{
             margin-top: 0px !important;

@@ -23,10 +23,14 @@
     <link rel="shortcut icon" href="favicon.ico" /> 
 
     <style type="text/css">
+        @font-face {
+                font-family: "Seravek";
+                src: url('{{ url('/fonts/Seravek.ttf') }}');
+        }
     	body{
     		background-color: #fff;
     		color: #858585;
-    		/*font-family: "sans-serif";*/
+            font-family: "Seravek", sans-serif !important;
     	}
     	p{
     		margin-top: 0px !important;
@@ -60,12 +64,14 @@
     		color: #000;
     	}
     	#timer{
+            width: 85px;
     		position: absolute;
     		top: 0px;
     		right: 0px;
     		padding: 5px 15px;
     		border-bottom-left-radius: 7px !important;
     		color: #fff;
+            display: none;
     	}
         .bg-red{
             background-color: #c02f2fcc;
@@ -123,7 +129,7 @@
 						{{ $deals['deals_title'] }}
 					</div>
 					<div class="col-right">
-						<div id="timer"></div>
+						<div id="timer" class="text-center"></div>
 						<div class="fee text-right">{{ $deals_fee }}</div>
 					</div>
 				</div>
@@ -149,102 +155,103 @@
 					</div>
 				</div>
 
-                {{-- <p>{{ $deals['deals_start'] }}</p>
-                <p>{{ $deals['deals_end'] }}</p>
-                <p>{{ $deals['time_server'] }}</p> --}}
 			</div>
 		@else
 			<div class="col-md-4 col-md-offset-4">
-				<h4 class="text-center">Deals is not found</h4>
+				<h4 class="text-center" style="margin-top: 30px;">Deals is not found</h4>
 			</div>
 		@endif
 	</div>
 
     {{-- <script type="text/javascript" src="{{ url('assets/global/plugins/jquery.min.js') }}"></script> --}}
-    <script type="text/javascript">
-        // timer
-        var deals_start = "{{ strtotime($deals['deals_start']) }}";
-        var deals_end   = "{{ strtotime($deals['deals_end']) }}";
-        var server_time = "{{ strtotime($deals['time_server']) }}";
-        var timer_text;
-        var difference;
+    @if(!empty($deals))
+        <script type="text/javascript">
+            // timer
+            var deals_start = "{{ strtotime($deals['deals_start']) }}";
+            var deals_end   = "{{ strtotime($deals['deals_end']) }}";
+            var server_time = "{{ strtotime($deals['time_server']) }}";
+            var timer_text;
+            var difference;
 
-        if (server_time >= deals_start && server_time <= deals_end) {
-            // deals date is valid and count the timer
-            difference = deals_end - server_time;
-            document.getElementById('timer').classList.add("bg-red");
-        }
-        else {
-            // deals is not yet start
-            difference = deals_start - server_time;
-            document.getElementById('timer').classList.add("bg-black");
-        }
-        console.log('deals_start', deals_start);
-        console.log('deals_end', deals_end);
-        console.log('server_time', server_time);
-        console.log('difference', difference);
-        console.log('difference / 1000', difference);
-
-        this.interval = setInterval(() => {
-            if(difference >= 0) {
-                timer_text = timer(difference);
-                document.getElementById('timer').innerText = timer_text;
-                // $('#timer').text(timer_text);
-                difference--;
+            if (server_time >= deals_start && server_time <= deals_end) {
+                // deals date is valid and count the timer
+                difference = deals_end - server_time;
+                document.getElementById('timer').classList.add("bg-red");
             }
             else {
-                clearInterval(this.interval);
+                // deals is not yet start
+                difference = deals_start - server_time;
+                document.getElementById('timer').classList.add("bg-black");
             }
 
-            // if days then stop the timer
-            if (timer_text!=null && timer_text.includes("day")) {
-                clearInterval(this.interval);
-            }
-        }, 1000); // 1 second
-
-        function timer(difference) {
-            if(difference === 0) {
-                return null;    // stop the function
-            }
-
-            var daysDifference, hoursDifference, minutesDifference, secondsDifference, timer;
-            
-            // countdown
-            daysDifference = Math.floor(difference/60/60/24);
-            if (daysDifference > 0) {
-                timer = daysDifference + (daysDifference===1 ? " day" : " days");
-                console.log('timer d', timer);
-            }
-            else {
-                difference -= daysDifference*60*60*24;
-
-                hoursDifference = Math.floor(difference/60/60);
-                difference -= hoursDifference*60*60;
-                hoursDifference = ("0" + hoursDifference).slice(-2);
-
-                minutesDifference = Math.floor(difference/60);
-                difference -= minutesDifference*60;
-                minutesDifference = ("0" + minutesDifference).slice(-2);
-
-                secondsDifference = Math.floor(difference);
-
-                if (secondsDifference-1 < 0) {
-                    secondsDifference = "00";
+            var display_flag = 0;
+            this.interval = setInterval(() => {
+                if(difference >= 0) {
+                    timer_text = timer(difference);
+                    document.getElementById('timer').innerText = timer_text;
+                    // $('#timer').text(timer_text);
+                    difference--;
                 }
                 else {
-                    secondsDifference = secondsDifference-1;
-                    secondsDifference = ("0" + secondsDifference).slice(-2);
+                    clearInterval(this.interval);
                 }
-                console.log('timer h', hoursDifference);
-                console.log('timer m', minutesDifference);
-                console.log('timer s', secondsDifference);
 
-                timer = hoursDifference + ":" + minutesDifference + ":" + secondsDifference;
-                console.log('timer', timer);
+                // if days then stop the timer
+                if (timer_text!=null && timer_text.includes("day")) {
+                    clearInterval(this.interval);
+                }
+
+                // show timer
+                if (display_flag == 0) {
+                    document.getElementById('timer').style.display = 'block';
+                    display_flag = 1;
+                }
+            }, 1000); // 1 second
+
+            function timer(difference) {
+                if(difference === 0) {
+                    return null;    // stop the function
+                }
+
+                var daysDifference, hoursDifference, minutesDifference, secondsDifference, timer;
+                
+                // countdown
+                daysDifference = Math.floor(difference/60/60/24);
+                if (daysDifference > 0) {
+                    timer = daysDifference + (daysDifference===1 ? " day" : " days");
+                    console.log('timer d', timer);
+                }
+                else {
+                    difference -= daysDifference*60*60*24;
+
+                    hoursDifference = Math.floor(difference/60/60);
+                    difference -= hoursDifference*60*60;
+                    hoursDifference = ("0" + hoursDifference).slice(-2);
+
+                    minutesDifference = Math.floor(difference/60);
+                    difference -= minutesDifference*60;
+                    minutesDifference = ("0" + minutesDifference).slice(-2);
+
+                    secondsDifference = Math.floor(difference);
+
+                    if (secondsDifference-1 < 0) {
+                        secondsDifference = "00";
+                    }
+                    else {
+                        secondsDifference = secondsDifference-1;
+                        secondsDifference = ("0" + secondsDifference).slice(-2);
+                    }
+                    console.log('timer h', hoursDifference);
+                    console.log('timer m', minutesDifference);
+                    console.log('timer s', secondsDifference);
+
+                    timer = hoursDifference + ":" + minutesDifference + ":" + secondsDifference;
+                    console.log('timer', timer);
+                }
+                
+                return timer;
             }
-            
-            return timer;
-        }
-    </script>
+        </script>
+    @endif
 </body>
 </html>
