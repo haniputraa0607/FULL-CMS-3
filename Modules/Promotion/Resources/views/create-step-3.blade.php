@@ -50,9 +50,8 @@ $grantedFeature     = session('granted_features');
         'format' : 'd-M-yyyy',
         'todayHighlight' : true,
         'autoclose' : true
-    }); 
-    $('.timepicker').timepicker(); 
-        
+	});
+	$('.timepicker').timepicker();       
     </script>
 	
 	<script>
@@ -1262,13 +1261,13 @@ $grantedFeature     = session('granted_features');
 														<div class="col-md-9" style="margin-bottom:30px">
 															@if(isset($result['contents'][$x-1]['deals']['deals_start']))
 																@if($result['contents'][$x-1]['deals']['deals_start'] != '')
-																{{date('d M Y',strtotime($result['contents'][$x-1]['deals']['deals_start']))}}
+																{{date('d M Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_start']))}}
 																@endif
 															@endif
 															
 															@if(isset($result['contents'][$x-1]['deals']['deals_end']))
 																@if($result['contents'][$x-1]['deals']['deals_end'] != '')
-																	sampai dengan  {{date('d M Y',strtotime($result['contents'][$x-1]['deals']['deals_end']))}}
+																	-  {{date('d M Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_end']))}}
 																@endif
 															@endif
 														</div>
@@ -1302,7 +1301,7 @@ $grantedFeature     = session('granted_features');
 														<div class="col-md-9" style="margin-bottom:30px">
 															@if(isset($result['contents'][$x-1]['deals']['deals_voucher_expired']))
 																@if($result['contents'][$x-1]['deals']['deals_voucher_expired'] != '')
-																	By Date: {{date('d M Y',strtotime($result['contents'][$x-1]['deals']['deals_voucher_expired']))}}
+																	By Date: {{date('d M Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_voucher_expired']))}}
 																@endif
 															@endif
 															
@@ -1347,12 +1346,12 @@ $grantedFeature     = session('granted_features');
 
 										@if(isset($result['contents'][$x-1]))
 											@if($result['contents'][$x-1]['id_deals'] != '')
-												<div class="col-md-2" style="display:block; padding:0" id="result_deals_{{$x}}">
+												<div class="col-md-10" style="display:block;" id="result_deals_{{$x}}">
 											@else
-												<div class="col-md-2" style="display:none;" id="result_deals_{{$x}}">
+												<div class="col-md-10" style="display:none;" id="result_deals_{{$x}}">
 											@endif
 										@else
-											<div class="col-md-2" style="display:none;" id="result_deals_{{$x}}">
+											<div class="col-md-10" style="display:none;" id="result_deals_{{$x}}">
 										@endif
 											<div class="portlet light bordered">
 												<div class="portlet-title">
@@ -1362,25 +1361,25 @@ $grantedFeature     = session('granted_features');
 													</div>
 												</div>
 												<div class="row list-separated">
-													<div class="col-md-12" style="margin-bottom:15px">
-														<div class="uppercase profile-stat-title font-red bold" @if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'Unlimited') style="font-size: 12px;font-weight: bolder;padding: 10px 0;"> Unlimited @else > {{number_format($result['contents'][$x-1]['deals']['deals_total_voucher'])}} @endif</div>
+													<div class="col-md-6" style="margin-bottom:15px">
+														<div class="uppercase profile-stat-title font-red bold" @if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'Unlimited') style="font-size: 20px;padding-bottom:5px"> Unlimited @else > {{number_format($result['contents'][$x-1]['deals']['deals_total_voucher'])}} @endif</div>
 														<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher',{{$result['contents'][$x-1]['id_promotion_content']}})"> Total Voucher </a></div>
 													</div>
-													<div class="col-md-12" style="margin-bottom:15px">
-														<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][$x-1]['promotion_count_voucher_give'])}} </div>
-														<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_give',{{$result['contents'][$x-1]['id_promotion_content']}})"> Total Voucher Given </a></div>
-													</div>
-													<div class="col-md-12" style="margin-bottom:15px">
-														<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][$x-1]['deals']['deals_total_used'])}} </div>
-														<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_used',{{$result['contents'][$x-1]['id_promotion_content']}})"> Total Voucher Used </a></div>
-													</div>
-													<div class="col-md-12" style="margin-bottom:15px">
+													<div class="col-md-6" style="margin-bottom:15px">
 														<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][$x-1]['deals']['deals_total_used'] * $result['contents'][$x-1]['voucher_value'])}} </div>
 														<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_used',{{$result['contents'][$x-1]['id_promotion_content']}})"> Total Nominal Voucher Used </a></div>
 													</div>
-													<div class="col-md-12">
-														<div class="uppercase profile-stat-title font-red bold" @if($result['contents'][$x-1]['promotion_sum_transaction'] > 1000000) style="font-size:20px @endif"> {{number_format($result['contents'][$x-1]['promotion_sum_transaction'])}} </div>
+													<div class="col-md-6" style="margin-bottom:15px">
+														<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][$x-1]['promotion_count_voucher_give'])}} </div>
+														<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_give',{{$result['contents'][$x-1]['id_promotion_content']}})"> Total Voucher Given </a></div>
+													</div>
+													<div class="col-md-6" style="margin-bottom:15px">
+														<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][$x-1]['promotion_sum_transaction'])}} </div>
 														<div class="uppercase profile-stat-text"><a onclick="modalSentList('nominal_trx',{{$result['contents'][$x-1]['id_promotion_content']}})"> Total Nominal Transaction </a></div>
+													</div>
+													<div class="col-md-6" style="margin-bottom:15px">
+														<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][$x-1]['deals']['deals_total_used'])}} </div>
+														<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_used',{{$result['contents'][$x-1]['id_promotion_content']}})"> Total Voucher Used </a></div>
 													</div>
 												</div>
 											</div>
@@ -1818,13 +1817,13 @@ $grantedFeature     = session('granted_features');
 										<div class="col-md-9" style="margin-bottom:30px">
 											@if(isset($result['contents'][0]['deals']['deals_start']))
 												@if($result['contents'][0]['deals']['deals_start'] != '')
-												{{date('d M Y',strtotime($result['contents'][0]['deals']['deals_start']))}}
+												{{date('d M Y H:i',strtotime($result['contents'][0]['deals']['deals_start']))}}
 												@endif
 											@endif
 											
 											@if(isset($result['contents'][0]['deals']['deals_end']))
 												@if($result['contents'][0]['deals']['deals_end'] != '')
-													sampai dengan  {{date('d M Y',strtotime($result['contents'][0]['deals']['deals_end']))}}
+													-  {{date('d M Y H:i',strtotime($result['contents'][0]['deals']['deals_end']))}}
 												@endif
 											@endif
 										</div>
@@ -1856,7 +1855,7 @@ $grantedFeature     = session('granted_features');
 										<div class="col-md-9" style="margin-bottom:30px">
 											@if(isset($result['contents'][0]['deals']['deals_voucher_expired']))
 												@if($result['contents'][0]['deals']['deals_voucher_expired'] != '')
-													By Date: {{date('d M Y',strtotime($result['contents'][0]['deals']['deals_voucher_expired']))}}
+													By Date: {{date('d M Y H:i',strtotime($result['contents'][0]['deals']['deals_voucher_expired']))}}
 												@endif
 											@endif
 											
@@ -1899,12 +1898,12 @@ $grantedFeature     = session('granted_features');
 
 						@if(isset($result['contents'][0]))
 							@if($result['contents'][0]['id_deals'] != '')
-								<div class="col-md-2" style="display:block; padding-left:0;" id="result_deals_0">
+								<div class="col-md-10" style="display:block;" id="result_deals_0">
 							@else
-								<div class="col-md-2" style="display:none;" id="result_deals_0">
+								<div class="col-md-10" style="display:none;" id="result_deals_0">
 							@endif
 						@else
-							<div class="col-md-2" style="display:none;" id="result_deals_0">
+							<div class="col-md-10" style="display:none;" id="result_deals_0">
 						@endif
 							<div class="portlet light bordered">
 								<div class="portlet-title">
@@ -1914,25 +1913,25 @@ $grantedFeature     = session('granted_features');
 									</div>
 								</div>
 								<div class="row list-separated">
-									<div class="col-md-12" style="margin-bottom:15px">
-										<div class="uppercase profile-stat-title font-red bold" @if($result['contents'][0]['deals']['deals_voucher_type'] == 'Unlimited') style="font-size: 12px;font-weight: bolder;padding: 10px 0;"> Unlimited @else > {{number_format($result['contents'][0]['deals']['deals_total_voucher'])}} @endif</div>
+									<div class="col-md-6" style="margin-bottom:15px">
+										<div class="uppercase profile-stat-title font-red bold" @if($result['contents'][0]['deals']['deals_voucher_type'] == 'Unlimited') style="font-size: 20px; padding-bottom:5px"> Unlimited @else > {{number_format($result['contents'][0]['deals']['deals_total_voucher'])}} @endif</div>
 										<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher',{{$result['contents'][0]['id_promotion_content']}})"> Total Voucher </a></div>
 									</div>
-									<div class="col-md-12" style="margin-bottom:15px">
-										<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][0]['promotion_count_voucher_give'])}} </div>
-										<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_give',{{$result['contents'][0]['id_promotion_content']}})"> Total Voucher Given </a></div>
-									</div>
-									<div class="col-md-12" style="margin-bottom:15px">
-										<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][0]['deals']['deals_total_used'])}} </div>
-										<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_used',{{$result['contents'][0]['id_promotion_content']}})"> Total Voucher Used </a></div>
-									</div>
-									<div class="col-md-12" style="margin-bottom:15px">
+									<div class="col-md-6" style="margin-bottom:15px">
 										<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][0]['deals']['deals_total_used'] * $result['contents'][0]['voucher_value'])}} </div>
 										<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_used',{{$result['contents'][0]['id_promotion_content']}})"> Total Nominal Voucher Used </a></div>
 									</div>
-									<div class="col-md-12">
-										<div class="uppercase profile-stat-title font-red bold" @if($result['contents'][0]['promotion_sum_transaction'] > 1000000) style="font-size:20px @endif"> {{number_format($result['contents'][0]['promotion_sum_transaction'])}} </div>
+									<div class="col-md-6" style="margin-bottom:15px">
+										<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][0]['promotion_count_voucher_give'])}} </div>
+										<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_give',{{$result['contents'][0]['id_promotion_content']}})"> Total Voucher Given </a></div>
+									</div>
+									<div class="col-md-6" style="margin-bottom:15px">
+										<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][0]['promotion_sum_transaction'])}} </div>
 										<div class="uppercase profile-stat-text"><a onclick="modalSentList('nominal_trx',{{$result['contents'][0]['id_promotion_content']}})"> Total Nominal Transaction </a></div>
+									</div>
+									<div class="col-md-6" style="margin-bottom:15px">
+										<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][0]['deals']['deals_total_used'])}} </div>
+										<div class="uppercase profile-stat-text"><a onclick="modalSentList('voucher_used',{{$result['contents'][0]['id_promotion_content']}})"> Total Voucher Used </a></div>
 									</div>
 								</div>
 							</div>
