@@ -423,7 +423,11 @@
                         @if ($data['trasaction_payment_type'] == 'Balance') 
                             Kopi Points
                         @elseif ($data['trasaction_payment_type'] == 'Midtrans') 
-                            Online Payment
+                            @if(isset($data['payment']['payment_type']))
+                                {{ ucwords(str_replace('_', ' ', $data['payment']['payment_type'])) }}
+                            @else
+                                Online Payment
+                            @endif
                         @elseif ($data['trasaction_payment_type'] == 'Manual')
                             Transfer Bank
                         @elseif ($data['trasaction_payment_type'] == 'Offline')
@@ -437,8 +441,9 @@
                         LUNAS
                     @endif
                     </div>
-                    @if (isset($data['payment']['payment_type']))
-                        <div class="col-6 text-grey text-12-7px">{{ $data['payment']['payment_type'] }}</div>
+                    
+                    @if (isset($data['payment']['bank']))
+                        <div class="col-6 text-grey text-12-7px">{{ $data['payment']['bank'] }}</div>
                     @endif
 
                     @if (isset($data['payment']['payment_method']))
