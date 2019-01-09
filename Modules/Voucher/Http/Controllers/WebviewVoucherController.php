@@ -10,12 +10,23 @@ use App\Lib\MyHelper;
 
 class WebviewVoucherController extends Controller
 {
-    public function voucherDetail($id_deals_user)
+    public function voucherDetail(Request $request, $id_deals_user)
     {
+    	$bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return abort(404);
+        }
+
         $post['id_deals_user'] = $id_deals_user;
         $post['used'] = 0;
         
-        $data['voucher'] = parent::getData(MyHelper::post('voucher/me', $post));
+        $data['voucher'] = parent::getData(MyHelper::postWithBearer('voucher/me', $post, $bearer));
+        if (empty($data['voucher'])) {
+            return [
+                'status' => 'fail',
+                'message' => 'Unauthenticated'
+            ];
+        }
         
         return view('voucher::webview.voucher_detail', $data);
     }

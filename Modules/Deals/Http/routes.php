@@ -60,7 +60,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:25'], 
 });
 
 /* Webview */
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'webview', 'namespace' => 'Modules\Deals\Http\Controllers'], function()
+Route::group(['middleware' => ['web'], 'prefix' => 'webview', 'namespace' => 'Modules\Deals\Http\Controllers'], function()
 {
     Route::get('deals/{id_deals}/{deals_type}', 'WebviewDealsController@dealsDetail');
 });

@@ -23,7 +23,7 @@ class WebviewUserController extends Controller
         if (empty($user)) {
             return [
                 'status' => 'fail',
-                'messages' => 'Unauthorize.'
+                'message' => 'Unauthenticated'
             ];
         }
 
