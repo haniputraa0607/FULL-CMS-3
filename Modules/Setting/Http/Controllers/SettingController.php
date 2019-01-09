@@ -16,6 +16,18 @@ class SettingController extends Controller
         return view('setting::webview.faq', ['faq' => $faqList['result']]);
     }
 
+    public function aboutWebview($key)
+    {
+        $data = MyHelper::post('setting/webview', ['key' => $key, 'data' => 1]);
+        if(isset($data['status']) && $data['status'] == 'success'){
+            $data['value'] =preg_replace('/font face="[^;"]*(")?/', 'div class="seravek-light-font"' , $data['result']['value_text']);
+            $data['value'] =preg_replace('/<\/font>?/', '</div>' , $data['value']);
+        }else{
+            $data['value'] = null;
+        }
+        return view('setting::webview.about', $data);
+    }
+
 	public function appLogoSave(Request $request){
         $post = $request->except('_token');
         if(isset($post['app_logo'])){
@@ -798,7 +810,7 @@ class SettingController extends Controller
         unset($post['click_to']);
 
         $result = MyHelper::post('setting/banner/create', $post);
-        return parent::redirect($result, 'New banner has been created.', 'setting/home#banner');
+        return parent::redirect($result, 'New banner has been created.');
     }
 
     public function updateBanner(Request $request)
@@ -819,7 +831,7 @@ class SettingController extends Controller
         unset($post['click_to']);
 
         $result = MyHelper::post('setting/banner/update', $post);
-        return parent::redirect($result, 'Banner has been updated.', 'setting/home#banner');
+        return parent::redirect($result, 'Banner has been updated.');
     }
 
     public function reorderBanner(Request $request)
@@ -829,7 +841,7 @@ class SettingController extends Controller
 
         $result = MyHelper::post('setting/banner/reorder', $post);
 
-        return parent::redirect($result, 'Banner has been sorted.', 'setting/home#banner');
+        return parent::redirect($result, 'Banner has been sorted.');
     }
 
     // delete banner
@@ -839,7 +851,7 @@ class SettingController extends Controller
         
         $result = MyHelper::post('setting/banner/delete', $post);
 
-        return parent::redirect($result, 'Banner has been deleted.', 'setting/home#banner');
+        return parent::redirect($result, 'Banner has been deleted.');
     }
 
     // complete user profile settings
@@ -858,7 +870,7 @@ class SettingController extends Controller
         $result = MyHelper::post('setting/complete-profile/update', $post);
         // dd($result);
 
-        return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/home#user-profile');
+        return parent::redirect($result, 'User Profile Completing has been updated.');
     }
 
 }
