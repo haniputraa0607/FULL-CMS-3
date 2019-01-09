@@ -48,7 +48,12 @@ $grantedFeature     = session('granted_features');
         'todayHighlight' : true,
         'autoclose' : true
     }); 
-    $('.timepicker').timepicker(); 
+	$('.timepicker').timepicker();
+	$(".form_datetime").datetimepicker({
+        format: "d-M-yyyy hh:ii",
+        autoclose: true,
+        todayBtn: true
+    }); 
         
     </script>
 	
@@ -1532,10 +1537,10 @@ $grantedFeature     = session('granted_features');
 														<div class="col-md-4">
 															<div class="input-icon right">
 																<div class="input-group">
-																	<input type="text" class="datepicker form-control" name="deals_start[]"
+																	<input type="text" class="form_datetime form-control" name="deals_start[]"
 																	@if(isset($result['contents'][$x-1]['deals']['deals_start']))
 																		@if($result['contents'][$x-1]['deals']['deals_start'] != '')
-																			value = "{{date('d-M-Y',strtotime($result['contents'][$x-1]['deals']['deals_start']))}}"
+																			value = "{{date('d-M-Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_start']))}}"
 																		@endif
 																	@endif
 																	>
@@ -1553,10 +1558,10 @@ $grantedFeature     = session('granted_features');
 														<div class="col-md-4">
 															<div class="input-icon right">
 																<div class="input-group">
-																	<input type="text" class="datepicker form-control" name="deals_end[]" 
+																	<input type="text" class="form_datetime form-control" name="deals_end[]" 
 																	@if(isset($result['contents'][$x-1]['deals']['deals_end']))
 																		@if($result['contents'][$x-1]['deals']['deals_end'] != '')
-																			value = "{{date('d-M-Y',strtotime($result['contents'][$x-1]['deals']['deals_end']))}}"
+																			value = "{{date('d-M-Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_end']))}}"
 																		@endif
 																	@endif
 																	>
@@ -1660,7 +1665,7 @@ $grantedFeature     = session('granted_features');
 																@if($result['contents'][$x-1]['deals']['deals_voucher_expired'] != '')
 																	<div class="col-md-4" id="voucher_bydate_{{$x}}" style="display: block;">
 																		<div class="input-group">
-																			<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" value="{{date('d-M-Y',strtotime($result['contents'][$x-1]['deals']['deals_voucher_expired']))}}">
+																			<input type="text" class="form_datetime form-control" name="deals_voucher_expiry_bydate[]" value="{{date('d-M-Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_voucher_expired']))}}">
 																			<span class="input-group-btn">
 																				<button class="btn default" type="button">
 																					<i class="fa fa-calendar"></i>
@@ -1670,12 +1675,12 @@ $grantedFeature     = session('granted_features');
 																	</div>
 																	
 																	<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: none;">
-																		<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day">
+																		<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day">
 																	</div>
 																@else
 																	<div class="col-md-4" id="voucher_bydate_{{$x}}" style="display: none;">
 																		<div class="input-group">
-																			<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" >
+																			<input type="text" class="form_datetime form-control" name="deals_voucher_expiry_bydate[]" >
 																			<span class="input-group-btn">
 																				<button class="btn default" type="button">
 																					<i class="fa fa-calendar"></i>
@@ -1685,13 +1690,13 @@ $grantedFeature     = session('granted_features');
 																	</div>
 																	
 																	<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: block;">
-																		<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" value="@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration'])){{$result['contents'][$x-1]['deals']['deals_voucher_duration']}}@endif">
+																		<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" value="@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration'])){{$result['contents'][$x-1]['deals']['deals_voucher_duration']}}@endif">
 																	</div>
 																@endif
 															@else
 																<div class="col-md-4" id="voucher_bydate_{{$x}}" style="display: none;">
 																	<div class="input-group">
-																		<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" >
+																		<input type="text" class="form_datetime form-control" name="deals_voucher_expiry_bydate[]" >
 																		<span class="input-group-btn">
 																			<button class="btn default" type="button">
 																				<i class="fa fa-calendar"></i>
@@ -1700,8 +1705,8 @@ $grantedFeature     = session('granted_features');
 																	</div>
 																</div>
 																
-																<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: block;">
-																	<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" value="@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration'])){{$result['contents'][$x-1]['deals']['deals_voucher_duration']}}@endif">
+																<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: none;">
+																	<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" value="@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration'])){{$result['contents'][$x-1]['deals']['deals_voucher_duration']}}@endif">
 																</div>
 															@endif
 														</div>
@@ -2659,10 +2664,10 @@ $grantedFeature     = session('granted_features');
 											<div class="col-md-4">
 												<div class="input-icon right">
 													<div class="input-group">
-														<input type="text" class="datepicker form-control" name="deals_start[]" 
+														<input type="text" class="form_datetime form-control" name="deals_start[]" 
 														@if(isset($result['contents'][0]['deals']['deals_start']))
 															@if($result['contents'][0]['deals']['deals_start'] != '')
-																value = "{{date('d-M-Y',strtotime($result['contents'][0]['deals']['deals_start']))}}"
+																value = "{{date('d-M-Y H:i',strtotime($result['contents'][0]['deals']['deals_start']))}}"
 															@endif
 														@endif
 														>
@@ -2680,10 +2685,10 @@ $grantedFeature     = session('granted_features');
 											<div class="col-md-4">
 												<div class="input-icon right">
 													<div class="input-group">
-														<input type="text" class="datepicker form-control" name="deals_end[]" 
+														<input type="text" class="form_datetime form-control" name="deals_end[]" 
 														@if(isset($result['contents'][0]['deals']['deals_end']))
 															@if($result['contents'][0]['deals']['deals_end'] != '')
-																value = "{{date('d-M-Y',strtotime($result['contents'][0]['deals']['deals_end']))}}"
+																value = "{{date('d-M-Y H:i',strtotime($result['contents'][0]['deals']['deals_end']))}}"
 															@endif
 														@endif
 														>
@@ -2787,7 +2792,7 @@ $grantedFeature     = session('granted_features');
 													@if($result['contents'][0]['deals']['deals_voucher_expired'] != '')
 														<div class="col-md-4" id="voucher_bydate_0" style="display: block;">
 															<div class="input-group">
-																<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" value="{{date('d-M-Y',strtotime($result['contents'][0]['deals']['deals_voucher_expired']))}}">
+																<input type="text" class="form_datetime form-control" name="deals_voucher_expiry_bydate[]" value="{{date('d-M-Y H:i',strtotime($result['contents'][0]['deals']['deals_voucher_expired']))}}">
 																<span class="input-group-btn">
 																	<button class="btn default" type="button">
 																		<i class="fa fa-calendar"></i>
@@ -2797,12 +2802,12 @@ $grantedFeature     = session('granted_features');
 														</div>
 														
 														<div class="col-md-3" id="voucher_duration_0" style="display: none;">
-															<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day">
+															<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day">
 														</div>
 													@else
 														<div class="col-md-4" id="voucher_bydate_0" style="display: none;">
 															<div class="input-group">
-																<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" >
+																<input type="text" class="form_datetime form-control" name="deals_voucher_expiry_bydate[]" >
 																<span class="input-group-btn">
 																	<button class="btn default" type="button">
 																		<i class="fa fa-calendar"></i>
@@ -2812,13 +2817,13 @@ $grantedFeature     = session('granted_features');
 														</div>
 														
 														<div class="col-md-3" id="voucher_duration_0" style="display: block;">
-															<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" @if(isset($result['contents'][0]['deals']['deals_voucher_duration'])) value="{{$result['contents'][0]['deals']['deals_voucher_duration']}}"@endif>
+															<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" @if(isset($result['contents'][0]['deals']['deals_voucher_duration'])) value="{{$result['contents'][0]['deals']['deals_voucher_duration']}}"@endif>
 														</div>
 													@endif
 												@else
 													<div class="col-md-4" id="voucher_bydate_0" style="display: none;">
 														<div class="input-group">
-															<input type="text" class="datepicker form-control" name="deals_voucher_expiry_bydate[]" >
+															<input type="text" class="form_datetime form-control" name="deals_voucher_expiry_bydate[]" >
 															<span class="input-group-btn">
 																<button class="btn default" type="button">
 																	<i class="fa fa-calendar"></i>
@@ -2827,8 +2832,8 @@ $grantedFeature     = session('granted_features');
 														</div>
 													</div>
 													
-													<div class="col-md-3" id="voucher_duration_0" style="display: block;">
-														<input type="number" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" @if(isset($result['contents'][0]['deals']['deals_voucher_duration']))  value="{{$result['contents'][0]['deals']['deals_voucher_duration']}}" @endif>
+													<div class="col-md-3" id="voucher_duration_0" style="display: none;">
+														<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" @if(isset($result['contents'][0]['deals']['deals_voucher_duration']))  value="{{$result['contents'][0]['deals']['deals_voucher_duration']}}" @endif>
 													</div>
 												@endif
 											</div>

@@ -1044,6 +1044,7 @@
 			</li>
 		@endif
 		
+		@if(MyHelper::hasAccess([33], $configs))
 		@if (!empty($advert))
 			@if(MyHelper::hasAccess([124], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'advert') ? 'active open' : ''}}">
@@ -1063,6 +1064,7 @@
 				</ul>
 			</li>
 			@endif
+		@endif
 		@endif
 
 		@if(MyHelper::hasAccess([124], $grantedFeature))
