@@ -512,10 +512,14 @@ class NewsController extends Controller
 
             if (empty($post)) {
                 $data['news'] = $news;
+                $data['bearer'] = $bearer;
 
                 return view('news::news_custom_form', $data);
             }
             else{
+                $bearer = $post['bearer'];
+                unset($post['bearer']);
+
                 foreach ($post['news_form'] as $key => $news_form) {
                     // if field is null
                     if (!isset($news_form['input_value'])) {
@@ -530,7 +534,7 @@ class NewsController extends Controller
                         $path = $news_form['input_value']->getRealPath(); 
                         $filename = $news_form['input_value']->getClientOriginalName(); 
                         // upload file
-                        $file = MyHelper::postFile('news/custom-form/file', 'news_form_file', $path, $filename);
+                        $file = MyHelper::postFileBearer('news/custom-form/file', 'news_form_file', $path, $filename, $bearer);
 
                         if ($file['status'] == 'success') {
                             $post['news_form'][$key]['input_value'] = $file['filename'];
@@ -538,7 +542,7 @@ class NewsController extends Controller
                     }
                 }
 
-                $result = MyHelper::post('news/custom-form', $post);
+                $result = MyHelper::postWithBearer('news/custom-form', $post, $bearer);
                 if ($result['status']=="success") {
                     $data['messages'] = $result['messages'];
                     if ($result['messages'] == "") {

@@ -75,6 +75,10 @@
                 color: #6C5648;
                 background-color: #fff;
             }
+            .btn-outline.brown:focus{
+                background-color: #6C5648;
+                color: #fff;
+            }
             @media only screen and (max-width: 768px) {
                 /* For mobile phones: */
                 [class*="col-"] {
@@ -103,7 +107,7 @@
 {{-- form --}}
 <form role="form" action="{{ url($form_action) }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
-    <input type="hidden" name="id_user" value="{{ $id_user }}">
+    <input type="hidden" name="bearer" value="{{ $bearer }}">
     <input type="hidden" name="id_news" value="{{ $news['id_news'] }}">
 
     <div class="form-body">

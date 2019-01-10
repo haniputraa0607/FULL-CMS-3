@@ -240,12 +240,10 @@ class MyHelper
 
   public static function postFile($url, $name_field, $path){ 
     $api = env('APP_API_URL'); 
-    $client = new Client( 
- 
-    ); 
-     
-    $ses = session('access_token'); 
- 
+    $client = new Client(); 
+
+    $ses = session('access_token');
+
     $content = array( 
       'headers' => [ 
         'Authorization' => $ses, 
@@ -352,11 +350,14 @@ class MyHelper
     }
   }
   
-  public static function postBiasaFile($url, $name_field, $path, $filename){
+  public static function postFileBearer($url, $name_field, $path, $filename, $bearer){
     $api = env('APP_API_URL');
     $client = new Client;
 
     $content = array(
+      'headers' => [ 
+        'Authorization' => $bearer, 
+      ],
       'multipart' => [ 
           [ 
               'name'     => $name_field,
