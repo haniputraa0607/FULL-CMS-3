@@ -161,6 +161,10 @@
                 color: #6C5648;
                 background-color: #fff;
             }
+            .btn-outline.brown:focus{
+              background-color: #6C5648;
+              color: #fff;
+            }
 
             .datepicker table td, .datepicker table th, .datetimepicker table td, .datetimepicker table th{
                 font-family: "Seravek", sans-serif !important;
@@ -223,7 +227,8 @@
                         @endif
 
                         <div class="form-actions noborder" style="margin-top: 70px; margin-bottom: 30px;">
-                            <input type="hidden" name="phone" value="{{ $user['phone'] }}">
+                            <input type="hidden" name="bearer" value="{{ $bearer }}">
+
                             <div class="button-wrapper text-center">
                                 <input type="submit" value="SIMPAN" class="btn btn-round btn-outline brown">
                             </div>
