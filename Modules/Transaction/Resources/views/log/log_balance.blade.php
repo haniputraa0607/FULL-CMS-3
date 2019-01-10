@@ -75,7 +75,7 @@
     <div class="portlet light portlet-fit bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-red sbold uppercase">Balance Log User</span>
+                <span class="caption-subject font-red sbold uppercase">Kopi Point Log User</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -83,7 +83,7 @@
             <thead>
               <tr>
                   <th>User Name</th>
-                  <th>Balance</th>
+                  <th>Kopi Point</th>
                   <th>Source</th>
                   <th>Grand Total</th>
                   <th>Cashback Convers</th>

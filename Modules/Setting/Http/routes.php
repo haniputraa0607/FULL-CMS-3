@@ -27,6 +27,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modu
     Route::get('{key}', 'SettingController@settingList');
     Route::get('webview/{key}', 'SettingController@aboutWebview');
     Route::post('update/{id}', 'SettingController@settingUpdate');
+    Route::post('{type}/update', 'SettingController@updatePointReset');
 	
 	
 	Route::any('background/create', ['middleware' => 'config_control:30,32', 'uses' => 'SettingController@createBackground']);

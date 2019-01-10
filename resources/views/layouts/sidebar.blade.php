@@ -147,6 +147,28 @@
 			</a>
 		</li>
 
+		@if(MyHelper::hasAccess([18], $configs))
+			@if(MyHelper::hasAccess([77], $configs))
+			<li class="nav-item {{($menu_active == 'point-reset') ? 'active' : ''}}">
+				<a href="{{url('setting/point_reset')}}" class="nav-link">
+					<i class="fa fa-refresh"></i>
+					<span class="title">Setting Point Reset</span>
+				</a>
+			</li>
+			@endif
+		@endif
+
+		@if(MyHelper::hasAccess([19], $configs))
+			@if(MyHelper::hasAccess([78], $configs))
+			<li class="nav-item {{($menu_active == 'balance-reset') ? 'active' : ''}}">
+				<a href="{{url('setting/balance_reset')}}" class="nav-link">
+					<i class="fa fa-refresh"></i>
+					<span class="title">Setting Kopi Point Reset</span>
+				</a>
+			</li>
+			@endif
+		@endif
+
 		@if(MyHelper::hasAccess([19,21,24,26,32,33,34,43,45,48,50,56,57], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Browse</h3>
@@ -409,7 +431,7 @@
 				<li class="nav-item {{($menu_active == 'balance') ? 'active' : ''}}">
 					<a href="{{url('transaction/balance')}}" class="nav-link nav-toggle">
 						<i class="fa fa-clock-o"></i>
-						<span class="title">Balance Log History</span>
+						<span class="title">Kopi Point Log History</span>
 					</a>
 				</li>
 				@endif

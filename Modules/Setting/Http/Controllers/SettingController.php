@@ -57,6 +57,7 @@ class SettingController extends Controller
 
         $colLabel = 2;
         $colInput = 10;
+        $label = '';
 
         if($key == 'about') {
             $sub = 'about-about';
@@ -98,6 +99,14 @@ class SettingController extends Controller
             $span = 'minutes';
             $colLabel = 3;
             $colInput = 3;
+        } elseif ($key == 'point_reset') {
+            $sub = 'point-reset';
+            $active = 'point-reset';
+            $subTitle = 'Point Reset';
+        } elseif ($key == 'balance_reset') {
+            $sub = 'balance-reset';
+            $active = 'balance-reset';
+            $subTitle = 'Kopi Point Reset';
         }
             
         $data = [
@@ -114,24 +123,36 @@ class SettingController extends Controller
             $data['span'] = $span;
         }
 
-        $request = MyHelper::post('setting', ['key' => $key]);
-        
-        if (isset($request['status']) && $request['status'] == 'success') {
-            $result = $request['result'];
-            $data['id'] = $result['id_setting'];
-
-            if (is_null($result['value'])) {
-                $data['value'] = $result['value_text'];
-                $data['key'] = 'value_text';
-            } else {
-                $data['value'] = $result['value'];
-                $data['key'] = 'value';
+        if ($key == 'point_reset' || $key == 'balance_reset') {
+            $request = MyHelper::post('setting', ['key-like' => $key]);
+            if (isset($request['status']) && $request['status'] == 'success') {
+                $data['result'] = $request['result'];
+                return view('setting::point-reset', $data);
+            } elseif (isset($request['status']) && $request['messages'][0] == 'empty') {
+                return view('setting::point-reset', $data);
+            }else {
+                return view('setting::point-reset', $data)->withErrors($request['messages']);
             }
-        } else {
-            return view('setting::index', $data)->withErrors($request['messages']);
+            
+        }else{
+            $request = MyHelper::post('setting', ['key' => $key]);
+            if (isset($request['status']) && $request['status'] == 'success') {
+                $result = $request['result'];
+                $data['id'] = $result['id_setting'];
+    
+                if (is_null($result['value'])) {
+                    $data['value'] = $result['value_text'];
+                    $data['key'] = 'value_text';
+                } else {
+                    $data['value'] = $result['value'];
+                    $data['key'] = 'value';
+                }
+            } else {
+                return view('setting::index', $data)->withErrors($request['messages']);
+            }
+           
+            return view('setting::index', $data);
         }
-       
-        return view('setting::index', $data);
     }
 
     public function settingUpdate(Request $request, $id)
@@ -140,6 +161,14 @@ class SettingController extends Controller
 
         $update = MyHelper::post('setting/update', ['id_setting' => $id, $post['key'] => $post['value']]);
         
+        return parent::redirect($update, 'Setting data has been updated.');
+    }
+
+    public function updatePointReset(Request $request, $type)
+    {
+        $post = $request->except('_token');
+
+        $update = MyHelper::post('setting/'.$type.'/update', $post);
         return parent::redirect($update, 'Setting data has been updated.');
     }
 

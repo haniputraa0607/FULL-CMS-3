@@ -1,6 +1,7 @@
 <?php
 use App\Lib\MyHelper;
 $grantedFeature     = session('granted_features');
+$configs    		= session('configs');
 ?>
  @extends('layouts.main-closed')
 
@@ -804,11 +805,13 @@ $grantedFeature     = session('granted_features');
 												</div>
 											</div>
 											<div class="portlet-body">
-												@if(isset($result['contents'][$x-1]))
-													@if($result['contents'][$x-1]['promotion_count_voucher_give'] > 0)
-														<div class="alert alert-warning" role="alert">
-															Hidden Deals & Voucher cannot be disabled because voucher have been sent to users
-														</div>
+												@if(MyHelper::hasAccess([26], $configs))
+													@if(isset($result['contents'][$x-1]))
+														@if($result['contents'][$x-1]['promotion_count_voucher_give'] > 0)
+															<div class="alert alert-warning" role="alert">
+																Hidden Deals & Voucher cannot be disabled because voucher have been sent to users
+															</div>
+														@endif
 													@endif
 												@endif
 												<div class="form-md-checkboxes">
@@ -921,10 +924,13 @@ $grantedFeature     = session('granted_features');
 																@endif
 															@endif
 															>
+															
+															@if(MyHelper::hasAccess([26], $configs))
 															<label for="checkbox_{{$x}}_deals">
 																<span></span>
 																<span class="check"></span>
 																<span class="box"></span>Hidden Deals & Voucher</label>
+															@endif
 														</div>
 													</div>
 												</div>
@@ -2043,10 +2049,12 @@ $grantedFeature     = session('granted_features');
 													@endif
 												@endif
 												>
+												@if(MyHelper::hasAccess([26], $configs))
 												<label for="checkbox_0_deals">
 													<span></span>
 													<span class="check"></span>
 													<span class="box"></span>Hidden Deals & Voucher</label>
+												@endif
 											</div>
 										</div>
 									</div>
