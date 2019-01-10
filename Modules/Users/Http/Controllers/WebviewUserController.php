@@ -18,6 +18,7 @@ class WebviewUserController extends Controller
         if ($bearer == "") {
             return abort(404);
         }
+        $data['bearer'] = $bearer;
 
         $user = parent::getData(MyHelper::getWithBearer('users/get', $bearer));
         if (empty($user)) {
@@ -43,17 +44,18 @@ class WebviewUserController extends Controller
         return view('users::webview_complete_profile', $data);
     }
 
-    public function completeProfileSubmit(Request $request, $user_phone)
+    public function completeProfileSubmit(Request $request)
     {
         $post = $request->except('_token');
-        $post['phone'] = $user_phone;
+        $bearer = $post['bearer'];
+        unset($post['bearer']);
 
         // convert date format
         if (isset($post['birthday'])) {
             $post['birthday'] = date('Y-m-d', strtotime($post['birthday']));
         }
-        
-        $result = MyHelper::post('users/complete-profile', $post);
+
+        $result = MyHelper::postWithBearer('users/complete-profile', $post, $bearer);
 
         if ($result['status']=="success") {
             $data['messages'] = ["Save data success", "Thank you"];

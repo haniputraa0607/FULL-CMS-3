@@ -25,6 +25,16 @@
         <link rel="shortcut icon" href="favicon.ico" /> 
 
         <style type="text/css">
+             @font-face {
+              font-family: "Seravek";
+              src: url('{{ url('/fonts/Seravek.ttf') }}');
+            }
+            body{
+                background-color: #fff;
+                font-size: 14px;
+                font-family: "Seravek", sans-serif !important;
+            }
+
             @media only screen and (max-width: 768px) {
                 /* For mobile phones: */
                 [class*="col-"] {
@@ -47,7 +57,7 @@
                     <div class="row">
                         <div class="col-md-offset-3 col-md-6">
                             <!-- BEGIN SAMPLE FORM PORTLET-->
-                            <div class="portlet light bordered">
+                            <div class="portlet light">
                                 <div class="portlet-body form">
                                     <div class="text-center" style="min-height: 75vh; margin-top: 30px; font-size: 16px;">
                                     @foreach($messages as $message)

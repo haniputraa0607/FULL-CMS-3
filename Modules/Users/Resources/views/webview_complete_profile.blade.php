@@ -136,6 +136,7 @@
             .select2-container--default,
             .select2-results__option--highlighted[aria-selected] {
                 background-color: #6C5648 !important;
+                color: #fff;
             }
             .select2-selection__arrow{
                 display: none;
@@ -149,7 +150,7 @@
             }
             .button-wrapper .btn{
                 width: 75%;
-                max-width: 500px;
+                max-width: 400px;
                 font-size: 16px;
             }
             .btn-round{
@@ -160,9 +161,9 @@
                 color: #6C5648;
                 background-color: #fff;
             }
-            .button-wrapper .btn-default{
-                border-color: #000;
-                color: #000;
+            .btn-outline.brown:focus{
+              background-color: #6C5648;
+              color: #fff;
             }
 
             .datepicker table td, .datepicker table th, .datetimepicker table td, .datetimepicker table th{
@@ -190,7 +191,7 @@
             @if($user != null)
                 @if($user['birthday'] == null || $user['gender'] == null || $user['id_city'] == null)
                 {{-- form --}}
-                <form role="form" action="{{ url('webview/complete-profile', $user['phone']) }}" method="post">
+                <form role="form" action="{{ url('webview/complete-profile') }}" method="post">
                     {{ csrf_field() }}
 
                     <div class="form-body">
@@ -226,6 +227,8 @@
                         @endif
 
                         <div class="form-actions noborder" style="margin-top: 70px; margin-bottom: 30px;">
+                            <input type="hidden" name="bearer" value="{{ $bearer }}">
+
                             <div class="button-wrapper text-center">
                                 <input type="submit" value="SIMPAN" class="btn btn-round btn-outline brown">
                             </div>
