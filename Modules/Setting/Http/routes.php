@@ -27,7 +27,6 @@ Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modu
     Route::get('{key}', 'SettingController@settingList');
     Route::get('webview/{key}', 'SettingController@aboutWebview');
     Route::post('update/{id}', 'SettingController@settingUpdate');
-    Route::post('{type}/update', 'SettingController@updatePointReset');
 	
 	
 	Route::any('background/create', ['middleware' => 'config_control:30,32', 'uses' => 'SettingController@createBackground']);
@@ -54,6 +53,8 @@ Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modu
     /* complete profile */
     Route::post('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
 
+    // point reset
+    Route::post('{type}/update', 'SettingController@updatePointReset');
 });
 
 Route::group(['middleware' => 'web', 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function()

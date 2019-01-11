@@ -173,7 +173,11 @@
 			else {
 				$('#modalBannerUpdate .click-to-radio[value="none"]').prop("checked", true);
 			}
+			
+			// reset var
+			url = "";
     	});
+
     });
 
     // clear banner edit form when modal close
