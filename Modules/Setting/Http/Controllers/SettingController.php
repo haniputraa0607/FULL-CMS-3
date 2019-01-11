@@ -839,7 +839,7 @@ class SettingController extends Controller
         unset($post['click_to']);
 
         $result = MyHelper::post('setting/banner/create', $post);
-        return parent::redirect($result, 'New banner has been created.');
+        return parent::redirect($result, 'New banner has been created.', 'setting/home#banner');
     }
 
     public function updateBanner(Request $request)
@@ -860,7 +860,7 @@ class SettingController extends Controller
         unset($post['click_to']);
 
         $result = MyHelper::post('setting/banner/update', $post);
-        return parent::redirect($result, 'Banner has been updated.');
+        return parent::redirect($result, 'Banner has been updated.', 'setting/home#banner');
     }
 
     public function reorderBanner(Request $request)
@@ -870,7 +870,7 @@ class SettingController extends Controller
 
         $result = MyHelper::post('setting/banner/reorder', $post);
 
-        return parent::redirect($result, 'Banner has been sorted.');
+        return parent::redirect($result, 'Banner has been sorted.', 'setting/home#banner');
     }
 
     // delete banner
@@ -880,7 +880,7 @@ class SettingController extends Controller
         
         $result = MyHelper::post('setting/banner/delete', $post);
 
-        return parent::redirect($result, 'Banner has been deleted.');
+        return parent::redirect($result, 'Banner has been deleted.', 'setting/home#banner');
     }
 
     // complete user profile settings
@@ -896,10 +896,10 @@ class SettingController extends Controller
         $post = $request->except('_token');
 
         // update complete profile
-        $result = MyHelper::post('setting/complete-profile/update', $post);
+        $result = MyHelper::post('setting/complete-profile', $post);
         // dd($result);
 
-        return parent::redirect($result, 'User Profile Completing has been updated.');
+        return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/home#user-profile');
     }
 
 }

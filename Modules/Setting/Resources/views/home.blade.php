@@ -55,7 +55,6 @@
 	<script src="{{asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script> 
 	<script src="{{ url('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ url('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('js/prices.js')}}"></script>
 	<script>
 	function hapus1(value){
 		swal({
@@ -249,7 +248,7 @@
 	<ul class="nav nav-tabs">
 	@if(MyHelper::hasAccess([30], $configs))
 		@if(MyHelper::hasAccess([31], $configs))
-        <li class="active">
+        <li>
             <a href="#greeting" data-toggle="tab">Greeting</a>
         </li>
 		@endif
@@ -257,7 +256,7 @@
             <a href="#home-background" data-toggle="tab">Home Background</a>
         </li>
 	@endif
-        <li>
+        <li class="active">
             <a href="#splash-screen" data-toggle="tab">Splash Screen</a>
         </li>
 		@if(MyHelper::hasAccess([144], $grantedFeature))
@@ -282,7 +281,7 @@
 <div class="tab-content">
 	@if(MyHelper::hasAccess([30], $configs))
 	{{-- greeting --}}
-        <div class="tab-pane active" id="greeting">
+        <div class="tab-pane" id="greeting">
 			@if(MyHelper::hasAccess([31], $configs))
 				<div class="row" style="margin-top:20px">
 					<div class="col-md-12">
@@ -461,7 +460,7 @@
 	@endif
 
 	{{-- splash screen --}}
-    <div class="tab-pane" id="splash-screen">
+    <div class="tab-pane active" id="splash-screen">
 		<div class="row" style="margin-top:20px">
 			<div class="col-md-12">
 				<div class="portlet light bordered">
@@ -713,7 +712,7 @@
 					</div>
 					<div class="portlet-body">
 
-						<form id="form" role="form" class="form-horizontal" action="{{url('setting/complete-profile')}}" method="POST" enctype="multipart/form-data">
+						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile')}}" method="POST">
 							<div class="form-body">
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completing Point
@@ -727,10 +726,10 @@
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completing Cashback
 										<span class="required" aria-required="true"> * </span> 
-										<i class="fa fa-question-circle tooltips" data-original-title="Cashback yang diperoleh user ketika melengkapi data" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="Cashback yang diperoleh user ketika melengkapi data (IDR)" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control price" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}" required>
+										<input class="form-control" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}" required>
 									</div>
 								</div>
 								<div class="form-group col-md-12">
@@ -754,7 +753,7 @@
 							</div>
 							<div class="form-actions" style="text-align:center">
 								{{ csrf_field() }}
-								<button type="submit" class="btn blue" id="checkBtn">Submit</button>
+								<button type="submit" class="btn blue">Submit</button>
 							</div>
 						</form>
 					</div>
