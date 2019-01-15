@@ -199,12 +199,17 @@
 
             $('.summernote').summernote({
                 placeholder: 'News Content Long',
-        				fontNames: [
-        					'Open Sans', 'Sans', 'Arial', 'Arial Black', 'Courier',
-        					'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande'
-        				],
                 tabsize: 2,
                 height: 120,
+                toolbar: [         
+                  ['style', ['style']],
+                  ['style', ['bold', 'underline', 'clear']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  ['insert', ['table']],
+                  ['insert', ['link', 'picture', 'video']],
+                  ['misc', ['fullscreen', 'codeview', 'help']]
+                ],
                 callbacks: {
                     onFocus: function() {
                         $('#tutorial1').attr('src', "{{url('img/news/news3.png')}}")

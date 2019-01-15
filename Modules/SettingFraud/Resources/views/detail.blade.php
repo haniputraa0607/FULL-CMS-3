@@ -31,6 +31,15 @@
 				placeholder: 'Email Content',
 				tabsize: 2,
 				height: 120,
+				toolbar: [         
+                  ['style', ['style']],
+                  ['style', ['bold', 'underline', 'clear']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  ['insert', ['table']],
+                  ['insert', ['link', 'picture', 'video']],
+                  ['misc', ['fullscreen', 'codeview', 'help']]
+                ],
 				callbacks: {
 					onImageUpload: function(files){
 						sendFile(files[0], $(this).attr('id'));

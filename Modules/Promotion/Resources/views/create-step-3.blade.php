@@ -59,6 +59,15 @@ $grantedFeature     = session('granted_features');
 		$('.summernote').summernote({
 			placeholder: 'Content',
 			tabsize: 2,
+			toolbar: [         
+              ['style', ['style']],
+              ['style', ['bold', 'underline', 'clear']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['insert', ['table']],
+              ['insert', ['link', 'picture', 'video']],
+              ['misc', ['fullscreen', 'codeview', 'help']]
+            ],
 			height: 120
 		});
 	  
@@ -147,11 +156,11 @@ $grantedFeature     = session('granted_features');
 		});
 		token = '<?php echo csrf_token();?>';
 		
-		$('.summernote').summernote({
+		/*$('.summernote').summernote({
 			placeholder: 'Deals Content Long',
 			tabsize: 2,
 			height: 120
-		});
+		});*/
 	});
 	
 	function dealsPromoType(channel, series){

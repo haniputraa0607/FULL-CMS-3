@@ -193,12 +193,16 @@
 	        }
 	    }
 
-    	var spin_url = "{{ url('webview/spin-the-wheel/spin', $user_phone) }}"
+    	var spin_url = "{{ url('webview/spin-the-wheel/spin') }}";
+    	var bearer = "{{ $bearer }}";
         function ajax_spin() {
             $.ajax({
                 type : "GET",
                 url : spin_url,
-                success : function(result) {
+                headers: {
+                	'Authorization' : bearer
+                },
+                success: function(result) {
                     if (result != "") {
 		                // flag for showPrize
 		                success = 1;

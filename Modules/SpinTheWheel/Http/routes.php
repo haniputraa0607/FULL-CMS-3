@@ -13,8 +13,8 @@ Route::group(['middleware' => 'web', 'prefix' => 'spinthewheel', 'namespace' => 
 /* Webview */
 Route::group(['middleware' => 'web', 'prefix' => 'webview/spin-the-wheel', 'namespace' => 'Modules\SpinTheWheel\Http\Controllers'], function()
 {
-    Route::get('/{user_phone}', 'WebviewSpinTheWheelController@index');
+    Route::get('/', 'WebviewSpinTheWheelController@index');
     // ajax for claim spin prize
-    Route::get('/spin/{user_phone}', 'WebviewSpinTheWheelController@spin');
+    Route::get('/spin', 'WebviewSpinTheWheelController@spin');
 
 });

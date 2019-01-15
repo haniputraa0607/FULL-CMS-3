@@ -38,6 +38,15 @@
         $('.summernote').summernote({
             placeholder: 'Payment Note Confirm',
             tabsize: 2,
+            toolbar: [         
+              ['style', ['style']],
+              ['style', ['bold', 'underline', 'clear']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['insert', ['table']],
+              ['insert', ['link', 'picture', 'video']],
+              ['misc', ['fullscreen', 'codeview', 'help']]
+            ],
             height: 120
         });
     });

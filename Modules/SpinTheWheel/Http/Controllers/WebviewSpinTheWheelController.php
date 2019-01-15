@@ -11,8 +11,14 @@ use App\Lib\MyHelper;
 class WebviewSpinTheWheelController extends Controller
 {   
     // get spin prize temp and spin items
-    public function index($user_phone)
+    public function index(Request $request)
     {
+        $bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return abort(404);  // page not found
+        }
+        $data['bearer'] = $bearer;
+
         // spin the wheel color
         $colors = [
             "#E53935",  // red
@@ -23,18 +29,16 @@ class WebviewSpinTheWheelController extends Controller
             "#F06292"   // pink
         ];
 
-        $data['user_phone'] = $user_phone;
-        
         $data['spin_items'] = null;
         $data['spin_count'] = 0;
         $data['spin_point'] = 0;
         $data['spin_prize'] = 0;
         $data['spin_items_id'] = 0;
+        $data['spin_item_titles'] = null;
         $segments = [];     // contain prize for wheel segment
         $segment_titles = [];   // contain prize title for legend in view
 
-        $spin_items = MyHelper::post('spinthewheel/items', ["phone"=>$user_phone] );
-        // dd($spin_items);
+        $spin_items = MyHelper::getWithBearer('spinthewheel/items', $bearer);
 
         if (isset($spin_items['status']) && $spin_items['status'] == "success") {
             $spin_items_temp    = $spin_items['result']['spin_items'];
@@ -74,9 +78,14 @@ class WebviewSpinTheWheelController extends Controller
     }
 
     // ajax for claim spin prize and calculate user point
-    public function spin($user_phone)
+    public function spin(Request $request)
     {
-        $result = MyHelper::post('spinthewheel/spin', ["phone"=>$user_phone] );
+        $bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return "";
+        }
+
+        $result = MyHelper::getWithBearer('spinthewheel/spin', $bearer);
         
         if (isset($result['status']) && $result['status'] == "success") {
             return $result;
