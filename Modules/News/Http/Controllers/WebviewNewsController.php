@@ -5,6 +5,7 @@ namespace Modules\News\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller as CustomController;
 
 use App\Lib\MyHelper;
 
@@ -20,4 +21,101 @@ class WebviewNewsController extends Controller
             return view('news::webview.fail');
         }
     }
+
+    /* Webview Custom Form */
+    function customFormView(Request $request, $id_news) {
+        $bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return abort(404);
+        }
+
+        $post = $request->except('_token');
+
+        $custom_controller = new CustomController();
+
+        $news = $custom_controller->getData(MyHelper::postWithBearer('news/get', ['id_news' => $id_news], $bearer));
+
+        if (empty($news)) {
+            return [
+                'status' => 'fail',
+                'messages' => ['Form is not found']
+            ];
+        }
+        else {
+            $data['form_action'] = "news/webview/custom-form/". $news['id_news'];
+            // flag if user logged in or not
+            $data['flag'] = 0;
+            $data['user'] = [];
+
+            // get user profile
+            $user = $custom_controller->getData(MyHelper::getWithBearer('users/get', $bearer));
+            if (!empty($user)) {
+                // flag if user logged in or not
+                $data['flag'] = 1;
+                $data['user'] = $user;
+            }
+
+            if (empty($post)) {
+                $data['news'] = $news;
+                $data['bearer'] = $bearer;
+
+                return view('news::webview.custom_form', $data);
+            }
+            else{
+                $bearer = $post['bearer'];
+                unset($post['bearer']);
+                $auth = $post['flag'];
+                unset($post['flag']);
+                
+                foreach ($post['news_form'] as $key => $news_form) {
+                    // if field is null
+                    if (!isset($news_form['input_value'])) {
+                        $news_form['input_value'] = "";
+                        $post['news_form'][$key]['input_value'] = "";
+                    }
+
+                    if ($news_form['input_type'] == "Image Upload" && $news_form['input_value'] != "") {
+                        $post['news_form'][$key]['input_value'] = MyHelper::encodeImage($news_form['input_value']);
+                    }
+                    elseif ($news_form['input_type'] == "File Upload" && $news_form['input_value'] != "") {
+                        $path = $news_form['input_value']->getRealPath(); 
+                        $filename = $news_form['input_value']->getClientOriginalName(); 
+                        // upload file
+                        $file = MyHelper::postFileBearer('news/custom-form/file', 'news_form_file', $path, $filename, $bearer);
+
+                        if ($file['status'] == 'success') {
+                            $post['news_form'][$key]['input_value'] = $file['filename'];
+                        }
+                    }
+                }
+
+                // if user logged in
+                if ($auth) {
+                    $result = MyHelper::postWithBearer('news/custom-form/auth', $post, $bearer);
+                }
+                else {
+                    $result = MyHelper::postWithBearer('news/custom-form', $post, $bearer);
+                }
+                
+                if ($result['status']=="success") {
+                    $data['messages'] = $result['messages'];
+                    if ($result['messages'] == "") {
+                        $data['messages'] = ["Submit form success", "Thank you"];
+                    }
+                    return view('news::webview.custom_form_success', $data);
+                }
+                else{
+                    return back()->withInput()->withErrors(['Save data fail', 'Please check again your input']);
+                }
+            }
+        }
+        
+    }
+
+    // preview custom form success page
+    /*public function customFormSuccess()
+    {
+        $data['messages'] = ["Submit form success", "Thank you"];
+        return view('news::webview.custom_form_success', $data);
+    }*/
 }

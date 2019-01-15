@@ -408,6 +408,13 @@ class MyHelper
     return number_format($n);
   }
 
+  public static function thousand_number_format($number){
+    if ($number != "") {
+      return number_format($number , 0, '', '.');
+    }
+    return 0;
+  }
+
   public static function hasAccess($granted, $features){
     foreach($granted as $g){
 		if(!is_array($features)) $features = session('granted_features');

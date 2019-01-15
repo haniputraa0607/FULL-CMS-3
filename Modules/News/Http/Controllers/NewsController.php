@@ -480,91 +480,13 @@ class NewsController extends Controller
         }
     }
 
-    /* WEB VIEW CUSTOM FORM */
-    function customFormView(Request $request, $id_news) {
-        $bearer = $request->header('Authorization');
-        if ($bearer == "") {
-            return abort(404);
-        }
-
-        $post = $request->except('_token');
-
-        $news = parent::getData(MyHelper::postWithBearer('news/get', ['id_news' => $id_news], $bearer));
-
-        if (empty($news)) {
-            return [
-                'status' => 'fail',
-                'messages' => 'Data news not found.'
-            ];
-        }
-        else {
-            $data['form_action'] = "news_form/". $news['id_news'] ."/form";
-            $data['id_user'] = "";
-            $data['user'] = [];
-
-            // get user profile
-            $user = parent::getData(MyHelper::getWithBearer('users/get', $bearer));
-            if (!empty($user)) {
-                // $data['form_action'] = "news_form/". $news['id_news'] ."/form/" . $phone;
-                $data['user'] = $user;
-                $data['id_user'] = $user['id'];
-            }
-
-            if (empty($post)) {
-                $data['news'] = $news;
-                $data['bearer'] = $bearer;
-
-                return view('news::news_custom_form', $data);
-            }
-            else{
-                $bearer = $post['bearer'];
-                unset($post['bearer']);
-
-                foreach ($post['news_form'] as $key => $news_form) {
-                    // if field is null
-                    if (!isset($news_form['input_value'])) {
-                        $news_form['input_value'] = "";
-                        $post['news_form'][$key]['input_value'] = "";
-                    }
-
-                    if ($news_form['input_type'] == "Image Upload" && $news_form['input_value'] != "") {
-                        $post['news_form'][$key]['input_value'] = MyHelper::encodeImage($news_form['input_value']);
-                    }
-                    elseif ($news_form['input_type'] == "File Upload" && $news_form['input_value'] != "") {
-                        $path = $news_form['input_value']->getRealPath(); 
-                        $filename = $news_form['input_value']->getClientOriginalName(); 
-                        // upload file
-                        $file = MyHelper::postFileBearer('news/custom-form/file', 'news_form_file', $path, $filename, $bearer);
-
-                        if ($file['status'] == 'success') {
-                            $post['news_form'][$key]['input_value'] = $file['filename'];
-                        }
-                    }
-                }
-
-                $result = MyHelper::postWithBearer('news/custom-form', $post, $bearer);
-                if ($result['status']=="success") {
-                    $data['messages'] = $result['messages'];
-                    if ($result['messages'] == "") {
-                        $data['messages'] = ["Submit form success", "Thank you"];
-                    }
-                    return view('news::news_custom_form_success', $data);
-                }
-                else{
-                    return back()->withInput()->withErrors(['Save data fail', 'Please check again your input']);
-                }
-            }
-        }
-        
-    }
-
-    // method for preview news custom form from admin
+    // preview news custom form from admin
     public function customFormPreview($id_news)
     {
         $news = parent::getData(MyHelper::post('news/get', ['id_news' => $id_news]));
-        
+
         if (empty($news)) {
-            return redirect()->back()->withErrors(['Data news not found.']);
+            return back()->withErrors(['Data news not found.']);
         }
         else {
             $data['form_action'] = "";
@@ -572,16 +494,9 @@ class NewsController extends Controller
             $data['user'] = [];
             $data['news'] = $news;
 
-            return view('news::news_custom_form', $data);
+            return view('news::webview.custom_form', $data);
         }
     }
-
-    // method for preview success page
-    /*public function customFormSuccess()
-    {
-        $data['messages'] = ["Submit form success", "Thank you"];
-        return view('news::news_custom_form_success', $data);
-    }*/
 
     public function formData($id, $slug)
     {

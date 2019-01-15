@@ -1,16 +1,10 @@
 <?php
     use App\Lib\MyHelper;
+    $title = "News Custom Form";
 ?>
+@extends('webview.main')
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>News Form</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-
+@section('page-style-plugin')
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="{{ url('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ url('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -26,89 +20,74 @@
         <!-- BEGIN THEME LAYOUT STYLES -->
         <link href="{{ url('assets/layouts/layout4/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
-        
-        <link rel="shortcut icon" href="favicon.ico" /> 
+@stop
 
-        <style type="text/css">
-            @font-face {
-              font-family: "Seravek";
-              src: url('{{ url('/fonts/Seravek.ttf') }}');
-            }
-            body{
-                background-color: #fff;
-                font-size: 14px;
-                font-family: "Seravek", sans-serif !important;
-            }
-            .form-group.form-md-line-input .form-control.edited:not([readonly]) ~ label:after,
-            .form-group.form-md-line-input .form-control.edited:not([readonly]) ~ .form-control-focus:after,
-            .form-group.form-md-line-input .form-control:focus:not([readonly]) ~ label:after,
-            .form-group.form-md-line-input .form-control:focus:not([readonly]) ~ .form-control-focus:after {
-                background: #6C5648;
+@section('css')
+    <style type="text/css">
+        .form-group.form-md-line-input .form-control.edited:not([readonly]) ~ label:after,
+        .form-group.form-md-line-input .form-control.edited:not([readonly]) ~ .form-control-focus:after,
+        .form-group.form-md-line-input .form-control:focus:not([readonly]) ~ label:after,
+        .form-group.form-md-line-input .form-control:focus:not([readonly]) ~ .form-control-focus:after {
+            background: #6C5648;
+        }
+
+        .md-checkbox label > .check{
+            border-color: #6C5648;
+        }
+        .datepicker table td, .datepicker table th, .datetimepicker table td, .datetimepicker table th{
+            font-family: "Seravek", sans-serif !important;
+        }
+        .datepicker .active,
+        .datetimepicker .active,
+        .md-radio label > .check {
+            background-color: #6C5648 !important;
+        }
+        .datepicker .active:hover,
+        .datetimepicker .active:hover{
+            background-color: #907462 !important;
+        }
+
+        .form-actions .btn{
+            width: 75%;
+            max-width: 400px;
+            font-size: 16px;
+        }
+        .btn-round{
+            border-radius: 25px !important;
+        }
+        .btn-outline.brown{
+            border-color: #6C5648;
+            color: #6C5648;
+            background-color: #fff;
+        }
+        .btn-outline.brown:focus{
+            background-color: #6C5648;
+            color: #fff;
+        }
+        @media only screen and (max-width: 768px) {
+            /* For mobile phones: */
+            [class*="col-"] {
+                width: 100%;
             }
 
-            .md-checkbox label > .check{
-                border-color: #6C5648;
-            }
-            .datepicker table td, .datepicker table th, .datetimepicker table td, .datetimepicker table th{
-                font-family: "Seravek", sans-serif !important;
-            }
-            .datepicker .active,
-            .datetimepicker .active,
-            .md-radio label > .check {
-                background-color: #6C5648 !important;
-            }
-            .datepicker .active:hover,
-            .datetimepicker .active:hover{
-                background-color: #907462 !important;
-            }
+        }
+    </style>
+@stop
 
-            .form-actions .btn{
-                width: 75%;
-                max-width: 400px;
-                font-size: 16px;
-            }
-            .btn-round{
-                border-radius: 25px !important;
-            }
-            .btn-outline.brown{
-                border-color: #6C5648;
-                color: #6C5648;
-                background-color: #fff;
-            }
-            .btn-outline.brown:focus{
-                background-color: #6C5648;
-                color: #fff;
-            }
-            @media only screen and (max-width: 768px) {
-                /* For mobile phones: */
-                [class*="col-"] {
-                    width: 100%;
-                }
-
-            }
-        </style>
-    </head>
-    <!-- END HEAD -->
-
-    <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
-        <!-- BEGIN CONTAINER -->
-        <div class="page-container" style="margin-top: 10px;margin-left: -250px;margin-bottom: 40px;">
-            <!-- BEGIN CONTENT -->
-            <div class="page-content-wrapper">
-                <!-- BEGIN CONTENT BODY -->
-                <div class="page-content" >
-                    <!-- BEGIN PAGE BASE CONTENT -->
-                    <div class="row">
-                        <div class="col-md-offset-3 col-md-6">
-                            <!-- BEGIN SAMPLE FORM PORTLET-->
-                            <div class="portlet light">
-                                <div class="portlet-body form">
-                                    @include('layouts.notifications')
+@section('content')
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <!-- BEGIN CONTENT BODY -->
+            <div class="col-md-offset-3 col-md-6" style="padding-left: 0; padding-right: 0;">
+                <!-- BEGIN SAMPLE FORM PORTLET-->
+                <div class="portlet light">
+                    <div class="portlet-body form">
+                        @include('layouts.notifications')
 {{-- form --}}
 <form role="form" action="{{ url($form_action) }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
-    <input type="hidden" name="bearer" value="{{ $bearer }}">
-    <input type="hidden" name="id_news" value="{{ $news['id_news'] }}">
 
     <div class="form-body">
         <?php 
@@ -138,7 +117,7 @@
                     <textarea class="form-control" rows="3" placeholder="Enter {{$item['form_input_label']}}" name="{{ $field_name }}" {{ ($item['is_required']==1 ? 'required' : '') }}>{{ MyHelper::oldValue($old_value, $item['form_input_autofill'], $user, $is_autofill=1) }}</textarea>
                     <label>{{ucwords($item['form_input_label'])}}  {!! MyHelper::isRequiredMark($item['is_required']) !!}</label>
                 @elseif($item['form_input_types'] == 'Number Input')
-                    <input type="text" class="form-control price" placeholder="Enter {{$item['form_input_label']}}" name="{{ $field_name }}" {{ ($item['is_required']==1 ? 'required' : '') }} value="{{ MyHelper::oldValue($old_value, $item['form_input_autofill'], $user, $is_autofill=0) }}">
+                    <input type="text" class="form-control" placeholder="Enter {{$item['form_input_label']}}" name="{{ $field_name }}" {{ ($item['is_required']==1 ? 'required' : '') }} value="{{ MyHelper::oldValue($old_value, $item['form_input_autofill'], $user, $is_autofill=0) }}">
                     <label>{{ucwords($item['form_input_label'])}}  {!! MyHelper::isRequiredMark($item['is_required']) !!}</label>
                 @elseif($item['form_input_types'] == 'Date')
                     <div class="input-icon right">
@@ -234,6 +213,13 @@
             </div>
         @endforeach
 
+        
+        @if($form_action != "")
+            <input type="hidden" name="bearer" value="{{ $bearer }}">
+            <input type="hidden" name="flag" value="{{ $flag }}">
+            <input type="hidden" name="id_news" value="{{ $news['id_news'] }}">
+        @endif
+        
         <div class="form-actions noborder text-center">
             @if($form_action != "")
                 <input type="submit" value="Submit" class="btn btn-round btn-outline brown">
@@ -245,61 +231,53 @@
     </div>
 </form>
 {{-- end form --}}
-                                </div>
-                            </div>
-                            <!-- END SAMPLE FORM PORTLET-->
-                        </div>
                     </div>
-                    <!-- END PAGE BASE CONTENT -->
                 </div>
-                <!-- END CONTENT BODY -->
+                <!-- END SAMPLE FORM PORTLET-->
             </div>
-            <!-- END CONTENT -->
+            <!-- END CONTENT BODY -->
         </div>
-        <!-- END CONTAINER -->
-        <!--[if lt IE 9] -->
-        <!-- BEGIN CORE PLUGINS -->
-        <script src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets/global/plugins/js.cookie.min.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-        <script src="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-        <script src="{{ url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-        <!-- END CORE PLUGINS -->
-        <!-- BEGIN THEME GLOBAL SCRIPTS -->
-        <script src="{{ url('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-        
-        <!-- END THEME GLOBAL SCRIPTS -->
-        <!-- BEGIN THEME LAYOUT SCRIPTS -->
-        <script src="{{ url('assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets/layouts/layout4/scripts/demo.min.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
-        <!-- END THEME LAYOUT SCRIPTS -->
-        <script src="{{ url('js/prices.js')}}"></script>
-        <script>
-            $('.datepicker').datepicker({
-                'format' : 'd-M-yyyy',
-                'todayHighlight' : true,
-                'autoclose' : true
-            });
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+@stop
 
-            $(document).ready(function() {
-                // check required checkbox
-                $("form").on('submit', function(e) {
-                    $('.md-checkbox-list.checkbox-required').each(function(i) {
-                        if($(this).find('input[type="checkbox"]:checked').length == 0){
-                            e.preventDefault();
-                            alert('Please check the checkbox at least 1');
-                            return false;
-                        };
-                    });
+@section('page-script')       
+    <!--[if lt IE 9] -->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="{{ url('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+    
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="{{ url('assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>
+    <!-- END THEME LAYOUT SCRIPTS -->
+    <script>
+        $('.datepicker').datepicker({
+            'format' : 'd-M-yyyy',
+            'todayHighlight' : true,
+            'autoclose' : true,
+            'orientation': 'auto right'
+        });
+
+        $(document).ready(function() {
+            // check required checkbox
+            $("form").on('submit', function(e) {
+                $('.md-checkbox-list.checkbox-required').each(function(i) {
+                    if($(this).find('input[type="checkbox"]:checked').length == 0){
+                        e.preventDefault();
+                        alert('Please check the checkbox at least 1');
+                        return false;
+                    };
                 });
             });
-        </script>
-</body>
-
-
-</html>
+        });
+    </script>
+@stop

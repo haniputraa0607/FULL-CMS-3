@@ -27,10 +27,9 @@ class WebviewDealsController extends Controller
         if (empty($data['deals'])) {
             return [
                 'status' => 'fail',
-                'message' => 'Unauthenticated'
+                'messages' => ['Deals is not found']
             ];
         }
-        // dd($data);
         
         return view('deals::deals.webview.deals_detail', $data);
     }

@@ -24,7 +24,7 @@ class WebviewVoucherController extends Controller
         if (empty($data['voucher'])) {
             return [
                 'status' => 'fail',
-                'message' => 'Unauthenticated'
+                'messages' => ['Voucher is not found']
             ];
         }
         

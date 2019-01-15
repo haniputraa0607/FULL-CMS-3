@@ -1,37 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Deals Detail</title>
-	<meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
+<?php
+    use App\Lib\MyHelper;
+    $title = "Deals Detail";
+?>
+@extends('webview.main')
 
-    <script src="{{ url('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
-    <link href="{{ url('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="{{ url('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="{{ url('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END THEME GLOBAL STYLES -->
-    <!-- BEGIN THEME LAYOUT STYLES -->
-    <link href="{{ url('assets/layouts/layout4/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/layouts/layout4/css/themes/default.min.css') }}" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="{{ url('assets/layouts/layout4/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END THEME LAYOUT STYLES -->
-    <link rel="shortcut icon" href="favicon.ico" /> 
-
+@section('css')
     <style type="text/css">
-        @font-face {
-                font-family: "Seravek";
-                src: url('{{ url('/fonts/Seravek.ttf') }}');
-        }
-    	body{
-    		background-color: #fff;
-    		color: #858585;
-            font-family: "Seravek", sans-serif !important;
-    	}
     	p{
     		margin-top: 0px !important;
     		margin-bottom: 0px !important;
@@ -105,14 +79,15 @@
 	    	}
         }
     </style>
-</head>
-<body>
+@stop
+
+@section('content')
 	<div class="deals-detail">
 		@if(!empty($deals))
 			@php
 				$deals = $deals[0];
                 if ($deals['deals_voucher_price_cash'] != "") {
-                    $deals_fee = "IDR " . $deals['deals_voucher_price_cash'];
+                    $deals_fee = "IDR " . MyHelper::thousand_number_format($deals['deals_voucher_price_cash']);
                 }
                 elseif ($deals['deals_voucher_price_point']) {
                     $deals_fee = $deals['deals_voucher_price_point'] . " pts";
@@ -162,8 +137,9 @@
 			</div>
 		@endif
 	</div>
+@stop
 
-    {{-- <script type="text/javascript" src="{{ url('assets/global/plugins/jquery.min.js') }}"></script> --}}
+@section('page-script')
     @if(!empty($deals))
         <script type="text/javascript">
             // timer
@@ -253,5 +229,4 @@
             }
         </script>
     @endif
-</body>
-</html>
+@stop
