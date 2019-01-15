@@ -1,6 +1,6 @@
 <?php
     use App\Lib\MyHelper;
-    $title = "News Custom Form";
+    $title = "User Profile";
 ?>
 @extends('webview.main')
 
@@ -228,7 +228,7 @@
     </div>
 @stop
                             
-@section('page-script')<!--[if lt IE 9] -->
+@section('page-script')
     <!-- BEGIN CORE PLUGINS -->
     <script src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
