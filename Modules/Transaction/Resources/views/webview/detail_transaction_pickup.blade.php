@@ -313,7 +313,9 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="col-12 text-16-7px text-greyish-brown seravek-font">
-                        @if($data['detail']['ready_at'] != null)
+                        @if($data['detail']['taken_at'] != null)
+                            Pesanan Sudah Diambil
+                        @elseif($data['detail']['ready_at'] != null)
                             Pesanan Anda Sudah Siap
                         @elseif($data['detail']['receive_at'] != null)
                             Pesanan Diterima
@@ -340,7 +342,7 @@
                         <div class="col-12 text-13-3px text-grey-white space-nice text-center ">{{ $data['outlet']['outlet_address'] }}</div>
                     </div>
                         <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan diproses pada</div>
-                        <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['detail']['pickup_at'])) }}</div>
+                        <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['transaction_date'])) }}</div>
                     @if ($data['detail']['pickup_type'] == 'set time')
                         <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
                     @elseif($data['detail']['pickup_type'] == 'at arrival')
@@ -404,12 +406,18 @@
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ number_format($data['transaction_tax']) }}</div>
 
-                <!-- <div class="col-6 text-13-3px space-text seravek-light-font">Kopi Points</div>
-                <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">-{{ number_format($data['transaction_tax']) }}</div> -->
+                @if(isset($data['balance']))
+                <div class="col-6 text-13-3px space-text seravek-light-font">Kopi Points</div>
+                <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ number_format(abs($data['balance'])) }}</div>
+                @endif
 
                 <div class="col-12 text-12-7px text-right"><hr></div>
                 <div class="col-6 text-13-3px seravek-font text-black ">Total Pembayaran</div>
+                @if(isset($data['balance']))
+                <div class="col-6 text-13-3px text-right seravek-font text-black">{{ number_format($data['transaction_grandtotal'] + $data['balance']) }}</div>
+                @else
                 <div class="col-6 text-13-3px text-right seravek-font text-black">{{ number_format($data['transaction_grandtotal']) }}</div>
+                @endif
             </div>
         </div>
     </div>
@@ -459,12 +467,34 @@
             <div class="row">
                 <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Status Pesanan <hr> </div>
                 @php $top = 5; $bg = true; @endphp
-                @if($data['detail']['ready_at'] != null)
+                @if($data['detail']['taken_at'] != null)
                     <div class="col-12 text-13-3px seravek-font text-black">
                         <div class="round-greyish-brown bg-greyish-brown"></div>
-                        Pesanan Anda sudah siap
+                        Pesanan Anda sudah diambil
                     </div>
                     <div class="col-12 top-5px">
+                        <div class="inline text-center">
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                        </div>
+                        <div class="inline vertical-top">
+                            <div class="text-11-7px seravek-light-font text-black space-bottom">
+                                {{date('d F Y H:i', strtotime($data['detail']['taken_at']))}}
+                            </div>
+                        </div>
+                    </div>
+                    @php $top += 5; $bg = false; @endphp
+                @endif
+                @if($data['detail']['ready_at'] != null)
+                    <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
+                        <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
+                        Pesanan Anda sudah siap
+                    </div>
+                    @php $top += 5; $bg = false; @endphp
+                    <div class="col-12 top-{{$top}}px">
                         <div class="inline text-center">
                             <div class="line-vertical text-grey-medium-light">|</div>
                             <div class="line-vertical text-grey-medium-light">|</div>
@@ -478,32 +508,12 @@
                             </div>
                         </div>
                     </div>
-                    @php $top += 5; $bg = false; @endphp
+                    @php $top += 5; @endphp
                 @endif
                 @if($data['detail']['receive_at'] != null)
                     <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
                         <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
                             Pesanan Anda sedang diproses
-                    </div>
-                    @php $top += 5; $bg = false; @endphp
-                    <div class="col-12 top-{{$top}}px">
-                        <div class="inline text-center">
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                        </div>
-                        <div class="inline vertical-top">
-                            <div class="text-11-7px seravek-light-font text-black space-bottom">
-                                {{date('d F Y H:i', strtotime($data['detail']['receive_at']))}}
-                            </div>
-                        </div>
-                    </div>
-                    @php $top += 5; @endphp
-                    <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
-                        <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
-                        Pesanan Anda sudah diterima
                     </div>
                     @php $top += 5; $bg = false; @endphp
                     <div class="col-12 top-{{$top}}px">

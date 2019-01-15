@@ -386,7 +386,7 @@
 							<span class="title">[Response] Order Ready</span>
 						</a>
 					</li>
-					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-order-ready') ? 'active open' : ''}}">
+					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-order-taken') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/order-taken')}}" class="nav-link ">
 							<span class="title">[Response] Order Taken</span>
 						</a>
@@ -474,6 +474,20 @@
 					<li class="nav-item {{($submenu_active == 'transaction-setting') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/cashback')}}" class="nav-link ">
 							<span class="title">Setting Cashback</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([79], $configs))
+					<li class="nav-item {{($submenu_active == 'free-delivery') ? 'active open' : ''}}">
+						<a href="{{url('transaction/setting/free-delivery')}}" class="nav-link ">
+							<span class="title">Setting Free Delivery</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([80], $configs))
+					<li class="nav-item {{($submenu_active == 'go-send-package-detail') ? 'active open' : ''}}">
+						<a href="{{url('transaction/setting/go-send-package-detail')}}" class="nav-link ">
+							<span class="title">Setting GO-SEND Package Detail</span>
 						</a>
 					</li>
 					@endif

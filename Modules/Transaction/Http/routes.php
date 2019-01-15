@@ -44,6 +44,8 @@ Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => '
 {
     Route::get('/setting/cashback', 'TransactionSettingController@list');
     Route::post('/setting/cashback/update', 'TransactionSettingController@update');
+    Route::any('/setting/free-delivery', 'TransactionController@freeDelivery');
+    Route::any('/setting/go-send-package-detail', 'TransactionController@goSendPackageDetail');
 });
 
 

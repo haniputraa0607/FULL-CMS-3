@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <div class="row invoice-cust-add">
+        <div class="row">
             <div class="col-xs-3 customer">
                 <h2 class="invoice-title uppercase">Customer</h2>
                 <p class="invoice-desc dataCustomer"><i class="fa fa-user"></i> {{ $result['user']['name'] }}</p>
@@ -69,56 +69,59 @@
             </div>
             <div class="col-xs-3 customer">
                 <h2 class="invoice-title uppercase">Date</h2>
-                <p class="invoice-desc dataCustomer"><i class="fa fa-calendar"></i> {{ date('d F Y', strtotime($result['transaction_date'])) }}</p>
+                <p class="invoice-desc dataCustomer"><i class="fa fa-calendar"></i> {{ date('d M Y H:i', strtotime($result['transaction_date'])) }}</p>
             </div>
             <div class="col-xs-3 customer">
-                @if ($result['trasaction_type'] == 'Delivery')
-                    <h2 class="invoice-title uppercase">Address</h2>
-                    <p class="invoice-desc dataCustomer"><i class="fa fa-street-view"></i> Jalan Garuda UH 3 / 159 Yogyakarta, Indonesia</p>
-                @else
-                    <h2 class="invoice-title uppercase">Pickup</h2>
-                    <p class="invoice-desc dataCustomer">@if($result['detail']['pickup_type'] == 'set time') <i class="fa fa-clock-o"></i> @if($result['detail']['pickup_at']) {{date('H:i', strtotime($result['detail']['pickup_at']))}} @endif @else <i class="fa fa-inbox"></i> {{ $result['detail']['pickup_type'] }} @endif</p>
-                @endif
+                <h2 class="invoice-title uppercase">Payment Status</h2>
+                <p class="invoice-desc dataCustomer"><i class="fa fa-money"></i> {{ $result['transaction_payment_status'] }}</p>
             </div>
+        </div>
+        <div class="row invoice-cust-add">
             <div class="col-xs-6 customer">
                 <h2 class="invoice-title uppercase">Payment Detail</h2>
                 @if ($result['trasaction_payment_type'] == 'Offline')
                     @if(!empty($result['payment_offline']))
                         @foreach($result['payment_offline'] as $res)
-                            <p class="invoice-desc dataCustomer" style="margin:20px 0 5px"> Payment Type : {{ $res['payment_type'] }}</p>
-                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Payment Name : {{ $res['payment_bank'] }}</p>
-                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Payment Amount : Rp {{ number_format($res['payment_amount'], 2) }}</p>
-                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Payment Date : {{ date('d F Y H:i:s', strtotime($res['created_at'])) }}</p>
+                            <p class="invoice-desc dataCustomer" style="margin:20px 0 5px"> Type&nbsp&nbsp&nbsp&nbsp : {{ $res['payment_type'] }}</p>
+                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Name&nbsp&nbsp&nbsp : {{ $res['payment_bank'] }}</p>
+                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Amount : Rp {{ number_format($res['payment_amount'], 2) }}</p>
+                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Date&nbsp&nbsp : {{ date('d M Y H:i:s', strtotime($res['created_at'])) }}</p>
                         @endforeach
                     @endif
                 @else
                     @if(!empty($result['payment']))
-                        @if(isset($result['payment']['approval_code']))
-                            <p class="invoice-desc dataCustomer" style="margin:20px 0 5px"> Payment Type : {{ $result['payment']['payment_type'] }}</p>
-                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Payment Name : {{ $result['payment']['bank'] }}</p>
-                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Payment Amount : Rp {{ number_format($result['payment']['gross_amount'], 2) }}</p>
+                        @if(isset($result['payment']['gross_amount']))
+                            <p class="invoice-desc dataCustomer" style="margin:20px 0 5px"> Type&nbsp&nbsp&nbsp&nbsp : {{ ucwords(str_replace('_', ' ', $result['payment']['payment_type'])) }}</p>
+                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Name&nbsp&nbsp&nbsp : {{ $result['payment']['bank'] }}</p>
+                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Amount : Rp {{ number_format($result['payment']['gross_amount'], 2) }}</p>
                         @else
-                            <p class="invoice-desc dataCustomer" style="margin:20px 0 5px"> Payment Type : {{ $result['payment']['payment_method'] }}</p>
-                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Payment Name : {{ $result['payment']['payment_bank'] }}</p>
-                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Payment Amount : Rp {{ number_format($result['payment']['payment_nominal'], 2) }}</p>
-                       
+                            <p class="invoice-desc dataCustomer" style="margin:20px 0 5px"> Type&nbsp&nbsp&nbsp&nbsp : {{ $result['payment']['payment_method'] }}</p>
+                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Name&nbsp&nbsp&nbsp : {{ $result['payment']['payment_bank'] }}</p>
+                            <p class="invoice-desc dataCustomer" style="margin:5px 0"> Amount : Rp {{ number_format($result['payment']['payment_nominal'], 2) }}</p>
                         @endif
-                        <p class="invoice-desc dataCustomer" style="margin:5px 0"> Payment Date : {{ date('d F Y H:i:s', strtotime($result['payment']['created_at'])) }}</p>
+                        <p class="invoice-desc dataCustomer" style="margin:5px 0"> Date&nbsp&nbsp&nbsp : {{ date('d M Y H:i:s', strtotime($result['payment']['created_at'])) }}</p>
+                    @else
+                        <p class="invoice-desc dataCustomer" style="margin:20px 0 5px"> Type&emsp; : </p>
+                        <p class="invoice-desc dataCustomer" style="margin:5px 0"> Name&nbsp&nbsp&nbsp : </p>
+                        <p class="invoice-desc dataCustomer" style="margin:5px 0"> Amount : </p>
                     @endif
                 @endif
             </div>
-            @if(MyHelper::hasAccess([18], $configs))
-            <div class="col-xs-3 customer">
-                <h2 class="invoice-title uppercase">Point Earned</h2>
-                <p class="invoice-desc dataCustomer"><i class="fa fa-gift"></i> {{ number_format( $result['transaction_point_earned']) }}</p>
+            <div class="col-xs-6 customer">
+                @if ($result['trasaction_type'] == 'Delivery')
+                    <h2 class="invoice-title uppercase">Delivery Detail</h2>
+                    <p class="invoice-desc dataCustomer" style="margin:20px 0 5px">Name : {{ $result['detail']['destination_name'] }}</p>
+                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Phone : {{ $result['detail']['destination_phone'] }}</p>
+                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Address : {{ $result['detail']['destination_address'] }}</p>
+                @else
+                    <h2 class="invoice-title uppercase">Pickup Detail</h2>
+                    <p class="invoice-desc dataCustomer" style="margin:20px 0 5px">Status : @if($result['detail']['receive_at'] == null) Pending  @elseif($result['detail']['taken_at'] != null) Completed @elseif($result['detail']['ready_at'] != null) Ready @else On Going @endif</p>
+                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Type&nbsp : {{ucwords($result['detail']['pickup_type'])}}</p>
+                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Accepted At : @if($result['detail']['receive_at']) {{date('d M Y H:i', strtotime($result['detail']['receive_at']))}} @endif</p>
+                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Ready At : @if($result['detail']['ready_at']) {{date('d F Y H:i', strtotime($result['detail']['ready_at']))}} @endif</p>
+                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Taken At : @if($result['detail']['taken_at']) {{date('d F Y H:i', strtotime($result['detail']['taken_at']))}} @endif</p>
+                @endif
             </div>
-            @endif
-            @if(MyHelper::hasAccess([19], $configs))
-            <div class="col-xs-3 customer">
-                <h2 class="invoice-title uppercase">Kopi Point Earned</h2>
-                <p class="invoice-desc dataCustomer"><i class="fa fa-gift"></i> {{ number_format( $result['transaction_cashback_earned'] ) }}</p>
-            </div>
-            @endif
         </div>
         <div class="row invoice-body">
             <div class="col-xs-12 table-responsive product">

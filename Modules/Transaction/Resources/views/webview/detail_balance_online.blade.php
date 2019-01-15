@@ -175,7 +175,7 @@
     	}
 
 		hr {
-			background: rgba(149, 152, 154, 0.3);
+			/* background: rgba(149, 152, 154, 0.3); */
 			margin-top: 10px;
 			margin-bottom: 10px;
 		}

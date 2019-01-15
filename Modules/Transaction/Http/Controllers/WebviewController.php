@@ -16,7 +16,7 @@ class WebviewController extends Controller
     	$data = json_decode(base64_decode($request->get('data')), true);
     	$data['check'] = 1;
     	$check = MyHelper::post('transaction/detail/webview', $data);
-        
+        // return $check;
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data = $check['result'];
     	} elseif (isset($check['status']) && $check['status'] == 'success') {
@@ -72,6 +72,32 @@ class WebviewController extends Controller
 
         if ($data['type'] == 'voucher') {
             $view = 'detail_point_voucher';
+        }
+
+        return view('transaction::webview.'.$view.'')->with(compact('data'));
+    }
+
+    public function detailBalance(Request $request)
+    {
+        $data = json_decode(base64_decode($request->get('data')), true);
+        $data['check'] = 1;
+        $check = MyHelper::post('transaction/detail/webview/balance', $data);
+        // return $check;
+
+        if (isset($check['status']) && $check['status'] == 'success') {
+            $data = $check['result'];
+        } elseif (isset($check['status']) && $check['status'] == 'success') {
+            return back()->withErrors($lists['messages']);
+        } else {
+            return back()->withErrors(['Data not found']);
+        }
+
+        if ($data['type'] == 'trx') {
+            $view = 'detail_balance_online';
+        }
+
+        if ($data['type'] == 'voucher') {
+            $view = 'detail_balance_voucher';
         }
 
         return view('transaction::webview.'.$view.'')->with(compact('data'));

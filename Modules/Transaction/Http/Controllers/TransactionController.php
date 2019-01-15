@@ -1063,8 +1063,8 @@ class TransactionController extends Controller
         }
 
         $data['setting'] = $grand_total;
-        // return view('transaction::transactionDetail', $data);
-        return view('transaction::transactionDetail2', $data);
+        return view('transaction::transactionDetail', $data);
+        // return view('transaction::transactionDetail2', $data);
     }
 
     public function transactionDelete($id) {
@@ -1228,6 +1228,63 @@ class TransactionController extends Controller
         } else {
             return back()->withErrors(['Update failed']);
         }
+    }
+
+    public function freeDelivery(Request $request) {
+        $post = $request->except('_token');
+
+        if(!empty($post)){
+            $update = MyHelper::post('transaction/setting/free-delivery', $post);
+            if (isset($update['status']) && $update['status'] == 'success') {
+                return redirect('transaction/setting/free-delivery')->with(['success' => ['Update Success']]);
+            } else {
+                return redirect('transaction/setting/free-delivery')->withErrors(['Update failed']);
+            } 
+        }
+
+        $data = [
+            'title'          => 'Order',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Free Delivery',
+            'submenu_active' => 'free-delivery'
+        ];
+
+        $data['result'] = [];
+        $request = MyHelper::post('setting', ['key-like' => 'free_delivery']);
+        if (isset($request['status']) && $request['status'] == 'success') {
+            foreach($request['result'] as $key => $result){
+                $data['result'][$result['key']] = $result['value'];
+            }
+        }
+
+        return view('transaction::setting.free_delivery', $data);
+    }
+
+    public function goSendPackageDetail(Request $request) {
+        $post = $request->except('_token');
+
+        if(!empty($post)){
+            $update = MyHelper::post('transaction/setting/go-send-package-detail', $post);
+            if (isset($update['status']) && $update['status'] == 'success') {
+                return redirect('transaction/setting/go-send-package-detail')->with(['success' => ['Update Success']]);
+            } else {
+                return redirect('transaction/setting/go-send-package-detail')->withErrors(['Update failed']);
+            } 
+        }
+
+        $data = [
+            'title'          => 'Order',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting GO-SEND Package Detail',
+            'submenu_active' => 'go-send-package-detail'
+        ];
+
+        $request = MyHelper::post('setting', ['key' => 'go_send_package_detail']);
+        if (isset($request['status']) && $request['status'] == 'success') {
+            $data['result'] = $request['result'];
+        }
+
+        return view('transaction::setting.go_send_package', $data);
     }
 
 }
