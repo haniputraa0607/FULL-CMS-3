@@ -204,15 +204,7 @@
                 placeholder: 'News Content Long',
                 tabsize: 2,
                 height: 120,
-                toolbar: [         
-                  ['style', ['style']],
-                  ['style', ['bold', 'underline', 'clear']],
-                  ['color', ['color']],
-                  ['para', ['ul', 'ol', 'paragraph']],
-                  ['insert', ['table']],
-                  ['insert', ['link', 'picture', 'video']],
-                  ['misc', ['fullscreen', 'codeview', 'help']]
-                ],
+                fontNames: ['Open Sans'],
                 callbacks: {
                     onFocus: function() {
                         $('#tutorial1').attr('src', "{{url('img/news/news3.png')}}")

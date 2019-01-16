@@ -28,66 +28,6 @@ $configs = session('configs');
 		$(document).ready(function() {
 			$.fn.modal.Constructor.prototype.enforceFocus = function() {};
 			
-				
-	$('.summernote').summernote({
-        placeholder: 'Enquiry Reply',
-        tabsize: 2,
-        height: 120,
-        toolbar: [         
-          ['style', ['style']],
-          ['style', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['insert', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['misc', ['fullscreen', 'codeview', 'help']]
-        ],
-        callbacks: {
-            onImageUpload: function(files){
-                sendFile(files[0], $(this).attr('id'));
-            },
-            onMediaDelete: function(target){
-                var name = target[0].src;
-                token = "<?php echo csrf_token(); ?>";
-                $.ajax({
-                    type: 'post',
-                    data: 'filename='+name+'&_token='+token,
-                    url: "{{url('summernote/picture/delete/enquiry')}}",
-                    success: function(data){
-                        // console.log(data);
-                    }
-                });
-            }
-        }
-    });
-
-
- 	function sendFile(file, id){
-        token = "<?php echo csrf_token(); ?>";
-        var data = new FormData();
-        data.append('image', file);
-        data.append('_token', token);
-        // document.getElementById('loadingDiv').style.display = "inline";
-        $.ajax({
-            url : "{{url('summernote/picture/upload/enquiry')}}",
-            data: data,
-            type: "POST",
-            processData: false,
-            contentType: false,
-            success: function(url) {
-                if (url['status'] == "success") {
-					$('#'+id).summernote('editor.saveRange');
-					$('#'+id).summernote('editor.restoreRange');
-					$('#'+id).summernote('editor.focus');
-                    $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
-                }
-                // document.getElementById('loadingDiv').style.display = "none";
-            },
-            error: function(data){
-                // document.getElementById('loadingDiv').style.display = "none";
-            }
-        })
-    }
         });
 		
 		function setIdEnquiry(idnya){
@@ -391,6 +331,54 @@ $configs = session('configs');
 			document.getElementById('link').style.display = 'none';
 		}
 	}
+
+	$('.summernote').summernote({
+        placeholder: 'Enquiry Reply',
+        tabsize: 2,
+        height: 120,
+		fontNames: ['Open Sans'],
+        callbacks: {
+            onImageUpload: function(files){
+                sendFile(files[0], $(this).attr('id'));
+            },
+            onMediaDelete: function(target){
+                var name = target[0].src;
+                token = "<?php echo csrf_token(); ?>";
+                $.ajax({
+                    type: 'post',
+                    data: 'filename='+name+'&_token='+token,
+                    url: "{{url('summernote/picture/delete/enquiry')}}",
+                    success: function(data){
+                    }
+                });
+            }
+        }
+    });
+
+
+ 	function sendFile(file, id){
+        token = "<?php echo csrf_token(); ?>";
+        var data = new FormData();
+        data.append('image', file);
+        data.append('_token', token);
+        $.ajax({
+            url : "{{url('summernote/picture/upload/enquiry')}}",
+            data: data,
+            type: "POST",
+            processData: false,
+            contentType: false,
+            success: function(url) {
+                if (url['status'] == "success") {
+					$('#'+id).summernote('editor.saveRange');
+					$('#'+id).summernote('editor.restoreRange');
+					$('#'+id).summernote('editor.focus');
+                    $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
+                }
+            },
+            error: function(data){
+            }
+        })
+    }
     </script>
 
 @endsection
@@ -690,6 +678,120 @@ $configs = session('configs');
         </div>
     </div>
 
+<div class="modal fade bs-modal-lg" id="modalReply" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Reply Enquiry</h4>
+			</div>
+			<div class="modal-body form">
+				<form class="form-horizontal" role="form" action="{{ url('enquiries/reply') }}" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="id_enquiry" id="id_enquiry">
+					<div class="form-body">
+						@if(MyHelper::hasAccess([38], $configs))
+							<h4>Via Email</h4>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Email Subject</label>
+								<div class="col-md-9">
+									<input type="text" placeholder="Email Subject" class="form-control" name="reply_email_subject" id="reply_email_subject">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="multiple" class="control-label col-md-3">Email Content</label>
+								<div class="col-md-9">
+									<textarea name="reply_email_content" id="reply_email_content" class="form-control summernote"></textarea>
+								</div>
+							</div>
+						@endif
+
+						@if(MyHelper::hasAccess([39], $configs))
+						<h4>Via SMS</h4>
+						<div class="form-group">
+							<label class="col-md-3 control-label">SMS Content</label>
+							<div class="col-md-9">
+								<textarea name="reply_sms_content" id="reply_sms_content" class="form-control" placeholder="SMS Content"></textarea>
+							</div>
+						</div>
+						@endif
+
+						@if(MyHelper::hasAccess([36], $configs))
+							<h4>Via Push Notification</h4>
+							<div class="form-group">
+								<label for="reply_push_subject" class="col-md-3 control-label">Subject</label>
+								<div class="col-md-9">
+									<input type="text" placeholder="Push Notification Subject" class="form-control" name="reply_push_subject" id="reply_push_subject">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="reply_push_content" class="control-label col-md-3">Content</label>
+								<div class="col-md-9">
+									<textarea name="reply_push_content" id="reply_push_content" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="reply_push_image" class="control-label col-md-3">Gambar</label>
+								<div class="col-md-9">
+									<div class="fileinput fileinput-new" data-provides="fileinput">
+										<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+											<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="reply_push_image" />
+										</div>
+											
+										<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+										<div>
+											<span class="btn default btn-file">
+												<span class="fileinput-new"> Select image </span>
+												<span class="fileinput-exists"> Change </span>
+												<input type="file"  accept="image/*" name="reply_push_image" id="btn_reply_push_image"> </span>
+											<a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="reply_push_clickto" class="control-label col-md-3">Click Action</label>
+								<div class="col-md-9">
+									<select name="reply_push_clickto" id="reply_push_clickto" class="form-control select2" onChange="fetchDetail(this.value)">
+										<option value="Home">Home</option>
+										<option value="News">News</option>
+										<option value="Product">Product</option>
+										<option value="Outlet">Outlet</option>
+										<option value="Inbox">Inbox</option>
+										<option value="Deals">Deals</option>
+										<option value="Contact Us">Contact Us</option>
+										<option value="Link">Link</option>
+										<option value="Logout">Logout</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group" id="atd" style="display:none;">
+								<label for="autocrm_push_clickto" class="control-label col-md-3">Action to Detail</label>
+								<div class="col-md-9">
+									<select name="autocrm_push_id_reference" id="autocrm_push_id_reference" class="form-control select2">
+									</select>
+								</div>
+							</div>
+							<div class="form-group" id="link" style="display:none;">
+								<label for="reply_push_link" class="control-label col-md-3">Link</label>
+								<div class="col-md-9">
+									<input type="text" placeholder="http://" class="form-control" name="reply_push_link" id="reply_push_link">
+								</div>
+							</div>
+						@endif
+					</div>
+					<div class="form-actions">
+						{{ csrf_field() }}
+						<div class="row">
+							<div class="col-md-offset-5 col-md-8">
+								<button type="submit" class="btn green">Send Reply</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="modal fade bs-modal-lg" id="modalReply" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
