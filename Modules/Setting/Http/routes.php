@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
 {
 	Route::post('app_logo', 'SettingController@appLogoSave');
     Route::post('app_sidebar', 'SettingController@appSidebarSave');
@@ -11,7 +11,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modu
     Route::get('faq/edit/{id}', 'SettingController@faqEdit');
     Route::post('faq/update/{id}', 'SettingController@faqUpdate');
     Route::any('faq/delete/{id}', 'SettingController@faqDelete');
-    Route::any('faq/webview', 'SettingController@faqWebview');
+    Route::post('update/{id}', 'SettingController@settingUpdate');
 
     Route::get('level', 'SettingController@levelList');
     Route::get('level/create', 'SettingController@levelCreate');
@@ -25,9 +25,6 @@ Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modu
     Route::any('home', 'SettingController@homeSetting');
 	Route::any('date', 'SettingController@dateSetting');
     Route::get('{key}', 'SettingController@settingList');
-    Route::get('webview/{key}', 'SettingController@aboutWebview');
-    Route::post('update/{id}', 'SettingController@settingUpdate');
-	
 	
 	Route::any('background/create', ['middleware' => 'config_control:30,32', 'uses' => 'SettingController@createBackground']);
     Route::any('background/delete', ['middleware' => 'config_control:30,32', 'uses' => 'SettingController@deleteBackground']);
@@ -54,10 +51,16 @@ Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modu
     Route::post('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
 
     // point reset
-    Route::post('{type}/update', 'SettingController@updatePointReset');
+    Route::post('reset/{type}/update', 'SettingController@updatePointReset');
 });
 
-Route::group(['middleware' => 'web', 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
 {
     Route::any('setting_email', 'SettingController@settingEmail');
+});
+
+Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
+{
+    Route::get('webview/{key}', 'SettingController@aboutWebview');
+    Route::any('faq/webview', 'SettingController@faqWebview');
 });

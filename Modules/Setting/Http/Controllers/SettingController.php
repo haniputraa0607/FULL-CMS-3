@@ -168,7 +168,7 @@ class SettingController extends Controller
     {
         $post = $request->except('_token');
 
-        $update = MyHelper::post('setting/'.$type.'/update', $post);
+        $update = MyHelper::post('setting/reset/'.$type.'/update', $post);
         return parent::redirect($update, 'Setting data has been updated.');
     }
 

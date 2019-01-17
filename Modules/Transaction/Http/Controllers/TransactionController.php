@@ -1234,7 +1234,7 @@ class TransactionController extends Controller
         $post = $request->except('_token');
 
         if(!empty($post)){
-            $update = MyHelper::post('transaction/setting/free-delivery', $post);
+            $update = MyHelper::post('setting/free-delivery', $post);
             if (isset($update['status']) && $update['status'] == 'success') {
                 return redirect('transaction/setting/free-delivery')->with(['success' => ['Update Success']]);
             } else {

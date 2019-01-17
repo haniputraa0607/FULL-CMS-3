@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
     Route::get('/setting/rule', 'TransactionController@ruleTransaction');
     Route::post('/setting/rule/update', 'TransactionController@ruleTransactionUpdate');
@@ -40,7 +40,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => '
 
 });
 
-Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
     Route::get('/setting/cashback', 'TransactionSettingController@list');
     Route::post('/setting/cashback/update', 'TransactionSettingController@update');
@@ -49,7 +49,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => '
 });
 
 
-Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
     Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
     Route::get('/detail/{id}/{key}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);
