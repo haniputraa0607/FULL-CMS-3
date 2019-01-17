@@ -21,16 +21,14 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', '
     Route::any('advert', 'AdvertController@index');
 });
 
-/* Webview Custom Form */
-Route::group(['middleware' => 'web', 'namespace' => 'Modules\News\Http\Controllers'], function()
+/* Webview */
+Route::group(['prefix' => 'news', 'middleware' => 'web', 'namespace' => 'Modules\News\Http\Controllers'], function()
 {
-    Route::any('news/webview/custom-form/{id_news}', 'WebviewNewsController@customFormView');
-
-    // preview success page
+    // custom form
+    Route::any('/webview/custom-form/{id_news}', 'WebviewNewsController@customFormView');
+    // preview custom form success page
     // Route::get('news/webview/custom-form-success', 'WebviewNewsController@customFormSuccess');
-});
 
-Route::group(['prefix' => 'news', 'namespace' => 'Modules\News\Http\Controllers'], function()
-{
-    Route::any('webview/{id}', 'WebviewNewsController@detail');
+    // news detail
+    Route::any('/webview/{id}', 'WebviewNewsController@detail');
 });

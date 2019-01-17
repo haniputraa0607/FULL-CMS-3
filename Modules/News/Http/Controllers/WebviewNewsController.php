@@ -11,9 +11,14 @@ use App\Lib\MyHelper;
 
 class WebviewNewsController extends Controller
 {
-    public function detail($id)
+    public function detail(Request $request, $id)
     {
-        $news = MyHelper::post('news/list/web', ['id_news'=> $id]);
+        $bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return abort(404);
+        }
+
+        $news = MyHelper::postWithBearer('news/list', ['id_news'=> $id], $bearer);
         if (isset($news['status']) && $news['status'] == 'success') {
             // return $news['result'];
             return view('news::webview.news', ['news' => $news['result']]);
