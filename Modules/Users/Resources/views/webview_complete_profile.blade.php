@@ -95,6 +95,10 @@
         }
         /* end of custom select */
 
+        .form-group.form-md-line-input .form-control[readonly]{
+          border-style: solid !important;
+        }
+
         /* select 2 */
         .select2 .select2-container--default,
         .select2 .select2-selection--single,
@@ -192,7 +196,7 @@
                     @if($user['birthday'] == null)
                     <div class="form-group form-md-line-input birthday">
                         <label>Tanggal Lahir</label>
-                        <input type="text" class="form-control datepicker" name="birthday" value="{{ old('birthday') }}" required>
+                        <input type="text" class="form-control datepicker" name="birthday" value="{{ old('birthday') }}" required readonly>
                         <img class="birthday-img" src="{{ asset('img/webview/calendar-o.png') }}" alt="">
                     </div>
                     @endif
