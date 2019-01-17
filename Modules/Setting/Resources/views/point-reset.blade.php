@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal" action="{{ url('setting/'.str_replace('-', '_', $menu_active).'/update') }}" method="post">
+            <form class="form-horizontal" action="{{ url('setting/reset/'.str_replace('-', '_', $menu_active).'/update') }}" method="post">
             {{ csrf_field() }}
             <div class="form-body">
                 <div class="form-group">

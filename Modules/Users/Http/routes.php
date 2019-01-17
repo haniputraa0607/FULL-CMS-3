@@ -2,7 +2,7 @@
 
 
 
-Route::group(['middleware' => 'web', 'prefix' => 'user', 'namespace' => 'Modules\Users\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', 'namespace' => 'Modules\Users\Http\Controllers'], function()
 {
 	Route::get('ajax/phone', 'UsersController@listPhoneUser');
 	Route::get('ajax/email', 'UsersController@listEmailUser');

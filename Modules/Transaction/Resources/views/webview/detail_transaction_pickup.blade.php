@@ -7,7 +7,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
     <link href="{{ url('css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
         @font-face {
@@ -107,6 +106,10 @@
 
         .space-nice {
         	padding-bottom: 20px;
+        }
+
+        .space-bottom-big {
+        	padding-bottom: 25px;
         }
 
         .space-top {
@@ -301,6 +304,23 @@
             top: -30px;
         }
 
+        #map{
+            border-radius: 10px;
+            width: 100%;
+            height: 150px;
+        }
+
+        .label-free{
+            background: #6c5648;
+            padding: 3px 15px;
+            border-radius: 6.7px;
+            float: right;
+        }
+
+        .text-strikethrough{
+            text-decoration:line-through
+        }
+
     </style>
   </head>
   <body>
@@ -313,7 +333,9 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="col-12 text-16-7px text-greyish-brown seravek-font">
-                        @if($data['detail']['taken_at'] != null)
+                        @if($data['detail']['reject_at'] != null)
+                            Pesanan Anda Ditolak
+                        @elseif($data['detail']['taken_at'] != null)
                             Pesanan Sudah Diambil
                         @elseif($data['detail']['ready_at'] != null)
                             Pesanan Anda Sudah Siap
@@ -327,32 +349,57 @@
             </div>
         </div>
 
-        <div class="kotak-biasa">
-            <div class="container">
-                <div class="row text-center">
-                    <div class="col-12 roboto-regular-font text-15px space-text text-grey">Kode Pickup Anda</div>
-                    
-                    <div class="kotak-qr">
-                        <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
+        @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
+            <div class="kotak-biasa">
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-12 seravek-font text-15px space-nice text-grey">Detail Pengiriman</div>
+                        <div class="col-12 text-greyish-brown text-21-7px space-bottom seravek-medium-font">GO-SEND</div>
+                        <div class="col-12 text-16-7px text-black space-bottom seravek-light-font">
+                            {{ $data['detail']['transaction_pickup_go_send']['destination_name'] }}
+                            <br>
+                            {{ $data['detail']['transaction_pickup_go_send']['destination_phone'] }}
+                        </div>
+                        <div class="kotak-inside col-12">
+                            <div class="col-12 text-13-3px text-grey-white space-nice text-center seravek-light-font">{{ $data['detail']['transaction_pickup_go_send']['destination_address'] }}</div>
+                        </div>
+                        <div class="col-12 text-15px space-bottom text-black seravek-light-font">Map</div>
+                        <div class="col-12 space-bottom-big">
+                            <div class="container">
+                                <div id="map"></div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
-                    <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{ $data['outlet']['outlet_name'] }}</div>
-                    <div class="kotak-inside col-12">
-                        <div class="col-12 text-13-3px text-grey-white space-nice text-center ">{{ $data['outlet']['outlet_address'] }}</div>
-                    </div>
-                        <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan diproses pada</div>
-                        <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['transaction_date'])) }}</div>
-                    @if ($data['detail']['pickup_type'] == 'set time')
-                        <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
-                    @elseif($data['detail']['pickup_type'] == 'at arrival')
-                        <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Kedatangan</div>
-                    @else
-                        <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Ini</div>
-                    @endif
                 </div>
             </div>
-        </div>
+        @else
+            <div class="kotak-biasa">
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-12 seravek-font text-15px space-text text-grey">Kode Pickup Anda</div>
+                        
+                        <div class="kotak-qr">
+                            <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
+                        </div>
+
+                        <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
+                        <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{ $data['outlet']['outlet_name'] }}</div>
+                        <div class="kotak-inside col-12">
+                            <div class="col-12 text-13-3px text-grey-white space-nice text-center ">{{ $data['outlet']['outlet_address'] }}</div>
+                        </div>
+                            <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan diproses pada</div>
+                            <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['transaction_date'])) }}</div>
+                        @if ($data['detail']['pickup_type'] == 'set time')
+                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
+                        @elseif($data['detail']['pickup_type'] == 'at arrival')
+                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Kedatangan</div>
+                        @else
+                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Ini</div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
     @endif
 
     <div class="kotak">
@@ -405,6 +452,20 @@
 
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ number_format($data['transaction_tax']) }}</div>
+
+                @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
+                <div class="col-6 text-13-3px space-text seravek-light-font text-black">Ongkos Kirim</div>
+                    @if($data['transaction_is_free'] == '1')
+                        <div class="col-6 text-13-3px text-right seravek-font text-white"><div class="label-free">FREE</div></div>
+                    @else
+                        @if($data['transaction_shipment_go_send'] != $data['transaction_shipment'])
+                            <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black text-strikethrough">{{ number_format($data['transaction_shipment_go_send']) }}</div>
+                            <div class="col-12 space-text text-13-3px text-right seravek-light-font text-greyish-brown">{{ number_format($data['transaction_shipment']) }}</div>
+                        @else
+                            <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ number_format($data['transaction_shipment']) }}</div>
+                        @endif
+                    @endif
+                @endif
 
                 @if(isset($data['balance']))
                 <div class="col-6 text-13-3px space-text seravek-light-font">Kopi Points</div>
@@ -467,12 +528,34 @@
             <div class="row">
                 <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Status Pesanan <hr> </div>
                 @php $top = 5; $bg = true; @endphp
-                @if($data['detail']['taken_at'] != null)
+                @if($data['detail']['reject_at'] != null)
                     <div class="col-12 text-13-3px seravek-font text-black">
                         <div class="round-greyish-brown bg-greyish-brown"></div>
-                        Pesanan Anda sudah diambil
+                        Pesanan Anda ditolak
                     </div>
                     <div class="col-12 top-5px">
+                        <div class="inline text-center">
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                        </div>
+                        <div class="inline vertical-top">
+                            <div class="text-11-7px seravek-light-font text-black space-bottom">
+                                {{date('d F Y H:i', strtotime($data['detail']['reject_at']))}}
+                            </div>
+                        </div>
+                    </div>
+                    @php $top += 5; $bg = false; @endphp
+                @endif
+                @if($data['detail']['taken_at'] != null)
+                    <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
+                        <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
+                        Pesanan Anda sudah diambil
+                    </div>
+                    @php $top += 5; $bg = false; @endphp
+                    <div class="col-12 top-{{$top}}px">
                         <div class="inline text-center">
                             <div class="line-vertical text-grey-medium-light">|</div>
                             <div class="line-vertical text-grey-medium-light">|</div>
@@ -486,7 +569,7 @@
                             </div>
                         </div>
                     </div>
-                    @php $top += 5; $bg = false; @endphp
+                    @php $top += 5; @endphp
                 @endif
                 @if($data['detail']['ready_at'] != null)
                     <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
@@ -513,7 +596,7 @@
                 @if($data['detail']['receive_at'] != null)
                     <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
                         <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
-                            Pesanan Anda sedang diproses
+                            Pesanan Anda sudah diterima
                     </div>
                     @php $top += 5; $bg = false; @endphp
                     <div class="col-12 top-{{$top}}px">
@@ -552,6 +635,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
+    
+    @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&callback=initMap">
+    </script>
+    
+    <script>    
+        // Initialize and add the map
+        function initMap() {
+            // The location of Uluru
+            var uluru = {lat: parseFloat("{{$data['detail']['transaction_pickup_go_send']['destination_latitude']}}"), lng: parseFloat("{{$data['detail']['transaction_pickup_go_send']['destination_longitude']}}")};
+            // The map, centered at Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), {
+                    zoom: 15, 
+                    center: uluru,
+                    disableDefaultUI: true
+                });
+            // The marker, positioned at Uluru
+            var marker = new google.maps.Marker({position: uluru, map: map});
+        }
+    </script>
+    @endif
     
   </body>
 </html>
