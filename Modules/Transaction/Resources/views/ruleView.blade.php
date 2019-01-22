@@ -87,7 +87,7 @@
                             @endif
                             @if(MyHelper::hasAccess([60], $grantedFeature))
                                 <li>
-                                    <a href="#tab_5" data-toggle="tab"> Cashback </a>
+                                    <a href="#tab_5" data-toggle="tab"> Kopi Point </a>
                                 </li>
                             @endif
                             <li>
@@ -450,7 +450,7 @@
                             <div class="tab-pane" id="tab_5">
                                 <div class="portlet light bordered">
                                     <div class="portlet-body">
-                                        <h3 class="">Cashback calculation of transactions
+                                        <h3 class="">Kopi Point calculation of transactions
                                             <i class="fa fa-question-circle tooltips" data-original-title="Rumus untuk menghitung cashback transaksi" data-container="body"></i></h3>
                                         <hr>
                                         <div class="m-grid m-grid-demo">
@@ -507,7 +507,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Cashback Conversion
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Kopi Point Conversion
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Total perhitangan cashback yang didapat user" data-container="body"></i>
                                                 <div class="input-group" style="margin: 20px">
                                                     <input id="persen" type="text" class="form-control cashbackPersen" placeholder="value" value="{{ $cashback['value'] }}">
@@ -516,7 +516,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Cashback Maximum
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Kopi Point Maximum
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Total maksimal cashback yang didapat user" data-container="body"></i>
                                                 <div class="input-group" style="margin: 20px">
                                                     <input id="cashbackMax" type="text" class="form-control cashbackMax" placeholder="value" value="{{ $cashback['max'] }}">
