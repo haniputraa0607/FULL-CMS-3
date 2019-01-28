@@ -368,6 +368,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            User Limit
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Batasan user untuk claim voucher, input 0 untuk unlimited" data-container="body"></i>
+                            </label>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <input type="number" class="form-control" name="user_limit" value="{{ $val['user_limit'] }}" placeholder="User limit" maxlength="30">
+                            </div>
+                        </div>
+                    </div>
                     
                 </div>
             @else
