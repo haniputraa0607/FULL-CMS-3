@@ -1287,4 +1287,35 @@ class TransactionController extends Controller
         return view('transaction::setting.go_send_package', $data);
     }
 
+    public function fakeTransaction(Request $request) {
+        $post = $request->except('_token');
+
+        if(!empty($post)){
+            if(in_array(0, $post['id_user'])){
+                unset($post['id_user']);
+            }
+            $update = MyHelper::post('transaction/dump', $post);
+            // dd($update);
+            if (isset($update['status']) && $update['status'] == 'success') {
+                return redirect('transaction/create/fake')->with(['success' => ['Create '.$post['how_many'].' Data Transaction Success']]);
+            } else {
+                return redirect('transaction/create/fake')->withErrors(['Create Transaction Failed']);
+            } 
+        }
+
+        $data = [
+            'title'          => 'Order',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Create Fake Transaction',
+            'submenu_active' => 'fake-transaction'
+        ];
+
+        $user = MyHelper::get('user/get-all');
+        if (isset($user['status']) && $user['status'] == 'success') {
+            $data['user'] = $user['result'];
+        }
+
+        return view('transaction::fake_transaction', $data);
+    }
+
 }

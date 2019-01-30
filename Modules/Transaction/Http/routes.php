@@ -48,9 +48,17 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::any('/setting/go-send-package-detail', 'TransactionController@goSendPackageDetail');
 });
 
+Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
+{
+    Route::get('/web/view/detail', 'WebviewController@detail');
+    Route::get('/web/view/detail/point', 'WebviewController@detailPoint');
+    Route::get('/web/view/detail/balance', 'WebviewController@detailBalance');
+    Route::get('/web/view/trx', 'WebviewController@success');
+});
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
+    Route::any('/create/fake', 'TransactionController@fakeTransaction');
     Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
     Route::get('/detail/{id}/{key}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);
     Route::get('/delete/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDelete']);
@@ -63,10 +71,3 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     // Route::any('/{key}/{slug}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transaction']);
 });
 
-Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
-{
-    Route::get('/web/view/detail', 'WebviewController@detail');
-    Route::get('/web/view/detail/point', 'WebviewController@detailPoint');
-    Route::get('/web/view/detail/balance', 'WebviewController@detailBalance');
-    Route::get('/web/view/trx', 'WebviewController@success');
-});
