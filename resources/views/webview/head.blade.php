@@ -25,6 +25,12 @@
             color: #858585;
             font-family: "Seravek", sans-serif !important;
         }
+        .pace .pace-progress{
+            top: 0;
+        }
+        .pace .pace-activity{
+            top: 15px;
+        }
     </style>
 
     <!-- css internal -->

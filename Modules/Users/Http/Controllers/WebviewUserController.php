@@ -57,13 +57,20 @@ class WebviewUserController extends Controller
 
         $result = MyHelper::postWithBearer('users/complete-profile', $post, $bearer);
 
-        if ($result['status']=="success") {
-            $data['messages'] = ["Save data success", "Thank you"];
-            return view('users::webview_complete_profile_success', $data);
+        if (isset($result['status']) && $result['status']=="success") {
+            // $data['messages'] = ["Save data success", "Thank you"];
+            // return view('users::webview_complete_profile_success', $data);
+            return redirect('webview/complete-profile/success');
         }
         else{
             return back()->withInput()->withErrors(['Save data fail']);
         }
+    }
+
+    public function completeProfileSuccess(Request $request)
+    {
+        $data['messages'] = ["Save data success", "Thank you"];
+        return view('users::webview_complete_profile_success', $data);
     }
 
 }

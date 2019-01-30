@@ -7,7 +7,6 @@
 @section('page-style-plugin')
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="{{ url('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN THEME GLOBAL STYLES -->
     <link href="{{ url('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
@@ -24,6 +23,9 @@
     <style type="text/css">
         .text-brown{
             color: #6C5648;
+        }
+        .form-group.form-md-line-input{
+          margin-bottom: 10px;
         }
         .form-group label{
           color: #666666;
