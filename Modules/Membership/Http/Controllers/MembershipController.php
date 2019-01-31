@@ -93,7 +93,6 @@ class MembershipController extends Controller
 		} else {
 			$post['id_membership'] = $id_membership;
 			$save = MyHelper::post('membership/update', $post);
-
 			if (isset($save['status']) && $save['status'] == "success") {
 				session(['success' => ['Membership has been updated']]);
 				return redirect('membership');
@@ -114,6 +113,22 @@ class MembershipController extends Controller
 		else {
 			return redirect('membership')->withErrors($save['messages']);
 		}
+	}
+	
+	public function detailWebview(Request $request)
+    {
+    	$data = json_decode(base64_decode($request->get('data')), true);
+    	$data['check'] = 1;
+    	$check = MyHelper::post('membership/detail/webview', $data);
+        // dd($check);
+    	if (isset($check['status']) && $check['status'] == 'success') {
+    		$data = $check['result'];
+    	} elseif (isset($check['status']) && $check['status'] == 'success') {
+    		return back()->withErrors($lists['messages']);
+    	} else {
+    		return back()->withErrors(['Data not found']);
+    	}
+        return view('membership::webview.detail_membership')->with(compact('data'));
     }
 	
 }
