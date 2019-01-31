@@ -99,6 +99,14 @@ class SettingController extends Controller
             $span = 'minutes';
             $colLabel = 3;
             $colInput = 3;
+        } elseif ($key == 'count_login_failed') {
+            $sub = 'count-login-failed';
+            $active = 'count-login-failed';
+            $subTitle = 'Count Login Failed';
+            $label = 'Response Failed login will be sent after the user has failed to login ';
+            $span = 'times';
+            $colLabel = 7;
+            $colInput = 2;
         } elseif ($key == 'point_reset') {
             $sub = 'point-reset';
             $active = 'point-reset';
