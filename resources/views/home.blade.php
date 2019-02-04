@@ -331,7 +331,7 @@
 												@else
 													<a class="more" 
 														@if(strpos($card['card_name'], 'Transaction') !== false )
-															href="{{url('report/global/'.$card['url'])}}"> 
+															href="{{url('report/global/?'.$card['url'])}}"> 
 															@if(strpos($dashboard['daterange'], 'months') !== false || strpos($dashboard['daterange'], 'days') !== false)
 																Last {{$dashboard['daterange']}}
 															@else

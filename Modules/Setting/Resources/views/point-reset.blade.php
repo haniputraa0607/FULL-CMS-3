@@ -12,8 +12,6 @@
         document.addEventListener("DOMContentLoaded", function(event) { 
             $('.datepicker').datepicker({ 
                 'format' : 'd MM', 
-                'todayHighlight' : true, 
-                'todayBtn' : true, 
                 'autoclose' : true 
             });  
 
@@ -29,8 +27,6 @@
             }
                 $('.datepicker').datepicker({ 
                     'format' : 'd MM', 
-                    'todayHighlight' : true, 
-                    'todayBtn' : true, 
                     'autoclose' : true 
                 });
             }, 100);
