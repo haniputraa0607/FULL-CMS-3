@@ -15,14 +15,16 @@ Route::group(['middleware' => 'web', 'prefix' => 'report', 'namespace' => 'Modul
     
     Route::any('/global', ['middleware' => 'feature_control:125', 'uses' => 'ReportDuaController@reportGlobal']);
     Route::any('/product', ['middleware' => 'feature_control:127', 'uses' => 'ReportDuaController@reportProductAll']);
-    Route::any('/product/detail/{id}/{start}/{end}', ['middleware' => 'feature_control:127', 'uses' => 'ReportDuaController@reportProductDetail']);
+    Route::any('/product/detail/{id}/{id_outlet}/{start}/{end}', ['middleware' => 'feature_control:127', 'uses' => 'ReportDuaController@reportProductDetail']);
     
     
     Route::any('/customer/summary', ['middleware' => 'feature_control:126','uses' => 'ReportController@customerSummary']);
     Route::any('/customer/detail/{id}/{type}', ['middleware' => 'feature_control:126', 'uses' => 'ReportController@customerDetail']);
     
+    Route::post('/outlet/detail/form', ['middleware' => 'feature_control:128', 'uses' => 'ReportDuaController@formOutletDetail']);
     Route::any('/outlet', [ 'middleware' => 'feature_control:128', 'uses' => 'ReportDuaController@reportOutletAll']);
     Route::any('/outlet/detail/{id}/{start}/{end}', ['middleware' => 'feature_control:128', 'uses' => 'ReportDuaController@reportOutletDetail']);
+    Route::any('/outlet/detail/trx/{id}/{start}/{end}', ['middleware' => 'feature_control:128', 'uses' => 'ReportDuaController@reportOutletDetailTrx']);
 
     // MAGIC REPORT
     Route::any('/magic', ['middleware' => 'feature_control:84', 'uses' => 'MagicReportController@magicReport']);

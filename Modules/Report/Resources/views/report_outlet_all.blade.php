@@ -112,7 +112,7 @@
                         target: "tr"
                     }
                 },
-                order: [0, "asc"],
+                order: [3, "desc"],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "All"]
@@ -324,8 +324,9 @@
                                         <td>{{ $value['outlet_name'] }}</td>
                                         <td>{{ number_format($value['total_count']) }}</td>
                                         <td>{{ number_format($value['total_value'], 2) }}</td>
-                                        <td>
-                                            <a href="{{ url('report/outlet/detail') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
+                                        <td style="width:200px">
+                                            <a href="{{ url('report/outlet/detail') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-line-chart"></i> Graphic</a> 
+                                            <a href="{{ url('report/outlet/detail/trx') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm green"><i class="fa fa-search"></i> Detail</a> 
                                         </td>
                                     </tr>
                                 @endforeach

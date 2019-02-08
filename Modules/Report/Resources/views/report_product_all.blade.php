@@ -3,6 +3,8 @@
 @section('page-style')
     <link href="{{ url('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
         #recurring {
@@ -53,6 +55,8 @@
     <script src="{{ url('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -247,6 +251,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Outlet <span class="required" aria-required="true"> * </span> </label>
+                        <div class="col-md-10">
+                            <div class="input-icon right">
+                                <select class="form-control select2" name="id_outlet" data-placeholder="select outlet" required>
+                                <optgroup label="Outlet List">
+                                    <option value="0" @if ($id_outlet == "0") selected @endif>All</option>
+                                    @if (!empty($outlet))
+                                        @foreach ($outlet as $key => $out)
+                                            <option value="{{ $out['id_outlet'] }}" @if (isset($id_outlet) && $id_outlet == $out['id_outlet']) selected @elseif (old('id_outlet') == $out['id_outlet']) selected @endif>{{ $out['outlet_name'] }}</option>
+                                        @endforeach
+                                    @endif
+                                </optgroup>
+                            </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}
@@ -365,7 +386,7 @@
                                         <td>{{ $value['total_qty'] }}</td>
                                         <td>{{ number_format($value['total_nominal'], 2) }}</td>
                                         <td>
-                                            <a href="{{ url('report/product/detail') }}/{{ $value['id_product'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
+                                            <a href="{{ url('report/product/detail') }}/{{ $value['id_product'] }}/{{ $id_outlet }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
                                         </td>
                                     </tr>
                                 @endforeach

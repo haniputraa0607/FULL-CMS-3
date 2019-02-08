@@ -27,6 +27,13 @@
     </style>
 
     <style type="text/css">
+        #outlet {
+          width: 100%;
+          height: 500px;
+        }
+    </style>
+
+    <style type="text/css">
         #transx {
             width   : 100%;
             height  : 500px;
@@ -111,6 +118,63 @@
                 "paging": false,
                 "searching": false,
                 order: [0, "desc"],
+                pageLength: 10,
+                dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+        });
+        $('.sample_2').dataTable({
+                language: {
+                    aria: {
+                        sortAscending: ": activate to sort column ascending",
+                        sortDescending: ": activate to sort column descending"
+                    },
+                    emptyTable: "No data available in table",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    infoEmpty: "No entries found",
+                    infoFiltered: "(filtered1 from _MAX_ total entries)",
+                    lengthMenu: "_MENU_ entries",
+                    search: "Search:",
+                    zeroRecords: "No matching records found"
+                },
+                buttons: [{
+                    extend: "print",
+                    className: "btn dark btn-outline",
+                    exportOptions: {
+                         columns: "thead th:not(.noExport)"
+                    },
+                }, {
+                  extend: "copy",
+                  className: "btn blue btn-outline",
+                  exportOptions: {
+                       columns: "thead th:not(.noExport)"
+                  },
+                },{
+                  extend: "pdf",
+                  className: "btn yellow-gold btn-outline",
+                  exportOptions: {
+                       columns: "thead th:not(.noExport)"
+                  },
+                }, {
+                    extend: "excel",
+                    className: "btn green btn-outline",
+                    exportOptions: {
+                         columns: "thead th:not(.noExport)"
+                    },
+                }, {
+                    extend: "csv",
+                    className: "btn purple btn-outline ",
+                    exportOptions: {
+                         columns: "thead th:not(.noExport)"
+                    },
+                }],
+                responsive: {
+                    details: {
+                        type: "column",
+                        target: "tr"
+                    }
+                },
+                "paging": false,
+                "searching": false,
+                order: [2, "desc"],
                 pageLength: 10,
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
@@ -218,6 +282,43 @@
         "zoomable": false
       },
       "categoryField": "product",
+      "categoryAxis": {
+        "gridPosition": "start",
+        "labelRotation": 45
+      },
+      "export": {
+        "enabled": true
+      }
+
+    });
+    </script>
+
+    <script>
+    var chart = AmCharts.makeChart("outlet", {
+      "type": "serial",
+      "theme": "none",
+      "marginRight": 70,
+      "dataProvider": <?php echo $dataValue; ?>,
+      "valueAxes": [{
+        "axisAlpha": 0,
+        "position": "left",
+        "title": "Total Transaction Value"
+      }],
+      "startDuration": 1,
+      "graphs": [{
+        "balloonText": "<b>[[category]]: [[value]]</b>",
+        "fillColorsField": "color",
+        "fillAlphas": 0.9,
+        "lineAlpha": 0.2,
+        "type": "column",
+        "valueField": "value"
+      }],
+      "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+      },
+      "categoryField": "outlet",
       "categoryAxis": {
         "gridPosition": "start",
         "labelRotation": 45
@@ -509,6 +610,53 @@
                                         <a href="{{ url('report/product/detail') }}/{{ $value['id_product'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
                                     </td>
                                 </tr>
+                                @endif
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>    
+
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption ">
+                <span class="caption-subject sbold uppercase font-yellow">TOP 10 Outlet</span>
+            </div>
+        </div>
+        <div class="row">
+            <div id="outlet"></div>            
+        </div>
+        <hr>
+        <div class="row">
+            <div class="portlet-body form" style="margin-top:50px">
+                <table class="table table-striped table-bordered table-hover dt-responsive sample_2" width="100%">
+                    <thead>
+                        <tr>
+                            <th> Code </th>
+                            <th> Outlet </th>
+                            <th> Transaction Value (RP)</th>
+                            <th> Transaction Count </th>
+                            <th> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!empty($dataOutlet))
+                            @foreach($dataOutlet as $key => $value)
+                                @if($key >= 10)
+                                    @php break; @endphp
+                                @else
+                                    <tr>
+                                        <td>{{ $value['outlet_code'] }}</td>
+                                        <td>{{ $value['outlet_name'] }}</td>
+                                        <td>{{ number_format($value['total_value'], 2) }}</td>
+                                        <td>{{ number_format($value['total_count']) }}</td>
+                                        <td style="width:200px">
+                                            <a href="{{ url('report/outlet/detail') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-line-chart"></i> Graphic</a> 
+                                            <a href="{{ url('report/outlet/detail/trx') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm green"><i class="fa fa-search"></i> Detail</a> 
+                                        </td>
+                                    </tr>
                                 @endif
                             @endforeach
                         @endif

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+
 use App\Lib\MyHelper;
 use Session;
 
@@ -88,6 +90,7 @@ class ReportDuaController extends Controller
         if (empty($post)) {
             $post['date_start']   = date('Y-m-d', strtotime("-30 days"));
             $post['date_end']     = date('Y-m-d', strtotime("-1 days"));
+            $post['id_outlet']    = 0;
         }
         else {
             $post['date_start']   = date('Y-m-d', strtotime($post['date_start']));
@@ -111,6 +114,8 @@ class ReportDuaController extends Controller
         foreach ($graph as $key => $value) {
             $data[$key] = $value;
         }
+
+        $data['outlet']    = parent::getData(MyHelper::get('outlet/list'));
 
         return view('report::report_product_all', $data);
     }
@@ -162,7 +167,7 @@ class ReportDuaController extends Controller
     }
 
     /* REPORT PRODUCT DETAIL */
-    function reportProductDetail($id, $date_start, $date_end) {
+    function reportProductDetail($id, $id_outlet, $date_start, $date_end) {
         $data = [
             'title'          => 'Report',
             'menu_active'    => 'report-product',
@@ -173,7 +178,8 @@ class ReportDuaController extends Controller
         $post = [
             'id_product' => $id,
             'date_start' => $date_start,
-            'date_end'   => $date_end
+            'date_end'   => $date_end,
+            'id_outlet'  => $id_outlet
         ];
 
         $graph = $this->getDataReportProductDetail($post);
@@ -191,7 +197,7 @@ class ReportDuaController extends Controller
 
     function getDataReportProductDetail($post) {
         $report = MyHelper::post('report/trx/product/detail', $post);
-
+        
         $dataRecQty  = [];
         $dataNominal = [];
 
@@ -354,6 +360,74 @@ class ReportDuaController extends Controller
         return $result;
     }
 
+    function reportOutletDetailTrx($id, $date_start, $date_end, Request $request) {
+        $data = [
+            'title'          => 'Report',
+            'menu_active'    => 'report-outlet',
+            'sub_title'      => 'Outlet',
+            'submenu_active' => 'report-outlet'
+        ];
+
+        $post = $request->except('_token');
+
+        $post['id_outlet'] = $id;
+        $post['date_start'] = $date_start;
+        $post['date_end']  = $date_end;
+
+        $data['date_start'] = $date_start;
+        $data['date_end']   = $date_end;        
+        $data['id_outlet']   = $id;        
+        $data['outlet']    = parent::getData(MyHelper::post('outlet/list', ['id_outlet' => $id]));
+        $data['all_outlet']    = parent::getData(MyHelper::get('outlet/list'));
+
+        if(isset($post['take'])){
+            $data['take'] = $post['take'];
+            Session::put('report_outlet_take',$post['take']);
+            if(isset($post['page'])){
+                unset($post['page']);
+            }
+        }else{
+            if(!empty(Session::get('report_outlet_take'))){
+                $data['take'] = Session::get('report_outlet_take');
+                $post['take'] = Session::get('report_outlet_take');
+            }else{
+                $data['take'] = 10;
+                $post['take'] = 10;
+                Session::put('report_outlet_take',10);
+            }
+        }
+
+        if(isset($post['page'])){
+            $page = $post['page'];
+            $report = MyHelper::post('report/outlet/detail/trx?page='.$page, $post);
+        }else{
+            $report = MyHelper::post('report/outlet/detail/trx', $post);
+        }
+        // return $report;
+
+        $data['transaction']          = [];
+        $data['total']     = 0;
+        $data['from']   = 0;
+        $data['to']      = 0;
+        $data['paginator'] = false;
+
+        if (isset($report['status']) && $report['status'] == 'success') {
+            if (!empty($report['result']['data'])) {
+                $data['transaction']    = $report['result']['data'];
+                $data['total']          = $report['result']['total'];
+                $data['from']           = $report['result']['from'];
+                $data['to']             = $report['result']['to'];
+                $data['paginator']      = new LengthAwarePaginator($report['result']['data'], $report['result']['total'], $report['result']['per_page'], $report['result']['current_page'], ['path' => url()->current()]);
+            }
+        }
+
+        return view('report::report_outlet_detail_trx', $data);
+    }
+
+    function formOutletDetail(Request $request){
+        $post = $request->except('_token');
+        return redirect('report/outlet/detail/trx/'.$post['id_outlet'].'/'.date('Y-m-d', strtotime($post['date_start'])).'/'.date('Y-m-d', strtotime($post['date_end'])));
+    }
     /* REPORT GLOBAL */
     function reportGlobal(Request $request) {
         $post = $request->except('_token');
@@ -417,9 +491,16 @@ class ReportDuaController extends Controller
             $data[$key] = $value;
         }
 
+        // OUTLET
+        $outlet = $this->getDataReportOutlet($post);
+
+        foreach ($outlet as $key => $value) {
+            $data[$key] = $value;
+        }
+
         /* OUTLET */
         $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
-
+        
         return view('report::report_global_new', $data);
     }
 
