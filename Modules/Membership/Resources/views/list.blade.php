@@ -127,6 +127,51 @@
 			}
 		}
 	}
+
+	function addNewLevel(){
+        setTimeout(function(){
+            $('.price').each(function() {
+				var input = $(this).val();
+				var input = input.replace(/[\D\s\._\-]+/g, "");
+				input = input ? parseInt( input, 10 ) : 0;
+
+				$(this).val( function() {
+					return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+				});
+			});
+
+			$( ".price" ).on( "keyup", numberFormat);
+
+			$( ".price" ).on( "blur", checkFormat);
+		
+        }, 100);
+	}
+
+	function numberFormat(event){
+		var selection = window.getSelection().toString();
+		if ( selection !== '' ) {
+			return;
+		}
+
+		if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+			return;
+		}
+		var $this = $( this );
+		var input = $this.val();
+		var input = input.replace(/[\D\s\._\-]+/g, "");
+		input = input ? parseInt( input, 10 ) : 0;
+
+		$this.val( function() {
+			return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+		});
+	}
+
+	function checkFormat(event){
+		var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+		if(!$.isNumeric(data)){
+			$( this ).val("");
+		}
+	}
 	</script>
 @endsection
 
@@ -238,17 +283,17 @@
 									</div>
 									</div>-->
 									
-									<!--<div class="col-md-12" style="margin-top:20px">
+									<div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Image
-											<i class="fa fa-question-circle tooltips" data-original-title="Image background untuk info membership di aplikasi." data-container="body"></i>
+											<i class="fa fa-question-circle tooltips" data-original-title="Icon membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
 										</div>
 									</div>
 									<div class="col-md-4" >
 										<div class="input-icon right">
 											<div class="fileinput fileinput-new" data-provides="fileinput">
-												<div class="fileinput-new thumbnail" style="width: 200px;">
+												<div class="fileinput-new thumbnail" style="max-width: 200px;">
 													@if($membership['membership_image'] != "")
 														<img src="{{env('API_URL')}}/{{$membership['membership_image']}}" alt="" /> 
 													@else
@@ -267,7 +312,7 @@
 											</div>
 										</div>
 									</div>
-									</div>-->
+									</div>
 									
 									<div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
@@ -616,7 +661,7 @@
 						<div class="col-md-2"></div>
 						<div class="col-md-10">
 							@if(MyHelper::hasAccess([12], $grantedFeature))
-								<a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add">
+								<a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add" onclick="addNewLevel()">
 								<i class="fa fa-plus"></i> Add New Level</a>
 							@endif
 						</div>

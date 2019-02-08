@@ -17,6 +17,7 @@
 
 @section('page-script')
 	<script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ url('js/prices.js')}}"></script>
 	<script>
 		$('.datepicker').datepicker({
 			'format' : 'd-M-yyyy',
@@ -45,7 +46,7 @@
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form role="form" class="form-horizontal" action="{{url('transaction/create/fake')}}" method="POST">
+				<form role="form" class="form-horizontal" action="{{url('transaction/create/fake')}}" method="POST" id="form">
 					{{ csrf_field() }}
 					<div class="form-body">
                         <div class="form-group">
@@ -57,7 +58,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="input-group">
-									<input type="text" class="form-control datepicker" name="date_start" placeholder="Date Start" required>
+									<input type="text" class="form-control datepicker" name="date_start" placeholder="Date Start" required value="{{old('date_start')}}">
 									<span class="input-group-btn">
 										<button class="btn default" type="button">
 											<i class="fa fa-calendar"></i>
@@ -75,7 +76,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="input-group">
-									<input type="text" class="form-control datepicker" name="date_end" placeholder="Date End" required>
+									<input type="text" class="form-control datepicker" name="date_end" placeholder="Date End" required value="{{old('date_end')}}">
 									<span class="input-group-btn">
 										<button class="btn default" type="button">
 											<i class="fa fa-calendar"></i>
@@ -92,9 +93,34 @@
 							    </label>
 							</div>
 							<div class="col-md-4">
-								<input type="number" name="how_many" placeholder="Number of Transactions" class="form-control" required />
+								<input type="number" name="how_many" placeholder="Number of Transactions" class="form-control" required value="{{old('how_many')}}"/>
 							</div>
 						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label"> Number Of Item </label>
+							<div class="col-md-2">
+								<label class="control-label">From</label>
+								<input type="text" name="qty_start" class="form-control price" value="{{old('qty_start')}}"> 
+							</div>
+							<div class="col-md-2">
+								<label class="control-label">To</label>
+								<input type="text" name="qty_end" class="form-control price" value="{{old('qty_end')}}"> 
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label"> Price </label>
+							<div class="col-md-3">
+								<label class="control-label">From</label>
+								<input type="text" name="price_start" class="form-control price" value="{{old('price_start')}}"> 
+							</div>
+							<div class="col-md-3">
+								<label class="control-label">To</label>
+								<input type="text" name="price_end" class="form-control price" value="{{old('price_end')}}"> 
+							</div>
+						</div>
+
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
@@ -103,7 +129,7 @@
 							    </label>
 							</div>
 							<div class="col-md-6">
-								<select name="id_user[]" class="form-control input-sm select2" multiple placeholder="Search User" data-placeholder="Choose User" required>
+								<select name="id_user[]" class="form-control input-sm select2" multiple placeholder="Search User" data-placeholder="Choose User" required value="{{old('id_user')}}">
 									<option value="">Select...</option>
 									<option value="0">All User</option>
 									@if(isset($user))

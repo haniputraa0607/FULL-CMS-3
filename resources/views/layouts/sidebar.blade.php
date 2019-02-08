@@ -147,6 +147,13 @@
 			</a>
 		</li>
 
+		<li class="nav-item {{($menu_active == 'count-login-failed') ? 'active' : ''}}">
+			<a href="{{url('setting/count_login_failed')}}" class="nav-link">
+				<i class="fa fa-times-circle-o"></i>
+				<span class="title">Setting Count Login Failed</span>
+			</a>
+		</li>
+
 		@if(MyHelper::hasAccess([18], $configs))
 			@if(MyHelper::hasAccess([77], $configs))
 			<li class="nav-item {{($menu_active == 'point-reset') ? 'active' : ''}}">

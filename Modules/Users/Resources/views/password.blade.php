@@ -71,7 +71,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">Your 6 Digit PIN</label>
 							<div class="col-md-9">
-								<input type="password" name="password" class="form-control" />
+								<input type="password" name="password" class="form-control" minlength="6" maxlength="6"/>
 							</div>
 						</div>
 					</div>

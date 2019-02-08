@@ -371,7 +371,7 @@ class ReportDuaController extends Controller
             $post['id_outlet']    = 0;
         }
         else {
-            if ($post['id_outlet'] == 0) {
+            if (!isset($post['id_outlet']) || $post['id_outlet'] == 0) {
                 unset($post['id_outlet']);
                 $data['id_outlet'] = 0;
             }

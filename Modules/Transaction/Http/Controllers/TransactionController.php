@@ -1296,10 +1296,18 @@ class TransactionController extends Controller
             }
             $update = MyHelper::post('transaction/dump', $post);
             // dd($update);
+
             if (isset($update['status']) && $update['status'] == 'success') {
                 return redirect('transaction/create/fake')->with(['success' => ['Create '.$post['how_many'].' Data Transaction Success']]);
             } else {
-                return redirect('transaction/create/fake')->withErrors(['Create Transaction Failed']);
+                if (isset($update['errors'])) { 
+                    return back()->withErrors($update['errors'])->withInput(); 
+                } 
+ 
+                if (isset($update['status']) && $update['status'] == "fail") { 
+                    return back()->withErrors($update['messages'])->withInput(); 
+                } 
+                return redirect('transaction/create/fake')->withErrors(['Create Transaction Failed'])->withInput();
             } 
         }
 
@@ -1310,7 +1318,7 @@ class TransactionController extends Controller
             'submenu_active' => 'fake-transaction'
         ];
 
-        $user = MyHelper::get('user/get-all');
+        $user = MyHelper::get('users/get-all');
         if (isset($user['status']) && $user['status'] == 'success') {
             $data['user'] = $user['result'];
         }
