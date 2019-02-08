@@ -29,7 +29,7 @@
     	}
 
     	.brown div {
-    		color: #7a361a;
+    		color: #6c5648;
     	}
 
     	.completed {
@@ -274,7 +274,7 @@
 	}
 
 	.day-alphabet-today{
-		background: #7a361a;
+		background: #6c5648;
 	}
 
     </style>
@@ -337,7 +337,7 @@
 		   		<div class="row space-sch @if ($val['day'] == $hari_ini) brown @endif">
 		   			<div class="text-grey-2 text-13-3px seravek-light-font day-alphabet @if ($val['day'] == $hari_ini) day-alphabet-today @endif">{{ substr($val['day'], 0,1) }}</div>
 		   			<div class="col-2 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) seravek-font @else seravek-light-font @endif min-left "> {{ $val['day'] }} </div>
-		   			<div class="col-5 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) seravek-font @else seravek-light-font @endif"> 10.00 - 22.00 </div>
+		   			<div class="col-5 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) seravek-font @else seravek-light-font @endif"> {{date('H:i', strtotime($val['open']))}} - {{date('H:i', strtotime($val['close']))}} </div>
 		   		</div>
 		   	@endforeach
 	   	</div>

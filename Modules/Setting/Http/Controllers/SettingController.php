@@ -703,7 +703,7 @@ class SettingController extends Controller
         $post = $request->except('_token');
 
         $data = [ 
-            'title'             => 'Setting Home',
+            'title'             => 'Home Setting',
             'menu_active'       => 'setting-home-user',
             'submenu_active'    => 'setting-home-user'
         ];

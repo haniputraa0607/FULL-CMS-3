@@ -1146,10 +1146,10 @@ $configs    		= session('configs');
 															<select name="promotion_push_clickto[]" id="promotion_push_clickto_{{$x}}" class="form-control select2" onChange="fetchDetail('{{$x}}','push',this.value)">
 																<option value="Home" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Home") selected @endif>Home</option>
 																<option value="News" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "New") selected @endif>News</option>
-																<option value="Product" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Product") selected @endif>Product</option>
+																<!-- <option value="Product" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Product") selected @endif>Product</option> -->
 																<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Outlet") selected @endif>Outlet</option>
 																<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-																<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option>
+																<!-- <option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option> -->
 																<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
 																<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 																<option value="Link" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Link") selected @endif>Link</option>
@@ -1224,10 +1224,10 @@ $configs    		= session('configs');
 																<option value="Home" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Home") selected @endif>Home</option>
 																{{-- <option value="Content" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
 																<option value="News" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "New") selected @endif>News</option>
-																<option value="Product" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>
+																<!-- <option value="Product" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option> -->
 																<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
 																<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
-																<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
+																<!-- <option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option> -->
 																<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
 																<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 																<option value="Link" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>
@@ -2274,10 +2274,10 @@ $configs    		= session('configs');
 												<select name="promotion_push_clickto[]" id="promotion_push_clickto_0" class="form-control select2" onChange="fetchDetail('0','push',this.value)">
 													<option value="Home" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Home") selected @endif>Home</option>
 													<option value="News" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "New") selected @endif>News</option>
-													<option value="Product" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Product") selected @endif>Product</option>
+													<!-- <option value="Product" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Product") selected @endif>Product</option> -->
 													<option value="Outlet" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Outlet") selected @endif>Outlet</option>
 													<option value="Inbox" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-													<option value="Voucher" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option>
+													<!-- <option value="Voucher" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option> -->
 													<option value="Voucher Detail" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
 													<option value="Contact Us" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 													<option value="Link" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Link") selected @endif>Link</option>
@@ -2354,10 +2354,10 @@ $configs    		= session('configs');
 													<option value="Home" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Home") selected @endif>Home</option>
 													{{-- <option value="Content" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
 													<option value="News" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "News") selected @endif>News</option>
-													<option value="Product" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>
+													<!-- <option value="Product" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option> -->
 													<option value="Outlet" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
 													<option value="Inbox" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
-													<option value="Voucher" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
+													<!-- <option value="Voucher" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option> -->
 													<option value="Voucher Detail" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
 													<option value="Contact Us" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 													<option value="Link" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>

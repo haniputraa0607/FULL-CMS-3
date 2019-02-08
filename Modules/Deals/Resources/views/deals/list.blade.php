@@ -137,7 +137,7 @@ $grantedFeature     = session('granted_features');
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-bluesbold uppercase">{{ $sub_title }}</span>
+                <span class="caption-subject font-blue sbold uppercase">{{ $sub_title }}</span>
             </div>
         </div>
         <div class="portlet-body form">

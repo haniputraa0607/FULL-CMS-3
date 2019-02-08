@@ -59,11 +59,11 @@ Route::group(['middleware' => 'web', 'prefix' => 'autopromotion', 'namespace' =>
     Route::post('create', ['middleware' => 'config_control:50', 'uses' => 'AutopromotionController@createPost']);
 });
 
-Route::group(['middleware' => 'web', 'prefix' => 'campaignseries', 'namespace' => 'Modules\Campaign\Http\Controllers'], function()
-{
-	Route::any('/', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@list']);
-	Route::any('/page/{page}', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@list']);
+// Route::group(['middleware' => 'web', 'prefix' => 'campaignseries', 'namespace' => 'Modules\Campaign\Http\Controllers'], function()
+// {
+// 	Route::any('/', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@list']);
+// 	Route::any('/page/{page}', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@list']);
 	
-	Route::get('create', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@create']);
-    Route::post('create', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@createPost']);
-});
+// 	Route::get('create', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@create']);
+//     Route::post('create', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@createPost']);
+// });

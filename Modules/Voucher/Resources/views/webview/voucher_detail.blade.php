@@ -5,6 +5,10 @@
 
 @section('css')
     <style type="text/css">
+        body{
+            max-width: 468px;
+            margin: auto;
+        }
         p{
             margin-top: 0px !important;
             margin-bottom: 0px !important;
@@ -29,19 +33,30 @@
             margin-bottom: 10px;
         }
         .valid-date{
-            font-size: 13px;
+            font-size: 13.3px;
+            color: #666666;
         }
         .description-wrapper,
         .outlet-wrapper{
-            padding: 15px;
+            padding: 10px 20px;
         }
         .subtitle{
-            font-weight: 600;
             margin-bottom: 10px;
-            color: #c0c0c0;
+            color: #b8b8b8;
+            font-size: 13.3px;
+        }
+        .subtitle2{
+            margin-bottom: 20px;
+            color: #aaa;
+            font-size: 13.3px;
         }
         .outlet-city:not(:first-child){
             margin-top: 10px;
+        }
+
+        .outlet{
+            font-size: 13.3px;
+            color: #666666;
         }
 
         @media only screen and (min-width: 768px) {
@@ -50,6 +65,54 @@
                 width: auto;
                 height: auto;
             }
+        }
+
+        @font-face {
+            font-family: 'Seravek Light';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Seravek Medium';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+        }
+
+        .seravek-light-font {
+            font-family: 'Seravek Light';
+        }
+
+        .seravek-medium-font {
+            font-family: 'Seravek Medium';
+        }
+
+        .deals-qr{
+            width: 135px;
+            height: 135px;
+        }
+
+        .kode-text{
+            color: #aaaaaa;
+            font-size: 15px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .voucher-code{
+            color: #6c5648;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .line{
+            background-image: linear-gradient(to right, transparent 50%, #b8b8b8 50%);
+            background-size: 7px 100%;
+            width: 100%;
+            height: 1px;
+        }
+        .space-bottom{
+            margin-bottom:20px;
         }
     </style>
 @stop
@@ -75,24 +138,46 @@
                     </div>
                 </div>
 
-                @if($deals['deals_description'] != "")
+                @if($voucher['redeemed_at'] != null)
                 <div class="description-wrapper">
-                    <div class="subtitle">DESKRIPSI</div>
-                    <div class="description">{!! $deals['deals_description'] !!}</div>
+                    <div class="subtitle2 text-center">Tampilkan Kode QR di bawah ke kasir</div>
+                    <img class="deals-qr center-block" src="{{ $voucher['voucher_hash'] }}" alt="">
+                    <div class="text-center kode-text">Kode Kupon</div>
+                    <div class="text-center voucher-code seravek-medium-font">{{ $voucher['deal_voucher']['voucher_code'] }}</div>
+                    <div class="line"></div>
                 </div>
                 @endif
 
-                <div class="outlet-wrapper">
-                    <div class="subtitle">TERSEDIA DI OUTLET INI</div>
-                    <div class="outlet">
-                        @foreach($deals['outlet_by_city'] as $key => $outlet_city)
-                        <div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
-                        <ul class="nav">
-                            @foreach($outlet_city['outlet'] as $key => $outlet)
-                            <li>- {{ $outlet['outlet_name'] }}</li>
+                @if($deals['deals_description'] != "")
+                <div class="description-wrapper">
+                    <div class="subtitle seravek-light-font">DESKRIPSI</div>
+                    <div class="description seravek-light-font">{!! $deals['deals_description'] !!}</div>
+                </div>
+                @endif
+
+                <div class="outlet-wrapper space-bottom">
+                    <div class="subtitle seravek-light-font">
+                    @if($voucher['redeemed_at'] != null)
+                        OUTLET
+                    @else
+                        TERSEDIA DI OUTLET INI
+                    @endif
+                    </div>
+                    <div class="outlet seravek-light-font">
+                        @if($voucher['redeemed_at'] != null)
+                            @if(isset($voucher['outlet_name']))
+                            {{$voucher['outlet_name']}}
+                            @endif
+                        @else
+                            @foreach($deals['outlet_by_city'] as $key => $outlet_city)
+                            <div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
+                            <ul class="nav">
+                                @foreach($outlet_city['outlet'] as $key => $outlet)
+                                <li>- {{ $outlet['outlet_name'] }}</li>
+                                @endforeach
+                            </ul>
                             @endforeach
-                        </ul>
-                        @endforeach
+                        @endif
                     </div>
                 </div>
 

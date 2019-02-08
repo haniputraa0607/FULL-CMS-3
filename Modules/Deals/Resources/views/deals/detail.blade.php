@@ -45,7 +45,8 @@
     $(".form_datetime").datetimepicker({
         format: "d-M-yyyy hh:ii",
         autoclose: true,
-        todayBtn: true
+        todayBtn: true,
+        minuteStep:1
     });
 
     </script>

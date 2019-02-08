@@ -42,7 +42,8 @@
     $(".form_datetime").datetimepicker({
         format: "d-M-yyyy hh:ii",
         autoclose: true,
-        todayBtn: true
+        todayBtn: true,
+        minuteStep:1
     });
         
     </script>
@@ -351,7 +352,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Second Title  
@@ -363,7 +364,7 @@
                                 <input type="text" class="form-control" name="deals_second_title" value="{{ old('deals_second_title') }}" placeholder="Second Title" maxlength="30">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     
                     <div class="form-group">
                         <div class="input-icon right">
@@ -411,7 +412,7 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
@@ -424,8 +425,8 @@
                                 <textarea name="deals_short_description" class="form-control" required>{{ old('deals_short_description') }}</textarea>
                             </div>
                         </div>
-                    </div> -->
-                    @if ($deals_type != "Hidden")
+                    </div>
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -440,7 +441,6 @@
                             </div>
                         </div>
                     </div>
-                    @endif
 
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Deals Periode <span class="required" aria-required="true"> * </span> </label>
@@ -513,12 +513,11 @@
                     </div>
                     @endif
                     
-                    @if ($deals_type == "Deals")
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Image
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span> 
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                             <br>
                             <span class="required" aria-required="true"> (300*300) </span>
@@ -545,7 +544,6 @@
                             </div>
                         </div>
                     </div>
-                    @endif
 
                     <!-- <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Video </label>
@@ -601,6 +599,22 @@
                         @include('deals::hidden.hidden_form')
                     @endif
                     
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            User Limit
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Batasan user untuk claim voucher, input 0 untuk unlimited" data-container="body"></i>
+                            </label>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <input type="number" class="form-control" name="user_limit" value="{{ old('user_limit') }}" placeholder="User limit" maxlength="30" minlength="0">
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}

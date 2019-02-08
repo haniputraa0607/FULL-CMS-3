@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
  ?>
 @extends('layouts.main')
 
@@ -80,11 +81,14 @@
                             <li>
                                 <a href="#tab_3" data-toggle="tab"> Tax </a>
                             </li>
+                            @if(MyHelper::hasAccess([18], $configs))
                             @if(MyHelper::hasAccess([59], $grantedFeature))
                                 <li>
                                     <a href="#tab_4" data-toggle="tab"> Point </a>
                                 </li>
                             @endif
+                            @endif
+                            @if(MyHelper::hasAccess([19], $configs))
                             @if(MyHelper::hasAccess([60], $grantedFeature))
                                 <li>
                                     <a href="#tab_5" data-toggle="tab"> Kopi Point </a>

@@ -17,7 +17,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Second Title  
@@ -27,7 +27,7 @@
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="deals_second_title" value="{{ $val['deals_second_title'] }}" placeholder="Second Title">
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <div class="form-group">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
@@ -78,9 +78,8 @@
                         <div class="col-md-9">
                             <textarea name="deals_short_description" class="form-control" required>{{ $val['deals_short_description'] }}</textarea>
                         </div>
-                    </div> -->
+                    </div>
 
-                    @if ($deals_type != "Hidden")
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -93,7 +92,6 @@
                             <textarea name="deals_description" id="field_content_long" class="form-control summernote">{{ $val['deals_description'] }}</textarea>
                         </div>
                     </div>
-                    @endif
 
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Deals Periode <span class="required" aria-required="true"> * </span> </label>
@@ -238,7 +236,7 @@
                         </div>
                     </div>
                     
-                    @if ($val['deals_voucher_type'] == "Auto generate" && $val['deals_type'] != "Hidden")
+                    @if ($val['deals_voucher_type'] == "Auto generate")
                     <div class="form-group">
                         <label class="col-md-3 control-label">Voucher Total <span class="required" aria-required="true"> * </span></label>
                         <div class="col-md-9">

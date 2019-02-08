@@ -50,7 +50,8 @@
         .slick-slide {
             width: 50.2px;
             height: 50.2px;
-            margin-top: 9.25px;
+            margin-top: 12.25px;
+            margin-bottom: 7px;
             margin-right: 10px;
         }
 
@@ -60,7 +61,8 @@
 
         .slick-center > div > .kotak-status,
         .slick-center > div > .kotak-lock {
-            margin-top: 0px;
+            margin-top: 3px;
+            margin-bottom: 7px;
             padding: 12px;
             transition: all 0.2s ease 0s;
         }
@@ -103,7 +105,7 @@
             width: 30px;
         }
         .slick-center > div > .kotak-lock {
-            background-size: 42.2px 45.6px, cover;
+            background-size: 42.2px 45.6px, cover !important;
             padding: 18px;
         }
 
@@ -439,7 +441,7 @@
                     @else
                         @if($now == false)
                             <div class="kotak-lock" style="background: url('{{$membership['membership_image']}}'); 
-                                                            background-color: rgba(169, 169, 169);
+                                                            background-color: #c1c0c0;
                                                             background-repeat: no-repeat;
                                                             -ms-background-size: 31.7px 34.2px, cover;
                                                             -o-background-size: 31.7px 34.2px, cover;
@@ -453,7 +455,7 @@
                             @endphp
                         @else
                             <div class="kotak-lock" style="background: url('{{$membership['membership_image']}}'); 
-                                                            background-color: rgba(169, 169, 169);
+                                                            background-color: #c1c0c0;
                                                             background-repeat: no-repeat;
                                                             -ms-background-size: 31.7px 34.2px, cover;
                                                             -o-background-size: 31.7px 34.2px, cover;
@@ -584,7 +586,7 @@
                     $('#status_nominal').text("{{str_replace(',', '.', number_format($data['user_membership']['user']['subtotal_transaction']))}}")
                     if(list_status[nextSlide]['type'] == 'Terbuka'){
                         $('#status_benefit_text').text('Benefit yang didapat:')
-                        $('#status_detail_text').text('nda sudah melewati level ini')
+                        $('#status_detail_text').text('Anda sudah melewati level ini')
                         $('#status_progress').hide()
                     }else{
                         $('#status_benefit_text').text('Benefit yang didapat saat ini:')

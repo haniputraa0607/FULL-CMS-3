@@ -23,7 +23,7 @@
 		<li class="nav-item {{($menu_active == 'setting-home-user') ? 'active' : ''}}">
 			<a href="{{url('setting/home/user')}}" class="nav-link">
 				<i class="fa fa-cog "></i>
-				<span class="title">Setting Home</span>
+				<span class="title">Home Setting</span>
 			</a>
 		</li>
 

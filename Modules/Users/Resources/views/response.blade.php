@@ -355,7 +355,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Contact Us'){
+		if(det == 'Contact Us' || det == 'Transaction'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -840,10 +840,10 @@ $configs = session('configs');
 							<select name="autocrm_push_clickto" id="autocrm_push_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'push')">
 								<option value="Home" @if($data['autocrm_push_clickto'] == 'Home') selected @endif>Home</option>
 								<option value="News" @if($data['autocrm_push_clickto'] == 'News') selected @endif>News</option>
-								<option value="Product" @if($data['autocrm_push_clickto'] == 'Product') selected @endif>Product</option>
+								<!-- <option value="Product" @if($data['autocrm_push_clickto'] == 'Product') selected @endif>Product</option> -->
 								<option value="Outlet" @if($data['autocrm_push_clickto'] == 'Outlet') selected @endif>Outlet</option>
 								<option value="Inbox" @if($data['autocrm_push_clickto'] == 'Inbox') selected @endif>Inbox</option>
-								<option value="Deals" @if($data['autocrm_push_clickto'] == 'Deals') selected @endif>Deals</option>
+								<!-- <option value="Deals" @if($data['autocrm_push_clickto'] == 'Deals') selected @endif>Deals</option> -->
 								<option value="Contact Us" @if($data['autocrm_push_clickto'] == 'Contact Us') selected @endif>Contact Us</option>
 								<option value="Link" @if($data['autocrm_push_clickto'] == 'Link') selected @endif>Link</option>
 								<option value="Logout" @if($data['autocrm_push_clickto'] == 'Logout') selected @endif>Logout</option>
@@ -935,10 +935,10 @@ $configs = session('configs');
 								<option value="Home" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Home") selected @endif>Home</option>
 								{{-- <option value="Content" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
 								<option value="News" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "New") selected @endif>News</option>
-								<option value="Product" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Product") selected @endif>Product</option>
+								<!-- <option value="Product" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Product") selected @endif>Product</option> -->
 								<option value="Outlet" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
 								<option value="Inbox" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
-								<option value="Voucher" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
+								<!-- <option value="Voucher" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Voucher") selected @endif>Voucher</option> -->
 								<option value="Contact Us" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 								<option value="Link" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Link") selected @endif>Link</option>
 								<option value="Logout" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Logout") selected @endif>Logout</option>
