@@ -174,7 +174,7 @@
         @include('layouts.notifications')
         
         <div class="text-brown" style="margin-top: 50px; margin-bottom: 20px; text-align: justify;">
-            Silahkan lengkapi data di bawah ini dan dapatkan Kopi Points
+            Silakan lengkapi data di bawah ini dan dapatkan Kopi Points
         </div>
 
         @if($user != null)
