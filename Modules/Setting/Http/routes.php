@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 
     /* complete profile */
     Route::post('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
+    Route::post('complete-profile-success-page', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfileSuccessPage']);
 
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');

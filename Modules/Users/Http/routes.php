@@ -37,5 +37,5 @@ Route::group(['middleware' => 'web', 'prefix' => 'webview/complete-profile', 'na
 {
     Route::get('/', 'WebviewUserController@completeProfile');
     Route::post('/', 'WebviewUserController@completeProfileSubmit');
-    Route::get('/success', 'WebviewUserController@completeProfileSuccess');
+    // Route::get('/success', 'WebviewUserController@completeProfileSuccess');
 });

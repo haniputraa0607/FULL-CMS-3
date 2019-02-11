@@ -12,9 +12,7 @@
 @section('content')
     <div class="col-md-offset-4 col-md-4">
         <div class="text-center" style="margin-top: 30px;">
-            @foreach($messages as $message)
-                <div style="margin-bottom: 10px;">{{ $message }}</div>
-            @endforeach
+            {!! $content !!}
         </div>
     </div>
 @stop

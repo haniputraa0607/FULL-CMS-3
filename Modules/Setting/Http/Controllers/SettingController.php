@@ -547,6 +547,7 @@ class SettingController extends Controller
                 'complete_profile_cashback' => '',
                 'complete_profile_count'    => '',
                 'complete_profile_interval' => '',
+                'complete_profile_success_page' => ''
             ];
         }
 
@@ -910,4 +911,19 @@ class SettingController extends Controller
         return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/home#user-profile');
     }
 
+    // complete user profile success page content
+    public function completeProfileSuccessPage(Request $request)
+    {
+        $validatedData = $request->validate([
+            'complete_profile_success_page' => 'required'
+        ]);
+
+        $post = $request->except('_token');
+
+        // update
+        $result = MyHelper::post('setting/complete-profile/success-page', $post);
+        // dd($result);
+
+        return parent::redirect($result, 'User Profile Success Page has been updated.', 'setting/home#user-profile');
+    }
 }

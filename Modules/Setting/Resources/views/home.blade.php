@@ -19,6 +19,7 @@
 	<link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ url('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 
 	<style type="text/css">
 		.click-to{
@@ -47,6 +48,7 @@
 	<script src="{{ url('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ url('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
 	<script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
@@ -143,7 +145,65 @@
     	$('#modalBanner').on('shown.bs.modal', function () {
     		$('#modalBanner .select2').select2({ dropdownParent: $("#modalBanner .modal-body") });
     	});
+
+    	// upload & delete image on summernote
+    	$('.summernote').summernote({
+	        placeholder: 'Success Page Content',
+	        tabsize: 2,
+	        height: 180,
+	        toolbar: [         
+	          ['style', ['style']],
+	          ['style', ['bold', 'underline', 'clear']],
+	          ['color', ['color']],
+	          ['para', ['ul', 'ol', 'paragraph']],
+	          ['insert', ['table']],
+	          ['insert', ['link', 'picture', 'video']],
+	          ['misc', ['fullscreen', 'codeview', 'help']]
+	        ],
+	        callbacks: {
+	            onImageUpload: function(files){
+	                sendFile(files[0]);
+	            },
+	            onMediaDelete: function(target){
+	                var name = target[0].src;
+	                token = "{{ csrf_token() }}";
+	                $.ajax({
+	                    type: 'post',
+	                    data: 'filename='+name+'&_token='+token,
+	                    url: "{{url('summernote/picture/delete/user-profile')}}",
+	                    success: function(data){
+	                        // console.log(data);
+	                    }
+	                });
+	            }
+	        }
+	    });
     });
+
+    // upload & delete image on summernote
+    function sendFile(file){
+        token = "{{ csrf_token() }}";
+        var data = new FormData();
+        data.append('image', file);
+        data.append('_token', token);
+        // document.getElementById('loadingDiv').style.display = "inline";
+        $.ajax({
+            url : "{{url('summernote/picture/upload/user-profile')}}",
+            data: data,
+            type: "POST",
+            processData: false,
+            contentType: false,
+            success: function(url) {
+                if (url['status'] == "success") {
+                    $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                }
+                // document.getElementById('loadingDiv').style.display = "none";
+            },
+            error: function(data){
+                // document.getElementById('loadingDiv').style.display = "none";
+            }
+        })
+    }
 
     // banner: edit
     $('#banner .btn-edit').click(function() {
@@ -206,6 +266,7 @@
 			window.location = link;
 		});
     });
+
 	</script>
 @endsection
 
@@ -761,6 +822,41 @@
 							</div>
 						</form>
 					</div>
+				</div>
+			</div>
+		</div>
+
+		{{-- update user's profile success --}}
+		<div class="row" style="margin-top:20px">
+			<div class="col-md-12">
+				<div class="portlet light bordered">
+					<div class="portlet-title">
+						<div class="caption font-blue ">
+							<i class="icon-settings font-blue "></i>
+							<span class="caption-subject bold uppercase">User Profile Success Page</span>
+						</div>
+					</div>
+
+					<div class="portlet-body">
+						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile-success-page')}}" method="POST">
+							<div class="form-body">
+								<div class="form-group col-md-12">
+									<label class="control-label col-md-2">Content
+										<span class="required" aria-required="true"> * </span> 
+										<i class="fa fa-question-circle tooltips" data-original-title="Point yang diperoleh user ketika melengkapi data" data-container="body"></i>
+									</label>
+									<div class="fileinput fileinput-new col-md-9">
+                                		<textarea name="complete_profile_success_page" id="field_content_long" class="form-control summernote">{!! $complete_profile['complete_profile_success_page'] !!}</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="form-actions" style="text-align:center">
+								{{ csrf_field() }}
+								<button type="submit" class="btn blue">Submit</button>
+							</div>
+						</form>
+					</div>
+
 				</div>
 			</div>
 		</div>
