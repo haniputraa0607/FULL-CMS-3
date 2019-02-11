@@ -25,6 +25,7 @@
 
         .kelas-panah {
         	-webkit-text-stroke: 1px white;
+            color: grey;
         }
 
         .kotak-qr {
@@ -54,6 +55,10 @@
             padding: 10px;
             background: #fff;
             font-family: 'Open Sans', sans-serif;
+        }
+
+        .kotak-full a:active, .kotak-full a:hover {
+            text-decoration: none;
         }
 
         .kotak-biasa {
@@ -227,16 +232,18 @@
     @endphp
 
     @foreach ($faq as $key => $value)
-	    <div class="kotak-full line-bottom div-panah" data-toggle="collapse" data-target=".multi-collapse{{ $key }}" aria-expanded="false">
+	    <div class="kotak-full line-bottom div-panah" >
 	        <div class="container">
-	            <div class="row">
-	                <div class="col-10 text-13-3px seravek-light-font text-grey-white">{{ $value['question'] }}</div>
-	                <div class="col-2 text-13-3px panah text-right"> <i class="fa fa-angle-down kelas-panah add"></i></div>
-	            </div>
+                <a href="#" data-toggle="collapse" data-target="#multi-collapse{{ $key }}" aria-expanded="false">
+    	            <div class="row">
+    	                <div class="col-10 text-13-3px seravek-light-font text-grey-white">{{ $value['question'] }}</div>
+    	                <div class="col-2 text-13-3px panah text-right"> <i class="fa fa-angle-down kelas-panah add"></i></div>
+    	            </div>
+                </a>
 	        </div>
 	    </div>
 
-	    <div class="kotak-biasa collapse space-top multi-collapse{{ $key }}">
+	    <div class="kotak-biasa collapse space-top" id="multi-collapse{{ $key }}">
 	        <div class="container">
 	            <div class="row">
 	                <div class="col-10 text-13-3px space-text text-black space-left seravek-font">{{ $value['answer'] }}</div>
@@ -250,8 +257,11 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
     <script type="text/javascript">
     	$(document).on('click', '.div-panah', function () {

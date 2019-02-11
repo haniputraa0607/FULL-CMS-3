@@ -303,6 +303,9 @@
         .top-30px{
             top: -30px;
         }
+        .top-35px{
+            top: -35px;
+        }
 
         #map{
             border-radius: 10px;
@@ -626,8 +629,6 @@
             </div>
         </div>
     </div>
-   
-    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -637,6 +638,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
     
     @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
+    
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&callback=initMap">
     </script>
     

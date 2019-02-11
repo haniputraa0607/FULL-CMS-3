@@ -94,6 +94,7 @@
                                     <a href="#tab_5" data-toggle="tab"> Kopi Point </a>
                                 </li>
                             @endif
+                            @endif
                             <li>
                                 <a href="#tab_6" data-toggle="tab"> Default Price Outlet </a>
                             </li>

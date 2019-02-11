@@ -1063,8 +1063,9 @@ class TransactionController extends Controller
         }
 
         $data['setting'] = $grand_total;
-        return view('transaction::transactionDetail', $data);
-        // return view('transaction::transactionDetail2', $data);
+        // return $data;
+        // return view('transaction::transactionDetail', $data);
+        return view('transaction::transactionDetail2', $data);
     }
 
     public function transactionDelete($id) {
@@ -1150,7 +1151,9 @@ class TransactionController extends Controller
         ];
 
         $post['key'] = ucwords($key);
-
+        if(!isset($post['rule'])){
+            $post['rule'] = 'and';
+        }
         $filter = MyHelper::post('transaction/filter', $post);
 
         if (isset($filter['status']) && $filter['status'] == 'success') {
@@ -1296,7 +1299,6 @@ class TransactionController extends Controller
             }
             $update = MyHelper::post('transaction/dump', $post);
             // dd($update);
-
             if (isset($update['status']) && $update['status'] == 'success') {
                 return redirect('transaction/create/fake')->with(['success' => ['Create '.$post['how_many'].' Data Transaction Success']]);
             } else {
@@ -1318,7 +1320,7 @@ class TransactionController extends Controller
             'submenu_active' => 'fake-transaction'
         ];
 
-        $user = MyHelper::get('users/get-all');
+        $user = MyHelper::get('user/get-all');
         if (isset($user['status']) && $user['status'] == 'success') {
             $data['user'] = $user['result'];
         }
