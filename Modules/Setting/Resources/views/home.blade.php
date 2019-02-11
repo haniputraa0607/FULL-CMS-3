@@ -843,7 +843,7 @@
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-2">Content
 										<span class="required" aria-required="true"> * </span> 
-										<i class="fa fa-question-circle tooltips" data-original-title="Point yang diperoleh user ketika melengkapi data" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="Konten halaman sukses setelah user melengkapi data" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-9">
                                 		<textarea name="complete_profile_success_page" id="field_content_long" class="form-control summernote">{!! $complete_profile['complete_profile_success_page'] !!}</textarea>
