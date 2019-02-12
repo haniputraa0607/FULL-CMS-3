@@ -57,7 +57,7 @@
           });
 
           var mapOptions = {
-              zoom: 12,
+              zoom: 15,
               center: haightAshbury,
               mapTypeId: google.maps.MapTypeId.ROADMAP
           };

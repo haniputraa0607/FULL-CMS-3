@@ -81,7 +81,15 @@
         placeholder: 'Product Description',
         tabsize: 2,
         height: 120,
-        fontNames: ['Open Sans'],
+        toolbar: [         
+          ['style', ['style']],
+          ['style', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['insert', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['misc', ['fullscreen', 'codeview', 'help']]
+        ],
         callbacks: {
             onImageUpload: function(files){
                 sendFile(files[0], $(this).attr('id'));
@@ -94,6 +102,7 @@
                     data: 'filename='+name+'&_token='+token,
                     url: "{{url('summernote/picture/delete/product')}}",
                     success: function(data){
+                        // console.log(data);
                     }
                 });
             }
@@ -106,6 +115,7 @@
         var data = new FormData();
         data.append('image', file);
         data.append('_token', token);
+        // document.getElementById('loadingDiv').style.display = "inline";
         $.ajax({
             url : "{{url('summernote/picture/upload/product')}}",
             data: data,
@@ -119,8 +129,10 @@
                     $('#'+id).summernote('editor.focus');
                     $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                 }
+                // document.getElementById('loadingDiv').style.display = "none";
             },
             error: function(data){
+                // document.getElementById('loadingDiv').style.display = "none";
             }
         })
     }

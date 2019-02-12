@@ -155,7 +155,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">Product {{ucfirst($visibility)}}</span>
+                <span class="caption-subject sbold uppercase font-blue">{{ucfirst($visibility)}} Product List</span>
             </div>
             <div class="actions">
                 <div class="btn-group" style="width: 300px">
