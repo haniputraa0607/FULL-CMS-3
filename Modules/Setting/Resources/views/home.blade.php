@@ -779,7 +779,7 @@
 
 						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile')}}" method="POST">
 							<div class="form-body">
-								<div class="form-group col-md-12">
+								{{-- <div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completing Point
 										<span class="required" aria-required="true"> * </span> 
 										<i class="fa fa-question-circle tooltips" data-original-title="Point yang diperoleh user ketika melengkapi data" data-container="body"></i>
@@ -787,11 +787,11 @@
 									<div class="fileinput fileinput-new col-md-4">
 										<input class="form-control" type="text" name="complete_profile_point" value="{{ $complete_profile['complete_profile_point'] }}" required>
 									</div>
-								</div>
+								</div> --}}
 								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completing Cashback
+									<label class="control-label col-md-4">Completing Kopi Point
 										<span class="required" aria-required="true"> * </span> 
-										<i class="fa fa-question-circle tooltips" data-original-title="Cashback yang diperoleh user ketika melengkapi data (IDR)" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="Kopi Point yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
 										<input class="form-control" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}" required>
@@ -800,7 +800,7 @@
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completing Count
 										<span class="required" aria-required="true"> * </span> 
-										<i class="fa fa-question-circle tooltips" data-original-title="Berapa kali aplikasi akan menawarkan user untuk melengkapi data" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="Berapa kali aplikasi akan menawarkan user untuk melengkapi data profil" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
 										<input class="form-control" type="text" name="complete_profile_count" value="{{ $complete_profile['complete_profile_count'] }}" required>

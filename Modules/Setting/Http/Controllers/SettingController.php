@@ -896,13 +896,15 @@ class SettingController extends Controller
     public function completeProfile(Request $request)
     {
         $validatedData = $request->validate([
-            'complete_profile_point'    => 'required',
+            // 'complete_profile_point'    => 'required',
             'complete_profile_cashback' => 'required',
             'complete_profile_count'    => 'required',
             'complete_profile_interval' => 'required'
         ]);
 
         $post = $request->except('_token');
+        // remove this, if point feature is active
+        $post['complete_profile_point'] = 0;
 
         // update complete profile
         $result = MyHelper::post('setting/complete-profile', $post);
