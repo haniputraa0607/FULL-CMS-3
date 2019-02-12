@@ -363,9 +363,9 @@
                 <li>
                     <a href="#price" data-toggle="tab"> Outlet Setting </a>
                 </li>
-				<li>
+				<!-- <li>
                     <a href="#discount" data-toggle="tab"> Discount </a>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="portlet-body">

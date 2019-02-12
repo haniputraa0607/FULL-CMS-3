@@ -16,10 +16,10 @@
 		                    <label style="margin-top: 5px;margin-left: 15px;">:</label>
 		                </div>
 		                <div class="col-md-4">
-		                    <input type="time" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open" name="open[]" value="{{ old('open') }}">
+		                    <input type="text" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open timepicker timepicker-no-seconds" name="open[]" @if (old('open') != '') value="{{ old('open') }}" @else value="07:00" @endif data-show-meridian="false" readonly>
 		                </div>
 		                <div class="col-md-4" style="padding-bottom: 5px">
-		                    <input type="time" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close" name="close[]" value="{{ old('close') }}">
+		                    <input type="text" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close timepicker timepicker-no-seconds" name="close[]" @if (old('close') != '') value="{{ old('close') }}" @else value="22:00" @endif data-show-meridian="false" readonly>
 		                </div>
 		                <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
 		                    <label class="mt-checkbox mt-checkbox-outline"> Same all
@@ -41,10 +41,10 @@
 		                    <label style="margin-top: 5px;margin-left: 15px;">:</label>
 		                </div>
 		                <div class="col-md-4">
-		                    <input type="time" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open" name="open[]" @if(isset($val['open'])) value="{{ date('H:i', strtotime($val['open'])) }}" @endif>
+		                    <input type="text" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open timepicker timepicker-no-seconds" name="open[]" @if(isset($val['open'])) value="{{ date('H:i', strtotime($val['open'])) }}" @endif data-show-meridian="false" readonly>
 		                </div>
 		                <div class="col-md-4" style="padding-bottom: 5px">
-		                    <input type="time" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close" name="close[]" @if(isset($val['open'])) value="{{ date('H:i', strtotime($val['close'])) }}" @endif>
+		                    <input type="text" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close timepicker timepicker-no-seconds" name="close[]" @if(isset($val['open'])) value="{{ date('H:i', strtotime($val['close'])) }}" @endif data-show-meridian="false" readonly>
 		                </div>
 		                <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
 		                    <label class="mt-checkbox mt-checkbox-outline"> Same all

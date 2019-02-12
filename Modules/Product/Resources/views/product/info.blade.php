@@ -97,6 +97,7 @@
         </div>
         <div class="form-group">
             <label for="multiple" class="control-label col-md-3">Tag
+                {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}
             </label>
             <div class="col-md-8">
                 <select name="id_tag[]" class="bs-select form-control" id="select_tag" multiple data-live-search="true" title="Select Tag">

@@ -3,6 +3,7 @@
 @section('page-style')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
 
+    <link href="{{ url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -15,6 +16,7 @@
 @endsection
     
 @section('page-script')
+    <script src="{{ url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/moment.min.js')}}" type="text/javascript"></script>
@@ -480,10 +482,10 @@
                                         <label style="margin-top: 5px;margin-left: 15px;">:</label>
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="time" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open" name="open[]" value="{{ old('open') }}">
+                                        <input type="text" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open timepicker timepicker-no-seconds" name="open[]" @if (old('open') != '') value="{{ old('open') }}" @else value="07:00" @endif data-show-meridian="false" readonly>
                                     </div>
                                     <div class="col-md-4" style="padding-bottom: 5px">
-                                        <input type="time" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close" name="close[]" value="{{ old('close') }}">
+                                        <input type="text" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close timepicker timepicker-no-seconds" name="close[]" @if (old('close') != '') value="{{ old('close') }}" @else value="22:00" @endif data-show-meridian="false" readonly>
                                     </div>
                                     <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
                                         <label class="mt-checkbox mt-checkbox-outline"> Same all

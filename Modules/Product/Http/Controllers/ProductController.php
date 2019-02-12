@@ -611,7 +611,7 @@ class ProductController extends Controller
         }
         $data = [
             'title'          => 'Product',
-            'sub_title'      => 'Product List '.$visibility,
+            'sub_title'      => $visibility.' Product List',
             'menu_active'    => 'product',
             'submenu_active' => 'product-list-'.lcfirst($visibility),
             'visibility'     => $visibility
