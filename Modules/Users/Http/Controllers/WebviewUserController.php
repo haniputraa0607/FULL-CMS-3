@@ -50,6 +50,12 @@ class WebviewUserController extends Controller
         $bearer = $post['bearer'];
         unset($post['bearer']);
 
+        $validatedData = $request->validate([
+            'gender' => 'required',
+            'birthday' => 'required',
+            'id_city' => 'required',
+        ]);
+
         // convert date format
         if (isset($post['birthday'])) {
             $post['birthday'] = date('Y-m-d', strtotime($post['birthday']));

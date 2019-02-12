@@ -206,7 +206,7 @@
                     @if($user['id_city'] == null)
                     <div class="form-group form-md-line-input city">
                         <label>Kota</label>
-                        <select class="form-control select2" placeholder="Select City" name="id_city" required style="width: 100%;">
+                        <select class="form-control select2 id_city" placeholder="Select City" name="id_city" required style="width: 100%;">
                             @foreach ($cities as $city)152
                                 <option value="{{$city['id_city']}}" @if(old('id_city')==$city['id_city']) selected @elseif($city['id_city']=="152") selected @endif>{{ $city['city_type']. " " .$city['city_name'] }}</option>
                             @endforeach
@@ -267,6 +267,30 @@
               }
           });
           $('.select2').select2();
+        });
+
+        $('form').submit(function(e) {
+          if ($('.gender-select').length > 0) {
+            var gender = $('.gender-select').val();
+            if (gender == "") {
+              e.preventDefault();
+            }
+          }
+          
+          if ($('.birthday').length > 0) {
+            var birthday = $('.birthday input').val();
+            if (birthday == "") {
+              e.preventDefault();
+            }
+          }
+
+          if ($('.id_city').length > 0) {
+            var id_city = $('.id_city').val();
+            if (id_city == "") {
+              e.preventDefault();
+            }
+          }
+
         });
         
     </script>
