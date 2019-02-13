@@ -5,6 +5,13 @@
 @endsection
     
 @section('page-script')
+    <script type="text/javascript">
+        function addTextReplace(param){
+            var textvalue = $('#display_text').val();
+            var textvaluebaru = textvalue+" "+param;
+            $('#display_text').val(textvaluebaru);
+        }
+    </script>
 @endsection
 
 @section('content')
@@ -112,7 +119,7 @@
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-4 control-label">
-                                            Android Version
+                                            IOS Version
                                             <span class="required" aria-required="true"> * </span>  
                                             <i class="fa fa-question-circle tooltips" data-original-title="Versi aplikasi android terbaru" data-container="body"></i>
                                         </label>
@@ -242,7 +249,15 @@
                                         </label>
                                     </div>
                                     <div class="col-md-8">
-                                        <textarea class="form-control" name="version_text_alert" required>@if(isset($version['version_text_alert'])){{ $version['version_text_alert'] }}@endif</textarea>
+                                        <textarea class="form-control" name="version_text_alert" required id="display_text">@if(isset($version['version_text_alert'])){{ $version['version_text_alert'] }}@endif</textarea>
+                                        <br>
+                                        You can use this variables to display version app :
+                                        <br><br>
+                                        <div class="row">
+                                            <div class="col-md-3" style="margin-bottom:5px;">
+                                                <span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '%version_app%' with the latest version for the device used" onClick="addTextReplace('%version_app%');">version app</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -263,7 +278,7 @@
                     <div class="form-actions">
                         {{ csrf_field() }}
                         <div class="row">
-                            <div class="col-md-offset-3 col-md-8">
+                            <div class="col-md-offset-4 col-md-8">
                                 <button type="submit" class="btn green">Save</button>
                                 <button type="button" class="btn default">Cancel</button>
                             </div>
