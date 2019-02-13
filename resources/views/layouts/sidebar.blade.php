@@ -314,14 +314,14 @@
 					@if(MyHelper::hasAccess([48], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'product-list-visible') ? 'active open' : ''}}">
 						<a href="{{url('product/visible')}}" class="nav-link ">
-							<span class="title">Product List Visible</span>
+							<span class="title">Visible Product List</span>
 						</a>
 					</li>
 					@endif
 					@if(MyHelper::hasAccess([48], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'product-list-hidden') ? 'active open' : ''}}">
 						<a href="{{url('product/hidden')}}" class="nav-link ">
-							<span class="title">Product List Hidden</span>
+							<span class="title">Hidden Product List</span>
 						</a>
 					</li>
 					@endif
@@ -403,7 +403,7 @@
 							<span class="title">[Response] Order Rejected</span>
 						</a>
 					</li>
-					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-topup-success') ? 'active open' : ''}}">
+					<!-- <li class="nav-item {{($submenu_active == 'transaction-autoresponse-topup-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/topup-success')}}" class="nav-link ">
 							<span class="title">[Response] Topup Success</span>
 						</a>
@@ -417,7 +417,7 @@
 						<a href="{{url('transaction/autoresponse/generate-approval-code')}}" class="nav-link ">
 							<span class="title">[Response] Generate Approval Code</span>
 						</a>
-					</li>
+					</li> -->
 				</ul>
 			</li>
 			@endif
@@ -1118,6 +1118,13 @@
 				</a>
 			</li>
 		@endif
+
+		<li class="nav-item {{($menu_active == 'setting-version') ? 'active' : ''}}">
+			<a href="{{url('setting/version')}}" class="nav-link">
+				<i class="fa fa-info-circle"></i>
+				<span class="title">Version Control</span>
+			</a>
+		</li>
 
 		@if(MyHelper::hasAccess([125,126,127,128,129], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
