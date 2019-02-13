@@ -324,12 +324,33 @@
             text-decoration:line-through
         }
 
+        #modal-usaha {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgb(255,255,255);
+            width: 100%;
+            display: none;
+            height: 100vh;
+            z-index: 999;
+        }
+
+        .modal-usaha-content {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -125px;
+            margin-top: -125px;
+        }
+
     </style>
   </head>
   <body>
-    @php
-        // print_r($data);die();
-    @endphp
+    <div id="modal-usaha">
+        <div class="modal-usaha-content">
+            <img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}">
+        </div>
+    </div>
 
     @if ($data['trasaction_payment_type'] != 'Offline')
         <div class="kotak-full">
@@ -381,7 +402,7 @@
                     <div class="row text-center">
                         <div class="col-12 seravek-font text-15px space-text text-grey">Kode Pickup Anda</div>
                         
-                        <div class="kotak-qr">
+                        <div class="kotak-qr" id="gambar-usaha">
                             <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
                         </div>
 
@@ -428,7 +449,7 @@
                     <div class="col-5 text-right text-13-3px text-black seravek-light-font">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal'])) }}</div>
                     <div class="col-12 text-grey text-12-7px text-black-grey-light seravek-light-font">{{ $val['transaction_product_qty'] }} x {{ str_replace(',', '.', number_format($val['transaction_product_price'])) }}</div>
                     <div class="space-bottom col-12">
-                        <div class="space-bottom text-12-7px text-grey-medium-light seravek-italic-font">
+                        <div class="space-bottom text-12-7px text-grey-medium-light seravek-italic-font" style="word-wrap: break-word;">
                             @if (isset($val['transaction_product_note']))
                                 {{ $val['transaction_product_note'] }}
                             @else
@@ -632,7 +653,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
@@ -659,6 +680,18 @@
         }
     </script>
     @endif
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '#gambar-usaha', function() {
+                $('#modal-usaha').fadeIn('fast');
+            });
+
+            $(document).on('click', '#modal-usaha', function() {
+                $('#modal-usaha').fadeOut('fast');
+            });
+        });
+    </script>
     
   </body>
 </html>
