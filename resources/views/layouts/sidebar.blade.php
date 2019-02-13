@@ -383,6 +383,16 @@
 							<span class="title">[Response] Transaction Success</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-payment') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/transaction-payment')}}" class="nav-link ">
+							<span class="title">[Response] Transaction Payment</span>
+						</a>
+					</li>
+					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-expired') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/transaction-expired')}}" class="nav-link ">
+							<span class="title">[Response] Transaction Expired</span>
+						</a>
+					</li>
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-order-accepted') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/order-accepted')}}" class="nav-link ">
 							<span class="title">[Response] Order Accepted</span>
@@ -480,7 +490,7 @@
 					@if(MyHelper::hasAccess([58,59,60,62], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'transaction-setting') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/cashback')}}" class="nav-link ">
-							<span class="title">Setting Cashback</span>
+							<span class="title">Global Kopi Point Setting</span>
 						</a>
 					</li>
 					@endif
@@ -630,7 +640,7 @@
 				@endif
 
 
-				@if(MyHelper::hasAccess([139,140,141,142,143], $grantedFeature))
+				<!-- @if(MyHelper::hasAccess([139,140,141,142,143], $grantedFeature))
 					<li class="nav-item {{($menu_active == 'deals-subscription') ? 'active open' : ''}}">
 						<a href="javascript:;" class="nav-link nav-toggle">
 							<i class="icon-present"></i>
@@ -654,7 +664,7 @@
 							@endif
 						</ul>
 					</li>
-				@endif
+				@endif -->
 				
 
 				@if(MyHelper::hasAccess([26], $configs))
