@@ -104,7 +104,7 @@
 										<div class="col-md-4">
 											<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 												<option value="name" @if ($con['subject'] == 'name') selected @endif>Name</option>
-												<option value="balance" @if ($con['subject'] == 'balance') selected @endif>Balance</option>
+												<option value="balance" @if ($con['subject'] == 'balance') selected @endif>Kopi Point</option>
 												<option value="source" @if ($con['subject'] == 'source') selected @endif>Source</option>
 												<option value="grand_total" @if ($con['subject'] == 'grand_total') selected @endif>Grand Total</option>
 												<option value="ccashback_conversion" @if ($con['subject'] == 'ccashback_conversion') selected @endif>Cashback Convers</option>
@@ -155,7 +155,7 @@
 									<div class="col-md-4">
 										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 											<option value="name">Name</option>
-											<option value="balance">Balance</option>
+											<option value="balance">Kopi Point</option>
 											<option value="source">Source</option>
 											<option value="grand_total">Grand Total</option>
 											<option value="ccashback_conversion">Cashback Convers</option>

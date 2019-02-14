@@ -2,6 +2,7 @@
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
     $configs    		= session('configs');
+
  ?>
 @extends('layouts.main')
 
@@ -68,19 +69,19 @@
                     <div class="tabbable-line boxless tabbable-reversed">
                         <ul class="nav nav-tabs">
                             @if(MyHelper::hasAccess([58], $grantedFeature))
-                                <li class="active">
+                                {{-- <li class="active">
                                     <a href="#tab_0" data-toggle="tab"> Grand Total </a>
-                                </li>
+                                </li> --}}
                             @endif
-                            <li>
+                            {{-- <li>
                                 <a href="#tab_2" data-toggle="tab"> Discount </a>
-                            </li>
-                            <li>
+                            </li> --}}
+                            {{-- <li>
                                 <a href="#tab_1" data-toggle="tab"> Service </a>
                             </li>
                             <li>
                                 <a href="#tab_3" data-toggle="tab"> Tax </a>
-                            </li>
+                            </li> --}}
                             @if(MyHelper::hasAccess([18], $configs))
                             @if(MyHelper::hasAccess([59], $grantedFeature))
                                 <li>
@@ -95,13 +96,13 @@
                                 </li>
                             @endif
                             @endif
-                            <li>
+                            {{-- <li>
                                 <a href="#tab_6" data-toggle="tab"> Default Price Outlet </a>
-                            </li>
+                            </li> --}}
                         </ul>
                         {{ csrf_field() }}
                         <div class="tab-content">
-                            <div class="tab-pane active" id="tab_0">
+                            <div class="tab-pane" id="tab_0">
                                 <div class="portlet light bordered" style="padding-bottom: 40px">
                                     Grand total calculation of transactions (<b>Swap the button as you wish</b>)
                                     <i class="fa fa-question-circle tooltips" data-original-title="Urutan perhitungan dalam menghitung grand total dari setiap transaksi" data-container="body"></i>
@@ -452,13 +453,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="tab_5">
+                            <div class="tab-pane active" id="tab_5">
                                 <div class="portlet light bordered">
                                     <div class="portlet-body">
                                         <h3 class="">Kopi Point calculation of transactions
                                             <i class="fa fa-question-circle tooltips" data-original-title="Rumus untuk menghitung cashback transaksi" data-container="body"></i></h3>
                                         <hr>
-                                        <div class="m-grid m-grid-demo">
+                                        <div class="m-grid m-grid-demo" style="display: none">
                                             <div class="m-grid-row">
                                                 <div class="m-grid-col m-grid-col-middle m-grid-col-center">Value
                                                     <i class="fa fa-question-circle tooltips" data-original-title="Klik salah satu value di samping untuk di masukkan kedalam kolom result dan dijadikan rumus" data-container="body"></i>
@@ -480,7 +481,7 @@
                                                 </button></div>
                                             </div>
                                         </div>
-                                        <div class="m-grid m-grid-demo">
+                                        <div class="m-grid m-grid-demo" style="display: none">
                                             <div class="m-grid-row">
                                                 <div class="m-grid-col m-grid-col-middle m-grid-col-center buttonOperator">Operators
                                                     <i class="fa fa-question-circle tooltips" data-original-title="Operator digunakan jika dalam perhitunga rumus menggunakan lebih dari 1 value dan menghubungkan nilai antar value, cara penggunaan sama seperti pada kolom value" data-container="body"></i>
@@ -501,7 +502,7 @@
                                             <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Result
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Hasil akhir yang akan digunakan untuk menghitung cashback untuk user" data-container="body"></i>
                                             </div>
-                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-6">
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-6" style="display: none">
                                                 <div id="targetCashback">
                                                     @if (isset($cashback['data']))
                                                         @foreach ($cashback['data'] as $key => $result)

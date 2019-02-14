@@ -15,7 +15,7 @@ class TransactionSettingController extends Controller
         $data = [
             'title'          => 'Setting',
             'menu_active'    => 'order',
-            'sub_title'      => 'Cashback',
+            'sub_title'      => 'Global Kopi Point',
             'submenu_active' => 'transaction-setting'
         ];
         

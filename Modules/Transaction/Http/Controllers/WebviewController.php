@@ -107,4 +107,27 @@ class WebviewController extends Controller
     {
         return view('transaction::webview.transaction_success');
     }
+
+    public function receiptOutletapp(Request $request)
+    {
+        $bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return abort(404);
+        }
+    	// return base64_decode($request->get('data'));
+        $data = json_decode(base64_decode($request->get('data')), true);
+    	$check = MyHelper::postWithBearer('outletapp/order/detail', $data, $bearer);
+      
+        // return $check;
+    	if (isset($check['status']) && $check['status'] == 'success') {
+    		$data = $check['result'];
+    	} elseif (isset($check['status']) && $check['status'] == 'success') {
+    		return back()->withErrors($lists['messages']);
+    	} else {
+    		return back()->withErrors(['Data not found']);
+        }
+        // dd($data);
+
+        return view('transaction::webview.receipt-outletapp')->with(compact('data'));
+    }
 }
