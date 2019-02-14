@@ -490,6 +490,9 @@ class UsersController extends Controller
 			if(isset($post['birthday'])){
 				$post['birthday'] = date('Y-m-d', strtotime($post['birthday']));
 			}
+			if(isset($post['relationship']) && $post['relationship']=="-"){
+				$post['relationship'] = null;
+			}
 			$update = MyHelper::post('users/update', ['phone' => $phone, 'update' => $post]);
 			return parent::redirect($update, 'Profile has been updated');
 		}

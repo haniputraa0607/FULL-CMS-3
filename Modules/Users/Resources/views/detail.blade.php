@@ -314,6 +314,8 @@
 												@endif
 											<li class="list-group-item" style="padding: 5px !important;" title="User City & Province">
 												<i class="fa fa-map"></i> {{$profile['city_name']}}, {{$profile['province_name']}} </li>
+											<li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
+												<i class="fa fa-heart"></i> {{$profile['relationship']}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Birthday">
 												<i class="fa fa-birthday-cake"></i> @if($profile['birthday']){{date("d F Y", strtotime($profile['birthday']))}} @endif</li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Register date & time">
@@ -541,6 +543,16 @@
 													<option value="">Select...</option>
 													<option value="Male" @if(isset($profile['gender'])) @if($profile['gender'] == 'Male') selected @endif @endif>Male</option>
 													<option value="Female" @if(isset($profile['gender'])) @if($profile['gender'] == 'Female') selected @endif @endif>Female</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="control-label">Relationship</label>
+												<select name="relationship" class="form-control input-sm select2">
+													<option value="">Select...</option>
+													<option value="-" {{ ($profile['relationship']=="" ? "selected" : "") }}>-</option>
+						                            <option value="In a Relationship" {{ ($profile['relationship']=="In a Relationship" ? "selected" : "") }}>In a Relationship</option>
+						                            <option value="Complicated" {{ ($profile['relationship']=="Complicated" ? "selected" : "") }}>Complicated</option>
+						                            <option value="Jomblo" {{ ($profile['relationship']=="Jomblo" ? "selected" : "") }}>Jomblo</option>
 												</select>
 											</div>
 											<div class="form-group">
