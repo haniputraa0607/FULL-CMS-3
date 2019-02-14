@@ -44,17 +44,16 @@
         }
 
         /* custom select */
-        .gender-wrapper,
+        .select-wrapper,
         .birthday,
         .city {
           position: relative;
         }
-        .gender-select {
+        .custom-select {
           display: none; /*hide original SELECT element:*/
         }
         .select-selected {
           color: #000;
-          /*border-bottom: 1px solid #D9D6D6;*/
           padding: 8px 0px;
         }
         /* the arrow inside the select element: */
@@ -178,32 +177,27 @@
         </div>
 
         @if($user != null)
-            @if($user['birthday'] == null || $user['gender'] == null || $user['id_city'] == null)
+            @if($user['birthday'] == null && $user['gender'] == null && $user['id_city'] == null)
             {{-- form --}}
             <form role="form" action="{{ url('webview/complete-profile') }}" method="post">
                 {{ csrf_field() }}
 
                 <div class="form-body">
-                    @if($user['gender'] == null)
-                    <div class="form-group form-md-line-input gender-wrapper">
+                    <div class="form-group form-md-line-input select-wrapper">
                         <label>Jenis Kelamin</label>
-                        <select class="form-control gender-select" name="gender" required>
+                        <select class="form-control custom-select" name="gender" required>
                             <option value="Male" selected>Laki-laki</option>
                             <option value="Female">Perempuan</option>
                         </select>
                         <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
                     </div>
-                    @endif
 
-                    @if($user['birthday'] == null)
                     <div class="form-group form-md-line-input birthday">
                         <label>Tanggal Lahir</label>
                         <input type="text" class="form-control datepicker" name="birthday" value="{{ old('birthday') }}" required readonly>
                         <img class="birthday-img" src="{{ asset('img/webview/calendar-o.png') }}" alt="">
                     </div>
-                    @endif
 
-                    @if($user['id_city'] == null)
                     <div class="form-group form-md-line-input city">
                         <label>Kota</label>
                         <select class="form-control select2 id_city" placeholder="Select City" name="id_city" required style="width: 100%;">
@@ -213,7 +207,17 @@
                         </select>
                         <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
                     </div>
-                    @endif
+
+                    <div class="form-group form-md-line-input select-wrapper">
+                        <label>Relationship</label>
+                        <select class="form-control custom-select" name="relationship">
+                            <option value="" selected>-</option>
+                            <option value="In a Relationship">In a Relationship</option>
+                            <option value="Complicated">Complicated</option>
+                            <option value="Jomblo">Jomblo</option>
+                        </select>
+                        <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
+                    </div>
 
                     <div class="form-actions noborder" style="margin-top: 70px; margin-bottom: 30px;">
                         <input type="hidden" name="bearer" value="{{ $bearer }}">
@@ -233,7 +237,7 @@
         @endif
     </div>
 @stop
-                            
+
 @section('page-script')
     <!-- BEGIN CORE PLUGINS -->
     <script src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
@@ -270,8 +274,8 @@
         });
 
         $('form').submit(function(e) {
-          if ($('.gender-select').length > 0) {
-            var gender = $('.gender-select').val();
+          if ($('.custom-select').length > 0) {
+            var gender = $('.custom-select').val();
             if (gender == "") {
               e.preventDefault();
             }
@@ -296,12 +300,12 @@
     </script>
 
     <script>
-        /* custom select */
+        /* custom gender select */
         var x, i, j, selElmnt, a, b, c;
-        /*look for any elements with the class "gender-wrapper":*/
-        x = document.getElementsByClassName("gender-wrapper");
+        /*look for any elements with the class "select-wrapper":*/
+        x = document.getElementsByClassName("select-wrapper");
         for (i = 0; i < x.length; i++) {
-          selElmnt = x[i].getElementsByClassName("gender-select")[0];
+          selElmnt = x[i].getElementsByClassName("custom-select")[0];
           /*for each element, create a new DIV that will act as the selected item:*/
           a = document.createElement("DIV");
           a.setAttribute("class", "select-selected");
@@ -319,7 +323,7 @@
                 /*when an item is clicked, update the original select box,
                 and the selected item:*/
                 var y, i, k, s, h;
-                s = this.parentNode.parentNode.getElementsByClassName("gender-select")[0];
+                s = this.parentNode.parentNode.getElementsByClassName("custom-select")[0];
                 h = this.parentNode.previousSibling;
                 for (i = 0; i < s.length; i++) {
                   if (s.options[i].innerHTML == this.innerHTML) {
@@ -347,6 +351,8 @@
               this.classList.toggle("select-arrow-active");
             });
         }
+
+
         function closeAllSelect(elmnt) {
           /*a function that will close all select boxes in the document,
           except the current select box:*/
