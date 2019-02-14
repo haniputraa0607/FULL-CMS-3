@@ -1320,7 +1320,7 @@ class TransactionController extends Controller
             'submenu_active' => 'fake-transaction'
         ];
 
-        $user = MyHelper::get('user/get-all');
+        $user = MyHelper::get('users/get-all');
         if (isset($user['status']) && $user['status'] == 'success') {
             $data['user'] = $user['result'];
         }
