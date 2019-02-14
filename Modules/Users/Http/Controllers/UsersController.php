@@ -123,6 +123,9 @@ class UsersController extends Controller
 		$post = $request->except('_token');
 		if(isset($post) && !empty($post)){
 			// print_r($post);exit;
+			if(isset($post['relationship']) && $post['relationship']=="-"){
+				$post['relationship'] = null;
+			}
 			$query = MyHelper::post('users/create', $post);
 			// print_r($query);exit;
 			if(isset($query['status']) && $query['status'] == 'success'){

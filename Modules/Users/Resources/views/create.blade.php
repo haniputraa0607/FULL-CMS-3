@@ -159,6 +159,23 @@
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
+							    Relationship
+							    <i class="fa fa-question-circle tooltips" data-original-title="User relationship" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<select name="relationship" class="form-control input-sm select2" data-placeholder="Relationship">
+									<option value="">Select...</option>
+									<option value="-">-</option>
+		                            <option value="In a Relationship">In a Relationship</option>
+		                            <option value="Complicated">Complicated</option>
+		                            <option value="Jomblo">Jomblo</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
 							    Birthday
 							    <span class="required" aria-required="true"> * </span>  
 							    <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir user" data-container="body"></i>
