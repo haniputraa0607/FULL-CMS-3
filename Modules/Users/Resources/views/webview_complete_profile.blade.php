@@ -185,7 +185,7 @@
                 <div class="form-body">
                     <div class="form-group form-md-line-input select-wrapper">
                         <label>Jenis Kelamin</label>
-                        <select class="form-control custom-select" name="gender" required>
+                        <select class="form-control custom-select gender-select" name="gender" required>
                             <option value="Male" selected>Laki-laki</option>
                             <option value="Female">Perempuan</option>
                         </select>
@@ -274,27 +274,16 @@
         });
 
         $('form').submit(function(e) {
-          if ($('.custom-select').length > 0) {
-            var gender = $('.custom-select').val();
-            if (gender == "") {
-              e.preventDefault();
-            }
-          }
-          
-          if ($('.birthday').length > 0) {
-            var birthday = $('.birthday input').val();
-            if (birthday == "") {
-              e.preventDefault();
-            }
-          }
+          var gender = $('.gender-select').val();
+          var birthday = $('.birthday input').val();
+          var id_city = $('.id_city').val();
 
-          if ($('.id_city').length > 0) {
-            var id_city = $('.id_city').val();
-            if (id_city == "") {
-              e.preventDefault();
+          if (gender=="" || birthday=="" || id_city=="" ) {
+            e.preventDefault();
+            if (birthday=="") {
+              alert("Tanggal Lahir tidak boleh kosong");
             }
           }
-
         });
         
     </script>
