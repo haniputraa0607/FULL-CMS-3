@@ -51,6 +51,28 @@ class WebviewController extends Controller
         return view('transaction::webview.'.$view.'')->with(compact('data'));
     }
 
+    public function outletSuccess(Request $request)
+    {
+        // return base64_decode($request->get('data'));
+        $data = json_decode(base64_decode($request->get('data')), true);
+        $data['check'] = 1;
+        $check = MyHelper::post('outletapp/order/detail/view', $data);
+        // return $check;
+        if (isset($check['status']) && $check['status'] == 'success') {
+            $data = $check['result'];
+        } elseif (isset($check['status']) && $check['status'] == 'success') {
+            return back()->withErrors($lists['messages']);
+        } else {
+            return back()->withErrors(['Data not found']);
+        }
+
+        if (isset($data['order_label_v2'])) {
+            $data['order_label_v2'] = explode(',', $data['order_label_v2']);
+            $data['order_v2'] = explode(',', $data['order_v2']);
+        }
+        return view('transaction::webview.outlet_app')->with(compact('data'));
+    }
+
     public function detailPoint(Request $request)
     {
         $data = json_decode(base64_decode($request->get('data')), true);
