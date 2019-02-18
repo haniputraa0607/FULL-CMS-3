@@ -321,6 +321,13 @@
             text-decoration:line-through
         }
 
+        .modal.fade .modal-dialog {
+            transform: translate3d(0, 0, 0);
+        }
+        .modal.in .modal-dialog {
+            transform: translate3d(0, 0, 0);
+        }
+
     </style>
   </head>
   <body>
@@ -328,6 +335,17 @@
         // print_r($data);die();
     @endphp
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content" style="border-radius: 42.3px; border: 0;">
+            <div class="modal-body">
+                <img class="img-responsive" style="display: block; width: 100%; padding: 30px" src="{{ $data['qr'] }}">
+            </div>
+            </div>
+        </div>
+    </div>
+    
     @if ($data['trasaction_payment_type'] != 'Offline')
         <div class="kotak-full">
             <div class="container">
@@ -374,7 +392,7 @@
                     <div class="row text-center">
                         <div class="col-12 roboto-regular-font text-15px space-text text-grey">Kode Pickup Anda</div>
                         
-                        <div class="kotak-qr">
+                        <div class="kotak-qr" data-toggle="modal" data-target="#exampleModal">
                             <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
                         </div>
 

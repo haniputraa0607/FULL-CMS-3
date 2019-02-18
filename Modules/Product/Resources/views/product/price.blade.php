@@ -106,6 +106,8 @@
 										<tr>
 											<th> Product </th>
 											<th> Price </th>
+											<th> Price Base </th>
+											<th> Price Tax </th>
 											<th> Visible </th>
 											<th> Stock </th>
 											<th> POS Status </th>
@@ -116,10 +118,9 @@
 											@foreach ($product as $col => $pro)
 												<tr>
 													<td> {{ $pro['product_name'] }} </td>
-													<td style="width: 20%"> 
-														<input type="hidden" name="id_outlet" value="{{ $key }}">
-														<input type="hidden" name="id_product[]" value="{{ $pro['id_product'] }}">
-														@if (!empty($data['product_prices']))
+													<input type="hidden" name="id_outlet" value="{{ $key }}">
+													<input type="hidden" name="id_product[]" value="{{ $pro['id_product'] }}">
+													@if (!empty($data['product_prices']))
 															@php
 																$marker = 0;
 															@endphp
@@ -128,18 +129,34 @@
 																	@php
 																		$marker = 1;
 																	@endphp
-																	<input type="text" name="price[]" value="{{ $dpp['product_price'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																	<td style="width: 15%"> 
+																		<input type="text" name="price[]" value="{{ $dpp['product_price'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																	</td>
+																	<td style="width: 15%"> 
+																		<input type="text" name="price_base[]" value="{{ $dpp['product_price_base'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																	</td>
+																	<td style="width: 15%"> 
+																		<input type="text" name="price_tax[]" value="{{ $dpp['product_price_tax'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																	</td>
 																@endif
 															@endforeach
 
 															@if ($marker == 0)
-															<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+															<td style="width: 15%"> 
+																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+															</td>
+															<td style="width: 15%"> 
+																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+															</td>
+															<td style="width: 15%"> 
+																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+															</td>
 															@endif
 														@else
 															<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price"> 
 														@endif
 													</td>
-													<td>
+													<td style="width:15%">
 														@php
 															$markerBottom = 0;
 														@endphp
@@ -162,7 +179,7 @@
 														</select>
 														@endif
 													</td>
-													<td>
+													<td style="width:15%">
 													@if (!empty($data['product_prices']))
 														@php
 															$marker = 0;
