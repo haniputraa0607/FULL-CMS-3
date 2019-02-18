@@ -400,9 +400,6 @@
     <div class="kotak-full">
         <div class="container">
             <div class="row text-center" id="div-now">
-            <div class="kotak-status">
-            <img class="img-responsive img-status" src="{{ $data['all_membership'][0]['membership_image'] }}">
-            </div>
                 <div class="col-12 text-11-7px text-greyish-brown seravek-font space-top-all" id="status">
                     @if(isset($data['user_membership']['membership_name'])) 
                         Sekarang :
