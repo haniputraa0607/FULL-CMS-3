@@ -51,6 +51,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
 Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
     Route::get('/web/view/detail', 'WebviewController@detail');
+    Route::post('/web/view/detail/check', 'WebviewController@check');
     Route::get('/web/view/detail/point', 'WebviewController@detailPoint');
     Route::get('/web/view/detail/balance', 'WebviewController@detailBalance');
     Route::get('/web/view/trx', 'WebviewController@success');

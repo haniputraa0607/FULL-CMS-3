@@ -293,7 +293,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: rgb(255,255,255);
+            background: rgba(0,0,0, 0.5);
             width: 100%;
             display: none;
             height: 100vh;
@@ -316,14 +316,14 @@
         setlocale (LC_TIME, 'id_ID');
         setlocale (LC_TIME, 'INDONESIA');
         $date = strftime( "%A, %d %B %Y %H:%M", strtotime($data['transaction_date']));
-        echo "Saat ini: ".$date;
+        // echo "Saat ini: ".$date;
     @endphp
 
-    <div id="modal-usaha">
+    <a id="modal-usaha" href="#">
         <div class="modal-usaha-content">
             <img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}">
         </div>
-    </div>
+    </a>
 
         <div class="kotak-full">
             <div class="container">
@@ -347,22 +347,22 @@
                         <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
                     </div>
 
-                    <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['order_id'] }}</div>
+                    <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
                     <div class="col-12 text-16-7px text-black space-text seravek-font">{{ strtoupper($data['user']['name']) }}</div>
                     <div class="col-12 text-16-7px text-black space-bottom-big seravek-font">{{ $data['user']['phone'] }}</div>
                     
                         <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan diproses pada</div>
-                        @if ($data['pickup_type'] == 'set time')
+                        @if ($data['detail']['pickup_type'] == 'set time')
                             <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['pickup_at'])) }}</div>
-                        @elseif($data['pickup_type'] == 'at arrival')
+                        @elseif($data['detail']['pickup_type'] == 'at arrival')
                             <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Kedatangan</div>
                         @else
                             <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Ini</div>
                         @endif
 
-                    @if($data['receive_at'] != null)
+                    @if($data['detail']['receive_at'] != null)
                         <div class="col-12 text-16-7px space-text text-grey seravek-font">Waktu Order Diterima</div>
-                        <div class="col-12 text-16-7px space-nice text-black seravek-font">{{ date('d F Y H:i', strtotime($data['receive_at'])) }}</div>
+                        <div class="col-12 text-16-7px space-nice text-black seravek-font">{{ date('d F Y H:i', strtotime($data['detail']['receive_at'])) }}</div>
                     @endif
                 </div>
             </div>

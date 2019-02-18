@@ -328,7 +328,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: rgb(255,255,255);
+            background: rgba(0,0,0, 0.5);
             width: 100%;
             display: none;
             height: 100vh;
@@ -702,8 +702,9 @@
 
     <script>
         $(document).ready(function() {
-            $(document).on('click', '#gambar-usaha', function() {
+            $(document).on('click', '#gambar-usaha', function(e) {
                 $('#modal-usaha').fadeIn('fast');
+                e.preventDefault();
             });
 
             $(document).on('click', '#modal-usaha', function() {
