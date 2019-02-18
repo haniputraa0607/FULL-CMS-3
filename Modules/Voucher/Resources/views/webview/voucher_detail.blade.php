@@ -5,10 +5,6 @@
 
 @section('css')
     <style type="text/css">
-        body{
-            max-width: 468px;
-            margin: auto;
-        }
         p{
             margin-top: 0px !important;
             margin-bottom: 0px !important;

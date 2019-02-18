@@ -160,7 +160,7 @@
         }
 
         body {
-            background: #fafafa;
+            background: #ffffff;
         }
 
         .completed {
