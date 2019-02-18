@@ -101,8 +101,8 @@ class PromotionController extends Controller
 		$post = $request->except("_token");
 		// print_r($post);exit;
 		$action = MyHelper::post('promotion/create', $post);
-		// print_r($action);exit;
-		if($action['status'] == 'success'){
+		// dd($action);exit;
+		if(isset($action['status']) && $action['status'] == 'success'){
 			return redirect('promotion/step2/'.$action['promotion']['id_promotion']);
 		} else{
 			return back()->withErrors($action['messages']);
@@ -164,7 +164,7 @@ class PromotionController extends Controller
 		// echo $id_promotion;exit;
 		$action = MyHelper::post('promotion/step2', ['id_promotion' => $id_promotion]);
 		// dd($action);exit;
-		if($action['status'] == 'success'){
+		if(isset($action['status']) && $action['status'] == 'success'){
 			$data = [ 'title'		  => 'Promotion',
 				  'menu_active'       => 'promotion',
 				  'submenu_active'    => 'promotion-create'

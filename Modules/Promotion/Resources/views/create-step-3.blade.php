@@ -761,7 +761,7 @@ $grantedFeature     = session('granted_features');
 											<div class="portlet light bordered" style="margin-bottom:10px">
 												@foreach($ruleParent['rules'] as $rule)
 												<div class="row static-info">
-													<div class="col-md-12 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif 
+													<div class="col-md-12 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if($rule['subject'] != "all_user") @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif @endif
 													@if($rule['subject'] == 'trx_outlet' || $rule['subject'] == 'trx_outlet_not')
 														<?php $name = null; ?>
 														@foreach($outlets as $outlet) 
@@ -1760,14 +1760,14 @@ $grantedFeature     = session('granted_features');
 							</div>
 						</div>
 
-						@if(isset($result['contents'][$x-1]))
-							@if($result['contents'][$x-1]['promotion_channel_whatsapp'] == '1')
-								<div class="col-md-2" style="display:block; padding:0" id="result_whatsapp_{{$x}}">
+						@if(isset($result['contents'][0]))
+							@if($result['contents'][0]['promotion_channel_whatsapp'] == '1')
+								<div class="col-md-2" style="display:block; padding:0" id="result_whatsapp_0">
 							@else
-								<div class="col-md-2" style="display:none;" id="result_whatsapp_{{$x}}">
+								<div class="col-md-2" style="display:none;" id="result_whatsapp_0">
 							@endif
 						@else
-							<div class="col-md-2" style="display:none;" id="result_whatsapp_{{$x}}">
+							<div class="col-md-2" style="display:none;" id="result_whatsapp_0">
 						@endif
 							<div class="portlet light bordered">
 								<div class="portlet-title">

@@ -245,7 +245,7 @@
 							@foreach($ruleParent['rules'] as $rule)
 							<div class="row static-info">
 								<div class="col-md-1 name"></div>
-								<div class="col-md-10 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif 
+								<div class="col-md-10 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if($rule['subject'] != "all_user") @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif @endif
 								@if($rule['subject'] == 'trx_outlet')
 									<?php $name = null; ?>
 									@foreach($outlets as $outlet) 

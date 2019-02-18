@@ -690,7 +690,7 @@ $configs    		= session('configs');
 											<div class="portlet light bordered" style="margin-bottom:10px">
 												@foreach($ruleParent['rules'] as $rule)
 												<div class="row static-info">
-													<div class="col-md-12 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif 
+													<div class="col-md-12 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if($rule['subject'] != 'all_user') @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif @endif
 													@if($rule['subject'] == 'trx_outlet' || $rule['subject'] == 'trx_outlet_not')
 														<?php $name = null; ?>
 														@foreach($outlets as $outlet) 
