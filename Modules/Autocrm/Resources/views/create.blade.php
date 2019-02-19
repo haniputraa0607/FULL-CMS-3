@@ -469,10 +469,14 @@
 		if(apa == 'whatsapp'){
 			@if(MyHelper::hasAccess([74], $configs))
 				if(nilai=='1'){
-					document.getElementById('div_whatsapp_content').style.display = 'block';
+					if(document.getElementById('div_whatsapp_content')){
+						document.getElementById('div_whatsapp_content').style.display = 'block';
+					}
 					$('.field_whatsapp').prop('required', true);
 				} else {
-					document.getElementById('div_whatsapp_content').style.display = 'none';
+					if(document.getElementById('div_whatsapp_content')){
+						document.getElementById('div_whatsapp_content').style.display = 'none';
+					}
 					$('.field_whatsapp').prop('required', false);
 				}
 			@endif
@@ -958,7 +962,7 @@
 										</label>
 									</div>
 									<div class="col-md-9">
-										<select name="autocrm_push_clickto" id="autocrm_push_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'push')">
+										<select name="autocrm_push_clickto" id="autocrm_push_clickto" class="form-control select2 field_push" onChange="fetchDetail(this.value, 'push')">
 											<option value="" selected></option>
 											<option value="Home" @if(old('autocrm_push_clickto') == 'Home') selected @else @if(isset($result['autocrm_push_clickto']) && $result['autocrm_push_clickto'] == "Home") selected @endif @endif>Home</option>
 											<option value="News" @if(old('autocrm_push_clickto') == 'News') selected @else @if(isset($result['autocrm_push_clickto']) && $result['autocrm_push_clickto'] == "News") selected @endif @endif>News</option>
@@ -1043,7 +1047,7 @@
 										</label>
 									</div>
 									<div class="col-md-9">
-										<select name="autocrm_inbox_clickto" id="autocrm_inbox_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
+										<select name="autocrm_inbox_clickto" id="autocrm_inbox_clickto" class="form-control select2 field_inbox" onChange="fetchDetail(this.value, 'inbox')">
 											<option value="" selected></option>
 											<option value="Home" @if(old('autocrm_inbox_clickto') == 'Home') selected @else @if(isset($result['autocrm_inbox_clickto']) && $result['autocrm_inbox_clickto'] == "Home") selected @endif @endif>Home</option>
 											{{-- <option value="Content" @if(old('autocrm_inbox_clickto') == 'Content') selected @else @if(isset($result['autocrm_inbox_clickto']) && $result['autocrm_inbox_clickto'] == "Content") selected @endif @endif>Content</option> --}}

@@ -558,8 +558,8 @@ class CampaignController extends Controller
 		$post = $request->except(['_token','sample_1_length','files']);
 		$post['id_campaign'] = $id_campaign;
 		$action = MyHelper::post('campaign/create', $post);
-		// print_r($action);exit;
-		if($action['status'] == 'success'){
+		// dd($action);exit;
+		if(isset($action['status']) && $action['status'] == 'success'){
 			return redirect('campaign/step2/'.$id_campaign);
 		} else{
 			return back()->withErrors($action['messages']);

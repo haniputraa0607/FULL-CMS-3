@@ -107,47 +107,50 @@
 								@foreach($cond as $row)
 									@if(isset($row['subject']))
 										<p>{{ucwords(str_replace("_"," ",$row['subject']))}}
-									
-										@if(isset($row['operator']) && in_array($row['operator'] ,["=","like","<","<=",">",">="]) ) 
-											{{$row['operator']}} {{$row['parameter']}}
-										
-										@else 
-										=
-											@if($row['subject'] == 'trx_outlet' || $row['subject'] == 'trx_outlet_not')
-												<?php $name = null; ?>
-												@foreach($outlets as $outlet) 
-													@if($outlet['id_outlet'] == $row['operator'])
-														<?php $name = $outlet['outlet_name']; ?>
-													@endif
-												@endforeach
-												{{$name}}
-											@elseif($row['subject'] == 'trx_product' || $row['subject'] == 'trx_product_not')
-												<?php $name = null; ?>
-												@foreach($products as $product) 
-													@if($product['id_product'] == $row['operator'])
-														<?php $name = $product['product_name']; ?>
-													@endif
-												@endforeach
-												{{$name}}
-											@elseif($row['subject'] == 'trx_product_tag' || $row['subject'] == 'trx_product_tag_not')
-												<?php $name = null; ?>
-												@foreach($tags as $tag) 
-													@if($tag['id_tag'] == $row['operator'])
-														<?php $name = $tag['tag_name']; ?>
-													@endif
-												@endforeach
-												{{$name}}
-											@elseif($row['subject'] == 'membership')
-												<?php $name = null; ?>
-												@foreach($memberships as $membership) 
-													@if($membership['id_membership'] == $row['operator'])
-														<?php $name = $membership['membership_name']; ?>
-													@endif
-												@endforeach
-												{{$name}}
+										@if($row['subject'] != 'all_user') 
+											@if(isset($row['operator']) && in_array($row['operator'] ,["=","like","<","<=",">",">="]) ) 
+												{{$row['operator']}} {{$row['parameter']}}
+											
 											@else
-												{{$row['operator']}}
-											@endif
+												=
+												@if($row['subject'] == 'trx_outlet' || $row['subject'] == 'trx_outlet_not')
+													<?php $name = null; ?>
+													@foreach($outlets as $outlet) 
+														@if($outlet['id_outlet'] == $row['operator'])
+															<?php $name = $outlet['outlet_name']; ?>
+														@endif
+													@endforeach
+													{{$name}}
+												@elseif($row['subject'] == 'trx_product' || $row['subject'] == 'trx_product_not')
+													<?php $name = null; ?>
+													@foreach($products as $product) 
+														@if($product['id_product'] == $row['operator'])
+															<?php $name = $product['product_name']; ?>
+														@endif
+													@endforeach
+													{{$name}}
+												@elseif($row['subject'] == 'trx_product_tag' || $row['subject'] == 'trx_product_tag_not')
+													<?php $name = null; ?>
+													@foreach($tags as $tag) 
+														@if($tag['id_tag'] == $row['operator'])
+															<?php $name = $tag['tag_name']; ?>
+														@endif
+													@endforeach
+													{{$name}}
+												@elseif($row['subject'] == 'membership')
+													<?php $name = null; ?>
+													@foreach($memberships as $membership) 
+														@if($membership['id_membership'] == $row['operator'])
+															<?php $name = $membership['membership_name']; ?>
+														@endif
+													@endforeach
+													{{$name}}
+												@else
+													@if(isset($row['operator']))
+													{{$row['operator']}}
+													@endif
+												@endif
+											@endif 
 										@endif 
 
 										</p>

@@ -46,7 +46,10 @@
 										'</div>'+
 										'<div class="col-md-4">'+
 											'<div class="input-group">'+
-												'<select id="select2'+noRule+'0" name="conditions['+noRule+'][0][subject]" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name, '+noRule+')" style="width:100%" required>'+
+												'<select id="select2'+noRule+'0" name="conditions['+noRule+'][0][subject]" class="form-control input-sm select2 subject" placeholder="Search Subject" onChange="changeSubject(this.name, '+noRule+')" style="width:100%" required>'+
+													'<optgroup label="All">'+
+														'<option value="all_user" selected>All User</option>'+
+													'</optgroup>'+
 													'<optgroup label="Profile">'+
 														'<option value="name" selected>Name</option>'+
 														'<option value="phone">Phone</option>'+
@@ -195,7 +198,10 @@
 						'</div>'+
 						'<div class="col-md-4">'+
 							'<div class="input-group">'+
-								'<select id="select2'+no+noCond+'" name="conditions['+no+']['+noCond+'][subject]" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name, '+no+')" style="width:100%" required>'+
+								'<select id="select2'+no+noCond+'" name="conditions['+no+']['+noCond+'][subject]" class="form-control input-sm select2 subject" placeholder="Search Subject" onChange="changeSubject(this.name, '+no+')" style="width:100%" required>'+
+									'<optgroup label="All">'+
+										'<option value="all_user" selected>All User</option>'+
+									'</optgroup>'+
 									'<optgroup label="Profile">'+
 										'<option value="name" selected>Name</option>'+
 										'<option value="phone">Phone</option>'+
@@ -322,6 +328,19 @@
 		var subject_value = document.getElementsByName(val)[0].value;
 		var indx = index.replace("[", "");
 		var indx = indx.replace("]", "");
+
+		var parameter = "conditions["+index+"][parameter]";
+		var operator = "conditions["+index+"][operator]";
+
+		if(subject_value == 'all_user'){
+			document.getElementsByName(parameter)[0].required = false;
+			document.getElementsByName(operator)[0].required = false;
+			$('[name="'+parameter+'"]').closest('.input-group').hide()
+			$('[name="'+operator+'"]').closest('.input-group').hide()
+		}else{
+			$('[name="'+parameter+'"]').closest('.input-group').show()
+			$('[name="'+operator+'"]').closest('.input-group').show()
+		}
 
 		if(subject_value == 'name' || subject_value == 'email' || subject_value == 'phone'){
 			var operator = "conditions["+index+"][operator]";
@@ -834,7 +853,6 @@
 		}
 
 	}
-
 </script>
 
 <div class="portlet light bordered">
@@ -865,7 +883,10 @@
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<select id="select200"  name="conditions[0][0][subject]" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name, 0)" style="width:100%" required>
+													<select id="select200"  name="conditions[0][0][subject]" class="form-control input-sm select2 subject" placeholder="Search Subject" onChange="changeSubject(this.name, 0)" style="width:100%" required>
+														<optgroup label="All">
+															<option value="all_user">All User</option>
+														</optgroup>
 														<optgroup label="Profile">
 															<option value="name" selected>Name</option>
 															<option value="phone">Phone</option>
@@ -1037,14 +1058,19 @@
 												}else{
 													ProductTagCount["{{$q}}"].push("{{$q}}{{$indexnya}}");
 												}
-												console.log(ProductTagCount)
 											</script>
 										@endif
 										<?php 
+										if($row['subject'] != '' && $row['subject'] != 'all_user'){
 											$arrayOp = ['=','like','<','<=','>','>='];
 											if(!in_array($row['operator'],$arrayOp)){
 												$row['parameter'] = $row['operator'];
 											}
+										}else{
+											$row['operator'] = "";
+											$row['parameter'] = $row['operator'];
+											
+										}
 										?>
 										<div data-repeater-item class="mt-repeater-item mt-overflow" id="condition{{$q}}{{$indexnya}}">
 											<div class="mt-repeater-cell">
@@ -1056,7 +1082,10 @@
 													</div>
 													<div class="col-md-4">
 														<div class="input-group">
-															<select id="select2{{$q}}{{$indexnya}}" name="conditions[{{$q}}][{{$indexnya}}][subject]" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name, {{$indexnya}})" style="width:100%" required>
+															<select id="select2{{$q}}{{$indexnya}}" name="conditions[{{$q}}][{{$indexnya}}][subject]" class="form-control input-sm select2 subject" placeholder="Search Subject" onChange="changeSubject(this.name, {{$indexnya}})" style="width:100%" required>
+																<optgroup label="All">
+																	<option value="all_user" @if($row['subject'] == 'all_user') selected @endif>All User</option>
+																</optgroup>
 																<optgroup label="Profile">
 																	<option value="name" @if($row['subject'] == 'name') selected @endif>Name</option>
 																	<option value="phone" @if($row['subject'] == 'phone') selected @endif>Phone</option>
@@ -1112,10 +1141,10 @@
 															</span>
 														</div>
 													</div>
-													@if($row['subject'] == 'name' || $row['subject'] == 'email' || $row['subject'] == 'phone')
+													@if($row['subject'] == 'name' || $row['subject'] == 'email' || $row['subject'] == 'phone' || $row['subject'] == 'all_user')
 													<div class="col-md-4">
-														<div class="input-group">
-															<select name="conditions[{{$q}}][{{$indexnya}}][operator]" class="form-control input-sm select2" placeholder="Search Operator" style="width:100%" required>
+														<div class="input-group" @if($row['subject'] == 'all_user') style="display:none" @endif>
+															<select name="conditions[{{$q}}][{{$indexnya}}][operator]" class="form-control input-sm select2" placeholder="Search Operator" style="width:100%" @if($row['subject'] != 'all_user') required @endif>
 																<option value="=" @if($row['operator'] == "=") selected @endif>=</option>
 																<option value="like" @if($row['operator'] == "like") selected @endif>Like</option>
 															</select>
@@ -1128,8 +1157,8 @@
 														</div>
 													</div>
 													<div class="col-md-3" id="parameter{{$indexnya}}">
-														<div class="input-group">
-															<input type="text" placeholder="Parameter" class="form-control" name="conditions[{{$q}}][{{$indexnya}}][parameter]" value="{{$row['parameter']}}" required/>
+														<div class="input-group" @if($row['subject'] == 'all_user') style="display:none" @endif>
+															<input type="text" placeholder="Parameter" class="form-control" name="conditions[{{$q}}][{{$indexnya}}][parameter]" value="{{$row['parameter']}}" @if($row['subject'] != 'all_user') required @endif/>
 															 {{-- <span class="input-group-addon" name="conditions[{{$q}}][{{$indexnya}}][addon-days]" style="display:none">
 																Days Ago
 															 </span> --}}

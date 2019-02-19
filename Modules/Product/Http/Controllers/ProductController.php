@@ -566,14 +566,15 @@ class ProductController extends Controller
     function priceProcess($post) 
     {
         $price = array_filter($post['price']);
-
         if (!empty($price)) {
             foreach ($price as $key => $value) {
                 $data = [
                     'id_product'            => $post['id_product'][$key],
                     'product_price'         => $value,
+                    'product_price_base'    => $post['price_base'][$key],
+                    'product_price_tax'     => $post['price_tax'][$key],
                     'product_visibility'    => $post['visible'][$key],
-                    'product_stock_status'   => $post['product_stock_status'][$key],
+                    'product_stock_status'  => $post['product_stock_status'][$key],
                     'id_outlet'             => $post['id_outlet'],
                 ];
 

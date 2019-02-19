@@ -516,7 +516,7 @@
                                             <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Kopi Point Conversion
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Total perhitangan cashback yang didapat user" data-container="body"></i>
                                                 <div class="input-group" style="margin: 20px">
-                                                    <input id="persen" type="text" class="form-control cashbackPersen" placeholder="value" value="{{ $cashback['value'] }}">
+                                                    <input id="persen" type="text" class="form-control cashbackPersen" placeholder="value" value="{{ $cashback['value']*100 }}">
                                                     <span class="input-group-addon">
                                                         %
                                                     </span>

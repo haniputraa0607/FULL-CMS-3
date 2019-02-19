@@ -316,6 +316,133 @@
 	})
     </script>
 
+<script type="text/javascript">
+    $(document).on('click', '.same', function() {
+      var price = $(this).parent().parent().parent().find('.product-price').val();
+      var priceBase = $(this).parent().parent().parent().find('.product-price-base').val();
+      var priceTax = $(this).parent().parent().parent().find('.product-price-tax').val();
+      var visibility = $(this).parent().parent().parent().find('.product-visibility').val();
+      var stock = $(this).parent().parent().parent().find('.product-stock').val();
+
+      if (price == '') {
+        alert('Price field cannot be empty');
+        $(this).parent().parent().parent().find('.product').focus();
+        return false;
+      }
+
+      if (priceBase == '') {
+        alert('Price Base field cannot be empty');
+        $(this).parent().parent().parent().find('.product-price-base').focus();
+        return false;
+      }
+
+      if (priceTax == '') {
+        alert('Price Tax field cannot be empty');
+        $(this).parent().parent().parent().find('.product-price-tax').focus();
+        return false;
+      }
+
+      if (visibility == '') {
+        alert('Visibility field cannot be empty');
+        $(this).parent().parent().parent().find('.product-price-tax').focus();
+        return false;
+      }
+
+      if (stock == '') {
+        alert('Stock field cannot be empty');
+        $(this).parent().parent().parent().find('.product-price-tax').focus();
+        return false;
+      }
+      
+      if ($(this).is(':checked')) {
+        var check = $('input[name="sameall[]"]:checked').length;
+        var count = $('.same').prop('checked', false);
+        $(this).prop('checked', true);
+
+        if (check == 1) {
+            var all_price = $('.product-price');
+            var array_price = [];
+            for (i = 0; i < all_price.length; i++) { 
+                array_price.push(all_price[i]['defaultValue']);
+            }
+            sessionStorage.setItem("product_price", array_price);
+
+            var all_price_base = $('.product-price-base');
+            var array_price_base = [];
+            for (i = 0; i < all_price_base.length; i++) { 
+                array_price_base.push(all_price_base[i]['defaultValue']);
+            }
+            sessionStorage.setItem("product_price_base", array_price_base);
+
+            var all_price_tax = $('.product-price-tax');
+            var array_price_tax = [];
+            for (i = 0; i < all_price_tax.length; i++) { 
+                array_price_tax.push(all_price_tax[i]['defaultValue']);
+            }
+            sessionStorage.setItem("product_price_tax", array_price_tax);
+
+            var all_visibility = $('.product-visibility-value');
+            var array_visibility = [];
+            for (i = 0; i < all_visibility.length; i++) { 
+                array_visibility.push(all_visibility[i]['defaultValue']);
+            }
+            sessionStorage.setItem("product_visibility", array_visibility);
+
+            var all_stock = $('.product-stock-value');
+            var array_stock = [];
+            for (i = 0; i < all_price.length; i++) { 
+                array_stock.push(all_stock[i]['defaultValue']);
+            }
+            sessionStorage.setItem("product_stock", array_stock);
+
+        }
+
+        $('.product-price').val(price);
+        $('.product-price-base').val(priceBase);
+        $('.product-price-tax').val(priceTax);
+        $('.product-visibility').val(visibility);
+        $('.product-stock').val(stock);
+        
+      } else {
+
+          var item_price = sessionStorage.getItem("product_price");
+          var item_price_base = sessionStorage.getItem("product_price_base");
+          var item_price_tax = sessionStorage.getItem("product_price_tax");
+          var item_visibility = sessionStorage.getItem("product_visibility");
+          var item_stock = sessionStorage.getItem("product_stock");
+
+          var item_price = item_price.split(",");
+          var item_price_base = item_price_base.split(",");
+          var item_price_tax = item_price_tax.split(",");
+          var item_visibility = item_visibility.split(",");
+          var item_stock = item_stock.split(",");
+
+          $('.product-price').each(function(i, obj) {
+              $(this).val(item_price[i]);
+          });
+          $('.product-price-base').each(function(i, obj) {
+              $(this).val(item_price_base[i]);
+          });
+          $('.product-price-tax').each(function(i, obj) {
+              $(this).val(item_price_tax[i]);
+          });
+          $('.product-visibility').each(function(i, obj) {
+              $(this).val(item_visibility[i]);
+          });
+          $('.product-stock').each(function(i, obj) {
+              $(this).val(item_stock[i]);
+          });
+          console.log(item_visibility)
+
+          $(this).parent().parent().parent().find('.product-price').val(price);
+          $(this).parent().parent().parent().find('.product-price-base').val(priceBase);
+          $(this).parent().parent().parent().find('.product-price-tax').val(priceTax);
+          $(this).parent().parent().parent().find('.product-visibility').val(visibility);
+          $(this).parent().parent().parent().find('.product-stock').val(stock);
+      }
+    });
+  </script>
+
 @endsection
 
 @section('content')

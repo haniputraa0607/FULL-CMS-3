@@ -3,57 +3,89 @@ $id_product = $product[0]['id_product'];
 ?>
 <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data" id="formWithPrice2">
   <div class="form-body">
+
+  	<div class="form-group" style="padding-left:20px">
+		<label class="bold" style="width:20%">Outlet</label>
+		<label class="bold" style="width:10%">Price</label>
+		<label class="bold" style="width:10%">Price Base</label>
+		<label class="bold" style="width:10%">Price Tax</label>
+		<label class="bold" style="width:10%">Visible</label>
+		<label class="bold" style="width:10%">Stock</label>
+		<label class="bold" style="width:10%">POS Status</label>
+	</div>
 		@foreach($outlet as $key => $ou)
 		<?php $marker = 0; ?>
-        <div class="form-group">
-            <label class="col-md-3 control-label">{{$ou['outlet_name']}}</label>
+        <div class="form-group" style="padding-left:20px">
+            <label class=""  style="width:20%">{{$ou['outlet_name']}}</label>
 			@foreach($ou['product_prices'] as $keyPrice => $price)
 			@if($price['id_product'] == $id_product)
 					<?php $marker = 1;?>
-					<div class="col-md-3">
+					<div style="width:10%; display:inline-block">
 						<input type="hidden" name="id_product_price[]" value="{{ $price['id_product_price'] }}">
 						<input type="hidden" name="id_outlet[]" value="{{ $ou['id_outlet'] }}">
-						<input type="text" class="form-control nominal price" name="product_price[]" value="{{ $price['product_price'] }}">
+						<input type="text" class="form-control nominal price product-price" name="product_price[]" value="{{ $price['product_price'] }}">
 					</div>
-					<div class="col-md-2">
-						<select class="form-control" name="product_visibility[]">
+					<div style="width:10%; display:inline-block">
+						<input type="text" class="form-control nominal price product-price-base" name="product_price_base[]" value="{{ $price['product_price_base'] }}">
+					</div>
+					<div style="width:10%; display:inline-block">
+						<input type="text" class="form-control nominal price product-price-tax" name="product_price_tax[]" value="{{ $price['product_price_tax'] }}">
+					</div>
+					<div style="width:10%; display:inline-block">
+						<select class="form-control product-visibility" name="product_visibility[]">
 							<option value="Visible" @if($price['product_visibility'] == 'Visible') selected @endif>Visible</option>
 							<option value="Hidden" @if($price['product_visibility'] != 'Visible') selected @endif>Hidden</option>
 						</select>
+						<input type="hidden" value="{{$price['product_visibility']}}" class="product-visibility-value">
 					</div>
-					<div class="col-md-2">
-						<select class="form-control" name="product_stock_status[]">
+					<div style="width:10%; display:inline-block">
+						<select class="form-control product-stock" name="product_stock_status[]">
 							<option value="Available" @if($price['product_stock_status'] == 'Available') selected @endif>Available</option>
 							<option value="Sold Out" @if($price['product_stock_status'] != 'Available') selected @endif>Sold Out</option>
 						</select>
+						<input type="hidden" value="{{$price['product_stock_status']}}" class="product-stock-value">
 					</div>
-					<div class="col-md-2">
+					<div style="width:10%; display:inline-block">
 						<input type="text" class="form-control nominal" value="{{ $price['product_status'] }}" disabled>
 					</div>
 				@endif
 			@endforeach
 			@if($marker == 0)
-				<div class="col-md-3">
+				<div style="width:10%; display:inline-block">
 					<input type="hidden" name="id_product_price[]" value="0">
 					<input type="hidden" name="id_outlet[]" value="{{ $ou['id_outlet'] }}">
-					<input type="text" class="form-control nominal price" name="product_price[]" value="0">
+					<input type="text" class="form-control nominal price product-price" name="product_price[]" value="0">
 				</div>
-				<div class="col-md-2">
-					<select class="form-control" name="product_visibility[]">
-						<option value="Visible" selected>Visible</option>
-						<option value="Hidden">Hidden</option>
+				<div style="width:10%; display:inline-block">
+					<input type="text" class="form-control nominal price product-price-base" name="product_price_base[]" value="0">
+				</div>
+				<div style="width:10%; display:inline-block">
+					<input type="text" class="form-control nominal price product-price-tax" name="product_price_tax[]" value="0">
+				</div>
+				<div style="width:10%; display:inline-block">
+					<select class="form-control product-visibility" name="product_visibility[]">
+						<option value="Visible">Visible</option>
+						<option value="Hidden" selected>Hidden</option>
 					</select>
+					<input type="hidden" value="Hidden" class="product-visibility-value">
 				</div>
-				<div class="col-md-2">
-					<select class="form-control" name="product_stock_status[]">
+				<div style="width:10%; display:inline-block">
+					<select class="form-control product-stock" name="product_stock_status[]">
 						<option value="Available" selected>Available</option>
 						<option value="Sold Out">Sold Out</option>
 					</select>
+					<input type="hidden" value="Available" class="product-stock-value">
 				</div>
-				<div class="col-md-2">
+				<div style="width:10%; display:inline-block">
 					<input type="text" class="form-control nominal" value="Active" disabled>
 				</div>
 			@endif
+			<div style="width:15%; display:inline-block; vertical-align: text-top;">
+				<label class="mt-checkbox mt-checkbox-outline"> Same for all Outlet
+					<input type="checkbox" name="sameall[]" class="same" data-check="ampas"/>
+					<span></span>
+				</label>
+			</div>
         </div>
 		@endforeach
 	</div>

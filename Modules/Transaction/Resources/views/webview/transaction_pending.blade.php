@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ url('css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
         @font-face {
@@ -321,13 +322,6 @@
             text-decoration:line-through
         }
 
-        .modal.fade .modal-dialog {
-            transform: translate3d(0, 0, 0);
-        }
-        .modal.in .modal-dialog {
-            transform: translate3d(0, 0, 0);
-        }
-
     </style>
   </head>
   <body>
@@ -335,87 +329,35 @@
         // print_r($data);die();
     @endphp
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content" style="border-radius: 42.3px; border: 0;">
-            <div class="modal-body">
-                <img class="img-responsive" style="display: block; width: 100%; padding: 30px" src="{{ $data['qr'] }}">
-            </div>
-            </div>
-        </div>
-    </div>
-    
     @if ($data['trasaction_payment_type'] != 'Offline')
         <div class="kotak-full">
             <div class="container">
                 <div class="row text-center">
                     <div class="col-12 text-13-3px text-black roboto-regular-font">
-                        Terima kasih! Pembayaran sudah diterima.
-                    </div>
-                    <div class="col-12 text-13-3px text-black roboto-regular-font">
-                        Kami akan memberikan notifikasi
-                    </div>
-                    <div class="col-12 text-13-3px text-black roboto-regular-font">
-                        apabila pesanan Anda sudah selesai.
+                        Silahkan lakukan pembayaran terlebih dahulu
                     </div>
                 </div>
             </div>
         </div>
+        @if (isset($data['data_payment']))
+        	@foreach ($data['data_payment'] as $pay)
+        		@if ($pay['type'] == 'Midtrans')
+        			<div class="kotak-biasa">
+			            <div class="container">
+			                <div class="row text-center" id="cont">
+			                    <div class="col-12 roboto-regular-font text-15px space-text text-grey">Virtual Number</div>
 
-        @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
-            <div class="kotak-biasa">
-                <div class="container">
-                    <div class="row text-center">
-                        <div class="col-12 seravek-font text-15px space-nice text-grey">Detail Pengiriman</div>
-                        <div class="col-12 text-greyish-brown text-21-7px space-bottom seravek-medium-font">GO-SEND</div>
-                        <div class="col-12 text-16-7px text-black space-bottom seravek-light-font">
-                            {{ $data['detail']['transaction_pickup_go_send']['destination_name'] }}
-                            <br>
-                            {{ $data['detail']['transaction_pickup_go_send']['destination_phone'] }}
-                        </div>
-                        <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center seravek-light-font">{{ $data['detail']['transaction_pickup_go_send']['destination_address'] }}</div>
-                        </div>
-                        <div class="col-12 text-15px space-bottom text-black seravek-light-font">Map</div>
-                        <div class="col-12 space-bottom-big">
-                            <div class="container">
-                                <div id="map"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @else
-            <div class="kotak-biasa">
-                <div class="container">
-                    <div class="row text-center">
-                        <div class="col-12 roboto-regular-font text-15px space-text text-grey">Kode Pickup Anda</div>
-                        
-                        <div class="kotak-qr" data-toggle="modal" data-target="#exampleModal">
-                            <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
-                        </div>
-
-                        <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
-                        <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{ $data['outlet']['outlet_name'] }}</div>
-                        <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center ">{{ $data['outlet']['outlet_address'] }}</div>
-                        </div>
-                            <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan diproses pada</div>
-                            <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['transaction_date'])) }}</div>
-                        @if ($data['detail']['pickup_type'] == 'set time')
-                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
-                        @elseif($data['detail']['pickup_type'] == 'at arrival')
-                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Kedatangan</div>
-                        @else
-                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Ini</div>
-                        @endif
-                    </div>
-                </div>
-            </div>
+			                    <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font"><span id="myInput">{{ $pay['eci'] }}</span> &nbsp; 
+			                    	<i class="fa fa-clone clone" data-togle="tooltip" title="Hooray!" onclick="copyToClipboard('#myInput')" style="cursor: pointer;"><div id="popover" rel="popover" data-content="Copied to clipboard" data-original-title="Copied"></div></i>
+			                    </div>
+			                    <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{strtoupper($pay['bank'])}}</div>
+			                </div>
+			            </div>
+			        </div>
+        		@endif
+        	@endforeach
         @endif
     @endif
-
     <div class="kotak">
         <div class="container line-bottom">
             <div class="row space-bottom">
@@ -497,7 +439,6 @@
         </div>
     </div>
 
-    
     @if ($data['transaction_payment_status'] == 'Completed'|| $data['transaction_payment_status'] == 'Paid')
         <div class="kotak">
             <div class="container">
@@ -536,95 +477,15 @@
                 </div>
             </div>
         </div>
+        
     @endif
-
-    <div class="kotak">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Status Pesanan <hr> </div>
-                @php $top = 5; $bg = true; @endphp
-                @if($data['detail']['taken_at'] != null)
-                    <div class="col-12 text-13-3px seravek-font text-black">
-                        <div class="round-greyish-brown bg-greyish-brown"></div>
-                        Pesanan Anda sudah diambil
-                    </div>
-                    <div class="col-12 top-5px">
-                        <div class="inline text-center">
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                        </div>
-                        <div class="inline vertical-top">
-                            <div class="text-11-7px seravek-light-font text-black space-bottom">
-                                {{date('d F Y H:i', strtotime($data['detail']['taken_at']))}}
-                            </div>
-                        </div>
-                    </div>
-                    @php $top += 5; $bg = false; @endphp
-                @endif
-                @if($data['detail']['ready_at'] != null)
-                    <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
-                        <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
-                        Pesanan Anda sudah siap
-                    </div>
-                    @php $top += 5; $bg = false; @endphp
-                    <div class="col-12 top-{{$top}}px">
-                        <div class="inline text-center">
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                        </div>
-                        <div class="inline vertical-top">
-                            <div class="text-11-7px seravek-light-font text-black space-bottom">
-                                {{date('d F Y H:i', strtotime($data['detail']['ready_at']))}}
-                            </div>
-                        </div>
-                    </div>
-                    @php $top += 5; @endphp
-                @endif
-                @if($data['detail']['receive_at'] != null)
-                    <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
-                        <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
-                            Pesanan Anda sudah diterima
-                    </div>
-                    @php $top += 5; $bg = false; @endphp
-                    <div class="col-12 top-{{$top}}px">
-                        <div class="inline text-center">
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                            <div class="line-vertical text-grey-medium-light">|</div>
-                        </div>
-                        <div class="inline vertical-top">
-                            <div class="text-11-7px seravek-light-font text-black space-bottom">
-                                {{date('d F Y H:i', strtotime($data['detail']['receive_at']))}}
-                            </div>
-                        </div>
-                    </div>
-                    @php $top += 5; @endphp
-                @endif
-                <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
-                    <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
-                    Pesanan Anda Menunggu Konfirmasi
-                </div>
-                <div class="col-12 text-11-7px seravek-light-font text-black space-bottom top-{{$top}}px">
-                    <div class="round-white"></div>
-                    {{date('d F Y H:i', strtotime($data['transaction_date']))}}
-                </div>
-            </div>
-        </div>
-    </div>
-   
-    
+    <input type="hidden" id="payment" value="{{ json_encode($data['data_payment']) }}">  
+    <input type="hidden" id="url" value="{{ env('APP_URL') }}">
+    {{ csrf_field() }}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
@@ -650,6 +511,80 @@
         }
     </script>
     @endif
-
   </body>
+
+  <script type="text/javascript">
+	   $(document).ready(function() {
+
+      	$("#popover").popover('hide');
+
+      	$('#cont').html('<div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">\
+                    	Loading . . .\
+                    </div>');
+		
+   		var url   = $('#url').val()+'transaction/web/view/detail/check';
+        var token = $('input[name=_token]').val();
+   		$.ajax({
+	        type: "POST", 
+	        url: url,
+	        data: {
+	        	transaction_receipt_number : '{!! $data['transaction_receipt_number'] !!}',
+	        	type : 'trx',
+	        	check : 1,
+	        	_token: token
+	        },
+	        success: function(response) {
+	        	console.log(response);
+	    		$('#cont').html('<div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">\
+	            	'+response+'\
+	            </div>');
+	        },
+	        error: function(xhr, status, error) {
+			  $('#cont').html('<div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">\
+                    	Error Server\
+                    </div>');
+			}
+	    });
+	   });
+
+	   function ajax() {
+	   		var url   = $('#url').val()+'transaction/web/view/detail/check';
+            var token = $('input[name=_token]').val();
+	   		$.ajax({
+		        type: "POST", 
+		        url: url,
+		        data: {
+		        	transaction_receipt_number : '{!! $data['transaction_receipt_number'] !!}',
+		        	type : 'trx',
+		        	check : 1,
+		        	_token: token
+		        },
+		        success: function(response) {
+		        	console.log(response);
+		    		$('#cont').html('<div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">\
+		            	'+response+'\
+		            </div>');
+		        },
+		        error: function(xhr, status, error) {
+				  $('#cont').html('<div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">\
+	                    	Error Server\
+	                    </div>');
+				}
+		    });
+	   }
+
+    	function copyToClipboard(element) {
+		  var $temp = $("<input>");
+		  $("body").append($temp);
+		  $temp.val($(element).text()).select();
+		  document.execCommand("copy");
+		  $temp.remove();
+		  $("#popover").popover('show');
+		  setTimeout(
+			  function() 
+			  {
+			    $("#popover").popover('hide');
+			  }, 1000);
+		}
+    </script>
 </html>

@@ -328,7 +328,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: rgb(255,255,255);
+            background: rgba(0,0,0, 0.5);
             width: 100%;
             display: none;
             height: 100vh;
@@ -343,14 +343,33 @@
             margin-top: -125px;
         }
 
+        .modal.fade .modal-dialog {
+            transform: translate3d(0, 0, 0);
+        }
+        .modal.in .modal-dialog {
+            transform: translate3d(0, 0, 0);
+        }
+
     </style>
   </head>
   <body>
-    <div id="modal-usaha">
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content" style="border-radius: 42.3px; border: 0;">
+            <div class="modal-body">
+                <img class="img-responsive" style="display: block; width: 100%; padding: 30px" src="{{ $data['qr'] }}">
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div id="modal-usaha">
         <div class="modal-usaha-content">
             <img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}">
         </div>
-    </div>
+    </div> -->
 
     @if ($data['trasaction_payment_type'] != 'Offline')
         <div class="kotak-full">
@@ -402,7 +421,7 @@
                     <div class="row text-center">
                         <div class="col-12 seravek-font text-15px space-text text-grey">Kode Pickup Anda</div>
                         
-                        <div class="kotak-qr" id="gambar-usaha">
+                        <div class="kotak-qr" data-toggle="modal" data-target="#exampleModal">
                             <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
                         </div>
 
@@ -683,8 +702,9 @@
 
     <script>
         $(document).ready(function() {
-            $(document).on('click', '#gambar-usaha', function() {
+            $(document).on('click', '#gambar-usaha', function(e) {
                 $('#modal-usaha').fadeIn('fast');
+                e.preventDefault();
             });
 
             $(document).on('click', '#modal-usaha', function() {

@@ -329,12 +329,12 @@
             <a href="#banner" data-toggle="tab">Banner</a>
         </li>
 		@endif
-        <li>
+        <!-- <li>
             <a href="#app-logo" data-toggle="tab">Application Logo</a>
-        </li>
-        <li>
+        </li> -->
+        <!-- <li>
             <a href="#app-navigation" data-toggle="tab">App Navigation Text</a>
-        </li>
+        </li> -->
 		@if(MyHelper::hasAccess([148], $grantedFeature))
         <li>
             <a href="#user-profile" data-toggle="tab">User Profile</a>

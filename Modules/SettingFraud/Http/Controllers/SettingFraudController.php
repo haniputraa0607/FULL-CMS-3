@@ -91,8 +91,18 @@ class SettingFraudController extends Controller
         ];
 
         $data['textreplaces'][] = [
+            'keyword' => '%last_device_type%',
+            'reference' => 'last device type used'
+        ];
+
+        $data['textreplaces'][] = [
             'keyword' => '%last_device_id%',
             'reference' => 'last device id used'
+        ];
+
+        $data['textreplaces'][] = [
+            'keyword' => '%last_device_token%',
+            'reference' => 'last device token used'
         ];
             
         return view('settingfraud::detail', $data);
