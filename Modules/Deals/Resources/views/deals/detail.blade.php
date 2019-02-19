@@ -322,10 +322,9 @@
                 var cariImage = mentah.attr('src')
                 var ko        = new Image()
                 ko.src        = cariImage
-
                 // load image
                 ko.onload     = function(){
-                    if (this.naturalHeight === 300 && this.naturalWidth === 300) {
+                    if (this.naturalHeight === 250 && this.naturalWidth === 500) {
                     } else {
                         mentah.attr('src', "")
                         $('#file').val("");
