@@ -30,6 +30,7 @@
         .form-group label{
           color: #666666;
           font-size: 13px;
+          margin-bottom: 0px;
         }
         .birthday input{
             color: #000 !important;
@@ -172,7 +173,7 @@
     <div class="col-md-4 col-md-offset-4" style="position: unset;">
         @include('layouts.notifications')
         
-        <div class="text-brown" style="margin-top: 50px; margin-bottom: 20px; text-align: justify;">
+        <div class="text-brown" style="margin-top: 20px; margin-bottom: 20px; text-align: justify;">
             Silakan lengkapi data di bawah ini dan dapatkan Kopi Points
         </div>
 
@@ -208,7 +209,7 @@
                         <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
                     </div>
 
-                    <div class="form-group form-md-line-input select-wrapper">
+                    <div class="form-group form-md-line-input select-wrapper relationship">
                         <label>Relationship</label>
                         <select class="form-control custom-select" name="relationship">
                             <option value="" selected>-</option>
@@ -271,6 +272,16 @@
               }
           });
           $('.select2').select2();
+
+          // change submit button's position from absolute to relative
+          var body = $("body").height();
+          body = body + 170;
+          var win = $(window).height();
+
+          if (body > win ) {
+              $(".button-wrapper").css({'position': 'relative', 'bottom': '0px'});
+              $(".form-actions").css({'margin-top': '150px'});
+          }
         });
 
         $('form').submit(function(e) {

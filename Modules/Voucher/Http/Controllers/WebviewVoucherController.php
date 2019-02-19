@@ -21,12 +21,6 @@ class WebviewVoucherController extends Controller
         $post['used'] = 0;
         
         $data['voucher'] = parent::getData(MyHelper::postWithBearer('voucher/me', $post, $bearer));
-        if (empty($data['voucher'])) {
-            return [
-                'status' => 'fail',
-                'messages' => ['Voucher is not found']
-            ];
-        }
         
         return view('voucher::webview.voucher_detail', $data);
     }

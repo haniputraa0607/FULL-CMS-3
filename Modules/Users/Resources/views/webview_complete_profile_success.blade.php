@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="col-md-offset-4 col-md-4">
-        <div class="text-center" style="margin-top: 30px;">
+        <div class="text-center" style="margin-top: 20px;">
             {!! $content !!}
         </div>
     </div>

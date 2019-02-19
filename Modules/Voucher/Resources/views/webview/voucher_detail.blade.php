@@ -6,7 +6,6 @@
 @section('css')
     <style type="text/css">
         body{
-            max-width: 468px;
             margin: auto;
         }
         p{
@@ -57,14 +56,6 @@
         .outlet{
             font-size: 13.3px;
             color: #666666;
-        }
-
-        @media only screen and (min-width: 768px) {
-            /* For mobile phones: */
-            .deals-img{
-                width: auto;
-                height: auto;
-            }
         }
 
         @font-face {
@@ -184,7 +175,7 @@
             </div>
         @else
             <div class="col-md-4 col-md-offset-4">
-                <h4 class="text-center">Voucher is not found</h4>
+                <div class="text-center" style="margin-top: 20px;">Voucher is not found</div>
             </div>
         @endif
     </div>
