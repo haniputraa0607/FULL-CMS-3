@@ -21,12 +21,19 @@ class WebviewController extends Controller
             if (isset($check['status']) && $check['status'] == 'success') {
                 foreach ($check['result']['data_payment'] as $key => $value) {
                     if ($value['type'] == 'Midtrans') {
-                        if ($value['payment_type'] == 'Bank Transfer' || $value['payment_type'] == 'Echannel') {
+                        if ($value['payment_type'] == 'Bank Transfer' || $value['payment_type'] == 'Echannel' || $value['payment_type'] == 'Cstore') {
                             if (empty($value['eci'])) {
                                 $count++;
                                 $messages = 'Data not found';
                             } else {
                                 $count = 11;
+                                if (isset($value['store'])) {
+                                    return '<div class="col-12 roboto-regular-font text-15px space-text text-grey">Virtual Number</div>
+                                        <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font"><span id="myInput">'.$value['eci'].'</span> &nbsp; 
+                                            <i class="fa fa-clone clone" data-togle="tooltip" title="Hooray!" onclick="copyToClipboard(\'#myInput\')" style="cursor: pointer;"><div id="popover" rel="popover" data-content="Copied to clipboard" data-original-title="Copied"></div></i>
+                                        </div>
+                                        <div class="col-12 text-16-7px text-black space-text seravek-light-font">'.strtoupper($value['store']).'</div>';
+                                }
                                 if ($value['bank'] == 'Mandiri') {
                                     return '<div class="col-12 roboto-regular-font text-15px space-text text-grey">Virtual Number</div>
                                         <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font"><span id="myInput">'.substr($value['eci'], 5).'</span> <span>('.substr($value['eci'], 0, 5).')</span> &nbsp; 
@@ -44,9 +51,11 @@ class WebviewController extends Controller
                         }
                     }
                 }
-            } elseif (isset($check['status']) && $check['status'] == 'success') {
+            } elseif (isset($check['status']) && $check['status'] == 'fail') {
+                $count++;
                 $messages = 'Data not found';
             } else {
+                $count++;
                 $messages = 'Error server';
             }
 
@@ -54,7 +63,6 @@ class WebviewController extends Controller
         }
 
         return '<div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">
-                        '.$messages.'
                     </div>';
     }
 
@@ -191,14 +199,14 @@ class WebviewController extends Controller
         if ($bearer == "") {
             return abort(404);
         }
-    	// return base64_decode($request->get('data'));
+
         $data = json_decode(base64_decode($request->get('data')), true);
     	$check = MyHelper::postWithBearer('outletapp/order/detail/view', $data, $bearer);
       
         // return $check;
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data = $check['result'];
-    	} elseif (isset($check['status']) && $check['status'] == 'success') {
+    	} elseif (isset($check['status']) && $check['status'] == 'fail') {
     		return back()->withErrors($lists['messages']);
     	} else {
     		return back()->withErrors(['Data not found']);

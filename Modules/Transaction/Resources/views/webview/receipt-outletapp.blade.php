@@ -76,8 +76,8 @@
         }
 
         .kotak-inside {
-        	padding-left: 25px;
-        	padding-right: 25px
+            padding-left: 25px;
+            padding-right: 25px
         }
 
         body {
@@ -105,15 +105,15 @@
         }
 
         .space-nice {
-        	padding-bottom: 20px;
+            padding-bottom: 20px;
         }
 
         .space-bottom-big {
-        	padding-bottom: 25px;
+            padding-bottom: 25px;
         }
 
         .space-top {
-        	padding-top: 5px;
+            padding-top: 5px;
         }
 
         .line-bottom {
@@ -353,7 +353,7 @@
                     
                         <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan diproses pada</div>
                         @if ($data['detail']['pickup_type'] == 'set time')
-                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['pickup_at'])) }}</div>
+                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
                         @elseif($data['detail']['pickup_type'] == 'at arrival')
                             <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Kedatangan</div>
                         @else

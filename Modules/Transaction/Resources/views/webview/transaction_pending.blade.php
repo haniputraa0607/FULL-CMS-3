@@ -346,11 +346,6 @@
 			            <div class="container">
 			                <div class="row text-center" id="cont">
 			                    <div class="col-12 roboto-regular-font text-15px space-text text-grey">Virtual Number</div>
-
-			                    <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font"><span id="myInput">{{ $pay['eci'] }}</span> &nbsp; 
-			                    	<i class="fa fa-clone clone" data-togle="tooltip" title="Hooray!" onclick="copyToClipboard('#myInput')" style="cursor: pointer;"><div id="popover" rel="popover" data-content="Copied to clipboard" data-original-title="Copied"></div></i>
-			                    </div>
-			                    <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{strtoupper($pay['bank'])}}</div>
 			                </div>
 			            </div>
 			        </div>
@@ -519,7 +514,6 @@
       	$("#popover").popover('hide');
 
       	$('#cont').html('<div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">\
-                    	Loading . . .\
                     </div>');
 		
    		var url   = $('#url').val()+'transaction/web/view/detail/check';
@@ -541,7 +535,6 @@
 	        },
 	        error: function(xhr, status, error) {
 			  $('#cont').html('<div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">\
-                    	Error Server\
                     </div>');
 			}
 	    });
@@ -573,18 +566,18 @@
 		    });
 	   }
 
-    	function copyToClipboard(element) {
-		  var $temp = $("<input>");
-		  $("body").append($temp);
-		  $temp.val($(element).text()).select();
-		  document.execCommand("copy");
-		  $temp.remove();
-		  $("#popover").popover('show');
-		  setTimeout(
-			  function() 
-			  {
-			    $("#popover").popover('hide');
-			  }, 1000);
-		}
+        function copyToClipboard(element) {
+          var $temp = $("<input>");
+          $("body").append($temp);
+          $temp.val($(element).text()).select();
+          document.execCommand("copy");
+          $temp.remove();
+          $("#popover").popover('show');
+          setTimeout(
+              function() 
+              {
+                $("#popover").popover('hide');
+              }, 1000);
+        }
     </script>
 </html>
