@@ -15,4 +15,5 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'voucher'
 Route::group(['middleware' => ['web'], 'prefix' => 'webview', 'namespace' => 'Modules\Voucher\Http\Controllers'], function()
 {
     Route::get('/voucher/{id_deals_user}', 'WebviewVoucherController@voucherDetail');
+    Route::get('/voucher/used/{id_deals_user}', 'WebviewVoucherController@voucherUsed');
 });

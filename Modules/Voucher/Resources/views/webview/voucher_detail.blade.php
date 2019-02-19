@@ -29,9 +29,9 @@
         .title{
             font-size: 18px;
             color: #000;
-            margin-bottom: 10px;
         }
         .valid-date{
+            margin-top: 10px;
             font-size: 13.3px;
             color: #666666;
         }
@@ -83,6 +83,19 @@
         .deals-qr{
             width: 135px;
             height: 135px;
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
+        .deals-qr img{
+            width: 100%;
+            height: 100%;
+        }
+        .modal.fade .modal-dialog {
+            transform: translate3d(0, 0, 0);
+        }
+        .modal.in .modal-dialog {
+            transform: translate3d(0, 0, 0);
         }
 
         .kode-text{
@@ -124,15 +137,22 @@
                     <div class="col-xs-8 title">
                         {{ $deals['deals_title'] }}
                     </div>
+
+                    @if($voucher['used_at'] == null)
                     <div class="col-xs-12 valid-date">
                         Berlaku hingga {{ date('d/m/Y H:i', strtotime($voucher['voucher_expired_at'])) }}
                     </div>
+                    @endif
                 </div>
 
-                @if($voucher['redeemed_at'] != null)
+                @if($voucher['redeemed_at'] != null && $voucher['used_at'] == null)
                 <div class="description-wrapper">
-                    <div class="subtitle2 text-center">Tampilkan Kode QR di bawah ke kasir</div>
-                    <img class="deals-qr center-block" src="{{ $voucher['voucher_hash'] }}" alt="">
+                    <div class="subtitle2 text-center" style="margin-top: 15px;">Tampilkan Kode QR di bawah ke kasir</div>
+
+                    <button class="deals-qr center-block" type="button" data-toggle="modal" data-target="#qr-code-modal">
+                        <img src="{{ $voucher['voucher_hash'] }}" alt="">
+                    </button>
+
                     <div class="text-center kode-text">Kode Kupon</div>
                     <div class="text-center voucher-code seravek-medium-font">{{ $voucher['deal_voucher']['voucher_code'] }}</div>
                     <div class="line"></div>
@@ -179,4 +199,17 @@
             </div>
         @endif
     </div>
+
+    @if(!empty($voucher) && $voucher['redeemed_at'] != null && $voucher['used_at'] == null)
+    <!-- Modal -->
+    <div class="modal fade" id="qr-code-modal" tabindex="-1" role="dialog" aria-labelledby="qr-code-modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content" style="border-radius: 42.3px; border: 0;">
+            <div class="modal-body">
+                <img class="img-responsive" style="display: block; width: 100%; padding: 30px" src="{{ $voucher['voucher_hash'] }}">
+            </div>
+            </div>
+        </div>
+    </div>
+    @endif
 @stop
