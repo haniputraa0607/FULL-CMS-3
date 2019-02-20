@@ -623,7 +623,11 @@
 					 			 				$click_to = str_limit($banner['url'], 20);
 					 			 			}
 					 			 			else{
-					 			 				$click_to = "-";
+					 			 				if ($banner['type'] == 'general') {
+					 			 					$click_to = "-";
+					 			 				} else {
+					 			 					$click_to = "GO-FOOD";
+					 			 				}
 					 			 			}
 					 			 		@endphp
 
@@ -1059,6 +1063,11 @@
 	                            <div class="col-md-2">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
+									</label>
+	                            </div>
+	                            <div class="col-md-4">
+                                    <label class="radio-inline">
+										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
 	                            </div>
                             </div>

@@ -11,8 +11,8 @@
         .kotak1 {
             padding-top: 10px;
             padding-bottom: 10px;
-            padding-left: 26.3px;
-            padding-right: 26.3px;
+            padding-left: 21.3px;
+            padding-right: 21.3px;
             background: #fff;
             font-family: 'Open Sans', sans-serif;
         }
@@ -64,7 +64,7 @@
     	}
 
         .space-bottom {
-            padding-bottom: 15px;
+            padding-bottom: 8px;
         }
 
         .space-title {
@@ -80,8 +80,9 @@
     	}
 
     	.line-bottom {
-    		border-bottom: 1px solid #eee;
-    		margin-bottom: 15px;
+    		    border-bottom: 1px solid #eee;
+                margin-bottom: -10px;
+                margin-top: 8px;
     	}
 
     	.text-grey {
@@ -170,8 +171,8 @@
         }
 
         .logo-img {
-        	width: 16.7px;
-        	height: 16.7px;
+        	width: 14.7px;
+            height: 14.7px;
             margin-top: -7px;
             margin-right: 5px;
         }
@@ -252,54 +253,56 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
             <div class="container">
                 <div class="row space-bottom">
                     <div class="row container kotak-title">
-                        <div class="col-12 text-bot text-custom-px"> <span> {{ date('l', strtotime($news[0]['news_publish_date'])) }}, {{ date('d F Y', strtotime($news[0]['news_publish_date'])) }} &nbsp;&nbsp;&nbsp; {{ date('H:i', strtotime($news[0]['news_publish_date'])) }}  </span></div>
-                        <div class="col-12 text-bot text-grey-black"> <span> {{ strtoupper($news[0]['news_title']) }}</span></div>
+                        <div class="col-12 text-bot text-custom-px"> <span> {{ date('l', strtotime($news[0]['news_post_date'])) }}, {{ date('d F Y', strtotime($news[0]['news_post_date'])) }} &nbsp;&nbsp;&nbsp; {{ date('H:i', strtotime($news[0]['news_post_date'])) }}  </span></div>
+                        <div class="col-12 text-bot text-grey-black" style="    line-height: 17px;padding-bottom: 10px;padding-top: 4px;"> <span> {{ strtoupper($news[0]['news_title']) }}</span></div>
                     </div>
                     <img src="{{ $news[0]['url_news_image_dalam'] }}" style="height: 50vw;">
-                    <div id="grad1"></div>
+                    <div id="grad1" style="margin-bottom: -20px;"></div>
                 </div>
             </div>
         </div>
 
         @if (isset($news[0]['news_event_date_start']) || isset($news[0]['news_event_location_name']) || isset($news[0]['news_event_location_address']) || isset($news[0]['news_event_location_phone']) || isset($news[0]['news_event_location_map']))
       	<div class="kotak1">
-      		<div class="container line-bottom">
+      		<div class="container">
             @if (isset($news[0]['news_event_date_start']))
       	   		<div class="row space-bottom">
-      	   			<div class="col-12 text-grey-black text-13-3px open-sans-font"><img class="logo-img" src="{{ url('img/webview/calendar.png') }}"> <span> {{ date('d F', strtotime($news[0]['news_event_date_start'])) }} - {{ date('d F Y', strtotime($news[0]['news_event_date_end'])) }} </span></div>
+      	   			<div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/calendar.png') }}"> <span> {{ date('d F', strtotime($news[0]['news_event_date_start'])) }} - {{ date('d F Y', strtotime($news[0]['news_event_date_end'])) }} </span></div>
       	   		</div>
             @endif
             @if (isset($news[0]['news_event_location_name']))
       	   		<div class="row space-bottom">
-      	   			<div class="col-12 text-grey-black text-13-3px open-sans-font"><img class="logo-img" src="{{ url('img/webview/outlet.png') }}"> <span> {{ $news[0]['news_event_location_name'] }} </span></div>
+      	   			<div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/outlet.png') }}"> <span> {{ $news[0]['news_event_location_name'] }} </span></div>
       	   		</div>
             @endif
 
             @if (isset($news[0]['news_event_location_address']))
       	   		<div class="row space-bottom">
-      	   			<div class="col-12 text-grey-black text-13-3px open-sans-font"><img class="logo-img" src="{{ url('img/webview/marker.png') }}"> <span>{{ $news[0]['news_event_location_address'] }} </span></div>
+      	   			<div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/marker.png') }}"> <span>{{ $news[0]['news_event_location_address'] }} </span></div>
       	   		</div>
             @endif
 
             @if (isset($news[0]['news_event_location_phone']))
       	   		<div class="row space-bottom">
-      	   			<div class="col-12 text-grey-black text-13-3px open-sans-font"><img class="logo-img" src="{{ url('img/webview/marker.png') }}"> <span> {{ $news[0]['news_event_location_phone'] }} </span></div>
+      	   			<div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/marker.png') }}"> <span> {{ $news[0]['news_event_location_phone'] }} </span></div>
       	   		</div>
             @endif
 
             @if (isset($news[0]['news_event_location_map']))
       	   		<div class="row space-bottom">
-      	   			<div class="col-12 text-grey-black text-13-3px open-sans-font"><div id="map-canvas" style="width:500;height:180px;"></div></div>
+      	   			<div class="col-12 text-grey-black text-12px open-sans-font"><div id="map-canvas" style="width:500;height:180px;"></div></div>
       	   		</div>
             @endif
 
     	   	</div>
+            <div class="line-bottom">
+                </div>
       	</div>
         @endif
 
       	<div class="kotak2">
       		<div class="container">
-    	   		<div class="row space-bottom">{!! $news[0]['news_content_long'] !!}
+    	   		<div class="row space-bottom text-12px">{!! $news[0]['news_content_long'] !!}
     	   		</div>
     	   	</div>
       	</div>
@@ -309,7 +312,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                 <div class="container">
                     @if (isset($news[0]['news_video_text']))
                         <div class="row space-bottom">
-                            <div class="col-12 text-bot text-grey-black text-15px open-sans-font"> <span> {{ $news[0]['news_video_text'] }} :  </span></div>
+                            <div class="col-12 text-bot text-grey-black text-12px open-sans-font"> <span> {{ $news[0]['news_video_text'] }} :  </span></div>
                         </div>
                     @endif
 
@@ -329,7 +332,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                 <div class="container">
                 @if (isset($news[0]['news_outlet_text']))
                     <div class="row space-bottom">
-                        <div class="col-12 text-bot text-grey-black text-15px open-sans-font"> <span> {{ $news[0]['news_outlet_text'] }} :  </span></div>
+                        <div class="col-12 text-bot text-grey-black text-12px open-sans-font"> <span> {{ $news[0]['news_outlet_text'] }} :  </span></div>
 
                     </div>
                 @endif
@@ -354,7 +357,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                 <div class="container">
                     @if (isset($news[0]['news_product_text']))
                         <div class="row space-bottom">
-                            <div class="col-12 text-bot text-grey-black text-15px open-sans-font"> <span> {{ $news[0]['news_product_text'] }} :  </span></div>
+                            <div class="col-12 text-bot text-grey-black text-12px open-sans-font"> <span> {{ $news[0]['news_product_text'] }} :  </span></div>
 
                         </div>
                     @endif

@@ -329,39 +329,18 @@
         // print_r($data);die();
     @endphp
 
-    @if ($data['trasaction_payment_type'] != 'Offline')
-        <div class="kotak-full">
-            <div class="container">
-                <div class="row text-center">
-                    <div class="col-12 text-13-3px text-black roboto-regular-font">
-                        Silahkan lakukan pembayaran terlebih dahulu
-                    </div>
+    <div class="kotak-full">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12 text-13-3px text-black roboto-regular-font">
+                    Terima kasih!
+                </div>
+                <div class="col-12 text-13-3px text-black roboto-regular-font">
+                    Transaksi anda sedang di proses
                 </div>
             </div>
         </div>
-        @if (isset($data['data_payment']))
-        	@foreach ($data['data_payment'] as $pay)
-        		@if ($pay['type'] == 'Midtrans')
-        			<div class="kotak-biasa">
-			            <div class="container">
-			                <div class="row text-center" id="cont">
-			                    <div class="col-12 roboto-regular-font text-15px space-text text-grey">Virtual Number</div>
-                                <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font"><span id="myInput">{{ $pay['eci'] }}</span> &nbsp; 
-                                    <i class="fa fa-clone clone" data-togle="tooltip" title="Hooray!" onclick="copyToClipboard('#myInput')" style="cursor: pointer;"><div id="popover" rel="popover" data-content="Copied to clipboard" data-original-title="Copied"></div></i>
-                                </div>
-                                @if (isset($pay['bank']))
-                                    <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{strtoupper($pay['bank'])}}</div>
-                                @endif
-                                @if (isset($pay['store']))
-                                    <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{strtoupper($pay['store'])}}</div>
-                                @endif
-			                </div>
-			            </div>
-			        </div>
-        		@endif
-        	@endforeach
-        @endif
-    @endif
+    </div>
     <div class="kotak">
         <div class="container line-bottom">
             <div class="row space-bottom">

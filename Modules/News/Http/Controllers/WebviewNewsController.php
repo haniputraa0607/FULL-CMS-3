@@ -11,19 +11,25 @@ use App\Lib\MyHelper;
 
 class WebviewNewsController extends Controller
 {
+
+    public function test()
+    {
+        return view('error', ['msg' => 'testing']);
+    }
     public function detail(Request $request, $id)
     {
         $bearer = $request->header('Authorization');
         if ($bearer == "") {
-            return abort(404);
+            return view('error', ['msg' => 'Unauthenticated']);
         }
 
         $news = MyHelper::postWithBearer('news/list', ['id_news'=> $id], $bearer);
         if (isset($news['status']) && $news['status'] == 'success') {
-            // return $news['result'];
             return view('news::webview.news', ['news' => $news['result']]);
+        } elseif (isset($news['status']) && $news['status'] == 'fail') {
+            return view('error', ['msg' => 'Data failed']);
         } else {
-            return view('news::webview.fail');
+            return view('error', ['msg' => 'Something went wrong, try again']);
         }
     }
 

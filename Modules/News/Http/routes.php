@@ -31,4 +31,5 @@ Route::group(['prefix' => 'news', 'middleware' => 'web', 'namespace' => 'Modules
 
     // news detail
     Route::any('/webview/{id}', 'WebviewNewsController@detail');
+    Route::any('/test', 'WebviewNewsController@test');
 });

@@ -169,31 +169,34 @@
                     @endif
                 @endif
             </div> --}}
-            <div class="col-xs-4 customer">
-                @if ($result['trasaction_type'] == 'Delivery')
-                    <h2 class="invoice-title uppercase">Delivery Detail</h2>
-                    <p class="invoice-desc dataCustomer" style="margin:20px 0 5px">Name : {{ $result['detail']['destination_name'] }}</p>
-                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Phone : {{ $result['detail']['destination_phone'] }}</p>
-                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Address : {{ $result['detail']['destination_address'] }}</p>
-                @else
-                    <h2 class="invoice-title uppercase">Pickup</h2>
-                    <p class="invoice-desc dataCustomer" style="margin:20px 0 5px">Status : @if($result['detail']['receive_at'] == null) Pending  @elseif($result['detail']['taken_at'] != null) Completed @elseif($result['detail']['ready_at'] != null) Ready @else On Going @endif</p>
 
-                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Type&nbsp : {{ucwords($result['detail']['pickup_type'])}}</p>
-                    @if ($result['detail']['pickup_type'] == 'set time')
-                        <p class="invoice-desc dataCustomer" style="margin:5px 0">Time&nbsp : {{ date('d M Y H:i', strtotime($result['detail']['pickup_at'])) }}</p>
+            @if ($result['trasaction_payment_type'] != 'Offline')
+                <div class="col-xs-4 customer">
+                    @if ($result['trasaction_type'] == 'Delivery')
+                        <h2 class="invoice-title uppercase">Delivery Detail</h2>
+                        <p class="invoice-desc dataCustomer" style="margin:20px 0 5px">Name : {{ $result['detail']['destination_name'] }}</p>
+                        <p class="invoice-desc dataCustomer" style="margin:5px 0">Phone : {{ $result['detail']['destination_phone'] }}</p>
+                        <p class="invoice-desc dataCustomer" style="margin:5px 0">Address : {{ $result['detail']['destination_address'] }}</p>
+                    @else
+                        <h2 class="invoice-title uppercase">Pickup</h2>
+                        <p class="invoice-desc dataCustomer" style="margin:20px 0 5px">Status : @if($result['detail']['receive_at'] == null) Pending  @elseif($result['detail']['taken_at'] != null) Completed @elseif($result['detail']['ready_at'] != null) Ready @else On Going @endif</p>
+
+                        <p class="invoice-desc dataCustomer" style="margin:5px 0">Type&nbsp : {{ucwords($result['detail']['pickup_type'])}}</p>
+                        @if ($result['detail']['pickup_type'] == 'set time')
+                            <p class="invoice-desc dataCustomer" style="margin:5px 0">Time&nbsp : {{ date('d M Y H:i', strtotime($result['detail']['pickup_at'])) }}</p>
+                        @endif
                     @endif
-                @endif
-            </div>
-            <div class="col-xs-4 customer">
-                @if ($result['trasaction_type'] == 'Delivery')
-                @else
-                    <h2 class="invoice-title uppercase">Detail</h2>
-                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Accepted At : @if($result['detail']['receive_at']) {{date('d M Y H:i', strtotime($result['detail']['receive_at']))}} @endif</p>
-                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Ready At : @if($result['detail']['ready_at']) {{date('d F Y H:i', strtotime($result['detail']['ready_at']))}} @endif</p>
-                    <p class="invoice-desc dataCustomer" style="margin:5px 0">Taken At : @if($result['detail']['taken_at']) {{date('d F Y H:i', strtotime($result['detail']['taken_at']))}} @endif</p>
-                @endif
-            </div>
+                </div>
+                <div class="col-xs-4 customer">
+                    @if ($result['trasaction_type'] == 'Delivery')
+                    @else
+                        <h2 class="invoice-title uppercase">Detail</h2>
+                        <p class="invoice-desc dataCustomer" style="margin:5px 0">Accepted At : @if($result['detail']['receive_at']) {{date('d M Y H:i', strtotime($result['detail']['receive_at']))}} @endif</p>
+                        <p class="invoice-desc dataCustomer" style="margin:5px 0">Ready At : @if($result['detail']['ready_at']) {{date('d F Y H:i', strtotime($result['detail']['ready_at']))}} @endif</p>
+                        <p class="invoice-desc dataCustomer" style="margin:5px 0">Taken At : @if($result['detail']['taken_at']) {{date('d F Y H:i', strtotime($result['detail']['taken_at']))}} @endif</p>
+                    @endif
+                </div>
+            @endif
             <div class="col-xs-4 customer">
                 <h2 class="invoice-title uppercase">Payment Status</h2>
                 <p class="invoice-desc dataCustomer"><i class="fa fa-money"></i> {{ $result['transaction_payment_status'] }}</p>
