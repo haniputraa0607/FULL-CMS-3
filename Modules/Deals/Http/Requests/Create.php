@@ -14,7 +14,7 @@ class Create extends FormRequest
     public function rules()
     {
         return [
-            'deals_image' => 'sometimes|dimensions:width=500,height=250',
+            'deals_image' => 'sometimes|dimensions:width=500,height=500',
         ];
     }
 
