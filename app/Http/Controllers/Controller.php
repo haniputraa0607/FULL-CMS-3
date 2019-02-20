@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\loginRequest;
 use App\Lib\MyHelper;
 use Session;
+use GoogleReCaptchaV3;
 
 class Controller extends BaseController
 {
@@ -22,6 +23,14 @@ class Controller extends BaseController
 	}
 	
 	function login(loginRequest $request){
+
+        $captcha = GoogleReCaptchaV3::verifyResponse($request->input('g-recaptcha-response'))->isSuccess();
+        if (!$captcha) {
+        	return redirect()->back()->withErrors(['Recaptcha failed']);
+        }
+        // dd($captcha);
+
+		
 		if(strlen($request->input('password')) != 6){
 			return redirect('login')->withErrors(['Pin must be 6 digits' => 'Pin must be 6 digits'])->withInput();
 		}

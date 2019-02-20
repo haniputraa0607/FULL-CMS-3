@@ -4,10 +4,11 @@
     <head>
         <meta charset="utf-8" />
         <title>Kopi Kenangan | User Login</title>
-		<script src='https://www.google.com/recaptcha/api.js'></script>
+
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Natasha Admin Portal" name="description" />
+        <meta content="Kopi Kenangan Admin Portal" name="description" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 		
 		<meta property="og:description" content="Technopartner Indonesia CRM System" />
 		<meta property="og:type" content="website" />
@@ -40,6 +41,14 @@
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
 		<link rel="shortcut icon" href="{{url('images/favicon-behave.ico')}}" />
+
+        <style type="text/css">
+            .captcha_div > div{
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+        
 	</head>
     <!-- END HEAD -->
 
@@ -69,8 +78,8 @@
                     <label class="control-label visible-ie8 visible-ie9">PIN</label>
                     <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="PIN" name="password" required maxlength="6" />
 				</div>
-				<div class="form-group" style="text-align:center !important;padding-left: 20px;">
-                    {!! Recaptcha::render() !!}
+				<div class="form-group" style="margin-bottom: 0">
+                    {!!  GoogleReCaptchaV3::renderField('captcha_div','homepage', 'captcha_div') !!}
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn blue uppercase btn-block">Login</button>
@@ -120,6 +129,8 @@
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <!-- END THEME LAYOUT SCRIPTS -->
+        {!!  GoogleReCaptchaV3::init() !!}
+
         <script>
             $(document).ready(function()
             {
