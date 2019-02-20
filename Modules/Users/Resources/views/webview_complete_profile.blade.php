@@ -65,6 +65,9 @@
           width: 17px;
           height: 17px;
         }
+        .city .select-img{
+          top: 52px;
+        }
         /*style the items (options), including the selected item:*/
         .select-selected {
           border: 1px solid #c2cad8;
@@ -102,6 +105,11 @@
         }
 
         /* select 2 */
+        .select2-search__field{
+            border: 1px solid #c2cad8;
+        }
+        .select2 .select2-container{
+        }
         .select2 .select2-container--default,
         .select2 .select2-selection--single,
         .select2 .select2-selection__rendered{
@@ -109,13 +117,11 @@
             padding-left: 0px !important;
             color: #000 !important;
             font-family: "Seravek";
+            border-bottom: 1px solid #c2cad8;
         }
         .select2 .select2-selection--single{
             height: 34px;
-            border-top: none;
-            border-left: none;
-            border-right: none;
-            border-bottom-color: #D9D6D6;
+            border: none;
         }
         .select2-results{
             height: 200px;

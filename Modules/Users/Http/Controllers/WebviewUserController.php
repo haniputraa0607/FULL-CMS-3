@@ -21,24 +21,21 @@ class WebviewUserController extends Controller
         $data['bearer'] = $bearer;
 
         $user = parent::getData(MyHelper::getWithBearer('users/get', $bearer));
-        if (empty($user)) {
-            return [
-                'status' => 'fail',
-                'message' => 'Unauthenticated'
-            ];
-        }
-
-        $data['cities'] = parent::getData(MyHelper::get('city/list'));
-
         $data['user'] = [];
-        // get only some data
-        if ($user) {
-            $user_data['phone']    = $user['phone'];
-            $user_data['gender']   = $user['gender'];
-            $user_data['birthday'] = $user['birthday'];
-            $user_data['id_city']  = $user['id_city'];
-            
-            $data['user'] = $user_data;
+
+        if (!empty($user)) {
+
+            $data['cities'] = parent::getData(MyHelper::get('city/list'));
+
+            // get only some data
+            if ($user) {
+                $user_data['phone']    = $user['phone'];
+                $user_data['gender']   = $user['gender'];
+                $user_data['birthday'] = $user['birthday'];
+                $user_data['id_city']  = $user['id_city'];
+                
+                $data['user'] = $user_data;
+            }
         }
         
         return view('users::webview_complete_profile', $data);
