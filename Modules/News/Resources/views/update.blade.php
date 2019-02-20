@@ -687,7 +687,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Image Square
@@ -715,7 +715,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <div class="input-icon right">

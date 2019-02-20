@@ -642,7 +642,7 @@ class OutletController extends Controller
         ];
 
         if(isset($post['page'])){
-            $outlet = MyHelper::post('outlet/list', ['qrcode'=>true, 'qrcode_paginate'=>true]);
+            $outlet = MyHelper::post('outlet/list?page='.$post['page'], ['qrcode'=>true, 'qrcode_paginate'=>true]);
         }else{
             $outlet = MyHelper::post('outlet/list', ['qrcode'=>true, 'qrcode_paginate'=>true]);
         }

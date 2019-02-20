@@ -267,6 +267,39 @@
 		});
     });
 
+	$(".file-splash").change(function(e) {
+		var widthImg  = 1080;
+		var heightImg = 1920;
+
+		var _URL = window.URL || window.webkitURL;
+		var image, file;
+
+		if ((file = this.files[0])) {
+			image = new Image();
+			
+			image.onload = function() {
+				if (this.width == widthImg && this.height == heightImg) {
+					// image.src = _URL.createObjectURL(file);
+				}
+				else {
+					toastr.warning("Please check dimension of your image.");
+					$(this).val("");
+					// $('#remove_square').click()
+					// image.src = _URL.createObjectURL();
+
+					$('#field_splash').val("");
+					$('#div_splash').children('img').attr('src', 'http://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
+					
+					console.log($(this).val())
+					// console.log(document.getElementsByName('news_image_luar'))
+				}
+			};
+		
+			image.src = _URL.createObjectURL(file);
+		}
+
+	});
+
 	</script>
 @endsection
 
@@ -546,17 +579,17 @@
 										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 											<div class="fileinput-new thumbnail">
 												@if(isset($default_home['default_home_splash_screen']))
-													<img src="{{env('APP_API_URL')}}{{$default_home['default_home_splash_screen']}}" alt="">
+													<img src="{{env('APP_API_URL')}}{{$default_home['default_home_splash_screen']}}?" alt="">
 												@else
 													<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 												@endif
 											</div>
-											<div class="fileinput-preview fileinput-exists thumbnail" id="div_background_default" style="max-width: 500px; max-height: 250px;"></div>
+											<div class="fileinput-preview fileinput-exists thumbnail" id="div_splash" style="max-width: 500px; max-height: 250px;"></div>
 											<div>
 												<span class="btn default btn-file">
 												<span class="fileinput-new"> Select image </span>
 												<span class="fileinput-exists"> Change </span>
-												<input type="file" class="file" id="background_default" accept="image/*" name="default_home_splash_screen">
+												<input type="file" class="file file-splash" id="field_splash" accept="image/*" name="default_home_splash_screen">
 												</span>
 												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 											</div>

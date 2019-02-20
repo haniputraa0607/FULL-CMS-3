@@ -152,7 +152,9 @@ class NewsController extends Controller
             }
             
             // set image
-            $news['news_image_luar']   = MyHelper::encodeImage($news['news_image_luar']);
+            if(isset($news['news_image_luar'])){
+                $news['news_image_luar']   = MyHelper::encodeImage($news['news_image_luar']);
+            }
             $news['news_image_dalam']  = MyHelper::encodeImage($news['news_image_dalam']);
 
             // dd($news);
