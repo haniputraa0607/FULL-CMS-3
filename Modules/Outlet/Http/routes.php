@@ -48,4 +48,5 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
 Route::group(['prefix' => 'outlet', 'namespace' => 'Modules\Outlet\Http\Controllers'], function()
 {
     Route::any('webview/{id}', 'WebviewController@detailWebview');
+    Route::any('webview/gofood/list', 'WebviewGofoodController@listOutletGofood');
 });
