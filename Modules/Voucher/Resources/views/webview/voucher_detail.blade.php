@@ -37,10 +37,10 @@
         }
         .description-wrapper,
         .outlet-wrapper{
-            padding: 10px 20px;
+            padding: 7px 20px;
         }
         .subtitle{
-            margin-bottom: 10px;
+            margin-bottom: 7px;
             color: #b8b8b8;
             font-size: 13.3px;
         }
@@ -129,7 +129,13 @@
                 if ($voucher['deal_voucher']['deal'] != "") {
                     $deals = $voucher['deal_voucher']['deal'];
                 }
+                // separate date & time
+                $voucher_expired = date('d/m/Y H:i', strtotime($voucher['voucher_expired_at']));
+                $voucher_expired = explode(" ", $voucher_expired);
+                $voucher_expired_date = $voucher_expired[0];
+                $voucher_expired_time = $voucher_expired[1];
             @endphp
+
             <div class="col-md-4 col-md-offset-4">
                 <img class="deals-img center-block" src="{{ $deals['url_deals_image'] }}" alt="">
 
@@ -140,7 +146,7 @@
 
                     @if($voucher['used_at'] == null)
                     <div class="col-xs-12 valid-date">
-                        Berlaku hingga {{ date('d/m/Y H:i', strtotime($voucher['voucher_expired_at'])) }}
+                        Berlaku hingga {{ $voucher_expired_date }} <span style="margin-left: 10px;">{{ $voucher_expired_time }}</span>
                     </div>
                     @endif
                 </div>
