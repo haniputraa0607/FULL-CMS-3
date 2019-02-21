@@ -91,12 +91,6 @@
             width: 100%;
             height: 100%;
         }
-        .modal.fade .modal-dialog {
-            transform: translate3d(0, 0, 0);
-        }
-        .modal.in .modal-dialog {
-            transform: translate3d(0, 0, 0);
-        }
 
         .kode-text{
             color: #aaaaaa;
@@ -117,6 +111,13 @@
         }
         .space-bottom{
             margin-bottom:20px;
+        }
+
+        .modal.fade .modal-dialog {
+            transform: translateY(50%);
+        }
+        .modal.in .modal-dialog {
+            transform: translateY(50%);
         }
     </style>
 @stop
@@ -220,5 +221,6 @@
 
     <script type="text/javascript" src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{{ url('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+
     @endif
 @stop

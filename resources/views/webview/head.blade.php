@@ -5,13 +5,8 @@
 
     <script src="{{ url('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
     <link href="{{ url('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="{{ url('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN THEME LAYOUT STYLES -->
-    <link href="{{ url('assets/layouts/layout4/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END THEME LAYOUT STYLES -->
-
+    
     <!-- another css plugin -->
 	@yield('page-style-plugin')
 

@@ -257,7 +257,7 @@
     
     <!-- END THEME GLOBAL SCRIPTS -->
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
-    <script src="{{ url('assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{ url('assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script> --}}
     <!-- END THEME LAYOUT SCRIPTS -->
     <script>
         /* set default date */
