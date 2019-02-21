@@ -207,10 +207,11 @@
 
     // banner: edit
     $('#banner .btn-edit').click(function() {
-		var id = $(this).data('id');
+		var id      = $(this).data('id');
 		var id_news = $(this).data('news');
-		var url = $(this).data('url');
-		var image = $(this).data('img');
+		var url     = $(this).data('url');
+		var image   = $(this).data('img');
+		var type    = $(this).data('type');
     	
     	$('#modalBannerUpdate').on('shown.bs.modal', function () {
     		// on chrome
@@ -223,8 +224,12 @@
 			$('#edit-banner-img').attr('src', image);
 
 			if (url != "") {
-				$('#modalBannerUpdate .click-to-radio[value="url"]').prop("checked", true);
-	            $('.click-to-url').show();
+				if (type == 'general') {
+					$('#modalBannerUpdate .click-to-radio[value="url"]').prop("checked", true);
+	            	$('.click-to-url').show();
+				} else {
+					$('#modalBannerUpdate .click-to-radio[value="gofood"]').prop("checked", true);
+				}
 			}
 			else if(id_news != "") {
 				$('#modalBannerUpdate .click-to-radio[value="news"]').prop("checked", true);
@@ -635,7 +640,7 @@
 											</div>
 											<div class="col-md-10 text-right">
 												@if(MyHelper::hasAccess([146], $grantedFeature))
-												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}"><i class="fa fa-pencil"></i> </a>
+												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}"><i class="fa fa-pencil"></i> </a>
 												@endif
 												@if(MyHelper::hasAccess([147], $grantedFeature))
 												<a class="btn red-mint btn-circle btn-delete" data-id="{{ $banner['id_banner'] }}"><i class="fa fa-trash-o"></i> </a>
@@ -653,14 +658,14 @@
 					 			 				$click_to = str_limit($banner['news_title'], 20);
 					 			 			}
 					 			 			elseif ($banner['url'] != null) {
-					 			 				$click_to = str_limit($banner['url'], 20);
-					 			 			}
-					 			 			else{
 					 			 				if ($banner['type'] == 'general') {
-					 			 					$click_to = "-";
+					 			 					$click_to = str_limit($banner['url'], 20);
 					 			 				} else {
 					 			 					$click_to = "GO-FOOD";
 					 			 				}
+					 			 			}
+					 			 			else {
+				 			 					$click_to = "-";
 					 			 			}
 					 			 		@endphp
 
@@ -1180,6 +1185,11 @@
 	                            <div class="col-md-2">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
+									</label>
+	                            </div>
+	                            <div class="col-md-4">
+                                    <label class="radio-inline">
+										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
 	                            </div>
                             </div>

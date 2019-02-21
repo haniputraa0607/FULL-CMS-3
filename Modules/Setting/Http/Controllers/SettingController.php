@@ -873,8 +873,16 @@ class SettingController extends Controller
             unset($post['banner_image']);
         }
 
-        // remove click_to index
-        unset($post['click_to']);
+        $post['type'] = 'general';
+
+        if (isset($post['click_to'])) {
+            if ($post['click_to'] == 'gofood') {
+                $post['type'] = 'gofood';
+            }
+
+            // remove click_to index
+            unset($post['click_to']);
+        }
 
         $result = MyHelper::post('setting/banner/update', $post);
         return parent::redirect($result, 'Banner has been updated.', 'setting/home#banner');
