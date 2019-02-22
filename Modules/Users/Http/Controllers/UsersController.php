@@ -114,7 +114,13 @@ class UsersController extends Controller
             unset($custom[count($custom) - 1]);
         }
 
-        $data['custom'] = $custom;
+		
+		if(stristr($request->url(), 'deals')){
+			$data['deals'] = true;
+			$custom[] = 'outlet_name';
+			$custom[] = 'outlet_code';
+		}
+		$data['custom'] = $custom;
 		// print_r($data);exit;
         return view('users::response', $data);
 	}

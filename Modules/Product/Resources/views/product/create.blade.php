@@ -136,6 +136,37 @@
             }
         })
     }
+
+    $(".file").change(function(e) {
+        var widthImg  = 300;
+        var heightImg = 300;
+
+        var _URL = window.URL || window.webkitURL;
+        var image, file;
+
+        if ((file = this.files[0])) {
+            image = new Image();
+            
+            image.onload = function() {
+                if (this.width == widthImg && this.height == heightImg) {
+                    // image.src = _URL.createObjectURL(file);
+                }
+                else {
+                    toastr.warning("Please check dimension of your photo.");
+                    $(this).val("");
+                    // $('#remove_square').click()
+                    // image.src = _URL.createObjectURL();
+
+                    $('#fieldphoto').val("");
+                    $('#imageproduct').children('img').attr('src', 'http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                    console.log($(this).val())
+                }
+            };
+        
+            image.src = _URL.createObjectURL(file);
+        }
+
+    });
     </script>
 
 @endsection
@@ -216,6 +247,31 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">
+                            Photo <span class="required" aria-required="true">* <br>(300*300) </span> 
+                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                                <img src="http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" id="imageproduct" style="max-width: 200px; max-height: 200px;"></div>
+                                <div>
+                                    <span class="btn default btn-file">
+                                    <span class="fileinput-new"> Select image </span>
+                                    <span class="fileinput-exists"> Change </span>
+                                    <input type="file" class="file" id="fieldphoto" accept="image/*" name="photo" required>
+                                    </span>
+
+                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="col-md-3 control-label">Video
                             <br>
@@ -251,7 +307,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Tag
                             {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}
                         </label>
@@ -267,7 +323,7 @@
                                 @endif
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="form-actions">
@@ -275,7 +331,7 @@
                     <div class="row">
                         <div class="col-md-offset-3 col-md-8">
                             <button type="submit" class="btn blue">Submit</button>
-                            <button type="submit" name="next" value="1" class="btn blue">Submit & Manage Photo</button>
+                            <!-- <button type="submit" name="next" value="1" class="btn blue">Submit & Manage Photo</button> -->
                         </div>
                     </div>
                 </div>

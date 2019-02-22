@@ -847,6 +847,9 @@ $configs = session('configs');
 								<option value="Contact Us" @if($data['autocrm_push_clickto'] == 'Contact Us') selected @endif>Contact Us</option>
 								<option value="Link" @if($data['autocrm_push_clickto'] == 'Link') selected @endif>Link</option>
 								<option value="Logout" @if($data['autocrm_push_clickto'] == 'Logout') selected @endif>Logout</option>
+								@if(isset($deals))
+								<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
+								@endif
 								@if(isset($type) && $type == 'trx')	
 								<option value="Transaction" @if($data['autocrm_push_clickto'] == 'Transaction') selected @endif>Transaction</option>
 								@endif
@@ -942,6 +945,9 @@ $configs = session('configs');
 								<option value="Contact Us" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 								<option value="Link" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Link") selected @endif>Link</option>
 								<option value="Logout" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Logout") selected @endif>Logout</option>
+								@if(isset($deals))
+								<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
+								@endif
 								@if(isset($type) && $type == 'trx')	
 								<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
 								@endif

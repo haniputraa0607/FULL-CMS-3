@@ -122,20 +122,27 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
+                        @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
+                            <th> Action </th>
+                        @endif
                         <th> Parameter </th>
                         <th> Channel </th>
                         <th> Email Recipient </th>
                         <th> SMS Recipient </th>
                         <th> WhatsApp Recipient </th>
-                        @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
-                            <th> Action </th>
-                        @endif
                     </tr>
                 </thead>
                 <tbody>
                     @if (!empty($list))
                         @foreach($list as $value)
                             <tr>
+                                @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
+                                    <td style="width: 85px;">
+                                        @if(MyHelper::hasAccess([25,27], $grantedFeature)) 
+                                            <a href="{{ url('setting-fraud-detection/detail') }}/{{ $value['id_fraud_setting'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i> Detail</a> 
+                                        @endif
+                                    </td>
+                                @endif
                                 <td>{{ $value['parameter'] }}</td>
                                 <td>
                                     @if($value['email_toogle'] == '1')
@@ -172,13 +179,6 @@
                                         @endforeach
                                     @endif
                                 </td>
-                                @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
-                                    <td style="width: 85px;">
-                                        @if(MyHelper::hasAccess([25,27], $grantedFeature)) 
-                                            <a href="{{ url('setting-fraud-detection/detail') }}/{{ $value['id_fraud_setting'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i> Detail</a> 
-                                        @endif
-                                    </td>
-                                @endif
                             </tr>
                         @endforeach
                     @endif

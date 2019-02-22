@@ -571,8 +571,9 @@ class DealsController extends Controller
         }
 
         $data['outlet']    = parent::getData(MyHelper::get('outlet/list'));
-        // $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => "Deals"]));
-        $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
+        $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => ["Deals", "Hidden"]]));
+        // $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
+
         
         foreach ($post as $key => $value) {
             $data[$key] = $value;
@@ -620,8 +621,8 @@ class DealsController extends Controller
         }
 
         $data['outlet']    = parent::getData(MyHelper::get('outlet/list'));
-        // $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => "Deals"]));
-        $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
+        $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => ["Deals", "Hidden"]]));
+        // $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
 
         return view('deals::deals.transaction', $data);
     }

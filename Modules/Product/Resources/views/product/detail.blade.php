@@ -247,7 +247,7 @@
                 image.onload = function() {
                     if (this.width == widthImg && this.height == heightImg) {
                         // image.src = _URL.createObjectURL(file);
-                       $('#formimage').submit()
+                    //    $('#formimage').submit()
                     }
                     else {
                         toastr.warning("Please check dimension of your photo.");
@@ -482,11 +482,11 @@
                 <li class="active">
                     <a href="#info" data-toggle="tab"> Info </a>
                 </li>
-                @if(MyHelper::hasAccess([53], $grantedFeature))
+                <!-- @if(MyHelper::hasAccess([53], $grantedFeature))
                     <li>
                         <a href="#photo" data-toggle="tab"> Photo </a>
                     </li>
-                @endif
+                @endif -->
                 <li>
                     <a href="#price" data-toggle="tab"> Outlet Setting </a>
                 </li>

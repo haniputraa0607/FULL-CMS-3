@@ -200,11 +200,11 @@
 					<div class="form-group">
 							<div class="mt-radio-list">
 								<label class="mt-radio mt-radio-outline"> NOW
-									<input type="radio" value="Now" name="campaign_generate_receipient" <input type="checkbox" value="Inbox" @if(isset($result['campaign_generate_receipient']) && $result['campaign_generate_receipient'] == "Now") checked @endif />
+									<input type="radio" value="Now" name="campaign_generate_receipient" <input type="checkbox" value="Inbox" @if(isset($result['campaign_generate_receipient']) && $result['campaign_generate_receipient'] == "Now") checked @endif required/>
 									<span></span>
 								</label>
 								<label class="mt-radio mt-radio-outline"> At the date time to send
-									<input type="radio" value="Send At Time" name="campaign_generate_receipient" @if(isset($result['campaign_generate_receipient']) && $result['campaign_generate_receipient'] == "Send At Time") checked @endif />
+									<input type="radio" value="Send At Time" name="campaign_generate_receipient" @if(isset($result['campaign_generate_receipient']) && $result['campaign_generate_receipient'] == "Send At Time") checked @endif required/>
 									<span></span>
 								</label>
 							</div>

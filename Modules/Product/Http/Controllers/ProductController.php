@@ -270,6 +270,13 @@ class ProductController extends Controller
                 }
             }
 
+            if (isset($post['photo'])) {
+                $postData['photo']      = MyHelper::encodeImage($post['photo']);
+                $postData['id_product'] = $save['result']['id_product'];
+
+                $save  = MyHelper::post('product/photo/create', $postData);
+            }
+            
             if (isset($next)) {
                 return parent::redirect($save, 'Product has been created.', 'product/detail/'.$post['product_code'].'#photo');
             }
@@ -349,10 +356,44 @@ class ProductController extends Controller
 				$data['outlet'] = $outlet['result'];
 			} 
 			// print_r($data);exit;
+		
             return view('product::product.detail', $data);
         }
         else {
 			// print_r($post);exit;
+			
+			 /**
+             * update info
+             */
+            if (isset($post['id_product_category'])) {
+                // kalo 0 => uncategorize
+                if ($post['id_product_category'] == 0  || empty($post['id_product_category'])) {
+                    $post['id_product_category'] = null;
+                }
+
+                if (isset($post['photo'])) {
+                    $post['photo'] = MyHelper::encodeImage($post['photo']);
+                }
+                
+                // update data
+                $save = MyHelper::post('product/update', $post);
+                
+                unset($post['photo']);
+                
+                // update product tag
+                if (isset($save['status']) && $save['status'] == 'success') {
+                    // delete dulu
+                    $deleteRelation = app($this->tag)->deleteAllProductTag($post['id_product']);
+					// print_r($deleteRelation);exit;
+                    // baru simpan
+                    if (isset($post['id_tag']))  {
+                        $saveRelation = app($this->tag)->createProductTag($post['id_product'], $post['id_tag']);
+                    }
+                }
+
+                return parent::redirect($save, 'Product info has been updated.', 'product/detail/'.$post['product_code'].'#info'); 
+            }
+			
             /**
              * jika price
              */
@@ -421,31 +462,6 @@ class ProductController extends Controller
                 return redirect('product/detail/'.$code.'#photo')->with('success', ['Photo\'s order has been updated']);
             }
 
-            /**
-             * update info
-             */
-            if (isset($post['id_product_category'])) {
-                // kalo 0 => uncategorize
-                if ($post['id_product_category'] == 0  || empty($post['id_product_category'])) {
-                    $post['id_product_category'] = null;
-                }
-
-                // update data
-                $save = MyHelper::post('product/update', $post);
-
-                // update product tag
-                if (isset($save['status']) && $save['status'] == 'success') {
-                    // delete dulu
-                    $deleteRelation = app($this->tag)->deleteAllProductTag($post['id_product']);
-					// print_r($deleteRelation);exit;
-                    // baru simpan
-                    if (isset($post['id_tag']))  {
-                        $saveRelation = app($this->tag)->createProductTag($post['id_product'], $post['id_tag']);
-                    }
-                }
-
-                return parent::redirect($save, 'Product info has been updated.', 'product/detail/'.$code.'#info'); 
-            }
         }
     }
 

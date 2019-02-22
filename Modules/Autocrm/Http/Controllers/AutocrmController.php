@@ -116,6 +116,13 @@ class AutocrmController extends Controller
 				  'menu_active'       => 'about-autoresponse',
 				  'submenu_active'    => 'about-autoresponse-'.$subject
 				];
+
+		if(stristr($subject, 'enquiry')){
+			$data['menu_active'] = 'enquiries';
+			$data['submenu_active'] = 'autoresponse-'.$subject;
+			$data['title'] = 'Auto Response '.ucfirst(str_replace('-',' ',$subject));
+		}
+
 		$query = MyHelper::get('autocrm/list');
 		$test = MyHelper::get('autocrm/textreplace');
 		$auto = null;

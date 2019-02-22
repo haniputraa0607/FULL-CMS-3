@@ -232,6 +232,18 @@ class OutletController extends Controller
         }
     }
 
+    public function updateStatus(Request $request){
+        $post = $request->except('_token');
+        $update = MyHelper::post('outlet/update/status', $post);
+        if (isset($update['status']) && $update['status'] == "success") {
+            return ['status' => 'success'];
+        }elseif (isset($update['status']) && $update['status'] == 'fail') {
+            return ['status' => 'fail', 'messages' => $update['messages']];
+        } else {
+            return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update outlet status'];
+        }
+    }
+
     /*
     Propinsi
     */
