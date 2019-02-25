@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
     <style type="text/css">
     	.kotak1 {
-    		padding-top: 10px;
+    		padding-top: 0px;
     		padding-bottom: 10px;
     		padding-left: 26.3px;
     		padding-right: 26.3px;
@@ -323,7 +323,7 @@
   <body>
 
   	<div class="kotak1">
-   		<div class="row">
+   		<div class="row" style="margin-top: -20px;">
    			<div class="col-12 mb-4 mt-4">
 	   			<div class="input-group kelas-input">
 				  <input type="text" id="id-input" class="form-control text-12-7px seravek-font" placeholder="Cari Outlet">
