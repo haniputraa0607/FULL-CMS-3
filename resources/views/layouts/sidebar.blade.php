@@ -281,11 +281,11 @@
 						</a>
 					</li>
 					@endif
-					<li class="nav-item {{($submenu_active == 'product-tag-list') ? 'active open' : ''}}">
+					<!-- <li class="nav-item {{($submenu_active == 'product-tag-list') ? 'active open' : ''}}">
 						<a href="{{url('product/tag')}}" class="nav-link ">
 							<span class="title">Tag List</span>
 						</a>
-					</li>
+					</li> -->
 					@if(!MyHelper::hasAccess([1], $configs)) 
 						@if(MyHelper::hasAccess([50], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'product-new') ? 'active open' : ''}}">
@@ -625,15 +625,6 @@
 								</a>
 							</li>
 							@endif
-							@if(MyHelper::hasAccess([49], $configs))
-								@if(MyHelper::hasAccess([95], $grantedFeature))
-									<li class="nav-item {{($submenu_active == 'user-autoresponse-deals') ? 'active open' : ''}}">
-										<a href="{{url('user/autoresponse/deals')}}" class="nav-link ">
-											<span class="title">Auto Response Deals</span>
-										</a>
-									</li>
-								@endif
-							@endif
 						</ul>
 					</li>
 					@endif
@@ -704,6 +695,17 @@
 				</a>
 			</li>
 			@endif
+
+			@if(MyHelper::hasAccess([49], $configs))
+				@if(MyHelper::hasAccess([95], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'user-autoresponse-deals') ? 'active open' : ''}}">
+						<a href="{{url('user/autoresponse/deals')}}" class="nav-link ">
+							<i class="fa fa-mail-forward"></i>
+							<span class="title">Auto Response Deals</span>
+						</a>
+					</li>
+				@endif
+			@endif
 			
 			@if(MyHelper::hasAccess([73], $configs))
 				@if(MyHelper::hasAccess([130,131,132,133,134], $grantedFeature))
@@ -769,98 +771,6 @@
 			@endif
 		@endif
 		
-		@if(MyHelper::hasAccess([85,86,87,88,89,90,91,94], $grantedFeature))
-			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">About</h3>
-			</li>
-			
-			@if(MyHelper::hasAccess([85], $grantedFeature))
-			<li class="nav-item {{($menu_active == 'about') ? 'active' : ''}}">
-				<a href="{{url('setting/about')}}" class="nav-link nav-toggle">
-					<i class="icon-info"></i>
-					<span class="title">About Us</span>
-				</a>
-			</li>
-			@endif
-
-			@if(MyHelper::hasAccess([88,89], $grantedFeature))
-			<li class="nav-item {{($menu_active == 'faq') ? 'active' : ''}}">
-				<a href="javascript:;" class="nav-link nav-toggle">
-					<i class="icon-question"></i>
-					<span class="title">FAQ</span>
-					<span class="arrow {{($menu_active == 'faq') ? 'open' : ''}}"></span>
-				</a>
-				<ul class="sub-menu">
-					@if(MyHelper::hasAccess([89], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'faq-new') ? 'active open' : ''}}">
-						<a href="{{url('setting/faq/create')}}" class="nav-link ">
-							<span class="title">New FAQ</span>
-						</a>
-					</li>
-					@endif
-					@if(MyHelper::hasAccess([88], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'faq-list') ? 'active open' : ''}}">
-						<a href="{{url('setting/faq')}}" class="nav-link ">
-							<span class="title">List FAQ</span>
-						</a>
-					</li>
-					@endif
-				</ul>
-			</li>
-			@endif
-			@if(MyHelper::hasAccess([86], $grantedFeature))
-			<li class="nav-item {{($menu_active == 'tos') ? 'active' : ''}}">
-				<a href="{{url('setting/tos')}}" class="nav-link nav-toggle">
-					<i class="icon-note"></i>
-					<span class="title">TOS</span>
-				</a>
-			</li>
-			@endif
-			@if(MyHelper::hasAccess([87], $grantedFeature))
-			<li class="nav-item {{($menu_active == 'contact') ? 'active' : ''}}">
-				<a href="{{url('setting/contact')}}" class="nav-link nav-toggle">
-					<i class="icon-call-in"></i>
-					<span class="title">Contact Us</span>
-				</a>
-			</li>
-			@endif
-
-			@if(MyHelper::hasAccess([40], $configs))
-				@if(MyHelper::hasAccess([94], $grantedFeature))
-				<li class="nav-item {{($menu_active == 'about-autoresponse') ? 'active' : ''}}">
-					<a href="{{url('autocrm')}}" class="nav-link nav-toggle">
-						<i class="icon-action-undo"></i>
-						<span class="title">Auto Response</span>
-						<span class="arrow {{($menu_active == 'autocrm') ? 'open' : ''}}"></span>
-					</a>
-					<ul class="sub-menu">
-						@if(MyHelper::hasAccess([46], $configs))
-							<li class="nav-item {{($submenu_active == 'about-autoresponse-enquiry-question') ? 'active open' : ''}}">
-								<a href="{{url('about/autoresponse/enquiry-question')}}" class="nav-link ">
-									<span class="title">Enquiry Question</span>
-								</a>
-							</li>
-						@endif
-						@if(MyHelper::hasAccess([47], $configs))
-							<li class="nav-item {{($submenu_active == 'about-autoresponse-enquiry-partnership') ? 'active open' : ''}}">
-								<a href="{{url('about/autoresponse/enquiry-partnership')}}" class="nav-link ">
-									<span class="title">Enquiry Partnership</span>
-								</a>
-							</li>
-						@endif
-						@if(MyHelper::hasAccess([48], $configs))
-							<li class="nav-item {{($submenu_active == 'about-autoresponse-enquiry-complaint') ? 'active open' : ''}}">
-								<a href="{{url('about/autoresponse/enquiry-complaint')}}" class="nav-link ">
-									<span class="title">Enquiry Complaint</span>
-								</a>
-							</li>
-						@endif
-					</ul>
-				</li>
-				@endif
-			@endif
-		@endif
-		
 		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">CRM</h3>
@@ -901,10 +811,43 @@
 			@if(MyHelper::hasAccess([58], $configs) || MyHelper::hasAccess([59], $configs) || MyHelper::hasAccess([60], $configs))
 				@if(MyHelper::hasAccess([83], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'enquiries') ? 'active' : ''}}">
-					<a href="{{url('enquiries')}}" class="nav-link nav-toggle">
-						<i class="icon-envelope-open "></i>
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="icon-action-undo"></i>
 						<span class="title">Enquiries</span>
+						<span class="arrow {{($menu_active == 'enquiries') ? 'open' : ''}}"></span>
 					</a>
+					<ul class="sub-menu">
+						<li class="nav-item {{($submenu_active == 'enquiries-list') ? 'active open' : ''}}">
+							<a href="{{url('enquiries')}}" class="nav-link">
+								<span class="title">Enquiry List</span>
+							</a>
+						</li>
+						@if(MyHelper::hasAccess([40], $configs))
+							@if(MyHelper::hasAccess([94], $grantedFeature))
+								@if(MyHelper::hasAccess([46], $configs))
+								<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-question') ? 'active open' : ''}}">
+									<a href="{{url('about/autoresponse/enquiry-question')}}" class="nav-link ">
+										<span class="title">[Response] Enquiry Question</span>
+									</a>
+								</li>
+								@endif
+								@if(MyHelper::hasAccess([47], $configs))
+									<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-partnership') ? 'active open' : ''}}">
+										<a href="{{url('about/autoresponse/enquiry-partnership')}}" class="nav-link ">
+											<span class="title">[Response] Enquiry Partnership</span>
+										</a>
+									</li>
+								@endif
+								@if(MyHelper::hasAccess([48], $configs))
+									<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-complaint') ? 'active open' : ''}}">
+										<a href="{{url('about/autoresponse/enquiry-complaint')}}" class="nav-link ">
+											<span class="title">[Response] Enquiry Complaint</span>
+										</a>
+									</li>
+								@endif
+							@endif
+						@endif
+					</ul>
 				</li>
 				@endif
 			@endif
@@ -1135,6 +1078,63 @@
 				<span class="title">Version Control</span>
 			</a>
 		</li>
+
+		@if(MyHelper::hasAccess([85,86,87,88,89,90,91,94], $grantedFeature))
+			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
+				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">About</h3>
+			</li>
+			
+			@if(MyHelper::hasAccess([85], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'about') ? 'active' : ''}}">
+				<a href="{{url('setting/about')}}" class="nav-link nav-toggle">
+					<i class="icon-info"></i>
+					<span class="title">About Us</span>
+				</a>
+			</li>
+			@endif
+
+			@if(MyHelper::hasAccess([88,89], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'faq') ? 'active' : ''}}">
+				<a href="javascript:;" class="nav-link nav-toggle">
+					<i class="icon-question"></i>
+					<span class="title">FAQ</span>
+					<span class="arrow {{($menu_active == 'faq') ? 'open' : ''}}"></span>
+				</a>
+				<ul class="sub-menu">
+					@if(MyHelper::hasAccess([89], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'faq-new') ? 'active open' : ''}}">
+						<a href="{{url('setting/faq/create')}}" class="nav-link ">
+							<span class="title">New FAQ</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([88], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'faq-list') ? 'active open' : ''}}">
+						<a href="{{url('setting/faq')}}" class="nav-link ">
+							<span class="title">List FAQ</span>
+						</a>
+					</li>
+					@endif
+				</ul>
+			</li>
+			@endif
+			@if(MyHelper::hasAccess([86], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'tos') ? 'active' : ''}}">
+				<a href="{{url('setting/tos')}}" class="nav-link nav-toggle">
+					<i class="icon-note"></i>
+					<span class="title">TOS</span>
+				</a>
+			</li>
+			@endif
+			<!-- @if(MyHelper::hasAccess([87], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'contact') ? 'active' : ''}}">
+				<a href="{{url('setting/contact')}}" class="nav-link nav-toggle">
+					<i class="icon-call-in"></i>
+					<span class="title">Contact Us</span>
+				</a>
+			</li>
+			@endif -->
+		@endif
 
 		@if(MyHelper::hasAccess([125,126,127,128,129], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">

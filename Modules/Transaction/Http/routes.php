@@ -48,14 +48,14 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::any('/setting/go-send-package-detail', 'TransactionController@goSendPackageDetail');
 });
 
-Route::group(['middleware' => 'web', 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
+Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
-    Route::get('/web/view/detail', 'WebviewController@detail');
+    Route::post('/web/view/detail', 'WebviewController@detail');
     Route::post('/web/view/detail/check', 'WebviewController@check');
-    Route::get('/web/view/detail/point', 'WebviewController@detailPoint');
-    Route::get('/web/view/detail/balance', 'WebviewController@detailBalance');
-    Route::get('/web/view/trx', 'WebviewController@success');
-    Route::get('/web/view/outletapp', 'WebviewController@receiptOutletapp');
+    Route::post('/web/view/detail/point', 'WebviewController@detailPoint');
+    Route::post('/web/view/detail/balance', 'WebviewController@detailBalance');
+    Route::post('/web/view/trx', 'WebviewController@success');
+    Route::post('/web/view/outletapp', 'WebviewController@receiptOutletapp');
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()

@@ -45,9 +45,9 @@ class EnquiriesController extends Controller
     {
         $data = [
             'title'          => 'Enquiries',
-            'sub_title'      => '',
+            'sub_title'      => 'List',
             'menu_active'    => 'enquiries',
-            'submenu_active' => '',
+            'submenu_active' => 'enquiries-list',
         ];
 
         // get api

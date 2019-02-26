@@ -46,6 +46,31 @@
         </div>
 
         <div class="form-group">
+            <label class="col-md-3 control-label">Status
+                <span class="required" aria-required="true"> * </span>  
+                <i class="fa fa-question-circle tooltips" data-original-title="Status outlet. Outlet tidak akan ditampilkan di aplikasi ketika status Inactive" data-container="body"></i>
+            </label>
+            <div class="col-md-9">
+                    <div class="md-radio-inline">
+                    <div class="md-radio">
+                        <input type="radio" id="radio14" name="outlet_status" class="md-radiobtn" value="Active" required @if($val['outlet_status'] == 'Active') checked @endif>
+                        <label for="radio14">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span> Active </label>
+                    </div>
+                    <div class="md-radio">
+                        <input type="radio" id="radio16" name="outlet_status" class="md-radiobtn" value="Inactive" required @if($val['outlet_status'] == 'Inactive') checked @endif>
+                        <label for="radio16">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span> Inactive </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Province

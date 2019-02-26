@@ -311,6 +311,7 @@
     </style>
   </head>
   <body>
+    {{ csrf_field() }}
     @php
         // print_r($data);die();
         setlocale (LC_TIME, 'id_ID');

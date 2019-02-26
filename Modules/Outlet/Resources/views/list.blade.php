@@ -109,6 +109,34 @@
                 }
             });
         });
+
+        $('#sample_1').on('draw.dt', function() {
+            $('input[name="outlet_status"]').bootstrapSwitch();
+        });
+
+
+        $('#sample_1').on('switchChange.bootstrapSwitch', 'input[name="outlet_status"]', function(event, state) {
+            var id     = $(this).data('id');
+            var token  = "{{ csrf_token() }}";
+            if(state == true){
+                state = 'Active'
+            }else{
+                state = 'Inactive'
+            }
+            $.ajax({
+                type : "POST",
+                url : "{{ url('outlet/update/status') }}",
+                data : "_token="+token+"&id_outlet="+id+"&outlet_status="+state,
+                success : function(result) {
+                    if (result.status == "success") {
+                        toastr.info("Outlet status has been updated.");
+                    }
+                    else {
+                        toastr.warning(result.messages);
+                    }
+                }
+            });
+        });
     </script>
 
 @endsection
@@ -151,6 +179,7 @@
                         <th> City </th>
                         <th> Open Hour </th>
                         <th> Close Hour </th>
+                        <th> Status </th>
                         @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                             <th> Action </th>
                         @endif
@@ -173,8 +202,11 @@
                                 <td>
                                     @if(!empty($value['today']['close'])){{ date('H:i', strtotime($value['today']['close'])) }}@endif
                                 </td>
+                                <td>
+                                    <input type="checkbox" name="outlet_status" @if($value['outlet_status'] == 'Active') checked @endif data-id="{{ $value['id_outlet'] }}" class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive">
+                                </td>
                                 @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
-                                    <td style="width: 85px;">
+                                    <td style="width: 90px;">
                                         @if(MyHelper::hasAccess([28], $grantedFeature)) 
                                             <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_outlet'] }}"><i class="fa fa-trash-o"></i></a>
                                         @endif

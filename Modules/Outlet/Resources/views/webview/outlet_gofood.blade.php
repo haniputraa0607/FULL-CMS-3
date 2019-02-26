@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
     <style type="text/css">
     	.kotak1 {
-    		padding-top: 10px;
+    		padding-top: 0px;
     		padding-bottom: 10px;
     		padding-left: 26.3px;
     		padding-right: 26.3px;
@@ -321,9 +321,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
   </head>
   <body>
-
+    {{ csrf_field() }}
   	<div class="kotak1">
-   		<div class="row">
+   		<div class="row" style="margin-top: -20px;">
    			<div class="col-12 mb-4 mt-4">
 	   			<div class="input-group kelas-input">
 				  <input type="text" id="id-input" class="form-control text-12-7px seravek-font" placeholder="Cari Outlet">
@@ -362,7 +362,7 @@
   	$(document).on('keyup', '#id-input', function() {
   		var data = JSON.parse($('.data').val());
 	  	var input = $(this).val();
-	  	let apa = data.filter(function(item) {
+	  	var apa = data.filter(function(item) {
 	  		return item.outlet.toLowerCase().search(input.toLowerCase()) !== -1;
 	  	});
 

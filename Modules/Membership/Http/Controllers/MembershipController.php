@@ -117,17 +117,23 @@ class MembershipController extends Controller
 	
 	public function detailWebview(Request $request)
     {
+		$bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return view('error', ['msg' => 'Unauthenticated']);
+		}
+		
     	$data = json_decode(base64_decode($request->get('data')), true);
     	$data['check'] = 1;
-    	$check = MyHelper::post('membership/detail/webview', $data);
+    	$check = MyHelper::postWithBearer('membership/detail/webview', $data, $bearer);
         // dd($check);
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data = $check['result'];
-    	} elseif (isset($check['status']) && $check['status'] == 'success') {
-    		return back()->withErrors($lists['messages']);
-    	} else {
-    		return back()->withErrors(['Data not found']);
-    	}
+		} elseif (isset($check['status']) && $check['status'] == 'fail') {
+            return view('error', ['msg' => 'Data failed']);
+        } else {
+            return view('error', ['msg' => 'Something went wrong, try again']);
+		}
+		
         return view('membership::webview.detail_membership')->with(compact('data'));
     }
 	

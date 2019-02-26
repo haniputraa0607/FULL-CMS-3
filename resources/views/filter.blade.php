@@ -93,8 +93,8 @@
 														'<option value="trx_tax">Transaction Tax</option>'+
 														'<option value="trx_service">Transaction Service</option>'+
 														'<option value="trx_discount">Transaction Discount</option>'+
-														'<option value="trx_shipment_value">Transaction Shipment Value</option>'+
-														'<option value="trx_shipment_courier">Transaction Shipment Courier</option>'+
+														// '<option value="trx_shipment_value">Transaction Shipment Value</option>'+
+														// '<option value="trx_shipment_courier">Transaction Shipment Courier</option>'+
 														'<option value="trx_payment_type">Transaction Payment Type</option>'+
 														'<option value="trx_payment_status">Transaction Payment Status</option>'+
 														'<option value="trx_void_count">Transaction Void Count</option>'+
@@ -245,8 +245,8 @@
 										'<option value="trx_tax">Transaction Tax</option>'+
 										'<option value="trx_service">Transaction Service</option>'+
 										'<option value="trx_discount">Transaction Discount</option>'+
-										'<option value="trx_shipment_value">Transaction Shipment Value</option>'+
-										'<option value="trx_shipment_courier">Transaction Shipment Courier</option>'+
+										// '<option value="trx_shipment_value">Transaction Shipment Value</option>'+
+										// '<option value="trx_shipment_courier">Transaction Shipment Courier</option>'+
 										'<option value="trx_payment_type">Transaction Payment Type</option>'+
 										'<option value="trx_payment_status">Transaction Payment Status</option>'+
 										'<option value="trx_void_count">Transaction Void Count</option>'+
@@ -933,8 +933,8 @@
 															<option value="trx_tax">Transaction Tax</option>
 															<option value="trx_service">Transaction Service</option>
 															<option value="trx_discount">Transaction Discount</option>
-															<option value="trx_shipment_value">Transaction Shipment Value</option>
-															<option value="trx_shipment_courier">Transaction Shipment Courier</option>
+													<!--	<option value="trx_shipment_value">Transaction Shipment Value</option> -->
+													<!--	<option value="trx_shipment_courier">Transaction Shipment Courier</option> -->
 															<option value="trx_payment_type">Transaction Payment Type</option>
 															<option value="trx_payment_status">Transaction Payment Status</option>
 															<option value="trx_void_count">Transaction Void Count</option>
@@ -1128,8 +1128,8 @@
 																	<option value="trx_tax" @if($row['subject'] == 'trx_tax') selected @endif>Transaction Tax</option>
 																	<option value="trx_service" @if($row['subject'] == 'trx_service') selected @endif>Transaction Service</option>
 																	<option value="trx_discount" @if($row['subject'] == 'trx_discount') selected @endif>Transaction Discount</option>
-																	<option value="trx_shipment_value" @if($row['subject'] == 'trx_shipment_value') selected @endif>Transaction Shipment Value</option>
-																	<option value="trx_shipment_courier" @if($row['subject'] == 'trx_shipment_courier') selected @endif>Transaction Shipment Courier</option>
+																	<!-- <option value="trx_shipment_value" @if($row['subject'] == 'trx_shipment_value') selected @endif>Transaction Shipment Value</option> -->
+																	<!-- <option value="trx_shipment_courier" @if($row['subject'] == 'trx_shipment_courier') selected @endif>Transaction Shipment Courier</option> -->
 																	<option value="trx_payment_type" @if($row['subject'] == 'trx_payment_type') selected @endif>Transaction Payment Type</option>
 																	<option value="trx_payment_status" @if($row['subject'] == 'trx_payment_status') selected @endif>Transaction Payment Status</option>
 																	<option value="trx_void_count" @if($row['subject'] == 'trx_void_count') selected @endif>Transaction Void Count</option>

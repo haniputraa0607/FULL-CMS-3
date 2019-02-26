@@ -60,6 +60,31 @@
                 </div>
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">
+                Photo <span class="required" aria-required="true">* <br>(300*300) </span> 
+                <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                    <img src="@if(isset($syu['photos'][0]['url_product_photo'])){{$syu['photos'][0]['url_product_photo']}}@endif" alt="">
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail" id="imageproduct" style="max-width: 200px; max-height: 200px;"></div>
+                    <div>
+                        <span class="btn default btn-file">
+                        <span class="fileinput-new"> Select image </span>
+                        <span class="fileinput-exists"> Change </span>
+                        <input type="file" class="file" id="fieldphoto" accept="image/*" name="photo">
+                        </span>
+
+                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="col-md-3 control-label">Video
                 <br>
@@ -95,7 +120,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <!-- {{--<div class="form-group">
             <label for="multiple" class="control-label col-md-3">Tag
                 {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}
             </label>
@@ -119,7 +144,7 @@
                         @endif
                 </select>
             </div>
-        </div>
+        </div> --}} -->
     </div>
     <input type="hidden" name="id_product" value="{{ $syu['id_product'] }}">
     @endforeach

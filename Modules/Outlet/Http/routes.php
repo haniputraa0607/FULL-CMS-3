@@ -8,6 +8,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::any('create', ['middleware' => 'feature_control:26', 'uses' => 'OutletController@create']);
     Route::get('detail/{id}', ['middleware' => 'feature_control:25', 'uses' => 'OutletController@detail']);
     Route::post('detail/{id}', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@detail']);
+    Route::post('update/status', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@updateStatus']);
     Route::post('get/city', 'OutletController@getCity');
     Route::post('delete', ['middleware' => 'feature_control:28', 'uses' => 'OutletController@delete']);
     Route::get('export', ['middleware' => ['feature_control:33', 'config_control:3'], 'uses' => 'OutletController@exportData']);
