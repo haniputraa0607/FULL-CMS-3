@@ -25,6 +25,7 @@
         }
         .pace .pace-activity{
             top: 15px;
+            border-radius: 10px !important;
         }
     </style>
 
