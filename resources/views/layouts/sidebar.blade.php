@@ -1140,7 +1140,13 @@
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Report</h3>
 			</li>
-			@if(MyHelper::hasAccess([125], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'report-single') ? 'active' : ''}}">
+				<a href="{{url('report')}}" class="nav-link nav-toggle">
+					<i class="icon-graph"></i>
+					<span class="title">Report</span>
+				</a>
+			</li>
+			{{-- @if(MyHelper::hasAccess([125], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'report-global') ? 'active' : ''}}">
 				<a href="{{url('report/global')}}" class="nav-link nav-toggle">
 					<i class="icon-graph"></i>
@@ -1171,17 +1177,17 @@
 					<span class="title">Outlet</span>
 				</a>
 			</li>
-			@endif
+			@endif --}}
 		@endif
 
-		@if(MyHelper::hasAccess([129], $grantedFeature))
+		{{-- @if(MyHelper::hasAccess([129], $grantedFeature))
 		<li class="nav-item {{($menu_active == 'report-magic') ? 'active' : ''}}">
 			<a href="{{url('report/magic')}}" class="nav-link nav-toggle">
 				<i class="icon-graph"></i>
 				<span class="title">Magic Report</span>
 			</a>
 		</li>
-		@endif
+		@endif --}}
 
 	</ul>
 	<!-- END SIDEBAR MENU -->

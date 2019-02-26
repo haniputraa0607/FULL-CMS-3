@@ -32,4 +32,8 @@ Route::group(['middleware' => 'web', 'prefix' => 'report', 'namespace' => 'Modul
     Route::any('/tag/detail/{id}/{start}/{end}/{id_outlet}', ['middleware' => 'feature_control:84', 'uses' => 'MagicReportController@reportTagDetail']);
     Route::post('newtop', ['middleware' => 'feature_control:84', 'uses' => 'MagicReportController@newTop']);
     
+    // SINGLE REPORT
+    Route::any('/', [ 'uses' => 'SingleReportController@index']);
+    Route::post('/ajax', [ 'uses' => 'SingleReportController@singleReport']);
+
 });
