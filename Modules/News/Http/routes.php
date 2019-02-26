@@ -22,7 +22,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', '
 });
 
 /* Webview */
-Route::group(['prefix' => 'news', 'middleware' => 'web', 'namespace' => 'Modules\News\Http\Controllers'], function()
+Route::group(['prefix' => 'news', 'namespace' => 'Modules\News\Http\Controllers'], function()
 {
     // custom form
     Route::any('/webview/custom-form/{id_news}', 'WebviewNewsController@customFormView');

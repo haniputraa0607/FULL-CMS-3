@@ -18,6 +18,10 @@ class WebviewController extends Controller
             return view('error', ['msg' => 'Unauthenticated']);
         }
 
+        // if ($request->isMethod('get')) {
+        //     return view('error', ['msg' => 'Url method is POST']);
+        // }
+
     	$data = json_decode(base64_decode($request->get('data')), true);
     	$data['check'] = 1;
     	$check = MyHelper::post('transaction/detail/webview', $data);
@@ -78,6 +82,10 @@ class WebviewController extends Controller
             return view('error', ['msg' => 'Unauthenticated']);
         }
 
+        // if ($request->isMethod('get')) {
+        //     return view('error', ['msg' => 'Url method is POST']);
+        // }
+        
         $data = json_decode(base64_decode($request->get('data')), true);
         $data['check'] = 1;
         $check = MyHelper::post('outletapp/order/detail/view', $data);
@@ -102,6 +110,10 @@ class WebviewController extends Controller
         if ($bearer == "") {
             return view('error', ['msg' => 'Unauthenticated']);
         }
+
+        // if ($request->isMethod('get')) {
+        //     return view('error', ['msg' => 'Url method is POST']);
+        // }
 
         $data = json_decode(base64_decode($request->get('data')), true);
         $data['check'] = 1;
@@ -132,6 +144,10 @@ class WebviewController extends Controller
         if ($bearer == "") {
             return view('error', ['msg' => 'Unauthenticated']);
         }
+
+        // if ($request->isMethod('get')) {
+        //     return view('error', ['msg' => 'Url method is POST']);
+        // }
         
         $data = json_decode(base64_decode($request->get('data')), true);
         $data['check'] = 1;
@@ -167,6 +183,10 @@ class WebviewController extends Controller
         if ($bearer == "") {
             return view('error', ['msg' => 'Unauthenticated']);
         }
+
+        // if ($request->isMethod('get')) {
+        //     return view('error', ['msg' => 'Url method is POST']);
+        // }
 
         $data = json_decode(base64_decode($request->get('data')), true);
     	$check = MyHelper::postWithBearer('outletapp/order/detail/view', $data, $bearer);

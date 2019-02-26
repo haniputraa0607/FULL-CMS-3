@@ -191,6 +191,7 @@
     </style>
   </head>
   <body>
+    {{ csrf_field() }}
   	<div class="kotak">
   		<div class="container">
 	   		<div class="row space-bottom">

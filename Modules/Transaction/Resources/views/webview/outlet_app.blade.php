@@ -346,6 +346,7 @@
     </style>
   </head>
   <body>
+    {{ csrf_field() }}
     <a id="modal-usaha" href="#">
         <div class="modal-usaha-content">
             <img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}">

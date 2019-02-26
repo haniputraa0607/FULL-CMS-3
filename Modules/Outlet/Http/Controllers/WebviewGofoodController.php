@@ -16,6 +16,10 @@ class WebviewGofoodController extends Controller
             return view('error', ['msg' => 'Unauthenticated']);
         }
 
+        if ($request->isMethod('get')) {
+            return view('error', ['msg' => 'Url method is POST']);
+        }
+
     	$post = $request->all();
     	// $post['latitude'] = '-7.803761';
     	// $post['longitude'] = '110.383058';

@@ -10,8 +10,17 @@ use App\Lib\MyHelper;
 
 class WebviewController extends Controller
 {
-    public function detailWebview($id)
+    public function detailWebview(Request $request, $id)
     {
+    	$bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return view('error', ['msg' => 'Unauthenticated']);
+        }
+
+        // if ($request->isMethod('get')) {
+        //     return view('error', ['msg' => 'Url method is POST']);
+        // }
+        
         $list = MyHelper::post('outlet/list', ['id_outlet' => $id]);
         // return $list;
         return view('outlet::webview.list', ['data' => $list['result']]);

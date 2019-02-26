@@ -23,6 +23,10 @@ class WebviewNewsController extends Controller
             return view('error', ['msg' => 'Unauthenticated']);
         }
 
+        if ($request->isMethod('get')) {
+            return view('error', ['msg' => 'Url method is POST']);
+        }
+
         $news = MyHelper::postWithBearer('news/list', ['id_news'=> $id], $bearer);
         if (isset($news['status']) && $news['status'] == 'success') {
             return view('news::webview.news', ['news' => $news['result']]);
