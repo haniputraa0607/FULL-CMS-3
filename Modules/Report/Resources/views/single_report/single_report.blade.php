@@ -312,24 +312,7 @@
 
 		// generate chart
 		$(document).ready(function(){
-	    	var trx_data = {!! json_encode($report['transactions']['trx_chart']) !!};
-	    	var trx_gender_data = {!! json_encode($report['transactions']['trx_gender_chart']) !!};
-	    	var trx_age_data = {!! json_encode($report['transactions']['trx_age_chart']) !!};
-	    	var trx_device_data = {!! json_encode($report['transactions']['trx_device_chart']) !!};
-	    	var trx_provider_data = {!! json_encode($report['transactions']['trx_provider_chart']) !!};
-
-	    	var product_data = {!! json_encode($report['products']['product_chart']) !!};
-	    	var product_gender_data = {!! json_encode($report['products']['product_gender_chart']) !!};
-	    	var product_age_data = {!! json_encode($report['products']['product_age_chart']) !!};
-	    	var product_device_data = {!! json_encode($report['products']['product_device_chart']) !!};
-	    	var product_provider_data = {!! json_encode($report['products']['product_provider_chart']) !!};
-
-	    	var reg_gender_data = {!! json_encode($report['registrations']['reg_gender_chart']) !!};
-	    	var reg_age_data = {!! json_encode($report['registrations']['reg_age_chart']) !!};
-	    	var reg_device_data = {!! json_encode($report['registrations']['reg_device_chart']) !!};
-	    	var reg_provider_data = {!! json_encode($report['registrations']['reg_provider_chart']) !!};
-
-	    	// series: related with api data properties
+			// series: related with api data properties
 			var gender_series = {
 				male: "Male",
 				female: "Female"
@@ -353,35 +336,76 @@
 				smart: "Smart"
 			};
 
-			// trx_chart(trx_data);
-			var trx_series = {
-				total_qty: ["Quantity", false],
-				total_idr: ["IDR", true],
-				kopi_point: ["Kopi Point", true]
-			};
-			multi_axis_chart(trx_data, "trx_chart", trx_series);
-			single_axis_chart(trx_gender_data, "trx_gender_chart", "Quantity", gender_series)
-			single_axis_chart(trx_age_data, "trx_age_chart", "Quantity", age_series)
-			single_axis_chart(trx_device_data, "trx_device_chart", "Quantity", device_series);
-			single_axis_chart(trx_provider_data, "trx_provider_chart", "Quantity", provider_series);
+			@if (isset($report['transactions']))
+		    	var trx_data = {!! json_encode($report['transactions']['trx_chart']) !!};
+		    	var trx_gender_data = {!! json_encode($report['transactions']['trx_gender_chart']) !!};
+		    	var trx_age_data = {!! json_encode($report['transactions']['trx_age_chart']) !!};
+		    	var trx_device_data = {!! json_encode($report['transactions']['trx_device_chart']) !!};
+		    	var trx_provider_data = {!! json_encode($report['transactions']['trx_provider_chart']) !!};
 
-			/* product charts */
-			var product_series = {
-				total_rec: ["Total Recurring", false],
-				total_qty: ["Quantity", false],
-				total_nominal: ["IDR", true]
-			};
-			multi_axis_chart(product_data, "product_chart", product_series);
-			single_axis_chart(product_gender_data, "product_gender_chart", "Quantity", gender_series)
-			single_axis_chart(product_age_data, "product_age_chart", "Quantity", age_series)
-			single_axis_chart(product_device_data, "product_device_chart", "Quantity", device_series);
-			single_axis_chart(product_provider_data, "product_provider_chart", "Quantity", provider_series);
+		    	// trx_chart(trx_data);
+				var trx_series = {
+					total_qty: ["Quantity", false],
+					total_idr: ["IDR", true],
+					kopi_point: ["Kopi Point", true]
+				};
+				multi_axis_chart(trx_data, "trx_chart", trx_series);
+				single_axis_chart(trx_gender_data, "trx_gender_chart", "Quantity", gender_series)
+				single_axis_chart(trx_age_data, "trx_age_chart", "Quantity", age_series)
+				single_axis_chart(trx_device_data, "trx_device_chart", "Quantity", device_series);
+				single_axis_chart(trx_provider_data, "trx_provider_chart", "Quantity", provider_series);
+	    	@endif
 
-			/* registration charts */
-			single_axis_chart(reg_gender_data, "reg_gender_chart", "Quantity", gender_series)
-			single_axis_chart(reg_age_data, "reg_age_chart", "Quantity", age_series)
-			single_axis_chart(reg_device_data, "reg_device_chart", "Quantity", device_series);
-			single_axis_chart(reg_provider_data, "reg_provider_chart", "Quantity", provider_series);
+			@if (isset($report['products']))
+		    	var product_data = {!! json_encode($report['products']['product_chart']) !!};
+		    	var product_gender_data = {!! json_encode($report['products']['product_gender_chart']) !!};
+		    	var product_age_data = {!! json_encode($report['products']['product_age_chart']) !!};
+		    	var product_device_data = {!! json_encode($report['products']['product_device_chart']) !!};
+		    	var product_provider_data = {!! json_encode($report['products']['product_provider_chart']) !!};
+
+		    	// product charts 
+				var product_series = {
+					total_rec: ["Total Recurring", false],
+					total_qty: ["Quantity", false],
+					total_nominal: ["IDR", true]
+				};
+				multi_axis_chart(product_data, "product_chart", product_series);
+				single_axis_chart(product_gender_data, "product_gender_chart", "Quantity", gender_series)
+				single_axis_chart(product_age_data, "product_age_chart", "Quantity", age_series)
+				single_axis_chart(product_device_data, "product_device_chart", "Quantity", device_series);
+				single_axis_chart(product_provider_data, "product_provider_chart", "Quantity", provider_series);
+	    	@endif
+
+			@if (isset($report['registrations']))
+		    	var reg_gender_data = {!! json_encode($report['registrations']['reg_gender_chart']) !!};
+		    	var reg_age_data = {!! json_encode($report['registrations']['reg_age_chart']) !!};
+		    	var reg_device_data = {!! json_encode($report['registrations']['reg_device_chart']) !!};
+		    	var reg_provider_data = {!! json_encode($report['registrations']['reg_provider_chart']) !!};
+
+				// registration charts 
+				single_axis_chart(reg_gender_data, "reg_gender_chart", "Quantity", gender_series)
+				single_axis_chart(reg_age_data, "reg_age_chart", "Quantity", age_series)
+				single_axis_chart(reg_device_data, "reg_device_chart", "Quantity", device_series);
+				single_axis_chart(reg_provider_data, "reg_provider_chart", "Quantity", provider_series);
+	    	@endif
+
+	    	@if (isset($report['memberships']))
+		    	var mem_data = {!! json_encode($report['memberships']['mem_chart']) !!};
+		    	var mem_gender_data = {!! json_encode($report['memberships']['mem_gender_chart']) !!};
+		    	var mem_age_data = {!! json_encode($report['memberships']['mem_age_chart']) !!};
+		    	var mem_device_data = {!! json_encode($report['memberships']['mem_device_chart']) !!};
+		    	var mem_provider_data = {!! json_encode($report['memberships']['mem_provider_chart']) !!};
+
+		    	var mem_series = {
+		    		cust_total: "Total Customer",
+		    	};
+				// membership charts 
+				single_axis_chart(mem_data, "mem_chart", "Quantity", mem_series)
+				single_axis_chart(mem_gender_data, "mem_gender_chart", "Quantity", gender_series)
+				single_axis_chart(mem_age_data, "mem_age_chart", "Quantity", age_series)
+				single_axis_chart(mem_device_data, "mem_device_chart", "Quantity", device_series);
+				single_axis_chart(mem_provider_data, "mem_provider_chart", "Quantity", provider_series);
+	    	@endif
 		});
 
     </script>
@@ -537,21 +561,9 @@
 
 	    {{-- Customer Registration --}}
 	    @include('report::single_report._registration')
-	    {{-- <div class="portlet light bordered">
-	        <div class="portlet-title">
-	            <div class="caption ">
-	                <span class="caption-subject sbold uppercase font-blue">Customer Registration</span>
-	            </div>
-	        </div>
-	        <div class="portlet-body form">
-	            <div class="form-body">
-	                <div class="row">
-	                </div>
-	            </div>
-	        </div>
-	    </div> --}}
 
-	    {{-- Customer Data --}}
+	    {{-- Customer Membership --}}
+	    @include('report::single_report._membership')
 	    {{-- <div class="portlet light bordered">
 	        <div class="portlet-title">
 	            <div class="caption ">

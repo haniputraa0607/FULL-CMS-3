@@ -23,18 +23,23 @@ class SingleReportController extends Controller
             'submenu_active' => 'report-single'
         ];
 
+        // get report year
+        $data['year_list'] = [date('Y')];
+        $year_list = MyHelper::get('report/single/year-list');
+        if (isset($year_list['status']) && $year_list['status']=='success' ) {
+            $data['year_list'] = $year_list['result'];
+        }
         // get outlet list
         $data['outlets'] = [];
         $outlets = MyHelper::get('report/single/outlet-list');
         if (isset($outlets['status']) && $outlets['status']=='success' ) {
             $data['outlets'] = $outlets['result'];
         }
-
-        // get report year
-        $data['year_list'] = [date('Y')];
-        $year_list = MyHelper::get('report/single/year-list');
-        if (isset($year_list['status']) && $year_list['status']=='success' ) {
-            $data['year_list'] = $year_list['result'];
+        // get membership list
+        $data['memberships'] = [];
+        $memberships = MyHelper::get('report/single/membership-list');
+        if (isset($memberships['status']) && $memberships['status']=='success' ) {
+            $data['memberships'] = $memberships['result'];
         }
 
         $today = date('Y-m-d');
@@ -53,6 +58,7 @@ class SingleReportController extends Controller
             $data['report'] = $report['result'];
         }
         // dd($data);
+        // dd(empty($data['report']), count($data['report']));
 
         return view('report::single_report.single_report', $data);
     }
