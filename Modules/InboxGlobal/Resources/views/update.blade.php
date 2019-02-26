@@ -161,6 +161,9 @@ $grantedFeature     = session('granted_features');
 			});
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+			document.getElementById('inbox_global_id_reference').required = true;
+		}else{
+			document.getElementById('inbox_global_id_reference').required = false;
 		}
 		
 		if(det == 'Home'){
@@ -202,6 +205,9 @@ $grantedFeature     = session('granted_features');
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'block';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+			document.getElementById('inbox_global_link').required = true;
+		}else{
+			document.getElementById('inbox_global_link').required = false;
 		}
 		
 		if(det == 'Logout'){
@@ -306,14 +312,14 @@ $grantedFeature     = session('granted_features');
 								</label>
 							</div>
 							<div class="col-md-10">
-								<select name="inbox_global_clickto" id="inbox_global_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
+								<select name="inbox_global_clickto" id="inbox_global_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')" required>
 									<option value="" selected></option>
 									<option value="Home" @if(old('inbox_global_clickto') == 'Home') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "Home") selected @endif @endif>Home</option>
 									{{-- <option value="Content" @if(old('inbox_global_clickto') == 'Content') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "News") selected @endif @endif>Content</option> --}}
 									<option value="News" @if(old('inbox_global_clickto') == 'News') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "News") selected @endif @endif>News</option>
-									<option value="Product" @if(old('inbox_global_clickto') == 'Product') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "Product") selected @endif @endif>Product</option>
+									<!-- <option value="Product" @if(old('inbox_global_clickto') == 'Product') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "Product") selected @endif @endif>Product</option> -->
 									<option value="Outlet" @if(old('inbox_global_clickto') == 'Outlet') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "Outlet") selected @endif @endif>Outlet</option>
-									<option value="Inbox" @if(old('inbox_global_clickto') == 'Inbox') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "Inbox") selected @endif @endif>Inbox</option>
+									<!-- <option value="Inbox" @if(old('inbox_global_clickto') == 'Inbox') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "Inbox") selected @endif @endif>Inbox</option> -->
 									<option value="Voucher" @if(old('inbox_global_clickto') == 'Voucher') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "Voucher") selected @endif @endif>Voucher</option>
 									<option value="Contact Us" @if(old('inbox_global_clickto') == 'Contact Us') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "Contact Us") selected @endif @endif>Contact Us</option>
 									<option value="Link" @if(old('inbox_global_clickto') == 'Link') selected @else @if(isset($inbox['inbox_global_clickto']) && $inbox['inbox_global_clickto'] == "Link") selected @endif @endif>Link</option>
@@ -341,7 +347,7 @@ $grantedFeature     = session('granted_features');
 								</label>
 							</div>
 							<div class="col-md-10">
-								<input type="text" placeholder="http://" class="form-control" name="inbox_global_link" value="@if(isset($inbox['inbox_global_link'])){{$inbox['inbox_global_link']}}@endif">
+								<input type="text" placeholder="http://" class="form-control" id="inbox_global_link" name="inbox_global_link" value="@if(isset($inbox['inbox_global_link'])){{$inbox['inbox_global_link']}}@endif">
 							</div>
 						</div>
 						<div class="form-group" id="div_inbox_content" style="display:none">
@@ -373,7 +379,7 @@ $grantedFeature     = session('granted_features');
 							</div>	
 							<div class="col-md-4">
 								<div class="input-group date form_datetime form_datetime bs-datetime">
-									<input type="text" size="16" class="form-control" name="inbox_global_start" placeholder="Date to Start Displaying" @if(isset($inbox['inbox_global_start']) && $inbox['inbox_global_start'] != "") value="{{date('d F Y - H:i', strtotime($inbox['inbox_global_start']))}}" @endif>
+									<input type="text" size="16" class="form-control" name="inbox_global_start" placeholder="Date to Start Displaying" @if(isset($inbox['inbox_global_start']) && $inbox['inbox_global_start'] != "") value="{{date('d F Y - H:i', strtotime($inbox['inbox_global_start']))}}" @endif required>
 									<span class="input-group-addon">
 										<button class="btn default date-set" type="button">
 											<i class="fa fa-calendar"></i>
@@ -390,7 +396,7 @@ $grantedFeature     = session('granted_features');
 							</div>
 							<div class="col-md-4">
 								<div class="input-group date form_datetime form_datetime bs-datetime">
-									<input type="text" size="16" class="form-control" name="inbox_global_end" placeholder="Date to Stop Displaying" @if(isset($inbox['inbox_global_end']) && $inbox['inbox_global_end'] != "") value="{{date('d F Y - H:i', strtotime($inbox['inbox_global_end']))}}" @endif>
+									<input type="text" size="16" class="form-control" name="inbox_global_end" placeholder="Date to Stop Displaying" @if(isset($inbox['inbox_global_end']) && $inbox['inbox_global_end'] != "") value="{{date('d F Y - H:i', strtotime($inbox['inbox_global_end']))}}" @endif required>
 									<span class="input-group-addon">
 										<button class="btn default date-set" type="button">
 											<i class="fa fa-calendar"></i>

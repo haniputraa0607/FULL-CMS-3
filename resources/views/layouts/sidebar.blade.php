@@ -216,12 +216,14 @@
 					<span class="arrow {{($menu_active == 'outlet') ? 'open' : ''}}"></span>
 				</a>
 				<ul class="sub-menu">
-					@if(MyHelper::hasAccess([26], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'outlet-new') ? 'active open' : ''}}">
-						<a href="{{url('outlet/create')}}" class="nav-link ">
-							<span class="title">New Outlet</span>
-						</a>
-					</li>
+					@if(!MyHelper::hasAccess([82], $configs))
+						@if(MyHelper::hasAccess([26], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'outlet-new') ? 'active open' : ''}}">
+							<a href="{{url('outlet/create')}}" class="nav-link ">
+								<span class="title">New Outlet</span>
+							</a>
+						</li>
+						@endif
 					@endif
 					@if(MyHelper::hasAccess([2], $configs) || MyHelper::hasAccess([3], $configs))
 						@if(MyHelper::hasAccess([32, 33], $grantedFeature))
@@ -953,6 +955,16 @@
 						<span class="arrow {{($menu_active == 'promotion') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
+						<li class="nav-item {{($submenu_active == 'new-deals-promotion') ? 'active open' : ''}}">
+							<a href="{{url('promotion/deals/create')}}" class="nav-link ">
+								<span class="title">New Deals Promotion</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'deals-promotion') ? 'active open' : ''}}">
+							<a href="{{url('promotion/deals')}}" class="nav-link ">
+								<span class="title">Deals Promotion</span>
+							</a>
+						</li>
 						@if(MyHelper::hasAccess([111], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'promotion-create') ? 'active open' : ''}}">
 							<a href="{{url('promotion/create')}}" class="nav-link ">
