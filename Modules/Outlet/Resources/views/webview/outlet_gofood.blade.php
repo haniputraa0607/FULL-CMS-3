@@ -362,7 +362,7 @@
   	$(document).on('keyup', '#id-input', function() {
   		var data = JSON.parse($('.data').val());
 	  	var input = $(this).val();
-	  	let apa = data.filter(function(item) {
+	  	var apa = data.filter(function(item) {
 	  		return item.outlet.toLowerCase().search(input.toLowerCase()) !== -1;
 	  	});
 
