@@ -133,6 +133,18 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                Deep Link Gojek
+                <i class="fa fa-question-circle tooltips" data-original-title="Deep link gojek" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="deep_link" value="{{ $val['deep_link'] }}" placeholder="Deep link gojek">
+            </div>
+        </div>
+
         <hr>
         <h4>Maps</h4>
         <div class="form-group">
