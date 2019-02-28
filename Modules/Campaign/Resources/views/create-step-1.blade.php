@@ -167,23 +167,11 @@
 					$conditions = $search_param;
 				?>
 			@else
-				@if(Session::has('form'))
-				<?php
-					$search_param = Session::get('form');
-					$search_param = array_filter($search_param);
-					if(isset($search_param['conditions'])){
-						$conditions = $search_param['conditions'];
-					} else {
-						$conditions = "";
-					}
-				?>
-				@else
 				<?php
 				//@if(isset($result['rules']))
 				// @else
 					$conditions = "";
 				?>
-				@endif
 			@endif
 			<?php $tombolsubmit = 'hidden'; ?>
 			@include('filter') 

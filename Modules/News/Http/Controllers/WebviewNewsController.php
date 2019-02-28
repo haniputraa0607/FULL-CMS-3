@@ -14,7 +14,9 @@ class WebviewNewsController extends Controller
 
     public function test()
     {
-        return view('error', ['msg' => 'testing']);
+        $news = MyHelper::post('news/list/test', ['id_news'=> 1]);
+        // return $news;
+        return view('news::webview.news', ['news' => $news['result']]);
     }
     public function detail(Request $request, $id)
     {

@@ -417,24 +417,24 @@
 										@endif
 									@endif
 									{{-- cek configs membership benefit discount --}}
-									@if(MyHelper::hasAccess([23], $configs))
-										<div class="col-md-12" style="margin-top:20px">
-											<div class="input-icon right">
-												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-													Discount Received
-													<i class="fa fa-question-circle tooltips" data-original-title="Persentase Diskon final yang diterima untuk setiap transaksi" data-container="body"></i>
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="input-icon input-group">
-													<input class="form-control price" type="text" name="benefit_discount"  @if(empty($membership['benefit_discount'])) value="0" @else value="{{$membership['benefit_discount']}}" @endif placeholder="Discount Received">
-													<span class="input-group-btn">
-														<button class="btn blue" type="button" >%</button>
-													</span>
-												</div>
-											</div>
-										</div>
-									@endif
+									<!--@if(MyHelper::hasAccess([23], $configs))-->
+									<!--	<div class="col-md-12" style="margin-top:20px">-->
+									<!--		<div class="input-icon right">-->
+									<!--			<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">-->
+									<!--				Discount Received-->
+									<!--				<i class="fa fa-question-circle tooltips" data-original-title="Persentase Diskon final yang diterima untuk setiap transaksi" data-container="body"></i>-->
+									<!--			</div>-->
+									<!--		</div>-->
+									<!--		<div class="col-md-4">-->
+									<!--			<div class="input-icon input-group">-->
+									<!--				<input class="form-control price" type="text" name="benefit_discount"  @if(empty($membership['benefit_discount'])) value="0" @else value="{{$membership['benefit_discount']}}" @endif placeholder="Discount Received">-->
+									<!--				<span class="input-group-btn">-->
+									<!--					<button class="btn blue" type="button" >%</button>-->
+									<!--				</span>-->
+									<!--			</div>-->
+									<!--		</div>-->
+									<!--	</div>-->
+									<!--@endif-->
 									{{-- cek configs membership benefit promo id --}}
 									@if(MyHelper::hasAccess([24], $configs))
 										<div class="col-md-12" style="margin-top:20px">
@@ -442,11 +442,12 @@
 												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 													POS Promo ID
 													<i class="fa fa-question-circle tooltips" data-original-title="Kode Promo dari Raptor" data-container="body"></i>
+													<span>Separated by coma (,)</span>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="input-icon right">
-													<input class="form-control price" type="text" name="benefit_promo_id"  @if(empty($membership['benefit_promo_id'])) value="0" @else value="{{$membership['benefit_promo_id']}}" @endif placeholder="Promo ID Received">
+													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea> 
 												</div>
 											</div>
 										</div>
@@ -650,11 +651,13 @@
 												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 													POS Promo ID
 													<i class="fa fa-question-circle tooltips" data-original-title="Kode Promo dari POS" data-container="body"></i>
+													<span>Separated by coma (,)</span>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="input-icon right">
-													<input class="form-control price" type="text" name="benefit_promo_id"  value="0" placeholder="Promo ID Received">
+												    <textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> </textarea> 
+												
 												</div>
 											</div>
 										</div>

@@ -420,7 +420,7 @@
     <div class="kotak">
         <div class="container line-bottom">
             <div class="row space-bottom">
-                <div class="col-6 text-grey-black text-14-3px seravek-text">{{ $data['outlet']['outlet_name'] }}</div>
+                <div class="col-6 text-grey-black text-14-3px seravek-font">{{ $data['outlet']['outlet_name'] }}</div>
                 <div class="col-6 text-right text-medium-grey text-13-3px seravek-light-font">{{ date('d F Y H:i', strtotime($data['transaction_date'])) }}</div>
             </div>
             <div class="row space-text">

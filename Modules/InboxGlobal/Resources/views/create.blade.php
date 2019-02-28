@@ -150,6 +150,9 @@
 			});
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+			document.getElementById('inbox_global_id_reference').required = true;
+		}else{
+			document.getElementById('inbox_global_id_reference').required = false;
 		}
 		
 		if(det == 'Home'){
@@ -191,6 +194,9 @@
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'block';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+			document.getElementById('inbox_global_link').required = true;
+		}else{
+			document.getElementById('inbox_global_link').required = false;
 		}
 		
 		if(det == 'Logout'){
@@ -295,14 +301,14 @@
 								</label>
 							</div>
 							<div class="col-md-10">
-								<select name="inbox_global_clickto" id="inbox_global_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
+								<select name="inbox_global_clickto" id="inbox_global_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')" required>
 									<option value="" selected></option>
 									<option value="Home" @if(old('inbox_global_clickto') == 'Home') selected @endif>Home</option>
 									{{-- <option value="Content" @if(old('inbox_global_clickto') == 'Content') selected @endif>Content</option> --}}
 									<option value="News" @if(old('inbox_global_clickto') == 'News') selected @endif>News</option>
-									<option value="Product" @if(old('inbox_global_clickto') == 'Product') selected @endif>Product</option>
+									<!-- <option value="Product" @if(old('inbox_global_clickto') == 'Product') selected @endif>Product</option> -->
 									<option value="Outlet" @if(old('inbox_global_clickto') == 'Outlet') selected @endif>Outlet</option>
-									<option value="Inbox" @if(old('inbox_global_clickto') == 'Inbox') selected @endif>Inbox</option>
+									<!-- <option value="Inbox" @if(old('inbox_global_clickto') == 'Inbox') selected @endif>Inbox</option> -->
 									<option value="Voucher" @if(old('inbox_global_clickto') == 'Voucher') selected @endif>Voucher</option>
 									<option value="Contact Us" @if(old('inbox_global_clickto') == 'Contact Us') selected @endif>Contact Us</option>
 									<option value="Link" @if(old('inbox_global_clickto') == 'Link') selected @endif>Link</option>
@@ -330,7 +336,7 @@
 								</label>
 							</div>
 							<div class="col-md-10">
-								<input type="text" placeholder="http://" class="form-control" name="inbox_global_link" value="@if(old('inbox_global_link')){{old('inbox_global_link')}}@endif">
+								<input type="text" placeholder="http://" class="form-control" id="inbox_global_link" name="inbox_global_link" value="@if(old('inbox_global_link')){{old('inbox_global_link')}}@endif">
 							</div>
 						</div>
 						<div class="form-group" id="div_inbox_content" style="display:none">
@@ -362,7 +368,7 @@
 							</div>										
 							<div class="col-md-4" >
 								<div class="input-group date form_datetime form_datetime bs-datetime">
-									<input type="text" size="16" class="form-control" name="inbox_global_start" placeholder="Date to Start Displaying" >
+									<input type="text" size="16" class="form-control" name="inbox_global_start" placeholder="Date to Start Displaying" required>
 									<span class="input-group-addon">
 										<button class="btn default date-set" type="button">
 											<i class="fa fa-calendar"></i>
@@ -378,7 +384,7 @@
 							</div>	
 							<div class="col-md-4" >
 								<div class="input-group date form_datetime form_datetime bs-datetime">
-									<input type="text" size="16" class="form-control" name="inbox_global_end" placeholder="Date to Stop Displaying" >
+									<input type="text" size="16" class="form-control" name="inbox_global_end" placeholder="Date to Stop Displaying" required>
 									<span class="input-group-addon">
 										<button class="btn default date-set" type="button">
 											<i class="fa fa-calendar"></i>

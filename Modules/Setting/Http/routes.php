@@ -61,8 +61,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'n
     Route::any('setting_email', 'SettingController@settingEmail');
 });
 
-Route::group(['middleware' => 'web', 'prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
+Route::group(['prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
 {
-    Route::get('webview/{key}', 'SettingController@aboutWebview');
+    Route::any('webview/{key}', 'SettingController@aboutWebview');
     Route::any('faq/webview', 'SettingController@faqWebview');
 });
