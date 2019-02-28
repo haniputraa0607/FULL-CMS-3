@@ -11,7 +11,7 @@
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#tab_reg_1" data-toggle="tab">Gender</a>
+                            <a href="#tab_reg_1" id="tab-menu-reg-1" data-toggle="tab">Gender</a>
                         </li>
                         <li>
                             <a href="#tab_reg_2" data-toggle="tab">Age</a>
@@ -41,7 +41,15 @@
             </div>
 
             <div style="margin-top: 30px">
-                <b>Date Range: {{ $date_range }}</b>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>Date Range</b></td>
+                            <td class="semicolon text-center">:</td>
+                            <td class="date-range">{{ $date_range }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             {{-- Card --}}
@@ -53,7 +61,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['registrations']['reg_total_male'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_reg_1">{{ $report['registrations']['reg_total_male'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Male Customer
                             </div>
@@ -67,7 +75,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['registrations']['reg_total_female'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_reg_2">{{ $report['registrations']['reg_total_female'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Female Customer
                             </div>
@@ -81,7 +89,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['registrations']['reg_total_android'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_reg_3">{{ $report['registrations']['reg_total_android'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Android
                             </div>
@@ -91,11 +99,11 @@
                 <div class="col-md-3">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
-                            <i class="fa fa-ios"></i>
+                            <i class="fa fa-apple"></i>
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['registrations']['reg_total_ios'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_reg_4">{{ $report['registrations']['reg_total_ios'] }}</span> </div>
                                 <div class="desc"> 
                                 Total iOS
                             </div>
@@ -105,7 +113,7 @@
             </div>
 
             {{-- Table --}}
-            <div class="table-wrapper" style="margin-top: 30px">
+            <div id="table-reg" class="table-wrapper" style="margin-top: 30px">
                 <table class="table table-striped table-bordered table-hover table-checkable order-column">
                     <thead>
                         <tr>

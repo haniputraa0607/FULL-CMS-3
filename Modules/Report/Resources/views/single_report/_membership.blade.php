@@ -9,9 +9,8 @@
             <div class="bg-grey-steel clearfix" style="padding-top: 15px; padding-bottom: 15px;">
                 <div class="col-md-6">
                     <select class="form-control select2" id="trx_outlet" name="id_outlet">
-                        <option value="0">All Memberships</option>
                         @foreach($memberships as $membership)
-                            <option value="{{ $membership['id_membership'] }}">{{ $membership['membership_name'] }}</option>
+                            <option value="{{ $membership['id_membership'] }}" {{ ($membership['id_membership']==$filter['id_membership'] ? 'selected' : '') }}>{{ $membership['membership_name'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -22,7 +21,7 @@
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#tab_mem_1" data-toggle="tab">Total</a>
+                            <a href="#tab_mem_1" id="tab-menu-mem-1" data-toggle="tab">Total</a>
                         </li>
                         <li>
                             <a href="#tab_mem_2" data-toggle="tab">Gender</a>
@@ -34,7 +33,7 @@
                             <a href="#tab_mem_4" data-toggle="tab">Device</a>
                         </li>
                         <li>
-                            <a href="#tab_mem_2" data-toggle="tab">Provider</a>
+                            <a href="#tab_mem_5" data-toggle="tab">Provider</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -58,7 +57,20 @@
             </div>
 
             <div style="margin-top: 30px">
-                <b>Date Range: {{ $date_range }}</b>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>Date Range</b></td>
+                            <td class="semicolon text-center">:</td>
+                            <td class="date-range">{{ $date_range }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Membership</b></td>
+                            <td class="semicolon text-center">:</td>
+                            <td>{{ $filter['membership_name'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             {{-- Card --}}
@@ -70,7 +82,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['memberships']['mem_total_male'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_mem_1">{{ $report['memberships']['mem_total_male'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Male Customer
                             </div>
@@ -84,7 +96,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['memberships']['mem_total_female'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_mem_2">{{ $report['memberships']['mem_total_female'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Female Customer
                             </div>
@@ -98,7 +110,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['memberships']['mem_total_android'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_mem_3">{{ $report['memberships']['mem_total_android'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Android
                             </div>
@@ -108,11 +120,11 @@
                 <div class="col-md-3">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
-                            <i class="fa fa-ios"></i>
+                            <i class="fa fa-apple"></i>
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['memberships']['mem_total_ios'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_mem_4">{{ $report['memberships']['mem_total_ios'] }}</span> </div>
                                 <div class="desc"> 
                                 Total iOS
                             </div>
@@ -122,13 +134,12 @@
             </div>
 
             {{-- Table --}}
-            <div class="table-wrapper" style="margin-top: 30px">
+            <div id="table-mem" class="table-wrapper" style="margin-top: 30px">
                 <table class="table table-striped table-bordered table-hover table-checkable order-column">
                     <thead>
                         <tr>
                             <th> No </th>
                             <th> Date </th>
-                            <th> Membership </th>
                             <th> Total </th>
                             <th> Male Customer </th>
                             <th> Female Customer </th>
@@ -151,7 +162,6 @@
                         <tr class="odd gradeX">
                             <td>{{ $key+1 }}</td>
                             <td>{{ $mem['date'] }}</td>
-                            <td>{{ $mem['membership']['membership_name'] }}</td>
                             <td>{{ $mem['cust_total'] }}</td>
                             <td>{{ $mem['cust_male'] }}</td>
                             <td>{{ $mem['cust_female'] }}</td>

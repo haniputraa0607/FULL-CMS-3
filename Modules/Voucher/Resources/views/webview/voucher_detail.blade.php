@@ -188,12 +188,16 @@
                             @endif
                         @else
                             @foreach($deals['outlet_by_city'] as $key => $outlet_city)
-                            <div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
-                            <ul class="nav">
-                                @foreach($outlet_city['outlet'] as $key => $outlet)
-                                <li>- {{ $outlet['outlet_name'] }}</li>
-                                @endforeach
-                            </ul>
+                                @if(isset($outlet_city['city_name']))
+                                <div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
+                                @elseif($key!=0)
+                                <br>
+                                @endif
+                                <ul class="nav">
+                                    @foreach($outlet_city['outlet'] as $key => $outlet)
+                                    <li>- {{ $outlet['outlet_name'] }}</li>
+                                    @endforeach
+                                </ul>
                             @endforeach
                         @endif
                     </div>

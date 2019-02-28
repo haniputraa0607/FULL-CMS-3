@@ -9,10 +9,18 @@
 
             <div class="bg-grey-steel clearfix" style="padding-top: 15px; padding-bottom: 15px;">
                 <div class="col-md-6">
-                    <select class="form-control select2" id="product_outlet" name="id_outlet">
+                    <select class="form-control select2" id="product_id_outlet" name="product_id_outlet">
                         <option value="0">All Outlets</option>
                         @foreach($outlets as $outlet)
                             <option value="{{ $outlet['id_outlet'] }}">{{ $outlet['outlet_code'] ." - ". $outlet['outlet_name'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <select class="form-control select2" id="product_product" name="id_product">
+                        <option>Select Product</option>
+                        @foreach($products as $product)
+                            <option value="{{ $product['id_product'] }}" {{ ($product['id_product']==$filter['id_product'] ? 'selected' : '') }} >{{ $product['product_name'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -23,7 +31,7 @@
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#tab_product_1" data-toggle="tab">Product</a>
+                            <a href="#tab_product_1" id="tab-menu-product-1" data-toggle="tab">Product</a>
                         </li>
                         <li>
                             <a href="#tab_product_2" data-toggle="tab">Gender</a>
@@ -59,7 +67,20 @@
             </div>
 
             <div style="margin-top: 30px">
-                <b>Date Range: {{ $date_range }}</b>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>Date Range</b></td>
+                            <td class="semicolon text-center">:</td>
+                            <td class="date-range">{{ $date_range }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Product</b></td>
+                            <td class="semicolon text-center">:</td>
+                            <td>{{ $filter['product_name'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             {{-- Card --}}
@@ -71,7 +92,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['products']['product_total_nominal'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_product_1">{{ $report['products']['product_total_nominal'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Nominal (IDR)
                             </div>
@@ -85,7 +106,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['products']['product_total_qty'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_product_2">{{ $report['products']['product_total_qty'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Quantity
                             </div>
@@ -95,11 +116,11 @@
                 <div class="col-md-3">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
-                            <i class="fa fa-money"></i>
+                            <i class="fa fa-male"></i>
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['products']['product_total_male'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_product_3">{{ $report['products']['product_total_male'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Male Customer
                             </div>
@@ -109,11 +130,11 @@
                 <div class="col-md-3">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
-                            <i class="fa fa-money"></i>
+                            <i class="fa fa-female"></i>
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['products']['product_total_female'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_product_4">{{ $report['products']['product_total_female'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Female Customer
                             </div>
@@ -123,13 +144,13 @@
             </div>
 
             {{-- Table --}}
-            <div class="table-wrapper" style="margin-top: 30px">
+            <div id="table-product" class="table-wrapper" style="margin-top: 30px">
                 <table class="table table-striped table-bordered table-hover table-checkable order-column">
                     <thead>
                         <tr>
                             <th> No </th>
                             <th> Date </th>
-                            <th> Product </th>
+                            {{-- <th> Product </th> --}}
                             <th> Total Recurring </th>
                             <th> Total (Qty) </th>
                             <th> Total Nominal (IDR) </th>
@@ -154,7 +175,7 @@
                         <tr class="odd gradeX">
                             <td>{{ $key+1 }}</td>
                             <td>{{ $product['date'] }}</td>
-                            <td>{{ $product['product']['product_name'] }}</td>
+                            {{-- <td>{{ $product['product']['product_name'] }}</td> --}}
                             <td>{{ $product['total_rec'] }}</td>
                             <td>{{ $product['total_qty'] }}</td>
                             <td>{{ $product['total_nominal'] }}</td>

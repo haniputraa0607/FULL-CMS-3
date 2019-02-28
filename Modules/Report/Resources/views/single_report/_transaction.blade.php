@@ -9,7 +9,7 @@
 
             <div class="bg-grey-steel clearfix" style="padding-top: 15px; padding-bottom: 15px;">
                 <div class="col-md-6">
-                    <select class="form-control select2" id="trx_outlet" name="id_outlet">
+                    <select class="form-control select2" id="trx_id_outlet" name="trx_id_outlet">
                         <option value="0">All Outlets</option>
                         @foreach($outlets as $outlet)
                             <option value="{{ $outlet['id_outlet'] }}">{{ $outlet['outlet_code'] ." - ". $outlet['outlet_name'] }}</option>
@@ -23,7 +23,7 @@
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#tab_trx_1" data-toggle="tab">Transaction</a>
+                            <a href="#tab_trx_1" id="tab-menu-trx-1" data-toggle="tab">Transaction</a>
                         </li>
                         <li>
                             <a href="#tab_trx_2" data-toggle="tab">Gender</a>
@@ -59,7 +59,15 @@
             </div>
 
             <div style="margin-top: 30px">
-                <b>Date Range: {{ $date_range }}</b>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>Date Range</b></td>
+                            <td class="semicolon text-center">:</td>
+                            <td class="date-range">{{ $date_range }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             {{-- Card --}}
@@ -71,7 +79,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['transactions']['total_idr'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_trx_1">{{ $report['transactions']['total_idr'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Transaction (IDR)
                             </div>
@@ -85,7 +93,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['transactions']['average_idr'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_trx_2">{{ $report['transactions']['average_idr'] }}</span> </div>
                                 <div class="desc"> 
                                 Avg Transaction (IDR)
                             </div>
@@ -99,7 +107,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['transactions']['total_male'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_trx_3">{{ $report['transactions']['total_male'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Male Customer
                             </div>
@@ -113,7 +121,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0">{{ $report['transactions']['total_female'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_trx_4">{{ $report['transactions']['total_female'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Female Customer
                             </div>
@@ -123,7 +131,7 @@
             </div>
 
             {{-- Table --}}
-            <div class="table-wrapper" style="margin-top: 30px">
+            <div id="table-trx" class="table-wrapper" style="margin-top: 30px">
                 <table class="table table-striped table-bordered table-hover table-checkable order-column">
                     <thead>
                         <tr>

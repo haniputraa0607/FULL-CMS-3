@@ -35,6 +35,12 @@ class SingleReportController extends Controller
         if (isset($outlets['status']) && $outlets['status']=='success' ) {
             $data['outlets'] = $outlets['result'];
         }
+        // get product list
+        $data['products'] = [];
+        $products = MyHelper::get('report/single/product-list');
+        if (isset($products['status']) && $products['status']=='success' ) {
+            $data['products'] = $products['result'];
+        }
         // get membership list
         $data['memberships'] = [];
         $memberships = MyHelper::get('report/single/membership-list');
@@ -43,12 +49,20 @@ class SingleReportController extends Controller
         }
 
         $today = date('Y-m-d');
-        $one_week_ago = date("Y-m-d", strtotime("-15 week"));
+        $one_week_ago = date("Y-m-d", strtotime("-16 week"));
 
         $post['time_type'] = 'day';
         $post['param1'] = $one_week_ago;
         $post['param2'] = $today;
 
+        if (!empty($data['products'])) {
+            $post['id_product'] = $data['products'][0]['id_product'];
+            $post['product_name'] = $data['products'][0]['product_name'];
+        }
+        if (!empty($data['memberships'])) {
+            $post['id_membership'] = $data['memberships'][0]['id_membership'];
+            $post['membership_name'] = $data['memberships'][0]['membership_name'];
+        }
         $data['filter'] = $post;
 
         // get report
@@ -68,6 +82,7 @@ class SingleReportController extends Controller
     {
         $post = $request->except('_token');
 
+        $date_range = "";
         // request validation
         $fail = false;
         switch ($post['time_type']) {
@@ -77,46 +92,43 @@ class SingleReportController extends Controller
                 } else {
                     $post['param1'] = date('Y-m-d', strtotime($post['param1']));
                     $post['param2'] = date('Y-m-d', strtotime($post['param2']));
+
+                    $date_range = date('d M Y', strtotime($post['param1'])) ." - ". date('d M Y', strtotime($post['param2']));
                 }
                 break;
             case 'month':
                 if ($post['param1']=="" || $post['param2']=="") {
                     $fail = true;
-                } /*else {
-                    $post['month'] = $post['param1'];
-                    $post['year'] = $post['param2'];
-                }*/
+                }
+                else{
+                    $month_name_1 = date('F', mktime(0, 0, 0, $post['param1'], 10));
+                    $month_name_2 = date('F', mktime(0, 0, 0, $post['param2'], 10));
+                    $date_range = $month_name_1 ." - ". $month_name_2 ." ". $post['param3'];
+                }
                 break;
             case 'year':
                 if ($post['param1']=="") {
                     $fail = true;
-                } /*else {
-                    $post['year'] = $post['param1'];
-                }*/
+                } else {
+                    $date_range = $post['param1'] ." - ". $post['param2'];
+                }
                 break;
             
             default:
                 $fail = true;
                 break;
         }
+        // return [$post, $date_range];
         if ($fail) {
             return [
                 "status" => "fail",
                 "messages" => ['Field is required']
             ];
         }
-        // return $post;
-
-        // unset($post['param1']);
-        // unset($post['param2']);
 
         $result = MyHelper::post('report/single', $post);
-        /*if (isset($result['status']) && $result['status'] == "success") {
-            $data['result'] = $result;
-        }
-        else {
-            $data['items'] = [];
-        }*/
+        $result['date_range'] = $date_range;
+        
         return $result;
     }
 
