@@ -12,7 +12,7 @@
                     <select class="form-control select2" id="trx_id_outlet" name="trx_id_outlet">
                         <option value="0">All Outlets</option>
                         @foreach($outlets as $outlet)
-                            <option value="{{ $outlet['id_outlet'] }}">{{ $outlet['outlet_code'] ." - ". $outlet['outlet_name'] }}</option>
+                            <option value="{{ $outlet['id_outlet'] }}" {{ ($outlet['id_outlet']==$filter['trx_id_outlet'] ? 'selected' : '') }}>{{ $outlet['outlet_code'] ." - ". $outlet['outlet_name'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -25,7 +25,7 @@
                         <li class="active">
                             <a href="#tab_trx_1" id="tab-menu-trx-1" data-toggle="tab">Transaction</a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="#tab_trx_2" data-toggle="tab">Gender</a>
                         </li>
                         <li>
@@ -36,13 +36,13 @@
                         </li>
                         <li>
                             <a href="#tab_trx_5" data-toggle="tab">Provider</a>
-                        </li>
+                        </li> --}}
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_trx_1">
                             <div id="trx_chart" style="height:300px;"></div>
                         </div>
-                        <div class="tab-pane" id="tab_trx_2">
+                        {{-- <div class="tab-pane" id="tab_trx_2">
                             <div id="trx_gender_chart" style="height:300px;"></div>
                         </div>
                         <div class="tab-pane" id="tab_trx_3">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="tab-pane" id="tab_trx_5">
                             <div id="trx_provider_chart" style="height:300px;"></div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -65,6 +65,11 @@
                             <td><b>Date Range</b></td>
                             <td class="semicolon text-center">:</td>
                             <td class="date-range">{{ $date_range }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Outlet</b></td>
+                            <td class="semicolon text-center">:</td>
+                            <td id="trx_outlet_name">{{ isset($filter['trx_outlet_name']) ? $filter['trx_outlet_name'] : 'All Outlets' }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -132,7 +137,7 @@
 
             {{-- Table --}}
             <div id="table-trx" class="table-wrapper" style="margin-top: 30px">
-                <table class="table table-striped table-bordered table-hover table-checkable order-column">
+                <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th> No </th>

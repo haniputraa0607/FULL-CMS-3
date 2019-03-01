@@ -8,7 +8,7 @@
         <div class="form-body">
             <div class="bg-grey-steel clearfix" style="padding-top: 15px; padding-bottom: 15px;">
                 <div class="col-md-6">
-                    <select class="form-control select2" id="trx_outlet" name="id_outlet">
+                    <select class="form-control select2" id="id_membership" name="id_membership">
                         @foreach($memberships as $membership)
                             <option value="{{ $membership['id_membership'] }}" {{ ($membership['id_membership']==$filter['id_membership'] ? 'selected' : '') }}>{{ $membership['membership_name'] }}</option>
                         @endforeach
@@ -21,9 +21,9 @@
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#tab_mem_1" id="tab-menu-mem-1" data-toggle="tab">Total</a>
+                            <a href="#tab_mem_1" id="tab-menu-mem-1" data-toggle="tab">Membership</a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="#tab_mem_2" data-toggle="tab">Gender</a>
                         </li>
                         <li>
@@ -34,13 +34,13 @@
                         </li>
                         <li>
                             <a href="#tab_mem_5" data-toggle="tab">Provider</a>
-                        </li>
+                        </li> --}}
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_mem_1">
                             <div id="mem_chart" style="height:300px;"></div>
                         </div>
-                        <div class="tab-pane" id="tab_mem_2">
+                        {{-- <div class="tab-pane" id="tab_mem_2">
                             <div id="mem_gender_chart" style="height:300px;"></div>
                         </div>
                         <div class="tab-pane" id="tab_mem_3">
@@ -51,7 +51,7 @@
                         </div>
                         <div class="tab-pane" id="tab_mem_5">
                             <div id="mem_provider_chart" style="height:300px;"></div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                         <tr>
                             <td><b>Membership</b></td>
                             <td class="semicolon text-center">:</td>
-                            <td>{{ $filter['membership_name'] }}</td>
+                            <td id="membership_name">{{ $filter['membership_name'] }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -135,7 +135,7 @@
 
             {{-- Table --}}
             <div id="table-mem" class="table-wrapper" style="margin-top: 30px">
-                <table class="table table-striped table-bordered table-hover table-checkable order-column">
+                <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th> No </th>

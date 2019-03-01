@@ -34,6 +34,6 @@ Route::group(['middleware' => 'web', 'prefix' => 'report', 'namespace' => 'Modul
     
     // SINGLE REPORT
     Route::any('/', [ 'uses' => 'SingleReportController@index']);
-    Route::post('/ajax', [ 'uses' => 'SingleReportController@singleReport']);
+    Route::post('/ajax', [ 'uses' => 'SingleReportController@ajaxSingleReport']);
 
 });

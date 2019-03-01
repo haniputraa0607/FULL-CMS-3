@@ -12,12 +12,12 @@
                     <select class="form-control select2" id="product_id_outlet" name="product_id_outlet">
                         <option value="0">All Outlets</option>
                         @foreach($outlets as $outlet)
-                            <option value="{{ $outlet['id_outlet'] }}">{{ $outlet['outlet_code'] ." - ". $outlet['outlet_name'] }}</option>
+                            <option value="{{ $outlet['id_outlet'] }}" {{ ($outlet['id_outlet']==$filter['product_id_outlet'] ? 'selected' : '') }}>{{ $outlet['outlet_code'] ." - ". $outlet['outlet_name'] }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <select class="form-control select2" id="product_product" name="id_product">
+                    <select class="form-control select2" id="id_product" name="id_product">
                         <option>Select Product</option>
                         @foreach($products as $product)
                             <option value="{{ $product['id_product'] }}" {{ ($product['id_product']==$filter['id_product'] ? 'selected' : '') }} >{{ $product['product_name'] }}</option>
@@ -75,9 +75,14 @@
                             <td class="date-range">{{ $date_range }}</td>
                         </tr>
                         <tr>
+                            <td><b>Outlet</b></td>
+                            <td class="semicolon text-center">:</td>
+                            <td id="product_outlet_name">{{ isset($filter['product_outlet_name']) ? $filter['product_outlet_name'] : 'All Outlets' }}</td>
+                        </tr>
+                        <tr>
                             <td><b>Product</b></td>
                             <td class="semicolon text-center">:</td>
-                            <td>{{ $filter['product_name'] }}</td>
+                            <td id="product_name">{{ $filter['product_name'] }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -102,7 +107,7 @@
                 <div class="col-md-3">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
-                            <i class="fa fa-money"></i>
+                            <i class="fa fa-line-chart"></i>
                         </div>
                         <div class="details">
                             <div class="number">
@@ -145,7 +150,7 @@
 
             {{-- Table --}}
             <div id="table-product" class="table-wrapper" style="margin-top: 30px">
-                <table class="table table-striped table-bordered table-hover table-checkable order-column">
+                <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th> No </th>

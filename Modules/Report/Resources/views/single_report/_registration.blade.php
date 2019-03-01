@@ -114,7 +114,7 @@
 
             {{-- Table --}}
             <div id="table-reg" class="table-wrapper" style="margin-top: 30px">
-                <table class="table table-striped table-bordered table-hover table-checkable order-column">
+                <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th> No </th>

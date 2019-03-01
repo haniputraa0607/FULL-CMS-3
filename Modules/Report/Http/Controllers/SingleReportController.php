@@ -11,8 +11,8 @@ use App\Lib\MyHelper;
 class SingleReportController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return Response
+     * Display a single report page
+     * 
      */
     public function index()
     {
@@ -47,21 +47,40 @@ class SingleReportController extends Controller
         if (isset($memberships['status']) && $memberships['status']=='success' ) {
             $data['memberships'] = $memberships['result'];
         }
-
-        $today = date('Y-m-d');
-        $one_week_ago = date("Y-m-d", strtotime("-16 week"));
-
-        $post['time_type'] = 'day';
-        $post['param1'] = $one_week_ago;
-        $post['param2'] = $today;
-
-        if (!empty($data['products'])) {
-            $post['id_product'] = $data['products'][0]['id_product'];
-            $post['product_name'] = $data['products'][0]['product_name'];
+        // get deals list
+        $data['deals'] = [];
+        $deals = MyHelper::get('report/single/deals-list');
+        if (isset($deals['status']) && $deals['status']=='success' ) {
+            $data['deals'] = $deals['result'];
         }
-        if (!empty($data['memberships'])) {
-            $post['id_membership'] = $data['memberships'][0]['id_membership'];
-            $post['membership_name'] = $data['memberships'][0]['membership_name'];
+
+        $post = session('report_filter');
+        if ($post == null) {
+            // set default filter
+            $today = date('Y-m-d');
+            $one_week_ago = date("Y-m-d", strtotime("-1 week"));
+
+            $post['time_type'] = 'day';
+            $post['param1'] = $one_week_ago;
+            $post['param2'] = $today;
+
+            if (!empty($data['products'])) {
+                $post['id_product'] = $data['products'][0]['id_product'];
+                $post['product_name'] = $data['products'][0]['product_name'];
+            }
+            if (!empty($data['memberships'])) {
+                $post['id_membership'] = $data['memberships'][0]['id_membership'];
+                $post['membership_name'] = $data['memberships'][0]['membership_name'];
+            }
+            $post['trx_id_outlet'] = 0;
+            $post['product_id_outlet'] = 0;
+            $post['voucher_id_outlet'] = 0;
+            $post['id_product'] = 0;
+            $post['id_membership'] = 0;
+            $post['id_deals'] = 0;
+
+            // store filter in session
+            session(['report_filter' => $post]);
         }
         $data['filter'] = $post;
 
@@ -71,25 +90,22 @@ class SingleReportController extends Controller
         if (isset($report['status']) && $report['status']=='success' ) {
             $data['report'] = $report['result'];
         }
-        // dd($data);
-        // dd(empty($data['report']), count($data['report']));
 
         return view('report::single_report.single_report', $data);
     }
 
-    // ajax get report
-    public function singleReport(Request $request)
+    // check ajax request
+    private function checkFilter($post)
     {
-        $post = $request->except('_token');
-
-        $date_range = "";
-        // request validation
-        $fail = false;
+        $success = true;
         switch ($post['time_type']) {
             case 'day':
                 if ($post['param1']=="" || $post['param2']=="") {
-                    $fail = true;
+                    $success = false;
                 } else {
+                    $post['param1'] = str_replace('/', '-', $post['param1']);
+                    $post['param2'] = str_replace('/', '-', $post['param2']);
+
                     $post['param1'] = date('Y-m-d', strtotime($post['param1']));
                     $post['param2'] = date('Y-m-d', strtotime($post['param2']));
 
@@ -97,8 +113,8 @@ class SingleReportController extends Controller
                 }
                 break;
             case 'month':
-                if ($post['param1']=="" || $post['param2']=="") {
-                    $fail = true;
+                if ($post['param1']=="" || $post['param2']=="" || $post['param3']=="") {
+                    $success = false;
                 }
                 else{
                     $month_name_1 = date('F', mktime(0, 0, 0, $post['param1'], 10));
@@ -107,72 +123,79 @@ class SingleReportController extends Controller
                 }
                 break;
             case 'year':
-                if ($post['param1']=="") {
-                    $fail = true;
+                if ($post['param1']=="" || $post['param2']=="") {
+                    $success = false;
                 } else {
                     $date_range = $post['param1'] ." - ". $post['param2'];
                 }
                 break;
             
             default:
-                $fail = true;
+                $success = false;
                 break;
         }
-        // return [$post, $date_range];
-        if ($fail) {
+
+        return [
+            'status' => $success,
+            'post' => $post,
+            'date_range' => $date_range
+        ];
+    }
+
+    // ajax get report
+    public function ajaxSingleReport(Request $request)
+    {
+        $post = $request->except('_token');
+        $report_type = $post['report_type'];
+        unset($post['report_type']);
+
+        $date_range = "";
+        // request validation
+        $check = $this->checkFilter($post);
+        if (!$check['status']) {
             return [
                 "status" => "fail",
                 "messages" => ['Field is required']
             ];
         }
+        else{
+            $post = $check['post'];
+            $date_range = $check['date_range'];
 
-        $result = MyHelper::post('report/single', $post);
-        $result['date_range'] = $date_range;
-        
-        return $result;
+            switch ($report_type) {
+                case 'all':
+                    $result = MyHelper::post('report/single', $post);
+                    break;
+                case 'trx':
+                    $result = MyHelper::post('report/single/trx', $post);
+                    break;
+                case 'product':
+                    $result = MyHelper::post('report/single/product', $post);
+                    break;
+                /*case 'reg':
+                    $result = MyHelper::post('report/single/registration', $post);
+                    break;*/
+                case 'membership':
+                    $result = MyHelper::post('report/single/membership', $post);
+                    break;
+                case 'voucher':
+                    $result = MyHelper::post('report/single/voucher', $post);
+                    break;
+                default:
+                    $result = ['status' => fail, 'messages' => 'Unknown report type'];
+                    break;
+            }
+
+            // store filter in session
+            $report_filter = session('report_filter');
+            $post = array_merge($report_filter, $post);
+            session(['report_filter' => $post]);
+
+            $result['filter'] = $post;
+            $result['date_range'] = $date_range;
+            
+            return $result;
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
-    {
-        return view('report::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('report::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
-    {
-    }
 }
