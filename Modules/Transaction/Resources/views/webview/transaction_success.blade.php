@@ -440,7 +440,7 @@
                     <div class="col-5 text-right text-13-3px text-black seravek-light-font">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal'])) }}</div>
                     <div class="col-12 text-grey text-12-7px text-black-grey-light seravek-light-font">{{ $val['transaction_product_qty'] }} x {{ str_replace(',', '.', number_format($val['transaction_product_price'])) }}</div>
                     <div class="space-bottom col-12">
-                        <div class="space-bottom text-12-7px text-grey-medium-light seravek-italic-font">
+                        <div class="space-bottom text-12-7px text-grey-medium-light seravek-italic-font" style="word-break: break-word">
                             @if (isset($val['transaction_product_note']))
                                 {{ $val['transaction_product_note'] }}
                             @else
@@ -490,7 +490,7 @@
                 <div class="col-12 text-12-7px text-right"><hr></div>
                 <div class="col-6 text-13-3px seravek-font text-black ">Total Pembayaran</div>
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px text-right seravek-font text-black">{{ number_format(($data['transaction_grandtotal'] + $data['balance']), 0, ',', '.') }}</div>
+                <div class="col-6 text-13-3px text-right seravek-font text-black">{{ number_format(($data['transaction_grandtotal'] - $data['balance']), 0, ',', '.') }}</div>
                 @else
                 <div class="col-6 text-13-3px text-right seravek-font text-black">{{ number_format($data['transaction_grandtotal'], 0, ',', '.') }}</div>
                 @endif
