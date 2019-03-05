@@ -26,6 +26,12 @@
         .text-brown{
             color: #6C5648;
         }
+        .text-red{
+          color: #e64343;
+        }
+        .text-error{
+          margin-top: 5px;
+        }
         .form-group.form-md-line-input{
           margin-bottom: 10px;
         }
@@ -110,8 +116,6 @@
         .select2-search__field{
             border: 1px solid #c2cad8;
         }
-        .select2 .select2-container{
-        }
         .select2 .select2-container--default,
         .select2 .select2-selection--single,
         .select2 .select2-selection__rendered{
@@ -179,7 +183,15 @@
 
 @section('content')
     <div class="col-md-4 col-md-offset-4" style="position: unset;">
-        @include('layouts.notifications')
+
+        @if(Session::has('errors'))
+          <div class="alert" role="alert" style="margin-top:20px">
+           @foreach(Session::get('errors') as $e)
+            {{$e}} <br/>
+           @endforeach
+         </div>
+         <?php Session::forget('errors'); ?>
+        @endif
         
         <div class="text-brown" style="margin-top: 20px; margin-bottom: 20px; text-align: justify;">
             Silakan lengkapi data di bawah ini dan dapatkan Kopi Points
@@ -188,8 +200,8 @@
         @if($user != null)
             @if($user['birthday'] == null && $user['gender'] == null && $user['id_city'] == null)
             {{-- form --}}
-            <form role="form" action="{{ url('webview/complete-profile') }}" method="post">
-                {{ csrf_field() }}
+            <form role="form" action="{{ url('webview/complete-profile/submit') }}" method="post">
+                {!! csrf_field() !!}
 
                 <div class="form-body">
                     <div class="form-group form-md-line-input select-wrapper">
@@ -205,6 +217,7 @@
                         <label>Tanggal Lahir</label>
                         <input type="text" class="form-control datepicker" name="birthday" value="{{ old('birthday') }}" required readonly>
                         <img class="birthday-img" src="{{ asset('img/webview/calendar-o.png') }}" alt="">
+                        <div id="error-birthday" class="text-red text-error"></div>
                     </div>
 
                     <div class="form-group form-md-line-input city">
@@ -215,6 +228,7 @@
                             @endforeach
                         </select>
                         <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
+                        <div id="error-city" class="text-red text-error"></div>
                     </div>
 
                     <div class="form-group form-md-line-input select-wrapper relationship">
@@ -300,7 +314,12 @@
           if (gender=="" || birthday=="" || id_city=="" ) {
             e.preventDefault();
             if (birthday=="") {
-              alert("Tanggal Lahir tidak boleh kosong");
+              $('.birthday input').css('border-bottom-color', '#e64343');
+              $('#error-birthday').text('Tanggal Lahir tidak boleh kosong')
+            }
+            if (id_city=="") {
+              $('.select2 .select2-selection__rendered').css('border-bottom-color', '#e64343');
+              $('#error-city').text('Kota tidak boleh kosong')
             }
           }
         });

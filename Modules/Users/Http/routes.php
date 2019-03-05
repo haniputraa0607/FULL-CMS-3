@@ -33,9 +33,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', '
 });
 
 /* Webview */
-Route::group(['middleware' => ['web'], 'prefix' => 'webview/complete-profile', 'namespace' => 'Modules\Users\Http\Controllers'], function()
+Route::group(['prefix' => 'webview/complete-profile', 'namespace' => 'Modules\Users\Http\Controllers'], function()
 {
     Route::any('/', 'WebviewUserController@completeProfile');
-    Route::post('/', 'WebviewUserController@completeProfileSubmit');
+    Route::post('/submit', 'WebviewUserController@completeProfileSubmit');
     // Route::get('/success', 'WebviewUserController@completeProfileSuccess');
 });
