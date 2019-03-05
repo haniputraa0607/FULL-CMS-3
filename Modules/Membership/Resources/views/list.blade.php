@@ -18,6 +18,7 @@
 	<link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ url('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 	
 	<link href="{{ url('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
@@ -50,6 +51,7 @@
 	<script src="{{ url('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
 	<script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 	<script src="{{ url('assets/pages/scripts//components-color-pickers.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 	 <script src="{{ url('js/prices.js')}}"></script>
 	<script>
 	function typeChange(varnya){
@@ -64,6 +66,12 @@
 			var i;
 			for (i = 0; i < reqIDR.length; i++) {
 				reqIDR[i].style.display = 'none';
+			}
+
+			var reqBalance = document.getElementsByClassName('levelReqBalance');
+			var i;
+			for (i = 0; i < reqBalance.length; i++) {
+				reqBalance[i].style.display = 'none';
 			}
 			
 			var reqX = document.getElementsByClassName('levelReqX');
@@ -83,13 +91,19 @@
 			for (l = 0; l < retX.length; l++) {
 				retX[l].style.display = 'table-cell';
 			}
+
+			var retBalance = document.getElementsByClassName('levelRetBalance');
+			var l;
+			for (l = 0; l < retBalance.length; l++) {
+				retBalance[l].style.display = 'none';
+			}
 			
 			var Ret = document.getElementsByClassName('levelRet');
 			var m;
 			for (m = 0; m < Ret.length; m++) {
 				Ret[m].className = 'input-icon input-group levelRet';
 			}
-		} else {
+		} else if(varnya == 'value') {
 			var Req = document.getElementsByClassName('levelReq');
 			var h;
 			for (h = 0; h < Req.length; h++) {
@@ -100,6 +114,12 @@
 			var i;
 			for (i = 0; i < reqIDR.length; i++) {
 				reqIDR[i].style.display = 'table-cell';
+			}
+
+			var reqBalance = document.getElementsByClassName('levelReqBalance');
+			var i;
+			for (i = 0; i < reqBalance.length; i++) {
+				reqBalance[i].style.display = 'none';
 			}
 			
 			var reqX = document.getElementsByClassName('levelReqX');
@@ -118,6 +138,60 @@
 			var l;
 			for (l = 0; l < retX.length; l++) {
 				retX[l].style.display = 'none';
+			}
+
+			var retBalance = document.getElementsByClassName('levelRetBalance');
+			var l;
+			for (l = 0; l < retBalance.length; l++) {
+				retBalance[l].style.display = 'none';
+			}
+			
+			var Ret = document.getElementsByClassName('levelRet');
+			var m;
+			for (m = 0; m < Ret.length; m++) {
+				Ret[m].className = 'input-icon input-group right levelRet';
+			}
+		} else {
+			var Req = document.getElementsByClassName('levelReq');
+			var h;
+			for (h = 0; h < Req.length; h++) {
+				Req[h].className = 'input-icon input-group right levelReq';
+			}
+			
+			var reqIDR = document.getElementsByClassName('levelReqIDR');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'none';
+			}
+
+			var reqBalance = document.getElementsByClassName('levelReqBalance');
+			var i;
+			for (i = 0; i < reqBalance.length; i++) {
+				reqBalance[i].style.display = 'table-cell';
+			}
+			
+			var reqX = document.getElementsByClassName('levelReqX');
+			var j;
+			for (j = 0; j < reqX.length; j++) {
+				reqX[j].style.display = 'none';
+			}
+			
+			var retIDR = document.getElementsByClassName('levelRetIDR');
+			var k;
+			for (k = 0; k < retIDR.length; k++) {
+				retIDR[k].style.display = 'none';
+			}
+			
+			var retX = document.getElementsByClassName('levelRetX');
+			var l;
+			for (l = 0; l < retX.length; l++) {
+				retX[l].style.display = 'none';
+			}
+
+			var retBalance = document.getElementsByClassName('levelRetBalance');
+			var l;
+			for (l = 0; l < retBalance.length; l++) {
+				retBalance[l].style.display = 'table-cell';
 			}
 			
 			var Ret = document.getElementsByClassName('levelRet');
@@ -172,6 +246,65 @@
 			$( this ).val("");
 		}
 	}
+
+	$(document).ready(function () {
+        $('.repeater').repeater({
+			show: function () {
+                $(this).slideDown();
+            },hide: function (deleteElement) {
+                if(confirm('Are you sure you want to delete this element?')) {
+                    $(this).slideUp(deleteElement);
+                }
+            },
+            // (Required if there is a nested repeater)
+            // Specify the configuration of the nested repeaters.
+            // Nested configuration follows the same format as the base configuration,
+            // supporting options "defaultValues", "show", "hide", etc.
+            // Nested repeaters additionally require a "selector" field.
+            repeaters: [{
+                // (Required)
+                // Specify the jQuery selector for this nested repeater
+				selector: '.inner-repeater',
+				show: function () {
+					$(this).slideDown();
+				},hide: function (deleteElement) {
+					if(confirm('Are you sure you want to delete this element?')) {
+						$(this).slideUp(deleteElement);
+					}
+				},
+            }]
+        });
+	});
+	
+		$(".file").change(function(e) {
+			console.log('l')
+                widthImg  = 300;
+                heightImg = 300;              
+
+                var _URL = window.URL || window.webkitURL;
+                var image, file;
+
+                if ((file = this.files[0])) {
+                    image = new Image();
+                    
+                    image.onload = function() {
+                        if (this.width == widthImg && this.height == heightImg) {
+                            // image.src = _URL.createObjectURL(file);
+                        }
+                        else {
+                            toastr.warning("Please check dimension of your photo.");
+                            $(this).val("");
+                            // $('#remove_square').click()
+                            // image.src = _URL.createObjectURL();
+							console.log($(this))
+							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        }
+                    };
+                
+                    image.src = _URL.createObjectURL(file);
+                }
+
+        });
 	</script>
 @endsection
 
@@ -204,16 +337,18 @@
 					<div class="col-md-4">
 						<?php 
 							if(isset($result) && !empty($result)){
-								if(!is_null($result[0]['min_total_value']) && is_null($result[0]['min_total_count'])) $value = "value";
-								if(is_null($result[0]['min_total_value']) && !is_null($result[0]['min_total_count'])) $value = "count";
-								if(!is_null($result[0]['min_total_value']) && !is_null($result[0]['min_total_count'])) $value = "neither";
-								if(is_null($result[0]['min_total_value']) && is_null($result[0]['min_total_count'])) $value = "both";
+								if($result[0]['membership_type']){
+									$value = $result[0]['membership_type'];
+								}else{
+									$value="value";
+								}
 							}							
 						?>
 						
-						<select class="form-control" name="type" onChange="typeChange(this.value)">
-							<option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
-							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option>
+						<select class="form-control" name="membership_type" onChange="typeChange(this.value)">
+							<!-- <option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
+							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option> -->
+							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By Kopi Point Received </option>
 						</select>
 					</div>
 				</div>
@@ -240,9 +375,10 @@
 						Membership Level
 					</label>
 				</div>
-				<div class="form-group mt-repeater">
+				<div class="form-group repeater">
 					<div data-repeater-list="membership">
 						@if(isset($result))
+							@php $i = 0; @endphp
 							@foreach($result as $membership)
 							<div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
 								<div class="mt-repeater-cell">
@@ -295,7 +431,7 @@
 									<div class="col-md-4" >
 										<div class="input-icon right">
 											<div class="fileinput fileinput-new" data-provides="fileinput">
-												<div class="fileinput-new thumbnail" style="max-width: 200px;">
+												<div class="fileinput-new thumbnail" style="max-width: 100px;">
 													@if($membership['membership_image'] != "")
 														<img src="{{env('API_URL')}}/{{$membership['membership_image']}}" alt="" /> 
 													@else
@@ -303,12 +439,13 @@
 													@endif
 												</div>
 													
-												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-												<div>
+												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
+												<div class="aa">
 													<span class="btn default btn-file">
 														<span class="fileinput-new"> Select image </span>
 														<span class="fileinput-exists"> Change </span>
-														<input type="file" name="membership_image"> </span>
+														<input class="file" type="file" name="membership_image"> 
+													</span>
 													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 												</div>
 											</div>
@@ -328,7 +465,10 @@
 												<span class="input-group-btn levelReqIDR" @if($value != 'value') style="display:none;" @endif>
 													<button class="btn blue" type="button" >IDR</button>
 												</span>
-												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}" @endif placeholder="Level Requirement">
+												<span class="input-group-btn levelReqBalance" @if($value != 'balance') style="display:none;" @endif>
+													<button class="btn blue" type="button" >Kopi Points</button>
+												</span>
+												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @endif placeholder="Level Requirement">
 												<span class="input-group-btn levelReqX" @if($value != 'count') style="display:none;" @endif>
 													<button class="btn yellow" type="button" >X trx</button>
 												</span>
@@ -348,7 +488,10 @@
 												<span class="input-group-btn levelRetIDR" @if($value != 'value') style="display:none;" @endif>
 													<button class="btn blue" type="button" >IDR</button>
 												</span>
-												<input class="form-control price" type="text" name="min_retain_value" @if($value == 'value') value="{{$membership['retain_min_total_value']}}" @elseif($value == 'count') value="{{$membership['retain_min_total_count']}}" @endif placeholder="Minimum Retain Value">
+												<span class="input-group-btn levelRetBalance" @if($value != 'balance') style="display:none;" @endif>
+													<button class="btn blue" type="button" >Kopi Points</button>
+												</span>
+												<input class="form-control price" type="text" name="min_retain_value" @if($value == 'value') value="{{$membership['retain_min_total_value']}}" @elseif($value == 'count') value="{{$membership['retain_min_total_count']}}" @elseif($value == 'balance') value="{{$membership['retain_min_total_balance']}}" @endif placeholder="Minimum Retain Value">
 												<span class="input-group-btn levelRetX" @if($value != 'count') style="display:none;" @endif>
 													<button class="btn yellow" type="button" >X trx</button>
 												</span>
@@ -442,18 +585,62 @@
 												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 													POS Promo ID
 													<i class="fa fa-question-circle tooltips" data-original-title="Kode Promo dari Raptor" data-container="body"></i>
-													<span>Separated by coma (,)</span>
 												</div>
 											</div>
-											<div class="col-md-4">
-												<div class="input-icon right">
+											<div class="col-md-6">
+												<!-- <div class="input-icon right">
 													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea> 
+												</div> -->
+												<div class="inner-repeater">
+          											<div data-repeater-list="benefit_promo_id">
+														@if(count($membership['membership_promo_id']) > 0)
+															@foreach($membership['membership_promo_id'] as $promo_id)
+																<div data-repeater-item="" class="row" style="margin-bottom:15px">
+																	<input type="hidden" name="id_membership_promo_id" value="{{$promo_id['id_membership_promo_id']}}">
+																	<div class="col-md-5">
+																		<label class="control-label">Promo Name</label>
+																		<input type="text" placeholder="Promo Name" class="form-control" name="promo_name" value="{{$promo_id['promo_name']}}" > </div>
+																	<div class="col-md-5">
+																		<label class="control-label">Promo ID</label>
+																		<input type="text" placeholder="Promo ID" class="form-control" name="promo_id"  value="{{$promo_id['promo_id']}}" required> </div>
+																	<div class="col-md-1">
+																		<label class="control-label">&nbsp;</label>
+																		<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																			<i class="fa fa-close"></i>
+																		</a>
+																	</div>
+																</div>
+															@endforeach
+														@else
+															<div data-repeater-item="" class="row" style="margin-bottom:15px">
+																<div class="col-md-5">
+																	<label class="control-label">Promo Name</label>
+																	<input type="text" placeholder="Promo Name" class="form-control" name="promo_name"> </div>
+																<div class="col-md-5">
+																	<label class="control-label">Promo ID</label>
+																	<input type="text" placeholder="Promo ID" class="form-control" name="promo_id" required> </div>
+																<div class="col-md-1">
+																	<label class="control-label">&nbsp;</label>
+																	<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																		<i class="fa fa-close"></i>
+																	</a>
+																</div>
+															</div>
+														@endif
+													</div>
+													<hr>
+													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+														<i class="fa fa-plus"></i> Add Promo ID</a>
+													<br>
 												</div>
+												<br>
 											</div>
 										</div>
+
 									@endif
 								</div>
 							</div>
+							@php $i ++; @endphp
 							@endforeach
 						@else
 
@@ -654,11 +841,32 @@
 													<span>Separated by coma (,)</span>
 												</div>
 											</div>
-											<div class="col-md-4">
-												<div class="input-icon right">
-												    <textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> </textarea> 
-												
-												</div>
+											<div class="col-md-6">
+												<!-- <div class="input-icon right">
+													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea> 
+												</div> -->
+												<div class="inner-repeater">
+          											<div data-repeater-list="benefit_promo_id">
+														<div data-repeater-item="" class="row" style="margin-bottom:15px">
+															<div class="col-md-5">
+																<label class="control-label">Promo Name</label>
+																<input type="text" placeholder="Promo Name" class="form-control" name="promo_name"> </div>
+															<div class="col-md-5">
+																<label class="control-label">Promo ID</label>
+																<input type="text" placeholder="Promo ID" class="form-control" name="promo_id" required> </div>
+															<div class="col-md-1">
+																<label class="control-label">&nbsp;</label>
+																<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																	<i class="fa fa-close"></i>
+																</a>
+															</div>
+														</div>
+													</div>
+													<hr>
+													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+														<i class="fa fa-plus"></i> Add Promo ID</a>
+													<br>
+                                                </div>
 											</div>
 										</div>
 									@endif
@@ -680,7 +888,14 @@
 			<div class="form-actions">
 				{{ csrf_field() }}
 				<div class="row">
-					<div class="col-md-offset-5 col-md-4">
+					<div class="col-12">
+						@if(MyHelper::hasAccess([12,13,14], $grantedFeature))
+							<div class="alert alert-warning" role="alert">
+							If you click submit, it may take a long time because the system will recalculate the user's membership
+							</div>
+						@endif
+					</div>
+					<div class="col-md-offset-5 col-md-7">
 						@if(MyHelper::hasAccess([12,13,14], $grantedFeature))
 							<button type="submit" class="btn green">Submit</button>
 						@endif

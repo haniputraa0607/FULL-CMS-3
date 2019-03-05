@@ -371,7 +371,7 @@
         </div>
     </div> -->
 
-    @if ($data['trasaction_payment_type'] != 'Offline')
+    @if ($data['trasaction_type'] != 'Offline')
         <div class="kotak-full">
             <div class="container">
                 <div class="row text-center">
@@ -510,6 +510,11 @@
                     @endif
                 @endif
 
+                @if($data['transaction_discount'] > 0)
+                <div class="col-6 text-13-3px space-text seravek-light-font">Diskon</div>
+                <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ str_replace(',', '.', number_format($data['transaction_discount'])) }}</div>
+                @endif
+
                 @if(isset($data['balance']))
                 <div class="col-6 text-13-3px space-text seravek-light-font">Kopi Points</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ str_replace(',', '.', number_format(abs($data['balance']))) }}</div>
@@ -566,6 +571,7 @@
         </div>
     @endif
 
+    @if ($data['trasaction_type'] != 'Offline')
     <div class="kotak">
         <div class="container">
             <div class="row">
@@ -669,6 +675,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
