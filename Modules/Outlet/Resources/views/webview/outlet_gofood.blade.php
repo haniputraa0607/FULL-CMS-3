@@ -336,8 +336,8 @@
    				@foreach ($outlet as $out)
 	   			<div class="col-12">
 	   				<a href="{{ $out['deep_link'] }}" class="row linkTidakAda">
-			   			<div class="col-6 text-grey-black text-12-7px seravek-font"><span> {{ $out['outlet'] }} </span></div>
-			   			<div class="col-6 text-12-7px seravek-light-font text-right" style="color: #bbb5b5"><span> {{ round($out['km']/1000, 2) }} km </span></div>
+			   			<div class="col-6 text-grey-black text-12-7px seravek-font"><span> {{ $out['outlet_name'] }} </span></div>
+			   			<div class="col-6 text-12-7px seravek-light-font text-right" style="color: #bbb5b5"><span> {{ $out['distance'] }} </span></div>
 			   			<div class="col-12 kelas-hr"><hr></div>
 		   			</a>
 	   			</div>
@@ -363,16 +363,15 @@
   		var data = JSON.parse($('.data').val());
 	  	var input = $(this).val();
 	  	var apa = data.filter(function(item) {
-	  		return item.outlet.toLowerCase().search(input.toLowerCase()) !== -1;
+	  		return item.outlet_name.toLowerCase().search(input.toLowerCase()) !== -1;
 	  	});
 
 	  	$('#result').html('');
 
 	  	apa.map(function(value, key) {
-	  		var data_km = value.km/1000;
 	  		$('#result').append('<div class="col-12"><a href="'+value.deep_link+'" class="row linkTidakAda">\
-		   			<div class="col-6 text-grey-black text-12-7px seravek-font"><span> '+value.outlet+' </span></div>\
-		   			<div class="col-6 text-12-7px seravek-light-font text-right" style="color: #bbb5b5"><span> '+data_km.toFixed(2)+' km </span></div>\
+		   			<div class="col-6 text-grey-black text-12-7px seravek-font"><span> '+value.outlet_name+' </span></div>\
+		   			<div class="col-6 text-12-7px seravek-light-font text-right" style="color: #bbb5b5"><span> '+value.distance+'</span></div>\
 		   			<div class="col-12 kelas-hr"><hr></div>\
 	   			</a></div>')
 	  	});

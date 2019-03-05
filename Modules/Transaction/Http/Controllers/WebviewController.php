@@ -68,6 +68,10 @@ class WebviewController extends Controller
             }
         }
 
+        if ($data['transaction_payment_status'] == 'Cancelled') {
+            $view = 'transaction_failed';
+        }
+
     	if (isset($data['order_label_v2'])) {
     		$data['order_label_v2'] = explode(',', $data['order_label_v2']);
     		$data['order_v2'] = explode(',', $data['order_v2']);
