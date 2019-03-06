@@ -30,7 +30,7 @@
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#tab_voucher_1" id="tab-menu-voucher-1" data-toggle="tab">Total</a>
+                            <a href="#tab_voucher_1" id="tab-menu-voucher-1" data-toggle="tab">Voucher Redemption</a>
                         </li>
                         <li>
                             <a href="#tab_voucher_2" data-toggle="tab">Gender</a>
@@ -166,30 +166,30 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th> No </th>
-                            <th> Date </th>
-                            <th> Total </th>
-                            <th> Male Customer </th>
-                            <th> Female Customer </th>
-                            <th> Android </th>
-                            <th> iOS </th>
-                            <th> Telkomsel </th>
-                            <th> XL </th>
-                            <th> Indosat </th>
-                            <th> Tri </th>
-                            <th> Axis </th>
-                            <th> Smart </th>
-                            <th> Teens </th>
-                            <th> Young Adult </th>
-                            <th> Adult </th>
-                            <th> Old </th>
+                            <th data-data='number'> No </th>
+                            <th data-data='date' class="col-date"> Date </th>
+                            <th data-data='voucher_count'> Total </th>
+                            <th data-data='cust_male'> Male Customer </th>
+                            <th data-data='cust_female'> Female Customer </th>
+                            <th data-data='cust_android'> Android </th>
+                            <th data-data='cust_ios'> iOS </th>
+                            <th data-data='cust_telkomsel'> Telkomsel </th>
+                            <th data-data='cust_xl'> XL </th>
+                            <th data-data='cust_indosat'> Indosat </th>
+                            <th data-data='cust_tri'> Tri </th>
+                            <th data-data='cust_axis'> Axis </th>
+                            <th data-data='cust_smart'> Smart </th>
+                            <th data-data='cust_teens'> Teens </th>
+                            <th data-data='cust_young_adult'> Young Adult </th>
+                            <th data-data='cust_adult'> Adult </th>
+                            <th data-data='cust_old'> Old </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($report['vouchers']['data'] as $key => $voucher)
                         <tr class="odd gradeX">
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $voucher['date'] }}</td>
+                            <td class="col-date">{{ $voucher['date'] }}</td>
                             <td>{{ $voucher['voucher_count'] }}</td>
                             <td>{{ $voucher['cust_male'] }}</td>
                             <td>{{ $voucher['cust_female'] }}</td>

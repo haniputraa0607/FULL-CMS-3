@@ -117,29 +117,29 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th> No </th>
-                            <th> Reg Date </th>
-                            <th> Male Customer </th>
-                            <th> Female Customer </th>
-                            <th> Android </th>
-                            <th> iOS </th>
-                            <th> Telkomsel </th>
-                            <th> XL </th>
-                            <th> Indosat </th>
-                            <th> Tri </th>
-                            <th> Axis </th>
-                            <th> Smart </th>
-                            <th> Teens </th>
-                            <th> Young Adult </th>
-                            <th> Adult </th>
-                            <th> Old </th>
+                            <th data-data='number'> No </th>
+                            <th data-data='date' class="col-date"> Reg Date </th>
+                            <th data-data='cust_male'> Male Customer </th>
+                            <th data-data='cust_female'> Female Customer </th>
+                            <th data-data='cust_android'> Android </th>
+                            <th data-data='cust_ios'> iOS </th>
+                            <th data-data='cust_telkomsel'> Telkomsel </th>
+                            <th data-data='cust_xl'> XL </th>
+                            <th data-data='cust_indosat'> Indosat </th>
+                            <th data-data='cust_tri'> Tri </th>
+                            <th data-data='cust_axis'> Axis </th>
+                            <th data-data='cust_smart'> Smart </th>
+                            <th data-data='cust_teens'> Teens </th>
+                            <th data-data='cust_young_adult'> Young Adult </th>
+                            <th data-data='cust_adult'> Adult </th>
+                            <th data-data='cust_old'> Old </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($report['registrations']['data'] as $key => $reg)
                         <tr class="odd gradeX">
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $reg['date'] }}</td>
+                            <td class="col-date">{{ $reg['date'] }}</td>
                             <td>{{ $reg['cust_male'] }}</td>
                             <td>{{ $reg['cust_female'] }}</td>
                             <td>{{ $reg['cust_android'] }}</td>

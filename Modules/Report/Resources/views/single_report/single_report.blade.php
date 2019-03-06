@@ -15,6 +15,24 @@
     	.semicolon{
     		width: 20px;
     	}
+        .col-date{
+            min-width: 70px;
+        }
+
+    	/* date */
+    	.datepicker table tr.week:hover{
+		    background: #eee;
+		}
+		.datepicker table tr.week-active,
+		.datepicker table tr.week-active td,
+		.datepicker table tr.week-active td:hover,
+		.datepicker table tr.week-active.week td,
+		.datepicker table tr.week-active.week td:hover,
+		.datepicker table tr.week-active.week,
+		.datepicker table tr.week-active:hover{
+		    background-color: #4b8df8;
+		    color: #fff;
+		}
     </style>
 @stop
 
@@ -35,7 +53,33 @@
     {{-- page scripts --}}
     <script type="text/javascript">
     	// define filter type
-    	var time_type = "{{ $filter['time_type'] }}";
+    	var filter = {!! json_encode($filter) !!};
+    	var time_type = filter.time_type_select;
+    	var week_date = "";
+
+    	// init default filter
+    	if (time_type == 'day') {
+    		$('#filter-day-1').val(filter.param1_str);
+    		$('#filter-day-2').val(filter.param2_str);
+    	}
+    	else if (time_type == 'week') {
+    		var week_str = filter.param1_str+ ' to ' + filter.param2_str;
+    		$('#filter-week-1').val(week_str);
+    	}
+    	else if (time_type == 'month') {
+    		$('#filter-month-1').val(filter.param1);
+    		$('#filter-month-2').val(filter.param2);
+    		$('#filter-month-3').val(filter.param3);
+    	}
+    	else if (time_type == 'quarter') {
+    		var quarter_str = filter.param1 + '-' + filter.param2;
+    		$('#filter-quarter-1').val(quarter_str);
+    		$('#filter-quarter-2').val(filter.param3);
+    	}
+    	else if (time_type == 'year') {
+    		$('#filter-year-1').val(filter.param1);
+    		$('#filter-year-2').val(filter.param2);
+    	}
 
     	// init global var
     	var gender_series = age_series = device_series =
@@ -55,13 +99,58 @@
 
     	$('.datepicker').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
     	$('.select2').select2();
-    	$('.table').dataTable({
+    	$('.table').DataTable({
     		lengthChange: false,
     		info: false,
     		ordering: false,
     		searching: false
     	});
-    	
+
+    	// week picker 
+    	$('.week-picker').datepicker({
+    		format: 'dd/mm/yyyy',
+    		autoclose: true
+    	}).on('show', function(e){
+		    var tr = $('body').find('.datepicker-days table tbody tr');
+		    tr.mouseover(function(){
+		        $(this).addClass('week');
+		    });
+		    tr.mouseout(function(){
+		        $(this).removeClass('week');
+		    });
+		    calculate_week_range(e);
+		}).on('hide', function(e){
+		    calculate_week_range(e, 1);
+		});
+
+		var calculate_week_range = function(e, ajax=0){
+		    var input = e.currentTarget;
+		    // remove all active class
+		    $('body').find('.datepicker-days table tbody tr').removeClass('week-active');
+		    // add active class
+		    var tr = $('body').find('.datepicker-days table tbody tr td.active.day').parent();
+		    tr.addClass('week-active');
+		    // find start and end date of the week
+		    var date = e.date;
+
+		    var start_date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+		    var end_date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+
+		    // make a friendly string
+		    var friendly_string = start_date.getDate() + '/' + (start_date.getMonth() + 1) + '/' + start_date.getFullYear() + ' to '
+		        + end_date.getDate() + '/' + (end_date.getMonth() + 1) + '/' + end_date.getFullYear();
+
+		    // if week_date change
+		    if (ajax == 1 && week_date != friendly_string) {
+		    	$(input).val(friendly_string);
+
+		    	week_date = friendly_string;
+				var split_date = week_date.split(' to ');
+		    	
+		    	ajax_get_report(time_type, split_date[0], split_date[1]);
+			}
+		}
+
     	$('#time_type').val(time_type).trigger('change');
     	filter_type(time_type);
 
@@ -72,19 +161,39 @@
 
     	// change filter based on time_type
     	function filter_type(time_type) {
-    		if (time_type == "month") {
+    		if(time_type == "week") {
     			$('#filter-day').hide();
+    			$('#filter-month').hide();
+    			$('#filter-quarter').hide();
+    			$('#filter-year').hide();
+    			$('#filter-week').show();
+    		}
+    		else if (time_type == "month") {
+    			$('#filter-day').hide();
+    			$('#filter-week').hide();
+    			$('#filter-quarter').hide();
     			$('#filter-year').hide();
     			$('#filter-month').show();
     		}
+    		else if(time_type == "quarter") {
+    			$('#filter-day').hide();
+    			$('#filter-week').hide();
+    			$('#filter-month').hide();
+    			$('#filter-year').hide();
+    			$('#filter-quarter').show();
+    		}
     		else if(time_type == "year") {
     			$('#filter-day').hide();
+    			$('#filter-week').hide();
     			$('#filter-month').hide();
+    			$('#filter-quarter').hide();
     			$('#filter-year').show();
     		}
     		else {
-    			$('#filter-year').hide();
+    			$('#filter-week').hide();
     			$('#filter-month').hide();
+    			$('#filter-quarter').hide();
+    			$('#filter-year').hide();
     			$('#filter-day').show();
     		}
     	}
@@ -111,6 +220,19 @@
     				}
     			}
     		}
+    		else if (time_type == "quarter") {
+    			var month = $('#filter-quarter-1').val();
+    			var split_month = month.split('-');
+    			var start_month = split_month[0];
+    			var end_month = split_month[1];
+    			var year = $('#filter-quarter-2').val();
+    			if (start_month!="" && end_month!="" && year!="") {
+					return {
+						status: true,
+						filter: [time_type, start_month, end_month, year]
+					};
+    			}
+    		}
     		else if (time_type == "year") {
     			var start_year = $('#filter-year-1').val();
     			var end_year = $('#filter-year-2').val();
@@ -128,6 +250,12 @@
 						};
 					}
     			}
+    		}
+    		else if (time_type == "week") {
+				return {
+					status: true,
+					filter: [time_type]
+				};
     		}
     		else {
     			// day
@@ -160,11 +288,14 @@
     		check_filter().then(function(check) {
 	    		if (check.status==true) {
 	    			var filter = check.filter;
-	    			if (filter[0] == 'month') {
-	    				ajax_get_report(filter[0], filter[1], filter[2], filter[3]);
-	    			}
-	    			else {
-	    				ajax_get_report(filter[0], filter[1], filter[2]);
+	    			// filter week will be handling at datepicker on hide
+	    			if (filter[0] != 'week') {
+    					if (filter[0] == 'month' || filter[0] == 'quarter') {
+		    				ajax_get_report(filter[0], filter[1], filter[2], filter[3]);
+		    			}
+		    			else {
+		    				ajax_get_report(filter[0], filter[1], filter[2]);
+		    			}
 	    			}
 	    		}
 	    		else {
@@ -187,7 +318,7 @@
                 },
                 url : "{{ url('/report/ajax') }}",
                 success: function(result) {
-                	// console.log('result', result);
+                	console.log('result', result);
                     
                     if (result.status == "success") {
                         $('.date-range').text(result.date_range);
@@ -232,31 +363,9 @@
             $('#card_trx_3').text(trx['total_male']);
             $('#card_trx_4').text(trx['total_female']);
             // update table
-            $('#table-trx tbody').html('');
-            $.each(transactions, function(index, item){
-            	var row = "<tr>\
-                    <td>"+(index+1)+"</td>\
-                    <td>"+item['date']+"</td>\
-                    <td>"+item['trx_count']+"</td>\
-                    <td>"+item['trx_grand']+"</td>\
-                    <td>"+item['trx_cashback_earned']+"</td>\
-                    <td>"+item['cust_male']+"</td>\
-                    <td>"+item['cust_female']+"</td>\
-                    <td>"+item['cust_android']+"</td>\
-                    <td>"+item['cust_ios']+"</td>\
-                    <td>"+item['cust_telkomsel']+"</td>\
-                    <td>"+item['cust_xl']+"</td>\
-                    <td>"+item['cust_indosat']+"</td>\
-                    <td>"+item['cust_tri']+"</td>\
-                    <td>"+item['cust_axis']+"</td>\
-                    <td>"+item['cust_smart']+"</td>\
-                    <td>"+item['cust_teens']+"</td>\
-                    <td>"+item['cust_young_adult']+"</td>\
-                    <td>"+item['cust_adult']+"</td>\
-                    <td>"+item['cust_old']+"</td>\
-            	</tr>";
-            	$('#table-trx tbody').append(row);
-            });
+			$('#table-trx .table').DataTable().clear();
+			$('#table-trx .table').DataTable().rows.add(transactions);
+			$('#table-trx .table').DataTable().draw();
     	}
     	// update product section after data fetched
     	function update_product_report(result) {
@@ -282,31 +391,9 @@
             $('#card_product_3').text(product['product_total_male']);
             $('#card_product_4').text(product['product_total_female']);
             // update table
-            $('#table-product tbody').html('');
-            $.each(products, function(index, item){
-            	var row = "<tr>\
-                    <td>"+(index+1)+"</td>\
-                    <td>"+item['date']+"</td>\
-                    <td>"+item['total_rec']+"</td>\
-                    <td>"+item['total_qty']+"</td>\
-                    <td>"+item['total_nominal']+"</td>\
-                    <td>"+item['cust_male']+"</td>\
-                    <td>"+item['cust_female']+"</td>\
-                    <td>"+item['cust_android']+"</td>\
-                    <td>"+item['cust_ios']+"</td>\
-                    <td>"+item['cust_telkomsel']+"</td>\
-                    <td>"+item['cust_xl']+"</td>\
-                    <td>"+item['cust_indosat']+"</td>\
-                    <td>"+item['cust_tri']+"</td>\
-                    <td>"+item['cust_axis']+"</td>\
-                    <td>"+item['cust_smart']+"</td>\
-                    <td>"+item['cust_teens']+"</td>\
-                    <td>"+item['cust_young_adult']+"</td>\
-                    <td>"+item['cust_adult']+"</td>\
-                    <td>"+item['cust_old']+"</td>\
-            	</tr>";
-            	$('#table-product tbody').append(row);
-            });
+            $('#table-product .table').DataTable().clear();
+            $('#table-product .table').DataTable().rows.add(products);
+            $('#table-product .table').DataTable().draw();
     	}
     	// update registration section after data fetched
     	function update_reg_report(result) {
@@ -330,28 +417,9 @@
             $('#card_reg_3').text(reg['reg_total_android']);
             $('#card_reg_4').text(reg['reg_total_ios']);
             // update table
-            $('#table-reg tbody').html('');
-            $.each(registrations, function(index, item){
-            	var row = "<tr>\
-                    <td>"+(index+1)+"</td>\
-                    <td>"+item['date']+"</td>\
-                    <td>"+item['cust_male']+"</td>\
-                    <td>"+item['cust_female']+"</td>\
-                    <td>"+item['cust_android']+"</td>\
-                    <td>"+item['cust_ios']+"</td>\
-                    <td>"+item['cust_telkomsel']+"</td>\
-                    <td>"+item['cust_xl']+"</td>\
-                    <td>"+item['cust_indosat']+"</td>\
-                    <td>"+item['cust_tri']+"</td>\
-                    <td>"+item['cust_axis']+"</td>\
-                    <td>"+item['cust_smart']+"</td>\
-                    <td>"+item['cust_teens']+"</td>\
-                    <td>"+item['cust_young_adult']+"</td>\
-                    <td>"+item['cust_adult']+"</td>\
-                    <td>"+item['cust_old']+"</td>\
-            	</tr>";
-            	$('#table-reg tbody').append(row);
-            });
+            $('#table-reg .table').DataTable().clear();
+            $('#table-reg .table').DataTable().rows.add(registrations);
+            $('#table-reg .table').DataTable().draw();
     	}
     	// update membership section after data fetched
     	function update_mem_report(result) {
@@ -376,29 +444,9 @@
             $('#card_mem_3').text(mem['mem_total_android']);
             $('#card_mem_4').text(mem['mem_total_ios']);
             // update table
-            $('#table-mem tbody').html('');
-            $.each(memberships, function(index, item){
-            	var row = "<tr>\
-                    <td>"+(index+1)+"</td>\
-                    <td>"+item['date']+"</td>\
-                    <td>"+item['cust_total']+"</td>\
-                    <td>"+item['cust_male']+"</td>\
-                    <td>"+item['cust_female']+"</td>\
-                    <td>"+item['cust_android']+"</td>\
-                    <td>"+item['cust_ios']+"</td>\
-                    <td>"+item['cust_telkomsel']+"</td>\
-                    <td>"+item['cust_xl']+"</td>\
-                    <td>"+item['cust_indosat']+"</td>\
-                    <td>"+item['cust_tri']+"</td>\
-                    <td>"+item['cust_axis']+"</td>\
-                    <td>"+item['cust_smart']+"</td>\
-                    <td>"+item['cust_teens']+"</td>\
-                    <td>"+item['cust_young_adult']+"</td>\
-                    <td>"+item['cust_adult']+"</td>\
-                    <td>"+item['cust_old']+"</td>\
-            	</tr>";
-            	$('#table-mem tbody').append(row);
-            });
+            $('#table-mem .table').DataTable().clear();
+            $('#table-mem .table').DataTable().rows.add(memberships);
+            $('#table-mem .table').DataTable().draw();
     	}
     	// update voucher section after data fetched
     	function update_voucher_report(result) {
@@ -423,29 +471,9 @@
             $('#card_voucher_3').text(voucher['voucher_total_female']);
             // $('#card_voucher_4').text(voucher['voucher_total_ios']);
             // update table
-            $('#table-voucher tbody').html('');
-            $.each(vouchers, function(index, item){
-            	var row = "<tr>\
-                    <td>"+(index+1)+"</td>\
-                    <td>"+item['date']+"</td>\
-                    <td>"+item['voucher_count']+"</td>\
-                    <td>"+item['cust_male']+"</td>\
-                    <td>"+item['cust_female']+"</td>\
-                    <td>"+item['cust_android']+"</td>\
-                    <td>"+item['cust_ios']+"</td>\
-                    <td>"+item['cust_telkomsel']+"</td>\
-                    <td>"+item['cust_xl']+"</td>\
-                    <td>"+item['cust_indosat']+"</td>\
-                    <td>"+item['cust_tri']+"</td>\
-                    <td>"+item['cust_axis']+"</td>\
-                    <td>"+item['cust_smart']+"</td>\
-                    <td>"+item['cust_teens']+"</td>\
-                    <td>"+item['cust_young_adult']+"</td>\
-                    <td>"+item['cust_adult']+"</td>\
-                    <td>"+item['cust_old']+"</td>\
-            	</tr>";
-            	$('#table-voucher tbody').append(row);
-            });
+            $('#table-voucher .table').DataTable().clear();
+            $('#table-voucher .table').DataTable().rows.add(vouchers);
+            $('#table-voucher .table').DataTable().draw();
     	}
 
     	// get trx report
@@ -462,10 +490,10 @@
 	    		else if (check.status==true) {
 	    			var filter = check.filter;
 	    			if (filter[0] == 'month') {
-	    				ajax_trx_report(filter[0], filter[1], filter[2], filter[3], trx_id_outlet);
+	    				ajax_trx_report(filter[0], filter[1], filter[2], filter[3], trx_id_outlet, trx_outlet_name);
 	    			}
 	    			else {
-	    				ajax_trx_report(filter[0], filter[1], filter[2], null, trx_id_outlet);
+	    				ajax_trx_report(filter[0], filter[1], filter[2], null, trx_id_outlet, trx_outlet_name);
 	    			}
 	    			// set outlet name
 	    			$('#trx_outlet_name').text(trx_outlet_name);
@@ -477,7 +505,7 @@
     		});
     	});
     	// ajax trx report
-    	function ajax_trx_report(time_type, param1, param2, param3=null, trx_id_outlet) {
+    	function ajax_trx_report(time_type, param1, param2, param3=null, trx_id_outlet, trx_outlet_name) {
     		$.ajax({
                 type : "POST",
                 data : {
@@ -487,7 +515,8 @@
                 	param1 : param1,
                 	param2 : param2,
                 	param3 : param3,
-                	trx_id_outlet : trx_id_outlet
+                    trx_id_outlet : trx_id_outlet,
+                	trx_outlet_name : trx_outlet_name
                 },
                 url : "{{ url('/report/ajax') }}",
                 success: function(result) {
@@ -526,10 +555,10 @@
 	    		else if (check.status==true) {
 	    			var filter = check.filter;
 	    			if (filter[0] == 'month') {
-	    				ajax_product_report(filter[0], filter[1], filter[2], filter[3], product_id_outlet, id_product);
+	    				ajax_product_report(filter[0], filter[1], filter[2], filter[3], product_id_outlet, id_product, product_outlet_name, product_name);
 	    			}
 	    			else {
-	    				ajax_product_report(filter[0], filter[1], filter[2], null, product_id_outlet, id_product);
+	    				ajax_product_report(filter[0], filter[1], filter[2], null, product_id_outlet, id_product, product_outlet_name, product_name);
 	    			}
 	    			// set product & outlet name
 	    			$('#product_outlet_name').text(product_outlet_name);
@@ -543,7 +572,7 @@
     	});
     	// ajax product report
     	function ajax_product_report(time_type, param1, param2, param3=null,
-    		product_id_outlet, id_product) {
+    		product_id_outlet, id_product, product_outlet_name, product_name) {
     		$.ajax({
                 type : "POST",
                 data : {
@@ -554,7 +583,9 @@
                 	param2 : param2,
                 	param3 : param3,
                 	product_id_outlet : product_id_outlet,
-                	id_product: id_product
+                	id_product: id_product,
+                    product_outlet_name : product_outlet_name,
+                    product_name : product_name
                 },
                 url : "{{ url('/report/ajax') }}",
                 success: function(result) {
@@ -589,10 +620,10 @@
 	    		else if (check.status==true) {
 	    			var filter = check.filter;
 	    			if (filter[0] == 'month') {
-	    				ajax_mem_report(filter[0], filter[1], filter[2], filter[3], id_membership);
+	    				ajax_mem_report(filter[0], filter[1], filter[2], filter[3], id_membership, membership_name);
 	    			}
 	    			else {
-	    				ajax_mem_report(filter[0], filter[1], filter[2], null, id_membership);
+	    				ajax_mem_report(filter[0], filter[1], filter[2], null, id_membership, membership_name);
 	    			}
 	    			// set mem & outlet name
 	    			$('#membership_name').text(membership_name);
@@ -603,7 +634,7 @@
     		});
     	});
     	// ajax membership report
-    	function ajax_mem_report(time_type, param1, param2, param3=null, id_membership) {
+    	function ajax_mem_report(time_type, param1, param2, param3=null, id_membership, membership_name) {
     		$.ajax({
                 type : "POST",
                 data : {
@@ -613,7 +644,8 @@
                 	param1 : param1,
                 	param2 : param2,
                 	param3 : param3,
-                	id_membership : id_membership
+                	id_membership : id_membership,
+                    membership_name : membership_name
                 },
                 url : "{{ url('/report/ajax') }}",
                 success: function(result) {
@@ -653,10 +685,10 @@
 	    		else if (check.status==true) {
 	    			var filter = check.filter;
 	    			if (filter[0] == 'month') {
-	    				ajax_voucher_report(filter[0], filter[1], filter[2], filter[3], voucher_id_outlet, id_deals);
+	    				ajax_voucher_report(filter[0], filter[1], filter[2], filter[3], voucher_id_outlet, id_deals, voucher_outlet_name, deals_title);
 	    			}
 	    			else {
-	    				ajax_voucher_report(filter[0], filter[1], filter[2], null, voucher_id_outlet, id_deals);
+	    				ajax_voucher_report(filter[0], filter[1], filter[2], null, voucher_id_outlet, id_deals, voucher_outlet_name, deals_title);
 	    			}
 	    			// set voucher & outlet name
 	    			$('#voucher_outlet_name').text(voucher_outlet_name);
@@ -670,7 +702,7 @@
     	});
     	// ajax voucher report
     	function ajax_voucher_report(time_type, param1, param2, param3=null,
-    		voucher_id_outlet, id_deals) {
+    		voucher_id_outlet, id_deals, voucher_outlet_name, deals_title) {
     		$.ajax({
                 type : "POST",
                 data : {
@@ -681,7 +713,9 @@
                 	param2 : param2,
                 	param3 : param3,
                 	voucher_id_outlet : voucher_id_outlet,
-                	id_deals : id_deals
+                	id_deals : id_deals,
+                    voucher_outlet_name: voucher_outlet_name,
+                    deals_title: deals_title
                 },
                 url : "{{ url('/report/ajax') }}",
                 success: function(result) {
@@ -1157,7 +1191,7 @@
 	<div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
-                <a href="/">Home</a>
+                <a href="{{ url('/home') }}">Home</a>
                 <i class="fa fa-circle"></i>
             </li>
             <li>
@@ -1187,9 +1221,11 @@
                 <div class="row">
                 	<div class="col-md-2">
                     	<select id="time_type" class="form-control select2" name="time_type">
-							<option value="day" {{ ($filter['time_type']=='day' ? 'selected' : '') }}>Day</option>
-							<option value="month" {{ ($filter['time_type']=='month' ? 'selected' : '') }}>Month</option>
-							<option value="year" {{ ($filter['time_type']=='year' ? 'selected' : '') }}>Year</option>
+							<option value="day" {{ ($filter['time_type_select']=='day' ? 'selected' : '') }}>Day</option>
+							<option value="week" {{ ($filter['time_type_select']=='week' ? 'selected' : '') }}>Week</option>
+							<option value="month" {{ ($filter['time_type_select']=='month' ? 'selected' : '') }}>Month</option>
+							<option value="quarter" {{ ($filter['time_type_select']=='quarter' ? 'selected' : '') }}>Quarter</option>
+							<option value="year" {{ ($filter['time_type_select']=='year' ? 'selected' : '') }}>Year</option>
 						</select>
 					</div>
 					<div id="filter-day" class="col-md-8" style="padding-left:0; padding-right:0">
@@ -1204,6 +1240,16 @@
 	                	<div class="col-md-4">
 	                		<div class="input-group">
 	                            <input type="text" id="filter-day-2" class="form-control datepicker filter-2" name="end_date" placeholder="End">
+	                            <span class="input-group-addon">
+	                                <i class="fa fa-calendar"></i>
+	                            </span>
+	                        </div>
+	                	</div>
+	                </div>
+					<div id="filter-week" class="col-md-8" style="padding-left:0; padding-right:0; display:none;">
+	                	<div class="col-md-6">
+	                		<div class="input-group">
+	                            <input type="text" id="filter-week-1" class="form-control week-picker filter-1" name="week_date" placeholder="Week Date">
 	                            <span class="input-group-addon">
 	                                <i class="fa fa-calendar"></i>
 	                            </span>
@@ -1247,6 +1293,24 @@
 	                	</div>
 	                	<div class="col-md-4">
 	                		<select id="filter-month-3" class="form-control select2 filter-3" name="month_year" data-placeholder="Select Year">
+	                			<option></option>
+	                			@foreach($year_list as $year)
+	                				<option value="{{ $year }}">{{ $year }}</option>
+	                			@endforeach
+	                		</select>
+	                	</div>
+	                </div>
+					<div id="filter-quarter" class="col-md-8" style="padding-left:0; padding-right:0; display:none;">
+	                	<div class="col-md-4">
+	                		<select id="filter-quarter-1" class="form-control select2 filter-1" name="quarter" data-placeholder="Select Quarter">
+								<option value="1-3">Jan - Mar</option>
+								<option value="4-6">Apr - Jun</option>
+								<option value="7-9">Jul - Sept</option>
+								<option value="10-12">Oct - Dec</option>
+							</select>
+	                	</div>
+	                	<div class="col-md-4">
+	                		<select id="filter-quarter-2" class="form-control select2 filter-2" name="quarter_year" data-placeholder="Select Year">
 	                			<option></option>
 	                			@foreach($year_list as $year)
 	                				<option value="{{ $year }}">{{ $year }}</option>

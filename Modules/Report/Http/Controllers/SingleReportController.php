@@ -53,16 +53,20 @@ class SingleReportController extends Controller
         if (isset($deals['status']) && $deals['status']=='success' ) {
             $data['deals'] = $deals['result'];
         }
-
+        
         $post = session('report_filter');
         if ($post == null) {
             // set default filter
             $today = date('Y-m-d');
             $one_week_ago = date("Y-m-d", strtotime("-1 week"));
 
-            $post['time_type'] = 'day';
+            $post['time_type_select'] = 'day';  // for select in view
+            $post['time_type'] = 'day';  // for api
             $post['param1'] = $one_week_ago;
-            $post['param2'] = $today;
+            $post['param2'] = $today;        
+
+            $post['param1_str'] = date('d/m/Y', strtotime($post['param1']));
+            $post['param2_str'] = date('d/m/Y', strtotime($post['param2']));
 
             if (!empty($data['products'])) {
                 $post['id_product'] = $data['products'][0]['id_product'];
@@ -72,12 +76,13 @@ class SingleReportController extends Controller
                 $post['id_membership'] = $data['memberships'][0]['id_membership'];
                 $post['membership_name'] = $data['memberships'][0]['membership_name'];
             }
+            if (!empty($data['deals'])) {
+                $post['id_deals'] = $data['deals'][0]['id_deals'];
+                $post['deals_title'] = $data['deals'][0]['deals_title'];
+            }
             $post['trx_id_outlet'] = 0;
             $post['product_id_outlet'] = 0;
             $post['voucher_id_outlet'] = 0;
-            $post['id_product'] = 0;
-            $post['id_membership'] = 0;
-            $post['id_deals'] = 0;
 
             // store filter in session
             session(['report_filter' => $post]);
@@ -98,11 +103,23 @@ class SingleReportController extends Controller
     private function checkFilter($post)
     {
         $success = true;
+        $post['time_type_select'] = $post['time_type'];
+        if ($post['time_type'] == 'week') {
+            $post['time_type'] = 'day';
+        }
+        else if ($post['time_type'] == 'quarter') {
+            $post['time_type'] = 'month';
+        }
+        
         switch ($post['time_type']) {
             case 'day':
                 if ($post['param1']=="" || $post['param2']=="") {
                     $success = false;
                 } else {
+                    // date format in datepicker
+                    $post['param1_str'] = $post['param1'];
+                    $post['param2_str'] = $post['param2'];
+
                     $post['param1'] = str_replace('/', '-', $post['param1']);
                     $post['param2'] = str_replace('/', '-', $post['param2']);
 
@@ -191,6 +208,7 @@ class SingleReportController extends Controller
             $post = array_merge($report_filter, $post);
             session(['report_filter' => $post]);
 
+            // date format in datepicker
             $result['filter'] = $post;
             $result['date_range'] = $date_range;
             
