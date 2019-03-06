@@ -371,22 +371,12 @@
         </div>
     </div> -->
 
-    @if ($data['trasaction_type'] != 'Offline')
+    @if ($data['trasaction_payment_type'] != 'Offline')
         <div class="kotak-full">
             <div class="container">
                 <div class="row text-center">
                     <div class="col-12 text-16-7px text-greyish-brown seravek-font">
-                        @if($data['detail']['reject_at'] != null)
-                            Pesanan Anda Ditolak
-                        @elseif($data['detail']['taken_at'] != null)
-                            Pesanan Sudah Diambil
-                        @elseif($data['detail']['ready_at'] != null)
-                            Pesanan Anda Sudah Siap
-                        @elseif($data['detail']['receive_at'] != null)
-                            Pesanan Diterima
-                        @else
-                            Pesanan Anda Menunggu Konfirmasi
-                        @endif
+                        Transaction Cancelled
                     </div>
                 </div>
             </div>
@@ -510,11 +500,6 @@
                     @endif
                 @endif
 
-                @if($data['transaction_discount'] > 0)
-                <div class="col-6 text-13-3px space-text seravek-light-font">Diskon</div>
-                <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ str_replace(',', '.', number_format($data['transaction_discount'])) }}</div>
-                @endif
-
                 @if(isset($data['balance']))
                 <div class="col-6 text-13-3px space-text seravek-light-font">Kopi Points</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ str_replace(',', '.', number_format(abs($data['balance']))) }}</div>
@@ -571,7 +556,6 @@
         </div>
     @endif
 
-    @if ($data['trasaction_type'] != 'Offline')
     <div class="kotak">
         <div class="container">
             <div class="row">
@@ -675,7 +659,6 @@
             </div>
         </div>
     </div>
-    @endif
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

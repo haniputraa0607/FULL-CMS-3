@@ -923,6 +923,7 @@ class SettingController extends Controller
     {
         $validatedData = $request->validate([
             // 'complete_profile_point'    => 'required',
+            'complete_profile_popup' => 'required',
             'complete_profile_cashback' => 'required',
             'complete_profile_count'    => 'required',
             'complete_profile_interval' => 'required'

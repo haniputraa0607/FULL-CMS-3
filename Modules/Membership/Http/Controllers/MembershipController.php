@@ -22,6 +22,9 @@ class MembershipController extends Controller
 				
 		$post = $request->except('_token');
 		if(!empty($post)){
+			
+			$post['membership'] = array_values($post['membership']);
+			// dd($post);exit;
 			foreach($post['membership'] as $key => $membership){
 				if (isset($membership['membership_image'])) {
 					$post['membership'][$key]['membership_image'] = MyHelper::encodeImage($membership['membership_image']);
@@ -29,9 +32,8 @@ class MembershipController extends Controller
 					$post['membership'][$key]['membership_image'] = "";
 				}
 			}
-			// print_r($post);exit;
 			$action = MyHelper::post('membership/update', $post);
-			// print_r($action);exit;
+			// dd($action);exit;
 			if(isset($action['status']) && $action['status'] == 'success'){
 				session(['success' => ['Membership has been updated']]);
 				return redirect('membership');
@@ -119,13 +121,14 @@ class MembershipController extends Controller
     {
 		$bearer = $request->header('Authorization');
         if ($bearer == "") {
-            return view('error', ['msg' => 'Unauthenticated']);
+			$bearer = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ0ZmE5NmIzYjdhYTc4NWM2NThlYzlhZDA4ZjYxN2E2N2M5YTkxNDE1ZmY3Y2UwZDEyZDkxOGVlNjZjNDEzYzMwZWZiNDYyZGU5ZjVhMDM2In0.eyJhdWQiOiIyIiwianRpIjoiZDRmYTk2YjNiN2FhNzg1YzY1OGVjOWFkMDhmNjE3YTY3YzlhOTE0MTVmZjdjZTBkMTJkOTE4ZWU2NmM0MTNjMzBlZmI0NjJkZTlmNWEwMzYiLCJpYXQiOjE1NDY0Nzk0MzcsIm5iZiI6MTU0NjQ3OTQzNywiZXhwIjoxNTc4MDE1NDM3LCJzdWIiOiIzIiwic2NvcGVzIjpbIioiXX0.lfaUcgDutdJ9UkzY509qrOtfoxteZMTGO0tuXPWVd8Yq3mi5mIFxDYrChfwmVhntTpni31sreY_ivRVWp5Y0dlnVnR_yVUVPp5Cf5lzxkgTfMkktMLGD906TaSuuCF2aA-KAoIqhJMX42ZoZUM0xRaAhqOROIifzUuxVwNTLGDNqPi_VMDjmHZE2sI8gtrV69MhjBgqjLbp0lWSzQLkl5gSsTuE4giqMGjnUIJtYhqHzUkUYvcdTRtokzxoTFAowRU0WkwSy6K0kReBM0S8J41YrL1-62tPnKMqZFUz4l8DIkaRS6Zf9agxQ8cU2wz9I8QqDRt2xUNtWf8xbvLS4CevOHB4ZoPaUx1T9qzmzxul4CACYCYrBdjJst_LlJRd2HokPe_XQQtByjc3yMzgpwfxW2uyfL1DVzsG5fOrMraqEeRrxei3gafEQIamHDRv8StLHkF4zFpY-lg5fqQnC0RMIUXVfGuzsNv19uydwwYtONSPHTEhXNfodf2cV91C5Wtp80yG2GXfqkCZr-TGSBj6j1ZWlHV9fhkxiGBDyEbe25nurXvHSGZwQXWaQmwyaH-hW9XFXK23_xrZW9nMy60SQIeB9PsF-FVJ8sK6TIbEfP3cehnXpeuhS4Y5UFUsyK6zQD1UV6mD7bGPNXdUgOnRPEOYlb7mKlHZ82EPzuDc";
+            // return view('error', ['msg' => 'Unauthenticated']);
 		}
 		
     	$data = json_decode(base64_decode($request->get('data')), true);
     	$data['check'] = 1;
     	$check = MyHelper::postWithBearer('membership/detail/webview', $data, $bearer);
-        // dd($check);
+        // return $check;
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data = $check['result'];
 		} elseif (isset($check['status']) && $check['status'] == 'fail') {

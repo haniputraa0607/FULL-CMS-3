@@ -78,7 +78,7 @@ $grantedFeature     = session('granted_features');
                         target: "tr"
                     }
                 },
-                order: [1, "asc"],
+                order: [0, "asc"],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "All"]
@@ -145,6 +145,7 @@ $grantedFeature     = session('granted_features');
                 <thead>
                     <tr>
                         
+                        <th> No</th>
                         <th> Promo ID </th>
                         <th> Title </th>
                         @if($deals_type != "Hidden")
@@ -156,8 +157,9 @@ $grantedFeature     = session('granted_features');
                 </thead>
                 <tbody>
                     @if (!empty($deals))
-                        @foreach($deals as $value)
+                        @foreach($deals as $key => $value)
                             <tr>
+                                <td>{{ $key }}</td>
                                 <td>{{ $value['deals_promo_id'] }}</td>
                                 <td>{{ $value['deals_title'] }}</td>
                                 @if($deals_type != "Hidden")

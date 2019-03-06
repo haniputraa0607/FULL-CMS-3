@@ -831,6 +831,15 @@
 									</div>
 								</div> --}}
 								<div class="form-group col-md-12">
+									<label class="control-label col-md-4">Text Popup Completing Profile
+										<span class="required" aria-required="true"> * </span> 
+										<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan pada popup lengkapi data profil" data-container="body"></i>
+									</label>
+									<div class="fileinput fileinput-new col-md-6">
+										<input class="form-control" maxlength="50" type="text" name="complete_profile_popup" value="@if(isset($complete_profile['complete_profile_popup'])){{ $complete_profile['complete_profile_popup'] }}@endif" required>
+									</div>
+								</div>
+								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completing Kopi Point
 										<span class="required" aria-required="true"> * </span> 
 										<i class="fa fa-question-circle tooltips" data-original-title="Kopi Point yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
