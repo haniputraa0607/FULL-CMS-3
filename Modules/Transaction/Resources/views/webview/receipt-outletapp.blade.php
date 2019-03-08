@@ -44,6 +44,10 @@
             src: url('{{url("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
+        .swal-text {
+            text-align: center;
+        }
+
         .kotak {
             margin : 10px;
             padding: 10px;
@@ -437,15 +441,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     <script>
         $(document).ready(function() {
+            var warning = ' {!! $data['warning'] !!}';
+            var code = ' {!! $data['detail']['order_id'] !!}';
+            var date = ' {!! $data['taken_label'] !!}';
+            if (warning == 1) {
+                swal("Order "+code+"", "sudah diambil pada \n"+date, "error");
+            }
+
             $(document).on('click', '#gambar-usaha', function() {
                 $('#modal-usaha').fadeIn('fast');
+
+                var url = window.location.href;
+                var result = url.replace("#true", "");
+                result = result.replace("#false", "");
+
+                window.location.href = result + '#true'
             });
 
-            $(document).on('click', '#modal-usaha', function() {
+            $(document).on('click', '#modal-usaha', function(e) {
+                e.preventDefault();
                 $('#modal-usaha').fadeOut('fast');
+
+                var url = window.location.href;
+                var result = url.replace("#true", "");
+                result = result.replace("#false", "");
+
+                window.location.href = result + '#false'
             });
         });
     </script>

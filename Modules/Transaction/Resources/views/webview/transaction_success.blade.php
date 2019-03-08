@@ -652,5 +652,27 @@
     </script>
     @endif
 
+    <script>
+        $(document).ready(function() {
+            $('#exampleModal').on('show.bs.modal', function(e) {
+
+                var url = window.location.href;
+                var result = url.replace("#true", "");
+                result = result.replace("#false", "");
+
+                window.location.href = result + '#true'
+            });
+
+            $('#exampleModal').on('hide.bs.modal', function(e) {
+                window.location.href = window.location.href + '#false'
+
+                var url = window.location.href;
+                var result = url.replace("#true", "");
+                result = result.replace("#false", "");
+
+                window.location.href = result + '#false'
+            });
+        });
+    </script>
   </body>
 </html>
