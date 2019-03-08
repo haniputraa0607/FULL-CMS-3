@@ -18,6 +18,37 @@
         .col-date{
             min-width: 70px;
         }
+        .filter-wrapper{
+            position: relative;
+        }
+        .filter-loader{
+            float: left;
+            margin-top: 10px;
+            margin-left: 15px;
+            display: none;
+        }
+        .spinner{
+            width: 16px;
+            height: 16px;
+            border: solid 2px transparent;
+            border-radius: 10px !important;
+            border-top-color: #29d;
+            border-left-color: #29d;
+            -webkit-animation: spin 0.5s infinite; /* Safari 4.0 - 8.0 */
+            animation: spin 0.5s linear infinite;
+        }
+        @-moz-keyframes spin {
+            0% { -moz-transform: rotate(0deg); }
+            100% { -moz-transform: rotate(360deg); }
+        }
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+        @keyframes spin {
+            0% {transform:rotate(0deg);}
+            100% {transform:rotate(360deg);}
+        }
 
     	/* date */
     	.datepicker table tr.week:hover{
@@ -306,6 +337,8 @@
 
     	// ajax all report
     	function ajax_get_report(time_type, param1, param2, param3=null) {
+            // display loader
+            $('#date-filter-loader').fadeIn('fast');
     		$.ajax({
                 type : "POST",
                 data : {
@@ -318,7 +351,6 @@
                 },
                 url : "{{ url('/report/ajax') }}",
                 success: function(result) {
-                	console.log('result', result);
                     
                     if (result.status == "success") {
                         $('.date-range').text(result.date_range);
@@ -334,9 +366,13 @@
                     else {
                         toastr.warning(result.messages);
                     }
+                    // hide loader
+                    $('#date-filter-loader').fadeOut('fast');
                 },
                 fail: function(xhr, textStatus, errorThrown){
     				toastr.warning("Something went wrong. Could not fetch data");
+                    // hide loader
+                    $('#date-filter-loader').fadeOut('fast');
 			    }
             });
     	}
@@ -492,6 +528,13 @@
 	    			if (filter[0] == 'month') {
 	    				ajax_trx_report(filter[0], filter[1], filter[2], filter[3], trx_id_outlet, trx_outlet_name);
 	    			}
+                    else if (filter[0] == 'week') {
+                        if (week_date == "") {
+                            week_date = $('#filter-week-1').val();
+                        }
+                        var split_date = week_date.split(' to ');
+                        ajax_trx_report(filter[0], split_date[0], split_date[1], null, trx_id_outlet, trx_outlet_name);
+                    }
 	    			else {
 	    				ajax_trx_report(filter[0], filter[1], filter[2], null, trx_id_outlet, trx_outlet_name);
 	    			}
@@ -506,6 +549,9 @@
     	});
     	// ajax trx report
     	function ajax_trx_report(time_type, param1, param2, param3=null, trx_id_outlet, trx_outlet_name) {
+            // display loader
+            $('#trx-loader').fadeIn('fast');
+
     		$.ajax({
                 type : "POST",
                 data : {
@@ -529,9 +575,13 @@
                     else {
                         toastr.warning(result.messages);
                     }
+                    // hide loader
+                    $('#trx-loader').fadeOut('fast');
                 },
                 fail: function(xhr, textStatus, errorThrown){
     				toastr.warning("Something went wrong. Could not fetch data");
+                    // hide loader
+                    $('#trx-loader').fadeOut('fast');
 			    }
             });
     	}
@@ -557,6 +607,13 @@
 	    			if (filter[0] == 'month') {
 	    				ajax_product_report(filter[0], filter[1], filter[2], filter[3], product_id_outlet, id_product, product_outlet_name, product_name);
 	    			}
+                    else if (filter[0] == 'week') {
+                        if (week_date == "") {
+                            week_date = $('#filter-week-1').val();
+                        }
+                        var split_date = week_date.split(' to ');
+                        ajax_product_report(filter[0], split_date[0], split_date[1], null, product_id_outlet, id_product, product_outlet_name, product_name);
+                    }
 	    			else {
 	    				ajax_product_report(filter[0], filter[1], filter[2], null, product_id_outlet, id_product, product_outlet_name, product_name);
 	    			}
@@ -573,7 +630,10 @@
     	// ajax product report
     	function ajax_product_report(time_type, param1, param2, param3=null,
     		product_id_outlet, id_product, product_outlet_name, product_name) {
-    		$.ajax({
+    		// display loader
+            $('#product-loader').fadeIn('fast');
+
+            $.ajax({
                 type : "POST",
                 data : {
                 	_token : "{{ csrf_token() }}",
@@ -598,9 +658,13 @@
                     else {
                         toastr.warning(result.messages);
                     }
+                    // hide loader
+                    $('#product-loader').fadeOut('fast');
                 },
                 fail: function(xhr, textStatus, errorThrown){
     				toastr.warning("Something went wrong. Could not fetch data");
+                    // hide loader
+                    $('#product-loader').fadeOut('fast');
 			    }
             });
     	}
@@ -622,6 +686,13 @@
 	    			if (filter[0] == 'month') {
 	    				ajax_mem_report(filter[0], filter[1], filter[2], filter[3], id_membership, membership_name);
 	    			}
+                    else if (filter[0] == 'week') {
+                        if (week_date == "") {
+                            week_date = $('#filter-week-1').val();
+                        }
+                        var split_date = week_date.split(' to ');
+                        ajax_mem_report(filter[0], split_date[0], split_date[1], null, id_membership, membership_name);
+                    }
 	    			else {
 	    				ajax_mem_report(filter[0], filter[1], filter[2], null, id_membership, membership_name);
 	    			}
@@ -635,6 +706,9 @@
     	});
     	// ajax membership report
     	function ajax_mem_report(time_type, param1, param2, param3=null, id_membership, membership_name) {
+            // display loader
+            $('#mem-loader').fadeIn('fast');
+
     		$.ajax({
                 type : "POST",
                 data : {
@@ -659,9 +733,13 @@
                     else {
                         toastr.warning(result.messages);
                     }
+                    // hide loader
+                    $('#mem-loader').fadeOut('fast');
                 },
                 fail: function(xhr, textStatus, errorThrown){
     				toastr.warning("Something went wrong. Could not fetch data");
+                    // hide loader
+                    $('#mem-loader').fadeOut('fast');
 			    }
             });
     	}
@@ -687,6 +765,13 @@
 	    			if (filter[0] == 'month') {
 	    				ajax_voucher_report(filter[0], filter[1], filter[2], filter[3], voucher_id_outlet, id_deals, voucher_outlet_name, deals_title);
 	    			}
+                    else if (filter[0] == 'week') {
+                        if (week_date == "") {
+                            week_date = $('#filter-week-1').val();
+                        }
+                        var split_date = week_date.split(' to ');
+                        ajax_voucher_report(filter[0], split_date[0], split_date[1], null, voucher_id_outlet, id_deals, voucher_outlet_name, deals_title);
+                    }
 	    			else {
 	    				ajax_voucher_report(filter[0], filter[1], filter[2], null, voucher_id_outlet, id_deals, voucher_outlet_name, deals_title);
 	    			}
@@ -703,7 +788,10 @@
     	// ajax voucher report
     	function ajax_voucher_report(time_type, param1, param2, param3=null,
     		voucher_id_outlet, id_deals, voucher_outlet_name, deals_title) {
-    		$.ajax({
+    		// display loader
+            $('#voucher-loader').fadeIn('fast');
+
+            $.ajax({
                 type : "POST",
                 data : {
                 	_token : "{{ csrf_token() }}",
@@ -728,9 +816,13 @@
                     else {
                         toastr.warning(result.messages);
                     }
+                    // hide loader
+                    $('#voucher-loader').fadeOut('fast');
                 },
                 fail: function(xhr, textStatus, errorThrown){
     				toastr.warning("Something went wrong. Could not fetch data");
+                    // hide loader
+                    $('#voucher-loader').fadeOut('fast');
 			    }
             });
     	}
@@ -1214,6 +1306,9 @@
         <div class="portlet-title">
             <div class="caption ">
                 <span class="caption-subject sbold uppercase font-blue">Filter</span>
+            </div>
+            <div class="filter-loader" id="date-filter-loader">
+                <div class="spinner"></div>
             </div>
         </div>
         <div class="portlet-body">

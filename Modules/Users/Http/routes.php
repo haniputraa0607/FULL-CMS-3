@@ -37,5 +37,5 @@ Route::group(['prefix' => 'webview/complete-profile', 'namespace' => 'Modules\Us
 {
     Route::any('/', 'WebviewUserController@completeProfile');
     Route::post('/submit', 'WebviewUserController@completeProfileSubmit');
-    // Route::get('/success', 'WebviewUserController@completeProfileSuccess');
+    Route::get('/success', 'WebviewUserController@completeProfileSuccess');
 });

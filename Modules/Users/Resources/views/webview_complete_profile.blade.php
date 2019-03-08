@@ -228,6 +228,7 @@
                             @endforeach
                         </select>
                         <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
+                        <div id="city-dropdown" style="position: relative;"></div>
                         <div id="error-city" class="text-red text-error"></div>
                     </div>
 
@@ -293,16 +294,50 @@
                 'day': day
               }
           });
-          $('.select2').select2();
+          // $('.select2').select2();
+          $('.select2').select2({
+            dropdownParent: $('#city-dropdown')
+          }).on('select2:open', function() {
+              
+          });
 
           // change submit button's position from absolute to relative
           var body = $("body").height();
           body = body + 170;
           var win = $(window).height();
 
-          if (body > win ) {
+          if (body > win) {
               $(".button-wrapper").css({'position': 'relative', 'bottom': '0px'});
               $(".form-actions").css({'margin-top': '150px'});
+          }
+        });
+
+        /* check screen when keyboard show */
+        $('body').on('focus', '.select2-search__field', function() {
+          var body = $("body").height();
+          body = body + 170;
+          var win = $(window).height();
+
+          $('.select2-container--open').css({'position': 'relative', 'top': '0'});
+          $('.select2-dropdown').css('position', 'relative');
+
+          // change submit button's position from absolute to relative
+          if (body > win) {
+              $(".button-wrapper").css({'position': 'relative', 'bottom': '0px'});
+              $(".form-actions").css({'margin-top': '150px'});
+          }
+        });
+
+        /* check screen when keyboard hide */
+        $('body').on('blur', '.select2-search__field', function() {
+          var body = $("body").height();
+          body = body + 170;
+          var win = $(window).height();
+
+          // change submit button's position from absolute to relative
+          if (body < win) {
+              $(".button-wrapper").attr('style', '');
+              $(".form-actions").css({'margin-top': '70px'});
           }
         });
 

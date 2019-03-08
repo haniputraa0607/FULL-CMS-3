@@ -1,7 +1,10 @@
 <div class="portlet light bordered">
     <div class="portlet-title">
-        <div class="caption ">
+        <div class="caption">
             <span class="caption-subject sbold uppercase font-blue">Transaction</span>
+        </div>
+        <div class="filter-loader" id="trx-loader">
+            <div class="spinner"></div>
         </div>
     </div>
     <div class="portlet-body form">

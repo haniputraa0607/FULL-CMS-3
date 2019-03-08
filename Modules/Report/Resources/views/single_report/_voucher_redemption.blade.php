@@ -3,6 +3,9 @@
         <div class="caption ">
             <span class="caption-subject sbold uppercase font-blue">Voucher Redemption</span>
         </div>
+        <div class="filter-loader" id="voucher-loader">
+            <div class="spinner"></div>
+        </div>
     </div>
     <div class="portlet-body form">
         <div class="form-body">

@@ -1,7 +1,10 @@
 <div class="portlet light bordered">
     <div class="portlet-title">
-        <div class="caption ">
+        <div class="caption">
             <span class="caption-subject sbold uppercase font-blue">Customer Membership</span>
+        </div>
+        <div class="filter-loader" id="mem-loader">
+            <div class="spinner"></div>
         </div>
     </div>
     <div class="portlet-body form">

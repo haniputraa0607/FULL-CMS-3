@@ -135,28 +135,26 @@
             .space-bottom{
                 margin-bottom:20px;
             }
-            
-            .modal.fade .modal-dialog {
-                transform: translate3d(0, 0, 0);
-            }
-            .modal.in .modal-dialog {
-                transform: translate3d(0, 0, 0);
-            }
+           
             #qr-code-modal{
                 position: fixed;
                 top: 0;
+                bottom: 0;
                 left: 0;
+                right: 0;
                 background: rgba(0,0,0, 0.5);
-                width: 100%;
+                /*width: 100%;*/
+                /*height: 100vh;*/
                 display: none;
-                height: 100vh;
                 z-index: 999;
+                overflow-y: auto;
             }
             #qr-code-modal-content{
                 position: absolute;
                 left: 50%;
                 top: 50%;
-                transform: translate(-50%, -50%);
+                margin-left: -155px;
+                margin-top: -155px;
                 padding: 30px;
                 background: #fff;
                 border-radius: 42.3px;
@@ -166,20 +164,29 @@
     </head>
 
     <body>
-        <div class="deals-detail">
-            @if(!empty($voucher))
-                @php
-                    $voucher = $voucher[0];
-                    if ($voucher['deal_voucher']['deal'] != "") {
-                        $deals = $voucher['deal_voucher']['deal'];
-                    }
-                    // separate date & time
-                    $voucher_expired = date('d/m/Y H:i', strtotime($voucher['voucher_expired_at']));
-                    $voucher_expired = explode(" ", $voucher_expired);
-                    $voucher_expired_date = $voucher_expired[0];
-                    $voucher_expired_time = $voucher_expired[1];
-                @endphp
+        @if(!empty($voucher))
+            @php
+                $voucher = $voucher[0];
+                if ($voucher['deal_voucher']['deal'] != "") {
+                    $deals = $voucher['deal_voucher']['deal'];
+                }
+                // separate date & time
+                $voucher_expired = date('d/m/Y H:i', strtotime($voucher['voucher_expired_at']));
+                $voucher_expired = explode(" ", $voucher_expired);
+                $voucher_expired_date = $voucher_expired[0];
+                $voucher_expired_time = $voucher_expired[1];
+            @endphp
 
+            <!-- Modal QR Code -->
+            @if($voucher['redeemed_at'] != null && $voucher['used_at'] == null)
+            <a id="qr-code-modal" href="#">
+                <div id="qr-code-modal-content">
+                    <img class="img-responsive" src="{{ $voucher['voucher_hash'] }}">
+                </div>
+            </a>
+            @endif
+
+            <div class="deals-detail">
                 <div class="col-md-4 offset-md-4">
                     <img class="deals-img center-block" src="{{ $deals['url_deals_image'] }}" alt="">
 
@@ -247,22 +254,15 @@
                     </div>
 
                 </div>
-            @else
+            </div>
+        @else
+            <div class="deals-detail">
                 <div class="col-md-4 col-md-offset-4">
                     <div class="text-center" style="margin-top: 20px;">Voucher is not found</div>
                 </div>
-            @endif
+            </div>
+        @endif
 
-            @if(!empty($voucher) && $voucher['redeemed_at'] != null && $voucher['used_at'] == null)
-            <!-- Modal -->
-            <a id="qr-code-modal" href="#">
-                <div id="qr-code-modal-content">
-                    <img class="img-responsive" src="{{ $voucher['voucher_hash'] }}">
-                </div>
-            </a>
-            @endif
-
-        </div>
 
        
         <script type="text/javascript" src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
@@ -274,12 +274,31 @@
         {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> --}}
         <script type="text/javascript">
             $(document).ready(function() {
-                $(document).on('click', '.deals-qr', function() {
+                $(document).on('click', '.deals-qr', function(e) {
+                    e.preventDefault();
                     $('#qr-code-modal').fadeIn('fast');
+                    $('.deals-detail').css({'height': '100vh', 'overflow-y':'scroll'});
+
+                    // send flag to native
+                    var url = window.location.href;
+                    var result = url.replace("#true", "");
+                    result = result.replace("#false", "");
+                    result = result.replace("#", "");
+    
+                    window.location.href = result + '#true';
                 });
 
                 $(document).on('click', '#qr-code-modal', function() {
                     $('#qr-code-modal').fadeOut('fast');
+                    $('.deals-detail').attr('style', '');
+
+                    // send flag to native
+                    var url = window.location.href;
+                    var result = url.replace("#true", "");
+                    result = result.replace("#false", "");
+                    result = result.replace("#", "");
+
+                    window.location.href = result + '#false';
                 });
             });
         </script>
