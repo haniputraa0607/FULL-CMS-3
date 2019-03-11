@@ -341,6 +341,11 @@
 						</a>
 					</li>
 					@endif
+					<li class="nav-item {{($submenu_active == 'product-photo-default') ? 'active open' : ''}}">
+						<a href="{{url('product/photo/default')}}" class="nav-link ">
+							<span class="title">Product Photo Default</span>
+						</a>
+					</li>
 				</ul>
 			</li>
 			@endif

@@ -493,9 +493,11 @@
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">SubTotal ({{$countQty}} item)</div>
                 <div class="col-6 text-13-3px text-right space-text seravek-light-font text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_subtotal'])) }}</div>
 
+                @if($data['transaction_tax'] > 0)
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_tax'])) }}</div>
-
+                @endif
+                
                 @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Ongkos Kirim</div>
                     @if($data['transaction_is_free'] == '1')

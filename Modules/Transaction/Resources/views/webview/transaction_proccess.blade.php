@@ -333,10 +333,10 @@
     <div class="kotak-full">
         <div class="container">
             <div class="row text-center">
-                <div class="col-12 text-13-3px text-black roboto-regular-font">
+                <div class="col-12 text-13-3px text-black seravek-font">
                     Terima kasih!
                 </div>
-                <div class="col-12 text-13-3px text-black roboto-regular-font">
+                <div class="col-12 text-13-3px text-black seravek-font">
                     Transaksi anda sedang di proses
                 </div>
             </div>

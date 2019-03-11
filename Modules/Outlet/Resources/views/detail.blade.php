@@ -382,6 +382,14 @@
           $(this).parent().parent().parent().find('.kelas-close').val(close);
       }
     });
+
+    $('.latlong').change(function(){
+        var lat = $('#lat').val()
+        var long = $('#lng').val()
+        // console.log(lat)
+        // console.log(long)
+        initialize(lat, long);
+    })
   </script>
 @endsection
 

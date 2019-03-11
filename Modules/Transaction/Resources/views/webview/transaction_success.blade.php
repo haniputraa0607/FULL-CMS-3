@@ -351,13 +351,13 @@
         <div class="kotak-full">
             <div class="container">
                 <div class="row text-center">
-                    <div class="col-12 text-13-3px text-black roboto-regular-font">
+                    <div class="col-12 text-13-3px text-black seravek-font">
                         Terima kasih! Pembayaran sudah diterima.
                     </div>
-                    <div class="col-12 text-13-3px text-black roboto-regular-font">
+                    <div class="col-12 text-13-3px text-black seravek-font">
                         Kami akan memberikan notifikasi
                     </div>
-                    <div class="col-12 text-13-3px text-black roboto-regular-font">
+                    <div class="col-12 text-13-3px text-black seravek-font">
                         apabila pesanan Anda sudah selesai.
                     </div>
                 </div>

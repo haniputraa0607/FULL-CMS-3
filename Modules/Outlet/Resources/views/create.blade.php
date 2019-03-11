@@ -299,6 +299,12 @@
           $(this).parent().parent().parent().find('.kelas-close').val(close);
       }
     });
+
+    $('.latlong').change(function(){
+        var lat = $('#lat').val()
+        var long = $('#lng').val()
+        initialize(lat, long);
+    })
   </script>
 
 @endsection
@@ -538,25 +544,26 @@
 
                     <hr>
                     <h4>Maps</h4>
-                    <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3"></label>
-                        <div class="col-md-9">
-                            <input id="pac-input" class="controls" type="text" placeholder="Enter a location" style="padding:10px;width:70%" onkeydown="if (event.keyCode == 13) return false;">
-                            <div id="map-canvas" style="width:900;height:380px;"></div>
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Latitude</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="outlet_latitude" value="{{ old('outlet_latitude') }}" id="lat" readonly>
+                            <input type="text" class="form-control latlong" name="outlet_latitude" value="{{ old('outlet_latitude') }}" id="lat">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Longitude</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="outlet_longitude" value="{{ old('outlet_longitude') }}" id="lng" readonly>
+                            <input type="text" class="form-control latlong" name="outlet_longitude" value="{{ old('outlet_longitude') }}" id="lng">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="multiple" class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <input id="pac-input" class="controls" type="text" placeholder="Enter a location" style="padding:10px;width:70%" onkeydown="if (event.keyCode == 13) return false;">
+                            <div id="map-canvas" style="width:900;height:380px;"></div>
                         </div>
                     </div>
 

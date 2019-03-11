@@ -30,6 +30,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 */
 	Route::group(['prefix' => 'photo'], function() {
     	Route::any('delete', ['middleware' => 'feature_control:55', 'uses' => 'ProductController@deletePhoto']);
+    	Route::any('default', ['middleware' => 'feature_control:55', 'uses' => 'ProductController@photoDefault']);
 	});
 
 	/**
