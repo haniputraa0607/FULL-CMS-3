@@ -26,7 +26,6 @@
     <script src="{{ url('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('js/global.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
     <script src="{{ url('assets/pages/scripts/components-bootstrap-select.min.js') }}"  type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
@@ -34,15 +33,14 @@
         
         $(document).ready(function(){
             $(".price").each(function() {
-              var input = $(this).val();
-              var input = input.replace(/[\D\s\._\-]+/g, "");
-              input = input ? parseInt( input, 10 ) : 0;
-
-              $(this).val( function() {
-                  return ( input === 0 ) ? "" : input.toLocaleString( "id" );
-              } );
+                var input = $(this).val();
+                var input = input.replace(/[^[^0-9]\s\_\-]+/g, "");
+                input = input ? parseFloat( input ) : 0;
+                $(this).val( function() {
+                    return ( input === 0 ) ? "" : input.toLocaleString( "en", {minimumFractionDigits: 2} );
+                } );
             });
-            
+
             $('.summernote').summernote({
                 placeholder: 'Product Description',
                 tabsize: 2,
@@ -145,6 +143,48 @@
                 }
             });
         });
+
+        $( "#formWithPrice2" ).submit(function() {
+			$( "#submit" ).attr("disabled", true);
+			$( "#submit" ).addClass("m-loader m-loader--light m-loader--right");
+			$( ".price" ).each(function() {
+				var number = $( this ).val().replace(/[($)\s\,_\-]+/g, '');
+				$(this).val(number);
+			});
+
+		});
+
+		$( ".price" ).on( "keyup", numberFormat);
+		$( ".price" ).on( "blur", checkFormat);
+
+		function checkFormat(event){
+			var data = $( this ).val().replace(/[($)\s\,_\-]+/g, '');
+			if(!$.isNumeric(data)){
+				$( this ).val("");
+			}
+		}
+
+		function numberFormat(event){
+			// When user select text in the document, also abort.
+			var selection = window.getSelection().toString();
+			if ( selection !== '' ) {
+				return;
+			}
+			// When the arrow keys are pressed, abort.
+			if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+				return;
+			}
+			var $this = $( this );
+			// Get the value.
+			var input = $this.val();
+			console.log(input)
+			var input = input.replace(",", "");
+			var input = input.replace(/[^[^0-9]\s\_\-]+/g, "");
+			input = input ? parseFloat( input ) : 0;
+			$this.val( function() {
+				return ( input === 0 ) ? "" : input.toLocaleString( "en" , {minimumFractionDigits: 2});
+			} );
+		}
     </script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
