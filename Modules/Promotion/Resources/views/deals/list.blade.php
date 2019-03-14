@@ -78,7 +78,7 @@ $grantedFeature     = session('granted_features');
                         target: "tr"
                     }
                 },
-                order: [0, "asc"],
+                aaSorting: [],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "All"]
@@ -95,7 +95,7 @@ $grantedFeature     = session('granted_features');
             $.ajax({
                 type : "POST",
                 url : "{{ url('deals/delete') }}",
-                data : "_token="+token+"&id_deals="+id,
+                data : "_token="+token+"&id_deals_promotion_template="+id,
                 success : function(result) {
                     if (result == "success") {
                         $('#sample_1').DataTable().row(column).remove().draw();
@@ -145,36 +145,20 @@ $grantedFeature     = session('granted_features');
                 <thead>
                     <tr>
                         
-                        <th> No</th>
-                        <th> Promo ID </th>
                         <th> Title </th>
-                        @if($deals_type != "Hidden")
-                        <th> Date Publish </th>
-                        @endif
-                        <th> Date Start </th>
+                        <th> Type </th>
+                        <th> Promo ID / Nominal </th>
+                        <th> Deals Period </th>
                         <th> Action </th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (!empty($deals))
-                        @foreach($deals as $key => $value)
+                        @foreach($deals as $value)
                             <tr>
-                                <td>{{ $key+1 }}</td>
-                                <td>{{ $value['deals_promo_id'] }}</td>
                                 <td>{{ $value['deals_title'] }}</td>
-                                @if($deals_type != "Hidden")
-                                <td>
-                                    @php
-                                        $bulan   = date('m', strtotime($value['deals_publish_start']));
-                                        $bulanEx = date('m', strtotime($value['deals_publish_end']));
-                                    @endphp
-                                    @if ($bulan == $bulanEx)
-                                        {{ date('d', strtotime($value['deals_publish_start'])) }} - {{ date('d M Y', strtotime($value['deals_publish_end'])) }}
-                                    @else
-                                        {{ date('d M Y', strtotime($value['deals_publish_start'])) }} - {{ date('d M Y', strtotime($value['deals_publish_end'])) }}
-                                    @endif
-                                </td>
-                                @endif
+                                <td>@if($value['deals_promo_id_type'] == 'nominal') Nominal @else Promo ID @endif </td>
+                                <td>@if($value['deals_promo_id']){{ $value['deals_promo_id'] }}@else{{number_format($value['deals_nominal'],0,',','.')}}@endif</td>
                                 <td>
                                     @php
                                         $bulan   = date('m', strtotime($value['deals_start']));
@@ -187,20 +171,11 @@ $grantedFeature     = session('granted_features');
                                     @endif
                                 </td>
                                 <td style="width: 80px;"> 
-                                    @if($deals_type == "Deals" && MyHelper::hasAccess([76], $grantedFeature)) 
-                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
+                                    @if(MyHelper::hasAccess([76], $grantedFeature)) 
+                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals_promotion_template'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
-                                    @if($deals_type == "Hidden" && MyHelper::hasAccess([81], $grantedFeature)) 
-                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
-                                    @endif
-                                    @if ($deals_type == "Deals" && MyHelper::hasAccess([73], $grantedFeature)) 
-                                    <a href="{{ url('deals/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
-                                    @elseif ($deals_type == "Point" && MyHelper::hasAccess([73], $grantedFeature)) 
-                                    <a href="{{ url('deals-point/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
-                                    @else 
-                                        @if(MyHelper::hasAccess([78], $grantedFeature))
-                                            <a href="{{ url('hidden-deals/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
-                                        @endif
+                                    @if (MyHelper::hasAccess([73], $grantedFeature)) 
+                                        <a href="{{ url('promotion/deals/detail') }}/{{ $value['id_deals_promotion_template'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
                                     @endif
                                 </td>
                             </tr>

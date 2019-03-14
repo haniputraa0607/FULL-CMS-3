@@ -243,7 +243,7 @@
 	
 	$(document).ready(function() {
 		$('.summernote').summernote({
-			placeholder: 'News Content Long',
+			placeholder: 'Email Content',
 			tabsize: 2,
 			height: 120,
 			toolbar: [         
