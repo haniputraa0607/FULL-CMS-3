@@ -22,16 +22,17 @@ class WebviewGofoodController extends Controller
 
     	$post = $request->all();
     	// $post['latitude'] = '-7.803761';
-        // $post['longitude'] = '110.383058';
+     //    $post['longitude'] = '110.383058';
         $post['sort'] = 'Nearest';
         $post['type'] = 'transaction';
         $post['search'] = '';
     	$post['gofood'] = 1;
-
+        // return $post;
+        // $list = MyHelper::post('outlet/filter', $post);
         $list = MyHelper::postWithBearer('outlet/filter', $post, $bearer);
         // return $list;
         if (isset($list['status']) && $list['status'] == 'success') {
-            return view('outlet::webview.outlet_gofood', ['outlet' => $list['result']]);
+            return view('outlet::webview.outlet_gofood_v2', ['outlet' => $list['result']]);
         } elseif (isset($list['status']) && $list['status'] == 'fail') {
             return view('error', ['msg' => 'Data failed']);
         } else {

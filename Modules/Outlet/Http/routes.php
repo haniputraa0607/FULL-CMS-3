@@ -50,4 +50,5 @@ Route::group(['prefix' => 'outlet', 'namespace' => 'Modules\Outlet\Http\Controll
 {
     Route::any('webview/{id}', 'WebviewController@detailWebview');
     Route::any('webview/gofood/list', 'WebviewGofoodController@listOutletGofood');
+    Route::any('webview/gofood/list/v2', 'WebviewGofoodController@listOutletGofood');
 });

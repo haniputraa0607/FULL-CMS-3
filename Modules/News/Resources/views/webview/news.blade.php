@@ -8,13 +8,47 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
         <link href="{{ url('css/slide.css') }}" rel="stylesheet">
         <style type="text/css">
+        @font-face {
+            font-family: 'Seravek';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek.ttf?")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Seravek Light';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek-Light.ttf?")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Seravek Medium';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek-Medium.ttf?")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Seravek Italic';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Seravek-Italic.ttf?")}}') format('truetype'); 
+        }
+
+        @font-face {
+            font-family: 'Roboto Regular';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{url("assets/fonts/Roboto-Regular.ttf?")}}') format('truetype'); 
+        }
         .kotak1 {
             padding-top: 10px;
             padding-bottom: 10px;
             padding-left: 21.3px;
             padding-right: 21.3px;
             background: #fff;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Seravek', sans-serif;
         }
 
         .kotak-title {
@@ -22,7 +56,7 @@
             padding-left: 41.3px;
             padding-right: 41.3px;
             background: #fff;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Seravek', sans-serif;
             height: 100%
         }
 
@@ -129,12 +163,12 @@
             color: rgba(4,154,74,1);
         }
 
-        .open-sans-font {
-            font-family: 'Open Sans', sans-serif;
-        }
-
         .questrial-font {
             font-family: 'Questrial', sans-serif;
+        }
+
+        .seravek-font {
+            font-family: 'Seravek';
         }
 
         .text-14-3px {
@@ -268,16 +302,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
         @if (isset($news[0]['news_event_date_start']) || isset($news[0]['news_event_location_name']) || isset($news[0]['news_event_location_address']) || isset($news[0]['news_event_location_phone']) || isset($news[0]['news_event_location_map']))
         <div class="kotak1">
-            <div class="container">
+            <div class="container seravek-font">
             @if (isset($news[0]['news_event_date_start']))
                 @if ($news[0]['news_event_date_start'] == $news[0]['news_event_date_end'])
                     <div class="row space-bottom">
-                        <div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/calendar.png') }}"> 
+                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ url('img/webview/calendar.png') }}"> 
                         <span> {{ date('d F Y', strtotime($news[0]['news_event_date_start'])) }} </span></div>
                     </div>
                 @else
                     <div class="row space-bottom">
-                        <div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/calendar.png') }}"> 
+                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ url('img/webview/calendar.png') }}"> 
                         <span> {{ date('d F', strtotime($news[0]['news_event_date_start'])) }} - {{ date('d F Y', strtotime($news[0]['news_event_date_end'])) }} </span></div>
                     </div>
                 @endif
@@ -285,37 +319,37 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
             @if (isset($news[0]['news_event_time_start']))
                 @if ($news[0]['news_event_time_start'] == $news[0]['news_event_time_end'])
                     <div class="row space-bottom">
-                        <div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/time.png') }}"> 
+                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ url('img/webview/time.png') }}"> 
                         <span> {{ date('H:i', strtotime($news[0]['news_event_time_start'])) }}</span></div>
                     </div>
                 @else
                     <div class="row space-bottom">
-                        <div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/time.png') }}"> 
+                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ url('img/webview/time.png') }}"> 
                         <span>{{ date('H:i', strtotime($news[0]['news_event_time_start'])) }} - {{ date('H:i', strtotime($news[0]['news_event_time_end'])) }}</span></div>
                     </div>
                 @endif
             @endif
             @if (isset($news[0]['news_event_location_name']))
                 <div class="row space-bottom">
-                    <div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/outlet.png') }}"> <span> {{ $news[0]['news_event_location_name'] }} </span></div>
+                    <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ url('img/webview/outlet.png') }}"> <span> {{ $news[0]['news_event_location_name'] }} </span></div>
                 </div>
             @endif
 
             @if (isset($news[0]['news_event_location_address']))
                 <div class="row space-bottom">
-                    <div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/marker.png') }}"> <span>{{ $news[0]['news_event_location_address'] }} </span></div>
+                    <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ url('img/webview/marker.png') }}"> <span>{{ $news[0]['news_event_location_address'] }} </span></div>
                 </div>
             @endif
 
             @if (isset($news[0]['news_event_location_phone']))
                 <div class="row space-bottom">
-                    <div class="col-12 text-grey-black text-12px open-sans-font"><img class="logo-img" src="{{ url('img/webview/hp.png') }}"> <span> {{ $news[0]['news_event_location_phone'] }} </span></div>
+                    <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ url('img/webview/hp.png') }}"> <span> {{ $news[0]['news_event_location_phone'] }} </span></div>
                 </div>
             @endif
 
             @if (isset($news[0]['news_event_location_map']))
                 <div class="row space-bottom">
-                    <div class="col-12 text-grey-black text-12px open-sans-font"><div id="map-canvas" style="width:500;height:180px;"></div></div>
+                    <div class="col-12 text-grey-black text-12px seravek-font"><div id="map-canvas" style="width:500;height:180px;"></div></div>
                 </div>
             @endif
 
@@ -337,7 +371,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                 <div class="container">
                     @if (isset($news[0]['news_video_text']))
                         <div class="row space-bottom">
-                            <div class="col-12 text-bot text-grey-black text-12px open-sans-font"> <span> {{ $news[0]['news_video_text'] }} :  </span></div>
+                            <div class="col-12 text-bot text-grey-black text-12px seravek-font"> <span> {{ $news[0]['news_video_text'] }} :  </span></div>
                         </div>
                     @endif
 
@@ -359,7 +393,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                 <div class="container">
                 @if (isset($news[0]['news_outlet_text']))
                     <div class="row space-bottom">
-                        <div class="col-12 text-bot text-grey-black text-12px open-sans-font"> <span> {{ $news[0]['news_outlet_text'] }} :  </span></div>
+                        <div class="col-12 text-bot text-grey-black text-12px seravek-font"> <span> {{ $news[0]['news_outlet_text'] }} :  </span></div>
 
                     </div>
                 @endif
@@ -392,7 +426,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                 <div class="container">
                     @if (isset($news[0]['news_product_text']))
                         <div class="row space-bottom">
-                            <div class="col-12 text-bot text-grey-black text-12px open-sans-font"> <span> {{ $news[0]['news_product_text'] }} :  </span></div>
+                            <div class="col-12 text-bot text-grey-black text-12px seravek-font"> <span> {{ $news[0]['news_product_text'] }} :  </span></div>
 
                         </div>
                     @endif
