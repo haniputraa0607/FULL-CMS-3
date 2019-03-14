@@ -87,7 +87,7 @@
                             </div>
                             <div class="portlet-body">
                                <label>Receipt Number</label>
-                                <a href="{{url('transaction/detail/'.$result['transaction_receipt_number'].'/'.$result['trasaction_type'])}}"><h5 style="font-weight: bold;">{{ $result['transaction_receipt_number'] }}</h5></a>
+                                <a href="{{url('transaction/detail/'.$result['id_transaction'].'/'.$result['trasaction_type'])}}"><h5 style="font-weight: bold;">{{ $result['transaction_receipt_number'] }}</h5></a>
 
                                 <label>Note</label>
                                 <h5 style="font-weight: bold;">{{ $result['transaction_notes'] }}</h5>

@@ -394,6 +394,10 @@
             display: inline-block;
         }
 
+        #status_detail_text{
+            max-width:280px
+        }
+
     </style>
   </head>
   <body>
@@ -543,8 +547,7 @@
                         @if($keyStatusNow == count($data['all_membership']) - 1 )
                             Anda sudah mencapai level tertinggi <br>
                         @else
-                        {{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke 
-                        <br>{{ucfirst($data['next_membership_name'])}}
+                        {{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}
                         @endif
                     </div>
                 </div>
@@ -583,8 +586,8 @@
     <script>
         $(document).ready(function(){
 
-            var heightListImage = $('#list-image').height()+60;
-            $('#detail-membership').css('height', 'calc(100vh - '+heightListImage+'px)')
+            var widthCup = $('#img-cup').width() + 30;
+            $('#status_detail_text').css('width', 'calc(100% - '+widthCup+'px)')
 
             @if($keyStatusNow != count($data['all_membership']) - 1 )
             $('#progress-nominal').css('padding-left', ' calc({{$data['progress_active']}}% - '+$("#progress-nominal").width()+'px)')
@@ -603,6 +606,9 @@
                 initialSlide: {{$keyStatusNow}},
                 swipeToSlide:true
             });
+
+            var heightListImage = $('#list-image').height()+60;
+            $('#detail-membership').css('height', 'calc(100vh - '+heightListImage+'px)')
 
         });
 
@@ -636,7 +642,7 @@
                     $('#status_nominal').text('{{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}')
                     $('#status_progress').hide()
                     $('#status_detail').show()
-                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke <br>'+list_status[nextSlide]['membership_name'])
+                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke '+list_status[nextSlide]['membership_name'])
                 }
                 $('#progress-nominal-nopad').show()
                 $('#progress-nominal').hide()
@@ -647,7 +653,7 @@
                     $('#status_nominal').text('{{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}')
                     $('#status_progress').hide()
                     $('#status_detail').show()
-                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke <br>'+list_status[nextSlide]['membership_name'])
+                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke '+list_status[nextSlide]['membership_name'])
                     $('#progress-nominal-nopad').show()
                     $('#progress-nominal').hide()
                     $('#detail-progress').hide()
@@ -662,7 +668,7 @@
                         $('#detail-progress').hide()
                     }else{
                         $('#status_benefit_text').text('Benefit yang didapat saat ini:')
-                        $('#status_detail_text').html("{{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke <br> {{ucfirst($data['next_membership_name'])}}")
+                        $('#status_detail_text').html("{{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}")
                         $('#status_progress').show()
                         $('#progress-nominal-nopad').hide()
                         $('#progress-nominal').show()
@@ -681,8 +687,8 @@
             startY,
             distX,
             distY,
-            threshold = 50, //required min distance traveled to be considered swipe
-            restraint = 200, // maximum distance allowed at the same time in perpendicular direction
+            threshold = 1, //required min distance traveled to be considered swipe
+            restraint = 100, // maximum distance allowed at the same time in perpendicular direction
             allowedTime = 1500, // maximum time allowed to travel that distance
             elapsedTime,
             startTime,
@@ -707,11 +713,15 @@
                 distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
                 distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
                 elapsedTime = new Date().getTime() - startTime // get time elapsed
+                // console.log(restraint)
+                console.log(distY)
+                // console.log(threshold)
+                console.log(distX)
                 if (elapsedTime <= allowedTime){ // first condition for awipe met
-                    if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
+                    if (Math.abs(distX) >= 5 && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
                         swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
                     }
-                    else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
+                    else if (Math.abs(distY) >= restraint && Math.abs(distX) <= threshold){ // 2nd condition for vertical swipe met
                         swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
                     }
                 }

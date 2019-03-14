@@ -101,7 +101,7 @@
                             <td>Rp {{ number_format($res['transaction_grandtotal'], 2) }}</td>
                             <td>{{ $res['transaction_payment_status'] }}</td>
                             <td>
-                                <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail') }}/{{ $res['transaction_receipt_number'] }}/{{ $key }}"><i class="icon-pencil"></i> Detail </a>
+                                <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/{{ $key }}"><i class="icon-pencil"></i> Detail </a>
                                 {{-- <a class="btn btn-block red btn-xs" href="{{ url('transaction/delete', $res['transaction_receipt_number']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a> --}}
                             </td>
                         </tr>

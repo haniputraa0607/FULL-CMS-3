@@ -413,7 +413,7 @@
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
 																			<td>{{ $res['transaction_payment_status'] }}</td>
 																			<td>
-																				<a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail', $res['transaction_receipt_number']) }}"><i class="icon-pencil"></i> Detail </a>
+																				<a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail/'.$res['id_transaction'].'/'.$res['trasaction_type']) }}"><i class="icon-pencil"></i> Detail </a>
 																			</td>
 																		</tr>
 																	@endforeach

@@ -37,13 +37,13 @@ class WebviewController extends Controller
     		$view = 'detail_transaction_deliv';
     	}
 
-    	if ($data['kind'] == 'Pickup Order') {
+    	if ($data['kind'] == 'Pickup Order' || $data['kind'] == 'Offline') {
     		$view = 'detail_transaction_pickup';
     	}
 
-    	if ($data['kind'] == 'Offline') {
-    		$view = 'detail_transaction_off';
-    	}
+    	// if ($data['kind'] == 'Offline') {
+    	// 	$view = 'detail_transaction_off';
+    	// }
 
     	if ($data['kind'] == 'Voucher') {
     		$view = 'detail_transaction_voucher';

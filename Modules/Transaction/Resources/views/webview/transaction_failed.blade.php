@@ -418,7 +418,7 @@
                         <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
                         <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{ $data['outlet']['outlet_name'] }}</div>
                         <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center ">{{ $data['outlet']['outlet_address'] }}</div>
+                            <div class="col-12 text-13-3px text-grey-white space-nice text-center seravek-light-font">{{ $data['outlet']['outlet_address'] }}</div>
                         </div>
                             <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan diproses pada</div>
                             <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['transaction_date'])) }}</div>
@@ -525,8 +525,8 @@
                         @if ($data['trasaction_payment_type'] == 'Balance') 
                             Kopi Points
                         @elseif ($data['trasaction_payment_type'] == 'Midtrans') 
-                            @if(isset($data['payment']['payment_type']))
-                                {{ ucwords(str_replace('_', ' ', $data['payment']['payment_type'])) }}
+                            @if(isset($data['data_payment'][0]['payment_type']))
+                                {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['payment_type'])) }}
                             @else
                                 Online Payment
                             @endif
