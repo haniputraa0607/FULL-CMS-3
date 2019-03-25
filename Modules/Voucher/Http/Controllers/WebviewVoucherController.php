@@ -12,7 +12,7 @@ class WebviewVoucherController extends Controller
 {
     public function voucherDetail(Request $request, $id_deals_user)
     {
-    	$bearer = $request->header('Authorization');
+        $bearer = $request->header('Authorization');
         if ($bearer == "") {
             return abort(404);
         }

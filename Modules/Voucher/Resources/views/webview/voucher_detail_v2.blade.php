@@ -20,14 +20,14 @@
                 font-family: 'Seravek Light';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+                src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
             }
 
             @font-face {
                 font-family: 'Seravek Medium';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+                src: url('{{url("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
             }
 
             .seravek-light-font {
@@ -245,9 +245,7 @@
                                     @endif
                                     <ul class="nav">
                                         @foreach($outlet_city['outlet'] as $key => $outlet)
-                                        @if($outlet['outlet_status'] == "Active")
                                         <li>- {{ $outlet['outlet_name'] }}</li>
-                                        @endif
                                         @endforeach
                                     </ul>
                                 @endforeach
@@ -269,7 +267,7 @@
 
 
        
-        <script type="text/javascript" src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Bootstrap JS -->
