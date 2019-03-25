@@ -6,27 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link href="{{ url('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{ url('css/slide.css') }}" rel="stylesheet">
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
     
     <!-- SLICK -->
-    <link rel="stylesheet" type="text/css" href="{{url('assets/webview/slick-1.8.1/slick/slick.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('assets/webview/slick-1.8.1/slick/slick-theme.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/slick-1.8.1/slick/slick.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/slick-1.8.1/slick/slick-theme.css')}}">
 
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -514,7 +514,9 @@
                     <div class="text-14-3px progress-active"></div>
                     <div class="progress-now"></div>
                     <div class="text-14-3px progress"></div>
-                    <img class="img-responsive img-progress" src="{{ url('img/webview/icon-heart2.png') }}" style="width:24.7px">
+                    
+                    <!--<img class="img-responsive img-progress" src="{{ url('img/webview/icon-heart2.png') }}" style="width:24.7px">-->
+                    <img class="img-responsive img-progress" src="{{ $data['all_membership'][$keyStatusNow+1]['membership_image'] }}" style="width:32px;height:32px;">
                 </div>
                 <div class="space-bottom col-12" id="detail-progress">
                 <div class="row">
@@ -581,7 +583,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
 
-    <script src="{{url('assets/webview/slick-1.8.1/slick/slick.js')}}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/slick-1.8.1/slick/slick.js')}}" type="text/javascript" charset="utf-8"></script>
 
     <script>
         $(document).ready(function(){

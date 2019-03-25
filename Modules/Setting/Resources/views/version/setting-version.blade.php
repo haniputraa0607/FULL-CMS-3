@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ url('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')

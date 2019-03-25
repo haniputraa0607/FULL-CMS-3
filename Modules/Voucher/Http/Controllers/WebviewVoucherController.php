@@ -25,6 +25,21 @@ class WebviewVoucherController extends Controller
         return view('voucher::webview.voucher_detail', $data);
     }
 
+    public function voucherDetailV2(Request $request, $id_deals_user)
+    {
+    	$bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return abort(404);
+        }
+
+        $post['id_deals_user'] = $id_deals_user;
+        $post['used'] = 0;
+        
+        $data['voucher'] = parent::getData(MyHelper::postWithBearer('voucher/me', $post, $bearer));
+        
+        return view('voucher::webview.voucher_detail_v2', $data);
+    }
+
     // display detail voucher after used
     public function voucherUsed(Request $request, $id_deals_user)
     {

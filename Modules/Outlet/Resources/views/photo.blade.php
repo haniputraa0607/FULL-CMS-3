@@ -64,7 +64,7 @@
  				</div>
  			 	<div class="portlet-body">
  			   		<input type="hidden" name="id_outlet_photo[]" value="{{ $you['id_outlet_photo'] }}">
- 			   		<center><img src="{{ env('APP_API_URL').$you['outlet_photo'] }}" alt="Photo" width="150"></center>
+ 			   		<center><img src="{{ env('AWS_URL').$you['outlet_photo'] }}" alt="Photo" width="150"></center>
  			 	</div>
  			</div>
  			@endforeach

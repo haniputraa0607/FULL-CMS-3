@@ -8,6 +8,9 @@ use Illuminate\Routing\Controller;
 use App\Lib\MyHelper;
 use Session;
 
+
+use Modules\Membership\Http\Requests\Create;
+
 class MembershipController extends Controller
 {
     /**
@@ -54,7 +57,7 @@ class MembershipController extends Controller
     }
 
     
-    public function create(Request $request) {
+    public function create(Create $request) {
 		$post = $request->except('_token');
 		$data = [
                 'title'          => 'New Membership',
@@ -76,7 +79,8 @@ class MembershipController extends Controller
 		}
     }
 	
-	public function update(Request $request, $id_membership) {
+	public function update(Create $request, $id_membership) {
+		dd($request);
 		$post = $request->except('_token');
 		$data = [
                 'title'          => 'Update Membership',

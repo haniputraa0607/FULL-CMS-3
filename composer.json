@@ -9,6 +9,7 @@
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "^6.2",
         "intervention/image": "^2.4",
+        "kinow-io/assets-laravel-aws-manager": "*",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "^2.1",

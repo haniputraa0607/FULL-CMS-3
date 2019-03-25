@@ -233,7 +233,8 @@
 									</div>
 									<div class="col-md-4">
 										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
-											<option value="receipt" selected>Receipt Number</option>
+											<option value="" selected disabled>Search Subject</option>
+											<option value="receipt">Receipt Number</option>
 											<option value="name">Customer Name</option>
 											<option value="phone">Customer Phone</option>
 											<option value="email">Customer Email</option>
@@ -256,7 +257,7 @@
 									</select>
 									</div>
 									<div class="col-md-3">
-									<input type="text" placeholder="Keyword" class="form-control" name="parameter" required />
+									<input type="text" placeholder="Keyword" class="form-control" name="parameter" />
 									</div>
 								</div>
 							</div>

@@ -5,46 +5,46 @@ $grantedFeature     = session('granted_features');
  @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/pages/css/profile.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/css/profile.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
 @endsection
 
 @section('page-plugin')
-	<script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 	
-	<script src="{{ url('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
 	<script>   
     $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
@@ -1030,7 +1030,7 @@ $grantedFeature     = session('granted_features');
 															<div class="fileinput fileinput-new" data-provides="fileinput">
 																<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 																	@if(isset($result['contents'][$x-1]['promotion_push_image']) && $result['contents'][$x-1]['promotion_push_image'] != "")
-																		<img src="{{env('APP_API_URL')}}/{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px" />
+																		<img src="{{env('AWS_URL')}}/{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px" />
 																	@else 
 																		<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 																	@endif
@@ -1584,7 +1584,7 @@ $grantedFeature     = session('granted_features');
 											<div class="fileinput fileinput-new" data-provides="fileinput">
 												<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 													@if(isset($result['contents'][0]['promotion_push_image']) && $result['contents'][0]['promotion_push_image'] != "")
-														<img src="{{env('APP_API_URL')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px" />
+														<img src="{{env('AWS_URL')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px" />
 													@else 
 														<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 													@endif

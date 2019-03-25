@@ -1,25 +1,25 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ url('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    {{-- <script src="{{ url('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
-    <script src="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
-    <script src="{{ url('assets/pages/scripts/components-bootstrap-select.min.js') }}"  type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-bootstrap-select.min.js') }}"  type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
 
         $('#select_tag').change(function(){
@@ -272,7 +272,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="col-md-3 control-label">Video
                             <br>
                             <span class="required" aria-required="true"> (from youtube) </span> 
@@ -283,8 +283,8 @@
                                 <input type="url" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ" class="form-control" name="product_video" value="{{ old('product_video') }}">
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+                    </div> -->
+                    <!-- <div class="form-group">
                         <label class="col-md-3 control-label">Weight
                             <br>
                             <span class="required" aria-required="true"> (gram) </span> 
@@ -295,9 +295,9 @@
                                 <input type="number" placeholder="Product weight" class="form-control" name="product_weight" value="{{ old('product_weight') }}">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                    
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Description
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>
                         </label>
@@ -306,7 +306,7 @@
                                 <textarea name="product_description" id="text_pro" class="form-control summernote">{{ old('product_description') }}</textarea>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Tag
                             {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}

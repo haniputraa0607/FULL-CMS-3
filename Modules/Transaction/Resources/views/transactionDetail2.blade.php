@@ -5,9 +5,9 @@
 @extends('layouts.main')
 
 @section('page-style')
-<link href="{{ url('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ url('assets/pages/css/invoice-2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/css/invoice-2.min.css') }}" rel="stylesheet" type="text/css" />
 <style type="text/css">
     .invoice-desc {
         font-weight: bold !important;
@@ -24,9 +24,9 @@
 </style>
 
 @section('page-script')
-    <script src="{{ url('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
