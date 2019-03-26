@@ -273,7 +273,7 @@ class ProductController extends Controller
             if (isset($post['photo'])) {
                 $postData['photo']      = MyHelper::encodeImage($post['photo']);
                 $postData['id_product'] = $save['result']['id_product'];
-
+                
                 $save  = MyHelper::post('product/photo/create', $postData);
             }
             
@@ -804,6 +804,33 @@ class ProductController extends Controller
         Session::put('idVisibility_allProduct',$ses_allProduct);
         Session::put('idVisibility', $idVisibility);
         return Session::get('idVisibility');
+    }
+
+    public function photoDefault(Request $request) {
+        $post = $request->except('_token');
+       
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Product',
+                'sub_title'      => 'Photo Default',
+                'menu_active'    => 'product',
+                'submenu_active' => 'product-photo-default',
+            ];
+
+            $data['photo'] = env('AWS_URL').'img/product/item/default.png?';
+
+            return view('product::product.photo-default', $data);
+        }else{
+            $post['photo'] = MyHelper::encodeImage($post['photo']);
+            $default = MyHelper::post('product/photo/default', ['photo' => $post['photo']]);
+            if (isset($default['status']) && $default['status'] == 'success') {
+                return parent::redirect($default, 'Product Photo Default has been updated.', 'product/photo/default');
+            } elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
+                return back()->witherrors([$outlet['messages']]);
+            } else {
+                return back()->witherrors(['Product Not Found']);
+            }
+        }
     }
 
 }

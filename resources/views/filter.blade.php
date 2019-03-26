@@ -549,7 +549,7 @@
 			<?php
 			foreach($city as $row){
 			?>
-			operator_value.options[operator_value.options.length] = new Option('<?php echo $row['city_name']; ?>', '<?php echo $row['city_name']; ?>');
+			operator_value.options[operator_value.options.length] = new Option("<?php echo $row['city_name']; ?>", "<?php echo $row['city_name']; ?>");
 			<?php
 			}
 			?>
@@ -591,7 +591,7 @@
 			<?php
 			foreach($province as $row){
 			?>
-			operator_value.options[operator_value.options.length] = new Option('<?php echo $row['province_name']; ?>', '<?php echo $row['province_name']; ?>');
+			operator_value.options[operator_value.options.length] = new Option("<?php echo $row['province_name']; ?>", "<?php echo $row['province_name']; ?>");
 			<?php
 			}
 			?>
@@ -760,7 +760,7 @@
 			<?php
 			foreach($outlets as $outlet){
 			?>
-			operator_value.options[operator_value.options.length] = new Option('<?php echo $outlet['outlet_name'];?>', '<?php echo $outlet['id_outlet']; ?>');
+			operator_value.options[operator_value.options.length] = new Option(<?php echo json_encode($outlet['outlet_name']);?>, "<?php echo $outlet['id_outlet']; ?>");
 			<?php
 			}
 			?>
@@ -784,7 +784,7 @@
 			<?php
 			foreach($products as $product){
 			?>
-			operator_value.options[operator_value.options.length] = new Option("<?php echo $product['product_name'];?>", "<?php echo $product['id_product']; ?>");
+			operator_value.options[operator_value.options.length] = new Option(<?php echo json_encode($product['product_name']);?>, "<?php echo $product['id_product']; ?>");
 			<?php
 			}
 			?>

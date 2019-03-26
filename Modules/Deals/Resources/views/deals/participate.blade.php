@@ -1,51 +1,77 @@
 @if ($deals[0]['deals_type'] == "Hidden")
-<form class="form-horizontal" role="form" action="{{ url('deals/update') }}" method="post" enctype="multipart/form-data">
-  <div class="form-body">
-        <div class="form-group">
-            <label class="col-md-3 control-label">Import File : </label>
-            <div class="col-md-9">
-                <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="input-group input-large">
-                        <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                            <i class="fa fa-file fileinput-exists"></i>&nbsp;
-                            <span class="fileinput-filename"> </span>
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <span class="caption-subject font-yellow sbold uppercase">Add Participant</span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form" action="{{ url('deals/update') }}" method="post" enctype="multipart/form-data">
+                <!-- <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Import File : </label>
+                            <div class="col-md-9">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="input-group input-large">
+                                        <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                            <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                                            <span class="fileinput-filename"> </span>
+                                        </div>
+                                        <span class="input-group-addon btn default btn-file">
+                                            <span class="fileinput-new"> Select file </span>
+                                            <span class="fileinput-exists"> Change </span>
+                                            <input type="file" name="import_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onChange="this.form.submit();"> </span>
+                                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <span class="input-group-addon btn default btn-file">
-                            <span class="fileinput-new"> Select file </span>
-                            <span class="fileinput-exists"> Change </span>
-                            <input type="file" name="import_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onChange="this.form.submit();"> </span>
-                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                        <div class="form-group">
+                            <label for="multiple" class="control-label col-md-3"> </label>
+                            <div class="col-md-9">
+                                Import data customer from excel. To filter customer please <a href="{{ url('user') }}" target="_blank"> click. </a>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">To 
+                                <span class="required" aria-required="true"> * </span> 
+                                <br> <small> Separated by coma (,) </small>
+                            </label>
+                            <div class="col-md-9">
+                                <textarea name="to" class="form-control" rows="5" required>@if(Session::get('deals_recipient')){{ Session::get('deals_recipient') }} @else{{ old('to') }}@endif</textarea>
+                            </div>
+                        </div>
+                </div> -->
+            
+                <?php $tombolsubmit = 'hidden'; ?>
+                @include('filter') 
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Voucher Amount 
+                        <span class="required" aria-required="true"> * </span> 
+                        <i class="fa fa-question-circle tooltips" data-original-title="Jumlah voucher yang akan diterima oleh masing - masing user" data-container="body"></i>
+                    </label>
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="amount" min="1" required>
+                            <span class="input-group-addon">
+                            Vouchers for each user
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="form-actions">
+                    {{ csrf_field() }}
+                    <div class="col-md-offset-3 col-md-9">
+                        <input type="hidden" name="id_deals" value="{{ $deals[0]['id_deals'] }}">
+                        <button type="submit" class="btn yellow">Submit</button>
+                    </div>
+                </div>
+            </form> 
         </div>
-        <div class="form-group">
-            <label for="multiple" class="control-label col-md-3"> </label>
-            <div class="col-md-9">
-                Import data customer from excel. To filter customer please <a href="{{ url('user') }}" target="_blank"> click. </a>
-            </div>
-        </div>
-        <br>
-        <div class="form-group">
-            <label class="col-md-3 control-label">To 
-                <span class="required" aria-required="true"> * </span> 
-                <br> <small> Separated by coma (,) </small>
-            </label>
-            <div class="col-md-9">
-                  <textarea name="to" class="form-control" rows="5" required>@if(Session::get('deals_recipient')){{ Session::get('deals_recipient') }} @else{{ old('to') }}@endif</textarea>
-            </div>
-        </div>
-  </div>
-  <div class="form-actions">
-      {{ csrf_field() }}
-      <div class="row">
-          <div class="col-md-offset-3 col-md-9">
-            <input type="hidden" name="id_deals" value="{{ $deals[0]['id_deals'] }}">
-            <button type="submit" class="btn green">Submit</button>
-          </div>
-      </div>
-  </div>
-</form>
+    </div>
 
 <hr>
 @endif

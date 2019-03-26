@@ -1042,7 +1042,7 @@ class TransactionController extends Controller
             'submenu_active' => 'transaction-'.$key
         ];
 
-        $detail = MyHelper::post('transaction/detail', ['transaction_receipt_number' => $id, 'type' => 'trx']);
+        $detail = MyHelper::post('transaction/detail', ['id_transaction' => $id, 'type' => 'trx']);
         // return $detail;
         if (isset($detail['status']) && $detail['status'] == 'success') {
             $data['result'] = $detail['result'];

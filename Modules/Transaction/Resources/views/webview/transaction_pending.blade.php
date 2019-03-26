@@ -8,41 +8,41 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="{{ url('css/slide.css') }}" rel="stylesheet">
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -334,7 +334,7 @@
         <div class="kotak-full">
             <div class="container">
                 <div class="row text-center">
-                    <div class="col-12 text-13-3px text-black roboto-regular-font">
+                    <div class="col-12 text-13-3px text-black seravek-font">
                         Silahkan lakukan pembayaran terlebih dahulu
                     </div>
                 </div>
@@ -453,8 +453,8 @@
                         @if ($data['trasaction_payment_type'] == 'Balance') 
                             Kopi Points
                         @elseif ($data['trasaction_payment_type'] == 'Midtrans') 
-                            @if(isset($data['payment']['payment_type']))
-                                {{ ucwords(str_replace('_', ' ', $data['payment']['payment_type'])) }}
+                            @if(isset($data['data_payment'][0]['payment_type']))
+                                {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['payment_type'])) }}
                             @else
                                 Online Payment
                             @endif

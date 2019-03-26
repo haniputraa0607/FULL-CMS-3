@@ -7,41 +7,41 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{ url('css/slide.css') }}" rel="stylesheet">
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -428,7 +428,7 @@
                         <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
                         <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{ $data['outlet']['outlet_name'] }}</div>
                         <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center ">{{ $data['outlet']['outlet_address'] }}</div>
+                            <div class="col-12 text-13-3px text-grey-white space-nice text-center seravek-light-font">{{ $data['outlet']['outlet_address'] }}</div>
                         </div>
                             <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan diproses pada</div>
                             <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['transaction_date'])) }}</div>
@@ -493,9 +493,11 @@
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">SubTotal ({{$countQty}} item)</div>
                 <div class="col-6 text-13-3px text-right space-text seravek-light-font text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_subtotal'])) }}</div>
 
+                @if($data['transaction_tax'] > 0)
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_tax'])) }}</div>
-
+                @endif
+                
                 @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Ongkos Kirim</div>
                     @if($data['transaction_is_free'] == '1')
@@ -540,8 +542,8 @@
                         @if ($data['trasaction_payment_type'] == 'Balance') 
                             Kopi Points
                         @elseif ($data['trasaction_payment_type'] == 'Midtrans') 
-                            @if(isset($data['payment']['payment_type']))
-                                {{ ucwords(str_replace('_', ' ', $data['payment']['payment_type'])) }}
+                            @if(isset($data['data_payment'][0]['payment_type']))
+                                {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['payment_type'])) }}
                             @else
                                 Online Payment
                             @endif

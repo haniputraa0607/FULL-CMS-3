@@ -8,6 +8,9 @@ use Illuminate\Routing\Controller;
 use App\Lib\MyHelper;
 use Session;
 
+
+use Modules\Membership\Http\Requests\Create;
+
 class MembershipController extends Controller
 {
     /**
@@ -54,7 +57,7 @@ class MembershipController extends Controller
     }
 
     
-    public function create(Request $request) {
+    public function create(Create $request) {
 		$post = $request->except('_token');
 		$data = [
                 'title'          => 'New Membership',
@@ -76,7 +79,8 @@ class MembershipController extends Controller
 		}
     }
 	
-	public function update(Request $request, $id_membership) {
+	public function update(Create $request, $id_membership) {
+		dd($request);
 		$post = $request->except('_token');
 		$data = [
                 'title'          => 'Update Membership',
@@ -121,8 +125,7 @@ class MembershipController extends Controller
     {
 		$bearer = $request->header('Authorization');
         if ($bearer == "") {
-			$bearer = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ0ZmE5NmIzYjdhYTc4NWM2NThlYzlhZDA4ZjYxN2E2N2M5YTkxNDE1ZmY3Y2UwZDEyZDkxOGVlNjZjNDEzYzMwZWZiNDYyZGU5ZjVhMDM2In0.eyJhdWQiOiIyIiwianRpIjoiZDRmYTk2YjNiN2FhNzg1YzY1OGVjOWFkMDhmNjE3YTY3YzlhOTE0MTVmZjdjZTBkMTJkOTE4ZWU2NmM0MTNjMzBlZmI0NjJkZTlmNWEwMzYiLCJpYXQiOjE1NDY0Nzk0MzcsIm5iZiI6MTU0NjQ3OTQzNywiZXhwIjoxNTc4MDE1NDM3LCJzdWIiOiIzIiwic2NvcGVzIjpbIioiXX0.lfaUcgDutdJ9UkzY509qrOtfoxteZMTGO0tuXPWVd8Yq3mi5mIFxDYrChfwmVhntTpni31sreY_ivRVWp5Y0dlnVnR_yVUVPp5Cf5lzxkgTfMkktMLGD906TaSuuCF2aA-KAoIqhJMX42ZoZUM0xRaAhqOROIifzUuxVwNTLGDNqPi_VMDjmHZE2sI8gtrV69MhjBgqjLbp0lWSzQLkl5gSsTuE4giqMGjnUIJtYhqHzUkUYvcdTRtokzxoTFAowRU0WkwSy6K0kReBM0S8J41YrL1-62tPnKMqZFUz4l8DIkaRS6Zf9agxQ8cU2wz9I8QqDRt2xUNtWf8xbvLS4CevOHB4ZoPaUx1T9qzmzxul4CACYCYrBdjJst_LlJRd2HokPe_XQQtByjc3yMzgpwfxW2uyfL1DVzsG5fOrMraqEeRrxei3gafEQIamHDRv8StLHkF4zFpY-lg5fqQnC0RMIUXVfGuzsNv19uydwwYtONSPHTEhXNfodf2cV91C5Wtp80yG2GXfqkCZr-TGSBj6j1ZWlHV9fhkxiGBDyEbe25nurXvHSGZwQXWaQmwyaH-hW9XFXK23_xrZW9nMy60SQIeB9PsF-FVJ8sK6TIbEfP3cehnXpeuhS4Y5UFUsyK6zQD1UV6mD7bGPNXdUgOnRPEOYlb7mKlHZ82EPzuDc";
-            // return view('error', ['msg' => 'Unauthenticated']);
+            return view('error', ['msg' => 'Unauthenticated']);
 		}
 		
     	$data = json_decode(base64_decode($request->get('data')), true);

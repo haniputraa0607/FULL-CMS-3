@@ -621,7 +621,6 @@ class OutletController extends Controller
     public function scheduleSave(Request $request)
     {
         $post = $request->except('_token');
-
         $save = MyHelper::post('outlet/schedule/save', $post);
         if (isset($save['status']) && $save['status'] == 'success') {
             return back()->with(['success' => ['Update schedule success']]);

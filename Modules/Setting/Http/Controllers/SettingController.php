@@ -523,7 +523,7 @@ class SettingController extends Controller
 			$data['background'] = [];
 		
 		$test = MyHelper::get('autocrm/textreplace');
-		
+        
 		if($test['status'] == 'success'){
 			$data['textreplaces'] = $test['result'];
         }

@@ -5,20 +5,20 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ url('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ url('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script> 
-	<script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         function hapus(value){
@@ -87,7 +87,7 @@
                             </div>
                             <div class="portlet-body">
                                <label>Receipt Number</label>
-                                <a href="{{url('transaction/detail/'.$result['transaction_receipt_number'].'/'.$result['trasaction_type'])}}"><h5 style="font-weight: bold;">{{ $result['transaction_receipt_number'] }}</h5></a>
+                                <a href="{{url('transaction/detail/'.$result['id_transaction'].'/'.$result['trasaction_type'])}}"><h5 style="font-weight: bold;">{{ $result['transaction_receipt_number'] }}</h5></a>
 
                                 <label>Note</label>
                                 <h5 style="font-weight: bold;">{{ $result['transaction_notes'] }}</h5>
@@ -162,7 +162,7 @@
                                     <label>Receipt</label>
                                     <br>
                                     <a data-toggle="modal" data-target="#modalReceipt"> 
-                                    <img style="width:200px" src="{{env('APP_API_URL')}}{{ $result['transaction_payment_manuals'][0]['payment_receipt_image'] }}">
+                                    <img style="width:200px" src="{{env('AWS_URL')}}/{{ $result['transaction_payment_manuals'][0]['payment_receipt_image'] }}">
                                     </a>
                                     <br><br>
 
@@ -269,7 +269,7 @@
                     <h4 class="modal-title">Receipt Transaction Payment Manual</h4>
                 </div>
                 <div class="modal-body" style="text-align:center">
-                    <img style="width:80%" src="{{env('APP_API_URL')}}{{ $result['transaction_payment_manuals'][0]['payment_receipt_image'] }}">
+                    <img style="width:80%" src="{{env('AWS_URL')}}/{{ $result['transaction_payment_manuals'][0]['payment_receipt_image'] }}">
                 </div> 
             </div>
         </div>

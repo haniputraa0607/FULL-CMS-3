@@ -82,6 +82,13 @@
 									</a>
 								</li>
 							@endif
+							@if(MyHelper::hasAccess([83], $configs))
+								<li class="nav-item {{($submenu_active == 'user-autoresponse-pin-forgot') ? 'active open' : ''}}">
+									<a href="{{url('user/autoresponse/pin-forgot')}}" class="nav-link ">
+										<span class="title">[Response] Pin Forgot</span>
+									</a>
+								</li>
+							@endif
 							@if(MyHelper::hasAccess([44], $configs))
 								<li class="nav-item {{($submenu_active == 'user-autoresponse-login-success') ? 'active open' : ''}}">
 									<a href="{{url('user/autoresponse/login-success')}}" class="nav-link ">
@@ -341,6 +348,11 @@
 						</a>
 					</li>
 					@endif
+					<li class="nav-item {{($submenu_active == 'product-photo-default') ? 'active open' : ''}}">
+						<a href="{{url('product/photo/default')}}" class="nav-link ">
+							<span class="title">Product Photo Default</span>
+						</a>
+					</li>
 				</ul>
 			</li>
 			@endif

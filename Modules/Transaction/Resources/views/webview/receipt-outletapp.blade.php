@@ -7,41 +7,41 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{ url('css/slide.css') }}" rel="stylesheet">
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
         .swal-text {
@@ -311,13 +311,63 @@
             margin-left: -125px;
             margin-top: -125px;
         }
-
+        
+        .kotak-full.pending{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#aaa;
+        }
+        
+        .kotak-full.on_going{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#ef9219;
+        }
+        
+        .kotak-full.complated{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#fff;
+        }
+        
+        .kotak-full.ready{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#15977b;
+        }
+        
+        .kotak-full.pending .text-greyish-brown,
+        .kotak-full.on_going .text-greyish-brown,
+        .kotak-full.ready .text-greyish-brown,
+        
+        .kotak-full.pending .text-grey-white-light,
+        .kotak-full.on_going .text-grey-white-light,
+        .kotak-full.ready .text-grey-white-light
+        {
+            color:#fff;
+        }
+        
+        .kotak-full.redbg{
+            margin-top:-10px;
+            background-color:#c10100;
+        }
+        
+        .kotak-full.redbg #content-taken{
+            text-transform : uppercase;
+            color:#fff;
+            text-align:center;
+            padding:10px;
+        }
+        
     </style>
   </head>
   <body>
     {{ csrf_field() }}
     @php
-        // print_r($data);die();
+        // dd($data);
+        // $class = str_replace(' ', '_', strtolower($data['status']));
+        // print_r($class);
+        // die();
         setlocale (LC_TIME, 'id_ID');
         setlocale (LC_TIME, 'INDONESIA');
         $date = strftime( "%A, %d %B %Y %H:%M", strtotime($data['transaction_date']));
@@ -330,18 +380,36 @@
         </div>
     </a>
 
-        <div class="kotak-full">
+        <div class="kotak-full {{ str_replace(' ', '_', strtolower($data['status'])) }}">
             <div class="container">
                 <div class="row">
-                    <div class="col-6 text-15px text-greyish-brown seravek-medium-font">
+                    <div class="col-6 text-21-7px text-greyish-brown seravek-medium-font">
                       {{strtoupper($data['status'])}}
                     </div>
-                    <div class="col-6 text-13.3px text-grey-white-light seravek-font text-right">
+                    <div class="col-6 text-16-7px text-grey-white-light seravek-font text-right" style="padding-top:5px">
                       {{date('d F Y H:i',strtotime($data['transaction_date']))}}
                     </div>
                 </div>
             </div>
         </div>
+        
+        @if($data['status'] == "Taken" || $data['status'] == "Reject")
+            <div class="kotak-full redbg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="content-taken" class="seravek-medium-font">
+                                @if($data['status'] == "Taken")
+                                    Order sudah selesai <br/>dan sudah diambil
+                                @else
+                                    Order di reject <br/> {{ $data['detail']['reject_reason'] }}
+                                @endif
+                            </div>            
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        @endif
 
         <div class="kotak-biasa">
             <div class="container">
@@ -356,7 +424,11 @@
                     <div class="col-12 text-16-7px text-black space-text seravek-font">{{ strtoupper($data['user']['name']) }}</div>
                     <div class="col-12 text-16-7px text-black space-bottom-big seravek-font">{{ $data['user']['phone'] }}</div>
                     
-                        <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan diproses pada</div>
+                        @if ($data['detail']['pickup_type'] == 'set time')
+                            <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan siap pada</div>
+                        @else
+                            <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan diproses pada</div>
+                        @endif
                         @if ($data['detail']['pickup_type'] == 'set time')
                             <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
                         @elseif($data['detail']['pickup_type'] == 'at arrival')
@@ -420,10 +492,17 @@
                 <div class="col-12 text-14-3px space-top seravek-font text-greyish-brown">Detail Pembayaran <hr> </div>
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">SubTotal ({{$countQty}} item)</div>
                 <div class="col-6 text-13-3px text-right space-text seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['transaction_subtotal'])) }}</div>
-
+                
+                @if($data['transaction_tax'] > 0)
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['transaction_tax'])) }}</div>
-
+                @endif
+                
+                @if(isset($data['balance']))
+                <div class="col-6 text-13-3px space-text seravek-light-font text-black">Kopi Points</div>
+                <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['balance'])) }}</div>
+                @endif
+                
                 <div class="col-12 text-12-7px text-right"><hr></div>
                 <div class="col-6 text-13-3px seravek-font text-black ">Total Pembayaran</div>
                 @if(isset($data['balance']))

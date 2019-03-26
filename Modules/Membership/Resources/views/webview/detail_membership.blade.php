@@ -6,27 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link href="{{ url('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{ url('css/slide.css') }}" rel="stylesheet">
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
     
     <!-- SLICK -->
-    <link rel="stylesheet" type="text/css" href="{{url('assets/webview/slick-1.8.1/slick/slick.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('assets/webview/slick-1.8.1/slick/slick-theme.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/slick-1.8.1/slick/slick.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/slick-1.8.1/slick/slick-theme.css')}}">
 
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -394,6 +394,10 @@
             display: inline-block;
         }
 
+        #status_detail_text{
+            max-width:280px
+        }
+
     </style>
   </head>
   <body>
@@ -510,7 +514,9 @@
                     <div class="text-14-3px progress-active"></div>
                     <div class="progress-now"></div>
                     <div class="text-14-3px progress"></div>
-                    <img class="img-responsive img-progress" src="{{ url('img/webview/icon-heart2.png') }}" style="width:24.7px">
+                    
+                    <!--<img class="img-responsive img-progress" src="{{ url('img/webview/icon-heart2.png') }}" style="width:24.7px">-->
+                    <img class="img-responsive img-progress" src="{{ $data['all_membership'][$keyStatusNow+1]['membership_image'] }}" style="width:32px;height:32px;">
                 </div>
                 <div class="space-bottom col-12" id="detail-progress">
                 <div class="row">
@@ -543,8 +549,7 @@
                         @if($keyStatusNow == count($data['all_membership']) - 1 )
                             Anda sudah mencapai level tertinggi <br>
                         @else
-                        {{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke 
-                        <br>{{ucfirst($data['next_membership_name'])}}
+                        {{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}
                         @endif
                     </div>
                 </div>
@@ -578,13 +583,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
 
-    <script src="{{url('assets/webview/slick-1.8.1/slick/slick.js')}}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/slick-1.8.1/slick/slick.js')}}" type="text/javascript" charset="utf-8"></script>
 
     <script>
         $(document).ready(function(){
 
-            var heightListImage = $('#list-image').height()+60;
-            $('#detail-membership').css('height', 'calc(100vh - '+heightListImage+'px)')
+            var widthCup = $('#img-cup').width() + 30;
+            $('#status_detail_text').css('width', 'calc(100% - '+widthCup+'px)')
 
             @if($keyStatusNow != count($data['all_membership']) - 1 )
             $('#progress-nominal').css('padding-left', ' calc({{$data['progress_active']}}% - '+$("#progress-nominal").width()+'px)')
@@ -603,6 +608,9 @@
                 initialSlide: {{$keyStatusNow}},
                 swipeToSlide:true
             });
+
+            var heightListImage = $('#list-image').height()+60;
+            $('#detail-membership').css('height', 'calc(100vh - '+heightListImage+'px)')
 
         });
 
@@ -636,7 +644,7 @@
                     $('#status_nominal').text('{{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}')
                     $('#status_progress').hide()
                     $('#status_detail').show()
-                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke <br>'+list_status[nextSlide]['membership_name'])
+                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke '+list_status[nextSlide]['membership_name'])
                 }
                 $('#progress-nominal-nopad').show()
                 $('#progress-nominal').hide()
@@ -647,7 +655,7 @@
                     $('#status_nominal').text('{{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}')
                     $('#status_progress').hide()
                     $('#status_detail').show()
-                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke <br>'+list_status[nextSlide]['membership_name'])
+                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke '+list_status[nextSlide]['membership_name'])
                     $('#progress-nominal-nopad').show()
                     $('#progress-nominal').hide()
                     $('#detail-progress').hide()
@@ -662,7 +670,7 @@
                         $('#detail-progress').hide()
                     }else{
                         $('#status_benefit_text').text('Benefit yang didapat saat ini:')
-                        $('#status_detail_text').html("{{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke <br> {{ucfirst($data['next_membership_name'])}}")
+                        $('#status_detail_text').html("{{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}")
                         $('#status_progress').show()
                         $('#progress-nominal-nopad').hide()
                         $('#progress-nominal').show()
@@ -681,8 +689,8 @@
             startY,
             distX,
             distY,
-            threshold = 50, //required min distance traveled to be considered swipe
-            restraint = 200, // maximum distance allowed at the same time in perpendicular direction
+            threshold = 1, //required min distance traveled to be considered swipe
+            restraint = 100, // maximum distance allowed at the same time in perpendicular direction
             allowedTime = 1500, // maximum time allowed to travel that distance
             elapsedTime,
             startTime,
@@ -707,11 +715,15 @@
                 distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
                 distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
                 elapsedTime = new Date().getTime() - startTime // get time elapsed
+                // console.log(restraint)
+                console.log(distY)
+                // console.log(threshold)
+                console.log(distX)
                 if (elapsedTime <= allowedTime){ // first condition for awipe met
-                    if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
+                    if (Math.abs(distX) >= 5 && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
                         swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
                     }
-                    else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
+                    else if (Math.abs(distY) >= restraint && Math.abs(distX) <= threshold){ // 2nd condition for vertical swipe met
                         swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
                     }
                 }

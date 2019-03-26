@@ -305,6 +305,54 @@
                         </div>
                     </div>
                     @endif
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Voucher Type
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tipe pembuatan voucher, di list secara manual, auto generate atau unlimited" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <div class="col-md-3">
+                                    <div class="md-radio-inline">
+                                        <div class="md-radio">
+                                            <input type="radio" name="deals_voucher_type" id="radio1" value="Auto generated" class="voucherType" @if ($val['deals_voucher_type'] == "Auto generated") checked @endif> 
+                                            <label for="radio1">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> Auto Generated </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="md-radio-inline">
+                                        <div class="md-radio">
+                                            <input type="radio" name="deals_voucher_type" id="radio2" value="List Vouchers" class="voucherType" @if ($val['deals_voucher_type'] == "List Vouchers") checked @endif required> 
+                                            <label for="radio2">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> List Voucher </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="md-radio-inline">
+                                        <div class="md-radio">
+                                            <input type="radio" name="deals_voucher_type" id="radio3" value="Unlimited" class="voucherType" @if ($val['deals_voucher_type'] == "Unlimited") checked @endif required> 
+                                            <label for="radio3">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> Unlimited </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
                     
                     <br>
                     <div class="form-group">
@@ -357,7 +405,7 @@
                             </div>
                             <div class="col-md-9 voucherTime" id="duration" @if (empty($val['deals_voucher_duration'])) style="display: none;" @endif>
                                 <div class="input-group">
-                                    <input type="number" class="form-control duration datesOpp" name="deals_voucher_duration" value="{{ $val['deals_voucher_duration'] }}">
+                                    <input type="number" min="1" class="form-control duration datesOpp" name="deals_voucher_duration" value="{{ $val['deals_voucher_duration'] }}">
                                     <span class="input-group-addon">
                                         day after claimed
                                     </span>
@@ -378,7 +426,7 @@
 
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="number" class="form-control" name="user_limit" value="{{ $val['user_limit'] }}" placeholder="User limit" maxlength="30">
+                                <input type="number" class="form-control" min="0" name="user_limit" value="{{ $val['user_limit'] }}" placeholder="User limit" maxlength="30">
                             </div>
                         </div>
                     </div>

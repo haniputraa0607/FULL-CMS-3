@@ -6,43 +6,43 @@ $configs    		= session('configs');
  @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
 @endsection
 
 @section('page-plugin')
-	<script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 	
-	<script src="{{ url('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('js/prices.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kopikenangan-view-asset/public/js/prices.js') }}" type="text/javascript"></script>
 	<script>   
     $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
@@ -64,7 +64,7 @@ $configs    		= session('configs');
 			placeholder: 'Content',
 			tabsize: 2,
 			height: 120,
-			toolbar: [         
+        	toolbar: [         
               ['style', ['style']],
               ['style', ['bold', 'underline', 'clear']],
               ['color', ['color']],
@@ -204,10 +204,10 @@ $configs    		= session('configs');
 		});
 		token = '<?php echo csrf_token();?>';
 		
-		/*$('.summernote').summernote({
+		$('.summernote').summernote({
 			placeholder: 'Deals Content Long',
 			tabsize: 2,
-			toolbar: [         
+        	toolbar: [         
               ['style', ['style']],
               ['style', ['bold', 'underline', 'clear']],
               ['color', ['color']],
@@ -217,7 +217,7 @@ $configs    		= session('configs');
               ['misc', ['fullscreen', 'codeview', 'help']]
             ],
 			height: 120
-		});*/
+		});
 	});
 	
 	function dealsPromoType(channel, series){
@@ -498,6 +498,29 @@ $configs    		= session('configs');
 		$(textarea).val(textvaluebaru);
     }
 	//end whatsapp content
+
+	$('.select-deals').change(function(){
+		var obj = '<?php echo json_encode($deals); ?>'
+		var dealsList = JSON.parse(obj);
+
+		var id = $("option:selected", this).attr('data-id')
+		var x = $("option:selected", this).attr('data-x')
+		if(dealsList[id]['deals_voucher_type'] == 'Unlimited'){
+			$('#voucher_type_unlimited_'+x).prop("checked", true);
+			dealsVoucherType('unlimited', x)
+		}else if(dealsList[id]['deals_voucher_type'] == 'List Vouchers'){
+			$('#voucher_type_listvoucher_'+x).prop("checked", true);
+			dealsVoucherType('listvoucher', x)
+			$('#vouchertype_listvoucher_input_'+x).val(dealsList[id]['deals_list_voucher'].replace(/,/g,'\n'));
+		}else if(dealsList[id]['deals_voucher_type'] == 'Auto generated'){
+			$('#voucher_type_autogenerated_'+x).prop("checked", true);
+			dealsVoucherType('autogenerated', x)
+			$('#vouchertype_autogenerated_input_'+x).val(dealsList[id]['deals_total_voucher']);
+		}
+
+		console.log(dealsList[id]['deals_list_outlet'].split(','))
+		console.log($('#voucher_type_unlimited_'+x))
+	})
 	</script>
 	
 @endsection
@@ -690,7 +713,7 @@ $configs    		= session('configs');
 											<div class="portlet light bordered" style="margin-bottom:10px">
 												@foreach($ruleParent['rules'] as $rule)
 												<div class="row static-info">
-													<div class="col-md-12 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if($rule['subject'] != 'all_user') @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif @endif
+													<div class="col-md-12 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif 
 													@if($rule['subject'] == 'trx_outlet' || $rule['subject'] == 'trx_outlet_not')
 														<?php $name = null; ?>
 														@foreach($outlets as $outlet) 
@@ -823,6 +846,11 @@ $configs    		= session('configs');
 												</div>
 											</div>
 											<div class="portlet-body">
+												@if(!$api_key_whatsapp)
+													<div class="alert alert-warning deteksi-trigger">
+														<p> To use WhatsApp channel you have to set the api key in <a href="{{url('setting/whatsapp')}}">WhatsApp Setting</a>. </p>
+													</div>
+												@endif
 												@if(MyHelper::hasAccess([26], $configs))
 													@if(isset($result['contents'][$x-1]))
 														@if($result['contents'][$x-1]['promotion_count_voucher_give'] > 0)
@@ -917,6 +945,9 @@ $configs    		= session('configs');
 																@if($result['contents'][$x-1]['promotion_channel_whatsapp'] == '1')
 																	checked
 																@endif
+															@endif
+															@if(!$api_key_whatsapp)
+															disabled
 															@endif
 															>
 															<label for="checkbox_{{$x}}_whatsapp">
@@ -1123,7 +1154,7 @@ $configs    		= session('configs');
 															<div class="fileinput fileinput-new" data-provides="fileinput">
 																<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 																	@if(isset($result['contents'][$x-1]['promotion_push_image']) && $result['contents'][$x-1]['promotion_push_image'] != "")
-																		<img src="{{env('APP_API_URL')}}/{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
+																		<img src="{{env('AWS_URL')}}/{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
 																	@else 
 																		<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 																	@endif
@@ -1146,10 +1177,10 @@ $configs    		= session('configs');
 															<select name="promotion_push_clickto[]" id="promotion_push_clickto_{{$x}}" class="form-control select2" onChange="fetchDetail('{{$x}}','push',this.value)">
 																<option value="Home" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Home") selected @endif>Home</option>
 																<option value="News" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "New") selected @endif>News</option>
-																<!-- <option value="Product" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Product") selected @endif>Product</option> -->
+																<option value="Product" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Product") selected @endif>Product</option>
 																<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Outlet") selected @endif>Outlet</option>
 																<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-																<!-- <option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option> -->
+																<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option>
 																<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
 																<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 																<option value="Link" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Link") selected @endif>Link</option>
@@ -1224,10 +1255,10 @@ $configs    		= session('configs');
 																<option value="Home" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Home") selected @endif>Home</option>
 																{{-- <option value="Content" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
 																<option value="News" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "New") selected @endif>News</option>
-																<!-- <option value="Product" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option> -->
+																<option value="Product" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>
 																<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
 																<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
-																<!-- <option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option> -->
+																<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
 																<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
 																<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 																<option value="Link" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>
@@ -1488,6 +1519,25 @@ $configs    		= session('configs');
 											<div class="portlet-body">
 												<div class="form-body">
 													<div class="form-group">
+														<label class="col-md-2 control-label"> Select Deals </label>
+														<div class="col-md-7">
+															<div class="input-icon right">
+																<select class="form-control select2 select-deals" data-placeholder="Select Deals" name="id_deals_promotion_template[{{$x-1}}]">
+																<optgroup label="Deals List">
+																	<option value="" disabled>Select Deals</option>
+																	@if (!empty($deals))
+																		@foreach($deals as $index=>$datadeals)
+																			<option value="{{ $datadeals['id_deals_promotion_template'] }}" data-id="{{$index}}" data-x="{{$x-1}}"
+																			>{{ $datadeals['deals_title'] }} - @if($datadeals['deals_promo_id']){{ $datadeals['deals_promo_id'] }}@else {{ number_format($datadeals['deals_nominal']) }} @endif</option>
+																		@endforeach
+																	@endif
+																</optgroup>
+																</select>
+															</div>
+														</div>
+													</div>
+
+													<!-- <div class="form-group">
 														<label class="col-md-2 control-label">Promo Type</label>
 														<div class="col-md-10">
 															<div class="input-icon right">
@@ -1561,7 +1611,7 @@ $configs    		= session('configs');
 														<div class="col-md-4">
 															<div class="input-icon right">
 																<div class="input-group">
-																	<input type="text" class="form_datetime form-control" name="deals_start[]"
+																	<input type="text" class="form_datetime form-control" name="deals_start[]" id="deals_start_{{$x}}"
 																	@if(isset($result['contents'][$x-1]['deals']['deals_start']))
 																		@if($result['contents'][$x-1]['deals']['deals_start'] != '')
 																			value = "{{date('d-M-Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_start']))}}"
@@ -1582,7 +1632,7 @@ $configs    		= session('configs');
 														<div class="col-md-4">
 															<div class="input-icon right">
 																<div class="input-group">
-																	<input type="text" class="form_datetime form-control" name="deals_end[]" 
+																	<input type="text" class="form_datetime form-control" name="deals_end[]" id="deals_end_{{$x}}"
 																	@if(isset($result['contents'][$x-1]['deals']['deals_end']))
 																		@if($result['contents'][$x-1]['deals']['deals_end'] != '')
 																			value = "{{date('d-M-Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_end']))}}"
@@ -1605,7 +1655,7 @@ $configs    		= session('configs');
 														<label class="col-md-2 control-label"> Outlet Available </label>
 														<div class="col-md-10">
 															<div class="input-icon right">
-																<select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[{{$x-1}}][]" multiple>
+																<select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[{{$x-1}}][]" id="outlet_available_{{$x}}" multiple>
 																<optgroup label="Outlet List">
 																	<option value="">Select Outlet</option>
 																	@if (!empty($outlets))
@@ -1734,7 +1784,7 @@ $configs    		= session('configs');
 																</div>
 															@endif
 														</div>
-													</div>
+													</div> -->
 													
 													<div class="form-group">
 														<label class="col-md-2 control-label"> Voucher Type  </label>
@@ -1906,7 +1956,7 @@ $configs    		= session('configs');
 														<label class="col-md-2 control-label">Every user receives</label>
 														<div class="col-md-3">
 															<div class="input-group">
-																<input type="text" class="form-control price" name="voucher_given[{{$x-1}}]" id="voucher_given[]" value="@if(isset($result['contents'][$x-1]['voucher_given'])){{$result['contents'][$x-1]['voucher_given']}}@endif">
+																<input type="text" class="form-control price" name="voucher_given[{{$x-1}}]" id="voucher_given_{{$x}}" value="@if(isset($result['contents'][$x-1]['voucher_given'])){{$result['contents'][$x-1]['voucher_given']}}@endif">
 																<span class="input-group-addon">
 																	vouchers
 																</span>
@@ -1961,6 +2011,26 @@ $configs    		= session('configs');
 										<span class="caption-subject bold uppercase">Promotion Channel</span>
 									</div>
 								</div>
+								@if(!$api_key_whatsapp)
+									<div class="alert alert-warning deteksi-trigger">
+										<p> To use WhatsApp channel you have to set the api key in <a href="{{url('setting/whatsapp')}}">WhatsApp Setting</a>. </p>
+									</div>
+								@endif
+								@if(MyHelper::hasAccess([26], $configs))
+									@if(isset($result['contents'][0]))
+										@if($result['contents'][0]['promotion_count_voucher_give'] > 0)
+											<div class="alert alert-warning" role="alert">
+												Hidden Deals & Voucher cannot be disabled because voucher have been sent to users
+											</div>
+										@endif
+									@else
+									@if(count($deals) <= 0)
+											<div class="alert alert-warning" role="alert">
+												<p> To use Hidden Deals & Voucher you have to create deals promotion first in <a href="{{url('promotion/deals/create')}}">New Deals Promotion</a>. </p>
+											</div>
+										@endif										
+									@endif
+								@endif
 								<div class="portlet-body form">
 									<div class="form-md-checkboxes">
 										<div class="md-checkbox-inline">
@@ -2048,6 +2118,9 @@ $configs    		= session('configs');
 														checked
 													@endif
 												@endif
+												@if(!$api_key_whatsapp)
+												disabled
+												@endif
 												>
 												<label for="checkbox_0_whatsapp">
 													<span></span>
@@ -2065,6 +2138,9 @@ $configs    		= session('configs');
 													@if($result['contents'][0]['id_deals'] != "")
 														checked
 													@endif
+												@endif
+												@if(count($deals) <= 0)
+												disabled
 												@endif
 												>
 												@if(MyHelper::hasAccess([26], $configs))
@@ -2251,7 +2327,7 @@ $configs    		= session('configs');
 												<div class="fileinput fileinput-new" data-provides="fileinput">
 													<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 														@if(isset($result['contents'][0]['promotion_push_image']) && $result['contents'][0]['promotion_push_image'] != "")
-															<img src="{{env('APP_API_URL')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
+															<img src="{{env('AWS_URL')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
 														@else 
 															<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 														@endif
@@ -2274,10 +2350,10 @@ $configs    		= session('configs');
 												<select name="promotion_push_clickto[]" id="promotion_push_clickto_0" class="form-control select2" onChange="fetchDetail('0','push',this.value)">
 													<option value="Home" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Home") selected @endif>Home</option>
 													<option value="News" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "New") selected @endif>News</option>
-													<!-- <option value="Product" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Product") selected @endif>Product</option> -->
+													<option value="Product" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Product") selected @endif>Product</option>
 													<option value="Outlet" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Outlet") selected @endif>Outlet</option>
 													<option value="Inbox" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-													<!-- <option value="Voucher" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option> -->
+													<option value="Voucher" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option>
 													<option value="Voucher Detail" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
 													<option value="Contact Us" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 													<option value="Link" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Link") selected @endif>Link</option>
@@ -2354,10 +2430,10 @@ $configs    		= session('configs');
 													<option value="Home" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Home") selected @endif>Home</option>
 													{{-- <option value="Content" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
 													<option value="News" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "News") selected @endif>News</option>
-													<!-- <option value="Product" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option> -->
+													<option value="Product" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>
 													<option value="Outlet" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
 													<option value="Inbox" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
-													<!-- <option value="Voucher" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option> -->
+													<option value="Voucher" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
 													<option value="Voucher Detail" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
 													<option value="Contact Us" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 													<option value="Link" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>
@@ -2617,6 +2693,25 @@ $configs    		= session('configs');
 								<div class="portlet-body">
 									<div class="form_body">
 										<div class="form-group">
+											<label class="col-md-2 control-label"> Select Deals </label>
+											<div class="col-md-7">
+												<div class="input-icon right">
+													<select class="form-control select2 select-deals" data-placeholder="Select Deals" name="id_deals_promotion_template[0]">
+													<optgroup label="Deals List">
+														<option value="">Select Deals</option>
+														@if (!empty($deals))
+															@foreach($deals as $index=>$datadeals)
+																<option value="{{ $datadeals['id_deals_promotion_template'] }}"  data-id="{{$index}}" data-x="0"  @if(isset($result['contents'][0]['id_deals_promotion_template']) && $result['contents'][0]['id_deals_promotion_template'] == $datadeals['id_deals_promotion_template']) selected @endif>
+																	{{ $datadeals['deals_title'] }} - @if($datadeals['deals_promo_id']){{ $datadeals['deals_promo_id'] }}@else {{ number_format($datadeals['deals_nominal']) }} @endif
+																</option>
+															@endforeach
+														@endif
+													</optgroup>
+													</select>
+												</div>
+											</div>
+										</div>
+										<!-- <div class="form-group">
 											<label class="col-md-2 control-label">Promo Type</label>
 											<div class="col-md-10">
 												<div class="input-icon right">
@@ -2734,7 +2829,7 @@ $configs    		= session('configs');
 											<label class="col-md-2 control-label"> Outlet Available </label>
 											<div class="col-md-10">
 												<div class="input-icon right">
-													<select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[0][]" style="width:100%" multiple>
+													<select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[0][]" id="outlet_available_0" style="width:100%" multiple>
 													<optgroup label="Outlet List">
 														<option value="">Select Outlet</option>
 														@if (!empty($outlets))
@@ -2865,7 +2960,7 @@ $configs    		= session('configs');
 											</div>
 										</div>
 										<input type="hidden" name="deals_voucher_type" value="Auto generated">
-										
+										 -->
 										<div class="form-group">
 											<label class="col-md-2 control-label"> Voucher Type  </label>
 											<div class="col-md-10">

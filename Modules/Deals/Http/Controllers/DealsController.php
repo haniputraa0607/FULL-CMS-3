@@ -301,6 +301,7 @@ class DealsController extends Controller
         
         $data       = $dataDeals['data'];
         $post       = $dataDeals['post'];
+        $post['newest'] = 1;
 
         $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
 
@@ -342,10 +343,37 @@ class DealsController extends Controller
         }
 
         // DATA PRODUCT
-        $data['product'] = parent::getData(MyHelper::get('product/list'));
+        // $data['product'] = parent::getData(MyHelper::get('product/list'));
 
         // DATA OUTLET
-        $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+        // $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+
+        $getCity = MyHelper::get('city/list');
+		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
+		
+		$getProvince = MyHelper::get('province/list');
+		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
+		
+		$getCourier = MyHelper::get('courier/list');
+		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
+		
+		$getOutlet = MyHelper::get('outlet/list');
+		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
+			
+		$getProduct = MyHelper::get('product/list');
+		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
+		
+		$getTag = MyHelper::get('product/tag/list');
+		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
+
+		$getMembership = MyHelper::post('membership/list',[]);
+		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
+		
+        if(!empty(Session::get('filter_user'))){
+            $data['conditions'] = Session::get('filter_user');
+        }else{
+            $data['conditions'] = [];
+        }
 
         return view('deals::deals.detail', $data);
     } 
@@ -368,8 +396,17 @@ class DealsController extends Controller
         }
 
         // ASSIGN USER TO VOUCHER
-        if (isset($post['to'])) {
-            return parent::redirect($this->autoAssignVoucher($post['id_deals'], $post['to']), "Voucher has been added.", $url[1].'#participate');
+        if (isset($post['conditions'])) {
+            $assign = $this->autoAssignVoucher($post['id_deals'], $post['conditions'], $post['amount']);
+            if(isset($assign['status']) && $assign['status'] == 'success'){
+                return parent::redirect($assign, $assign['result']['voucher']." voucher has been assign to ".$assign['result']['user'].' users', $url[1].'#participate');
+            }else{
+                if(isset($assign['status']) && $assign['status'] == 'fail') $e = $assign['messages'];
+                elseif(isset($assign['errors'])) $e = $assign['errors'];
+                elseif(isset($assign['exception'])) $e = $assign['message'];
+                else $e = ['e' => 'Something went wrong. Please try again.'];
+                return back()->witherrors($e)->withInput();
+            }
         }
 
         // UPDATE DATA DEALS
@@ -382,14 +419,16 @@ class DealsController extends Controller
     }
 
     /* AUTO ASSIGN VOUCHER */
-    function autoAssignVoucher($id_deals, $to) {
+    function autoAssignVoucher($id_deals, $conditions, $amount) {
         $post = [
-            'phone'    => $to,
-            'id_deals' => $id_deals
+            'id_deals'      => $id_deals,
+            'conditions'    => $conditions,
+            'amount'        => $amount
         ];
 
+        Session::put('filter_user',$post['conditions']);
+        
         $save = MyHelper::post('hidden-deals/create/autoassign', $post);
-
         return $save;
     }
 

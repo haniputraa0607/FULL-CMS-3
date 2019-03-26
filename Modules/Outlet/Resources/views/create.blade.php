@@ -3,22 +3,22 @@
 @section('page-style')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
 
-    <link href="{{ url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    <script src="{{ url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/global/plugins/moment.min.js')}}" type="text/javascript"></script>
 	<script src="{{asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js')}}" type="text/javascript"></script>
 	<script src="{{asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
@@ -299,6 +299,19 @@
           $(this).parent().parent().parent().find('.kelas-close').val(close);
       }
     });
+
+    $('.latlong').change(function(){
+        var lat = $('#lat').val()
+        var long = $('#lng').val()
+        initialize(lat, long);
+    })
+    $('.is_closed').change(function(){
+        if($(this).is(':checked')){
+            $('#'+$(this).attr('data-id')).val('1')
+        }else{
+            $('#'+$(this).attr('data-id')).val('0')
+        }
+    })
   </script>
 
 @endsection
@@ -506,15 +519,22 @@
                                     <div class="col-md-1">
                                         <label style="margin-top: 5px;margin-left: 15px;">:</label>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open timepicker timepicker-no-seconds" name="open[]" @if (old('open') != '') value="{{ old('open') }}" @else value="07:00" @endif data-show-meridian="false" readonly>
                                     </div>
-                                    <div class="col-md-4" style="padding-bottom: 5px">
+                                    <div class="col-md-3" style="padding-bottom: 5px">
                                         <input type="text" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close timepicker timepicker-no-seconds" name="close[]" @if (old('close') != '') value="{{ old('close') }}" @else value="22:00" @endif data-show-meridian="false" readonly>
                                     </div>
                                     <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
                                         <label class="mt-checkbox mt-checkbox-outline"> Same all
                                             <input type="checkbox" name="ampas[]" class="same" data-check="ampas"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
+                                        <label class="mt-checkbox mt-checkbox-outline"> Closed
+                                            <input type="checkbox" class="is_closed" data-id="is_closed{{$i}}"/>
+                                            <input type="hidden" name="is_closed[]" id="is_closed{{$i}}" value="0"/>
                                             <span></span>
                                         </label>
                                     </div>
@@ -538,25 +558,26 @@
 
                     <hr>
                     <h4>Maps</h4>
-                    <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3"></label>
-                        <div class="col-md-9">
-                            <input id="pac-input" class="controls" type="text" placeholder="Enter a location" style="padding:10px;width:70%" onkeydown="if (event.keyCode == 13) return false;">
-                            <div id="map-canvas" style="width:900;height:380px;"></div>
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Latitude</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="outlet_latitude" value="{{ old('outlet_latitude') }}" id="lat" readonly>
+                            <input type="text" class="form-control latlong" name="outlet_latitude" value="{{ old('outlet_latitude') }}" id="lat">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Longitude</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="outlet_longitude" value="{{ old('outlet_longitude') }}" id="lng" readonly>
+                            <input type="text" class="form-control latlong" name="outlet_longitude" value="{{ old('outlet_longitude') }}" id="lng">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="multiple" class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <input id="pac-input" class="controls" type="text" placeholder="Enter a location" style="padding:10px;width:70%" onkeydown="if (event.keyCode == 13) return false;">
+                            <div id="map-canvas" style="width:900;height:380px;"></div>
                         </div>
                     </div>
 

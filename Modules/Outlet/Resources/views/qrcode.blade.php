@@ -1,7 +1,7 @@
 <html>
 <head>
         <meta charset="utf-8">
-        <title>Behave | Print QRCode Outlet</title>
+        <title>B | Print QRCode Outlet</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <meta content="Technopartner Indonesia CRM System" name="description">
@@ -9,9 +9,9 @@
 
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
         <link href="{{ url('/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-	    <link href="{{ url('assets/pages/css/invoice-2.css') }}" rel="stylesheet" type="text/css"> 
-        <link href="{{ url('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css">
-        <link href="{{ url('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css">
+	    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/css/invoice-2.css') }}" rel="stylesheet" type="text/css"> 
+        <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css">
+        <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css">
 
         <style>
         .page-break {

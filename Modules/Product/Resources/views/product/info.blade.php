@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label class="col-md-3 control-label">Video
                 <br>
                 <span class="required" aria-required="true"> (from youtube) </span> 
@@ -96,8 +96,8 @@
                     <input type="url" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ" class="form-control" name="product_video" value="{{ $syu['product_video'] }}">
                 </div>
             </div>
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
             <label class="col-md-3 control-label">Weight
                 <br>
                 <span class="required" aria-required="true"> (gram) </span> 
@@ -108,9 +108,9 @@
                     <input type="number" class="form-control" name="product_weight" value="{{ $syu['product_weight'] }}" required>
                 </div>
             </div>
-        </div>
+        </div> -->
         
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="multiple" class="control-label col-md-3">Description
                 <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>
             </label>
@@ -119,7 +119,7 @@
                     <textarea name="product_description" id="pro_text" class="form-control summernote">{{ $syu['product_description'] }}</textarea>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- {{--<div class="form-group">
             <label for="multiple" class="control-label col-md-3">Tag
                 {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}

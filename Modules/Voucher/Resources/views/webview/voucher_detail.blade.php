@@ -7,7 +7,8 @@
 
         <script src="{{ asset('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
         <link href="{{ asset('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
-        <!-- Bootstrap CSS -->
+        
+        <!-- Bootstrap CSS (part) -->
         <style type="text/css">
             *, ::after, ::before {
                 box-sizing: border-box;
@@ -111,7 +112,7 @@
                 line-height: 1.4;
             }
         </style>
-
+        
         <style type="text/css">
             @font-face {
                 font-family: "Seravek";
@@ -121,21 +122,24 @@
                 font-family: 'Seravek Light';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
             }
 
             @font-face {
                 font-family: 'Seravek Medium';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{url("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
             }
+
             .seravek-light-font {
                 font-family: 'Seravek Light';
             }
+
             .seravek-medium-font {
                 font-family: 'Seravek Medium';
             }
+
             body{
                 background-color: #fff;
                 color: #858585;
@@ -169,7 +173,6 @@
                 padding-bottom: 12px;
             }
             .title{
-                max-width: 66.66667%;
                 font-size: 18px;
                 color: #000;
             }
@@ -235,10 +238,8 @@
                 margin-bottom:20px;
             }
             .btn-wrapper {
-                position: absolute;
-                bottom: 30px;
-                left: 0;
-                right: 0;
+                margin-top: 30px;
+                margin-bottom: 30px;
             }
             .btn{
                 width: 75%;
@@ -254,6 +255,7 @@
                 background-color: #fff;
             }
             .btn-outline.brown:focus{
+                outline: none;
                 animation: btn-click 0.5s;
             }
             @keyframes btn-click {
@@ -271,16 +273,13 @@
                 }
             }
            
-            #qr-code-modal,
-            #invalidate-modal{
+            #qr-code-modal{
                 position: fixed;
                 top: 0;
-                bottom: 0;
                 left: 0;
-                right: 0;
                 background: rgba(0,0,0, 0.5);
-                /*width: 100%;*/
-                /*height: 100vh;*/
+                width: 100%;
+                height: 100vh;
                 display: none;
                 z-index: 999;
                 overflow-y: auto;
@@ -289,24 +288,13 @@
                 position: absolute;
                 left: 50%;
                 top: 50%;
-                /*margin-left: -155px;
-                margin-top: -155px;*/
                 transform: translate(-50%, -50%);
+                /*margin-left: -155px;*/
+                /*margin-top: -155px;*/
                 padding: 30px;
                 background: #fff;
                 border-radius: 42.3px;
-            }
-            #invalidate-modal-content{
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-                background: #fff;
-                border-radius: 4px;
-            }
-            #invalidate-modal .btn{
-                width: 100%;
+                border: 0;
             }
         </style>
     </head>
@@ -334,39 +322,17 @@
             </a>
             @endif
 
-            <!-- Modal Invalidate -->
-            @if($voucher['redeemed_at'] == null)
-            <div id="invalidate-modal">
-                <div id="invalidate-modal-content">
-                    {{-- <div class="invalidate-form-wrapper"> --}}
-                        <form action="{{ url('/') }}" method="post">
-                            {!! csrf_field() !!}
-                            <input type="hidden" name="bearer" value="{{ $bearer }}">
-                            <input type="hidden" name="id_deals_user" value="{{ $id_deals_user }}">
-
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="outlet_code" required>
-                            </div>
-                            <div class="text-center" style="margin-top: 15px;">
-                                <input class="btn btn-round btn-outline brown" type="submit" value="Submit">
-                            </div>
-                        </form>
-                    {{-- </div> --}}
-                </div>
-            </div>
-            @endif
-
             <div class="deals-detail">
                 <div class="col-md-4 offset-md-4">
-                    <img class="deals-img" src="{{ $deals['url_deals_image'] }}" alt="">
+                    <img class="deals-img center-block" src="{{ $deals['url_deals_image'] }}" alt="">
 
                     <div class="title-wrapper clearfix container">
-                        <div class="title">
+                        <div class="col-xs-8 title">
                             {{ $deals['deals_title'] }}
                         </div>
 
                         @if($voucher['used_at'] == null)
-                        <div class="valid-date">
+                        <div class="col-xs-12 valid-date">
                             Berlaku hingga {{ $voucher_expired_date }} <span style="margin-left: 10px;">{{ $voucher_expired_time }}</span>
                         </div>
                         @endif
@@ -415,23 +381,26 @@
                                     @endif
                                     <ul class="nav">
                                         @foreach($outlet_city['outlet'] as $key => $outlet)
-                                        <li>- {{ $outlet['outlet_name'] }}</li>
+                                            @if($outlet['outlet_status'] == "Active")
+                                                <li>- {{ $outlet['outlet_name'] }}</li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                 @endforeach
                             @endif
                         </div>
                     </div>
-
+                    
                     @if($voucher['redeemed_at'] == null)
                     <div id="invalidate">
                         <div class="btn-wrapper text-center">
-                            <button id="btn-invalidate" class="btn btn-round btn-outline brown" type="button">Invalidate</button>
+                            <button id="btn-invalidate" class="btn btn-round btn-outline brown" type="button">INVALIDATE</button>
                         </div>
                     </div>
                     @endif
                 </div>
             </div>
+
         @else
             <div class="deals-detail">
                 <div class="col-md-4 offset-md-4">
@@ -447,23 +416,26 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 // change submit button's position from absolute to relative
-                var body = $("body").height();
+                /*var body = $("body").height();
                 body = body + 50;
                 var win = $(window).height();
 
                 if (body > win) {
                     $(".btn-wrapper").css({
-                        'position': 'relative',
-                        'bottom': '0px',
-                        'margin-top': '30px',
-                        'margin-bottom': '30px'
+                        'position': 'absolute',
+                        'bottom': '30px',
+                        'margin-top': '0px',
+                        'margin-bottom': '0px',
+                        'left': '0',
+                        'right': '0',
                     });
-                }
-
+                }*/
+                
                 $(document).on('click', '.deals-qr', function(e) {
                     e.preventDefault();
                     $('#qr-code-modal').fadeIn('fast');
-                    $('.deals-detail').css({'height': '100vh', 'overflow-y':'scroll', '-webkit-overflow-scrolling':'touch'});
+                    // $('.deals-detail').css({'height': '100vh', 'overflow-y':'auto'});
+                    $('body').css({'height': '100%', 'overflow-y':'auto'});
 
                     // send flag to native
                     var url = window.location.href;
@@ -476,7 +448,8 @@
 
                 $(document).on('click', '#qr-code-modal', function() {
                     $('#qr-code-modal').fadeOut('fast');
-                    $('.deals-detail').attr('style', '');
+                    // $('.deals-detail').attr('style', '');
+                    $('body').attr('style', '');
 
                     // send flag to native
                     var url = window.location.href;
@@ -485,16 +458,6 @@
                     result = result.replace("#", "");
 
                     window.location.href = result + '#false';
-                });
-
-                // invalidate modal
-                $(document).on('click', '#btn-invalidate', function(e) {
-                    e.preventDefault();
-                    $('#invalidate-modal').fadeIn('fast');
-                });
-                var inv_modal_content = $('#invalidate-modal-content');
-                $('#invalidate-modal').on('click', !inv_modal_content, function() {
-                    $('#invalidate-modal').fadeOut('fast');
                 });
             });
         </script>

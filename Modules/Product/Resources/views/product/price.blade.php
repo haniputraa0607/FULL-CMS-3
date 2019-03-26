@@ -1,21 +1,21 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ url('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ url('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    {{-- <script src="{{ url('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
-    <script src="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('js/global.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<!-- <script src="{{Cdn::asset('kopikenangan-view-asset/public/js/global.js') }}" type="text/javascript"></script> -->
     <script type="text/javascript">
         $(document).ready(function() {
           $('.summernote').summernote({
@@ -33,16 +33,57 @@
             height: 120
           });
 
-          $(".price").each(function() {
-	        var input = $(this).val();
-	        var input = input.replace(/[\D\s\._\-]+/g, "");
-	        input = input ? parseInt( input, 10 ) : 0;
-
+        $(".price").each(function() {
+			var input = $(this).val();
+			var input = input.replace(/[^[^0-9]\s\_\-]+/g, "");
+	        input = input ? parseFloat( input ) : 0;
 	        $(this).val( function() {
-	            return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+	            return ( input === 0 ) ? "" : input.toLocaleString( "en", {minimumFractionDigits: 2} );
 	        } );
 	      });
 		});
+
+		$( "#formWithPrice" ).submit(function() {
+			$( "#submit" ).attr("disabled", true);
+			$( "#submit" ).addClass("m-loader m-loader--light m-loader--right");
+			$( ".price" ).each(function() {
+				var number = $( this ).val().replace(/[($)\s\,_\-]+/g, '');
+				$(this).val(number);
+			});
+
+		});
+
+		$( ".price" ).on( "keyup", numberFormat);
+		$( ".price" ).on( "blur", checkFormat);
+
+		function checkFormat(event){
+			var data = $( this ).val().replace(/[($)\s\,_\-]+/g, '');
+			if(!$.isNumeric(data)){
+				$( this ).val("");
+			}
+		}
+
+		function numberFormat(event){
+			// When user select text in the document, also abort.
+			var selection = window.getSelection().toString();
+			if ( selection !== '' ) {
+				return;
+			}
+			// When the arrow keys are pressed, abort.
+			if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+				return;
+			}
+			var $this = $( this );
+			// Get the value.
+			var input = $this.val();
+			console.log(input)
+			var input = input.replace(",", "");
+			var input = input.replace(/[^[^0-9]\s\_\-]+/g, "");
+			input = input ? parseFloat( input ) : 0;
+			$this.val( function() {
+				return ( input === 0 ) ? "" : input.toLocaleString( "en" , {minimumFractionDigits: 2});
+			} );
+		}
 		
         $("#multiple").change(function() {
         	var id = $(this).val();
@@ -138,6 +179,21 @@
 																	<td style="width: 15%"> 
 																		<input type="text" name="price_tax[]" value="{{ $dpp['product_price_tax'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
 																	</td>
+																	<td style="width:15%">
+																		<select class="form-control" name="visible[]">
+																			<option value="Visible" @if($dpp['product_visibility'] == 'Visible') selected @endif>Visible</option>
+																			<option value="Hidden" @if($dpp['product_visibility'] == 'Hidden') selected @endif>Hidden</option>
+																		</select>
+																	</td>
+																	<td style="width:15%">
+																		<select class="form-control" name="product_stock_status[]">
+																			<option value="Available" @if($dpp['product_stock_status'] == 'Available') selected @endif>Available</option>
+																			<option value="Sold Out" @if($dpp['product_stock_status'] == 'Sold Out') selected @endif>Sold Out</option>
+																		</select>
+																	</td>
+																	<td style="width:15%">
+																		<input type="text" value="{{ $dpp['product_status'] }}" class="form-control mt-repeater-input-inline" disabled>
+																	</td>
 																@endif
 															@endforeach
 
@@ -151,84 +207,48 @@
 															<td style="width: 15%"> 
 																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
 															</td>
+															<td style="width: 15%"> 
+																<select class="form-control" name="visible[]">
+																	<option value="Visible">Visible</option>
+																	<option value="Hidden" selected>Hidden</option>
+																</select>
+															</td>
+															<td style="width: 15%"> 
+																<select class="form-control" name="product_stock_status[]">
+																	<option value="Available">Available</option>
+																	<option value="Sold Out" selected>Sold Out</option>
+																</select>
+															</td>
+															<td style="width: 15%"> 
+																<input type="text" value="" class="form-control mt-repeater-input-inline" disabled> 
+															</td>
 															@endif
 														@else
-															<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price"> 
-														@endif
-													</td>
-													<td style="width:15%">
-														@php
-															$markerBottom = 0;
-														@endphp
-														@foreach ($data['product_prices'] as $dpp)
-														@if ($dpp['id_product'] == $pro['id_product'])
-															@php
-																$markerBottom = 1;
-															@endphp
-															<select class="form-control" name="visible[]">
-																<option value="Visible" @if($dpp['product_visibility'] == 'Visible') selected @endif>Visible</option>
-																<option value="Hidden" @if($dpp['product_visibility'] == 'Hidden') selected @endif>Hidden</option>
-															</select>
-														@endif
-														@endforeach
-
-														@if ($markerBottom == 0)
-														<select class="form-control" name="visible[]">
-															<option value="Visible">Visible</option>
-															<option value="Hidden" selected>Hidden</option>
-														</select>
-														@endif
-													</td>
-													<td style="width:15%">
-													@if (!empty($data['product_prices']))
-														@php
-															$marker = 0;
-														@endphp
-														@foreach ($data['product_prices'] as $dpp)
-															@if ($dpp['id_product'] == $pro['id_product'])
-																@php
-																	$marker = 1;
-																@endphp
-																<select class="form-control" name="product_stock_status[]">
-																	<option value="Available" @if($dpp['product_stock_status'] == 'Available') selected @endif>Available</option>
-																	<option value="Sold Out" @if($dpp['product_stock_status'] == 'Sold Out') selected @endif>Sold Out</option>
+															<td style="width: 15%"> 
+																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+															</td>
+															<td style="width: 15%"> 
+																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+															</td>
+															<td style="width: 15%"> 
+																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+															</td>
+															<td style="width: 15%"> 
+																<select class="form-control" name="visible[]">
+																	<option value="Visible">Visible</option>
+																	<option value="Hidden" selected>Hidden</option>
 																</select>
-															@endif
-														@endforeach
-
-														@if ($marker == 0)
-															<select class="form-control" name="product_stock_status[]">
-																<option value="Available">Available</option>
-																<option value="Sold Out" selected>Sold Out</option>
-															</select>
+															</td>
+															<td style="width: 15%"> 
+																<select class="form-control" name="product_stock_status[]">
+																	<option value="Available">Available</option>
+																	<option value="Sold Out" selected>Sold Out</option>
+																</select>
+															</td>
+															<td style="width: 15%"> 
+																<input type="text" value="" class="form-control mt-repeater-input-inline" disabled> 
+															</td>
 														@endif
-													@else
-														<select class="form-control" name="product_stock_status[]">
-																<option value="Available">Available</option>
-																<option value="Sold Out" selected>Sold Out</option>
-															</select>
-													@endif
-													</td>
-													<td style="width: 15%">
-													@if (!empty($data['product_prices']))
-														@php
-															$marker = 0;
-														@endphp
-														@foreach ($data['product_prices'] as $dpp)
-															@if ($dpp['id_product'] == $pro['id_product'])
-																@php
-																	$marker = 1;
-																@endphp
-																<input type="text" value="{{ $dpp['product_status'] }}" class="form-control mt-repeater-input-inline" disabled>
-															@endif
-														@endforeach
-
-														@if ($marker == 0)
-														<input type="text" value="" class="form-control mt-repeater-input-inline " disabled>
-														@endif
-													@else
-														<input type="text" value="" class="form-control mt-repeater-input-inline" disabled> 
-													@endif
 													</td>
 												</tr>
 											@endforeach
