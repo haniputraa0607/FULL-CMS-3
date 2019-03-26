@@ -5,20 +5,13 @@
 @extends('webview.main')
 
 @section('page-style-plugin')
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="{{ url('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN THEME GLOBAL STYLES -->
     <link href="{{ url('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
     <link href="{{ url('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END THEME GLOBAL STYLES -->
-    <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="{{ url('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
     {{-- <link href="{{ url('assets/layouts/layout4/css/layout.min.css') }}" rel="stylesheet" type="text/css" /> --}}
-
-    <!-- END PAGE LEVEL STYLES -->
 @stop
 
 @section('css')
@@ -40,21 +33,19 @@
           font-size: 13px;
           margin-bottom: 0px;
         }
-        .birthday input{
-            color: #000 !important;
-            font-size: 15px;
+        /* remove input number spinner */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
         }
-        .birthday-img{
-          position: absolute;
-          top: 50px;
-          right: 3px;
-          width: 17px;
-          height: 17px;
+        input[type=number] {
+          -moz-appearance:textfield; /* Firefox */
         }
 
         /* custom select */
         .select-wrapper,
-        .birthday,
+        /*.birthday,*/
         .city {
           position: relative;
         }
@@ -72,15 +63,14 @@
           right: 3px;
           width: 17px;
           height: 17px;
+          z-index: -1;
         }
         .city .select-img{
           top: 52px;
         }
         /*style the items (options), including the selected item:*/
         .select-selected {
-          border: 1px solid #c2cad8;
-          border: 1px solid transparent;
-          border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+          border-bottom: 1px solid #c2cad8;
           cursor: pointer;
           user-select: none;
         }
@@ -93,7 +83,7 @@
           border: 1px solid #c2cad8;
           position: absolute;
           background-color: #fff;
-          top: 99%;
+          top: 98%;
           left: 0;
           right: 0;
           z-index: 99;
@@ -116,6 +106,12 @@
         .select2-search__field{
             border: 1px solid #c2cad8;
         }
+        span.select2-selection.select2-selection--single {
+            outline: none;
+        }
+        .select2-container{
+            padding-top: 1px;
+        }
         .select2 .select2-container--default,
         .select2 .select2-selection--single,
         .select2 .select2-selection__rendered{
@@ -130,7 +126,7 @@
             border: none;
         }
         .select2-results{
-            height: 200px;
+            height: 160px;
             overflow: auto;
         }
         .select2-results__option{
@@ -165,37 +161,47 @@
             background-color: #fff;
         }
         .btn-outline.brown:focus{
-          background-color: #6C5648;
-          color: #fff;
+          animation: btn-click 0.5s;
+        }
+        @keyframes btn-click {
+          0% {
+            background-color: #fff;
+            color: #6C5648;
+          }
+          50% {
+            background-color: #6C5648;
+            color: #fff;
+          }
+          100% {
+            background-color: #fff;
+            color: #6C5648;
+          }
         }
 
-        .datepicker table td, .datepicker table th, .datetimepicker table td, .datetimepicker table th{
-            font-family: "Seravek", sans-serif !important;
-        }
-        .datepicker .active {
-            background-color: #6C5648 !important;
-        }
-        .datepicker .active:hover{
-            background-color: #907462 !important;
+        .birthday-wrapper input.form-control{
+          height: 36px;
+          padding-top: 8px;
+          padding-bottom: 8px;
+          border-bottom-color: #c2cad8;
+          color: #000 !important;
+          font-size: 15px;
         }
     </style>
 @stop
 
 @section('content')
     <div class="col-md-4 col-md-offset-4" style="position: unset;">
-
-        @if(Session::has('errors'))
-          <div class="alert" role="alert" style="margin-top:20px">
-           @foreach(Session::get('errors') as $e)
-            {{$e}} <br/>
-           @endforeach
-         </div>
-         <?php Session::forget('errors'); ?>
-        @endif
-        
         <div class="text-brown" style="margin-top: 20px; margin-bottom: 20px; text-align: justify;">
             Silakan lengkapi data di bawah ini dan dapatkan Kopi Points
         </div>
+
+        @if(isset($errors))
+          <div class="alert alert-danger text-red" role="alert" style="margin-top:20px; margin-bottom: 0px;">
+           @foreach($errors as $e)
+            <p>{{ $e }}</p>
+           @endforeach
+         </div>
+        @endif
 
         @if($user != null)
             @if($user['birthday'] == null && $user['gender'] == null && $user['id_city'] == null)
@@ -215,14 +221,24 @@
 
                     <div class="form-group form-md-line-input birthday">
                         <label>Tanggal Lahir</label>
-                        <input type="text" class="form-control datepicker" name="birthday" value="{{ old('birthday') }}" required readonly>
-                        <img class="birthday-img" src="{{ asset('img/webview/calendar-o.png') }}" alt="">
+
+                        <div class="birthday-wrapper row">
+                            <div class="form-md-line-input date-select col-xs-3">
+                              <input id="date-input" class="form-control text-center" type="tel" name="date" maxlength="2" placeholder="Tanggal">
+                            </div>
+                            <div class="form-md-line-input col-xs-3">
+                              <input id="month-input" class="form-control text-center" type="tel" name="month" maxlength="2" placeholder="Bulan">
+                            </div>
+                            <div class="form-md-line-input col-xs-4">
+                              <input id="year-input" class="form-control text-center" type="tel" name="year" maxlength="4" placeholder="Tahun">
+                            </div>
+                        </div>
                         <div id="error-birthday" class="text-red text-error"></div>
                     </div>
 
                     <div class="form-group form-md-line-input city">
-                        <label>Kota</label>
-                        <select class="form-control select2 id_city" placeholder="Select City" name="id_city" required style="width: 100%;">
+                        <label>Kota Domisili</label>
+                        <select id="id_city" class="form-control select2 id_city" placeholder="Select City" name="id_city" required style="width: 100%;">
                             @foreach ($cities as $city)152
                                 <option value="{{$city['id_city']}}" @if(old('id_city')==$city['id_city']) selected @elseif($city['id_city']=="152") selected @endif>{{ $city['city_type']. " " .$city['city_name'] }}</option>
                             @endforeach
@@ -263,42 +279,18 @@
 @stop
 
 @section('page-script')
-    <!-- BEGIN CORE PLUGINS -->
     <script src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/webview/scripts/select2-custom.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <!-- END CORE PLUGINS -->
-    <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="{{ url('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
     
-    <!-- END THEME GLOBAL SCRIPTS -->
-    <!-- BEGIN THEME LAYOUT SCRIPTS -->
-    {{-- <script src="{{ url('assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script> --}}
-    <!-- END THEME LAYOUT SCRIPTS -->
     <script>
-        /* set default date */
-        var date = new Date();
-        var year = date.getFullYear();
-        var default_year = year - 17;
-        var month = date.getMonth();
-        var day = date.getDate();
-        
         $(document).ready(function() {
-          $('.datepicker').datepicker({
-              'format' : 'd-M-yyyy',
-              'autoclose' : true,
-              'defaultViewDate' : {
-                'year' : default_year,
-                'month': month,
-                'day': day
-              }
-          });
-          // $('.select2').select2();
+          // force select2 to open in below
           $('.select2').select2({
+            positionDropdown: true,
             dropdownParent: $('#city-dropdown')
-          }).on('select2:open', function() {
-              
           });
 
           // change submit button's position from absolute to relative
@@ -313,7 +305,7 @@
         });
 
         /* check screen when keyboard show */
-        $('body').on('focus', '.select2-search__field', function() {
+        $('body').on('focus', 'input, .select2-search__field', function() {
           var body = $("body").height();
           body = body + 170;
           var win = $(window).height();
@@ -329,40 +321,182 @@
         });
 
         /* check screen when keyboard hide */
-        $('body').on('blur', '.select2-search__field', function() {
+        $('body').on('blur', 'input, .select2-search__field', function() {
           var body = $("body").height();
           body = body + 170;
           var win = $(window).height();
 
-          // change submit button's position from absolute to relative
+          // change submit button's position from relative to absolute
           if (body < win) {
               $(".button-wrapper").attr('style', '');
               $(".form-actions").css({'margin-top': '70px'});
           }
         });
 
+        /* check last date if month change */
+        $('#month-input').on('change, keyup', function (e) {
+          var month = $(this).val();
+          var year = $('#year-input').val();
+          if (year == "") {
+            var today = new Date();
+            var year = today.getFullYear();
+          }
+          var d = new Date(year, month, 0);
+          var last_day = d.getDate();
+
+          var date = $('#date-input').val();
+          // reset selected date
+          if (date > last_day) {
+            date = 1;
+            $('#date-input').val(date);
+          }
+        });
+        // check february last day
+        $('#year-input').on('change, keyup', function(e) {
+          var year = $(this).val();
+          var month = $('#month-input').val();
+          if (month == 2) {
+            var d = new Date(year, month, 0);
+            var last_day = d.getDate();
+            
+            var date = $('#date-input').val();
+            // reset selected date
+            if (date > last_day) {
+              date = 1;
+              $('#date-input').val(date);
+            }
+          }
+        });
+
+        // validate date
+        var date_input = document.getElementById('date-input');
+        date_input.addEventListener('keydown', validateDate);
+        date_input.addEventListener('keyup', validateDateRange);
+        // validate month
+        var month_input = document.getElementById('month-input');
+        month_input.addEventListener('keydown', validateMonth);
+        month_input.addEventListener('keyup', validateMonthRange);
+        // validate year
+        var year_input = document.getElementById('year-input');
+        year_input.addEventListener('keydown', validateYear);
+
+        function validateDate(e) {
+          var date = date_input.value;
+          var keycode = (typeof e.which == "number") ? e.which : e.keyCode;
+          // max 2 digit
+          // except backspace, delete, tab
+          if (keycode != 8 && keycode != 46 && keycode != 9) {
+            if (date.length == 2) {
+              e.preventDefault();
+            }
+          }
+          // accept only numeric in date
+          if (keycode != 0 && keycode != 8 && keycode != 9 && (keycode < 48 || keycode > 57)) {
+              e.preventDefault();
+              if (keycode == 13) {
+                // on enter, focus on month input
+                month_input.focus();
+              }
+          }
+        }
+        // check date range
+        function validateDateRange(e) {
+          var date = date_input.value;
+          var month = month_input.value;
+          var year = year_input.value;
+          if (year == "") {
+            var today = new Date();
+            var year = today.getFullYear();
+          }
+          var d = new Date(year, month, 0);
+          var last_day = d.getDate();
+          if (date == 0) {
+            date_input.value = "";
+          }
+          else if (date > last_day) {
+            date = date.slice(0, 1);
+            date_input.value = date;
+          }
+        }
+
+        function validateMonth(e) {
+          var month = month_input.value;
+          var keycode = (typeof e.which == "number") ? e.which : e.keyCode;
+          // max 4 digit
+          // except backspace, delete, tab
+          if (keycode != 8 && keycode != 46 && keycode != 9) {
+            if (month.length == 2) {
+              e.preventDefault();
+            }
+          }
+          // accept only numeric in month
+          if (keycode != 0 && keycode != 8 && keycode != 9 && (keycode < 48 || keycode > 57)){
+            e.preventDefault();
+            if (keycode == 13) {
+              // on enter, focus on month input
+              year_input.focus();
+            }
+          }
+        }
+        // check month range
+        function validateMonthRange(e) {
+          var month = month_input.value;
+          if (month == 0) {
+            month_input.value = "";
+          }
+          else if (month > 12) {
+            month = month.slice(0, 1);
+            month_input.value = month;
+          }
+        }
+        
+        function validateYear(e) {
+          var year = year_input.value;
+          var keycode = (typeof e.which == "number") ? e.which : e.keyCode;
+          // max 4 digit
+          // except backspace, delete, tab
+          if (keycode != 8 && keycode != 46 && keycode != 9) {
+            if (year.length == 4) {
+              e.preventDefault();
+            }
+          }
+          // accept only numeric in year
+          if (keycode != 0 && keycode != 8 && keycode != 9 && (keycode < 48 || keycode > 57)) {
+            e.preventDefault();
+            if (keycode == 13) {
+              // on enter, remove cursor from field
+              year_input.blur();
+            }
+          }
+        }
+
         $('form').submit(function(e) {
           var gender = $('.gender-select').val();
-          var birthday = $('.birthday input').val();
+          var birthday_d = $('#date-input').val();
+          var birthday_m = $('#month-input').val();
+          var birthday_y = $('#year-input').val();
           var id_city = $('.id_city').val();
 
-          if (gender=="" || birthday=="" || id_city=="" ) {
+          if (gender=="" || birthday_d=="" || birthday_m=="" || birthday_y=="" || id_city=="" ) {
             e.preventDefault();
-            if (birthday=="") {
-              $('.birthday input').css('border-bottom-color', '#e64343');
+            if (birthday_d=="" || birthday_m=="" || birthday_y=="") {
               $('#error-birthday').text('Tanggal Lahir tidak boleh kosong')
             }
             if (id_city=="") {
-              $('.select2 .select2-selection__rendered').css('border-bottom-color', '#e64343');
               $('#error-city').text('Kota tidak boleh kosong')
             }
+          }
+
+          if (birthday_y.length > 4) {
+            e.preventDefault();
+            $('#error-birthday').text('Tahun maksimal 4 digit')
           }
         });
         
     </script>
 
     <script>
-        /* custom gender select */
+        /* custom select */
         var x, i, j, selElmnt, a, b, c;
         /*look for any elements with the class "select-wrapper":*/
         x = document.getElementsByClassName("select-wrapper");
@@ -414,7 +548,6 @@
             });
         }
 
-
         function closeAllSelect(elmnt) {
           /*a function that will close all select boxes in the document,
           except the current select box:*/
@@ -434,6 +567,7 @@
             }
           }
         }
+
         /*if the user clicks anywhere outside the select box,
         then close all select boxes:*/
         document.addEventListener("click", closeAllSelect);

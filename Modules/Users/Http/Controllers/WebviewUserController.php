@@ -29,7 +29,6 @@ class WebviewUserController extends Controller
 
             // get only some data
             if ($user) {
-                $user_data['phone']    = $user['phone'];
                 $user_data['gender']   = $user['gender'];
                 $user_data['birthday'] = $user['birthday'];
                 $user_data['id_city']  = $user['id_city'];
@@ -46,26 +45,49 @@ class WebviewUserController extends Controller
         $post = $request->except('_token');
         $bearer = $post['bearer'];
         unset($post['bearer']);
-
         // manual validation
-        if ($post['gender'] == "" || $post['birthday'] == "" || $post['id_city'] == "") {
-            return back()->withInput()->withErrors(['Save data fail']);
+        if ($post['gender'] == "" || $post['date'] == "" || $post['month'] == "" || $post['year'] == "" || $post['id_city'] == "") {
+            // manually redirect back
+            $data['errors'] = ['Submit data gagal.', 'Silakan ulangi lagi.'];
+
+            $data['bearer'] = $bearer;
+            $user_data['gender']   = "";
+            $user_data['birthday'] = "";
+            $user_data['id_city']  = "";
+            $data['user'] = $user_data;
+
+            $data['cities'] = parent::getData(MyHelper::get('city/list'));
+            
+            return view('users::webview_complete_profile', $data);
         }
         
-        // convert date format
-        if (isset($post['birthday'])) {
-            $post['birthday'] = date('Y-m-d', strtotime($post['birthday']));
-        }
-
+        // date format
+        $post['birthday'] = $post['year'] ."-". $post['month'] ."-". $post['date'];
+        $post['birthday'] = date('Y-m-d', strtotime($post['birthday']));
+        unset($post['date']);
+        unset($post['month']);
+        unset($post['year']);
+        
         $result = MyHelper::postWithBearer('users/complete-profile', $post, $bearer);
 
         if (isset($result['status']) && $result['status']=="success") {
-            $data['content'] = $result['result'];
+            // $data['content'] = $result['result'];
             // return view('users::webview_complete_profile_success', $data);
             return redirect('webview/complete-profile/success#true');
         }
         else{
-            return back()->withInput()->withErrors(['Save data fail']);
+            // manually redirect back
+            $data['errors'] = ['Submit data gagal.', 'Silakan ulangi lagi.'];
+
+            $data['bearer'] = $bearer;
+            $user_data['gender']   = "";
+            $user_data['birthday'] = "";
+            $user_data['id_city']  = "";
+            $data['user'] = $user_data;
+
+            $data['cities'] = parent::getData(MyHelper::get('city/list'));
+            
+            return view('users::webview_complete_profile', $data);
         }
     }
 

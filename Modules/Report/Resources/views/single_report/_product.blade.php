@@ -185,7 +185,7 @@
                             <td class="col-date">{{ $product['date'] }}</td>
                             <td>{{ $product['product']['product_name'] }}</td>
                             <td>{{ $product['total_rec'] }}</td>
-                            <td>{{ $product['total_qty'] }}</td>
+                            <td>{{ number_format($product['total_qty'] , 0, '', ',') }}</td>
                             <td>{{ $product['total_nominal'] }}</td>
                             <td>{{ $product['cust_male'] }}</td>
                             <td>{{ $product['cust_female'] }}</td>
