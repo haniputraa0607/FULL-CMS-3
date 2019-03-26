@@ -15,5 +15,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'voucher'
 Route::group(['prefix' => 'webview', 'namespace' => 'Modules\Voucher\Http\Controllers'], function()
 {
     Route::any('/voucher/{id_deals_user}', 'WebviewVoucherController@voucherDetail');
+    Route::post('/voucher/invalidate', 'WebviewVoucherController@voucherInvalidate');
     Route::any('/voucher/used/{id_deals_user}', 'WebviewVoucherController@voucherUsed');
 });
