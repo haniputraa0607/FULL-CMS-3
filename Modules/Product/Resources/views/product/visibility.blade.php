@@ -29,6 +29,7 @@
 					idVisibility.splice(index, 1);
 				}
 			}
+            console.log(idVisibility)
 		}
 
         // action for checkbox all
@@ -179,6 +180,7 @@
                             @if (!empty($product))
                             <input type="hidden" name="visibility" value="{{$visibility}}">
 							<input type="hidden" name="key" value="{{$key}}">
+							<input type="hidden" name="page" value="{{$page}}">
 							<div class="form-group">
 								<label class="col-md-5 control-label" style="padding:0">Select All Product in All Outlet</label>
 								<div class="col-md-1">

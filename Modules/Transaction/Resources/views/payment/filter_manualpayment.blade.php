@@ -114,6 +114,7 @@
 				<div data-repeater-list="conditions">
 					@if (!empty($conditions))
 						@foreach ($conditions as $key => $con)
+						@if(isset($con['subject']))
 							<div data-repeater-item class="mt-repeater-item mt-overflow">
 								<div class="mt-repeater-cell">
 									<div class="col-md-12">
@@ -170,8 +171,7 @@
 									</div>
 								</div>
 							</div>
-						@endforeach
-					@else
+						@else
 						<div data-repeater-item class="mt-repeater-item mt-overflow">
 							<div class="mt-repeater-cell">
 								<div class="col-md-12">
@@ -181,7 +181,8 @@
 										</a>
 									</div>
 									<div class="col-md-4">
-										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%" required>
+										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
+											<option value="" disabled selected></option>
 											<option value="receipt">Receipt Number</option>
 											<option value="payment_nominal">Nominal Payment</option>
 											<option value="account_name">Account Name</option>
@@ -199,13 +200,56 @@
 										</select>
 									</div>
 									<div class="col-md-3" name="divoperator">
-									<select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%" required>
+									<select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%" >
 										<option value="=">=</option>
 										<option value="like">Like</option>
 									</select>
 									</div>
 									<div class="col-md-4">
-									<input type="text" placeholder="Keyword" class="form-control" name="parameter" required />
+									<input type="text" placeholder="Keyword" class="form-control" name="parameter" />
+									</div>
+									
+								</div>
+							</div>
+						</div>
+						@endif
+						@endforeach
+					@else
+						<div data-repeater-item class="mt-repeater-item mt-overflow">
+							<div class="mt-repeater-cell">
+								<div class="col-md-12">
+									<div class="col-md-1">
+										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
+											<i class="fa fa-close"></i>
+										</a>
+									</div>
+									<div class="col-md-4">
+										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
+											<option value="" disabled selected></option>
+											<option value="receipt">Receipt Number</option>
+											<option value="payment_nominal">Nominal Payment</option>
+											<option value="account_name">Account Name</option>
+											<option value="account_number">Account Number</option>
+											<option value="payment_method">Payment Method</option>
+											<option value="bank">Payment Bank</option>
+                                            <option value="confirm_by">Confirm By</option>
+                                            <option value="confirmed_at">Accept Date</option>
+                                            <option value="cancelled_at">Decline Date</option>
+											<option value="name">Customer Name</option>
+											<option value="phone">Customer Phone</option>
+											<option value="email">Customer Email</option>
+											<option value="gender">Customer Gender</option>
+											<option value="grand_total">Grand Total</option>
+										</select>
+									</div>
+									<div class="col-md-3" name="divoperator">
+									<select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%" >
+										<option value="=">=</option>
+										<option value="like">Like</option>
+									</select>
+									</div>
+									<div class="col-md-4">
+									<input type="text" placeholder="Keyword" class="form-control" name="parameter" />
 									</div>
 									
 								</div>

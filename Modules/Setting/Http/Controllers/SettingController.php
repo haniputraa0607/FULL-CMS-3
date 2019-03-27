@@ -966,6 +966,9 @@ class SettingController extends Controller
         ];
 
         if(!empty($post)){
+            if(isset($post['version_image'])){
+                $post['version_image']   = MyHelper::encodeImage($post['version_image']);
+            }
             $save = MyHelper::post('setting/version/update', $post);
             if (isset($save['status']) && $save['status'] == "success") {
                 return redirect('setting/version')->withSuccess(['Version Setting has been updated.']);

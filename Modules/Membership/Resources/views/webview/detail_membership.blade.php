@@ -10,10 +10,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
     
+   
     <!-- SLICK -->
-    <link rel="stylesheet" type="text/css" href="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/slick-1.8.1/slick/slick.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/slick-1.8.1/slick/slick-theme.css')}}">
-
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
+    
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
@@ -41,7 +43,7 @@
             font-family: 'Open Sans', sans-serif;
         }
 
-        .slick-center,  .slick-center > div{
+        .slick-current,  .slick-current > div{
             width: 66.9px !important;
             height: 66.9px !important;
             margin-top: 0 !important;
@@ -59,15 +61,15 @@
             height: 100%;
         }
 
-        .slick-center > div > .kotak-status,
-        .slick-center > div > .kotak-lock {
+        .slick-current.kotak-status,
+        .slick-current.kotak-lock {
             margin-top: 3px;
             margin-bottom: 7px;
             padding: 12px;
             transition: all 0.2s ease 0s;
         }
 
-        .slick-center > div > .kotak-status > .img-status{
+        .slick-current > .img-status{
             width: 42.2px;
         }
 
@@ -89,7 +91,6 @@
         }
 
         .kotak-lock {
-            height: 100%;
             border-radius: 10px;
             margin-right: 10px;
             padding: 15.95px;
@@ -101,10 +102,10 @@
             width: 18.3px;
         }
 
-        .slick-center > div > .kotak-lock > .img-lock{
+        .slick-current > .img-lock{
             width: 30px;
         }
-        .slick-center > div > .kotak-lock {
+        .slick-current.kotak-lock {
             background-size: 42.2px 45.6px, cover !important;
             padding: 18px;
         }
@@ -582,9 +583,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
-
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/slick-1.8.1/slick/slick.js')}}" type="text/javascript" charset="utf-8"></script>
-
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
+    
     <script>
         $(document).ready(function(){
 

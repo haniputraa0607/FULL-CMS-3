@@ -195,10 +195,10 @@
                 
                     @php
                         if (!empty($val['outlets'])) {
-                            $outlets = array_pluck($val['outlets'],'id_outlet');
+                            $outletselected = array_pluck($val['outlets'],'id_outlet');
                         }
                         else {
-                            $outlets = [];
+                            $outletselected = [];
                         }
                     @endphp
 
@@ -213,20 +213,20 @@
                         <div class="col-md-9">
                             <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple>
                                 <optgroup label="Outlet List">
-                                    @if (!empty($outlet))
+                                    @if (!empty($outlets))
                                         @php
-                                            $jmlOutlet = count($outlet);
-                                            $jmlOutletSelected = count($outlets);
+                                            $jmlOutlet = count($outlets);
+                                            $jmlOutletSelected = count($outletselected);
                                         @endphp
 
                                         @if ($jmlOutlet == $jmlOutletSelected)
                                             <option value="all" selected>All Outlets</option>
-                                            @foreach($outlet as $suw)
+                                            @foreach($outlets as $suw)
                                                 <option value="{{ $suw['id_outlet'] }}" >{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
                                             @endforeach
                                         @else 
-                                            @foreach($outlet as $suw)
-                                                <option value="{{ $suw['id_outlet'] }}" @if (!empty($outlet)) @if (in_array($suw['id_outlet'], $outlets)) selected @endif  @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
+                                            @foreach($outlets as $suw)
+                                                <option value="{{ $suw['id_outlet'] }}" @if (!empty($outletselected)) @if (in_array($suw['id_outlet'], $outletselected)) selected @endif  @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
                                             @endforeach
                                         @endif
                                         

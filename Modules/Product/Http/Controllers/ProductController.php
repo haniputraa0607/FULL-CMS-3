@@ -674,7 +674,20 @@ class ProductController extends Controller
             Session::forget('idVisibility');
             Session::forget('idVisibility_allOutlet');
             Session::forget('idVisibility_allProduct');
-            return parent::redirect($save, 'Product visibility has been updated.'); 
+            if (isset($save['status']) && $save['status'] == "success") {
+                return parent::redirect($save, 'Product visibility has been updated.', 'product/'.strtolower($visibility).'/'.$post['key']);
+            }else {
+                   if (isset($save['errors'])) {
+                       return back()->withErrors($save['errors'])->withInput();
+                   }
+   
+                   if (isset($save['status']) && $save['status'] == "fail") {
+                       return back()->withErrors($save['messages'])->withInput();
+                   }
+                   
+                   return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+            }
+           
         }
 
         $outlet = MyHelper::get('outlet/list');

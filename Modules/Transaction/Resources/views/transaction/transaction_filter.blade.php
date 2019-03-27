@@ -137,6 +137,7 @@
 				<div data-repeater-list="conditions">
 					@if (!empty($conditions))
 						@foreach ($conditions as $key => $con)
+							@if(isset($con['subject']))
 							<div data-repeater-item class="mt-repeater-item mt-overflow">
 								<div class="mt-repeater-cell">
 									<div class="col-md-12">
@@ -221,6 +222,47 @@
 									</div>
 								</div>
 							</div>
+							@else
+							<div data-repeater-item class="mt-repeater-item mt-overflow">
+							<div class="mt-repeater-cell">
+								<div class="col-md-12">
+									<div class="col-md-1">
+										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
+											<i class="fa fa-close"></i>
+										</a>
+									</div>
+									<div class="col-md-4">
+										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
+											<option value="" selected disabled>Search Subject</option>
+											<option value="receipt">Receipt Number</option>
+											<option value="name">Customer Name</option>
+											<option value="phone">Customer Phone</option>
+											<option value="email">Customer Email</option>
+											<option value="gender">Customer Gender</option>
+											<option value="product_name">Product Name</option>
+											<option value="product_code">Product Code</option>
+											<option value="product_category">Product Category</option>
+											<option value="product_weight">Product Weight</option>
+											<option value="product_price">Product Price</option>
+											<option value="product_tax">Product Tax</option>
+											<option value="grand_total">Grand Total</option>
+											<option value="status">Transaction Status</option>
+											<option value="courier">Courier</option>
+										</select>
+									</div>
+									<div class="col-md-4">
+									<select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" onChange="changeSubject(this.name)" style="width:100%">
+										<option value="=" selected>=</option>ororororor
+										<option value="like">Like</option>
+									</select>
+									</div>
+									<div class="col-md-3">
+									<input type="text" placeholder="Keyword" class="form-control" name="parameter" />
+									</div>
+								</div>
+							</div>
+						</div>
+							@endif
 						@endforeach
 					@else
 						<div data-repeater-item class="mt-repeater-item mt-overflow">
