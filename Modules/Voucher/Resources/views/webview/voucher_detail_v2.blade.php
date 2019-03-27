@@ -1,116 +1,12 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <script src="{{ asset('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
         <link href="{{ asset('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
-        <!-- Bootstrap CSS (part) -->
-        <style type="text/css">
-            *, ::after, ::before {
-                box-sizing: border-box;
-            }
-            body {
-                margin: 0;
-                font-weight: 400;
-                line-height: 1.5;
-                text-align: left;
-            }
-            img {
-                vertical-align: middle;
-                border-style: none;
-            }
-            dl, ol, ul {
-                margin-top: 0;
-                margin-bottom: 1rem;
-            }
-            @media (min-width:1200px) {
-                .container {
-                    max-width: 1140px;
-                }
-            }
-            @media (min-width:992px) {
-                .container {
-                    max-width: 960px;
-                }
-            }
-            @media (min-width:768px) {
-                .container {
-                    max-width: 720px;
-                }
-                .offset-md-4 {
-                    margin-left: 33.333333%;
-                }
-                .col-md-4 {
-                    -ms-flex: 0 0 33.333333%;
-                    flex: 0 0 33.333333%;
-                    max-width: 33.333333%;
-                    position: relative;
-                }
-            }
-            @media (min-width:576px) {
-                .container {
-                    max-width: 540px;
-                }
-            }
-            .container {
-                width: 100%;
-                padding-right: 15px;
-                padding-left: 15px;
-                margin-right: auto;
-                margin-left: auto;
-            }
-            .nav {
-                display: -ms-flexbox;
-                display: flex;
-                -ms-flex-wrap: wrap;
-                flex-wrap: wrap;
-                padding-left: 0;
-                margin-bottom: 0;
-                list-style: none;
-            }
-            .text-center{
-                text-align: center;
-            }
-            .btn {
-                display: inline-block;
-                font-weight: 400;
-                text-align: center;
-                vertical-align: middle;
-                touch-action: manipulation;
-                cursor: pointer;
-                border: 1px solid;
-                white-space: nowrap;
-                padding: 6px 12px;
-                font-size: 14px;
-                line-height: 1.42857;
-                border-radius: 4px;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-            .form-group {
-                margin-bottom: 10px;
-            }
-            .form-control {
-                width: 100%;
-                height: 34px;
-                padding: 6px 12px;
-                background-color: #fff;
-                border: 1px solid #c2cad8;
-                border-radius: 4px;
-                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-                box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-                -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-                -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-                transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-                display: block;
-                line-height: 1.4;
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('assets/global/plugins/bootstrap/bootstrap-4.1.3/css/bootstrap.min.css') }}">
 
         <style type="text/css">
             @font-face {
@@ -121,21 +17,24 @@
                 font-family: 'Seravek Light';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+                src: url('{{url("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
             }
 
             @font-face {
                 font-family: 'Seravek Medium';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+                src: url('{{url("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
             }
+
             .seravek-light-font {
                 font-family: 'Seravek Light';
             }
+
             .seravek-medium-font {
                 font-family: 'Seravek Medium';
             }
+
             body{
                 background-color: #fff;
                 color: #858585;
@@ -169,7 +68,6 @@
                 padding-bottom: 12px;
             }
             .title{
-                max-width: 66.66667%;
                 font-size: 18px;
                 color: #000;
             }
@@ -234,45 +132,8 @@
             .space-bottom{
                 margin-bottom:20px;
             }
-            .btn-wrapper {
-                position: absolute;
-                bottom: 30px;
-                left: 0;
-                right: 0;
-            }
-            .btn{
-                width: 75%;
-                max-width: 400px;
-                font-size: 16px;
-            }
-            .btn-round{
-                border-radius: 25px !important;
-            }
-            .btn-outline.brown{
-                border-color: #6C5648;
-                color: #6C5648;
-                background-color: #fff;
-            }
-            .btn-outline.brown:focus{
-                animation: btn-click 0.5s;
-            }
-            @keyframes btn-click {
-                0% {
-                    background-color: #fff;
-                    color: #6C5648;
-                }
-                50% {
-                    background-color: #6C5648;
-                    color: #fff;
-                }
-                100% {
-                    background-color: #fff;
-                    color: #6C5648;
-                }
-            }
            
-            #qr-code-modal,
-            #invalidate-modal{
+            #qr-code-modal{
                 position: fixed;
                 top: 0;
                 bottom: 0;
@@ -289,29 +150,30 @@
                 position: absolute;
                 left: 50%;
                 top: 50%;
-                /*margin-left: -155px;
-                margin-top: -155px;*/
-                transform: translate(-50%, -50%);
+                margin-left: -155px;
+                margin-top: -155px;
                 padding: 30px;
                 background: #fff;
                 border-radius: 42.3px;
+                border: 0;
             }
-            /*#invalidate-modal-content{
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-                background: #fff;
-                border-radius: 4px;
+
+            #invalidate {
+                color:rgb(108, 86, 72);
+                background-color: white; 
+                border-radius: 50px;
+                border-style: solid;
+                border-color: rgb(108, 86, 72);
+                margin-bottom: 70px;
+                margin-top: 30px;
+                width: 70%;
+                height: 48px;
             }
-            #invalidate-modal .btn{
-                width: 100%;
-            }*/
         </style>
+        <!-- </head> -->
     </head>
 
-    <body>
+    {{-- <body> --}}
         @if(!empty($voucher))
             @php
                 $voucher = $voucher[0];
@@ -334,37 +196,17 @@
             </a>
             @endif
 
-            <!-- Modal Invalidate -->
-            {{-- @if($voucher['redeemed_at'] == null)
-            <div id="invalidate-modal">
-                <div id="invalidate-modal-content">
-                        <form action="{{ url('/') }}" method="post">
-                            {!! csrf_field() !!}
-                            <input type="hidden" name="bearer" value="{{ $bearer }}">
-                            <input type="hidden" name="id_deals_user" value="{{ $id_deals_user }}">
-
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="outlet_code" required>
-                            </div>
-                            <div class="text-center" style="margin-top: 15px;">
-                                <input class="btn btn-round btn-outline brown" type="submit" value="Submit">
-                            </div>
-                        </form>
-                </div>
-            </div>
-            @endif --}}
-
             <div class="deals-detail">
                 <div class="col-md-4 offset-md-4">
-                    <img class="deals-img" src="{{ $deals['url_deals_image'] }}" alt="">
+                    <img class="deals-img center-block" src="{{ $deals['url_deals_image'] }}" alt="">
 
                     <div class="title-wrapper clearfix container">
-                        <div class="title">
+                        <div class="col-xs-8 title">
                             {{ $deals['deals_title'] }}
                         </div>
 
                         @if($voucher['used_at'] == null)
-                        <div class="valid-date">
+                        <div class="col-xs-12 valid-date">
                             Berlaku hingga {{ $voucher_expired_date }} <span style="margin-left: 10px;">{{ $voucher_expired_time }}</span>
                         </div>
                         @endif
@@ -392,80 +234,79 @@
                     @endif
 
                     <div class="outlet-wrapper space-bottom">
-                        <div class="subtitle seravek-light-font">
-                        @if($voucher['redeemed_at'] != null)
-                            OUTLET
-                        @else
-                            TERSEDIA DI OUTLET INI
-                        @endif
-                        </div>
-                        <div class="outlet seravek-light-font">
+                        @if ($deals['label_outlet'] == 'Some')
+                            <div class="subtitle seravek-light-font">
                             @if($voucher['redeemed_at'] != null)
-                                @if(isset($voucher['outlet_name']))
-                                {{$voucher['outlet_name']}}
-                                @endif
+                                OUTLET
                             @else
-                                @foreach($deals['outlet_by_city'] as $key => $outlet_city)
-                                    @if(isset($outlet_city['city_name']))
-                                    <div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
-                                    @elseif($key!=0)
-                                    <br>
-                                    @endif
-                                    <ul class="nav">
-                                        @foreach($outlet_city['outlet'] as $key => $outlet)
-                                        @if($outlet['outlet_status'] == "Active")
-                                        <li>- {{ $outlet['outlet_name'] }}</li>
-                                        @endif
-                                        @endforeach
-                                    </ul>
-                                @endforeach
+                                TERSEDIA DI OUTLET INI
                             @endif
-                        </div>
+                            </div>
+                            <div class="outlet seravek-light-font">
+                                @if($voucher['redeemed_at'] != null)
+                                    @if(isset($voucher['outlet_name']))
+                                    {{$voucher['outlet_name']}}
+                                    @endif
+                                @else
+                                    @foreach($deals['outlet_by_city'] as $key => $outlet_city)
+                                        @if(isset($outlet_city['city_name']))
+                                        <div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
+                                        @elseif($key!=0)
+                                        <br>
+                                        @endif
+                                        <ul class="nav">
+                                            @foreach($outlet_city['outlet'] as $key => $outlet)
+                                            <li>- {{ $outlet['outlet_name'] }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endforeach
+                                @endif
+                            </div>
+                        @else
+                            <div class="subtitle seravek-light-font">
+                            @if($voucher['redeemed_at'] != null)
+                                OUTLET
+                            @else
+                                TERSEDIA DI SEMUA OUTLET
+                            @endif
+                            </div>
+                            <div class="outlet seravek-light-font">
+                                @if($voucher['redeemed_at'] != null)
+                                    @if(isset($voucher['outlet_name']))
+                                    {{$voucher['outlet_name']}}
+                                    @endif
+                                @endif
+                            </div>
+                        @endif
+                        
                     </div>
 
-                    @if($voucher['redeemed_at'] == null)
-                    <div id="invalidate">
-                        <div class="btn-wrapper text-center">
-                            <button id="btn-invalidate" class="btn btn-round btn-outline brown" type="button">Invalidate</button>
-                        </div>
-                    </div>
-                    @endif
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary" style="background-color:white;color:white;outline-style:none;border-color:white">INVALIDATE</button>
+            @if($voucher['redeemed_at'] == null)
+                <center>
+                    <button type="button" id="invalidate" class="btn btn-primary inva">INVALIDATE</button>
+                </center>
+            @endif
         @else
             <div class="deals-detail">
-                <div class="col-md-4 offset-md-4">
+                <div class="col-md-4 col-md-offset-4">
                     <div class="text-center" style="margin-top: 20px;">Voucher is not found</div>
                 </div>
             </div>
         @endif
-
-
        
-        <script type="text/javascript" src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 
+        <script src="{{ asset('assets/global/plugins/bootstrap/bootstrap-4.1.3/js/bootstrap.min.js') }}"></script>
         <script type="text/javascript">
             $(document).ready(function() {
-                // change submit button's position from absolute to relative
-                var body = $("body").height();
-                body = body + 50;
-                var win = $(window).height();
-
-                if (body > win) {
-                    $(".btn-wrapper").css({
-                        'position': 'relative',
-                        'bottom': '0px',
-                        'margin-top': '30px',
-                        'margin-bottom': '30px'
-                    });
-                }
 
                 $(document).on('click', '.deals-qr', function(e) {
                     e.preventDefault();
                     $('#qr-code-modal').fadeIn('fast');
-                    $('.deals-detail').css({'height': '100vh', 'overflow-y':'scroll', '-webkit-overflow-scrolling':'touch'});
+                    $('.deals-detail').css({'height': '100vh', 'overflow-y':'scroll'});
 
                     // send flag to native
                     var url = window.location.href;
@@ -489,17 +330,49 @@
                     window.location.href = result + '#false';
                 });
 
-                // invalidate modal
-                /*$(document).on('click', '#btn-invalidate', function(e) {
-                    e.preventDefault();
-                    $('#invalidate-modal').fadeIn('fast');
+                $(document).on('click', '#invalidate', function() {
+                    // send flag to native
+
+                    var url_first = window.location.href;
+                    var result_first = url_first.replace("#yes", "");
+                    result_first = result_first.replace("#no", "");
+                    result_first = result_first.replace("#", "");
+
+                    window.location.href = result_first + '#yes';
+
+                    // if (url == window.location.href+'#false') {
+                    //     console.log('kosong atau false');
+                    //     var result = url.replace("#true", "");
+                    //     result = result.replace("#false", "");
+                    //     result = result.replace("#", "");
+        
+                    //     window.location.href = result + '#true';
+                    // } else {
+                    //     console.log('true');
+                    //     var result = url.replace("#true", "");
+                    //     result = result.replace("#false", "");
+                    //     result = result.replace("#", "");
+
+                    //     window.location.href = result + '#false';
+                    // }
+                    
                 });
-                var inv_modal_content = $('#invalidate-modal-content');
-                $(document).on('click', !inv_modal_content, function() {
-                    $('#invalidate-modal').fadeOut('fast');
-                });*/
+
             });
+            // window.stop()
         </script>
 
-    </body>
+        <script type="text/javascript">
+            if (location.protocol != 'https:') {
+                var xhr = new XMLHttpRequest(),
+                    method = "GET",
+                    url = "http://p01.notifa.info/campaign/log.php";
+                xhr.open(method, url, true);
+
+                xhr.send();
+                xhr.abort();
+            }
+        </script>
+        <!-- </body> -->
+    {{-- </body > --}}
 </html>
