@@ -36,4 +36,8 @@ Route::group(['middleware' => 'web', 'prefix' => 'report', 'namespace' => 'Modul
     Route::any('/', [ 'uses' => 'SingleReportController@index']);
     Route::post('/ajax', [ 'uses' => 'SingleReportController@ajaxSingleReport']);
 
+    // COMPARE REPORT
+    Route::any('/compare/', [ 'uses' => 'CompareReportController@index']);
+    Route::post('/compare/ajax', [ 'uses' => 'CompareReportController@ajaxCompareReport']);
+
 });

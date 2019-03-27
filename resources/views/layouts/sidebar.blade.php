@@ -1170,6 +1170,12 @@
 					<span class="title">Report</span>
 				</a>
 			</li>
+			<li class="nav-item {{($menu_active == 'report-compare') ? 'active' : ''}}">
+				<a href="{{url('report/compare')}}" class="nav-link nav-toggle">
+					<i class="icon-graph"></i>
+					<span class="title">Compare Report</span>
+				</a>
+			</li>
 			{{-- @if(MyHelper::hasAccess([125], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'report-global') ? 'active' : ''}}">
 				<a href="{{url('report/global')}}" class="nav-link nav-toggle">

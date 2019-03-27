@@ -170,8 +170,8 @@
                             <td>{{ $key+1 }}</td>
                             <td class="col-date">{{ $trx['date'] }}</td>
                             <td>{{ $trx['trx_count'] }}</td>
-                            <td>{{ $trx['trx_grand'] }}</td>
-                            <td>{{ $trx['trx_cashback_earned'] }}</td>
+                            <td>{{ number_format($trx['trx_grand'] , 0, '', ',') }}</td>
+                            <td>{{ number_format($trx['trx_cashback_earned'] , 0, '', ',') }}</td>
                             <td>{{ $trx['cust_male'] }}</td>
                             <td>{{ $trx['cust_female'] }}</td>
                             <td>{{ $trx['cust_android'] }}</td>

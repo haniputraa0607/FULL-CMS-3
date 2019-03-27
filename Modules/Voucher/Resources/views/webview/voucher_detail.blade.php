@@ -7,10 +7,112 @@
 
         <script src="{{ asset('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
         <link href="{{ asset('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="{{ asset('assets/global/plugins/bootstrap/bootstrap-4.1.3/css/bootstrap.min.css') }}">
-        {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> --}}
-
+        
+        <!-- Bootstrap CSS (part) -->
+        <style type="text/css">
+            *, ::after, ::before {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+                font-weight: 400;
+                line-height: 1.5;
+                text-align: left;
+            }
+            img {
+                vertical-align: middle;
+                border-style: none;
+            }
+            dl, ol, ul {
+                margin-top: 0;
+                margin-bottom: 1rem;
+            }
+            @media (min-width:1200px) {
+                .container {
+                    max-width: 1140px;
+                }
+            }
+            @media (min-width:992px) {
+                .container {
+                    max-width: 960px;
+                }
+            }
+            @media (min-width:768px) {
+                .container {
+                    max-width: 720px;
+                }
+                .offset-md-4 {
+                    margin-left: 33.333333%;
+                }
+                .col-md-4 {
+                    -ms-flex: 0 0 33.333333%;
+                    flex: 0 0 33.333333%;
+                    max-width: 33.333333%;
+                    position: relative;
+                }
+            }
+            @media (min-width:576px) {
+                .container {
+                    max-width: 540px;
+                }
+            }
+            .container {
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+            }
+            .nav {
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                padding-left: 0;
+                margin-bottom: 0;
+                list-style: none;
+            }
+            .text-center{
+                text-align: center;
+            }
+            .btn {
+                display: inline-block;
+                font-weight: 400;
+                text-align: center;
+                vertical-align: middle;
+                touch-action: manipulation;
+                cursor: pointer;
+                border: 1px solid;
+                white-space: nowrap;
+                padding: 6px 12px;
+                font-size: 14px;
+                line-height: 1.42857;
+                border-radius: 4px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            .form-group {
+                margin-bottom: 10px;
+            }
+            .form-control {
+                width: 100%;
+                height: 34px;
+                padding: 6px 12px;
+                background-color: #fff;
+                border: 1px solid #c2cad8;
+                border-radius: 4px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                display: block;
+                line-height: 1.4;
+            }
+        </style>
+        
         <style type="text/css">
             @font-face {
                 font-family: "Seravek";
@@ -135,16 +237,49 @@
             .space-bottom{
                 margin-bottom:20px;
             }
+            .btn-wrapper {
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
+            .btn{
+                width: 75%;
+                max-width: 400px;
+                font-size: 16px;
+            }
+            .btn-round{
+                border-radius: 25px !important;
+            }
+            .btn-outline.brown{
+                border-color: #6C5648;
+                color: #6C5648;
+                background-color: #fff;
+            }
+            .btn-outline.brown:focus{
+                outline: none;
+                animation: btn-click 0.5s;
+            }
+            @keyframes btn-click {
+                0% {
+                    background-color: #fff;
+                    color: #6C5648;
+                }
+                50% {
+                    background-color: #6C5648;
+                    color: #fff;
+                }
+                100% {
+                    background-color: #fff;
+                    color: #6C5648;
+                }
+            }
            
             #qr-code-modal{
                 position: fixed;
                 top: 0;
-                bottom: 0;
                 left: 0;
-                right: 0;
                 background: rgba(0,0,0, 0.5);
-                /*width: 100%;*/
-                /*height: 100vh;*/
+                width: 100%;
+                height: 100vh;
                 display: none;
                 z-index: 999;
                 overflow-y: auto;
@@ -153,8 +288,9 @@
                 position: absolute;
                 left: 50%;
                 top: 50%;
-                margin-left: -155px;
-                margin-top: -155px;
+                transform: translate(-50%, -50%);
+                /*margin-left: -155px;*/
+                /*margin-top: -155px;*/
                 padding: 30px;
                 background: #fff;
                 border-radius: 42.3px;
@@ -245,23 +381,29 @@
                                     @endif
                                     <ul class="nav">
                                         @foreach($outlet_city['outlet'] as $key => $outlet)
-                                        @if($outlet['outlet_status'] == "Active")
-                                        <li>- {{ $outlet['outlet_name'] }}</li>
-                                        @endif
+                                            @if($outlet['outlet_status'] == "Active")
+                                                <li>- {{ $outlet['outlet_name'] }}</li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                 @endforeach
                             @endif
                         </div>
                     </div>
-
+                    
+                    @if($voucher['redeemed_at'] == null)
+                    <div id="invalidate">
+                        <div class="btn-wrapper text-center">
+                            <button id="btn-invalidate" class="btn btn-round btn-outline brown" type="button">INVALIDATE</button>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary" style="background-color:white;color:white;outline-style:none;border-color:white">INVALIDATE</button>
         @else
             <div class="deals-detail">
-                <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-4 offset-md-4">
                     <div class="text-center" style="margin-top: 20px;">Voucher is not found</div>
                 </div>
             </div>
@@ -269,19 +411,31 @@
 
 
        
-        <script type="text/javascript" src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Bootstrap JS -->
-        {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> --}}
-        <script src="{{ asset('assets/global/plugins/bootstrap/bootstrap-4.1.3/js/bootstrap.min.js') }}"></script>
-        {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> --}}
         <script type="text/javascript">
             $(document).ready(function() {
+                // change submit button's position from absolute to relative
+                /*var body = $("body").height();
+                body = body + 50;
+                var win = $(window).height();
+
+                if (body > win) {
+                    $(".btn-wrapper").css({
+                        'position': 'absolute',
+                        'bottom': '30px',
+                        'margin-top': '0px',
+                        'margin-bottom': '0px',
+                        'left': '0',
+                        'right': '0',
+                    });
+                }*/
+                
                 $(document).on('click', '.deals-qr', function(e) {
                     e.preventDefault();
                     $('#qr-code-modal').fadeIn('fast');
-                    $('.deals-detail').css({'height': '100vh', 'overflow-y':'scroll'});
+                    // $('.deals-detail').css({'height': '100vh', 'overflow-y':'auto'});
+                    $('body').css({'height': '100%', 'overflow-y':'auto'});
 
                     // send flag to native
                     var url = window.location.href;
@@ -294,7 +448,8 @@
 
                 $(document).on('click', '#qr-code-modal', function() {
                     $('#qr-code-modal').fadeOut('fast');
-                    $('.deals-detail').attr('style', '');
+                    // $('.deals-detail').attr('style', '');
+                    $('body').attr('style', '');
 
                     // send flag to native
                     var url = window.location.href;
