@@ -99,7 +99,7 @@
                               	  @php
                               	  	$url = 'http://localhost/crmsys-api/public/'
                               	  @endphp
-                                  <img src="{{ env('AWS_URL').$list['manual_payment_logo'] }}" alt="">
+                                  <img src="{{ env('AWS_URL').'/'.$list['manual_payment_logo'] }}" alt="">
                               </div>
                               <div class="fileinput-preview fileinput-exists thumbnail"></div>
                               <div>

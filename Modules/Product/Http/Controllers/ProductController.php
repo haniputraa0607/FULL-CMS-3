@@ -830,7 +830,7 @@ class ProductController extends Controller
                 'submenu_active' => 'product-photo-default',
             ];
 
-            $data['photo'] = env('AWS_URL').'img/product/item/default.png?';
+            $data['photo'] = env('AWS_URL').'/img/product/item/default.png?';
 
             return view('product::product.photo-default', $data);
         }else{

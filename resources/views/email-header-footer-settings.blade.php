@@ -110,7 +110,7 @@
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail" style="width: 200px;">
 								@if(isset($settings['email_logo']))
-								  	<img src="{{ env('AWS_URL').$settings['email_logo'] }}" alt="Image Logo">
+								  	<img src="{{ env('AWS_URL').'/'.$settings['email_logo'] }}" alt="Image Logo">
 								@else
 									<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 								@endif
