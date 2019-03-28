@@ -1,24 +1,24 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
 @endsection
     
 @section('page-script')
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 language: {

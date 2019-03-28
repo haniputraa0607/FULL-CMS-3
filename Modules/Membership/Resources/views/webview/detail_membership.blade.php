@@ -6,29 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
+    <link href="{{Cdn::asset('kk-ass/public/css/slide.css') }}" rel="stylesheet">
     
    
     <!-- SLICK -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
     <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
     
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kk-ass/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kk-ass/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -583,7 +583,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
     
     <script>
         $(document).ready(function(){

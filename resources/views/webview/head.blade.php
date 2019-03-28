@@ -3,9 +3,9 @@
 	<meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
 
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
+    <link href="{{Cdn::asset('kk-ass/public/assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     
     <!-- another css plugin -->
 	@yield('page-style-plugin')

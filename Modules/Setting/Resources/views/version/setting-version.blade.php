@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
         function addTextReplace(param){
             var textvalue = $('#display_text').val();

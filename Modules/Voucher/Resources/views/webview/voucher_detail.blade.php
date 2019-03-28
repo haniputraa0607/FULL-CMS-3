@@ -122,14 +122,14 @@
                 font-family: 'Seravek Light';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+                src: url('{{Cdn::asset("kk-ass/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
             }
 
             @font-face {
                 font-family: 'Seravek Medium';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+                src: url('{{Cdn::asset("kk-ass/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
             }
 
             .seravek-light-font {

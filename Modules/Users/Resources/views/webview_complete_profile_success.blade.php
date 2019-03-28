@@ -6,7 +6,7 @@
 
 @section('page-style-plugin')
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
 @stop
 
 @section('content')

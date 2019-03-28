@@ -6,16 +6,16 @@
 
 @section('page-style-plugin')
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- END THEME GLOBAL STYLES -->
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" /><link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" /><link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
     <!-- END PAGE LEVEL STYLES -->
 @stop
 
@@ -202,19 +202,19 @@
 @section('page-script')
     <!--[if lt IE 9] -->
     <!-- BEGIN CORE PLUGINS -->
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
     <!-- END CORE PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
     
     <!-- END THEME GLOBAL SCRIPTS -->
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>
     <!-- END THEME LAYOUT SCRIPTS -->
     <script>
         $('.datepicker').datepicker({

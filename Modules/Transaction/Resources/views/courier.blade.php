@@ -1,19 +1,19 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/css/custom.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    {{-- <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{Cdn::asset('kk-ass/public/assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ url('js/courier.js') }}" type="text/javascript"></script>
 @endsection
 

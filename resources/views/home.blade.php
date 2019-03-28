@@ -46,9 +46,9 @@
 @endsection
 
 @section('page-script')
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/public/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 	<script src="{{url('/assets/pages/scripts/table-datatables-scroller.min.js')}}" type="text/javascript"></script>
 	<script>
 		$('.sample').DataTable({

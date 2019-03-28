@@ -1,11 +1,11 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
           $('.summernote').summernote({

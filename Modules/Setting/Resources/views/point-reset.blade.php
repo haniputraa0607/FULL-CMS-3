@@ -1,13 +1,13 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/form-repeater.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/public/assets/pages/scripts/form-repeater.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function(event) { 
             $('.datepicker').datepicker({ 
