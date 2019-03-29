@@ -202,7 +202,7 @@
 
                     <div class="title-wrapper clearfix container">
                         <div class="col-xs-8 title">
-                            {{ $deals['deals_title'] }}
+                            {{ $deals['deals_title'] }} {{ $deals['deals_second_title'] }}
                         </div>
 
                         @if($voucher['used_at'] == null)
