@@ -116,20 +116,20 @@
         <style type="text/css">
             @font-face {
                 font-family: "Seravek";
-                src: url('{{ url('/fonts/Seravek.ttf') }}');
+                src: url('{{ Cdn::asset("kk-ass/fonts/Seravek.ttf") }}');
             }
             @font-face {
                 font-family: 'Seravek Light';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+                src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
             }
 
             @font-face {
                 font-family: 'Seravek Medium';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+                src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
             }
 
             .seravek-light-font {
@@ -392,11 +392,11 @@
                     </div>
                     
                     @if($voucher['redeemed_at'] == null)
-                    <div id="invalidate">
-                        <div class="btn-wrapper text-center">
-                            <button id="btn-invalidate" class="btn btn-round btn-outline brown" type="button">INVALIDATE</button>
-                        </div>
-                    </div>
+                    <!--<div id="invalidate">-->
+                    <!--    <div class="btn-wrapper text-center">-->
+                    <!--        <button id="btn-invalidate" class="btn btn-round btn-outline brown" type="button">INVALIDATE</button>-->
+                    <!--    </div>-->
+                    <!--</div>-->
                     @endif
                 </div>
             </div>
@@ -411,7 +411,7 @@
 
 
        
-        <script type="text/javascript" src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ Cdn::asset('kk-ass/assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(document).ready(function() {

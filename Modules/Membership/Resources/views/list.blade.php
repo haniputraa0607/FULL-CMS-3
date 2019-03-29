@@ -6,53 +6,53 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 	
-	<link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/pages/scripts/components-color-pickers.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kopikenangan-view-asset/public/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-	 <script src="{{Cdn::asset('kopikenangan-view-asset/public/js/prices.js')}}"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-color-pickers.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	 <script src="{{Cdn::asset('kk-ass/js/prices.js')}}"></script>
 	<script>
 	function typeChange(varnya){
 		if(varnya == 'count'){
@@ -349,7 +349,7 @@
 						<select class="form-control" name="membership_type" onChange="typeChange(this.value)">
 							<!-- <option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
 							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option> -->
-							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By Kopi Point Received </option>
+							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By Kenangan Points Received </option>
 						</select>
 					</div>
 				</div>
@@ -467,7 +467,7 @@
 													<button class="btn blue" type="button" >IDR</button>
 												</span>
 												<span class="input-group-btn levelReqBalance" @if($value != 'balance') style="display:none;" @endif>
-													<button class="btn blue" type="button" >Kopi Points</button>
+													<button class="btn blue" type="button" >Kenangan Points</button>
 												</span>
 												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @endif placeholder="Level Requirement">
 												<span class="input-group-btn levelReqX" @if($value != 'count') style="display:none;" @endif>
@@ -490,7 +490,7 @@
 													<button class="btn blue" type="button" >IDR</button>
 												</span>
 												<span class="input-group-btn levelRetBalance" @if($value != 'balance') style="display:none;" @endif>
-													<button class="btn blue" type="button" >Kopi Points</button>
+													<button class="btn blue" type="button" >Kenangan Points</button>
 												</span>
 												<input class="form-control price" type="text" name="min_retain_value" @if($value == 'value') value="{{$membership['retain_min_total_value']}}" @elseif($value == 'count') value="{{$membership['retain_min_total_count']}}" @elseif($value == 'balance') value="{{$membership['retain_min_total_balance']}}" @endif placeholder="Minimum Retain Value">
 												<span class="input-group-btn levelRetX" @if($value != 'count') style="display:none;" @endif>
@@ -529,13 +529,13 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														Kopi Point Received
-														<i class="fa fa-question-circle tooltips" data-original-title="Persentase kopi point yang diterima dengan acuan basic kopi point setelah transaksi" data-container="body"></i>
+														Kenangan Points Received
+														<i class="fa fa-question-circle tooltips" data-original-title="Persentase Kenangan Points yang diterima dengan acuan basic Kenangan Points setelah transaksi" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="Kopi Point Received">
+														<input class="form-control price" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="Kenangan Points Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -545,8 +545,8 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														Kopi Point Maximum
-														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum kopi point yang akan didapat oleh customer" data-container="body"></i>
+														Kenangan Points Maximum
+														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum Kenangan Points yang akan didapat oleh customer" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
@@ -554,7 +554,7 @@
 														<span class="input-group-btn">
 															<button class="btn blue" type="button">IDR</button>
 														</span>
-														<input class="form-control price" type="text" name="cashback_maximum" @if(empty($membership['cashback_maximum'])) value="0" @else value="{{$membership['cashback_maximum']}}" @endif placeholder="Kopi Point Maximum">
+														<input class="form-control price" type="text" name="cashback_maximum" @if(empty($membership['cashback_maximum'])) value="0" @else value="{{$membership['cashback_maximum']}}" @endif placeholder="Kenangan Points Maximum">
 													</div>
 												</div>
 											</div>
@@ -603,7 +603,7 @@
 																		<input type="text" placeholder="Promo Name" class="form-control" name="promo_name" value="{{$promo_id['promo_name']}}" > </div>
 																	<div class="col-md-5">
 																		<label class="control-label">Promo ID</label>
-																		<input type="text" placeholder="Promo ID" class="form-control" name="promo_id"  value="{{$promo_id['promo_id']}}" required> </div>
+																		<input type="text" placeholder="Promo ID" class="form-control" name="promo_id"  value="{{$promo_id['promo_id']}}"> </div>
 																	<div class="col-md-1">
 																		<label class="control-label">&nbsp;</label>
 																		<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
@@ -619,7 +619,7 @@
 																	<input type="text" placeholder="Promo Name" class="form-control" name="promo_name"> </div>
 																<div class="col-md-5">
 																	<label class="control-label">Promo ID</label>
-																	<input type="text" placeholder="Promo ID" class="form-control" name="promo_id" required> </div>
+																	<input type="text" placeholder="Promo ID" class="form-control" name="promo_id"> </div>
 																<div class="col-md-1">
 																	<label class="control-label">&nbsp;</label>
 																	<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
@@ -782,13 +782,13 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														Kopi Point Received
-														<i class="fa fa-question-circle tooltips" data-original-title="Persentase kopi point yang diterima dengan acuan basic kopi point setelah transaksi" data-container="body"></i>
+														Kenangan Points Received
+														<i class="fa fa-question-circle tooltips" data-original-title="Persentase Kenangan Points yang diterima dengan acuan basic Kenangan Points setelah transaksi" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" value="0" placeholder="Kopi Point Received">
+														<input class="form-control price" type="text" name="benefit_cashback_multiplier" value="0" placeholder="Kenangan Points Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -798,8 +798,8 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														Kopi Point Maximum
-														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum kopi point yang akan didapat oleh customer" data-container="body"></i>
+														Kenangan Points Maximum
+														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum Kenangan Points yang akan didapat oleh customer" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
@@ -807,7 +807,7 @@
 														<span class="input-group-btn">
 															<button class="btn blue" type="button">IDR</button>
 														</span>
-														<input class="form-control price" type="text" name="cashback_maximum" value="0" placeholder="Kopi Point Maximum">
+														<input class="form-control price" type="text" name="cashback_maximum" value="0" placeholder="Kenangan Points Maximum">
 													</div>
 												</div>
 											</div>

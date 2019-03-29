@@ -123,7 +123,7 @@ return [
                 */
                 'buckets' => [
 
-                    'kopikenangan-view-asset' => '*',
+                    'kk-ass' => '*',
                     // examples:
                     //   'your-js-bucket-name-here'   =>  ['public/js'],
                     //   'your-css-bucket-name-here'  =>  ['public/css'],

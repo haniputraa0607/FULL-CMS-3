@@ -147,7 +147,7 @@
                             <th data-data='date' class="col-date"> Date </th>
                             <th data-data='trx_count'> Total (Qty) </th>
                             <th data-data='trx_grand'> Total (IDR) </th>
-                            <th data-data='trx_cashback_earned'> User Kopi Point </th>
+                            <th data-data='trx_cashback_earned'> User Kenangan Points </th>
                             <th data-data='cust_male'> Male Customer </th>
                             <th data-data='cust_female'> Female Customer </th>
                             <th data-data='cust_android'> Android </th>

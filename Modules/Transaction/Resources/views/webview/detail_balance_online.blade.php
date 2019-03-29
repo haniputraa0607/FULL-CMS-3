@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
+    <link href="{{Cdn::asset('kk-ass/css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
     	.kotak {
     		margin : 10px;
@@ -91,35 +91,35 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kk-ass/assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
     	.open-sans-font {
@@ -216,7 +216,7 @@
 	   			<div class="col-12"><hr></div>
 	   		</div>
 	   		<div class="row space-text">
-	   			<div class="col-6 text-13-3px text-black seravek-light-font margin-top5px">Kopi Points</div>
+	   			<div class="col-6 text-13-3px text-black seravek-light-font margin-top5px">Kenangan Points</div>
 	   			<div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">@if($data['balance'] > 0) + @endif {{ str_replace(',', '.', number_format($data['balance'])) }}</div>
 	   		</div>
 			@else
@@ -229,7 +229,7 @@
 	   			<div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">{{ str_replace(',', '.', number_format($data['detail']['transaction_grandtotal'])) }}</div>
 	   		</div>
 	   		<div class="row">
-	   			<div class="col-6 text-13-3px text-black seravek-light-font">Kopi Points</div>
+	   			<div class="col-6 text-13-3px text-black seravek-light-font">Kenangan Points</div>
 	   			<div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">@if($data['balance'] > 0) + @endif {{ str_replace(',', '.', number_format($data['balance'])) }}</div>
 				<div class="col-12"><hr></div>
 			</div>

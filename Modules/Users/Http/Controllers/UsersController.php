@@ -581,6 +581,40 @@ class UsersController extends Controller
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
 		// print_r($data);exit;
         return view('users::detail', $data);
+	}
+	
+	public function showLog($phone, Request $request)
+    {
+		$post = $request->except('_token');
+		// print_r($post);exit;
+		if(isset($post['password'])){
+			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password']));
+			/* print_r($checkpin);exit;
+			if($checkpin['status'] != "success")
+				return redirect('login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
+			else */
+				Session::put('secure','yes');
+		} 
+		
+		if(empty(Session::get('secure'))){
+			$data = [ 'title'             => 'User',
+					  'menu_active'       => 'user',
+					  'submenu_active'    => 'user-list',
+					  'phone'    		  => $phone
+					];
+			return view('users::password', $data);
+		}
+		
+		$getLog = MyHelper::post('users/log', ['phone' => $phone, 'skip' => 0, 'take' => 300]);
+		
+		$data = [ 'title'             => 'User',
+				  'menu_active'       => 'user',
+				  'submenu_active'    => 'user-list'
+				];
+		
+		if(isset($getLog['result'])) $data['log'] = $getLog['result'];
+
+        return view('users::detail_log', $data);
     }
 
     /**

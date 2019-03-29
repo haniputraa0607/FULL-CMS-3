@@ -4,7 +4,7 @@
 @endsection
     
 @section('page-script')
-<script src="{{Cdn::asset('kopikenangan-view-asset/public/js/prices.js')}}"></script>
+<script src="{{Cdn::asset('kk-ass/js/prices.js')}}"></script>
 <script>
     $(document).ready(function() {
         @if(isset($result['free_delivery_requirement_type']))
