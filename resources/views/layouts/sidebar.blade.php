@@ -177,7 +177,7 @@
 			<li class="nav-item {{($menu_active == 'balance-reset') ? 'active' : ''}}">
 				<a href="{{url('setting/balance_reset')}}" class="nav-link">
 					<i class="fa fa-refresh"></i>
-					<span class="title">Setting Kopi Point Reset</span>
+					<span class="title">Setting Kenangan Points Reset</span>
 				</a>
 			</li>
 			@endif
@@ -462,7 +462,7 @@
 				<li class="nav-item {{($menu_active == 'balance') ? 'active' : ''}}">
 					<a href="{{url('transaction/balance')}}" class="nav-link nav-toggle">
 						<i class="fa fa-clock-o"></i>
-						<span class="title">Kopi Point Log History</span>
+						<span class="title">Kenangan Points Log History</span>
 					</a>
 				</li>
 				@endif
@@ -504,7 +504,7 @@
 					@if(MyHelper::hasAccess([58,59,60,62], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'transaction-setting') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/cashback')}}" class="nav-link ">
-							<span class="title">Global Kopi Point Setting</span>
+							<span class="title">Global Kenangan Points Setting</span>
 						</a>
 					</li>
 					@endif

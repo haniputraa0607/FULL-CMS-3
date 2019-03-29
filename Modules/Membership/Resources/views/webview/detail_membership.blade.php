@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{Cdn::asset('kk-ass/public/css/slide.css') }}" rel="stylesheet">
+    <link href="{{Cdn::asset('kk-ass/css/slide.css') }}" rel="stylesheet">
     
    
     <!-- SLICK -->
@@ -21,14 +21,14 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -406,7 +406,7 @@
   @php 
     $text = "rupiah";
     if($data['user_membership']['membership_type'] == 'balance'){
-        $text = "kopi point";
+        $text = "Kenangan Points";
     }
   @endphp
 
@@ -476,7 +476,7 @@
                                                             -webkit-background-size: 31.7px 34.2px, cover;
                                                             background-size: 31.7px 34.2px, cover;
                                                             background-position: center;">
-                                <img class="img-responsive img-lock" src="{{ url('img/webview/lock.png') }}">
+                                <img class="img-responsive img-lock" src="{{ Cdn::asset('kk-ass/img/webview/lock.png') }}">
                             </div>
                             @php 
                                 $data['all_membership'][$key]['type'] = "Terkunci";
@@ -496,7 +496,7 @@
             <div class="row">
                 <div class="" id="progress-nominal">
                     <div class="text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" style="width:32px;">
-                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ url('img/webview/money.png') }}">
+                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ Cdn::asset('kk-ass/img/webview/money.png') }}">
                     </div>
                     <div class=" text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" id="status_nominal">
                         {{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}
@@ -504,7 +504,7 @@
                 </div>
                 <div class="col-12" id="progress-nominal-nopad" style="display:none">
                     <div class="text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" style="width:32px;">
-                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ url('img/webview/money.png') }}">
+                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ Cdn::asset('kk-ass/img/webview/money.png') }}">
                     </div>
                     <div class=" text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" id="status_nominal">
                         {{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}
@@ -544,7 +544,7 @@
                 @endif
                 <div class="col-12" id="status_detail">
                     <div class="text-15px space-top space-text seravek-font text-black display-inline" style="width:32px; @if($keyStatusNow == count($data['all_membership']) - 1 ) vertical-align:middle @else vertical-align:top @endif" id="img-cup">
-                        <img class="img-responsive" style="max-width: 16.4px;" src="{{ url('img/webview/cup.png') }}">
+                        <img class="img-responsive" style="max-width: 16.4px;" src="{{ Cdn::asset('kk-ass/img/webview/cup.png') }}">
                     </div>
                     <div class="text-15px space-top space-text seravek-font text-black display-inline" id="status_detail_text">
                         @if($keyStatusNow == count($data['all_membership']) - 1 )
@@ -566,7 +566,7 @@
                 </div>
                 <div class="col-12">
                     <div class="text-14px space-top space-bottom display-inline" style="width:32px; vertical-align:top; margin-left:6px">
-                        <img class="img-responsive" style="width: 23.3px;" src="{{ url('img/webview/cash.png') }}">
+                        <img class="img-responsive" style="width: 23.3px;" src="{{ Cdn::asset('kk-ass/img/webview/cash.png') }}">
                     </div>
                     <div class="text-16-7px space-top space-bottom seravek-light-font text-black display-inline" id="status_benefit">
                         Cashback sebanyak {{$data['all_membership'][$keyStatusNow]['benefit_cashback_multiplier']}}%

@@ -4,7 +4,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="{{url('/')}}">
-				<img src="{{Cdn::asset('kk-ass/public/images/logo_150_white.png?') }}" alt="logo" class="logo-default"  style="margin: 8px 0 0;"/> </a>
+				<img src="{{Cdn::asset('kk-ass/images/logo_150_white.png?') }}" alt="logo" class="logo-default"  style="margin: 8px 0 0;"/> </a>
 			<div class="menu-toggler sidebar-toggler">
 				<span></span>
 			</div>

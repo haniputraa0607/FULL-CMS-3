@@ -21,7 +21,7 @@ class SettingController extends Controller
         return view('setting::webview.faq', ['faq' => $faqList['result']]);
     }
 
-    public function aboutWebview($key)
+    public function aboutWebview($key, Request $request)
     {
         $bearer = $request->header('Authorization');
         if ($bearer == "") {
@@ -124,7 +124,7 @@ class SettingController extends Controller
         } elseif ($key == 'balance_reset') {
             $sub = 'balance-reset';
             $active = 'balance-reset';
-            $subTitle = 'Kopi Point Reset';
+            $subTitle = 'Kenangan Points Reset';
         }
             
         $data = [

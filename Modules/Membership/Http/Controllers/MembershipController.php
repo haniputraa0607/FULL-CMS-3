@@ -8,9 +8,6 @@ use Illuminate\Routing\Controller;
 use App\Lib\MyHelper;
 use Session;
 
-
-use Modules\Membership\Http\Requests\Create;
-
 class MembershipController extends Controller
 {
     /**
@@ -36,12 +33,17 @@ class MembershipController extends Controller
 				}
 			}
 			$action = MyHelper::post('membership/update', $post);
-			// dd($action);exit;
+// 			dd($action);exit;
 			if(isset($action['status']) && $action['status'] == 'success'){
 				session(['success' => ['Membership has been updated']]);
 				return redirect('membership');
 			} else{
-				return redirect('membership')->withErrors($action['messages']);
+			    if(isset($action['messages'])){
+    				return redirect('membership')->withErrors($action['messages']);
+			    }else{
+    				return redirect('membership')->withErrors(['Something went wrong.']);
+			        
+			    }
 			}
 		} else {
 			$action = MyHelper::post('membership/list', []);
@@ -57,7 +59,7 @@ class MembershipController extends Controller
     }
 
     
-    public function create(Create $request) {
+    public function create(Request $request) {
 		$post = $request->except('_token');
 		$data = [
                 'title'          => 'New Membership',
@@ -79,8 +81,7 @@ class MembershipController extends Controller
 		}
     }
 	
-	public function update(Create $request, $id_membership) {
-		dd($request);
+	public function update(Request $request, $id_membership) {
 		$post = $request->except('_token');
 		$data = [
                 'title'          => 'Update Membership',
@@ -104,7 +105,11 @@ class MembershipController extends Controller
 				return redirect('membership');
 			}
 			else {
-                return redirect('membership/update/'.$id_membership)->withErrors($save['messages']);
+			    if(isset($save['messages'])){
+					return redirect('membership/update/'.$id_membership)->withErrors($save['messages']);
+			    }else{
+			        return redirect('membership/update/'.$id_membership)->withErrors('Something Went Wrong.');
+			    }
 			}
 		}
     }

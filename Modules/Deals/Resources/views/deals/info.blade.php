@@ -17,7 +17,7 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Second Title  
@@ -27,7 +27,7 @@
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="deals_second_title" value="{{ $val['deals_second_title'] }}" placeholder="Second Title">
                         </div>
-                    </div> -->
+                    </div>
 
 
                     <div class="form-group">

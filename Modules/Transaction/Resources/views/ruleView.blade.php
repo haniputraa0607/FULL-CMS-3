@@ -7,21 +7,21 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/public/css/custom.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/public/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{Cdn::asset('kk-ass/public/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/public/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ url('js/custom.js?'.date('YmdHis')) }}" type="text/javascript"></script>
     <script src="{{ url('js/service.js?'.date('YmdHis')) }}" type="text/javascript"></script>
     <script src="{{ url('js/discount.js?'.date('YmdHis')) }}" type="text/javascript"></script>
@@ -92,7 +92,7 @@
                             @if(MyHelper::hasAccess([19], $configs))
                             @if(MyHelper::hasAccess([60], $grantedFeature))
                                 <li>
-                                    <a href="#tab_5" data-toggle="tab"> Kopi Point </a>
+                                    <a href="#tab_5" data-toggle="tab"> Kenangan Points </a>
                                 </li>
                             @endif
                             @endif
@@ -456,7 +456,7 @@
                             <div class="tab-pane active" id="tab_5">
                                 <div class="portlet light bordered">
                                     <div class="portlet-body">
-                                        <h3 class="">Kopi Point calculation of transactions
+                                        <h3 class="">Kenangan Points calculation of transactions
                                             <i class="fa fa-question-circle tooltips" data-original-title="Rumus untuk menghitung cashback transaksi" data-container="body"></i></h3>
                                         <hr>
                                         <div class="m-grid m-grid-demo" style="display: none">
@@ -513,7 +513,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Kopi Point Conversion
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Kenangan Points Conversion
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Total perhitangan cashback yang didapat user" data-container="body"></i>
                                                 <div class="input-group" style="margin: 20px">
                                                     <input id="persen" type="text" class="form-control cashbackPersen" placeholder="value" value="{{ $cashback['value']*100 }}">
@@ -522,7 +522,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Kopi Point Maximum
+                                            <div class="m-grid-col m-grid-col-middle m-grid-col-center m-grid-col-md-2">Kenangan Points Maximum
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Total maksimal cashback yang didapat user" data-container="body"></i>
                                                 <div class="input-group" style="margin: 20px">
                                                     <input id="cashbackMax" type="text" class="form-control cashbackMax" placeholder="value" value="{{ $cashback['max'] }}">

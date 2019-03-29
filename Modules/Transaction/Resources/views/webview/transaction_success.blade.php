@@ -483,7 +483,7 @@
                 @endif
 
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text seravek-light-font">Kopi Points</div>
+                <div class="col-6 text-13-3px space-text seravek-light-font">Kenangan Points</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ number_format(abs($data['balance']), 0, ',', '.') }}</div>
                 @endif
                 
