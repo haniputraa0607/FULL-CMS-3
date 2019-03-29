@@ -166,7 +166,6 @@
 							<div class="col-md-9">
 								<select name="relationship" class="form-control input-sm select2" data-placeholder="Relationship">
 									<option value="">Select...</option>
-									<option value="-">-</option>
 		                            <option value="In a Relationship">In a Relationship</option>
 		                            <option value="Complicated">Complicated</option>
 		                            <option value="Jomblo">Jomblo</option>

@@ -5,20 +5,12 @@
 @extends('webview.main')
 
 @section('page-style-plugin')
-
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="{{Cdn::asset('kk-ass/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN THEME GLOBAL STYLES -->
     <link href="{{Cdn::asset('kk-ass/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
     <link href="{{Cdn::asset('kk-ass/assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END THEME GLOBAL STYLES -->
-    <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-
-    <!-- END PAGE LEVEL STYLES -->
 @stop
 
 @section('css')
@@ -131,6 +123,7 @@
         .select2 .select2-selection--single{
             height: 34px;
             border: none;
+            background-color: transparent;
         }
         .select2-results{
             height: 160px;
@@ -139,7 +132,6 @@
         .select2-results__option{
             color: #000;
         }
-        .select2-container--default,
         .select2-results__option--highlighted[aria-selected] {
             background-color: #6C5648 !important;
             color: #fff;
@@ -147,7 +139,10 @@
         .select2-selection__arrow{
             display: none;
         }
-
+        .form-actions{
+          margin-top: 70px;
+          margin-bottom: 30px;
+        }
         .button-wrapper {
           position: absolute;
           bottom: 30px;
@@ -211,7 +206,24 @@
         @endif
 
         @if($user != null)
-            @if($user['birthday'] == null && $user['gender'] == null && $user['id_city'] == null)
+            @php
+              $date = "";
+              $month = "";
+              $year = "";
+              $id_city = "152"; // Jakarta
+              if ($user['birthday'] != "") {
+                $birthday = date('j-n-Y', strtotime($user['birthday']));
+                $birthday = explode('-', $birthday);
+                $date = $birthday[0];
+                $month = $birthday[1];
+                $year = $birthday[2];
+              }
+              if ($user['id_city'] != "") {
+                $id_city = $user['id_city'];
+              }
+            @endphp
+
+            @if($user['birthday']==null || $user['gender']==null || $user['id_city']==null || $user['relationship']==null)
             {{-- form --}}
             <form role="form" action="{{ url('webview/complete-profile/submit') }}" method="post">
                 {!! csrf_field() !!}
@@ -220,8 +232,8 @@
                     <div class="form-group form-md-line-input select-wrapper">
                         <label>Jenis Kelamin</label>
                         <select class="form-control custom-select gender-select" name="gender" required>
-                            <option value="Male" selected>Laki-laki</option>
-                            <option value="Female">Perempuan</option>
+                            <option value="Male" {{ ($user['gender']=='Male' ? 'selected' : '') }}>Laki-laki</option>
+                            <option value="Female" {{ ($user['gender']=='Female' ? 'selected' : '') }}>Perempuan</option>
                         </select>
                         <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
                     </div>
@@ -231,13 +243,13 @@
 
                         <div class="birthday-wrapper row">
                             <div class="form-md-line-input date-select col-xs-3">
-                              <input id="date-input" class="form-control text-center" type="tel" name="date" maxlength="2" placeholder="Tanggal">
+                              <input id="date-input" class="form-control text-center" type="tel" name="date" maxlength="2" placeholder="Tanggal" value="{{ $date }}">
                             </div>
                             <div class="form-md-line-input col-xs-3">
-                              <input id="month-input" class="form-control text-center" type="tel" name="month" maxlength="2" placeholder="Bulan">
+                              <input id="month-input" class="form-control text-center" type="tel" name="month" maxlength="2" placeholder="Bulan" value="{{ $month }}">
                             </div>
                             <div class="form-md-line-input col-xs-4">
-                              <input id="year-input" class="form-control text-center" type="tel" name="year" maxlength="4" placeholder="Tahun">
+                              <input id="year-input" class="form-control text-center" type="tel" name="year" maxlength="4" placeholder="Tahun" value="{{ $year }}">
                             </div>
                         </div>
                         <div id="error-birthday" class="text-red text-error"></div>
@@ -247,7 +259,7 @@
                         <label>Kota Domisili</label>
                         <select id="id_city" class="form-control select2 id_city" placeholder="Select City" name="id_city" required style="width: 100%;">
                             @foreach ($cities as $city)152
-                                <option value="{{$city['id_city']}}" @if(old('id_city')==$city['id_city']) selected @elseif($city['id_city']=="152") selected @endif>{{ $city['city_type']. " " .$city['city_name'] }}</option>
+                                <option value="{{$city['id_city']}}" @if($city['id_city']==$id_city) selected @endif>{{ $city['city_type']. " " .$city['city_name'] }}</option>
                             @endforeach
                         </select>
                         <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
@@ -257,16 +269,15 @@
 
                     <div class="form-group form-md-line-input select-wrapper relationship">
                         <label>Relationship</label>
-                        <select class="form-control custom-select" name="relationship">
-                            <option value="" selected>-</option>
-                            <option value="In a Relationship">In a Relationship</option>
-                            <option value="Complicated">Complicated</option>
-                            <option value="Jomblo">Jomblo</option>
+                        <select class="form-control custom-select" name="relationship" required>
+                            <option value="In a Relationship" {{ ($user['relationship']=='In a Relationship' ? 'selected' : '') }}>In a Relationship</option>
+                            <option value="Complicated" {{ ($user['relationship']=='Complicated' ? 'selected' : '') }}>Complicated</option>
+                            <option value="Jomblo" {{ ($user['relationship']=='Jomblo' ? 'selected' : '') }}>Jomblo</option>
                         </select>
                         <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
                     </div>
 
-                    <div class="form-actions noborder" style="margin-top: 70px; margin-bottom: 30px;">
+                    <div class="form-actions noborder">
                         <input type="hidden" name="bearer" value="{{ $bearer }}">
 
                         <div class="button-wrapper text-center">
@@ -286,63 +297,56 @@
 @stop
 
 @section('page-script')
-    <!-- BEGIN CORE PLUGINS -->
     <script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
     <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ url('assets/webview/scripts/select2-custom.js') }}" type="text/javascript"></script>
-    {{-- <script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script> --}}
-    <!-- END CORE PLUGINS -->
-    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="{{Cdn::asset('kk-ass/assets/webview/scripts/select2-custom.js') }}" type="text/javascript"></script>
+    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{Cdn::asset('kk-ass/assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
-    
+
     <script>
-        $(document).ready(function() {
+        // when document ready
+        (function() {
           // force select2 to open in below
           $('.select2').select2({
             positionDropdown: true,
             dropdownParent: $('#city-dropdown')
           });
 
-          // change submit button's position from absolute to relative
-          var body = $("body").height();
-          body = body + 170;
-          var win = $(window).height();
+          // check scree on init page
+          checkScreen();
+        })();
 
-          if (body > win) {
-              $(".button-wrapper").css({'position': 'relative', 'bottom': '0px'});
-              $(".form-actions").css({'margin-top': '150px'});
-          }
-        });
 
         /* check screen when keyboard show */
-        $('body').on('focus', 'input, .select2-search__field', function() {
-          var body = $("body").height();
-          body = body + 170;
-          var win = $(window).height();
-
+        $('input').on('focus', function() {
+          checkScreen();
+        });
+        $('body').on('focus', '.select2-search__field', function() {
           $('.select2-container--open').css({'position': 'relative', 'top': '0'});
           $('.select2-dropdown').css('position', 'relative');
-
-          // change submit button's position from absolute to relative
-          if (body > win) {
-              $(".button-wrapper").css({'position': 'relative', 'bottom': '0px'});
-              $(".form-actions").css({'margin-top': '150px'});
-          }
+          checkScreen();
         });
 
         /* check screen when keyboard hide */
         $('body').on('blur', 'input, .select2-search__field', function() {
-          var body = $("body").height();
-          body = body + 170;
-          var win = $(window).height();
-
-          // change submit button's position from relative to absolute
-          if (body < win) {
-              $(".button-wrapper").attr('style', '');
-              $(".form-actions").css({'margin-top': '70px'});
-          }
+          checkScreen();
         });
+
+        function checkScreen() {
+            var body = $("body").height();
+            body = body + 170;
+            var win = $(window).height();
+
+            // change submit button's position from relative to absolute
+            if (body > win) {
+                $(".button-wrapper").css({'position': 'relative', 'bottom': '0px'});
+                $(".form-actions").css({'margin-top': '150px'});
+            }else {
+                $(".button-wrapper").attr('style', '');
+                $(".form-actions").attr('style', '');
+            }
+        }
 
         /* check last date if month change */
         $('#month-input').on('change, keyup', function (e) {
@@ -379,17 +383,18 @@
           }
         });
 
-        // validate date
         var date_input = document.getElementById('date-input');
+        var month_input = document.getElementById('month-input');
+        var year_input = document.getElementById('year-input');
+        // validate date
         date_input.addEventListener('keydown', validateDate);
         date_input.addEventListener('keyup', validateDateRange);
         // validate month
-        var month_input = document.getElementById('month-input');
         month_input.addEventListener('keydown', validateMonth);
         month_input.addEventListener('keyup', validateMonthRange);
         // validate year
-        var year_input = document.getElementById('year-input');
         year_input.addEventListener('keydown', validateYear);
+        year_input.addEventListener('keyup', validateYear);
 
         function validateDate(e) {
           var date = date_input.value;
@@ -441,7 +446,7 @@
             }
           }
           // accept only numeric in month
-          if (keycode != 0 && keycode != 8 && keycode != 9 && (keycode < 48 || keycode > 57)){
+          if (keycode != 0 && keycode != 8 && keycode != 9 && (keycode < 48 || keycode > 57)) {
             e.preventDefault();
             if (keycode == 13) {
               // on enter, focus on month input
@@ -462,6 +467,9 @@
         }
         
         function validateYear(e) {
+          var date = new Date();
+          var this_year = date.getFullYear();
+          var max_year = this_year - 10;
           var year = year_input.value;
           var keycode = (typeof e.which == "number") ? e.which : e.keyCode;
           // max 4 digit
@@ -469,6 +477,11 @@
           if (keycode != 8 && keycode != 46 && keycode != 9) {
             if (year.length == 4) {
               e.preventDefault();
+            }
+            if (year > max_year) {
+              e.preventDefault();
+              year_input.value = "";
+              $('#error-birthday').text('Tahun Lahir maksimal 10 tahun lalu');
             }
           }
           // accept only numeric in year
@@ -487,8 +500,9 @@
           var birthday_m = $('#month-input').val();
           var birthday_y = $('#year-input').val();
           var id_city = $('.id_city').val();
+          var relationship = $('.relationship select').val();
 
-          if (gender=="" || birthday_d=="" || birthday_m=="" || birthday_y=="" || id_city=="" ) {
+          if (gender=="" || birthday_d=="" || birthday_m=="" || birthday_y=="" || id_city=="" || relationship=="") {
             e.preventDefault();
             if (birthday_d=="" || birthday_m=="" || birthday_y=="") {
               $('#error-birthday').text('Tanggal Lahir tidak boleh kosong')
@@ -498,10 +512,6 @@
             }
           }
 
-          if (birthday_y.length > 4) {
-            e.preventDefault();
-            $('#error-birthday').text('Tahun maksimal 4 digit')
-          }
         });
         
     </script>

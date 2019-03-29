@@ -549,7 +549,6 @@
 												<label class="control-label">Relationship</label>
 												<select name="relationship" class="form-control input-sm select2">
 													<option value="">Select...</option>
-													<option value="-" {{ ($profile['relationship']=="" ? "selected" : "") }}>-</option>
 						                            <option value="In a Relationship" {{ ($profile['relationship']=="In a Relationship" ? "selected" : "") }}>In a Relationship</option>
 						                            <option value="Complicated" {{ ($profile['relationship']=="Complicated" ? "selected" : "") }}>Complicated</option>
 						                            <option value="Jomblo" {{ ($profile['relationship']=="Jomblo" ? "selected" : "") }}>Jomblo</option>

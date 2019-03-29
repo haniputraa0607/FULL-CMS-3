@@ -32,6 +32,7 @@ class WebviewUserController extends Controller
                 $user_data['gender']   = $user['gender'];
                 $user_data['birthday'] = $user['birthday'];
                 $user_data['id_city']  = $user['id_city'];
+                $user_data['relationship'] = $user['relationship'];
                 
                 $data['user'] = $user_data;
             }
@@ -46,14 +47,13 @@ class WebviewUserController extends Controller
         $bearer = $post['bearer'];
         unset($post['bearer']);
         // manual validation
-        if ($post['gender'] == "" || $post['date'] == "" || $post['month'] == "" || $post['year'] == "" || $post['id_city'] == "") {
+        if ($post['gender'] == "" || $post['date'] == "" || $post['month'] == "" || $post['year'] == "" || $post['id_city'] == "" || $post['relationship'] == "") {
             // manually redirect back
             $data['errors'] = ['Submit data gagal.', 'Silakan ulangi lagi.'];
 
             $data['bearer'] = $bearer;
-            $user_data['gender']   = "";
-            $user_data['birthday'] = "";
-            $user_data['id_city']  = "";
+
+            $user_data = $this->getUser($bearer);
             $data['user'] = $user_data;
 
             $data['cities'] = parent::getData(MyHelper::get('city/list'));
@@ -80,15 +80,31 @@ class WebviewUserController extends Controller
             $data['errors'] = ['Submit data gagal.', 'Silakan ulangi lagi.'];
 
             $data['bearer'] = $bearer;
-            $user_data['gender']   = "";
-            $user_data['birthday'] = "";
-            $user_data['id_city']  = "";
+
+            $user_data = $this->getUser($bearer);
             $data['user'] = $user_data;
 
             $data['cities'] = parent::getData(MyHelper::get('city/list'));
             
             return view('users::webview_complete_profile', $data);
         }
+    }
+
+    private function getUser($bearer)
+    {
+        $user = parent::getData(MyHelper::getWithBearer('users/get', $bearer));
+        $user_data = [];
+
+        if (!empty($user)) {
+            // get only some data
+            if ($user) {
+                $user_data['gender']   = $user['gender'];
+                $user_data['birthday'] = $user['birthday'];
+                $user_data['id_city']  = $user['id_city'];
+                $user_data['relationship'] = $user['relationship'];
+            }
+        }
+        return $user_data;
     }
 
     public function completeProfileSuccess()
