@@ -1,8 +1,8 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
         #recurring {
@@ -50,9 +50,9 @@
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <script src="https://www.amcharts.com/lib/3/themes/none.js"></script>
 
-    <script src="{{Cdn::asset('kk-ass/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -112,7 +112,7 @@
                         target: "tr"
                     }
                 },
-                order: [3, "desc"],
+                order: [0, "asc"],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "All"]
@@ -324,9 +324,8 @@
                                         <td>{{ $value['outlet_name'] }}</td>
                                         <td>{{ number_format($value['total_count']) }}</td>
                                         <td>{{ number_format($value['total_value'], 2) }}</td>
-                                        <td style="width:200px">
-                                            <a href="{{ url('report/outlet/detail') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-line-chart"></i> Graphic</a> 
-                                            <a href="{{ url('report/outlet/detail/trx') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm green"><i class="fa fa-search"></i> Detail</a> 
+                                        <td>
+                                            <a href="{{ url('report/outlet/detail') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
                                         </td>
                                     </tr>
                                 @endforeach

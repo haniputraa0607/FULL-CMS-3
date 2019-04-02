@@ -1,10 +1,10 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .amcharts-export-menu-top-right {
           top: 10px;
@@ -27,13 +27,6 @@
     </style>
 
     <style type="text/css">
-        #outlet {
-          width: 100%;
-          height: 500px;
-        }
-    </style>
-
-    <style type="text/css">
         #transx {
             width   : 100%;
             height  : 500px;
@@ -42,10 +35,10 @@
 @endsection
 
 @section('page-plugin')
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
@@ -57,11 +50,11 @@
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <script src="https://www.amcharts.com/lib/3/themes/none.js"></script>
 
-    <script src="{{Cdn::asset('kk-ass/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
-    <script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('.sample_1').dataTable({
@@ -118,63 +111,6 @@
                 "paging": false,
                 "searching": false,
                 order: [0, "desc"],
-                pageLength: 10,
-                dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
-        });
-        $('.sample_2').dataTable({
-                language: {
-                    aria: {
-                        sortAscending: ": activate to sort column ascending",
-                        sortDescending: ": activate to sort column descending"
-                    },
-                    emptyTable: "No data available in table",
-                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                    infoEmpty: "No entries found",
-                    infoFiltered: "(filtered1 from _MAX_ total entries)",
-                    lengthMenu: "_MENU_ entries",
-                    search: "Search:",
-                    zeroRecords: "No matching records found"
-                },
-                buttons: [{
-                    extend: "print",
-                    className: "btn dark btn-outline",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                  extend: "copy",
-                  className: "btn blue btn-outline",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                },{
-                  extend: "pdf",
-                  className: "btn yellow-gold btn-outline",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                }, {
-                    extend: "excel",
-                    className: "btn green btn-outline",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                    extend: "csv",
-                    className: "btn purple btn-outline ",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }],
-                responsive: {
-                    details: {
-                        type: "column",
-                        target: "tr"
-                    }
-                },
-                "paging": false,
-                "searching": false,
-                order: [2, "desc"],
                 pageLength: 10,
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
@@ -282,43 +218,6 @@
         "zoomable": false
       },
       "categoryField": "product",
-      "categoryAxis": {
-        "gridPosition": "start",
-        "labelRotation": 45
-      },
-      "export": {
-        "enabled": true
-      }
-
-    });
-    </script>
-
-    <script>
-    var chart = AmCharts.makeChart("outlet", {
-      "type": "serial",
-      "theme": "none",
-      "marginRight": 70,
-      "dataProvider": <?php echo $dataValue; ?>,
-      "valueAxes": [{
-        "axisAlpha": 0,
-        "position": "left",
-        "title": "Total Transaction Value"
-      }],
-      "startDuration": 1,
-      "graphs": [{
-        "balloonText": "<b>[[category]]: [[value]]</b>",
-        "fillColorsField": "color",
-        "fillAlphas": 0.9,
-        "lineAlpha": 0.2,
-        "type": "column",
-        "valueField": "value"
-      }],
-      "chartCursor": {
-        "categoryBalloonEnabled": false,
-        "cursorAlpha": 0,
-        "zoomable": false
-      },
-      "categoryField": "outlet",
       "categoryAxis": {
         "gridPosition": "start",
         "labelRotation": 45
@@ -610,53 +509,6 @@
                                         <a href="{{ url('report/product/detail') }}/{{ $value['id_product'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
                                     </td>
                                 </tr>
-                                @endif
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>    
-
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption ">
-                <span class="caption-subject sbold uppercase font-yellow">TOP 10 Outlet</span>
-            </div>
-        </div>
-        <div class="row">
-            <div id="outlet"></div>            
-        </div>
-        <hr>
-        <div class="row">
-            <div class="portlet-body form" style="margin-top:50px">
-                <table class="table table-striped table-bordered table-hover dt-responsive sample_2" width="100%">
-                    <thead>
-                        <tr>
-                            <th> Code </th>
-                            <th> Outlet </th>
-                            <th> Transaction Value (RP)</th>
-                            <th> Transaction Count </th>
-                            <th> Action </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!empty($dataOutlet))
-                            @foreach($dataOutlet as $key => $value)
-                                @if($key >= 10)
-                                    @php break; @endphp
-                                @else
-                                    <tr>
-                                        <td>{{ $value['outlet_code'] }}</td>
-                                        <td>{{ $value['outlet_name'] }}</td>
-                                        <td>{{ number_format($value['total_value'], 2) }}</td>
-                                        <td>{{ number_format($value['total_count']) }}</td>
-                                        <td style="width:200px">
-                                            <a href="{{ url('report/outlet/detail') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-line-chart"></i> Graphic</a> 
-                                            <a href="{{ url('report/outlet/detail/trx') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm green"><i class="fa fa-search"></i> Detail</a> 
-                                        </td>
-                                    </tr>
                                 @endif
                             @endforeach
                         @endif

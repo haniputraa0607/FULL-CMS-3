@@ -1,25 +1,25 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kk-ass/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    {{-- <script src="{{Cdn::asset('kk-ass/assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-bootstrap-select.min.js') }}"  type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-bootstrap-select.min.js') }}"  type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
 
         $('#select_tag').change(function(){
@@ -136,7 +136,7 @@
             }
         })
     }
-
+    
     $(".file").change(function(e) {
         var widthImg  = 300;
         var heightImg = 300;
@@ -158,7 +158,7 @@
                     // image.src = _URL.createObjectURL();
 
                     $('#fieldphoto').val("");
-                    $('#imageproduct').children('img').attr('src', 'http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                    $('#imageproduct').children('img').attr('src', 'http://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
                     console.log($(this).val())
                 }
             };
@@ -247,8 +247,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="form-group">
+                    
+                        <div class="form-group">
                         <label class="col-md-3 control-label">
                             Photo <span class="required" aria-required="true">* <br>(300*300) </span> 
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>
@@ -271,59 +271,60 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div class="form-group">
-                        <label class="col-md-3 control-label">Video
-                            <br>
-                            <span class="required" aria-required="true"> (from youtube) </span> 
-                            <i class="fa fa-question-circle tooltips" data-original-title="Video Tentang Produk" data-container="body"></i>
-                        </label>
-                        <div class="col-md-8">
-                            <div class="input-icon right">
-                                <input type="url" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ" class="form-control" name="product_video" value="{{ old('product_video') }}">
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <div class="form-group">
-                        <label class="col-md-3 control-label">Weight
-                            <br>
-                            <span class="required" aria-required="true"> (gram) </span> 
-                            <i class="fa fa-question-circle tooltips" data-original-title="Berat Produk" data-container="body"></i>
-                        </label>
-                        <div class="col-md-8">
-                            <div class="input-icon right">
-                                <input type="number" placeholder="Product weight" class="form-control" name="product_weight" value="{{ old('product_weight') }}">
-                            </div>
-                        </div>
-                    </div> -->
+                    
+                    <!--<div class="form-group">-->
+                    <!--    <label class="col-md-3 control-label">Video-->
+                    <!--        <br>-->
+                    <!--        <span class="required" aria-required="true"> (from youtube) </span> -->
+                    <!--        <i class="fa fa-question-circle tooltips" data-original-title="Video Tentang Produk" data-container="body"></i>-->
+                    <!--    </label>-->
+                    <!--    <div class="col-md-8">-->
+                    <!--        <div class="input-icon right">-->
+                    <!--            <input type="url" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ" class="form-control" name="product_video" value="{{ old('product_video') }}">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                    <!--    <label class="col-md-3 control-label">Weight-->
+                    <!--        <br>-->
+                    <!--        <span class="required" aria-required="true"> (gram) </span> -->
+                    <!--        <i class="fa fa-question-circle tooltips" data-original-title="Berat Produk" data-container="body"></i>-->
+                    <!--    </label>-->
+                    <!--    <div class="col-md-8">-->
+                    <!--        <div class="input-icon right">-->
+                    <!--            <input type="number" placeholder="Product weight" class="form-control" name="product_weight" value="{{ old('product_weight') }}">-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--</div>-->
                    
-                    <!-- <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3">Description
-                            <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>
-                        </label>
-                        <div class="col-md-8">
-                            <div class="input-icon right">
-                                <textarea name="product_description" id="text_pro" class="form-control summernote">{{ old('product_description') }}</textarea>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3">Tag
-                            {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}
-                        </label>
-                        <div class="col-md-8">
-                            <select name="id_tag[]" class="bs-select form-control" id="select_tag" multiple data-live-search="true" title="Select Tag">
-                                <option id="option_new_tag" value="+" data-content="<span class='btn btn-info'><i class='fa fa-plus' style='color:#fff'></i> Add New Category</span>">
-                                    New Tag
-                                </option>
-                                @if (!empty($tags))
-                                    @foreach($tags as $tag)
-                                        <option value="{{ $tag['id_tag'] }}">{{ $tag['tag_name'] }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div> -->
+                    <!--<div class="form-group">-->
+                    <!--    <label for="multiple" class="control-label col-md-3">Description-->
+                    <!--        <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>-->
+                    <!--    </label>-->
+                    <!--    <div class="col-md-8">-->
+                    <!--        <div class="input-icon right">-->
+                    <!--            <textarea name="product_description" id="text_pro" class="form-control summernote">{{ old('product_description') }}</textarea>-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--</div>-->
+                    
+                    <!--<div class="form-group">-->
+                    <!--    <label for="multiple" class="control-label col-md-3">Tag-->
+                    <!--        {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}-->
+                    <!--    </label>-->
+                    <!--    <div class="col-md-8">-->
+                    <!--        <select name="id_tag[]" class="bs-select form-control" id="select_tag" multiple data-live-search="true" title="Select Tag">-->
+                    <!--            <option id="option_new_tag" value="+" data-content="<span class='btn btn-info'><i class='fa fa-plus' style='color:#fff'></i> Add New Category</span>">-->
+                    <!--                New Tag-->
+                    <!--            </option>-->
+                    <!--            @if (!empty($tags))-->
+                    <!--                @foreach($tags as $tag)-->
+                    <!--                    <option value="{{ $tag['id_tag'] }}">{{ $tag['tag_name'] }}</option>-->
+                    <!--                @endforeach-->
+                    <!--            @endif-->
+                    <!--        </select>-->
+                    <!--    </div>-->
+                    <!--</div>-->
 
                 </div>
                 <div class="form-actions">
@@ -331,7 +332,7 @@
                     <div class="row">
                         <div class="col-md-offset-3 col-md-8">
                             <button type="submit" class="btn blue">Submit</button>
-                            <!-- <button type="submit" name="next" value="1" class="btn blue">Submit & Manage Photo</button> -->
+                            <!--<button type="submit" name="next" value="1" class="btn blue">Submit & Manage Photo</button>-->
                         </div>
                     </div>
                 </div>

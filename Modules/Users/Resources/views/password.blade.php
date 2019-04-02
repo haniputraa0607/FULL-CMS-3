@@ -1,29 +1,29 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
 @endsection
 
 @section('page-plugin')
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
 	<script>
 	function centang(no){
 		alert(no);
@@ -71,7 +71,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">Your 6 Digit PIN</label>
 							<div class="col-md-9">
-								<input type="password" name="password" class="form-control" minlength="6" maxlength="6"/>
+								<input type="password" name="password" class="form-control" />
 							</div>
 						</div>
 					</div>

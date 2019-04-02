@@ -54,6 +54,7 @@ class MyHelper
 
   public static function postLogin($request){
     $api = env('APP_API_URL');
+
     $client = new Client;
     try {
       $response = $client->request('POST',$api.'oauth/token', [

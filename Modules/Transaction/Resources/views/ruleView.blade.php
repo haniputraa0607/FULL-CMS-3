@@ -7,27 +7,27 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/css/custom.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{'css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ url('js/custom.js?'.date('YmdHis')) }}" type="text/javascript"></script>
-    <script src="{{ url('js/service.js?'.date('YmdHis')) }}" type="text/javascript"></script>
-    <script src="{{ url('js/discount.js?'.date('YmdHis')) }}" type="text/javascript"></script>
-    <script src="{{ url('js/tax.js?'.date('YmdHis')) }}" type="text/javascript"></script>
-    <script src="{{ url('js/point.js?'.date('YmdHis')) }}" type="text/javascript"></script>
-    <script src="{{ url('js/cashback.js?'.date('YmdHis')) }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('js/custom.js?'.date('YmdHis')) }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('js/service.js?'.date('YmdHis')) }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('js/discount.js?'.date('YmdHis')) }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('js/tax.js?'.date('YmdHis')) }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('js/point.js?'.date('YmdHis')) }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('js/cashback.js?'.date('YmdHis')) }}" type="text/javascript"></script>
 @endsection
 
 @section('content')

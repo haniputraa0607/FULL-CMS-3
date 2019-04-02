@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
-    <link href="{{Cdn::asset('kk-ass/css/slide.css') }}" rel="stylesheet">
+    <link href="{{ env('AWS_ASSET_URL') }}{{'css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
     	.kotak {
     		margin : 10px;
@@ -91,35 +91,35 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
     	.open-sans-font {

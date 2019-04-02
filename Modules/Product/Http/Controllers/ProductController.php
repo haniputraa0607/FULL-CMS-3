@@ -263,7 +263,7 @@ class ProductController extends Controller
             $post['product_visibility'] = 'Visible';
 			// print_r($post);exit;
             $save = MyHelper::post('product/create', $post);
-
+            // return $save;
             if (isset($save['status']) && $save['status'] == 'success') {
                 if (isset($post['id_tag']))  {
                     $saveRelation = app($this->tag)->createProductTag($save['result']['id_product'], $post['id_tag']);
@@ -312,7 +312,7 @@ class ProductController extends Controller
     }
 	
 	function listProductAjax(Request $request) {
-        $product = MyHelper::get('product/list');
+        $product = MyHelper::get('product/list?log_save=0');
 
         if (isset($product['status']) && $product['status'] == "success") {
             $data = $product['result'];
@@ -335,7 +335,7 @@ class ProductController extends Controller
         ];
 
         $product = MyHelper::post('product/list', ['product_code' => $code]);
-
+        
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
@@ -351,7 +351,7 @@ class ProductController extends Controller
             $tags = MyHelper::get('product/tag/list');
             $data['tags'] = parent::getData($tags);
 			
-			$outlet = MyHelper::post('outlet/list', []);
+			$outlet = MyHelper::post('outlet/list', ['admin' => 1]);
 			if (isset($outlet['status']) && $outlet['status'] == 'success') {
 				$data['outlet'] = $outlet['result'];
 			} 
@@ -543,6 +543,7 @@ class ProductController extends Controller
         if ($post) {
             return $this->priceProcess($post);
         }
+        $data['admin'] = 1;
         $outlet = MyHelper::post('outlet/list', $data);
         if (isset($outlet['status']) && $outlet['status'] == 'success') {
             $data['outlet'] = $outlet['result'];
@@ -830,7 +831,7 @@ class ProductController extends Controller
                 'submenu_active' => 'product-photo-default',
             ];
 
-            $data['photo'] = env('AWS_URL').'/img/product/item/default.png?';
+            $data['photo'] = env('AWS_URL').'img/product/item/default.png?';
 
             return view('product::product.photo-default', $data);
         }else{

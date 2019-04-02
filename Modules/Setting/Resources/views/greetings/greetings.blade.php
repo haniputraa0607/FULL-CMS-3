@@ -356,7 +356,7 @@ if(isset($data)){
 									<div class="col-md-9">
 										<div class="fileinput fileinput-new" data-provides="fileinput">
 											<div class="fileinput-new thumbnail" style="width: 300px; height: 180px;">
-												<img src="{{env('AWS_URL')}}/assets/pages/img/noimg-500-375.png" alt="">
+												<img src="{{ env('AWS_URL')}}assets/pages/img/noimg-500-375.png" alt="">
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 											<div>
@@ -408,9 +408,9 @@ if(isset($data)){
 									@foreach($data['background'] as $row)
 										@if($row['when'] == 'morning')
 										<div class="col-md-3 ui-state-default" id="photo-{{$row['id_home_background']}}" style="text-align:center;padding: 20px;margin-top:20px;background-color: #dedede;margin-right:30px" draggable="true">
-											<img src="{{env('AWS_URL')}}/{{$row['picture']}}" alt="Category Image" width="150">
+											<img src="{{ env('AWS_URL')}}{{$row['picture']}}" alt="Category Image" width="150">
 											<br><br>
-											<a href="{{env('AWS_URL')}}/{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
+											<a href="{{env('AWS_URL')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
 											
 											<a onClick="hapus('{{$row['id_home_background']}}')" class="btn red uppercase" >Delete</a>
 										</div>
@@ -421,9 +421,9 @@ if(isset($data)){
 									@foreach($data['background'] as $row)
 										@if($row['when'] == 'afternoon')
 										<div class="col-md-3 ui-state-default" id="photo-{{$row['id_home_background']}}" style="text-align:center;padding: 20px;margin-top:20px;background-color: #dedede;margin-right:30px" draggable="true">
-											<img src="{{env('AWS_URL')}}/{{$row['picture']}}" alt="Category Image" width="150">
+											<img src="{{ env('AWS_URL')}}{{$row['picture']}}" alt="Category Image" width="150">
 											<br><br>
-											<a href="{{env('AWS_URL')}}/{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
+											<a href="{{env('AWS_URL')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
 											
 											<a onClick="hapus('{{$row['id_home_background']}}')" class="btn red uppercase" >Delete</a>
 										</div>
@@ -434,9 +434,9 @@ if(isset($data)){
 									@foreach($data['background'] as $row)
 										@if($row['when'] == 'evening')
 										<div class="col-md-3 ui-state-default" id="photo-{{$row['id_home_background']}}" style="text-align:center;padding: 20px;margin-top:20px;background-color: #dedede;margin-right:30px" draggable="true">
-											<img src="{{env('AWS_URL')}}/{{$row['picture']}}" alt="Category Image" width="150">
+											<img src="{{ env('AWS_URL')}}{{$row['picture']}}" alt="Category Image" width="150">
 											<br><br>
-											<a href="{{env('AWS_URL')}}/{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
+											<a href="{{env('AWS_URL')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
 											
 											<a onClick="hapus('{{$row['id_home_background']}}')" class="btn red uppercase" >Delete</a>
 										</div>
@@ -447,9 +447,9 @@ if(isset($data)){
 									@foreach($data['background'] as $row)
 										@if($row['when'] == 'late_night')
 										<div class="col-md-3 ui-state-default" id="photo-{{$row['id_home_background']}}" style="text-align:center;padding: 20px;margin-top:20px;background-color: #dedede;margin-right:30px" draggable="true">
-											<img src="{{env('AWS_URL')}}/{{$row['picture']}}" alt="Category Image" width="150">
+											<img src="{{ env('AWS_URL')}}{{$row['picture']}}" alt="Category Image" width="150">
 											<br><br>
-											<a href="{{env('AWS_URL')}}/{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
+											<a href="{{env('AWS_URL')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
 											
 											<a onClick="hapus('{{$row['id_home_background']}}')" class="btn red uppercase" >Delete</a>
 										</div>

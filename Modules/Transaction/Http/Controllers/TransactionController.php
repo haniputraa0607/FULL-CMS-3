@@ -1298,7 +1298,7 @@ class TransactionController extends Controller
                 unset($post['id_user']);
             }
             $update = MyHelper::post('transaction/dump', $post);
-            // dd($update);
+            // return $update;
             if (isset($update['status']) && $update['status'] == 'success') {
                 return redirect('transaction/create/fake')->with(['success' => ['Create '.$post['how_many'].' Data Transaction Success']]);
             } else {

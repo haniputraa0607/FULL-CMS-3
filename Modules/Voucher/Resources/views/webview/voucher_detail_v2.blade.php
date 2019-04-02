@@ -11,20 +11,20 @@
         <style type="text/css">
             @font-face {
                 font-family: "Seravek";
-                src: url('{{ Cdn::asset("kk-ass/fonts/Seravek.ttf") }}');
+                src: url('{{ url('/fonts/Seravek.ttf') }}');
             }
             @font-face {
                 font-family: 'Seravek Light';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+                src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
             }
 
             @font-face {
                 font-family: 'Seravek Medium';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+                src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
             }
 
             .seravek-light-font {
@@ -202,7 +202,7 @@
 
                     <div class="title-wrapper clearfix container">
                         <div class="col-xs-8 title">
-                            {{ $deals['deals_title'] }} {{ $deals['deals_second_title'] }}
+                            {{ $deals['deals_title'] }}{{ $deals['deals_second_title'] }}
                         </div>
 
                         @if($voucher['used_at'] == null)
@@ -297,9 +297,9 @@
             </div>
         @endif
        
-        <script type="text/javascript" src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 
-        <script src="{{ Cdn::asset('kk-ass/assets/global/plugins/bootstrap/bootstrap-4.1.3/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/global/plugins/bootstrap/bootstrap-4.1.3/js/bootstrap.min.js') }}"></script>
         <script type="text/javascript">
             $(document).ready(function() {
 

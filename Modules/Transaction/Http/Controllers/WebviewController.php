@@ -41,9 +41,9 @@ class WebviewController extends Controller
     		$view = 'detail_transaction_pickup';
     	}
 
-    	// if ($data['kind'] == 'Offline') {
-    	// 	$view = 'detail_transaction_off';
-    	// }
+    // 	if ($data['kind'] == 'Offline') {
+    // 		$view = 'detail_transaction_off';
+    // 	}
 
     	if ($data['kind'] == 'Voucher') {
     		$view = 'detail_transaction_voucher';
@@ -168,7 +168,7 @@ class WebviewController extends Controller
         if ($data['type'] == 'trx') {
             $view = 'detail_balance_online';
         }
-
+        
         if ($data['type'] == 'voucher') {
             $view = 'detail_balance_voucher';
         }
@@ -202,6 +202,8 @@ class WebviewController extends Controller
         } else {
             return view('error', ['msg' => 'Something went wrong, try again']);
         }
+
+        // return $data;
 
         return view('transaction::webview.receipt-outletapp')->with(compact('data'));
     }

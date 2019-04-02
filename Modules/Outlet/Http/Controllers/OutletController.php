@@ -38,7 +38,7 @@ class OutletController extends Controller
     }
 	
 	public function indexAjax(Request $request) {
-        $outlet = MyHelper::get('outlet/list');
+        $outlet = MyHelper::get('outlet/list?log_save=0');
 
 		if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data = $outlet['result'];
@@ -158,6 +158,7 @@ class OutletController extends Controller
         else {
 
             //change pin
+            // return $post;
             if(isset($post['outlet_pin'])){
                 $validator = Validator::make($request->all(), [
                     'outlet_pin' => 'required|confirmed|min:6|max:6',
@@ -214,6 +215,7 @@ class OutletController extends Controller
 
                 $post = array_filter($post);
                 $save = MyHelper::post('outlet/update', $post);
+                // return $save;
                 if (isset($save['status']) && $save['status'] == "success") {
                     return parent::redirect($save, 'Outlet has been updated.', 'outlet/detail/'.$code.'#info');
                 }else {
@@ -231,8 +233,8 @@ class OutletController extends Controller
             } 
         }
     }
-
-    public function updateStatus(Request $request){
+    
+   public function updateStatus(Request $request){
         $post = $request->except('_token');
         $update = MyHelper::post('outlet/update/status', $post);
         if (isset($update['status']) && $update['status'] == "success") {
@@ -243,7 +245,7 @@ class OutletController extends Controller
             return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update outlet status'];
         }
     }
-
+    
     /*
     Propinsi
     */
@@ -621,7 +623,9 @@ class OutletController extends Controller
     public function scheduleSave(Request $request)
     {
         $post = $request->except('_token');
+
         $save = MyHelper::post('outlet/schedule/save', $post);
+        // return $save;
         if (isset($save['status']) && $save['status'] == 'success') {
             return back()->with(['success' => ['Update schedule success']]);
         }

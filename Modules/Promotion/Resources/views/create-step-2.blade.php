@@ -6,43 +6,43 @@ $configs    		= session('configs');
  @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
 @endsection
 
 @section('page-plugin')
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 	
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/js/prices.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js') }}" type="text/javascript"></script>
 	<script>   
     $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
@@ -64,15 +64,7 @@ $configs    		= session('configs');
 			placeholder: 'Content',
 			tabsize: 2,
 			height: 120,
-        	toolbar: [         
-              ['style', ['style']],
-              ['style', ['bold', 'underline', 'clear']],
-              ['color', ['color']],
-              ['para', ['ul', 'ol', 'paragraph']],
-              ['insert', ['table']],
-              ['insert', ['link', 'picture', 'video']],
-              ['misc', ['fullscreen', 'codeview', 'help']]
-            ],
+        	fontNames: ['Open Sans'],
 			callbacks: {
 				onImageUpload: function(files){
 					sendFile(files[0], $(this).attr('id'));
@@ -207,15 +199,7 @@ $configs    		= session('configs');
 		$('.summernote').summernote({
 			placeholder: 'Deals Content Long',
 			tabsize: 2,
-        	toolbar: [         
-              ['style', ['style']],
-              ['style', ['bold', 'underline', 'clear']],
-              ['color', ['color']],
-              ['para', ['ul', 'ol', 'paragraph']],
-              ['insert', ['table']],
-              ['insert', ['link', 'picture', 'video']],
-              ['misc', ['fullscreen', 'codeview', 'help']]
-            ],
+        	fontNames: ['Open Sans'],
 			height: 120
 		});
 	});
@@ -375,7 +359,7 @@ $configs    		= session('configs');
 			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
 		
-		if(det == 'News'){
+		else if(det == 'News'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('news/ajax') }}",
@@ -398,15 +382,7 @@ $configs    		= session('configs');
 			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
 
-		if(det == 'Home' || det == 'Inbox' || det == 'Voucher' || det == 'Voucher Detail' || det == 'Contact Us' || det == 'Logout'){
-			document.getElementById('atd_'+type+'_'+series).style.display = 'none';
-			var operator_value = document.getElementById('promotion_'+type+'_id_reference_'+series+'');
-			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-			document.getElementById('link_'+type+'_'+series).style.display = 'none';
-			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
-		}
-		
-		if(det == 'Link'){
+		else if(det == 'Link'){
 			document.getElementById('atd_'+type+'_'+series).style.display = 'none';
 			var operator_value = document.getElementById('promotion_'+type+'_id_reference_'+series+'');
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -414,12 +390,20 @@ $configs    		= session('configs');
 			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
 
-		if(det == 'Content'){
+		else if(det == 'Content'){
 			document.getElementById('atd_'+type+'_'+series).style.display = 'none';
 			var operator_value = document.getElementById('promotion_'+type+'_id_reference_'+series+'');
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type+'_'+series).style.display = 'none';
 			document.getElementById(type+'_content_'+series).style.display = 'block';
+		}
+
+		else {
+			document.getElementById('atd_'+type+'_'+series).style.display = 'none';
+			var operator_value = document.getElementById('promotion_'+type+'_id_reference_'+series+'');
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			document.getElementById('link_'+type+'_'+series).style.display = 'none';
+			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
 	}
 
@@ -628,7 +612,7 @@ $configs    		= session('configs');
 												$x = explode('-',$result['schedules'][0]['schedule_date_month']);
 											?>
 											<div class="col-md-12">
-												<p class="form-control-static"><b>Every {{date('F', strtotime($year.'-'.$x[1].'-'.$x[0]))}} {{$x[0]}} each year at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
+												<p class="form-control-static"><b>Every {{date('F', strtotime($year.'-'.$x[1].'-'.$x[0]))}}{{$x[0]}} each year at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
 											</div>
 										@endif
 										@if(isset($result['schedules'][0]['schedule_date_every_month']) && $result['schedules'][0]['schedule_date_every_month'] != "")
@@ -846,11 +830,13 @@ $configs    		= session('configs');
 												</div>
 											</div>
 											<div class="portlet-body">
+											@if(MyHelper::hasAccess([75], $configs))
 												@if(!$api_key_whatsapp)
 													<div class="alert alert-warning deteksi-trigger">
 														<p> To use WhatsApp channel you have to set the api key in <a href="{{url('setting/whatsapp')}}">WhatsApp Setting</a>. </p>
 													</div>
 												@endif
+											@endif
 												@if(MyHelper::hasAccess([26], $configs))
 													@if(isset($result['contents'][$x-1]))
 														@if($result['contents'][$x-1]['promotion_count_voucher_give'] > 0)
@@ -934,6 +920,7 @@ $configs    		= session('configs');
 																<span class="check"></span>
 																<span class="box"></span>Inbox</label>
 														</div>
+														@if(MyHelper::hasAccess([75], $configs))
 														<div class="md-checkbox">
 															<input type="checkbox" 
 																id="checkbox_{{$x}}_whatsapp" 
@@ -955,6 +942,7 @@ $configs    		= session('configs');
 																<span class="check"></span>
 																<span class="box"></span>WhatsApp</label>
 														</div>
+														@endif
 														<div class="md-checkbox">
 															<input type="checkbox" 
 																id="checkbox_{{$x}}_deals" 
@@ -1154,7 +1142,7 @@ $configs    		= session('configs');
 															<div class="fileinput fileinput-new" data-provides="fileinput">
 																<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 																	@if(isset($result['contents'][$x-1]['promotion_push_image']) && $result['contents'][$x-1]['promotion_push_image'] != "")
-																		<img src="{{env('AWS_URL')}}/{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
+																		<img src="{{env('AWS_URL')}}{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
 																	@else 
 																		<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 																	@endif
@@ -1177,15 +1165,23 @@ $configs    		= session('configs');
 															<select name="promotion_push_clickto[]" id="promotion_push_clickto_{{$x}}" class="form-control select2" onChange="fetchDetail('{{$x}}','push',this.value)">
 																<option value="Home" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Home") selected @endif>Home</option>
 																<option value="News" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "New") selected @endif>News</option>
-																<option value="Product" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Product") selected @endif>Product</option>
-																<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Outlet") selected @endif>Outlet</option>
-																<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-																<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option>
-																<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
-																<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
-																<option value="Link" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Link") selected @endif>Link</option>
-																<option value="Logout" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Logout") selected @endif>Logout</option>
-															</select>
+																<!--<option value="Product" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Product") selected @endif>Product</option>-->
+																<option value="Order" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Order") selected @endif>Order</option>
+                												<option value="History On Going" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "History On Going") selected @endif>History On Going</option>
+                												<option value="History Transaksi" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
+                												<option value="History Point" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "History Point") selected @endif>History Point</option>
+                												<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Outlet") selected @endif>Outlet</option>
+                												<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option>
+                												<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
+                												<option value="Profil" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Profil") selected @endif>Profil</option>
+                												<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
+                												<option value="About" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "About") selected @endif>About</option>
+                												<option value="FAQ" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "FAQ") selected @endif>FAQ</option>
+                												<option value="TOS" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "TOS") selected @endif>TOS</option>
+                												<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
+                												<option value="Link" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Link") selected @endif>Link</option>
+                												<option value="Logout" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Logout") selected @endif>Logout</option>
+                											</select>
 														</div>
 													</div>
 													<div class="form-group" id="atd_push_{{$x}}" style="display:none;">
@@ -1255,14 +1251,23 @@ $configs    		= session('configs');
 																<option value="Home" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Home") selected @endif>Home</option>
 																{{-- <option value="Content" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
 																<option value="News" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "New") selected @endif>News</option>
-																<option value="Product" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>
+																<!--<option value="Product" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>-->
+																<option value="Order" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Order") selected @endif>Order</option>
+																<option value="History On Going" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "History On Going") selected @endif>History On Going</option>
+																<option value="History Transaksi" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
+																<option value="History Point" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "History Point") selected @endif>History Point</option>
 																<option value="Outlet" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
-																<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
+																<!--<option value="Inbox" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>-->
 																<option value="Voucher" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
 																<option value="Voucher Detail" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
+																<option value="Profil" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Profil") selected @endif>Profil</option>
+																<option value="About" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "About") selected @endif>About</option>
+																<option value="FAQ" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
+																<option value="TOS" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "TOS") selected @endif>TOS</option>
 																<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 																<option value="Link" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>
 																<option value="Logout" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Logout") selected @endif>Logout</option>
+															
 															</select>
 														</div>
 													</div>
@@ -1299,39 +1304,127 @@ $configs    		= session('configs');
 											</div>
 										</div>
 									</div>
-
-									@if(isset($result['contents'][$x-1]))
-										@if($result['contents'][$x-1]['promotion_channel_whatsapp'] == '1')
-											<div class="col-md-12" style="display:block;" id="content_whatsapp_{{$x}}">
+									@if(MyHelper::hasAccess([75], $configs))
+										@if(isset($result['contents'][$x-1]))
+											@if($result['contents'][$x-1]['promotion_channel_whatsapp'] == '1')
+												<div class="col-md-12" style="display:block;" id="content_whatsapp_{{$x}}">
+											@else
+												<div class="col-md-12" style="display:none;" id="content_whatsapp_{{$x}}">
+											@endif
 										@else
 											<div class="col-md-12" style="display:none;" id="content_whatsapp_{{$x}}">
 										@endif
-									@else
-										<div class="col-md-12" style="display:none;" id="content_whatsapp_{{$x}}">
-									@endif
-										<div class="portlet light bordered">
-											<div class="portlet-title">
-												<div class="caption font-blue ">
-													<i class="icon-settings font-blue "></i>
-													<span class="caption-subject bold uppercase">WhatsApp Content</span>
+											<div class="portlet light bordered">
+												<div class="portlet-title">
+													<div class="caption font-blue ">
+														<i class="icon-settings font-blue "></i>
+														<span class="caption-subject bold uppercase">WhatsApp Content</span>
+													</div>
 												</div>
-											</div>
-											<div class="portlet-body">
-												<div class="form-body">
-													<div class="repeat">
-														<div data-repeater-list="promotion_whatsapp_content[{{$x-1}}]">
-															@if(isset($result['contents'][$x-1]) && count($result['contents'][$x-1]['whatsapp_content']) > 0)
-																@foreach($result['contents'][$x-1]['whatsapp_content'] as $content)
+												<div class="portlet-body">
+													<div class="form-body">
+														<div class="repeat">
+															<div data-repeater-list="promotion_whatsapp_content[{{$x-1}}]">
+																@if(isset($result['contents'][$x-1]) && count($result['contents'][$x-1]['whatsapp_content']) > 0)
+																	@foreach($result['contents'][$x-1]['whatsapp_content'] as $content)
+																		<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
+																			<input type="hidden" name="id_whatsapp_content" value="{{$content['id_whatsapp_content']}}">
+																			<div class="form-group row" style="padding:0; margin-bottom:15px">
+																				<label class="col-md-2 control-label" style="text-align:right">Content Type</label>
+																				<div class="col-md-4">
+																					<select name="content_type" class="form-control select content-type" style="width:100%">
+																						<option value="" disabled>Select Content Type</option>
+																						<option value="text" @if($content['content_type'] == 'text') selected @endif>Text</option>
+																						<option value="image" @if($content['content_type'] == 'image') selected @endif>Image</option>
+																						<option value="file" @if($content['content_type'] == 'file') selected @endif>File PDF</option>
+																					</select>
+																				</div>
+																				<div class="col-md-1" style="float:right">
+																					<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																						<i class="fa fa-close"></i>
+																					</a>
+																				</div>
+																			</div>
+																			<div class="form-group type_text row" @if($content['content_type'] != 'text') style="display:none" @endif>
+																				<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																				<div class="col-md-8">
+																					<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if($content['content_type'] == 'text') {{$content['content']}} @endif</textarea>
+																					<br>
+																					You can use this variables to display user personalized information:
+																					<br><br>
+																					<div class="row">
+																						@foreach($textreplaces as $key=>$row)
+																							<div class="col-md-3" style="margin-bottom:5px;">
+																								<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addWhatsappContent('{{ $row['keyword'] }}', this);">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																							</div>
+																						@endforeach
+																					</div>
+																					<br><br>
+																				</div>
+																			</div>
+																			<div class="form-group type_file row" @if($content['content_type'] != 'file') style="display:none" @endif>
+																				<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																				<div class="col-md-9">
+																					@if($content['content_type'] == 'file')
+																						<div class="form-group filename" style="margin-left:0">
+																						@php $file = explode('/', $content['content']) @endphp
+																						<label class="control-label"><a href= "{{$content['content']}}"> <i class="fa fa-file-pdf-o"></i> {{end($file)}} </a> </label>
+																						</div>
+																					@endif
+																					<div class="fileinput fileinput-new" data-provides="fileinput">
+																						<div class="input-group input-large">
+																							<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+																								<i class="fa fa-file fileinput-exists"></i>&nbsp;
+																								<span class="fileinput-filename"> </span>
+																							</div>
+																							<span class="input-group-addon btn default btn-file">
+																								<span class="fileinput-new"> Select file </span>
+																								<span class="fileinput-exists"> Change </span>
+																								<input type="file" class="file whatsapp-content" accept="application/pdf" name="content_file">
+																								</span>
+																							<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="form-group type_image row" @if($content['content_type'] != 'image') style="display:none" @endif>
+																				<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																				<div class="col-md-9">
+																					<div class="fileinput fileinput-new" data-provides="fileinput">
+																						<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+																						@if($content['content_type'] == 'image')
+																							<img src="{{$content['content']}}" alt="">
+																						@else
+																							<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																						@endif
+																						</div>
+																						<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
+																						<div>
+																							<span class="btn default btn-file">
+																							<span class="fileinput-new"> Select image </span>
+																							<span class="fileinput-exists"> Change </span>
+																							<input type="file" class="file whatsapp-content" accept="image/*" name="content">
+																							
+																							</span>
+													
+																							<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	@endforeach
+																@else
 																	<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
-																		<input type="hidden" name="id_whatsapp_content" value="{{$content['id_whatsapp_content']}}">
+																		<input type="hidden" name="id_whatsapp_content" value="">
 																		<div class="form-group row" style="padding:0; margin-bottom:15px">
 																			<label class="col-md-2 control-label" style="text-align:right">Content Type</label>
 																			<div class="col-md-4">
 																				<select name="content_type" class="form-control select content-type" style="width:100%">
-																					<option value="" disabled>Select Content Type</option>
-																					<option value="text" @if($content['content_type'] == 'text') selected @endif>Text</option>
-																					<option value="image" @if($content['content_type'] == 'image') selected @endif>Image</option>
-																					<option value="file" @if($content['content_type'] == 'file') selected @endif>File PDF</option>
+																					<option value="" disabled selected>Select Content Type</option>
+																					<option value="text">Text</option>
+																					<option value="image">Image</option>
+																					<option value="file">File PDF</option>
 																				</select>
 																			</div>
 																			<div class="col-md-1" style="float:right">
@@ -1340,10 +1433,10 @@ $configs    		= session('configs');
 																				</a>
 																			</div>
 																		</div>
-																		<div class="form-group type_text row" @if($content['content_type'] != 'text') style="display:none" @endif>
+																		<div class="form-group type_text row" style="display:none">
 																			<label class="col-md-2 control-label" style="text-align:right">Content</label>
 																			<div class="col-md-8">
-																				<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if($content['content_type'] == 'text') {{$content['content']}} @endif</textarea>
+																				<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if(isset($result['campaign_whatsapp_content']) && $result['campaign_whatsapp_content'] != ""){{$result['campaign_whatsapp_content']}}@endif</textarea>
 																				<br>
 																				You can use this variables to display user personalized information:
 																				<br><br>
@@ -1357,15 +1450,9 @@ $configs    		= session('configs');
 																				<br><br>
 																			</div>
 																		</div>
-																		<div class="form-group type_file row" @if($content['content_type'] != 'file') style="display:none" @endif>
+																		<div class="form-group type_file row" style="display:none">
 																			<label class="col-md-2 control-label" style="text-align:right">Content</label>
 																			<div class="col-md-9">
-																				@if($content['content_type'] == 'file')
-																					<div class="form-group filename" style="margin-left:0">
-																					@php $file = explode('/', $content['content']) @endphp
-																					<label class="control-label"><a href= "{{$content['content']}}"> <i class="fa fa-file-pdf-o"></i> {{end($file)}} </a> </label>
-																					</div>
-																				@endif
 																				<div class="fileinput fileinput-new" data-provides="fileinput">
 																					<div class="input-group input-large">
 																						<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
@@ -1382,16 +1469,12 @@ $configs    		= session('configs');
 																				</div>
 																			</div>
 																		</div>
-																		<div class="form-group type_image row" @if($content['content_type'] != 'image') style="display:none" @endif>
-																			<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																		<div class="form-group type_image row" style="display:none">
+																			<label class="col-md-2 control-label" style="text-align:right">Content Image</label>
 																			<div class="col-md-9">
 																				<div class="fileinput fileinput-new" data-provides="fileinput">
 																					<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-																					@if($content['content_type'] == 'image')
-																						<img src="{{$content['content']}}" alt="">
-																					@else
-																						<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-																					@endif
+																					<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																					</div>
 																					<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 																					<div>
@@ -1408,97 +1491,20 @@ $configs    		= session('configs');
 																			</div>
 																		</div>
 																	</div>
-																@endforeach
-															@else
-																<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
-																	<input type="hidden" name="id_whatsapp_content" value="">
-																	<div class="form-group row" style="padding:0; margin-bottom:15px">
-																		<label class="col-md-2 control-label" style="text-align:right">Content Type</label>
-																		<div class="col-md-4">
-																			<select name="content_type" class="form-control select content-type" style="width:100%">
-																				<option value="" disabled selected>Select Content Type</option>
-																				<option value="text">Text</option>
-																				<option value="image">Image</option>
-																				<option value="file">File PDF</option>
-																			</select>
-																		</div>
-																		<div class="col-md-1" style="float:right">
-																			<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
-																				<i class="fa fa-close"></i>
-																			</a>
-																		</div>
-																	</div>
-																	<div class="form-group type_text row" style="display:none">
-																		<label class="col-md-2 control-label" style="text-align:right">Content</label>
-																		<div class="col-md-8">
-																			<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if(isset($result['campaign_whatsapp_content']) && $result['campaign_whatsapp_content'] != ""){{$result['campaign_whatsapp_content']}}@endif</textarea>
-																			<br>
-																			You can use this variables to display user personalized information:
-																			<br><br>
-																			<div class="row">
-																				@foreach($textreplaces as $key=>$row)
-																					<div class="col-md-3" style="margin-bottom:5px;">
-																						<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addWhatsappContent('{{ $row['keyword'] }}', this);">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																					</div>
-																				@endforeach
-																			</div>
-																			<br><br>
-																		</div>
-																	</div>
-																	<div class="form-group type_file row" style="display:none">
-																		<label class="col-md-2 control-label" style="text-align:right">Content</label>
-																		<div class="col-md-9">
-																			<div class="fileinput fileinput-new" data-provides="fileinput">
-																				<div class="input-group input-large">
-																					<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-																						<i class="fa fa-file fileinput-exists"></i>&nbsp;
-																						<span class="fileinput-filename"> </span>
-																					</div>
-																					<span class="input-group-addon btn default btn-file">
-																						<span class="fileinput-new"> Select file </span>
-																						<span class="fileinput-exists"> Change </span>
-																						<input type="file" class="file whatsapp-content" accept="application/pdf" name="content_file">
-																						</span>
-																					<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="form-group type_image row" style="display:none">
-																		<label class="col-md-2 control-label" style="text-align:right">Content Image</label>
-																		<div class="col-md-9">
-																			<div class="fileinput fileinput-new" data-provides="fileinput">
-																				<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-																				<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-																				</div>
-																				<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
-																				<div>
-																					<span class="btn default btn-file">
-																					<span class="fileinput-new"> Select image </span>
-																					<span class="fileinput-exists"> Change </span>
-																					<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																					
-																					</span>
-											
-																					<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															@endif
+																@endif
+															</div>
+															<hr>
+															<label class="col-md-2 control-label" style="text-align:right"></label>
+															<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+																<i class="fa fa-plus"></i> Add Content</a>
+															<br>
+															<br> 
 														</div>
-														<hr>
-														<label class="col-md-2 control-label" style="text-align:right"></label>
-														<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
-															<i class="fa fa-plus"></i> Add Content</a>
-														<br>
-														<br> 
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
+									@endif
 									
 									@if(isset($result['contents'][$x-1]))
 										@if($result['contents'][$x-1]['id_deals'] != '')
@@ -2011,10 +2017,12 @@ $configs    		= session('configs');
 										<span class="caption-subject bold uppercase">Promotion Channel</span>
 									</div>
 								</div>
+								@if(MyHelper::hasAccess([75], $configs))
 								@if(!$api_key_whatsapp)
 									<div class="alert alert-warning deteksi-trigger">
 										<p> To use WhatsApp channel you have to set the api key in <a href="{{url('setting/whatsapp')}}">WhatsApp Setting</a>. </p>
 									</div>
+								@endif
 								@endif
 								@if(MyHelper::hasAccess([26], $configs))
 									@if(isset($result['contents'][0]))
@@ -2106,6 +2114,7 @@ $configs    		= session('configs');
 													<span class="check"></span>
 													<span class="box"></span>Inbox</label>
 											</div>
+											@if(MyHelper::hasAccess([75], $configs))
 											<div class="md-checkbox">
 												<input type="checkbox" 
 													id="checkbox_0_whatsapp" 
@@ -2127,6 +2136,7 @@ $configs    		= session('configs');
 													<span class="check"></span>
 													<span class="box"></span>WhatsApp</label>
 											</div>
+											@endif
 											<div class="md-checkbox">
 												<input type="checkbox" 
 													id="checkbox_0_deals" 
@@ -2327,7 +2337,7 @@ $configs    		= session('configs');
 												<div class="fileinput fileinput-new" data-provides="fileinput">
 													<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 														@if(isset($result['contents'][0]['promotion_push_image']) && $result['contents'][0]['promotion_push_image'] != "")
-															<img src="{{env('AWS_URL')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
+															<img src="{{ env('AWS_URL')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
 														@else 
 															<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 														@endif
@@ -2350,11 +2360,19 @@ $configs    		= session('configs');
 												<select name="promotion_push_clickto[]" id="promotion_push_clickto_0" class="form-control select2" onChange="fetchDetail('0','push',this.value)">
 													<option value="Home" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Home") selected @endif>Home</option>
 													<option value="News" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "New") selected @endif>News</option>
-													<option value="Product" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Product") selected @endif>Product</option>
+													<!-- <option value="Product" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Product") selected @endif>Product</option> -->
+													<option value="Order" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Order") selected @endif>Order</option>
+													<option value="History On Going" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "History On Going") selected @endif>History On Going</option>
+													<option value="History Transaksi" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
+													<option value="History Point" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "History Point") selected @endif>History Point</option>
 													<option value="Outlet" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Outlet") selected @endif>Outlet</option>
-													<option value="Inbox" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
 													<option value="Voucher" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Voucher") selected @endif>Voucher</option>
 													<option value="Voucher Detail" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
+													<option value="Profil" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Profil") selected @endif>Profil</option>
+													<option value="Inbox" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Inbox") selected @endif>Inbox</option>
+													<option value="About" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "About") selected @endif>About</option>
+													<option value="FAQ" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "FAQ") selected @endif>FAQ</option>
+													<option value="TOS" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "TOS") selected @endif>TOS</option>
 													<option value="Contact Us" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 													<option value="Link" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Link") selected @endif>Link</option>
 													<option value="Logout" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Logout") selected @endif>Logout</option>
@@ -2429,15 +2447,24 @@ $configs    		= session('configs');
 												<select name="promotion_inbox_clickto[]" id="promotion_inbox_clickto_0" class="form-control select2" onChange="fetchDetail('0','inbox',this.value)">
 													<option value="Home" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Home") selected @endif>Home</option>
 													{{-- <option value="Content" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
-													<option value="News" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "News") selected @endif>News</option>
-													<option value="Product" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>
+													<option value="News" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "New") selected @endif>News</option>
+													<!--<option value="Product" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Product") selected @endif>Product</option>-->
+													<option value="Order" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Order") selected @endif>Order</option>
+													<option value="History On Going" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "History On Going") selected @endif>History On Going</option>
+													<option value="History Transaksi" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
+													<option value="History Point" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "History Point") selected @endif>History Point</option>
 													<option value="Outlet" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
-													<option value="Inbox" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
+													<!--<option value="Inbox" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>-->
 													<option value="Voucher" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
 													<option value="Voucher Detail" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option>
+													<option value="Profil" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Profil") selected @endif>Profil</option>
+													<option value="About" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "About") selected @endif>About</option>
+													<option value="FAQ" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
+													<option value="TOS" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "TOS") selected @endif>TOS</option>
 													<option value="Contact Us" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 													<option value="Link" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>
 													<option value="Logout" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Logout") selected @endif>Logout</option>
+												
 												</select>
 											</div>
 										</div>
@@ -2473,39 +2500,127 @@ $configs    		= session('configs');
 								</div>
 							</div>
 						</div>
-
-						@if(isset($result['contents'][0]))
-							@if($result['contents'][0]['promotion_channel_whatsapp'] == '1')
-								<div class="col-md-12" style="display:block;" id="content_whatsapp_0">
+						@if(MyHelper::hasAccess([75], $configs))
+							@if(isset($result['contents'][0]))
+								@if($result['contents'][0]['promotion_channel_whatsapp'] == '1')
+									<div class="col-md-12" style="display:block;" id="content_whatsapp_0">
+								@else
+									<div class="col-md-12" style="display:none;" id="content_whatsapp_0">
+								@endif
 							@else
 								<div class="col-md-12" style="display:none;" id="content_whatsapp_0">
 							@endif
-						@else
-							<div class="col-md-12" style="display:none;" id="content_whatsapp_0">
-						@endif
-							<div class="portlet light bordered">
-								<div class="portlet-title">
-									<div class="caption font-blue ">
-										<i class="icon-settings font-blue "></i>
-										<span class="caption-subject bold uppercase">WhatsApp Content</span>
+								<div class="portlet light bordered">
+									<div class="portlet-title">
+										<div class="caption font-blue ">
+											<i class="icon-settings font-blue "></i>
+											<span class="caption-subject bold uppercase">WhatsApp Content</span>
+										</div>
 									</div>
-								</div>
-								<div class="portlet-body">
-									<div class="row">
-										<div class="repeat">
-											<div data-repeater-list="promotion_whatsapp_content[0]">
-												@if(isset($result['contents'][0]) && count($result['contents'][0]['whatsapp_content']) > 0)
-													@foreach($result['contents'][0]['whatsapp_content'] as $content)
+									<div class="portlet-body">
+										<div class="row">
+											<div class="repeat">
+												<div data-repeater-list="promotion_whatsapp_content[0]">
+													@if(isset($result['contents'][0]) && count($result['contents'][0]['whatsapp_content']) > 0)
+														@foreach($result['contents'][0]['whatsapp_content'] as $content)
+															<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
+																<input type="hidden" name="id_whatsapp_content" value="{{$content['id_whatsapp_content']}}">
+																<div class="form-group row" style="padding:0; margin-bottom:15px">
+																	<label class="col-md-2 control-label" style="text-align:right">Content Type</label>
+																	<div class="col-md-4">
+																		<select name="content_type" class="form-control select content-type" style="width:100%" required>
+																			<option value="" disabled>Select Content Type</option>
+																			<option value="text" @if($content['content_type'] == 'text') selected @endif>Text</option>
+																			<option value="image" @if($content['content_type'] == 'image') selected @endif>Image</option>
+																			<option value="file" @if($content['content_type'] == 'file') selected @endif>File PDF</option>
+																		</select>
+																	</div>
+																	<div class="col-md-1" style="float:right">
+																		<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																			<i class="fa fa-close"></i>
+																		</a>
+																	</div>
+																</div>
+																<div class="form-group type_text row" @if($content['content_type'] != 'text') style="display:none" @endif>
+																	<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																	<div class="col-md-8">
+																		<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if($content['content_type'] == 'text') {{$content['content']}} @endif</textarea>
+																		<br>
+																		You can use this variables to display user personalized information:
+																		<br><br>
+																		<div class="row">
+																			@foreach($textreplaces as $key=>$row)
+																				<div class="col-md-3" style="margin-bottom:5px;">
+																					<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addWhatsappContent('{{ $row['keyword'] }}', this);">{{ str_replace('_',' ',$row['keyword']) }}</span>
+																				</div>
+																			@endforeach
+																		</div>
+																		<br><br>
+																	</div>
+																</div>
+																<div class="form-group type_file row" @if($content['content_type'] != 'file') style="display:none" @endif>
+																	<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																	<div class="col-md-9">
+																		@if($content['content_type'] == 'file')
+																			<div class="form-group filename" style="margin-left:0">
+																			@php $file = explode('/', $content['content']) @endphp
+																			<label class="control-label"><a href= "{{$content['content']}}"> <i class="fa fa-file-pdf-o"></i> {{end($file)}} </a> </label>
+																			</div>
+																		@endif
+																		<div class="fileinput fileinput-new" data-provides="fileinput">
+																			<div class="input-group input-large">
+																				<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+																					<i class="fa fa-file fileinput-exists"></i>&nbsp;
+																					<span class="fileinput-filename"> </span>
+																				</div>
+																				<span class="input-group-addon btn default btn-file">
+																					<span class="fileinput-new"> Select file </span>
+																					<span class="fileinput-exists"> Change </span>
+																					<input type="file" class="file whatsapp-content" accept="application/pdf" name="content_file">
+																					</span>
+																				<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group type_image row" @if($content['content_type'] != 'image') style="display:none" @endif>
+																	<label class="col-md-2 control-label" style="text-align:right">Content</label>
+																	<div class="col-md-9">
+																		<div class="fileinput fileinput-new" data-provides="fileinput">
+																			<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+																			@if($content['content_type'] == 'image')
+																				<img src="{{$content['content']}}" alt="">
+																			@else
+																				<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																			@endif
+																			</div>
+																			<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
+																			<div>
+																				<span class="btn default btn-file">
+																				<span class="fileinput-new"> Select image </span>
+																				<span class="fileinput-exists"> Change </span>
+																				<input type="file" class="file whatsapp-content" accept="image/*" name="content">
+																				
+																				</span>
+										
+																				<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														@endforeach
+													@else
 														<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
-															<input type="hidden" name="id_whatsapp_content" value="{{$content['id_whatsapp_content']}}">
-															<div class="form-group row" style="padding:0; margin-bottom:15px">
+															<input type="hidden" name="id_whatsapp_content" value="">
+															<div class="form-group row" style="padding:0;">
 																<label class="col-md-2 control-label" style="text-align:right">Content Type</label>
 																<div class="col-md-4">
-																	<select name="content_type" class="form-control select content-type" style="width:100%" required>
-																		<option value="" disabled>Select Content Type</option>
-																		<option value="text" @if($content['content_type'] == 'text') selected @endif>Text</option>
-																		<option value="image" @if($content['content_type'] == 'image') selected @endif>Image</option>
-																		<option value="file" @if($content['content_type'] == 'file') selected @endif>File PDF</option>
+																	<select name="content_type" class="form-control select content-type" style="width:100%">
+																		<option value="" disabled selected>Select Content Type</option>
+																		<option value="text">Text</option>
+																		<option value="image">Image</option>
+																		<option value="file">File PDF</option>
 																	</select>
 																</div>
 																<div class="col-md-1" style="float:right">
@@ -2514,10 +2629,10 @@ $configs    		= session('configs');
 																	</a>
 																</div>
 															</div>
-															<div class="form-group type_text row" @if($content['content_type'] != 'text') style="display:none" @endif>
+															<div class="form-group type_text row" style="display:none">
 																<label class="col-md-2 control-label" style="text-align:right">Content</label>
 																<div class="col-md-8">
-																	<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if($content['content_type'] == 'text') {{$content['content']}} @endif</textarea>
+																	<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if(isset($result['campaign_whatsapp_content']) && $result['campaign_whatsapp_content'] != ""){{$result['campaign_whatsapp_content']}}@endif</textarea>
 																	<br>
 																	You can use this variables to display user personalized information:
 																	<br><br>
@@ -2531,15 +2646,9 @@ $configs    		= session('configs');
 																	<br><br>
 																</div>
 															</div>
-															<div class="form-group type_file row" @if($content['content_type'] != 'file') style="display:none" @endif>
+															<div class="form-group type_file row" style="display:none">
 																<label class="col-md-2 control-label" style="text-align:right">Content</label>
 																<div class="col-md-9">
-																	@if($content['content_type'] == 'file')
-																		<div class="form-group filename" style="margin-left:0">
-																		@php $file = explode('/', $content['content']) @endphp
-																		<label class="control-label"><a href= "{{$content['content']}}"> <i class="fa fa-file-pdf-o"></i> {{end($file)}} </a> </label>
-																		</div>
-																	@endif
 																	<div class="fileinput fileinput-new" data-provides="fileinput">
 																		<div class="input-group input-large">
 																			<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
@@ -2556,16 +2665,12 @@ $configs    		= session('configs');
 																	</div>
 																</div>
 															</div>
-															<div class="form-group type_image row" @if($content['content_type'] != 'image') style="display:none" @endif>
-																<label class="col-md-2 control-label" style="text-align:right">Content</label>
+															<div class="form-group type_image row" style="display:none">
+																<label class="col-md-2 control-label" style="text-align:right">Content Image</label>
 																<div class="col-md-9">
 																	<div class="fileinput fileinput-new" data-provides="fileinput">
 																		<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-																		@if($content['content_type'] == 'image')
-																			<img src="{{$content['content']}}" alt="">
-																		@else
-																			<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-																		@endif
+																		<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																		</div>
 																		<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 																		<div>
@@ -2582,97 +2687,20 @@ $configs    		= session('configs');
 																</div>
 															</div>
 														</div>
-													@endforeach
-												@else
-													<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
-														<input type="hidden" name="id_whatsapp_content" value="">
-														<div class="form-group row" style="padding:0;">
-															<label class="col-md-2 control-label" style="text-align:right">Content Type</label>
-															<div class="col-md-4">
-																<select name="content_type" class="form-control select content-type" style="width:100%">
-																	<option value="" disabled selected>Select Content Type</option>
-																	<option value="text">Text</option>
-																	<option value="image">Image</option>
-																	<option value="file">File PDF</option>
-																</select>
-															</div>
-															<div class="col-md-1" style="float:right">
-																<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
-																	<i class="fa fa-close"></i>
-																</a>
-															</div>
-														</div>
-														<div class="form-group type_text row" style="display:none">
-															<label class="col-md-2 control-label" style="text-align:right">Content</label>
-															<div class="col-md-8">
-																<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if(isset($result['campaign_whatsapp_content']) && $result['campaign_whatsapp_content'] != ""){{$result['campaign_whatsapp_content']}}@endif</textarea>
-																<br>
-																You can use this variables to display user personalized information:
-																<br><br>
-																<div class="row">
-																	@foreach($textreplaces as $key=>$row)
-																		<div class="col-md-3" style="margin-bottom:5px;">
-																			<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addWhatsappContent('{{ $row['keyword'] }}', this);">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																		</div>
-																	@endforeach
-																</div>
-																<br><br>
-															</div>
-														</div>
-														<div class="form-group type_file row" style="display:none">
-															<label class="col-md-2 control-label" style="text-align:right">Content</label>
-															<div class="col-md-9">
-																<div class="fileinput fileinput-new" data-provides="fileinput">
-																	<div class="input-group input-large">
-																		<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-																			<i class="fa fa-file fileinput-exists"></i>&nbsp;
-																			<span class="fileinput-filename"> </span>
-																		</div>
-																		<span class="input-group-addon btn default btn-file">
-																			<span class="fileinput-new"> Select file </span>
-																			<span class="fileinput-exists"> Change </span>
-																			<input type="file" class="file whatsapp-content" accept="application/pdf" name="content_file">
-																			</span>
-																		<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="form-group type_image row" style="display:none">
-															<label class="col-md-2 control-label" style="text-align:right">Content Image</label>
-															<div class="col-md-9">
-																<div class="fileinput fileinput-new" data-provides="fileinput">
-																	<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-																	<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-																	</div>
-																	<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
-																	<div>
-																		<span class="btn default btn-file">
-																		<span class="fileinput-new"> Select image </span>
-																		<span class="fileinput-exists"> Change </span>
-																		<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																		
-																		</span>
-								
-																		<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												@endif
+													@endif
+												</div>
+												<hr>
+												<label class="col-md-2 control-label" style="text-align:right"></label>
+												<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+													<i class="fa fa-plus"></i> Add Content</a>
+												<br>
+												<br> 
 											</div>
-											<hr>
-											<label class="col-md-2 control-label" style="text-align:right"></label>
-											<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
-												<i class="fa fa-plus"></i> Add Content</a>
-											<br>
-											<br> 
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						@endif
 
 						@if(isset($result['contents'][0]))
 							@if($result['contents'][0]['id_deals'] != '')

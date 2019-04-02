@@ -10,7 +10,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'membersh
     Route::get('delete/{id}', ['middleware' => ['feature_control:14', 'config_control:20'], 'uses' => 'MembershipController@delete']);
 });
 
-Route::group(['prefix' => 'membership', 'namespace' => 'Modules\Membership\Http\Controllers'], function()
+Route::group([ 'prefix' => 'membership', 'namespace' => 'Modules\Membership\Http\Controllers'], function()
 {
     Route::any('/web/view', 'MembershipController@detailWebview');
 });

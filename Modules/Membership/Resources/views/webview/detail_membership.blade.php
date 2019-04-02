@@ -6,29 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{Cdn::asset('kk-ass/css/slide.css') }}" rel="stylesheet">
+    <link href="{{ env('AWS_ASSET_URL') }}{{'css/slide.css') }}" rel="stylesheet">
     
-   
     <!-- SLICK -->
-    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
     <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
-    
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
+
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -476,7 +475,7 @@
                                                             -webkit-background-size: 31.7px 34.2px, cover;
                                                             background-size: 31.7px 34.2px, cover;
                                                             background-position: center;">
-                                <img class="img-responsive img-lock" src="{{ Cdn::asset('kk-ass/img/webview/lock.png') }}">
+                                <img class="img-responsive img-lock" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/lock.png') }}">
                             </div>
                             @php 
                                 $data['all_membership'][$key]['type'] = "Terkunci";
@@ -496,7 +495,7 @@
             <div class="row">
                 <div class="" id="progress-nominal">
                     <div class="text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" style="width:32px;">
-                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ Cdn::asset('kk-ass/img/webview/money.png') }}">
+                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/money.png') }}">
                     </div>
                     <div class=" text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" id="status_nominal">
                         {{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}
@@ -504,7 +503,7 @@
                 </div>
                 <div class="col-12" id="progress-nominal-nopad" style="display:none">
                     <div class="text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" style="width:32px;">
-                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ Cdn::asset('kk-ass/img/webview/money.png') }}">
+                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/money.png') }}">
                     </div>
                     <div class=" text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" id="status_nominal">
                         {{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}
@@ -516,8 +515,8 @@
                     <div class="progress-now"></div>
                     <div class="text-14-3px progress"></div>
                     
-                    <!--<img class="img-responsive img-progress" src="{{ url('img/webview/icon-heart2.png') }}" style="width:24.7px">-->
-                    <img class="img-responsive img-progress" src="{{ $data['all_membership'][$keyStatusNow+1]['membership_image'] }}" style="width:32px;height:32px;">
+                    <!--<img class="img-responsive img-progress" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/icon-heart2.png') }}" style="width:24.7px">-->
+                    <img class="img-responsive img-progress" src="{{ $data['all_membership'][$keyStatusNow+1]['membership_image'] }}" style="width:32px; height:32px;vertical-align:top">
                 </div>
                 <div class="space-bottom col-12" id="detail-progress">
                 <div class="row">
@@ -544,13 +543,13 @@
                 @endif
                 <div class="col-12" id="status_detail">
                     <div class="text-15px space-top space-text seravek-font text-black display-inline" style="width:32px; @if($keyStatusNow == count($data['all_membership']) - 1 ) vertical-align:middle @else vertical-align:top @endif" id="img-cup">
-                        <img class="img-responsive" style="max-width: 16.4px;" src="{{ Cdn::asset('kk-ass/img/webview/cup.png') }}">
+                        <img class="img-responsive" style="max-width: 16.4px;" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/cup.png') }}">
                     </div>
                     <div class="text-15px space-top space-text seravek-font text-black display-inline" id="status_detail_text">
                         @if($keyStatusNow == count($data['all_membership']) - 1 )
                             Anda sudah mencapai level tertinggi <br>
                         @else
-                        {{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}
+                        {{str_replace(',', '.', number_format($data['next_trx']))}}{{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}
                         @endif
                     </div>
                 </div>
@@ -566,7 +565,7 @@
                 </div>
                 <div class="col-12">
                     <div class="text-14px space-top space-bottom display-inline" style="width:32px; vertical-align:top; margin-left:6px">
-                        <img class="img-responsive" style="width: 23.3px;" src="{{ Cdn::asset('kk-ass/img/webview/cash.png') }}">
+                        <img class="img-responsive" style="width: 23.3px;" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/cash.png') }}">
                     </div>
                     <div class="text-16-7px space-top space-bottom seravek-light-font text-black display-inline" id="status_benefit">
                         Cashback sebanyak {{$data['all_membership'][$keyStatusNow]['benefit_cashback_multiplier']}}%
@@ -583,8 +582,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
-    
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
+
     <script>
         $(document).ready(function(){
 
@@ -670,7 +670,7 @@
                         $('#detail-progress').hide()
                     }else{
                         $('#status_benefit_text').text('Benefit yang didapat saat ini:')
-                        $('#status_detail_text').html("{{str_replace(',', '.', number_format($data['next_trx']))}} {{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}")
+                        $('#status_detail_text').html("{{str_replace(',', '.', number_format($data['next_trx']))}}{{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}")
                         $('#status_progress').show()
                         $('#progress-nominal-nopad').hide()
                         $('#progress-nominal').show()
@@ -752,6 +752,13 @@
                 }
             }
         });
+        
+        <?php
+            print str_pad('',4096)."\n";
+            ob_flush();
+            flush();
+            set_time_limit(45);
+        ?>
 
 
     </script>

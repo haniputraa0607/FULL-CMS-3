@@ -93,7 +93,6 @@
 				<div data-repeater-list="conditions">
 					@if (!empty($conditions))
 						@foreach ($conditions as $key => $con)
-							@if(isset($con['subject']))
 							<div data-repeater-item class="mt-repeater-item mt-overflow">
 								<div class="mt-repeater-cell">
 									<div class="col-md-12">
@@ -143,40 +142,6 @@
 									</div>
 								</div>
 							</div>
-							@else
-							<div data-repeater-item class="mt-repeater-item mt-overflow">
-								<div class="mt-repeater-cell">
-									<div class="col-md-12">
-										<div class="col-md-1">
-											<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
-												<i class="fa fa-close"></i>
-											</a>
-										</div>
-										<div class="col-md-4">
-											<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
-												<option value="" disabled selected>Name</option>
-												<option value="name">Name</option>
-												<option value="point">Point</option>
-												<option value="source">Source</option>
-												<option value="grand_total">Grand Total</option>
-												<option value="point_conversion">Point Convers</option>
-												<option value="membership_level">Membership</option>
-												<option value="membership_point_percentage">Point Percentage</option>
-											</select>
-										</div>
-										<div class="col-md-4">
-										<select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" onChange="changeSubject(this.name)" style="width:100%">
-											<option value="=" selected>=</option>ororororor
-											<option value="like">Like</option>
-										</select>
-										</div>
-										<div class="col-md-3">
-										<input type="text" placeholder="Keyword" class="form-control" name="parameter" />
-										</div>
-									</div>
-								</div>
-							</div>
-							@endif
 						@endforeach
 					@else
 						<div data-repeater-item class="mt-repeater-item mt-overflow">
@@ -189,7 +154,6 @@
 									</div>
 									<div class="col-md-4">
 										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
-											<option value="" disabled selected>Name</option>
 											<option value="name">Name</option>
 											<option value="point">Point</option>
 											<option value="source">Source</option>
@@ -206,7 +170,7 @@
 									</select>
 									</div>
 									<div class="col-md-3">
-									<input type="text" placeholder="Keyword" class="form-control" name="parameter" />
+									<input type="text" placeholder="Keyword" class="form-control" name="parameter" required />
 									</div>
 								</div>
 							</div>

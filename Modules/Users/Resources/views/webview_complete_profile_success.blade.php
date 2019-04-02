@@ -6,7 +6,7 @@
 
 @section('page-style-plugin')
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="{{Cdn::asset('kk-ass/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
 @stop
 
 @section('content')

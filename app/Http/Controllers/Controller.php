@@ -24,11 +24,10 @@ class Controller extends BaseController
 	
 	function login(loginRequest $request){
 
-        /*$captcha = GoogleReCaptchaV3::verifyResponse($request->input('g-recaptcha-response'))->isSuccess();
+        $captcha = GoogleReCaptchaV3::verifyResponse($request->input('g-recaptcha-response'))->isSuccess();
         if (!$captcha) {
         	return redirect()->back()->withErrors(['Recaptcha failed']);
-        }*/
-        // dd($captcha);
+        }
 
 		
 		if(strlen($request->input('password')) != 6){
@@ -291,7 +290,7 @@ class Controller extends BaseController
 	}
 	
     function redirect($save, $messagesSuccess, $next=null, $view=[]) {
-		if (isset($save['status']) && $save['status'] == 'success') {
+        if (isset($save['status']) && $save['status'] == 'success') {
 
             if (!empty($view)) {
             	

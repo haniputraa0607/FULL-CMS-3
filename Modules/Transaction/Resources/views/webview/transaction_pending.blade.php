@@ -8,41 +8,41 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
+    <link href="{{ env('AWS_ASSET_URL') }}{{'css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -346,7 +346,7 @@
         			<div class="kotak-biasa">
 			            <div class="container">
 			                <div class="row text-center" id="cont">
-			                    <div class="col-12 roboto-regular-font text-15px space-text text-grey">Virtual Number</div>
+			                    <div class="col-12 seravek-font text-15px space-text text-grey">Virtual Number</div>
                                 <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font"><span id="myInput">{{ $pay['eci'] }}</span> &nbsp; 
                                     <i class="fa fa-clone clone" data-togle="tooltip" title="Hooray!" onclick="copyToClipboard('#myInput')" style="cursor: pointer;"><div id="popover" rel="popover" data-content="Copied to clipboard" data-original-title="Copied"></div></i>
                                 </div>
@@ -411,8 +411,10 @@
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">SubTotal ({{$countQty}} item)</div>
                 <div class="col-6 text-13-3px text-right space-text seravek-light-font text-grey-black">{{ number_format($data['transaction_subtotal'], 0, ',', '.') }}</div>
 
+                @if($data['transaction_tax'] > 0)
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ number_format($data['transaction_tax'], 0, ',', '.') }}</div>
+                @endif
 
                 @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Ongkos Kirim</div>

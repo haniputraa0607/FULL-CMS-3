@@ -23,13 +23,13 @@ $id_product = $product[0]['id_product'];
 					<div style="width:10%; display:inline-block">
 						<input type="hidden" name="id_product_price[]" value="{{ $price['id_product_price'] }}">
 						<input type="hidden" name="id_outlet[]" value="{{ $ou['id_outlet'] }}">
-						<input type="text" class="form-control nominal price product-price" name="product_price[]" value="{{ $price['product_price'] }}">
+						<input type="text" class="form-control nominal price product-price" name="product_price[]" value="{{ $price['product_price'] }}" data-id="{{$ou['id_outlet']}}">
 					</div>
 					<div style="width:10%; display:inline-block">
-						<input type="text" class="form-control nominal price product-price-base" name="product_price_base[]" value="{{ $price['product_price_base'] }}">
+						<input type="text" class="form-control nominal price_float product-price-base" name="product_price_base[]" value="{{ $price['product_price_base'] }}" id="price_base_{{$ou['id_outlet']}}" readonly>
 					</div>
 					<div style="width:10%; display:inline-block">
-						<input type="text" class="form-control nominal price product-price-tax" name="product_price_tax[]" value="{{ $price['product_price_tax'] }}">
+						<input type="text" class="form-control nominal price_float product-price-tax" name="product_price_tax[]" value="{{ $price['product_price_tax'] }}" id="price_tax_{{$ou['id_outlet']}}" readonly>
 					</div>
 					<div style="width:10%; display:inline-block">
 						<select class="form-control product-visibility" name="product_visibility[]">
@@ -54,13 +54,13 @@ $id_product = $product[0]['id_product'];
 				<div style="width:10%; display:inline-block">
 					<input type="hidden" name="id_product_price[]" value="0">
 					<input type="hidden" name="id_outlet[]" value="{{ $ou['id_outlet'] }}">
-					<input type="text" class="form-control nominal price product-price" name="product_price[]" value="0">
+					<input type="text" class="form-control nominal price product-price" name="product_price[]" value="0" data-id="{{$ou['id_outlet']}}">
 				</div>
 				<div style="width:10%; display:inline-block">
-					<input type="text" class="form-control nominal price product-price-base" name="product_price_base[]" value="0">
+					<input type="text" class="form-control nominal price_float product-price-base" name="product_price_base[]" value="0" id="price_base_{{$ou['id_outlet']}}" readonly>
 				</div>
 				<div style="width:10%; display:inline-block">
-					<input type="text" class="form-control nominal price product-price-tax" name="product_price_tax[]" value="0">
+					<input type="text" class="form-control nominal price_float product-price-tax" name="product_price_tax[]" value="0" id="price_tax_{{$ou['id_outlet']}}" readonly>
 				</div>
 				<div style="width:10%; display:inline-block">
 					<select class="form-control product-visibility" name="product_visibility[]">

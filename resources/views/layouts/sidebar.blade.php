@@ -397,11 +397,11 @@
 							<span class="title">[Response] Transaction Success</span>
 						</a>
 					</li>
-					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-payment') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/transaction-payment')}}" class="nav-link ">
-							<span class="title">[Response] Transaction Payment</span>
-						</a>
-					</li>
+					<!--<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-payment') ? 'active open' : ''}}">-->
+					<!--	<a href="{{url('transaction/autoresponse/transaction-payment')}}" class="nav-link ">-->
+					<!--		<span class="title">[Response] Transaction Payment</span>-->
+					<!--	</a>-->
+					<!--</li>-->
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-expired') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-expired')}}" class="nav-link ">
 							<span class="title">[Response] Transaction Expired</span>
@@ -1168,12 +1168,6 @@
 				<a href="{{url('report')}}" class="nav-link nav-toggle">
 					<i class="icon-graph"></i>
 					<span class="title">Report</span>
-				</a>
-			</li>
-			<li class="nav-item {{($menu_active == 'report-compare') ? 'active' : ''}}">
-				<a href="{{url('report/compare')}}" class="nav-link nav-toggle">
-					<i class="icon-graph"></i>
-					<span class="title">Compare Report</span>
 				</a>
 			</li>
 			{{-- @if(MyHelper::hasAccess([125], $grantedFeature))

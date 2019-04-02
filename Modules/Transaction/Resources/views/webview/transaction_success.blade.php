@@ -7,41 +7,41 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{Cdn::asset('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
+    <link href="{{ env('AWS_ASSET_URL') }}{{'css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kopikenangan-view-asset/public/assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{url("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -391,7 +391,7 @@
             <div class="kotak-biasa">
                 <div class="container">
                     <div class="row text-center">
-                        <div class="col-12 roboto-regular-font text-15px space-text text-grey">Kode Pickup Anda</div>
+                        <div class="col-12 seravek-font text-15px space-text text-grey">Kode Pickup Anda</div>
                         
                         <div class="kotak-qr" data-toggle="modal" data-target="#exampleModal">
                             <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
@@ -400,7 +400,7 @@
                         <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
                         <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{ $data['outlet']['outlet_name'] }}</div>
                         <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center seravek-light-font">{{ $data['outlet']['outlet_address'] }}</div>
+                            <div class="col-12 text-13-3px text-grey-white space-nice text-center ">{{ $data['outlet']['outlet_address'] }}</div>
                         </div>
                             <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan diproses pada</div>
                             <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['transaction_date'])) }}</div>
@@ -464,10 +464,12 @@
                 <div class="col-12 text-14-3px space-top seravek-font text-greyish-brown">Detail Pembayaran <hr> </div>
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">SubTotal ({{$countQty}} item)</div>
                 <div class="col-6 text-13-3px text-right space-text seravek-light-font text-grey-black">{{ number_format($data['transaction_subtotal'], 0, ',', '.') }}</div>
-
+                
+                @if($data['transaction_tax'] > 0)
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ number_format($data['transaction_tax'], 0, ',', '.') }}</div>
-
+                @endif
+                
                 @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Ongkos Kirim</div>
                     @if($data['transaction_is_free'] == '1')
@@ -506,7 +508,7 @@
                     <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Metode Pembayaran <hr> </div>
                     <div class="col-6 text-13-3px seravek-font text-black">
                         @if ($data['trasaction_payment_type'] == 'Balance') 
-                            Kopi Points
+                            Kenangan Points
                         @elseif ($data['trasaction_payment_type'] == 'Midtrans') 
                             @if(isset($data['data_payment'][0]['payment_type']))
                                 {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['payment_type'])) }}

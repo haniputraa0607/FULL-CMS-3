@@ -5,20 +5,20 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{Cdn::asset('kk-ass/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script> 
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         function hapus(value){
@@ -148,7 +148,7 @@
                             <div class="portlet-body row">
                                 <div class="col-md-6 col-xs-12">
                                     <label>Date Time</label>
-                                        <h5 style="font-weight: bold;">{{ date('d F Y',strtotime($result['payment_date'])) }} {{date('h:i:s',strtotime($result['payment_time']))}}</h5>
+                                        <h5 style="font-weight: bold;">{{ date('d F Y',strtotime($result['payment_date'])) }}{{date('h:i:s',strtotime($result['payment_time']))}}</h5>
 
                                     <label>Bank</label>
                                     <h5 style="font-weight: bold;">{{ $result['payment_bank'] }}</h5>
@@ -170,7 +170,7 @@
                                     <label>Receipt</label>
                                     <br>
                                     <a data-toggle="modal" data-target="#modalReceipt"> 
-                                    <img style="width:200px" src="{{env('AWS_URL')}}/{{ $result['payment_receipt_image'] }}">
+                                    <img style="width:200px" src="{{env('AWS_URL')}}{{ $result['payment_receipt_image'] }}">
                                     </a>
                                     <br><br>
 
@@ -277,7 +277,7 @@
                     <h4 class="modal-title">Receipt Transaction Payment Manual</h4>
                 </div>
                 <div class="modal-body" style="text-align:center">
-                    <img style="width:80%" src="{{env('AWS_URL')}}/{{ $result['payment_receipt_image'] }}">
+                    <img style="width:80%" src="{{ env('AWS_URL')}}{{ $result['payment_receipt_image'] }}">
                 </div> 
             </div>
         </div>
