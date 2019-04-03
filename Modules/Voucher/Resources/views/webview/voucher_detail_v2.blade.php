@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <script src="{{ asset('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
-        <link href="{{ asset('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="{{ asset('assets/global/plugins/bootstrap/bootstrap-4.1.3/css/bootstrap.min.css') }}">
+        <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
+        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap/bootstrap-4.1.3/css/bootstrap.min.css') }}">
 
         <style type="text/css">
             @font-face {
@@ -17,14 +17,14 @@
                 font-family: 'Seravek Light';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+                src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
             }
 
             @font-face {
                 font-family: 'Seravek Medium';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+                src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
             }
 
             .seravek-light-font {
@@ -299,7 +299,7 @@
        
         <script type="text/javascript" src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 
-        <script src="{{ asset('assets/global/plugins/bootstrap/bootstrap-4.1.3/js/bootstrap.min.js') }}"></script>
+        <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap/bootstrap-4.1.3/js/bootstrap.min.js') }}"></script>
         <script type="text/javascript">
             $(document).ready(function() {
 

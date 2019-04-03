@@ -204,8 +204,8 @@
                 fontNames: ['Open Sans'],
                 callbacks: {
                     onFocus: function() {
-                        $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-                        $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/content-long.png')}}")
+                        $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+                        $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/content-long.png')}}")
                     },
                     onImageUpload: function(files){
                         sendFile(files[0], $(this).attr('id'));
@@ -371,50 +371,50 @@
 			 /* BUTTON TO FORM */
             $('#featureForm').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureForm', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/outlet.png')}}")
+                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
             });
 			
             /* OUTLET */
             $('#featureOutlet').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureOutlet', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/outlet.png')}}")
+                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
             });
 
             /* VIDEO */
             $('#featureVideo').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureVideo', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/video.png')}}")
+                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/video.png')}}")
             });
 
             /* LOCATION */
             $('#featureLocation').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureLocation', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
             });
 
             /* PRODUCT */
             $('#featureProduct').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureProduct', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/product.png')}}")
+                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
             });
 
             /* DATE */
             $('#featureDate').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureDate', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
             });
 
             /* TIME */
             $('#featureTime').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureTime', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
             });
 
             /* PUBLISH DATE */
@@ -500,56 +500,56 @@
         }
 
         $('#field_title').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/title.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/title2.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/title.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/title2.png')}}")
         })
         $('#field_post_date').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/post-date.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/post-date2.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/post-date.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/post-date2.png')}}")
         })
         $('#field_content_short').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/content-short.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news4.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/content-short.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news4.png')}}")
         })
         $('#field_image_square').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/image-square.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news4.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/image-square.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news4.png')}}")
         })
         $('#field_image_landscape').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/image-landscape.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/image-landscape.png')}}")
         })
         $('.field_event').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/event.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
         })
         $('.featureVideoForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/video.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/video.png')}}")
         })
         $('.featureProductForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/product.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
         })
         $('.featureOutletForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/outlet.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
         })
         $("input[name='publish_type']").change(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news1.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news2.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}")
         })
         $(".field_publish_date").focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news1.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news2.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}")
         })
         $(document).on('focus', '#selectOutlet .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/outlet.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
         })
         $(document).on('focus', '#selectProduct .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{'img/news/product.png')}}")
+            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
         })
     </script>
 @endsection
@@ -587,8 +587,8 @@
         <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
         <div class="portlet-body m-form__group row">
                 <div class="col-md-4">
-                    <img src="{{env('AWS_ASSET_URL') }}{{'img/news/news1.png')}}" style="width:100%" alt="tutorial" id="tutorial1">
-                    <img src="{{env('AWS_ASSET_URL') }}{{'img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
+                    <img src="{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}" style="width:100%" alt="tutorial" id="tutorial1">
+                    <img src="{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
                 </div>
                 <div class="col-md-8">
                 <div class="form-body">

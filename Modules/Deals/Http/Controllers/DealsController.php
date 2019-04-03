@@ -258,10 +258,10 @@ class DealsController extends Controller
             $data       = $dataDeals['data'];
 
             // DATA PRODUCT
-            $data['product'] = parent::getData(MyHelper::get('product/list'));
+            $data['product'] = parent::getData(MyHelper::get('product/list?log_save=0'));
 
             // DATA OUTLET
-            $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+            $data['outlet'] = parent::getData(MyHelper::get('outlet/list?log_save=0'));
 
             if ($identifier == "deals-point") {
                 return view('deals::point.create', $data);
@@ -348,25 +348,25 @@ class DealsController extends Controller
         // DATA OUTLET
         // $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
 
-        $getCity = MyHelper::get('city/list');
+        $getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
 		
-		$getProvince = MyHelper::get('province/list');
+		$getProvince = MyHelper::get('province/list?log_save=0');
 		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
 		
-		$getCourier = MyHelper::get('courier/list');
+		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 		
-		$getOutlet = MyHelper::get('outlet/list');
+		$getOutlet = MyHelper::get('outlet/list?log_save=0');
 		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-		$getProduct = MyHelper::get('product/list');
+		$getProduct = MyHelper::get('product/list?log_save=0');
 		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 		
-		$getTag = MyHelper::get('product/tag/list');
+		$getTag = MyHelper::get('product/tag/list?log_save=0');
 		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-		$getMembership = MyHelper::post('membership/list',[]);
+		$getMembership = MyHelper::post('membership/list?log_save=0',[]);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 		
         if(!empty(Session::get('filter_user'))){
@@ -609,7 +609,7 @@ class DealsController extends Controller
             $data[$key] = $value;
         }
 
-        $data['outlet']    = parent::getData(MyHelper::get('outlet/list'));
+        $data['outlet']    = parent::getData(MyHelper::get('outlet/list?log_save=0'));
         $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => ["Deals", "Hidden"]]));
         // $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
 
@@ -659,7 +659,7 @@ class DealsController extends Controller
             $data[$key] = $value;
         }
 
-        $data['outlet']    = parent::getData(MyHelper::get('outlet/list'));
+        $data['outlet']    = parent::getData(MyHelper::get('outlet/list?log_save=0'));
         $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => ["Deals", "Hidden"]]));
         // $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
 
@@ -715,10 +715,10 @@ class DealsController extends Controller
             $data       = $dataDeals['data'];
 
             // DATA PRODUCT
-            $data['products'] = parent::getData(MyHelper::get('product/list'));
+            $data['products'] = parent::getData(MyHelper::get('product/list?log_save=0'));
 
             // DATA OUTLET
-            $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+            $data['outlet'] = parent::getData(MyHelper::get('outlet/list?log_save=0'));
 
             return view('deals::subscription.subscription_create', $data);
         }
@@ -813,10 +813,10 @@ class DealsController extends Controller
         }
 
         // DATA PRODUCT
-        $data['products'] = parent::getData(MyHelper::get('product/list'));
+        $data['products'] = parent::getData(MyHelper::get('product/list?log_save=0'));
 
         // DATA OUTLET
-        $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+        $data['outlet'] = parent::getData(MyHelper::get('outlet/list?log_save=0'));
 
         // dd($data);
         return view('deals::subscription.subscription_detail', $data);

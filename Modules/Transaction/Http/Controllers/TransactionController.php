@@ -1105,13 +1105,13 @@ class TransactionController extends Controller
 
         if($getList['status'] == 'success') $data['list'] = $getList['result']; else $data['list'] = null;
 
-        $getCity = MyHelper::get('city/list');
+        $getCity = MyHelper::get('city/list?log_save=0');
         if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
 
-        $getProvince = MyHelper::get('province/list');
+        $getProvince = MyHelper::get('province/list?log_save=0');
         if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
 		
-		$getCourier = MyHelper::get('courier/list');
+		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
 			
         return view('transaction::transaction.transaction_delivery', $data);

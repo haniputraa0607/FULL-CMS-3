@@ -20,14 +20,14 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{(("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         .kotak {
@@ -475,7 +475,7 @@
                                                             -webkit-background-size: 31.7px 34.2px, cover;
                                                             background-size: 31.7px 34.2px, cover;
                                                             background-position: center;">
-                                <img class="img-responsive img-lock" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/lock.png') }}">
+                                <img class="img-responsive img-lock" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/lock.png') }}">
                             </div>
                             @php 
                                 $data['all_membership'][$key]['type'] = "Terkunci";
@@ -495,7 +495,7 @@
             <div class="row">
                 <div class="" id="progress-nominal">
                     <div class="text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" style="width:32px;">
-                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/money.png') }}">
+                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/money.png') }}">
                     </div>
                     <div class=" text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" id="status_nominal">
                         {{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}
@@ -503,7 +503,7 @@
                 </div>
                 <div class="col-12" id="progress-nominal-nopad" style="display:none">
                     <div class="text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" style="width:32px;">
-                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/money.png') }}">
+                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/money.png') }}">
                     </div>
                     <div class=" text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" id="status_nominal">
                         {{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}
@@ -515,7 +515,7 @@
                     <div class="progress-now"></div>
                     <div class="text-14-3px progress"></div>
                     
-                    <!--<img class="img-responsive img-progress" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/icon-heart2.png') }}" style="width:24.7px">-->
+                    <!--<img class="img-responsive img-progress" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/icon-heart2.png') }}" style="width:24.7px">-->
                     <img class="img-responsive img-progress" src="{{ $data['all_membership'][$keyStatusNow+1]['membership_image'] }}" style="width:32px; height:32px;vertical-align:top">
                 </div>
                 <div class="space-bottom col-12" id="detail-progress">
@@ -543,7 +543,7 @@
                 @endif
                 <div class="col-12" id="status_detail">
                     <div class="text-15px space-top space-text seravek-font text-black display-inline" style="width:32px; @if($keyStatusNow == count($data['all_membership']) - 1 ) vertical-align:middle @else vertical-align:top @endif" id="img-cup">
-                        <img class="img-responsive" style="max-width: 16.4px;" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/cup.png') }}">
+                        <img class="img-responsive" style="max-width: 16.4px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/cup.png') }}">
                     </div>
                     <div class="text-15px space-top space-text seravek-font text-black display-inline" id="status_detail_text">
                         @if($keyStatusNow == count($data['all_membership']) - 1 )
@@ -565,7 +565,7 @@
                 </div>
                 <div class="col-12">
                     <div class="text-14px space-top space-bottom display-inline" style="width:32px; vertical-align:top; margin-left:6px">
-                        <img class="img-responsive" style="width: 23.3px;" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/cash.png') }}">
+                        <img class="img-responsive" style="width: 23.3px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/cash.png') }}">
                     </div>
                     <div class="text-16-7px space-top space-bottom seravek-light-font text-black display-inline" id="status_benefit">
                         Cashback sebanyak {{$data['all_membership'][$keyStatusNow]['benefit_cashback_multiplier']}}%

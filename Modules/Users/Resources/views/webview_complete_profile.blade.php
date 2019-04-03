@@ -177,7 +177,7 @@
                             <option value="Male" {{ ($user['gender']=='Male' ? 'selected' : '') }}>Laki-laki</option>
                             <option value="Female" {{ ($user['gender']=='Female' ? 'selected' : '') }}>Perempuan</option>
                         </select>
-                        <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
+                        <img class="select-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/arrow-down.png') }}" alt="">
                         <div id="error-gender" class="text-red text-error"></div>
                     </div>
 
@@ -206,7 +206,7 @@
                                 <option value="{{$city['id_city']}}" @if($city['id_city']==$id_city) selected @endif>{{ $city['city_type']. " " .$city['city_name'] }}</option>
                             @endforeach
                         </select>
-                        <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
+                        <img class="select-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/arrow-down.png') }}" alt="">
                         <div id="city-dropdown" style="position: relative;"></div>
                         <div id="error-city" class="text-red text-error"></div>
                     </div>
@@ -219,7 +219,7 @@
                             <option value="Complicated" {{ ($user['relationship']=='Complicated' ? 'selected' : '') }}>Complicated</option>
                             <option value="Jomblo" {{ ($user['relationship']=='Jomblo' ? 'selected' : '') }}>Jomblo</option>
                         </select>
-                        <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
+                        <img class="select-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/arrow-down.png') }}" alt="">
                         <div id="error-relationship" class="text-red text-error"></div>
                     </div>
 
