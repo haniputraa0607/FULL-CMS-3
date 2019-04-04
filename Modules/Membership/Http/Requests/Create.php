@@ -14,7 +14,7 @@ class Create extends FormRequest
     public function rules()
     {
         return [
-            'membership.membership_image' => 'required|dimensions:width=300,height=300',
+            'mebership.membership_image' => 'required|dimensions:width=300,height=300',
         ];
     }
 

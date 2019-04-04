@@ -3,10 +3,12 @@
 	<meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
 
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
-    <link href="{{Cdn::asset('kk-ass/assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    
+    <script src="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
+    <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+
     <!-- another css plugin -->
 	@yield('page-style-plugin')
 

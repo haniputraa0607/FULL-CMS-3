@@ -84,8 +84,8 @@
 														'<option value="trx_product">Transaction Product</option>'+
 														'<option value="trx_product_not">Transaction Product Not</option>'+
 														'<option value="trx_product_count">Transaction Product Count</option>'+
-														'<option value="trx_product_tag">Transaction Product Tag</option>'+
-														'<option value="trx_product_tag_count">Transaction Product Tag Count</option>'+
+												// 		'<option value="trx_product_tag">Transaction Product Tag</option>'+
+												// 		'<option value="trx_product_tag_count">Transaction Product Tag Count</option>'+
 														'<option value="trx_date">Transaction Date</option>'+
 														'<option value="last_trx">Last Transaction</option>'+
 														'<option value="trx_count">Transaction Count</option>'+
@@ -236,8 +236,8 @@
 										'<option value="trx_product">Transaction Product</option>'+
 										'<option value="trx_product_not">Transaction Product Not</option>'+
 										'<option value="trx_product_count">Transaction Product Count</option>'+
-										'<option value="trx_product_tag">Transaction Product Tag</option>'+
-										'<option value="trx_product_tag_count">Transaction Product Tag Count</option>'+
+								// 		'<option value="trx_product_tag">Transaction Product Tag</option>'+
+								// 		'<option value="trx_product_tag_count">Transaction Product Tag Count</option>'+
 										'<option value="trx_date">Transaction Date</option>'+
 										'<option value="last_trx">Last Transaction</option>'+
 										'<option value="trx_count">Transaction Count</option>'+
@@ -549,7 +549,7 @@
 			<?php
 			foreach($city as $row){
 			?>
-			operator_value.options[operator_value.options.length] = new Option("<?php echo $row['city_name']; ?>", "<?php echo $row['city_name']; ?>");
+			operator_value.options[operator_value.options.length] = new Option('<?php echo $row['city_name']; ?>', '<?php echo $row['city_name']; ?>');
 			<?php
 			}
 			?>
@@ -591,7 +591,7 @@
 			<?php
 			foreach($province as $row){
 			?>
-			operator_value.options[operator_value.options.length] = new Option("<?php echo $row['province_name']; ?>", "<?php echo $row['province_name']; ?>");
+			operator_value.options[operator_value.options.length] = new Option('<?php echo $row['province_name']; ?>', '<?php echo $row['province_name']; ?>');
 			<?php
 			}
 			?>
@@ -760,7 +760,7 @@
 			<?php
 			foreach($outlets as $outlet){
 			?>
-			operator_value.options[operator_value.options.length] = new Option(<?php echo json_encode($outlet['outlet_name']);?>, "<?php echo $outlet['id_outlet']; ?>");
+			operator_value.options[operator_value.options.length] = new Option("<?php echo $outlet['outlet_name'];?>", '<?php echo $outlet['id_outlet']; ?>');
 			<?php
 			}
 			?>
@@ -784,7 +784,7 @@
 			<?php
 			foreach($products as $product){
 			?>
-			operator_value.options[operator_value.options.length] = new Option(<?php echo json_encode($product['product_name']);?>, "<?php echo $product['id_product']; ?>");
+			operator_value.options[operator_value.options.length] = new Option("<?php echo $product['product_name'];?>", "<?php echo $product['id_product']; ?>");
 			<?php
 			}
 			?>
@@ -924,8 +924,8 @@
 															<option value="trx_product">Transaction Product</option>
 															<option value="trx_product_not">Transaction Product Not</option>
 															<option value="trx_product_count">Transaction Product Count</option>
-															<option value="trx_product_tag">Transaction Product Tag</option>
-															<option value="trx_product_tag_count">Transaction Product Tag Count</option>
+															<!--<option value="trx_product_tag">Transaction Product Tag</option>-->
+															<!--<option value="trx_product_tag_count">Transaction Product Tag Count</option>-->
 															<option value="trx_date">Transaction Date</option>
 															<option value="last_trx">Last Transaction</option>
 															<option value="trx_count">Transaction Count</option>
@@ -1119,8 +1119,8 @@
 																	<option value="trx_product" @if($row['subject'] == 'trx_product') selected @endif>Transaction Product</option>
 																	<option value="trx_product_not" @if($row['subject'] == 'trx_product_not') selected @endif>Transaction Product Not</option>
 																	<option value="trx_product_count" @if($row['subject'] == 'trx_product_count') selected @endif>Transaction Product Count</option>
-																	<option value="trx_product_tag" @if($row['subject'] == 'trx_product_tag') selected @endif>Transaction Product Tag</option>
-																	<option value="trx_product_tag_count" @if($row['subject'] == 'trx_product_tag_count') selected @endif>Transaction Product Tag Count</option>
+																	<!--<option value="trx_product_tag" @if($row['subject'] == 'trx_product_tag') selected @endif>Transaction Product Tag</option>-->
+																	<!--<option value="trx_product_tag_count" @if($row['subject'] == 'trx_product_tag_count') selected @endif>Transaction Product Tag Count</option>-->
 																	<option value="trx_date" @if($row['subject'] == 'trx_date') selected @endif>Transaction Date</option>
 																	<option value="last_trx" @if($row['subject'] == 'last_trx') selected @endif>Last Transaction</option>
 																	<option value="trx_count" @if($row['subject'] == 'trx_count') selected @endif>Transaction Count</option>

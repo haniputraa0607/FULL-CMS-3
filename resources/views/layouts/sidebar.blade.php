@@ -397,11 +397,11 @@
 							<span class="title">[Response] Transaction Success</span>
 						</a>
 					</li>
-					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-payment') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/transaction-payment')}}" class="nav-link ">
-							<span class="title">[Response] Transaction Payment</span>
-						</a>
-					</li>
+					<!--<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-payment') ? 'active open' : ''}}">-->
+					<!--	<a href="{{url('transaction/autoresponse/transaction-payment')}}" class="nav-link ">-->
+					<!--		<span class="title">[Response] Transaction Payment</span>-->
+					<!--	</a>-->
+					<!--</li>-->
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-expired') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-expired')}}" class="nav-link ">
 							<span class="title">[Response] Transaction Expired</span>

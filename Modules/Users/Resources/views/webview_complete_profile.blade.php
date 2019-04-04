@@ -4,11 +4,11 @@
 @extends('webview.main')
 
 @section('page-style-plugin')
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @stop
 
 @section('css')
@@ -186,7 +186,7 @@
                             <option value="Male" {{ ($user['gender']=='Male' ? 'selected' : '') }}>Laki-laki</option>
                             <option value="Female" {{ ($user['gender']=='Female' ? 'selected' : '') }}>Perempuan</option>
                         </select>
-                        <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
+                        <img class="select-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/arrow-down.png') }}" alt="">
                         <div id="error-gender" class="text-red text-error"></div>
                     </div>
 
@@ -215,7 +215,7 @@
                                 <option value="{{$city['id_city']}}" @if($city['id_city']==$id_city) selected @endif>{{ $city['city_type']. " " .$city['city_name'] }}</option>
                             @endforeach
                         </select>
-                        <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
+                        <img class="select-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/arrow-down.png') }}" alt="">
                         <div id="city-dropdown" style="position: relative;"></div>
                         <div id="error-city" class="text-red text-error"></div>
                     </div>
@@ -228,7 +228,7 @@
                             <option value="Complicated" {{ ($user['relationship']=='Complicated' ? 'selected' : '') }}>Complicated</option>
                             <option value="Jomblo" {{ ($user['relationship']=='Jomblo' ? 'selected' : '') }}>Jomblo</option>
                         </select>
-                        <img class="select-img" src="{{ asset('img/webview/arrow-down.png') }}" alt="">
+                        <img class="select-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/arrow-down.png') }}" alt="">
                         <div id="error-relationship" class="text-red text-error"></div>
                     </div>
 
@@ -252,12 +252,11 @@
 @stop
 
 @section('page-script')
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/webview/scripts/select2-custom.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
-    
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/webview/scripts/select2-custom.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
+
     <script>
         // when document ready
         (function() {

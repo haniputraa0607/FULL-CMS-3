@@ -16,6 +16,5 @@ Route::group(['prefix' => 'webview', 'namespace' => 'Modules\Voucher\Http\Contro
 {
     Route::any('/voucher/{id_deals_user}', 'WebviewVoucherController@voucherDetail');
     Route::any('/voucher/v2/{id_deals_user}', 'WebviewVoucherController@voucherDetailV2');
-    Route::post('/voucher/invalidate', 'WebviewVoucherController@voucherInvalidate');
     Route::any('/voucher/used/{id_deals_user}', 'WebviewVoucherController@voucherUsed');
 });

@@ -13,7 +13,7 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="deals_title" value="{{ $val['deals_title'] }}" placeholder="Title" required>
+                            <input type="text" class="form-control" name="deals_title" value="{{ $val['deals_title'] }}" placeholder="Title" required maxlength="20">
                         </div>
                     </div>
 
@@ -25,7 +25,7 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="deals_second_title" value="{{ $val['deals_second_title'] }}" placeholder="Second Title">
+                            <input type="text" class="form-control" name="deals_second_title" value="{{ $val['deals_second_title'] }}" placeholder="Second Title" maxlength="20">
                         </div>
                     </div>
 

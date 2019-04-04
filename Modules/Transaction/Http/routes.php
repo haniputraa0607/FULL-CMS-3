@@ -50,12 +50,12 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
 
 Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
-    Route::post('/web/view/detail', 'WebviewController@detail');
-    Route::post('/web/view/detail/check', 'WebviewController@check');
-    Route::post('/web/view/detail/point', 'WebviewController@detailPoint');
-    Route::post('/web/view/detail/balance', 'WebviewController@detailBalance');
-    Route::post('/web/view/trx', 'WebviewController@success');
-    Route::post('/web/view/outletapp', 'WebviewController@receiptOutletapp');
+    Route::any('/web/view/detail', 'WebviewController@detail');
+    Route::any('/web/view/detail/check', 'WebviewController@check');
+    Route::any('/web/view/detail/point', 'WebviewController@detailPoint');
+    Route::any('/web/view/detail/balance', 'WebviewController@detailBalance');
+    Route::any('/web/view/trx', 'WebviewController@success');
+    Route::any('/web/view/outletapp', 'WebviewController@receiptOutletapp');
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()

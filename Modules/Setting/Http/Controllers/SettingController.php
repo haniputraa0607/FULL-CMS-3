@@ -10,25 +10,15 @@ use App\Lib\MyHelper;
 
 class SettingController extends Controller
 {
-    public function faqWebview(Request $request)
+    public function faqWebview()
     {
-        $bearer = $request->header('Authorization');
-        if ($bearer == "") {
-            return view('error', ['msg' => 'Unauthenticated']);
-        }
-        
-        $faqList = MyHelper::getWithBearer('setting/faq', $bearer);
+        $faqList = MyHelper::get('setting/faq');
         return view('setting::webview.faq', ['faq' => $faqList['result']]);
     }
 
-    public function aboutWebview($key, Request $request)
+    public function aboutWebview($key)
     {
-        $bearer = $request->header('Authorization');
-        if ($bearer == "") {
-            return view('error', ['msg' => 'Unauthenticated']);
-        }
-
-        $data = MyHelper::postWithBearer('setting/webview', ['key' => $key, 'data' => 1], $bearer);
+        $data = MyHelper::post('setting/webview', ['key' => $key, 'data' => 1]);
         if(isset($data['status']) && $data['status'] == 'success'){
             $data['value'] =preg_replace('/font face="[^;"]*(")?/', 'div class="seravek-light-font"' , $data['result']['value_text']);
             $data['value'] =preg_replace('/<\/font>?/', '</div>' , $data['value']);
@@ -523,7 +513,7 @@ class SettingController extends Controller
 			$data['background'] = [];
 		
 		$test = MyHelper::get('autocrm/textreplace');
-        
+		
 		if($test['status'] == 'success'){
 			$data['textreplaces'] = $test['result'];
         }
@@ -923,7 +913,6 @@ class SettingController extends Controller
     {
         $validatedData = $request->validate([
             // 'complete_profile_point'    => 'required',
-            'complete_profile_popup' => 'required',
             'complete_profile_cashback' => 'required',
             'complete_profile_count'    => 'required',
             'complete_profile_interval' => 'required'

@@ -116,13 +116,11 @@ class AutocrmController extends Controller
 				  'menu_active'       => 'about-autoresponse',
 				  'submenu_active'    => 'about-autoresponse-'.$subject
 				];
-
 		if(stristr($subject, 'enquiry')){
 			$data['menu_active'] = 'enquiries';
 			$data['submenu_active'] = 'autoresponse-'.$subject;
 			$data['title'] = 'Auto Response '.ucfirst(str_replace('-',' ',$subject));
 		}
-
 		$query = MyHelper::get('autocrm/list');
 		$test = MyHelper::get('autocrm/textreplace');
 		$auto = null;
@@ -177,33 +175,33 @@ class AutocrmController extends Controller
 					  'submenu_active'    => 'autocrm-new'
 					];
 	
-			$getCity = MyHelper::get('city/list');
+			$getCity = MyHelper::get('city/list?log_save=0');
 			if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
 			
-			$getProvince = MyHelper::get('province/list');
+			$getProvince = MyHelper::get('province/list?log_save=0');
 			if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
 			
-			$getCourier = MyHelper::get('courier/list');
+			$getCourier = MyHelper::get('courier/list?log_save=0');
 			if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 			
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/list?log_save=0');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-			$getProduct = MyHelper::get('product/list');
+			$getProduct = MyHelper::get('product/list?log_save=0');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 			
-			$getTag = MyHelper::get('product/tag/list');
+			$getTag = MyHelper::get('product/tag/list?log_save=0');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 			
-			$getMembership = MyHelper::post('membership/list', []);
+			$getMembership = MyHelper::post('membership/list?log_save=0', []);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 			
-			$test = MyHelper::get('autocrm/textreplace');
+			$test = MyHelper::get('autocrm/textreplace?log_save=0');
 			if($test['status'] == 'success'){
 				$data['textreplaces'] = $test['result'];
 			}
 
-			$getApiKey = MyHelper::get('setting/whatsapp');
+			$getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
 			if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
 				$data['api_key_whatsapp'] = $getApiKey['result']['value'];
 			}else{
@@ -265,35 +263,35 @@ class AutocrmController extends Controller
 				$data['conditions'] = [];
 			}
 			
-			$getCity = MyHelper::get('city/list');
+			$getCity = MyHelper::get('city/list?log_save=0');
 			if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
 			
-			$getProvince = MyHelper::get('province/list');
+			$getProvince = MyHelper::get('province/list?log_save=0');
 			if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
 			
-			$getCourier = MyHelper::get('courier/list');
+			$getCourier = MyHelper::get('courier/list?log_save=0');
 			if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 			
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/list?log_save=0');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-			$getProduct = MyHelper::get('product/list');
+			$getProduct = MyHelper::get('product/list?log_save=0');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 			
-			$getTag = MyHelper::get('product/tag/list');
+			$getTag = MyHelper::get('product/tag/list?log_save=0');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 			
-			$getMembership = MyHelper::post('membership/list', []);
+			$getMembership = MyHelper::post('membership/list?log_save=0', []);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
-			$test = MyHelper::get('autocrm/textreplace');
+			$test = MyHelper::get('autocrm/textreplace?log_save=0');
 			if($test['status'] == 'success'){
 				$data['textreplaces'] = $test['result'];
 			}else{
 				$data['textreplaces'] = [];
 			}
 
-			$getApiKey = MyHelper::get('setting/whatsapp');
+			$getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
 			if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
 				$data['api_key_whatsapp'] = $getApiKey['result']['value'];
 			}else{

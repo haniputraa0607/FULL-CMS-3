@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url('js/global.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('js/global.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
 
         var idVisibility = [];
@@ -29,7 +29,6 @@
 					idVisibility.splice(index, 1);
 				}
 			}
-            console.log(idVisibility)
 		}
 
         // action for checkbox all
@@ -178,9 +177,10 @@
         			<div class="portlet-body form">
 			            <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data" id="form">
                             @if (!empty($product))
+                            
+							<input type="hidden" name="page" value="{{$page}}">
                             <input type="hidden" name="visibility" value="{{$visibility}}">
 							<input type="hidden" name="key" value="{{$key}}">
-							<input type="hidden" name="page" value="{{$page}}">
 							<div class="form-group">
 								<label class="col-md-5 control-label" style="padding:0">Select All Product in All Outlet</label>
 								<div class="col-md-1">

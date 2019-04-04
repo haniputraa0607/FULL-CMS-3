@@ -5,37 +5,81 @@
 @extends('webview.main')
 
 @section('page-style-plugin')
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="{{Cdn::asset('kk-ass/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END THEME GLOBAL STYLES -->
-    <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" /><link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-    <!-- END PAGE LEVEL STYLES -->
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN THEME GLOBAL STYLES -->
+        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
+        <!-- END THEME GLOBAL STYLES -->
+        <!-- BEGIN PAGE LEVEL STYLES -->
+        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" /><link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+        <!-- END PAGE LEVEL STYLES -->
+        <!-- BEGIN THEME LAYOUT STYLES -->
+        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/layouts/layout4/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
+        <!-- END THEME LAYOUT STYLES -->
 @stop
 
 @section('css')
     <style type="text/css">
+        .form-group.form-md-line-input .form-control.edited:not([readonly]) ~ label:after,
+        .form-group.form-md-line-input .form-control.edited:not([readonly]) ~ .form-control-focus:after,
+        .form-group.form-md-line-input .form-control:focus:not([readonly]) ~ label:after,
+        .form-group.form-md-line-input .form-control:focus:not([readonly]) ~ .form-control-focus:after {
+            background: #6C5648;
+        }
+
+        .md-checkbox label > .check{
+            border-color: #6C5648;
+        }
+        .datepicker table td, .datepicker table th, .datetimepicker table td, .datetimepicker table th{
+            font-family: "Seravek", sans-serif !important;
+        }
+        .datepicker .active,
+        .datetimepicker .active,
+        .md-radio label > .check {
+            background-color: #6C5648 !important;
+        }
+        .datepicker .active:hover,
+        .datetimepicker .active:hover{
+            background-color: #907462 !important;
+        }
+
+        .form-actions .btn{
+            width: 75%;
+            max-width: 400px;
+            font-size: 16px;
+        }
+        .btn-round{
+            border-radius: 25px !important;
+        }
+        .btn-outline.brown{
+            border-color: #6C5648;
+            color: #6C5648;
+            background-color: #fff;
+        }
+        .btn-outline.brown:focus{
+            background-color: #6C5648;
+            color: #fff;
+        }
         @media only screen and (max-width: 768px) {
             /* For mobile phones: */
             [class*="col-"] {
                 width: 100%;
             }
+
         }
     </style>
 @stop
 
 @section('content')
     <!-- BEGIN CONTAINER -->
-    <div class="page-container open-sans">
+    <div class="page-container">
         <!-- BEGIN CONTENT -->
         <div class="page-content-wrapper">
-            <!-- BEGIN PAGE BASE CONTENT -->
+            <!-- BEGIN CONTENT BODY -->
             <div class="col-md-offset-3 col-md-6" style="padding-left: 0; padding-right: 0;">
                 <!-- BEGIN SAMPLE FORM PORTLET-->
                 <div class="portlet light">
@@ -44,7 +88,7 @@
 {{-- form --}}
 <form role="form" action="{{ url($form_action) }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
-   
+
     <div class="form-body">
         <?php 
             $old = session()->getOldInput();
@@ -169,20 +213,19 @@
             </div>
         @endforeach
 
-
+        
         @if($form_action != "")
             <input type="hidden" name="bearer" value="{{ $bearer }}">
             <input type="hidden" name="flag" value="{{ $flag }}">
             <input type="hidden" name="id_news" value="{{ $news['id_news'] }}">
         @endif
         
-        <div class="form-actions noborder">
-
+        <div class="form-actions noborder text-center">
             @if($form_action != "")
-                <input type="submit" value="Submit" class="btn blue btn-block">
+                <input type="submit" value="Submit" class="btn btn-round btn-outline brown">
             @else
                 {{-- only preview for admin --}}
-                <button type="button" class="btn blue btn-block" style="cursor: not-allowed;">Submit</button>
+                <button type="button" class="btn btn-round btn-outline brown" style="cursor: not-allowed;">Submit</button>
             @endif
         </div>
     </div>
@@ -192,29 +235,29 @@
                 </div>
                 <!-- END SAMPLE FORM PORTLET-->
             </div>
-            <!-- END PAGE BASE CONTENT -->
+            <!-- END CONTENT BODY -->
         </div>
         <!-- END CONTENT -->
     </div>
     <!-- END CONTAINER -->
 @stop
 
-@section('page-script')
+@section('page-script')       
     <!--[if lt IE 9] -->
     <!-- BEGIN CORE PLUGINS -->
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
     <!-- END CORE PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
-    <script src="{{Cdn::asset('kk-ass/assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
     
     <!-- END THEME GLOBAL SCRIPTS -->
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
-    <script src="{{Cdn::asset('kk-ass/assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>
     <!-- END THEME LAYOUT SCRIPTS -->
     <script>
         $('.datepicker').datepicker({

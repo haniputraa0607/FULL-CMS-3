@@ -106,7 +106,8 @@ class MembershipController extends Controller
 			}
 			else {
 			    if(isset($save['messages'])){
-					return redirect('membership/update/'.$id_membership)->withErrors($save['messages']);
+			        
+                return redirect('membership/update/'.$id_membership)->withErrors($save['messages']);
 			    }else{
 			        return redirect('membership/update/'.$id_membership)->withErrors('Something Went Wrong.');
 			    }

@@ -21,10 +21,11 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::any('level/delete/{id}', 'SettingController@levelDelete');
 
     Route::any('whatsapp', ['middleware' => 'config_control:74,75', 'uses' => 'SettingController@whatsApp']);
+
+    Route::any('version', 'SettingController@versionSetting');
 	
     Route::any('home', 'SettingController@homeSetting');
-    Route::any('date', 'SettingController@dateSetting');
-    Route::any('version', 'SettingController@versionSetting');
+	Route::any('date', 'SettingController@dateSetting');
     Route::get('{key}', 'SettingController@settingList');
 	
 	Route::any('background/create', ['middleware' => 'config_control:30,32', 'uses' => 'SettingController@createBackground']);
@@ -41,7 +42,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('dashboard/default-date', 'SettingController@updateDateRange');
     Route::post('dashboard/order-section', 'SettingController@orderDashboardSection');
     Route::post('dashboard/order-card', 'SettingController@orderDashboardCard');
-    
+
     /* banner */
     Route::post('banner/create', ['middleware' => 'feature_control:145', 'uses' => 'SettingController@createBanner']);
     Route::post('banner/update', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@updateBanner']);

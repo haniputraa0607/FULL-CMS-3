@@ -32,7 +32,7 @@ class NewsController extends Controller
 	
 	public function indexAjax()
     {
-		$news = MyHelper::post('news/list', ['admin'=> 1]);
+		$news = MyHelper::post('news/list?log_save=0', ['admin'=> 1]);
 		if (isset($news['status']) && $news['status'] == "success") {
             $data = $news['result'];
         }

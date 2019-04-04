@@ -60,8 +60,8 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
+        
+         <div class="form-group">
             <label class="col-md-3 control-label">
                 Photo <span class="required" aria-required="true">* <br>(300*300) </span> 
                 <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>
@@ -69,7 +69,7 @@
             <div class="col-md-8">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                    <img src="@if(isset($syu['photos'][0]['url_product_photo'])){{$syu['photos'][0]['url_product_photo']}}@endif" alt="">
+                     <img src="@if(isset($syu['photos'][0]['url_product_photo'])){{$syu['photos'][0]['url_product_photo']}}@endif" alt="">
                     </div>
                     <div class="fileinput-preview fileinput-exists thumbnail" id="imageproduct" style="max-width: 200px; max-height: 200px;"></div>
                     <div>
@@ -85,42 +85,43 @@
             </div>
         </div>
 
-        <!-- <div class="form-group">
-            <label class="col-md-3 control-label">Video
-                <br>
-                <span class="required" aria-required="true"> (from youtube) </span> 
-                <i class="fa fa-question-circle tooltips" data-original-title="Video Tentang Produk" data-container="body"></i>
-            </label>
-            <div class="col-md-8">
-                <div class="input-icon right">
-                    <input type="url" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ" class="form-control" name="product_video" value="{{ $syu['product_video'] }}">
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="form-group">
-            <label class="col-md-3 control-label">Weight
-                <br>
-                <span class="required" aria-required="true"> (gram) </span> 
-                <i class="fa fa-question-circle tooltips" data-original-title="Berat Produk" data-container="body"></i>
-            </label>
-            <div class="col-md-8">
-                <div class="input-icon right">
-                    <input type="number" class="form-control" name="product_weight" value="{{ $syu['product_weight'] }}" required>
-                </div>
-            </div>
-        </div> -->
+
+        <!--<div class="form-group">-->
+        <!--    <label class="col-md-3 control-label">Video-->
+        <!--        <br>-->
+        <!--        <span class="required" aria-required="true"> (from youtube) </span> -->
+        <!--        <i class="fa fa-question-circle tooltips" data-original-title="Video Tentang Produk" data-container="body"></i>-->
+        <!--    </label>-->
+        <!--    <div class="col-md-8">-->
+        <!--        <div class="input-icon right">-->
+        <!--            <input type="url" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ" class="form-control" name="product_video" value="{{ $syu['product_video'] }}">-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--    <label class="col-md-3 control-label">Weight-->
+        <!--        <br>-->
+        <!--        <span class="required" aria-required="true"> (gram) </span> -->
+        <!--        <i class="fa fa-question-circle tooltips" data-original-title="Berat Produk" data-container="body"></i>-->
+        <!--    </label>-->
+        <!--    <div class="col-md-8">-->
+        <!--        <div class="input-icon right">-->
+        <!--            <input type="number" class="form-control" name="product_weight" value="{{ $syu['product_weight'] }}" required>-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--</div>-->
         
-        <!-- <div class="form-group">
-            <label for="multiple" class="control-label col-md-3">Description
-                <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>
-            </label>
-            <div class="col-md-8">
-                <div class="input-icon right">
-                    <textarea name="product_description" id="pro_text" class="form-control summernote">{{ $syu['product_description'] }}</textarea>
-                </div>
-            </div>
-        </div> -->
-        <!-- {{--<div class="form-group">
+        <!--<div class="form-group">-->
+        <!--    <label for="multiple" class="control-label col-md-3">Description-->
+        <!--        <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>-->
+        <!--    </label>-->
+        <!--    <div class="col-md-8">-->
+        <!--        <div class="input-icon right">-->
+        <!--            <textarea name="product_description" id="pro_text" class="form-control summernote">{{ $syu['product_description'] }}</textarea>-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--</div>-->
+          <!-- {{--<div class="form-group">
             <label for="multiple" class="control-label col-md-3">Tag
                 {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}
             </label>

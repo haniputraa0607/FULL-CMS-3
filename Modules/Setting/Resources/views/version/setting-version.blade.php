@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kk-ass/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
         function addTextReplace(param){
             var textvalue = $('#display_text').val();
@@ -242,39 +242,39 @@
                         </div>
                         <div class="portlet-body form">
                             <div class="form-body">
-                                <div class="form-group">
-                                    <div class="input-icon right">
-                                        <label class="col-md-4 control-label">
-                                        Image 
-                                        <span class="required" aria-required="true"> * </span> 
-                                        <!-- <br> -->
-                                        <!-- <span class="required" aria-required="true"> (500*500) </span>  -->
-                                        <i class="fa fa-question-circle tooltips" data-original-title="Gambar yang akan ditampilkan pada aplikasi" data-container="body"></i>
-                                        </label>
+                                  <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-4 control-label">
+                                Image 
+                                <span class="required" aria-required="true"> * </span> 
+                                <!--<br>-->
+                                <!-- <span class="required" aria-required="true"> (500*500) </span>  -->
+                                <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran persegi ditampilkan pada aplikasi" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                                    @if(isset($version['version_image']))
+                                    <img src="{{ env('AWS_URL')}}{{$version['version_image']}}" alt="">
+                                    @else
+                                    <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                    @endif
                                     </div>
-                                    <div class="col-md-8">
-                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                            @if(isset($version['version_image']))
-                                            <img src="{{env('AWS_URL')}}/{{$version['version_image']}}" alt="">
-                                            @else
-                                            <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-                                            @endif
-                                            </div>
-                                            <div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
-                                            <div>
-                                                <span class="btn default btn-file">
-                                                <span class="fileinput-new"> Select image </span>
-                                                <span class="fileinput-exists"> Change </span>
-                                                <input type="file" id="field_image_square" class="file" accept="image/*" data-jenis="square" name="version_image" required>
-                                                
-                                                </span>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
+                                    <div>
+                                        <span class="btn default btn-file">
+                                        <span class="fileinput-new"> Select image </span>
+                                        <span class="fileinput-exists"> Change </span>
+                                        <input type="file" id="field_image_square" class="file" accept="image/*" data-jenis="square" name="version_image">
+                                        
+                                        </span>
 
-                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                            </div>
-                                        </div>
+                                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-4 control-label">
@@ -309,7 +309,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="form-actions">
                         {{ csrf_field() }}

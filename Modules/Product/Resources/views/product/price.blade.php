@@ -1,22 +1,22 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{Cdn::asset('kk-ass/assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
     
 @section('page-script')
-    {{-- <script src="{{Cdn::asset('kk-ass/assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<!-- <script src="{{Cdn::asset('kk-ass/js/global.js') }}" type="text/javascript"></script> -->
-    <script type="text/javascript">
+    {{-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<!-- <script src="{{ env('AWS_ASSET_URL') }}{{('js/global.js') }}" type="text/javascript"></script> -->
+     <script type="text/javascript">
         $(document).ready(function() {
           $('.summernote').summernote({
             placeholder: 'Product Description',
@@ -33,63 +33,86 @@
             height: 120
           });
 
-        $(".price").each(function() {
+        $(".price_float").each(function() {
 			var input = $(this).val();
 			var input = input.replace(/[^[^0-9]\s\_\-]+/g, "");
 	        input = input ? parseFloat( input ) : 0;
 	        $(this).val( function() {
-	            return ( input === 0 ) ? "" : input.toLocaleString( "en", {minimumFractionDigits: 2} );
+	            return ( input === 0 ) ? "" : input.toLocaleString( "id", {minimumFractionDigits: 2} );
 	        } );
 	      });
 		});
 
+		$('.price').each(function() {
+			var input = $(this).val();
+			var input = input.replace(/[\D\s\._\-]+/g, "");
+			input = input ? parseInt( input, 10 ) : 0;
+
+			$(this).val( function() {
+				return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+			});
+		});
+
+		$( ".price" ).on( "keyup", numberFormat);
+		function numberFormat(event){
+			var selection = window.getSelection().toString();
+			if ( selection !== '' ) {
+				return;
+			}
+
+			if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+				return;
+			}
+			var $this = $( this );
+			var input = $this.val();
+			var input = input.replace(/[\D\s\._\-]+/g, "");
+			input = input ? parseInt( input, 10 ) : 0;
+
+			$this.val( function() {
+				return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+			});
+		}
+
+		$( ".price" ).on( "blur", checkFormat);
+		function checkFormat(event){
+			var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+			if(!$.isNumeric(data)){
+				$( this ).val("");
+			}
+		}
 		$( "#formWithPrice" ).submit(function() {
 			$( "#submit" ).attr("disabled", true);
 			$( "#submit" ).addClass("m-loader m-loader--light m-loader--right");
-			$( ".price" ).each(function() {
-				var number = $( this ).val().replace(/[($)\s\,_\-]+/g, '');
+			$( ".price_float" ).each(function() {
+				var number = $( this ).val().replace(/[($)\s\._\-]+/g, '').replace(/[($)\s\,_\-]+/g, '.');
+				$(this).val(number);
+			});
+			$('.price').each(function() {
+				var number = $( this ).val().replace(/[($)\s\._\-]+/g, '');
 				$(this).val(number);
 			});
 
 		});
 
-		$( ".price" ).on( "keyup", numberFormat);
-		$( ".price" ).on( "blur", checkFormat);
+		$('.price').change(function(){
+			id = $(this).attr('data-id');
+			
+			base = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) * 10 / 11;
+			base = base.toLocaleString( "id", {maximumFractionDigits: 2} );
+			
+			tax = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) / 11;
+			tax = tax.toLocaleString( "id", {maximumFractionDigits: 2} )
+	        
+			$('#price_base_'+id).val(base);
+			$('#price_tax_'+id).val(tax);
+		})
 
-		function checkFormat(event){
-			var data = $( this ).val().replace(/[($)\s\,_\-]+/g, '');
-			if(!$.isNumeric(data)){
-				$( this ).val("");
-			}
-		}
-
-		function numberFormat(event){
-			// When user select text in the document, also abort.
-			var selection = window.getSelection().toString();
-			if ( selection !== '' ) {
-				return;
-			}
-			// When the arrow keys are pressed, abort.
-			if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
-				return;
-			}
-			var $this = $( this );
-			// Get the value.
-			var input = $this.val();
-			console.log(input)
-			var input = input.replace(",", "");
-			var input = input.replace(/[^[^0-9]\s\_\-]+/g, "");
-			input = input ? parseFloat( input ) : 0;
-			$this.val( function() {
-				return ( input === 0 ) ? "" : input.toLocaleString( "en" , {minimumFractionDigits: 2});
-			} );
-		}
-		
         $("#multiple").change(function() {
         	var id = $(this).val();
         	var url = '{{ url("product/price") }}/'+id;
         	window.location.href = url;
 		});
+		
     </script>
 
 @endsection
@@ -128,7 +151,7 @@
 				        <optgroup label="Outlet List">
 				            @if (!empty($outlet))
 				                @foreach($outlet as $suw)
-				                    <option value="{{ $suw['id_outlet'] }}" @if ($suw['id_outlet'] == $key) selected @endif>{{ $suw['outlet_name'] }}</option>
+				                    <option value="{{ $suw['id_outlet'] }}" @if ($suw['id_outlet'] == $key) selected @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
 				                @endforeach
 				            @endif
 				        </optgroup>
@@ -136,7 +159,7 @@
                 </div>
             </div>
         </div>
-        @if (!empty($outlet))
+          @if (!empty($outlet))
         	@foreach ($outlet as $row => $data)
         		@if ($data['id_outlet'] == $key)
         			<div class="portlet-body form">
@@ -171,13 +194,13 @@
 																		$marker = 1;
 																	@endphp
 																	<td style="width: 15%"> 
-																		<input type="text" name="price[]" value="{{ $dpp['product_price'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																		<input type="text" name="price[]" value="{{ $dpp['product_price'] }}" data-placeholder="input price" data-id="{{$pro['id_product']}}" class="form-control mt-repeater-input-inline price">
 																	</td>
 																	<td style="width: 15%"> 
-																		<input type="text" name="price_base[]" value="{{ $dpp['product_price_base'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																		<input type="text" name="price_base[]" value="{{ $dpp['product_price_base'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_base_{{$pro['id_product']}}" readonly>
 																	</td>
 																	<td style="width: 15%"> 
-																		<input type="text" name="price_tax[]" value="{{ $dpp['product_price_tax'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																		<input type="text" name="price_tax[]" value="{{ $dpp['product_price_tax'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_tax_{{$pro['id_product']}}" readonly>
 																	</td>
 																	<td style="width:15%">
 																		<select class="form-control" name="visible[]">
@@ -199,13 +222,13 @@
 
 															@if ($marker == 0)
 															<td style="width: 15%"> 
-																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price" data-id="{{$pro['id_product']}}">
 															</td>
 															<td style="width: 15%"> 
-																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_base_{{$pro['id_product']}}" readonly>
 															</td>
 															<td style="width: 15%"> 
-																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_tax_{{$pro['id_product']}}" readonly>
 															</td>
 															<td style="width: 15%"> 
 																<select class="form-control" name="visible[]">
@@ -225,13 +248,13 @@
 															@endif
 														@else
 															<td style="width: 15%"> 
-																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price" data-id="{{$pro['id_product']}}">
 															</td>
 															<td style="width: 15%"> 
-																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_base_{{$pro['id_product']}}" readonly>
 															</td>
 															<td style="width: 15%"> 
-																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price">
+																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_tax_{{$pro['id_product']}}" readonly>
 															</td>
 															<td style="width: 15%"> 
 																<select class="form-control" name="visible[]">

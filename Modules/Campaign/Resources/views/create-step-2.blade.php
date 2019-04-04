@@ -1,50 +1,29 @@
 @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" /> 
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/form-repeater.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/table-datatables-buttons.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/table-datatables-buttons.js') }}" type="text/javascript"></script>
 	
 	<script type="text/javascript">
 	function addEmailContent(param){
@@ -131,7 +110,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Outlet'){
+		else if(det == 'Outlet'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('outlet/ajax') }}",
@@ -154,7 +133,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'News'){
+		else if(det == 'News'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('news/ajax') }}",
@@ -177,7 +156,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Home'){
+		else if(det == 'Home'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -185,7 +164,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Inbox'){
+		else if(det == 'Inbox'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -193,7 +172,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Voucher'){
+		else if(det == 'Voucher'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -201,7 +180,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Contact Us'){
+		else if(det == 'Contact Us'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -209,7 +188,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Link'){
+		else if(det == 'Link'){
 			console.log(idref)
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
@@ -218,7 +197,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Logout'){
+		else if(det == 'Logout'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -226,12 +205,20 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
-		if(det == 'Content'){
+		else if(det == 'Content'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'block';
+		}
+
+		else {
+			document.getElementById('atd_'+type).style.display = 'none';
+			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			document.getElementById('link_'+type).style.display = 'none';
+			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 	}
 	
@@ -243,7 +230,7 @@
 	
 	$(document).ready(function() {
 		$('.summernote').summernote({
-			placeholder: 'Email Content',
+			placeholder: 'News Content Long',
 			tabsize: 2,
 			height: 120,
 			toolbar: [         
@@ -830,12 +817,22 @@
 										<option value="Home" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Home") selected @endif>Home</option>
 										<option value="News" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "New") selected @endif>News</option>
 										<!-- <option value="Product" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Product") selected @endif>Product</option> -->
+										<option value="Order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Order") selected @endif>Order</option>
+										<option value="History On Going" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History On Going") selected @endif>History On Going</option>
+										<option value="History Transaksi" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
+										<option value="History Point" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Point") selected @endif>History Point</option>
 										<option value="Outlet" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Outlet") selected @endif>Outlet</option>
+										<option value="Voucher" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Voucher") selected @endif>Voucher</option>
+										<!-- <option value="Voucher Detail" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option> -->
+										<option value="Profil" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Profil") selected @endif>Profil</option>
 										<option value="Inbox" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-										<!-- <option value="Voucher" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Voucher") selected @endif>Voucher</option> -->
+										<option value="About" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "About") selected @endif>About</option>
+										<option value="FAQ" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "FAQ") selected @endif>FAQ</option>
+										<option value="TOS" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "TOS") selected @endif>TOS</option>
 										<option value="Contact Us" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 										<option value="Link" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Link") selected @endif>Link</option>
 										<option value="Logout" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Logout") selected @endif>Logout</option>
+												
 									</select>
 								</div>
 							</div>
@@ -891,15 +888,24 @@
 								<div class="col-md-10">
 									<select name="campaign_inbox_clickto" id="campaign_inbox_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
 										<option value="Home" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Home") selected @endif>Home</option>
-										{{-- <option value="Content" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
 										<option value="News" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "New") selected @endif>News</option>
 										<!-- <option value="Product" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Product") selected @endif>Product</option> -->
+										<option value="Order" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Order") selected @endif>Order</option>
+										<option value="History On Going" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History On Going") selected @endif>History On Going</option>
+										<option value="History Transaksi" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
+										<option value="History Point" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Point") selected @endif>History Point</option>
 										<option value="Outlet" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
-										<option value="Inbox" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
-										<!-- <option value="Voucher" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Voucher") selected @endif>Voucher</option> -->
+										<option value="Voucher" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
+										<!-- <option value="Voucher Detail" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option> -->
+										<option value="Profil" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Profil") selected @endif>Profil</option>
+										<!-- <option value="Inbox" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Inbox") selected @endif>Inbox</option> -->
+										<option value="About" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "About") selected @endif>About</option>
+										<option value="FAQ" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
+										<option value="TOS" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "TOS") selected @endif>TOS</option>
 										<option value="Contact Us" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 										<option value="Link" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Link") selected @endif>Link</option>
 										<option value="Logout" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Logout") selected @endif>Logout</option>
+												
 									</select>
 								</div>
 							</div>

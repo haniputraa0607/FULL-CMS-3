@@ -6,41 +6,41 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
-        <link href="{{Cdn::asset('kk-ass/css/slide.css') }}" rel="stylesheet">
+        <link href="{{ env('AWS_ASSET_URL') }}{{('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
         <style type="text/css">
         @font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek.ttf?")}}') format('truetype'); 
+            src: url('{{ env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf?")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Light.ttf?")}}') format('truetype'); 
+            src: url('{{ env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf?")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Medium.ttf?")}}') format('truetype'); 
+            src: url('{{ env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf?")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Italic.ttf?")}}') format('truetype'); 
+            src: url('{{ env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf?")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Roboto-Regular.ttf?")}}') format('truetype'); 
+            src: url('{{ env("AWS_ASSET_URL") }}{{("kopikenangan-view-asset/public/assets/fonts/Roboto-Regular.ttf?")}}') format('truetype'); 
         }
         .kotak1 {
             padding-top: 10px;
@@ -281,7 +281,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     </head>
-    <body>
+    {{-- <body> --}}
         @php
            // print_r($news[0]['news_outlet']);die();
         @endphp
@@ -306,12 +306,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
             @if (isset($news[0]['news_event_date_start']))
                 @if ($news[0]['news_event_date_start'] == $news[0]['news_event_date_end'])
                     <div class="row space-bottom">
-                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ Cdn::asset('kk-ass/img/webview/calendar.png') }}"> 
+                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/calendar.png') }}"> 
                         <span> {{ date('d F Y', strtotime($news[0]['news_event_date_start'])) }} </span></div>
                     </div>
                 @else
                     <div class="row space-bottom">
-                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ Cdn::asset('kk-ass/img/webview/calendar.png') }}"> 
+                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/calendar.png') }}"> 
                         <span> {{ date('d F', strtotime($news[0]['news_event_date_start'])) }} - {{ date('d F Y', strtotime($news[0]['news_event_date_end'])) }} </span></div>
                     </div>
                 @endif
@@ -319,31 +319,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
             @if (isset($news[0]['news_event_time_start']))
                 @if ($news[0]['news_event_time_start'] == $news[0]['news_event_time_end'])
                     <div class="row space-bottom">
-                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ Cdn::asset('kk-ass/img/webview/time.png') }}"> 
+                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/time.png') }}"> 
                         <span> {{ date('H:i', strtotime($news[0]['news_event_time_start'])) }}</span></div>
                     </div>
                 @else
                     <div class="row space-bottom">
-                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ Cdn::asset('kk-ass/img/webview/time.png') }}"> 
+                        <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/time.png') }}"> 
                         <span>{{ date('H:i', strtotime($news[0]['news_event_time_start'])) }} - {{ date('H:i', strtotime($news[0]['news_event_time_end'])) }}</span></div>
                     </div>
                 @endif
             @endif
             @if (isset($news[0]['news_event_location_name']))
                 <div class="row space-bottom">
-                    <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ Cdn::asset('kk-ass/img/webview/outlet.png') }}"> <span> {{ $news[0]['news_event_location_name'] }} </span></div>
+                    <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/outlet.png') }}"> <span> {{ $news[0]['news_event_location_name'] }} </span></div>
                 </div>
             @endif
 
             @if (isset($news[0]['news_event_location_address']))
                 <div class="row space-bottom">
-                    <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ Cdn::asset('kk-ass/img/webview/marker.png') }}"> <span>{{ $news[0]['news_event_location_address'] }} </span></div>
+                    <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/marker.png') }}"> <span>{{ $news[0]['news_event_location_address'] }} </span></div>
                 </div>
             @endif
 
             @if (isset($news[0]['news_event_location_phone']))
                 <div class="row space-bottom">
-                    <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ Cdn::asset('kk-ass/img/webview/hp.png') }}"> <span> {{ $news[0]['news_event_location_phone'] }} </span></div>
+                    <div class="col-12 text-grey-black text-12px seravek-font"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/hp.png') }}"> <span> {{ $news[0]['news_event_location_phone'] }} </span></div>
                 </div>
             @endif
 
@@ -559,5 +559,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
-    </body>
+    {{-- </body> --}}
 </html>

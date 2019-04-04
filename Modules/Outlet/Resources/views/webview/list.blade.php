@@ -118,35 +118,35 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
     	.open-sans-font {
@@ -282,16 +282,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
   </head>
   <body>
-{{ csrf_field() }}
+
   	<div class="kotak1">
   		<div class="container">
 	   		<div class="row">
 	   			<div class="col-12 text-black text-15px seravek-font space-bottom">{{ $data[0]['outlet_name'] }}</div>
-	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ Cdn::asset('kk-ass/img/webview/location.png') }}"></div>
+	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/location.png') }}"></div>
 	   			<div class="col-10 text-grey-black text-13-3px seravek-light-font space-text"><span> {{ $data[0]['outlet_address'] }} </span></div>
 	   		</div>
 	   		<div class="row space-bottom line-bottom">
-	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ Cdn::asset('kk-ass/img/webview/phone.png') }}"></div>
+	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/phone.png') }}"></div>
 	   			<div class="col-10 text-grey-black text-13-3px seravek-light-font space-text"><span> {{ $data[0]['call'] }} </span></div>
 	   		</div>
 	   	</div>
@@ -338,12 +338,12 @@
 		   			<div class="text-grey-2 text-13-3px seravek-light-font day-alphabet @if ($val['day'] == $hari_ini) day-alphabet-today @endif">{{ substr($val['day'], 0,1) }}</div>
 		   			<div class="col-2 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) seravek-font @else seravek-light-font @endif min-left "> {{ $val['day'] }} </div>
 		   			<div class="col-5 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) seravek-font @else seravek-light-font @endif"> 
-						@if($val['is_closed'] == '1')
+    		   			@if($val['is_closed'] == '1')
 					   		TUTUP
 						@else
 							{{date('H:i', strtotime($val['open']))}} - {{date('H:i', strtotime($val['close']))}} 
 						@endif
-					</div>
+		   			</div>
 		   		</div>
 		   	@endforeach
 	   	</div>

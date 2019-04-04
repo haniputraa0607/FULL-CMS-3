@@ -14,9 +14,7 @@ class WebviewNewsController extends Controller
 
     public function test()
     {
-        $news = MyHelper::post('news/list/test', ['id_news'=> 1]);
-        // return $news;
-        return view('news::webview.news', ['news' => $news['result']]);
+        return view('error', ['msg' => 'testing']);
     }
     public function detail(Request $request, $id)
     {
@@ -30,8 +28,18 @@ class WebviewNewsController extends Controller
         // }
 
         $news = MyHelper::postWithBearer('news/list', ['id_news'=> $id], $bearer);
+        $totalOutlet = 0;
+        $outlet = MyHelper::get('outlet/list');
+        if (isset($outlet['status']) && $outlet['status'] == "success") {
+            $totalOutlet = count($outlet['result']);
+        }
+        
+        $totalOutletNews = 0;
+        
         if (isset($news['status']) && $news['status'] == 'success') {
-            return view('news::webview.news', ['news' => $news['result']]);
+            // return $news['result'];
+            $totalOutletNews = count($news['result'][0]['news_outlet']);
+            return view('news::webview.news', ['news' => $news['result'], 'total_outlet' => $totalOutlet, 'total_outlet_news' => $totalOutletNews]);
         } elseif (isset($news['status']) && $news['status'] == 'fail') {
             return view('error', ['msg' => 'Data failed']);
         } else {

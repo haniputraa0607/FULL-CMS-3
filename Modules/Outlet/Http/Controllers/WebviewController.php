@@ -21,7 +21,7 @@ class WebviewController extends Controller
         //     return view('error', ['msg' => 'Url method is POST']);
         // }
         
-        $list = MyHelper::post('outlet/list', ['id_outlet' => $id]);
+        $list = MyHelper::postWithBearer('outlet/list', ['id_outlet' => $id], $bearer);
         // return $list;
         return view('outlet::webview.list', ['data' => $list['result']]);
     }

@@ -15,35 +15,35 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek.ttf?")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf?")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Light.ttf?")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf?")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Medium.ttf?")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf?")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Seravek-Italic.ttf?")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf?")}}') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{Cdn::asset("kk-ass/assets/fonts/Roboto-Regular.ttf?")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf?")}}') format('truetype'); 
         }
 
     	.kotak1 {
@@ -330,7 +330,7 @@
 	   			<div class="input-group kelas-input">
 				  <input type="text" id="id-input" class="form-control text-12-7px seravek-font" placeholder="Cari Outlet">
 				  <div class="input-group-append">
-				    <span class="input-group-text"><img src="{{ Cdn::asset('kk-ass/images/search.png') }}" style="width: 20px;"></span>
+				    <span class="input-group-text"><img src="{{ env('AWS_ASSET_URL') }}{{ ('images/search.png') }}" style="width: 20px;"></span>
 				  </div>
 				</div>
 			</div>

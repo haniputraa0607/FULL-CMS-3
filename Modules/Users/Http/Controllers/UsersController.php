@@ -61,7 +61,7 @@ class UsersController extends Controller
 		$test = MyHelper::get('autocrm/textreplace');
 		$auto = null;
 
-		$getApiKey = MyHelper::get('setting/whatsapp');
+		$getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
 		if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
 			$data['api_key_whatsapp'] = $getApiKey['result']['value'];
 		}else{
@@ -113,13 +113,13 @@ class UsersController extends Controller
 
             unset($custom[count($custom) - 1]);
         }
-
 		
 		if(stristr($request->url(), 'deals')){
 			$data['deals'] = true;
-			$custom[] = 'outlet_name';
-			$custom[] = 'outlet_code';
+			$custom[] = '%outlet_name%';
+			$custom[] = '%outlet_code%';
 		}
+		
 		$data['custom'] = $custom;
 		// print_r($data);exit;
         return view('users::response', $data);
@@ -369,25 +369,25 @@ class UsersController extends Controller
 		}
 		
 		
-		$getCity = MyHelper::get('city/list');
+		$getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
 		
-		$getProvince = MyHelper::get('province/list');
+		$getProvince = MyHelper::get('province/list?log_save=0');
 		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
 		
-		$getCourier = MyHelper::get('courier/list');
+		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 		
-		$getOutlet = MyHelper::get('outlet/list');
+		$getOutlet = MyHelper::get('outlet/list?log_save=0');
 		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-		$getProduct = MyHelper::get('product/list');
+		$getProduct = MyHelper::get('product/list?log_save=0');
 		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 		
-		$getTag = MyHelper::get('product/tag/list');
+		$getTag = MyHelper::get('product/tag/list?log_save=0');
 		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-		$getMembership = MyHelper::post('membership/list',[]);
+		$getMembership = MyHelper::post('membership/list?log_save=0',[]);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 		
 		$data['table_title'] = "User list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']." data)";
@@ -543,7 +543,8 @@ class UsersController extends Controller
 		
 		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
 		// print_r($getUser);exit;
-		$getLog = MyHelper::post('users/log', ['phone' => $phone, 'skip' => 0, 'take' => 300]);
+		$getLog = MyHelper::post('users/log', ['phone' => $phone, 'skip' => 0, 'take' => 5]);
+// 		return $getLog;
 		$getFeature = MyHelper::post('users/granted-feature', ['phone' => $phone]);
 		// print_r($getFeature);exit;
 		$getFeatureAll = MyHelper::get('feature');
@@ -571,50 +572,46 @@ class UsersController extends Controller
 		if(isset($getFeatureAll['result'])) $data['featuresall'] = $getFeatureAll['result'];
 		if(isset($getFeatureModule['result'])) $data['featuresmodule'] = $getFeatureModule['result'];
 
-		$getCity = MyHelper::get('city/list');
+		$getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
 		
-		$getProvince = MyHelper::get('province/list');
+		$getProvince = MyHelper::get('province/list?log_save=0');
 		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
 		
-		$getCourier = MyHelper::get('courier/list');
+		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
 		// print_r($data);exit;
         return view('users::detail', $data);
-	}
-	
-	public function showLog($phone, Request $request)
+    }
+    
+    public function showLog($phone, Request $request)
     {
 		$post = $request->except('_token');
-		// print_r($post);exit;
-		if(isset($post['password'])){
-			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password']));
-			/* print_r($checkpin);exit;
-			if($checkpin['status'] != "success")
-				return redirect('login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
-			else */
-				Session::put('secure','yes');
-		} 
-		
-		if(empty(Session::get('secure'))){
-			$data = [ 'title'             => 'User',
-					  'menu_active'       => 'user',
-					  'submenu_active'    => 'user-list',
-					  'phone'    		  => $phone
-					];
-			return view('users::password', $data);
-		}
-		
-		$getLog = MyHelper::post('users/log', ['phone' => $phone, 'skip' => 0, 'take' => 300]);
+	
+		$getLog = MyHelper::post('users/log', ['phone' => $phone, 'skip' => 0, 'take' => 5]);
 		
 		$data = [ 'title'             => 'User',
 				  'menu_active'       => 'user',
-				  'submenu_active'    => 'user-list'
+				  'submenu_active'    => 'user-list',
+				  'phone'             => $phone
 				];
 		
 		if(isset($getLog['result'])) $data['log'] = $getLog['result'];
 
         return view('users::detail_log', $data);
+    }
+    
+    public function showLogAjax($phone, Request $request)
+    {
+		$post = $request->except('_token');
+	
+		$getLog = MyHelper::post('users/log', ['phone' => $phone, 'skip' => 0, 'take' => 5]);
+		
+		$data = [];
+		
+		if(isset($getLog['result'])) $data = $getLog['result'];
+
+        return $data;
     }
 
     /**

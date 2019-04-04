@@ -7,21 +7,21 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-    <link href="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{Cdn::asset('kk-ass/js/prices.js')}}"></script>
-	<script src="{{Cdn::asset('kk-ass/assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
 	
 	<script type="text/javascript">
         $(document).ready(function() {
@@ -240,21 +240,6 @@
 
 						<div class="form-group" id="type-detail" @if(strpos($result['parameter'], 'transaction') === false) style="display:none" @endif>
 							<label class="col-md-3 control-label" ></label>
-							<div class="col-md-5">
-								<div class="input-group">
-									<span class="input-group-addon">
-										>=
-									</span>
-									<input type="number" class="form-control price" min="1" name="parameter_detail" value="{{$result['parameter_detail']}}">
-									<span class="input-group-addon">
-										Transactions / @if(strpos($result['parameter'], 'day') !== false) Day @elseif(strpos($result['parameter'], 'week') !== false) Week @endif
-									</span>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group" id="type-detail" @if(!strpos($result['parameter'], 'transaction') === false) style="display:none" @endif>
-							<label class="col-md-3 control-label" >Detail</label>
 							<div class="col-md-5">
 								<div class="input-group">
 									<span class="input-group-addon">
