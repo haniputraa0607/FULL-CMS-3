@@ -427,6 +427,11 @@
 							<span class="title">[Response] Order Rejected</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-cron-transaction') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/cron-transaction')}}" class="nav-link ">
+							<span class="title">[Response] Cron Transaction</span>
+						</a>
+					</li>
 					<!-- <li class="nav-item {{($submenu_active == 'transaction-autoresponse-topup-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/topup-success')}}" class="nav-link ">
 							<span class="title">[Response] Topup Success</span>
