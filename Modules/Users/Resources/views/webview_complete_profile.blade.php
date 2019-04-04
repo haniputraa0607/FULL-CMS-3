@@ -81,14 +81,23 @@
         }
 
         .form-actions{
-          margin-top: 70px;
           margin-bottom: 30px;
         }
-        .button-wrapper {
-          position: absolute;
-          bottom: 30px;
-          left: 0;
-          right: 0;
+        @media screen and ( max-height: 585px ) {
+          .form-actions{
+            margin-top: 120px;
+          }
+        }
+        @media screen and ( min-height: 586px ) {
+          .form-actions{
+            margin-top: 70px;
+          }
+          .button-wrapper {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+          }
         }
         .button-wrapper .btn{
             width: 75%;
@@ -186,13 +195,13 @@
 
                         <div class="birthday-wrapper row">
                             <div class="form-md-line-input date-select col-xs-3">
-                              <input id="date-input" class="form-control text-center" type="tel" name="date" maxlength="2" placeholder="Tanggal" required value="{{ $date }}">
+                              <input id="date-input" class="form-control text-center" type="tel" name="date" maxlength="2" placeholder="Tanggal" autocomplete="off" required value="{{ $date }}" pattern="[0-9]{1,2}">
                             </div>
                             <div class="form-md-line-input col-xs-3">
-                              <input id="month-input" class="form-control text-center" type="tel" name="month" maxlength="2" placeholder="Bulan" required value="{{ $month }}">
+                              <input id="month-input" class="form-control text-center" type="tel" name="month" maxlength="2" placeholder="Bulan" autocomplete="off" required value="{{ $month }}" pattern="[0-9]{1,2}">
                             </div>
                             <div class="form-md-line-input col-xs-4">
-                              <input id="year-input" class="form-control text-center" type="tel" name="year" maxlength="4" placeholder="Tahun" required value="{{ $year }}">
+                              <input id="year-input" class="form-control text-center" type="tel" name="year" maxlength="4" placeholder="Tahun" autocomplete="off" required value="{{ $year }}" pattern="[0-9]{4}">
                             </div>
                         </div>
                         <div id="error-birthday" class="text-red text-error"></div>
@@ -268,40 +277,14 @@
             minimumResultsForSearch: -1,
             placeholder : 'Pilih Relationship'
           });
-          
-          checkScreen();
         })();
 
 
-        /* check screen when keyboard show */
-        $('input').on('focus', function() {
-          checkScreen();
-        });
+        /* styling select2 when keyboard show */
         $('body').on('focus', '.select2-search__field', function() {
           $('.select2-container--open').css({'position': 'relative', 'top': '0'});
           $('.select2-dropdown').css('position', 'relative');
-          checkScreen();
         });
-
-        /* check screen when keyboard hide */
-        $('body').on('blur', 'input, .select2-search__field', function() {
-          checkScreen();
-        });
-
-        function checkScreen() {
-            var body = $("body").height();
-            body = body + 170;
-            var win = $(window).height();
-
-            // change submit button's position from relative to absolute
-            if (body > win) {
-                $(".button-wrapper").css({'position': 'relative', 'bottom': '0px'});
-                $(".form-actions").css({'margin-top': '150px'});
-            }else {
-                $(".button-wrapper").attr('style', '');
-                $(".form-actions").attr('style', '');
-            }
-        }
 
         /* check last date if month change */
         $('#month-input').on('change, keyup', function (e) {
