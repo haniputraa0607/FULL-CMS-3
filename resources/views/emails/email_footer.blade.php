@@ -42,7 +42,7 @@
 			   @if(isset($setting) && $setting['email_copyright'] != null)
 				   {{$setting['email_copyright']}}
 			   @else 
-				   Copyright @2018 CRMSystem
+				   Copyright @2019 CRMSystem
 			   @endif
 			</td>
 		 </tr>

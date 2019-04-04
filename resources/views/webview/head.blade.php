@@ -15,7 +15,7 @@
     <style type="text/css">
         @font-face {
                 font-family: "Seravek";
-                src: url('{{ url('/fonts/Seravek.ttf') }}');
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/Seravek.ttf') }}');
         }
         body{
             background-color: #fff;

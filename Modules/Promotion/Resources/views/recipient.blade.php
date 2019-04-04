@@ -33,7 +33,7 @@
                                 <td>{{$user['phone']}}</td>
                                 @for($x = 1;$x <= $result['promotion_series']; $x++)
                                 @if(isset($user['promotion_sents'][$x-1]))
-                                <td>{{date('d F Y h:i', strtotime($user['promotion_sents'][$x-1]['send_at']))}}</td>
+                                <td>{{date('d F Y H:i', strtotime($user['promotion_sents'][$x-1]['send_at']))}}</td>
                                 @else
                                 <td></td>
                                 @endif
@@ -47,7 +47,7 @@
                                 <td>{{$no}}</td>
                                 <td>{{$user['name']}}</td>
                                 <td>{{$user['phone']}}</td>
-                                <td>{{date('d F Y h:i', strtotime($user['send_at']))}}</td>
+                                <td>{{date('d F Y H:i', strtotime($user['send_at']))}}</td>
                                 <td>given: @if(isset($user['voucher_given'])) {{$user['voucher_given']}} @else 0 @endif
                                     <br>used : @if(isset($user['voucher_used'])) {{$user['voucher_used']}} @else 0 @endif
                                 </td>

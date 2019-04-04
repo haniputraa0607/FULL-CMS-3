@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'inboxglobal', 'namespace' => 'Modules\InboxGlobal\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'inboxglobal', 'namespace' => 'Modules\InboxGlobal\Http\Controllers'], function()
 {
 	Route::any('/', ['middleware' => 'feature_control:114', 'uses' => 'InboxGlobalController@inboxGlobalList']);
 	Route::any('/page/{page}', ['middleware' => 'feature_control:114', 'uses' => 'InboxGlobalController@inboxGlobalList']);

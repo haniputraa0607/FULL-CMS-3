@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'spinthewheel', 'namespace' => 'Modules\SpinTheWheel\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'spinthewheel', 'namespace' => 'Modules\SpinTheWheel\Http\Controllers'], function()
 {
     Route::get('/list', ['middleware' => 'feature_control:130', 'uses' => 'SpinTheWheelController@list']);
     Route::any('/create', ['middleware' => 'feature_control:131', 'uses' => 'SpinTheWheelController@create']);

@@ -10,18 +10,38 @@ use App\Lib\MyHelper;
 
 class SettingController extends Controller
 {
-    public function faqWebview()
+    public function faqWebview(Request $request)
     {
-        $faqList = MyHelper::get('setting/faq');
-        return view('setting::webview.faq', ['faq' => $faqList['result']]);
+        $bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return view('error', ['msg' => 'Unauthenticated']);
+        }
+
+        $faqList = MyHelper::getWithBearer('setting/faq', $bearer);
+        if(isset($faqList['result'])){
+            return view('setting::webview.faq', ['faq' => $faqList['result']]);
+        }else{
+            return view('setting::webview.faq', ['faq' => null]);
+        }
     }
 
-    public function aboutWebview($key)
+    public function aboutWebview($key, Request $request)
     {
-        $data = MyHelper::post('setting/webview', ['key' => $key, 'data' => 1]);
+        $bearer = $request->header('Authorization');
+        if ($bearer == "") {
+            return view('error', ['msg' => 'Unauthenticated']);
+        }
+
+        $data = MyHelper::postWithBearer('setting/webview', ['key' => $key, 'data' => 1], $bearer);
         if(isset($data['status']) && $data['status'] == 'success'){
-            $data['value'] =preg_replace('/font face="[^;"]*(")?/', 'div class="seravek-light-font"' , $data['result']['value_text']);
-            $data['value'] =preg_replace('/<\/font>?/', '</div>' , $data['value']);
+            if($data['result']['value_text']){
+                $data['value'] =preg_replace('/face="[^;"]*(")?/', 'div class="seravek-light-font"' , $data['result']['value_text']);
+                $data['value'] =preg_replace('/face="[^;"]*(")?/', '' , $data['value']);
+            }
+            
+            if($data['result']['value']){
+                $data['value'] =preg_replace('/<\/font>?/', '</div>' , $data['value']);
+            }
         }else{
             $data['value'] = null;
         }

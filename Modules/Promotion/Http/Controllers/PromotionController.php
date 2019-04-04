@@ -308,14 +308,18 @@ class PromotionController extends Controller
 				$getMembership = MyHelper::post('membership/list?log_save=0',[]);
 				if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 		
+				$setting = MyHelper::get('setting/email?is_log=0');
+			
+				if($setting['status'] == 'success'){
+					$data['setting'] = $setting['result'];
+				}
+				
 				if(isset($post['page'])){
 					$recipient = MyHelper::post('promotion/recipient/list?page='.$post['page'], ['id_promotion' => $id_promotion]);
 				}else{
 					$recipient = MyHelper::post('promotion/recipient/list', ['id_promotion' => $id_promotion]);
 				}
-	
-				$data['users'] = new LengthAwarePaginator($recipient['result']['data'], $recipient['result']['total'], $recipient['result']['per_page'], $recipient['result']['current_page'], ['path' => url()->current()]);
-				
+
 				$data['from'] = $recipient['result']['from'];
 				$data['to'] = $recipient['result']['to'];
 				$data['total'] = $recipient['result']['total'];
@@ -433,7 +437,7 @@ class PromotionController extends Controller
             'title'          => 'Promotion',
             'sub_title'      => 'Create Deals Promotion',
             'menu_active'    => 'promotion',
-            'submenu_active' => 'deals-promotion',
+            'submenu_active' => 'new-deals-promotion',
 		];
 		
 		$post = $request->except('_token');

@@ -337,7 +337,21 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="input-icon right">
-                                            <input type="text" class="form-control" name="deals_title" value="{{ $deals['deals_title'] }}" placeholder="Title" required maxlength="30">
+                                            <input type="text" class="form-control" name="deals_title" value="{{ $deals['deals_title'] }}" placeholder="Title" required maxlength="20">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Second Title  
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Sub Judul deals jika ada" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <input type="text" class="form-control" name="deals_second_title" value="{{ $deals['deals_second_title'] }}" placeholder="Title" required maxlength="20">
                                         </div>
                                     </div>
                                 </div>

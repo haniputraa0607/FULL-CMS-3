@@ -656,11 +656,17 @@ class CampaignController extends Controller
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-create'
 				];
-			$test = MyHelper::get('autocrm/textreplace');
+			$test = MyHelper::get('autocrm/textreplace?is_log=0');
 			
 			$data['result'] = $action['result'];
 			if($test['status'] == 'success'){
 				$data['textreplaces'] = $test['result'];
+			}
+
+			$setting = MyHelper::get('setting/email?is_log=0');
+			
+			if($setting['status'] == 'success'){
+				$data['setting'] = $setting['result'];
 			}
 			
 			$getOutlet = MyHelper::get('outlet/list');

@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'campaign', 'namespace' => 'Modules\Campaign\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'campaign', 'namespace' => 'Modules\Campaign\Http\Controllers'], function()
 {
 	Route::any('/', ['middleware' => 'config_control:50', 'uses' => 'CampaignController@campaignList']);
 	Route::any('/page/{page}', ['middleware' => 'config_control:50', 'uses' => 'CampaignController@campaignList']);
@@ -49,21 +49,3 @@ Route::group(['middleware' => 'web', 'prefix' => 'campaign', 'namespace' => 'Mod
 	Route::post('step3/{id_campaign}', ['middleware' => 'config_control:50', 'uses' => 'CampaignController@campaignStep3Post']);
 
 });
-
-Route::group(['middleware' => 'web', 'prefix' => 'autopromotion', 'namespace' => 'Modules\Campaign\Http\Controllers'], function()
-{
-	Route::any('/', ['middleware' => 'config_control:50', 'uses' => 'AutopromotionController@list']);
-	Route::any('/page/{page}', ['middleware' => 'config_control:50', 'uses' => 'AutopromotionController@list']);
-	
-	Route::get('create', ['middleware' => 'config_control:50', 'uses' => 'AutopromotionController@create']);
-    Route::post('create', ['middleware' => 'config_control:50', 'uses' => 'AutopromotionController@createPost']);
-});
-
-// Route::group(['middleware' => 'web', 'prefix' => 'campaignseries', 'namespace' => 'Modules\Campaign\Http\Controllers'], function()
-// {
-// 	Route::any('/', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@list']);
-// 	Route::any('/page/{page}', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@list']);
-	
-// 	Route::get('create', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@create']);
-//     Route::post('create', ['middleware' => 'config_control:50', 'uses' => 'CampaignSeriesController@createPost']);
-// });

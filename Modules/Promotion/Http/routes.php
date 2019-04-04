@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'promotion', 'namespace' => 'Modules\Promotion\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'promotion', 'namespace' => 'Modules\Promotion\Http\Controllers'], function()
 {
 	Route::any('/', ['middleware' => 'feature_control:109', 'uses' => 'PromotionController@index']);
 	Route::any('/page/{page}', ['middleware' => 'feature_control:109', 'uses' => 'PromotionController@create']);
