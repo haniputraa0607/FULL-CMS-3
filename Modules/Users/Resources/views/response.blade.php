@@ -1267,7 +1267,7 @@ $configs = session('configs');
 					    </label>
 					</div>
 					<div class="col-md-9">
-						<textarea name="autocrm_forward_email" id="autocrm_forward_email" class="form-control" placeholder="Forward Email Address"><?php echo $data['autocrm_forward_email']; ?></textarea>
+						<textarea name="autocrm_forward_email" id="autocrm_forward_email" class="form-control" placeholder="Forward Email Address, Example:admin1@mail.com;admin2@mail.com"><?php echo $data['autocrm_forward_email']; ?></textarea>
 					</div>
 				</div>
 				<div class="form-group" id="div_forward_subject" @if($data['autocrm_forward_toogle'] == 0) style="display:none;" @endif>

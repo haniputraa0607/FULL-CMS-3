@@ -281,10 +281,10 @@
 
 
         /* styling select2 when keyboard show */
-        $('body').on('focus', '.select2-search__field', function() {
+        /*$('body').on('focus', '.select2-search__field', function() {
           $('.select2-container--open').css({'position': 'relative', 'top': '0'});
           $('.select2-dropdown').css('position', 'relative');
-        });
+        });*/
 
         /* check last date if month change */
         $('#month-input').on('change, keyup', function (e) {
