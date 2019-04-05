@@ -814,7 +814,7 @@
 					<div class="portlet-title">
 						<div class="caption font-blue ">
 							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">User Profile Completing</span>
+							<span class="caption-subject bold uppercase">User Profile Completion</span>
 						</div>
 					</div>
 					<div class="portlet-body">
@@ -822,7 +822,7 @@
 						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile')}}" method="POST">
 							<div class="form-body">
 								{{-- <div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completing Point
+									<label class="control-label col-md-4">Completion Point
 										<span class="required" aria-required="true"> * </span> 
 										<i class="fa fa-question-circle tooltips" data-original-title="Point yang diperoleh user ketika melengkapi data" data-container="body"></i>
 									</label>
@@ -831,7 +831,7 @@
 									</div>
 								</div> --}}
 								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Text Popup Completing Profile
+									<label class="control-label col-md-4">Completion Popup Text
 										<span class="required" aria-required="true"> * </span> 
 										<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan pada popup lengkapi data profil" data-container="body"></i>
 									</label>
@@ -840,7 +840,7 @@
 									</div>
 								</div>
 								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completing Kenangan Points
+									<label class="control-label col-md-4">Completion Kenangan Points
 										<span class="required" aria-required="true"> * </span> 
 										<i class="fa fa-question-circle tooltips" data-original-title="Kenangan Points yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
 									</label>
@@ -849,7 +849,7 @@
 									</div>
 								</div>
 								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completing Count
+									<label class="control-label col-md-4">Completion Count
 										<span class="required" aria-required="true"> * </span> 
 										<i class="fa fa-question-circle tooltips" data-original-title="Berapa kali aplikasi akan menawarkan user untuk melengkapi data profil" data-container="body"></i>
 									</label>
@@ -858,7 +858,7 @@
 									</div>
 								</div>
 								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completing Interval (Minutes)
+									<label class="control-label col-md-4">Completion Interval (Minutes)
 										<span class="required" aria-required="true"> * </span> 
 										<i class="fa fa-question-circle tooltips" data-original-title="Jarak waktu penawaran hingga penawaran selanjutnya (menit)" data-container="body"></i>
 									</label>
