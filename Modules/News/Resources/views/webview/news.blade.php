@@ -292,7 +292,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                 <div class="row space-bottom">
                     <div class="row container kotak-title">
                         <div class="col-12 text-bot text-custom-px"> <span> {{ date('l', strtotime($news[0]['news_post_date'])) }}, {{ date('d F Y', strtotime($news[0]['news_post_date'])) }} &nbsp;&nbsp;&nbsp; {{ date('H:i', strtotime($news[0]['news_post_date'])) }}  </span></div>
-                        <div class="col-12 text-bot text-grey-black" style="    line-height: 17px;padding-bottom: 10px;padding-top: 4px;"> <span> {{ strtoupper($news[0]['news_title']) }}</span></div>
+                        <div class="col-12 text-bot text-grey-black" style="    line-height: 17px;padding-bottom: 10px;padding-top: 4px;"> <span> @if($news[0]['news_second_title'] == null){{ strtoupper($news[0]['news_title']) }} @else {{ strtoupper($news[0]['news_second_title']) }} @endif</span></div>
                     </div>
                     <img src="{{ $news[0]['url_news_image_dalam'] }}" style="height: 50vw;">
                     <div id="grad1" style="margin-bottom: -20px;"></div>

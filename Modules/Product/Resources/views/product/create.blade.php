@@ -158,7 +158,7 @@
                     // image.src = _URL.createObjectURL();
 
                     $('#fieldphoto').val("");
-                    $('#imageproduct').children('img').attr('src', 'http://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
+                    $('#imageproduct').children('img').attr('src', 'http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
                     console.log($(this).val())
                 }
             };

@@ -28,7 +28,7 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="text" class="form-control" name="outlet_code" value="{{ $val['outlet_code'] }}" required placeholder="Outlet Code">
+                <input type="text" class="form-control" name="outlet_code" value="{{ $val['outlet_code'] }}" required placeholder="Outlet Code" readonly>
             </div>
         </div>
 
