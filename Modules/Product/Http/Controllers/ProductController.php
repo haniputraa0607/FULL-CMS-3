@@ -261,7 +261,12 @@ class ProductController extends Controller
             }
 
             $post['product_visibility'] = 'Visible';
-			// print_r($post);exit;
+            // print_r($post);exit;
+            
+            if (isset($post['photo'])) {
+                $post['photo']      = MyHelper::encodeImage($post['photo']);
+            }
+
             $save = MyHelper::post('product/create', $post);
             // return $save;
             if (isset($save['status']) && $save['status'] == 'success') {
@@ -270,12 +275,6 @@ class ProductController extends Controller
                 }
             }
 
-            if (isset($post['photo'])) {
-                $postData['photo']      = MyHelper::encodeImage($post['photo']);
-                $postData['id_product'] = $save['result']['id_product'];
-                
-                $save  = MyHelper::post('product/photo/create', $postData);
-            }
             
             if (isset($next)) {
                 return parent::redirect($save, 'Product has been created.', 'product/detail/'.$post['product_code'].'#photo');

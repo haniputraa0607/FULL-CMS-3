@@ -677,13 +677,26 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Title
+                            Header Title
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan Header news" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" id="" class="form-control" name="news_title" value="{{ $value['news_title'] }}" placeholder="Header" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            News Title
                             <span class="required" aria-required="true"> * </span>  
                             <i class="fa fa-question-circle tooltips" data-original-title="Masukkan judul news" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" id="field_title" class="form-control" name="news_title" value="{{ $value['news_title'] }}" placeholder="Title" required>
+                            <input type="text" id="field_title" class="form-control" name="news_second_title" value="{{ $value['news_second_title'] }}" placeholder="Title" required>
                         </div>
                     </div>
 
