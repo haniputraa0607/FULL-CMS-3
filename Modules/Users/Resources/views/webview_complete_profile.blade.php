@@ -371,6 +371,7 @@
             date = date.slice(0, 1);
             date_input.value = date;
           }
+          validateAge(date_input);
         }
 
         function validateMonth(e) {
@@ -402,12 +403,10 @@
             month = month.slice(0, 1);
             month_input.value = month;
           }
+          validateAge(month_input);
         }
         
         function validateYear(e) {
-          var date = new Date();
-          var this_year = date.getFullYear();
-          var max_year = this_year - 10;
           var year = year_input.value;
           var keycode = (typeof e.which == "number") ? e.which : e.keyCode;
           // max 4 digit
@@ -416,12 +415,9 @@
             if (year.length == 4) {
               e.preventDefault();
             }
-            if (year > max_year) {
-              e.preventDefault();
-              year_input.value = "";
-              $('#error-birthday').text('Tahun Lahir maksimal 10 tahun lalu');
-            }
+            validateAge(year_input);
           }
+
           // accept only numeric in year
           if (keycode != 0 && keycode != 8 && keycode != 9 && (keycode < 48 || keycode > 57)) {
             e.preventDefault();
@@ -430,6 +426,47 @@
               year_input.blur();
             }
           }
+        }
+
+        function validateAge(target_input) {
+          var date = new Date();
+          var this_year = date.getFullYear();
+
+          var year = year_input.value;
+          var month = (month_input.value!='' ? month_input.value-1 : '0');  // month start from 0
+          var day = (date_input.value!='' ? date_input.value : '01');
+          var birthday = new Date(year, month, day);
+
+          var age = diff_years(date, birthday);
+
+          if (age < 0) {
+            target_input.value = "";
+            $('#error-birthday').text('Tahun lahir tidak valid');
+          }
+          else if (age < 10) {
+            target_input.value = "";
+            $('#error-birthday').text('Usia minimal adalah 10 tahun');
+          }
+          else {
+            $('#error-birthday').text('');
+          }
+        }
+        // calculate difference year between 2 dates
+        function diff_years(date2, date1) {
+          var day1 = date1.getDate();
+          var day2 = date2.getDate();
+          var month1 = date1.getMonth();
+          var month2 = date2.getMonth();
+          // if today is birthday, calculate by year
+          if (day1 == day2 && month1==month2) {
+            var year1 = date1.getFullYear();
+            var year2 = date2.getFullYear();
+            var diff = year2 - year1;
+          }
+          else {
+            var diff = Math.floor((date2-date1) / (365.25 * 24 * 60 * 60 * 1000));
+          }
+          return diff;
         }
 
         $('form').submit(function(e) {
