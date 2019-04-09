@@ -78,7 +78,14 @@
 							@if(MyHelper::hasAccess([43], $configs))
 								<li class="nav-item {{($submenu_active == 'user-autoresponse-pin-changed') ? 'active open' : ''}}">
 									<a href="{{url('user/autoresponse/pin-changed')}}" class="nav-link ">
-										<span class="title">[Response] Pin Changed</span>
+										<span class="title">[Response] Pin Changed First Time</span>
+									</a>
+								</li>
+							@endif
+							@if(MyHelper::hasAccess([43], $configs))
+								<li class="nav-item {{($submenu_active == 'user-autoresponse-pin-changed-forgot-password') ? 'active open' : ''}}">
+									<a href="{{url('user/autoresponse/pin-changed-forgot-password')}}" class="nav-link ">
+										<span class="title">[Response] Pin Changed Forgot Password</span>
 									</a>
 								</li>
 							@endif
@@ -232,15 +239,15 @@
 						</li>
 						@endif
 					@endif
-					@if(MyHelper::hasAccess([2], $configs) || MyHelper::hasAccess([3], $configs))
-						@if(MyHelper::hasAccess([32, 33], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'outlet-import') ? 'active open' : ''}}">
-							<a href="{{url('outlet/import')}}" class="nav-link ">
-								<span class="title">Export & Import Outlet</span>
-							</a>
-						</li>
-						@endif
-					@endif
+					<!--@if(MyHelper::hasAccess([2], $configs) || MyHelper::hasAccess([3], $configs))-->
+					<!--	@if(MyHelper::hasAccess([32, 33], $grantedFeature))-->
+					<!--	<li class="nav-item {{($submenu_active == 'outlet-import') ? 'active open' : ''}}">-->
+					<!--		<a href="{{url('outlet/import')}}" class="nav-link ">-->
+					<!--			<span class="title">Export & Import Outlet</span>-->
+					<!--		</a>-->
+					<!--	</li>-->
+					<!--	@endif-->
+					<!--@endif-->
 					@if(MyHelper::hasAccess([24], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'outlet-list') ? 'active open' : ''}}">
 						<a href="{{url('outlet/list')}}" class="nav-link ">
@@ -304,15 +311,15 @@
 						</li>
 						@endif
 					@endif
-					@if(MyHelper::hasAccess([10], $configs)|| MyHelper::hasAccess([11], $configs))
-						@if(MyHelper::hasAccess([56,57], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'product-import') ? 'active open' : ''}}">
-							<a href="{{url('product/import')}}" class="nav-link ">
-								<span class="title">Export & Import Product</span>
-							</a>
-						</li>
-						@endif
-					@endif
+					<!--@if(MyHelper::hasAccess([10], $configs)|| MyHelper::hasAccess([11], $configs))-->
+					<!--	@if(MyHelper::hasAccess([56,57], $grantedFeature))-->
+					<!--	<li class="nav-item {{($submenu_active == 'product-import') ? 'active open' : ''}}">-->
+					<!--		<a href="{{url('product/import')}}" class="nav-link ">-->
+					<!--			<span class="title">Export & Import Product</span>-->
+					<!--		</a>-->
+					<!--	</li>-->
+					<!--	@endif-->
+					<!--@endif-->
 					@if(MyHelper::hasAccess([48], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'product-list') ? 'active open' : ''}}">
 						<a href="{{url('product')}}" class="nav-link ">

@@ -4,7 +4,7 @@
 <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/cubeportfolio/css/cubeportfolio.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{ URL::to('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
   <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
@@ -141,7 +141,7 @@ if(isset($data)){
     width:100%;
     height:100%;
     background-color:rgba(0, 0, 0, 0.1);
-    background-image:url('{{URL::to('assets/pages/img/gears.gif')}}');
+    background-image:url('{{ env('AWS_ASSET_URL') }}{{('assets/pages/img/gears.gif')}}');
     background-repeat:no-repeat;
     background-position:center;
     z-index:10000000;
