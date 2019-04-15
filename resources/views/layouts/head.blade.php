@@ -9,7 +9,7 @@
         <script src="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
         <!-- END PAGE FIRST SCRIPTS -->
         <!-- BEGIN PAGE TOP STYLES -->
-        <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/pace/themes/pace-theme-flash.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/pace/themes/pace-theme-flash.css?') }}" rel="stylesheet" type="text/css" />
         <!-- END PAGE TOP STYLES -->
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
