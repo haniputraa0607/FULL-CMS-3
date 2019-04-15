@@ -16,6 +16,16 @@
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	
+	<style type="text/css">
+	    #sample_1_filter label, #sample_5_filter label, #sample_4_filter label, .pagination, .dataTables_filter label {
+	        float: right;
+	    }
+	    
+	    .cont-col2{
+	        margin-left: 30px;
+	    }
+	</style>
 @endsection
 
 @section('page-plugin')
@@ -68,7 +78,36 @@
 		}
 	}
 	
-	 $('#sample_1').dataTable({
+	$('.sample_1').dataTable({
+                language: {
+                    aria: {
+                        sortAscending: ": activate to sort column ascending",
+                        sortDescending: ": activate to sort column descending"
+                    },
+                    emptyTable: "No data available in table",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    infoEmpty: "No entries found",
+                    infoFiltered: "(filtered1 from _MAX_ total entries)",
+                    lengthMenu: "_MENU_ entries",
+                    search: "Search:",
+                    zeroRecords: "No matching records found"
+                },
+                buttons: [],
+                responsive: {
+                    details: {
+                        type: "column",
+                        target: "tr"
+                    }
+                },
+                order: [0, "asc"],
+                lengthMenu: [
+                    [5, 10, 15, 20, -1],
+                    [5, 10, 15, 20, "All"]
+                ],
+                pageLength: 10,
+                dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+        });
+	$('#sample_1').dataTable({
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -98,7 +137,7 @@
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
 
-        $('#sample_2').dataTable({
+    $('#sample_2').dataTable({
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -128,7 +167,7 @@
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
 
-        $('#sample_3').dataTable({
+    $('#sample_3').dataTable({
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -158,7 +197,7 @@
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
 
-        $('#sample_4').dataTable({
+    $('#sample_4').dataTable({
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -179,7 +218,7 @@
                         target: "tr"
                     }
                 },
-                order: [2, "asc"],
+                order: [2, "desc"],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "All"]
@@ -187,6 +226,37 @@
                 pageLength: 10,
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
+        
+    $('#sample_5').dataTable({
+                language: {
+                    aria: {
+                        sortAscending: ": activate to sort column ascending",
+                        sortDescending: ": activate to sort column descending"
+                    },
+                    emptyTable: "No data available in table",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    infoEmpty: "No entries found",
+                    infoFiltered: "(filtered1 from _MAX_ total entries)",
+                    lengthMenu: "_MENU_ entries",
+                    search: "Search:",
+                    zeroRecords: "No matching records found"
+                },
+                buttons: [],
+                responsive: {
+                    details: {
+                        type: "column",
+                        target: "tr"
+                    }
+                },
+                order: [0, "asc"],
+                lengthMenu: [
+                    [5, 10, 15, 20, -1],
+                    [5, 10, 15, 20, "All"]
+                ],
+                pageLength: 10,
+                dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+        });
+        
 	$(document).ready(function() {
 		$.fn.modal.Constructor.prototype.enforceFocus = function() {};
 	});
@@ -215,14 +285,27 @@
 		}
 	}
 	
-	function viewLogDetail(url, status, request, response, ip, useragent){
-		document.getElementById("log-url").value = url;
-		document.getElementById("log-status").value = status;
-		document.getElementById("log-request").innerHTML = request;
-		document.getElementById("log-response").innerHTML = response;
-		document.getElementById("log-ip").value = ip;
-		document.getElementById("log-useragent").value = useragent;
+	// function viewLogDetail(url, status, request, response, ip, useragent){
+	function viewLogDetail(id_log){
+		$.get("{{url('user/ajax/log')}}"+'/'+id_log, function(result){
+			if(result){
+				document.getElementById("log-url").value = result.url;
+				document.getElementById("log-status").value = result.response_status;
+				document.getElementById("log-request").innerHTML = result.request;
+				document.getElementById("log-response").innerHTML = result.response;
+				document.getElementById("log-ip").value = result.ip;
+				document.getElementById("log-useragent").value = result.useragent;
+				$('#logModal').modal('show');
+			}
+		})
 	}
+
+	function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
 	</script>
 @endsection
 
@@ -291,7 +374,7 @@
 															<span class="sale-num font-red">not verified</span>
 														@endif
 													</li>
-													<li>
+													<!-- <li>
 														<span class="sale-info"> Email
 															<i class="fa fa-img-down"></i>
 														</span>
@@ -300,7 +383,7 @@
 														@else
 															<span class="sale-num font-red">not verified</span>
 														@endif
-													</li>
+													</li> -->
 												</ul>
 											</div>
 										</div>
@@ -320,68 +403,169 @@
 												<i class="fa fa-birthday-cake"></i> @if($profile['birthday']){{date("d F Y", strtotime($profile['birthday']))}} @endif</li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Register date & time">
 												<i class="fa fa-registered"></i> {{date("d F Y", strtotime($profile['created_at']))}} </li>
+											<li class="list-group-item" style="padding: 5px !important;" title="User Kenangan Points">
+												<i class="fa fa-gift"></i> {{number_format($profile['balance'], 0, ',', '.')}} </li>
 										</ul>
 									</div>
 									<!--end col-md-8-->
 									<div class="col-md-8">
 										@if(isset($log))
-										<h4 class="font-blue sbold uppercase" style="margin-top: 0px;margin-bottom: 50px;font-size: 24px;">Latest Activity Log</h4>
-										<div class="tabbable-line tabbable-custom-profile">
-											<div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
-												<ul class="feeds">
-													@foreach($log as $logs)
-													<li>
-														<div class="col1">
-															<div class="cont">
-																<div class="cont-col1">
-																	@if($logs['response_status'] == 'fail')
-																		<div class="label label-danger">
-																			<i class="fa fa-exclamation-circle"></i>
-																		</div>
-																	@else
-																		<div class="label label-success">
-																			<i class="fa fa-check-square"></i>
-																		</div>
-																	@endif
-																</div>
-																<div class="cont-col2">
-																	<div class="desc"> {{$logs['subject']}} 
-																		@if($logs['response_status'] == 'fail')
-																		<span class="label label-danger label-sm"> Failed
-																		</span>
-																		@else
-																		<span class="label label-success label-sm"> Success
-																		</span>
-																		@endif
-																		 from IP {{$logs['ip']}}
-																		 
-																		 <?php 
-																		 $request =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['request']))));
-																		 
-																		 $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
-																		 ?>
-																		<span class="label label-info label-sm" data-toggle="modal" href="#logModal" onClick="viewLogDetail('{{$logs['url']}}','{{$logs['response_status']}}', '{{$request}}','{{$response}}','{{$logs['ip']}}','{{$logs['useragent']}}')"> <i class="fa fa-info-circle"></i> Details
-																		
-																		</span>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="col2" style="width: 190px;margin-left: -190px;">
-															<div class="date"> {{date("d F Y H:i:s", strtotime($logs['created_at']))}} </div>
-														</div>
+											<button class="btn btn-sm btn-yellow" type="button" style="float:right">
+												Show All Activity
+											</button>
+    										<h4 class="font-blue sbold uppercase" style="margin-top: 0px;margin-bottom: 50px;font-size: 24px;">Latest Activity Log</h4>
+										    <div class="tabbable-line tabbable-full-width">
+												<ul class="nav nav-tabs">
+													<li class="active">
+														<a href="#log_mobile" data-toggle="tab"> Mobile </a>
 													</li>
-													@endforeach
+													<li>
+														<a href="#log_backend" data-toggle="tab"> Backend </a>
+													</li>
 												</ul>
 											</div>
-										</div>
+											<div class="tab-content" style="margin-top:20px">
+												<div class="tab-pane active" id="log_mobile">
+											
+    										        <div class="tabbable-line tabbable-custom-profile">
+    										            
+            											<div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
+            											    @if(count($log['mobile']) > 0)
+            												<ul class="feeds">
+            													@foreach($log['mobile'] as $logs)
+            													<li>
+            														<div class="col1">
+            															<div class="cont">
+            																<div class="cont-col1">
+            																    @if(stristr($logs['useragent'],'iOS'))
+            															            <i class="fa fa-apple"></i>
+            																	@elseif(stristr($logs['useragent'],'okhttp'))
+        																			<i class="fa fa-android"></i>
+            																	@else
+        																			<i class="fa fa-circle-o" style="color:white"></i>
+        																		@endif
+        																		
+            																	@if($logs['response_status'] == 'fail')
+            																		<div class="label label-danger">
+            																			<i class="fa fa-exclamation-circle"></i>
+            																		</div>
+            																	@else
+            																		<div class="label label-success">
+            																			<i class="fa fa-check-square"></i>
+            																		</div>
+            																	@endif
+            																</div>
+            																<div class="cont-col2">
+            																	<div class="desc"> {{$logs['subject']}} 
+            																		@if($logs['response_status'] == 'fail')
+            																		<span class="label label-danger label-sm"> Failed
+            																		</span>
+            																		@else
+            																		<span class="label label-success label-sm"> Success
+            																		</span>
+            																		@endif
+            																		 from IP {{$logs['ip']}}
+            																		 
+            																		 <?php 
+            																		//  $request =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['request']))));
+            																		 
+            																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
+            																		 ?>
+            																		<span class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+            																		
+            																		</span>
+            																	</div>
+            																</div>
+            															</div>
+            														</div>
+            														<div class="col2" style="width: 190px;margin-left: -190px;">
+            															<div class="date"> {{date("d F Y H:i:s", strtotime($logs['created_at']))}} </div>
+            														</div>
+            													</li>
+            													@endforeach
+            												</ul>
+            											    @else
+            											    Activity Log is Empty
+            												@endif
+            											</div>
+    										        </div>
+										        </div>
+										        
+												<div class="tab-pane" id="log_backend">
+											
+    										        <div class="tabbable-line tabbable-custom-profile">
+            											<div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
+            											     @if(count($log['backend']) > 0)
+            												<ul class="feeds">
+            													@foreach($log['backend'] as $logs)
+            													<li>
+            														<div class="col1">
+            															<div class="cont">
+            																<div class="cont-col1">
+																				<i class="fa fa-circle-o" style="color:white"></i>
+            																	@if($logs['response_status'] == 'fail')
+            																		<div class="label label-danger">
+            																			<i class="fa fa-exclamation-circle"></i>
+            																		</div>
+            																	@else
+            																		<div class="label label-success">
+            																			<i class="fa fa-check-square"></i>
+            																		</div>
+            																	@endif
+            																</div>
+            																<div class="cont-col2">
+            																	<div class="desc"> {{$logs['subject']}} 
+            																		@if($logs['response_status'] == 'fail')
+            																		<span class="label label-danger label-sm"> Failed
+            																		</span>
+            																		@else
+            																		<span class="label label-success label-sm"> Success
+            																		</span>
+            																		@endif
+            																		 from IP {{$logs['ip']}}
+            																		 
+            																		 <?php 
+            																		//  $request =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['request']))));
+            																		 
+            																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
+            																		 ?>
+            																		<span class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+            																		
+            																		</span>
+            																	</div>
+            																</div>
+            															</div>
+            														</div>
+            														<div class="col2" style="width: 190px;margin-left: -190px;">
+            															<div class="date"> {{date("d F Y H:i:s", strtotime($logs['created_at']))}} </div>
+            														</div>
+            													</li>
+            													@endforeach
+            												</ul>
+            												@else
+            												 Activity Log is Empty
+            												@endif
+            											</div>
+            										</div>
+        										</div>
+										    </div>
+										
 										@endif
-										<div class="col-md-12 row" style="margin-top:30px">
+										
+									</div>
+									
+									<div class="col-md-12" style="margin-top:30px">
 										<h4 class="font-blue sbold uppercase">HISTORY</h4>
 											<div class="tabbable-line tabbable-full-width">
 												<ul class="nav nav-tabs">
 													<li class="active">
-														<a href="#portlet_comments_1" data-toggle="tab"> Transaction </a>
+														<a href="#history_ongoing" data-toggle="tab"> On Going </a>
+													</li>
+													<li>
+														<a href="#history_trx" data-toggle="tab"> Transaction </a>
+													</li>
+													<li>
+														<a href="#history_balance" data-toggle="tab"> Point </a>
 													</li>
 													@if(MyHelper::hasAccess([18], $configs))
 														<li>
@@ -391,14 +575,63 @@
 												</ul>
 											</div>
 											<div class="tab-content" style="margin-top:20px">
-												<div class="tab-pane active" id="portlet_comments_1">
+												<div class="tab-pane active" id="history_ongoing">
 													<!-- BEGIN: Comments -->
 													<div class="mt-comments">
-														@if(!empty($profile['transactions']))
+														@if(!empty($profile['on_going']))
 															<table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
 																<thead>
 																  <tr>
 																	  <th>Date</th>
+																	  <th>Outlet</th>
+																	  <th>Receipt Number</th>
+																	  <th>Total Price</th>
+																	  <th>Order Status</th>
+																	  <th>Actions</th>
+																  </tr>
+																</thead>
+																<tbody>
+																	@foreach($profile['on_going'] as $res)
+																		<tr>
+																			<td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
+																			<td>{{ $res['transaction_receipt_number'] }}</td>
+																			<td>{{ $res['outlet_name']['outlet_name'] }}</td>
+																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
+																			<td>
+																			    @if($res['reject_at'] != null)
+																			        Rejected
+																			    @elseif($res['taken_at'] != null)
+																			        Taken
+																			    @elseif($res['ready_at'] != null)
+																			        Ready
+																			    @elseif($res['receive_at'] != null)
+																			        Accepted
+																			    @else
+																			        Pending
+																			    @endif
+																			</td>
+																			<td>
+																				<a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail/'.$res['id_transaction'].'/'.$res['trasaction_type']) }}"><i class="icon-pencil"></i> Detail </a>
+																			</td>
+																		</tr>
+																	@endforeach
+																</tbody>
+															</table>
+														@else
+															Transaction is empty
+														@endif
+													</div>
+													<!-- END: Comments -->
+												</div>
+												<div class="tab-pane" id="history_trx">
+													<!-- BEGIN: Comments -->
+													<div class="mt-comments">
+														@if(!empty($profile['history_transactions']))
+															<table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+																<thead>
+																  <tr>
+																	  <th>Date</th>
+																	  <th>Outlet</th>
 																	  <th>Receipt Number</th>
 																	  <th>Total Price</th>
 																	  <th>Payment Status</th>
@@ -406,9 +639,10 @@
 																  </tr>
 																</thead>
 																<tbody>
-																	@foreach($profile['transactions'] as $res)
+																	@foreach($profile['history_transactions'] as $res)
 																		<tr>
-																			<td>{{ date('d F Y H:i', strtotime($res['created_at'])) }}</td>
+																			<td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
+																			<td>{{ $res['outlet_name']['outlet_name'] }}</td>
 																			<td>{{ $res['transaction_receipt_number'] }}</td>
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
 																			<td>{{ $res['transaction_payment_status'] }}</td>
@@ -425,31 +659,30 @@
 													</div>
 													<!-- END: Comments -->
 												</div>
-												@if(MyHelper::hasAccess([18], $configs))
-													<div class="tab-pane" id="portlet_comments_4">
+												@if(MyHelper::hasAccess([19], $configs))
+													<div class="tab-pane" id="history_balance">
 														<div class="row">
 															<div class="col-lg-12 col-xs-12 col-sm-12">
-																<div class="portlet light ">
-																	<div class="portlet-body">
-																		<div class="row number-stats margin-bottom-30">
-																			<div class="col-md-6 col-sm-6 col-xs-6">
-																				<div class="stat-left">
-																					<div class="stat-number">
-																						<div class="title" style="color: red"> Voucher </div>
-																						<div class="number"> Voucher </div>
-																					</div>
-																				</div>
-																			</div>
-																			<div class="col-md-6 col-sm-6 col-xs-6">
-																				<div class="stat-right">
-																					<div class="stat-number">
-																						<div class="title" style="color: blue"> Transaction </div>
-																						<div class="number"> Trx </div>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																		<table class="table table-striped table-bordered table-hover dt-responsive" id="sample_4">
+																	<div class="mt-comments">
+																		<!--<div class="row number-stats margin-bottom-30">-->
+																		<!--	<div class="col-md-6 col-sm-6 col-xs-6">-->
+																		<!--		<div class="stat-left">-->
+																		<!--			<div class="stat-number">-->
+																		<!--				<div class="title" style="color: red"> Voucher </div>-->
+																		<!--				<div class="number"> Voucher </div>-->
+																		<!--			</div>-->
+																		<!--		</div>-->
+																		<!--	</div>-->
+																		<!--	<div class="col-md-6 col-sm-6 col-xs-6">-->
+																		<!--		<div class="stat-right">-->
+																		<!--			<div class="stat-number">-->
+																		<!--				<div class="title" style="color: blue"> Transaction </div>-->
+																		<!--				<div class="number"> Trx </div>-->
+																		<!--			</div>-->
+																		<!--		</div>-->
+																		<!--	</div>-->
+																		<!--</div>-->
+																		<table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_4">
 																			<thead>
 																				<tr class="uppercase">
 																					<th> Source </th>
@@ -459,17 +692,24 @@
 																					<th> Detail </th>
 																				</tr>
 																			</thead>
-																			@if(!empty($profile['point']))
-																				@foreach ($profile['point'] as $point)
-																					<tr @if ($point['source'] == 'voucher') style="color: red" @else style="color: blue" @endif >
-																						<td> {{ ucwords($point['source']) }} </td>
-																						<td> {{ $point['point'] }} </td>
-																						<td> {{ date('d F Y', strtotime($point['created_at'])) }} </td>
-																						<td> {{ date('H:i:s', strtotime($point['created_at'])) }} </td>
-																						@if ($point['source'] != 'voucher')
-																							<td> {{ $point['detail_product']['transaction_receipt_number'] }} </td>
+																			@if(!empty($profile['history_balance']))
+																				@foreach ($profile['history_balance'] as $balance)
+																					<tr 
+																					{{--@if ($balance['source'] == 'voucher') style="color: red" @else style="color: blue" @endif --}}
+																					>
+																						<td> {{ ucwords($balance['source']) }} </td>
+																						<td> {{ $balance['balance'] }} </td>
+																						<td> {{ date('d F Y', strtotime($balance['created_at'])) }} </td>
+																						<td> {{ date('H:i:s', strtotime($balance['created_at'])) }} </td>
+																						@if ($balance['source'] != 'voucher' || $balance['source'] != 'Complete Profile')
+																							<td> 
+																							<a href="{{ url('transaction/detail/'.$balance['detail_trx']['id_transaction'].'/'.$balance['detail_trx']['trasaction_type']) }}">
+		
+																							    {{ $balance['detail_trx']['transaction_receipt_number'] }} 
+																							</a>
+																							</td>
 																						@else
-																							<td> {{ $point['detail_product']['trx_id'] }} </td>
+																							<td> {{ $balance['detail_trx']['trx_id'] }} </td>
 																						@endif
 																						
 																					</tr>
@@ -479,12 +719,214 @@
 																	</div>
 																</div>
 															</div>
-														</div>
 													</div>
 												@endif
 											</div>
 										</div>
-									</div>
+										
+									<div class="col-md-12" style="margin-top:30px">
+										<h4 class="font-blue sbold uppercase">Voucher</h4>
+											<div class="tabbable-line tabbable-full-width">
+												<ul class="nav nav-tabs">
+													<li class="active">
+														<a href="#vouche_not_invalidate" data-toggle="tab"> Not Invalidate Yet </a>
+													</li>
+													<li>
+														<a href="#voucher_invalidate" data-toggle="tab"> Already Invalidate </a>
+													</li>
+													<li>
+														<a href="#voucher_used" data-toggle="tab"> Used </a>
+													</li>
+													<li>
+														<a href="#voucher_expired" data-toggle="tab"> Expired </a>
+													</li>
+												</ul>
+											</div>
+											<div class="tab-content" style="margin-top:20px">
+												<div class="tab-pane active" id="vouche_not_invalidate">
+													<!-- BEGIN: Comments -->
+													<div class="mt-comments">
+														@if(!empty($voucher))
+															<table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
+																<thead>
+																  <tr>
+																	  <th>Deals Title</th>
+																	  <th>Promo Type</th>
+																	  <th>Voucher Code</th>
+																	  <th>Claimed</th>
+																	  <th>Expired</th>
+																  </tr>
+																</thead>
+																<tbody>
+																	@foreach($voucher as $i => $vou)
+																	    @if($vou['used_at'] == null && date('Y-m-d H:i', strtotime($vou['voucher_expired_at'])) > date('Y-m-d H:i') && $vou['redeemed_at'] == null )
+																		<tr>
+																			<td>{{ $vou['deals_voucher']['deals']['deals_title'] }} {{ $vou['deals_voucher']['deals']['deals_second_title'] }}</td>
+																			<td>
+																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid') 
+																			        Promo ID : {{ $vou['deals_voucher']['deals']['deals_promo_id'] }}
+																			    @else
+																			        Nominal : {{number_format($vou['deals_voucher']['deals']['deals_promo_id'], 0, ',','.')}}
+																			    @endif
+																	        </td>
+																			<td>{{ $vou['deals_voucher']['voucher_code'] }}</td>
+																			<td>@if($vou['claimed_at']) {{ date('d F Y H:i', strtotime($vou['claimed_at'])) }} @endif</td>
+																			<td>@if($vou['voucher_expired_at'])  {{ date('d F Y H:i', strtotime($vou['voucher_expired_at'])) }} @endif</td>
+																		</tr>
+																		@php unset($voucher[$i]); @endphp
+																	    @endif
+																	@endforeach
+																</tbody>
+															</table>
+														@else
+															Voucher is empty
+														@endif
+													</div>
+													<!-- END: Comments -->
+												</div>
+												
+												<div class="tab-pane" id="voucher_invalidate">
+													<!-- BEGIN: Comments -->
+													<div class="mt-comments">
+														@if(!empty($voucher))
+															<table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
+																<thead>
+																  <tr>
+																	  <th>Deals Title</th>
+																	  <th>Promo Type</th>
+																	  <th>Voucher Code</th>
+																	  <th>Outlet</th>
+																	  <th>Claimed</th>
+																	  <th>Redeemed</th>
+																	  <th>Expired</th>
+																  </tr>
+																</thead>
+																<tbody>
+																	@foreach($voucher as $i => $vou)
+																	    @if($vou['used_at'] == null && $vou['redeemed_at'] != null && date('Y-m-d H:i', strtotime($vou['voucher_expired_at'])) > date('Y-m-d H:i') )
+																		<tr>
+																			<td>{{ $vou['deals_voucher']['deals']['deals_title'] }} {{ $vou['deals_voucher']['deals']['deals_second_title'] }}</td>
+																			<td>
+																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid') 
+																			        Promo ID : {{ $vou['deals_voucher']['deals']['deals_promo_id'] }}
+																			    @else
+																			        Nominal : {{number_format($vou['deals_voucher']['deals']['deals_promo_id'], 0, ',','.')}}
+																			    @endif
+																	        </td>
+																			<td>{{ $vou['deals_voucher']['voucher_code'] }}</td>
+																			<td>{{ $vou['outlet']['outlet_code'] }} - {{ $vou['outlet']['outlet_name'] }}</td>
+																			<td>@if($vou['claimed_at']) {{ date('d F Y H:i', strtotime($vou['claimed_at'])) }} @endif</td>
+																			<td>@if($vou['redeemed_at']) {{ date('d F Y H:i', strtotime($vou['redeemed_at'])) }} @endif</td>
+																			<td>@if($vou['voucher_expired_at']) {{ date('d F Y H:i', strtotime($vou['voucher_expired_at'])) }} @endif</td>
+																		</tr>
+																		@php unset($voucher[$i]); @endphp
+																	    @endif
+																	@endforeach
+																</tbody>
+															</table>
+														@else
+															Voucher is empty
+														@endif
+													</div>
+													<!-- END: Comments -->
+												</div>
+											
+												<div class="tab-pane" id="voucher_used">
+													<!-- BEGIN: Comments -->
+													<div class="mt-comments">
+														@if(!empty($voucher))
+															<table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
+																<thead>
+																  <tr>
+																	  <th>Deals Title</th>
+																	  <th>Promo Type</th>
+																	  <th>Voucher Code</th>
+																	  <th>Outlet</th>
+																	  <th>Claimed</th>
+																	  <th>Redeemed</th>
+																	  <th>Used</th>
+																	  <th>Expired</th>
+																  </tr>
+																</thead>
+																<tbody>
+																	@foreach($voucher as $i => $vou)
+																	    @if($vou['used_at'] != null )
+																		<tr>
+																			<td>{{ $vou['deals_voucher']['deals']['deals_title'] }} {{ $vou['deals_voucher']['deals']['deals_second_title'] }}</td>
+																			<td>
+																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid') 
+																			        Promo ID : {{ $vou['deals_voucher']['deals']['deals_promo_id'] }}
+																			    @else
+																			        Nominal : {{number_format($vou['deals_voucher']['deals']['deals_promo_id'], 0, ',','.')}}
+																			    @endif
+																	        </td>
+																			<td>{{ $vou['deals_voucher']['voucher_code'] }}</td>
+																			<td>{{ $vou['outlet']['outlet_code'] }} - {{ $vou['outlet']['outlet_name'] }}</td>
+																			<td>@if($vou['claimed_at']) {{ date('d F Y H:i', strtotime($vou['claimed_at'])) }} @endif</td>
+																			<td>@if($vou['redeemed_at']) {{ date('d F Y H:i', strtotime($vou['redeemed_at'])) }} @endif</td>
+																			<td>@if($vou['used_at']) {{ date('d F Y H:i', strtotime($vou['used_at'])) }} @endif</td>
+																			<td>@if($vou['voucher_expired_at']) {{ date('d F Y H:i', strtotime($vou['voucher_expired_at'])) }} @endif</td>
+																		</tr>
+																		@php unset($voucher[$i]); @endphp
+																	    @endif
+																	@endforeach
+																</tbody>
+															</table>
+														@else
+															Voucher is empty
+														@endif
+													</div>
+													<!-- END: Comments -->
+												</div>
+											
+												<div class="tab-pane" id="voucher_expired">
+													<!-- BEGIN: Comments -->
+													<div class="mt-comments">
+														@if(!empty($voucher))
+															<table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
+																<thead>
+																  <tr>
+																	  <th>Deals Title</th>
+																	  <th>Promo Type</th>
+																	  <th>Voucher Code</th>
+																	  <th>Outlet</th>
+																	  <th>Claimed At</th>
+																	  <th>Redeemed At</th>
+																	  <th>Expired At</th>
+																  </tr>
+																</thead>
+																<tbody>
+																	@foreach($voucher as $i => $vou)
+																	    @if(date('Y-m-d H:i', strtotime($vou['voucher_expired_at'])) <= date('Y-m-d H:i') && $vou['used_at'] == null)
+																		<tr>
+																			<td>{{ $vou['deals_voucher']['deals']['deals_title'] }} {{ $vou['deals_voucher']['deals']['deals_second_title'] }}</td>
+																			<td>
+																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid') 
+																			        Promo ID : {{ $vou['deals_voucher']['deals']['deals_promo_id'] }}
+																			    @else
+																			        Nominal : {{number_format($vou['deals_voucher']['deals']['deals_promo_id'], 0, ',','.')}}
+																			    @endif
+																	        </td>
+																			<td>{{ $vou['deals_voucher']['voucher_code'] }}</td>
+																			<td>{{ $vou['outlet']['outlet_code'] }} - {{ $vou['outlet']['outlet_name'] }}</td>
+																			<td>@if($vou['claimed_at']) {{ date('d F Y H:i', strtotime($vou['claimed_at'])) }} @endif</td>
+																			<td>@if($vou['redeemed_at']) {{ date('d F Y H:i', strtotime($vou['redeemed_at'])) }} @endif</td>
+																			<td>@if($vou['voucher_expired_at']) {{ date('d F Y H:i', strtotime($vou['voucher_expired_at'])) }} @endif</td>
+																		</tr>
+																		@php unset($voucher[$i]); @endphp
+																	    @endif
+																	@endforeach
+																</tbody>
+															</table>
+														@else
+															Voucher is empty
+														@endif
+													</div>
+													<!-- END: Comments -->
+												</div>
+											
+											</div>
+										</div>
 								</div>
 							</div>
 						</div>
@@ -505,7 +947,7 @@
 									</li>
 									<li>
 										<a data-toggle="tab" href="#tab_3-3">
-											<i class="fa fa-lock"></i> Change Password </a>
+											<i class="fa fa-lock"></i> Change PIN </a>
 									</li>
 								</ul>
 							</div>
@@ -578,7 +1020,7 @@
 													</label>
 												</div>
 											</div>
-											<div class="form-group">
+											<!-- <div class="form-group">
 												<label class="control-label">Email Verified</label>
 												<div class="mt-radio-inline">
 													<label class="mt-radio">
@@ -590,7 +1032,7 @@
 														<span></span>
 													</label>
 												</div>
-											</div>
+											</div> -->
 											<div class="margiv-top-10">
 												<button class="btn green"> Save Changes </button>
 											</div>
@@ -608,11 +1050,11 @@
 										<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" method="POST">
 										{{ csrf_field() }}
 											<div class="form-group">
-												<label class="control-label">New Password</label>
-												<input type="password" class="form-control" name="password_new" /> </div>
+												<label class="control-label">New PIN</label>
+												<input type="password" class="form-control" name="password_new" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)"/> </div>
 											<div class="form-group">
-												<label class="control-label">Re-type New Password</label>
-												<input type="password" class="form-control" name="password_new_confirmation" /> </div>
+												<label class="control-label">Re-type New PIN</label>
+												<input type="password" class="form-control" name="password_new_confirmation" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)"/> </div>
 											<div class="margin-top-10">
 												<button class="btn green"> Save Changes </button>
 											</div>
@@ -641,7 +1083,7 @@
 							<div class="col-md-4">
 								<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" style="text-align:center;">
 								{{ csrf_field() }}
-									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current PIN" required>
+									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current PIN" required maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
 									<input type="hidden" class="form-control" name="level" value="Customer">
 									<button class="btn btn-lg green btn-block"> Yes! Be a Customer <i class="fa fa-user "></i> </button>
 								</form>
@@ -652,7 +1094,7 @@
 							<div class="col-md-4">
 								<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" style="text-align:center;">
 								{{ csrf_field() }}
-									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current PIN" required>
+									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current PIN" required maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
 									<input type="hidden" class="form-control" name="level" value="Admin">
 									<button class="btn btn-lg yellow btn-block"> Yes! Be an Admin <i class="fa fa-user-plus "></i> </button>
 								</form>

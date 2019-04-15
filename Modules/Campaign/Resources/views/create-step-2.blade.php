@@ -110,7 +110,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		else if(det == 'Outlet'){
+		else if(det == 'Outlet' || det == 'Order'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('outlet/ajax') }}",
@@ -793,7 +793,7 @@
 									<div class="fileinput fileinput-new" data-provides="fileinput">
 										<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 											@if(isset($result['campaign_push_image']) && $result['campaign_push_image'] != "")
-												<img src="{{env('AWS_URL')}}/{{$result['campaign_push_image']}}" id="campaign_push_image" />
+												<img src="{{env('AWS_URL')}}{{$result['campaign_push_image']}}" id="campaign_push_image" />
 											@else 
 												<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="campaign_push_image" />
 											@endif
@@ -818,6 +818,7 @@
 										<option value="News" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "New") selected @endif>News</option>
 										<!-- <option value="Product" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Product") selected @endif>Product</option> -->
 										<option value="Order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Order") selected @endif>Order</option>
+										<!-- <option value="Transaction" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Transaction") selected @endif>History</option> -->
 										<option value="History On Going" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History On Going") selected @endif>History On Going</option>
 										<option value="History Transaksi" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
 										<option value="History Point" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Point") selected @endif>History Point</option>
@@ -1140,7 +1141,7 @@
 		<div class="col-md-12" style="text-align:center;">
 			<div class="form-actions">
 				{{ csrf_field() }}
-				<button type="submit" class="btn blue">Save Campaingn</button>
+				<button type="submit" class="btn blue">Save Campaign</button>
 			</div>
 		</div>
 	</form>

@@ -13,7 +13,7 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="password" class="form-control" name="outlet_pin" required placeholder="New Outlet PIN">
+                <input type="password" class="form-control" name="outlet_pin" required placeholder="New Outlet PIN" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
             </div>
         </div>
 
@@ -26,7 +26,7 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="password" class="form-control" name="outlet_pin_confirmation" required placeholder="Re-type New PIN">
+                <input type="password" class="form-control" name="outlet_pin_confirmation" required placeholder="Re-type New PIN" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
             </div>
         </div>
     </div>

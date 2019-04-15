@@ -7,7 +7,7 @@
         <meta content="Technopartner Indonesia CRM System" name="description">
         <meta content="" name="author">
 
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
         <link href="{{ url('/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
 	    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/invoice-2.css') }}" rel="stylesheet" type="text/css"> 
         <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css">

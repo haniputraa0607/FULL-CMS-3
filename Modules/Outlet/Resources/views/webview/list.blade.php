@@ -287,11 +287,11 @@
   		<div class="container">
 	   		<div class="row">
 	   			<div class="col-12 text-black text-15px seravek-font space-bottom">{{ $data[0]['outlet_name'] }}</div>
-	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/location.png') }}"></div>
+	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/location.png') }}"></div>
 	   			<div class="col-10 text-grey-black text-13-3px seravek-light-font space-text"><span> {{ $data[0]['outlet_address'] }} </span></div>
 	   		</div>
 	   		<div class="row space-bottom line-bottom">
-	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{'img/webview/phone.png') }}"></div>
+	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/phone.png') }}"></div>
 	   			<div class="col-10 text-grey-black text-13-3px seravek-light-font space-text"><span> {{ $data[0]['call'] }} </span></div>
 	   		</div>
 	   	</div>

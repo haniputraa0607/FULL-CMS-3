@@ -29,7 +29,7 @@ class WebviewNewsController extends Controller
 
         $news = MyHelper::postWithBearer('news/list', ['id_news'=> $id], $bearer);
         $totalOutlet = 0;
-        $outlet = MyHelper::get('outlet/list');
+        $outlet = MyHelper::getWithBearer('outlet/list?log_save=0', $bearer);
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $totalOutlet = count($outlet['result']);
         }

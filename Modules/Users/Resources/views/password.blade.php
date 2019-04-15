@@ -44,6 +44,13 @@
 		   slides[i].checked = false;
 		}
 	}
+
+	function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
 	</script>
 @endsection
 
@@ -71,7 +78,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">Your 6 Digit PIN</label>
 							<div class="col-md-9">
-								<input type="password" name="password" class="form-control" />
+								<input type="password" name="password" class="form-control" minLength="6" maxLength="6" onkeypress="return isNumberKey(event)"/>
 							</div>
 						</div>
 					</div>
