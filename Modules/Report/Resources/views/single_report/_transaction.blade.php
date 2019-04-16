@@ -80,7 +80,7 @@
 
             {{-- Card --}}
             <div class="row cards" style="margin-top: 30px">
-                <div class="col-md-3">
+                <div class="col-md-4" style="margin-bottom: 20px;">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
                             <i class="fa fa-money"></i>
@@ -94,42 +94,56 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4" style="margin-bottom: 20px;">
+                    <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
+                        <div class="visual">
+                            <i class="fa fa-line-chart"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number">
+                                <span data-counter="counterup" data-value="0" id="card_trx_2">{{ $report['transactions']['total_qty'] }}</span> </div>
+                                <div class="desc"> 
+                                Total Transaction (Qty)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-bottom: 20px;">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
                             <i class="fa fa-money"></i>
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0" id="card_trx_2">{{ $report['transactions']['average_idr'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_trx_3">{{ $report['transactions']['average_idr'] }}</span> </div>
                                 <div class="desc"> 
                                 Avg Transaction (IDR)
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
                             <i class="fa fa-male"></i>
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0" id="card_trx_3">{{ $report['transactions']['total_male'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_trx_4">{{ $report['transactions']['total_male'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Male Customer
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
                             <i class="fa fa-female"></i>
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="0" id="card_trx_4">{{ $report['transactions']['total_female'] }}</span> </div>
+                                <span data-counter="counterup" data-value="0" id="card_trx_5">{{ $report['transactions']['total_female'] }}</span> </div>
                                 <div class="desc"> 
                                 Total Female Customer
                             </div>

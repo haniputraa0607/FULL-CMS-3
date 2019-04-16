@@ -395,9 +395,10 @@
 			tab_trx = 0;
             // update card value
             $('#card_trx_1').text(trx['total_idr']);
-            $('#card_trx_2').text(trx['average_idr']);
-            $('#card_trx_3').text(trx['total_male']);
-            $('#card_trx_4').text(trx['total_female']);
+            $('#card_trx_2').text(trx['total_qty']);
+            $('#card_trx_3').text(trx['average_idr']);
+            $('#card_trx_4').text(trx['total_male']);
+            $('#card_trx_5').text(trx['total_female']);
             // update table
 			$('#table-trx .table').DataTable().clear();
 			$('#table-trx .table').DataTable().rows.add(transactions);
