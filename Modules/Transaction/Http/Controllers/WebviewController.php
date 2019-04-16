@@ -60,7 +60,7 @@ class WebviewController extends Controller
                     if ($value['type'] != 'Midtrans') {
                         continue;
                     } else {
-                        if (isset($value['eci'])) {
+                        if (!isset($value['signature_key'])) {
                             $view = 'transaction_pending';
                         }
                     }
