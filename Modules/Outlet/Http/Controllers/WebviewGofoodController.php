@@ -29,7 +29,7 @@ class WebviewGofoodController extends Controller
     	$post['gofood'] = 1;
         // return $post;
         // $list = MyHelper::post('outlet/filter', $post);
-        $list = MyHelper::postWithBearer('outlet/filter', $post, $bearer);
+        $list = MyHelper::postWithBearer('outlet/filter/gofood', $post, $bearer);
         // return $list;
         if (isset($list['status']) && $list['status'] == 'success') {
             return view('outlet::webview.outlet_gofood_v2', ['outlet' => $list['result']]);

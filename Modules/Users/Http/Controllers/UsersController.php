@@ -58,7 +58,7 @@ class UsersController extends Controller
 				  'submenu_active'    => 'user-autoresponse-'.$subject
 				];
 		$query = MyHelper::get('autocrm/list');
-		$test = MyHelper::get('autocrm/textreplace');
+		$test = MyHelper::get('autocrm/textreplace?log_save=0');
 		$auto = null;
 
 		$getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
@@ -542,35 +542,42 @@ class UsersController extends Controller
 		}
 		
 		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
-		// print_r($getUser);exit;
-		$getLog = MyHelper::post('users/log', ['phone' => $phone, 'skip' => 0, 'take' => 5]);
-// 		return $getLog;
-		$getFeature = MyHelper::post('users/granted-feature', ['phone' => $phone]);
-		// print_r($getFeature);exit;
-		$getFeatureAll = MyHelper::get('feature');
-		
+// 		return $getUser;exit;
+		$getLogMobile = MyHelper::post('users/log?log_save=0', ['phone' => $phone,'type'=> 'mobile', 'skip' => 0, 'take' => 50]);
+		$getLogBE = MyHelper::post('users/log?log_save=0', ['phone' => $phone,'type'=> 'backend', 'skip' => 0, 'take' => 50]);
 
-		$getFeatureModule = MyHelper::get('feature-module');
+		$getFeature = MyHelper::post('users/granted-feature?log_save=0', ['phone' => $phone]);
+
+		$getFeatureAll = MyHelper::get('feature?log_save=0');
+		
+		$getFeatureModule = MyHelper::get('feature-module?log_save=0');
+		
+		$getVoucher = MyHelper::post('deals/voucher/user?log_save=0', ['phone' => $phone]);
+// 		return $getVoucher;
 		
 		$data = [ 'title'             => 'User',
 				  'menu_active'       => 'user',
 				  'submenu_active'    => 'user-list'
 				];
 		$data['profile'] = null;
-		$data['log'] = null;
+		$data['log']['mobile'] = [];
+		$data['log']['backend'] = [];
 		$data['features'] = null;
 		$data['featuresall'] = null;
 		$data['featuresmodule'] = null;
+		$data['voucher'] = null;
 		
 		if(isset($getUser['result'])){
 			$data['profile'] = $getUser['result'];
-			$data['trx'] = $getUser['trx'];
-			$data['voucher'] = $getUser['voucher'];
+// 			$data['trx'] = $getUser['trx'];
+// 			$data['voucher'] = $getUser['voucher'];
 		}
-		if(isset($getLog['result'])) $data['log'] = $getLog['result'];
+		if(isset($getLogMobile['result'])) $data['log']['mobile'] = $getLogMobile['result'];
+		if(isset($getLogBE['result'])) $data['log']['backend'] = $getLogBE['result'];
 		if(isset($getFeature['result'])) $data['features'] = $getFeature['result'];
 		if(isset($getFeatureAll['result'])) $data['featuresall'] = $getFeatureAll['result'];
 		if(isset($getFeatureModule['result'])) $data['featuresmodule'] = $getFeatureModule['result'];
+		if(isset($getVoucher['result'])) $data['voucher'] = $getVoucher['result'];
 
 		$getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
@@ -601,12 +608,9 @@ class UsersController extends Controller
         return view('users::detail_log', $data);
     }
     
-    public function showLogAjax($phone, Request $request)
+    public function showDetailLog($id, Request $request)
     {
-		$post = $request->except('_token');
-	
-		$getLog = MyHelper::post('users/log', ['phone' => $phone, 'skip' => 0, 'take' => 5]);
-		
+		$getLog = MyHelper::get('users/log/detail/'.$id);
 		$data = [];
 		
 		if(isset($getLog['result'])) $data = $getLog['result'];

@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{ env('AWS_ASSET_URL') }}{{'css/slide.css') }}" rel="stylesheet">
+    <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
     
     <!-- SLICK -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
@@ -568,7 +568,8 @@
                         <img class="img-responsive" style="width: 23.3px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/cash.png') }}">
                     </div>
                     <div class="text-16-7px space-top space-bottom seravek-light-font text-black display-inline" id="status_benefit">
-                        Cashback sebanyak {{$data['all_membership'][$keyStatusNow]['benefit_cashback_multiplier']}}%
+                        Cashback sebanyak {{$data['all_membership'][$keyStatusNow]['benefit_cashback_multiplier']}}% 
+                        (maximum {{number_format($data['all_membership'][$keyStatusNow]['cashback_maximum'], 0, ',', '.')}})
                     </div>
                 </div>
             </div>
@@ -623,7 +624,12 @@
 
             $('#status').text(list_status[nextSlide]['type']+ ' :')
             $('#status_name').text(list_status[nextSlide]['membership_name'])
-            $('#status_benefit').text('Cashback sebanyak '+ list_status[nextSlide]['benefit_cashback_multiplier'] +'%')
+
+            var max = list_status[nextSlide]['cashback_maximum'].toString().replace(/[\D\s\._\-]+/g, "");
+            max = max ? parseInt( max, 10 ) : 0;
+            max = max.toLocaleString( "id" );
+
+            $('#status_benefit').text('Cashback sebanyak '+ list_status[nextSlide]['benefit_cashback_multiplier'] +'% (maximum ' + max + ')' )
 
             @if($data['user_membership']['membership_type'] == 'value')
                 var nominal = list_status[nextSlide]['min_total_value'] - parseInt({{$data['user_membership']['user']['progress_now']}});

@@ -17,7 +17,7 @@ class SettingController extends Controller
             return view('error', ['msg' => 'Unauthenticated']);
         }
 
-        $faqList = MyHelper::getWithBearer('setting/faq', $bearer);
+        $faqList = MyHelper::getWithBearer('setting/faq?log_save=0', $bearer);
         if(isset($faqList['result'])){
             return view('setting::webview.faq', ['faq' => $faqList['result']]);
         }else{

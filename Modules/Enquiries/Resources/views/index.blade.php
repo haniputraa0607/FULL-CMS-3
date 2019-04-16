@@ -478,7 +478,7 @@ $configs = session('configs');
    		    	        	            	@if ($value['enquiry_subject'] == "Question")
    		    	        	                <tr>
    		    	        	                    <td>{{ $no }}</td>
-   		    	        	                    <td>{{ date('d F Y', strtotime($value['created_at'])) }}</td>
+   		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
 																					 
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
@@ -502,7 +502,7 @@ $configs = session('configs');
    		    	        	                   <div class="modal-dialog">
    		    	        	                       <div class="modal-content">
    		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
+   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
    		    	        	                           </div>
    		    	        	                           <div class="col-md-12" style="margin-top: 10px">
    		    	        	                              <div class="portlet light portlet-fit bordered">
@@ -556,11 +556,11 @@ $configs = session('configs');
 		    	        	    <tbody>
 		    	        	        @if (!empty($enquiries))
 										<?php $no = 1; ?>
-		    	        	            @foreach($enquiries as $value)
+		    	        	            @foreach($enquiries as $key => $value)
 		    	        	            	@if ($value['enquiry_subject'] == "Complaint")
 		    	        	                 <tr>
 												<td>{{ $no }}</td>
-   		    	        	                    <td>{{ date('d F Y', strtotime($value['created_at'])) }}</td>
+   		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
@@ -581,7 +581,7 @@ $configs = session('configs');
    		    	        	                   <div class="modal-dialog">
    		    	        	                       <div class="modal-content">
    		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
+   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
    		    	        	                           </div>
    		    	        	                           <div class="col-md-12" style="margin-top: 10px">
    		    	        	                              <div class="portlet light portlet-fit bordered">
@@ -635,11 +635,11 @@ $configs = session('configs');
 		    	        	    <tbody>
 								<?php $no = 1; ?>
 		    	        	        @if (!empty($enquiries))
-		    	        	            @foreach($enquiries as $value)
+		    	        	            @foreach($enquiries as $key => $value)
 		    	        	            	@if ($value['enquiry_subject'] == "Partnership")
 		    	        	                 <tr>
    		    	        	                    <td>{{ $no }}</td>
-   		    	        	                    <td>{{ date('d F Y', strtotime($value['created_at'])) }}</td>
+   		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
@@ -660,7 +660,7 @@ $configs = session('configs');
    		    	        	                   <div class="modal-dialog">
    		    	        	                       <div class="modal-content">
    		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
+   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
    		    	        	                           </div>
    		    	        	                           <div class="col-md-12" style="margin-top: 10px">
    		    	        	                              <div class="portlet light portlet-fit bordered">

@@ -277,7 +277,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Outlet'){
+		else if(det == 'Outlet' || det == 'Order'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('outlet/ajax') }}",
@@ -300,7 +300,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'News'){
+		else if(det == 'News'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('news/ajax') }}",
@@ -323,7 +323,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Home'){
+		else if(det == 'Home'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -331,15 +331,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'E-Magazine'){
-			document.getElementById('atd').style.display = 'none';
-			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
-			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
-		}
-		
-		if(det == 'Inbox'){
+		else if(det == 'Inbox'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -347,7 +339,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Voucher'){
+		else if(det == 'Voucher'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -355,7 +347,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Contact Us' || det == 'Transaction'){
+		else if(det == 'Contact Us' || det == 'Transaction'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -363,7 +355,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Link'){
+		else if(det == 'Link'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -371,20 +363,20 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
-		if(det == 'Logout'){
-			document.getElementById('atd_'+type).style.display = 'none';
-			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
-			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
-		}
-
-		if(det == 'Content'){
+		else if(det == 'Content'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'block';
+		}
+
+		else {
+			document.getElementById('atd_'+type).style.display = 'none';
+			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			document.getElementById('link_'+type).style.display = 'none';
+			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 	}
 
@@ -841,10 +833,16 @@ $configs = session('configs');
 								<select name="autocrm_push_clickto" id="autocrm_push_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'push')">
 									<option value="Home" @if($data['autocrm_push_clickto'] == 'Home') selected @endif>Home</option>
 									<option value="News" @if($data['autocrm_push_clickto'] == 'News') selected @endif>News</option>
-									<!-- <option value="Product" @if($data['autocrm_push_clickto'] == 'Product') selected @endif>Product</option> -->
+									<option value="Order" @if($data['autocrm_push_clickto'] == 'Order') selected @endif>Order</option>
+									<option value="History On Going" @if($data['autocrm_push_clickto'] == 'History On Going') selected @endif>History On Going</option>
+									<option value="History Transaksi" @if($data['autocrm_push_clickto'] == 'History Transaksi') selected @endif>History Transaksi</option>
+									<option value="History Point" @if($data['autocrm_push_clickto'] == 'History Point') selected @endif>History Point</option>
 									<option value="Outlet" @if($data['autocrm_push_clickto'] == 'Outlet') selected @endif>Outlet</option>
+									<option value="Profil" @if($data['autocrm_push_clickto'] == 'Profil') selected @endif>Profil</option>
 									<option value="Inbox" @if($data['autocrm_push_clickto'] == 'Inbox') selected @endif>Inbox</option>
-									<!-- <option value="Deals" @if($data['autocrm_push_clickto'] == 'Deals') selected @endif>Deals</option> -->
+									<option value="About" @if($data['autocrm_push_clickto'] == 'About') selected @endif>About</option>
+									<option value="FAQ" @if($data['autocrm_push_clickto'] == 'FAQ') selected @endif>FAQ</option>
+									<option value="TOS" @if($data['autocrm_push_clickto'] == 'TOS') selected @endif>TOS</option>
 									<option value="Contact Us" @if($data['autocrm_push_clickto'] == 'Contact Us') selected @endif>Contact Us</option>
 									<option value="Link" @if($data['autocrm_push_clickto'] == 'Link') selected @endif>Link</option>
 									<option value="Logout" @if($data['autocrm_push_clickto'] == 'Logout') selected @endif>Logout</option>
@@ -938,11 +936,17 @@ $configs = session('configs');
 								<select name="autocrm_inbox_clickto" id="autocrm_inbox_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
 									<option value="Home" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Home") selected @endif>Home</option>
 									{{-- <option value="Content" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
-									<option value="News" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "New") selected @endif>News</option>
-									<!-- <option value="Product" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Product") selected @endif>Product</option> -->
+									<option value="News" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "News") selected @endif>News</option>
+									<option value="Order" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Order") selected @endif>Order</option>
+									<option value="History On Going" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "History On Going") selected @endif>History On Going</option>
+									<option value="History Transaksi" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
+									<option value="History Point" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "History Point") selected @endif>History Point</option>
 									<option value="Outlet" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
+									<option value="Profil" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Profil") selected @endif>Profil</option>
 									<option value="Inbox" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
-									<!-- <option value="Voucher" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Voucher") selected @endif>Voucher</option> -->
+									<option value="About" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "About") selected @endif>About</option>
+									<option value="FAQ" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
+									<option value="TOS" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "TOS") selected @endif>TOS</option>
 									<option value="Contact Us" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 									<option value="Link" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Link") selected @endif>Link</option>
 									<option value="Logout" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Logout") selected @endif>Logout</option>
