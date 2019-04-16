@@ -138,7 +138,7 @@ class OutletController extends Controller
                 'submenu_active' => 'outlet-list',
             ];
 
-            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code, 'qrcode' => 1, 'admin' => 1]);
+            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code, 'qrcode' => 1]);
             // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {

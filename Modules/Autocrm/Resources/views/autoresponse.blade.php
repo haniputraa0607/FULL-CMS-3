@@ -652,7 +652,7 @@ $configs = session('configs');
 							<select name="autocrm_push_clickto" id="autocrm_push_clickto" class="form-control select2" onChange="fetchDetail(this.value)">
 								<option value="Home" @if($data['autocrm_push_clickto'] == 'Home') selected @endif>Home</option>
 								<option value="News" @if($data['autocrm_push_clickto'] == 'News') selected @endif>News</option>
-								<option value="Product" @if($data['autocrm_push_clickto'] == 'Product') selected @endif>Product</option>
+								<!-- <option value="Product" @if($data['autocrm_push_clickto'] == 'Product') selected @endif>Product</option> -->
 								<option value="Outlet" @if($data['autocrm_push_clickto'] == 'Outlet') selected @endif>Outlet</option>
 								<option value="Inbox" @if($data['autocrm_push_clickto'] == 'Inbox') selected @endif>Inbox</option>
 								<option value="Deals" @if($data['autocrm_push_clickto'] == 'Deals') selected @endif>Deals</option>

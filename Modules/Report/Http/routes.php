@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'report', 'namespace' => 'Modules\Report\Http\Controllers'], function()
+Route::group(['middleware' => 'web', 'prefix' => 'report', 'namespace' => 'Modules\Report\Http\Controllers'], function()
 {
     // Route::any('/global', ['middleware' => 'feature_control:114', 'uses' => 'ReportController@reportGlobal']);
     // Route::any('/product', ['middleware' => 'feature_control:116', 'uses' => 'ReportController@reportProduct']);

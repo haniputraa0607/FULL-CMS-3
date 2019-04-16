@@ -92,7 +92,7 @@
 
             {{-- Card --}}
             <div class="row cards" style="margin-top: 30px">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
                             <i class="fa fa-line-chart"></i>
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
                             <i class="fa fa-male"></i>
@@ -120,7 +120,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="dashboard-stat grey-steel" style="padding-top: 5px; padding-bottom: 5px;">
                         <div class="visual">
                             <i class="fa fa-female"></i>

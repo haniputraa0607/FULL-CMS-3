@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
  ?>
 @extends('layouts.main')
 
@@ -123,9 +124,11 @@
                 <thead>
                     <tr>
                         <th> Parameter </th>
-                        <th> Email Recipient </th>
-                        <th> SMS Recipient </th>
-                        <th> WhatsApp Recipient </th>
+                        <th> Forward Email Address</th>
+                        <th> Forward SMS</th>
+                        @if(MyHelper::hasAccess([74], $configs))
+                        <th> WhatsApp Forward </th>
+                        @endif
                         @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                             <th> Action </th>
                         @endif
@@ -152,6 +155,7 @@
                                         @endforeach
                                     @endif
                                 </td>
+                                @if(MyHelper::hasAccess([74], $configs))
                                 <td>
                                     @if($value['whatsapp_toogle'] == '1')
                                         @php $recipient = explode(',', $value['whatsapp_recipient'])@endphp
@@ -160,10 +164,11 @@
                                         @endforeach
                                     @endif
                                 </td>
+                                @endif
                                 @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                     <td style="width: 85px;">
                                         @if(MyHelper::hasAccess([25,27], $grantedFeature)) 
-                                            <a href="{{ url('setting-fraud-detection/detail') }}/{{ $value['id_fraud_setting'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i> Detail</a> 
+                                            <a href="{{ url('setting-fraud-detection/detail') }}/{{ $value['id_fraud_setting'] }}" class="btn btn-sm blue"><i class="fa fa-pencil"></i> Edit</a> 
                                         @endif
                                     </td>
                                 @endif

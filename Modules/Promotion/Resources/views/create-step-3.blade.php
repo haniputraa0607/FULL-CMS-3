@@ -15,6 +15,8 @@ $grantedFeature     = session('granted_features');
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
 @endsection
 

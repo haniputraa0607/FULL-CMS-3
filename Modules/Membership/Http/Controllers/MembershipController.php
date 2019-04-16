@@ -136,7 +136,7 @@ class MembershipController extends Controller
 		
     	$data = json_decode(base64_decode($request->get('data')), true);
     	$data['check'] = 1;
-    	$check = MyHelper::postWithBearer('membership/detail/webview', $data, $bearer);
+    	$check = MyHelper::postWithBearer('membership/detail/webview?log_save=0', $data, $bearer);
         // return $check;
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data = $check['result'];

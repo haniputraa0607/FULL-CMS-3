@@ -275,7 +275,6 @@ class ProductController extends Controller
                 }
             }
 
-            
             if (isset($next)) {
                 return parent::redirect($save, 'Product has been created.', 'product/detail/'.$post['product_code'].'#photo');
             }

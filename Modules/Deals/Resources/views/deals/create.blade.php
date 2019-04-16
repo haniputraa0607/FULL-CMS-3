@@ -291,7 +291,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase ">New Deals {{ $title }}</span>
+                <span class="caption-subject font-blue sbold uppercase ">New {{ $title }}</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -610,7 +610,7 @@
 
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="number" class="form-control" name="user_limit" value="{{ old('user_limit') }}" placeholder="User limit" maxlength="30" minlength="0">
+                                <input type="number" class="form-control" name="user_limit" value="{{ old('user_limit') }}" placeholder="User limit" min="0">
                             </div>
                         </div>
                     </div>

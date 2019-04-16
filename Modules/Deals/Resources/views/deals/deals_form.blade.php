@@ -156,7 +156,7 @@ $configs = session('configs');
             <div class="col-md-3">
                 <div class="md-radio-inline">
                     <div class="md-radio">
-                        <input type="radio" name="duration" id="radio9" value="dates" class="expiry md-radiobtn" required @if (old('duration') == "dates") checked @endif>
+                        <input type="radio" name="duration" id="radio9" value="dates" class="expiry md-radiobtn" required @if (old('duration') == "dates") checked @endif required>
                         <label for="radio9">
                             <span></span>
                             <span class="check"></span>
@@ -167,7 +167,7 @@ $configs = session('configs');
             <div class="col-md-3">
                 <div class="md-radio-inline">
                     <div class="md-radio">
-                        <input type="radio" name="duration" id="radio10" value="duration" class="expiry md-radiobtn" required @if (old('duration') == "duration") checked @endif>
+                        <input type="radio" name="duration" id="radio10" value="duration" class="expiry md-radiobtn" required @if (old('duration') == "duration") checked @endif required>
                         <label for="radio10">
                             <span></span>
                             <span class="check"></span>
@@ -187,7 +187,7 @@ $configs = session('configs');
         </div>
         <div class="col-md-9 voucherTime" id="dates" @if (old('duration') == "dates") style="display: block;" @else style="display: none;" @endif>
             <div class="input-group">
-                <input type="text" class="form_datetime form-control dates durationOpp" name="deals_voucher_expired" value="{{ old('deals_voucher_expired') }}">
+                <input type="text" class="form_datetime form-control dates durationOpp" name="deals_voucher_expired" value="{{ old('deals_voucher_expired') }}" required>
                 <span class="input-group-btn">
                     <button class="btn default" type="button">
                         <i class="fa fa-calendar"></i>
@@ -197,7 +197,7 @@ $configs = session('configs');
         </div>
         <div class="col-md-9 voucherTime" id="duration" @if (old('duration') == "duration") style="display: block;" @else style="display: none;" @endif>
             <div class="input-group">
-                <input type="number" class="form-control duration datesOpp" name="deals_voucher_duration" value="{{ old('deals_voucher_duration') }}">
+                <input type="number" class="form-control duration datesOpp" name="deals_voucher_duration" value="{{ old('deals_voucher_duration') }}" required>
                 <span class="input-group-addon">
                     day after claimed
                 </span>

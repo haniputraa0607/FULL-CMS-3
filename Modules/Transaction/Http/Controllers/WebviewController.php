@@ -24,7 +24,7 @@ class WebviewController extends Controller
 
     	$data = json_decode(base64_decode($request->get('data')), true);
     	$data['check'] = 1;
-    	$check = MyHelper::postWithBearer('transaction/detail/webview', $data, $bearer);
+    	$check = MyHelper::postWithBearer('transaction/detail/webview?log_save=0', $data, $bearer);
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data = $check['result'];
     	} elseif (isset($check['status']) && $check['status'] == 'fail') {
@@ -92,7 +92,7 @@ class WebviewController extends Controller
         
         $data = json_decode(base64_decode($request->get('data')), true);
         $data['check'] = 1;
-        $check = MyHelper::postWithBearer('outletapp/order/detail/view', $data, $bearer);
+        $check = MyHelper::postWithBearer('outletapp/order/detail/view?log_save=0', $data, $bearer);
         if (isset($check['status']) && $check['status'] == 'success') {
             $data = $check['result'];
         } elseif (isset($check['status']) && $check['status'] == 'fail') {
@@ -121,7 +121,7 @@ class WebviewController extends Controller
 
         $data = json_decode(base64_decode($request->get('data')), true);
         $data['check'] = 1;
-        $check = MyHelper::postWithBearer('transaction/detail/webview/point', $data, $bearer);
+        $check = MyHelper::postWithBearer('transaction/detail/webview/point?log_save=0', $data, $bearer);
 
         if (isset($check['status']) && $check['status'] == 'success') {
             $data = $check['result'];
@@ -155,7 +155,7 @@ class WebviewController extends Controller
         
         $data = json_decode(base64_decode($request->get('data')), true);
         $data['check'] = 1;
-        $check = MyHelper::postWithBearer('transaction/detail/webview/balance', $data, $bearer);
+        $check = MyHelper::postWithBearer('transaction/detail/webview/balance?log_save=0', $data, $bearer);
 
         if (isset($check['status']) && $check['status'] == 'success') {
             $data = $check['result'];
@@ -193,7 +193,7 @@ class WebviewController extends Controller
         // }
 
         $data = json_decode(base64_decode($request->get('data')), true);
-    	$check = MyHelper::postWithBearer('outletapp/order/detail/view', $data, $bearer);
+    	$check = MyHelper::postWithBearer('outletapp/order/detail/view?log_save=0', $data, $bearer);
       
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data = $check['result'];

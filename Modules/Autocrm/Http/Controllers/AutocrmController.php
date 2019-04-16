@@ -146,8 +146,15 @@ class AutocrmController extends Controller
 			$data['textreplaces'] = $test['result'];
 			$data['subject'] = $subject;
 		}
-		// print_r($data);exit;
-        return view('autocrm::autoresponse', $data);
+
+		$getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
+		if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+			$data['api_key_whatsapp'] = $getApiKey['result']['value'];
+		}else{
+			$data['api_key_whatsapp'] = null;
+		}
+		// dd($data);exit;
+        return view('users::response', $data);
 	}
 
 	public function list(){
