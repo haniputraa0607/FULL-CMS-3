@@ -179,6 +179,13 @@ class SingleReportController extends Controller
             $post = $check['post'];
             $date_range = $check['date_range'];
 
+            // combine post with filter from session
+            $report_filter = session('report_filter');
+            $post = array_replace($report_filter, $post);
+            
+            // store filter in session
+            session(['report_filter' => $post]);
+
             switch ($report_type) {
                 case 'all':
                     $result = MyHelper::post('report/single', $post);
@@ -202,11 +209,6 @@ class SingleReportController extends Controller
                     $result = ['status' => fail, 'messages' => 'Unknown report type'];
                     break;
             }
-
-            // store filter in session
-            $report_filter = session('report_filter');
-            $post = array_merge($report_filter, $post);
-            session(['report_filter' => $post]);
 
             // date format in datepicker
             $result['filter'] = $post;
