@@ -247,7 +247,7 @@
 									</span>
 									<input type="number" class="form-control price" min="1" name="parameter_detail" value="{{$result['parameter_detail']}}">
 									<span class="input-group-addon">
-										Transactions / @if(strpos($result['parameter'], 'day') !== false) Day @elseif(strpos($result['parameter'], 'week') !== false) Week @endif
+										Transactions / @if(strpos($result['parameter'], 'week') !== false) Week @elseif(strpos($result['parameter'], 'day') !== false) Day @endif
 									</span>
 								</div>
 							</div>

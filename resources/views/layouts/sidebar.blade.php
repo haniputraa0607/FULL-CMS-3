@@ -1,7 +1,8 @@
 <?php
-    use App\Lib\MyHelper;
+	use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
     $configs    		= session('configs');
+    $level    			= session('level');
 
     (session('advert')) ? $advert = session('advert') : $advert = null;
 
@@ -11,6 +12,7 @@
 				<span></span>
 			</div>
 		</li>
+		@if($level == "Super Admin")
 		<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 			<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Home</h3>
 		</li>
@@ -26,6 +28,7 @@
 				<span class="title">Home Setting</span>
 			</a>
 		</li>
+		@endif
 
 		@if(MyHelper::hasAccess([2,4,7,9], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
@@ -154,6 +157,7 @@
 			@endif
 		@endif
 
+		@if($level == "Super Admin")
 		<li class="nav-item {{($menu_active == 'expired-qrcode') ? 'active' : ''}}">
 			<a href="{{url('setting/qrcode_expired')}}" class="nav-link">
 				<i class="fa fa-qrcode"></i>
@@ -188,6 +192,8 @@
 				</a>
 			</li>
 			@endif
+		@endif
+
 		@endif
 
 		@if(MyHelper::hasAccess([19,21,24,26,32,33,34,43,45,48,50,56,57], $grantedFeature))
@@ -489,11 +495,11 @@
 				</a>
 				<ul class="sub-menu">
 					@if(MyHelper::hasAccess([58,59,60,62], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'transaction-rule') ? 'active open' : ''}}">
+					<!-- <li class="nav-item {{($submenu_active == 'transaction-rule') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/rule')}}" class="nav-link ">
 							<span class="title">Calculation Rule</span>
 						</a>
-					</li>
+					</li> -->
 					@endif
 					@if(MyHelper::hasAccess([13], $configs))
 						@if(MyHelper::hasAccess([14], $configs))
@@ -1034,7 +1040,7 @@
 				</li>
 			@endif
 									   
-			@if(MyHelper::hasAccess([55], $configs))
+			<!-- @if(MyHelper::hasAccess([55], $configs))
 				@if(MyHelper::hasAccess([119,120,121,122,123], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'autocrm') ? 'active' : ''}}">
 					<a href="{{url('autocrm')}}" class="nav-link nav-toggle">
@@ -1060,7 +1066,7 @@
 					</ul>
 				</li>
 				@endif
-			@endif
+			@endif -->
 
 		@endif
 		
@@ -1108,12 +1114,14 @@
 			</li>
 		@endif
 
+		@if($level == "Super Admin")
 		<li class="nav-item {{($menu_active == 'setting-version') ? 'active' : ''}}">
 			<a href="{{url('setting/version')}}" class="nav-link">
 				<i class="fa fa-info-circle"></i>
 				<span class="title">Version Control</span>
 			</a>
 		</li>
+		@endif
 
 		@if(MyHelper::hasAccess([85,86,87,88,89,90,91,94], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">

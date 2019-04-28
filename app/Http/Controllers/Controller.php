@@ -77,7 +77,7 @@ class Controller extends BaseController
 					'username'      => $request->input('username'),
 				]);
 
-				$getFeature = MyHelper::get('granted-feature');
+				$getFeature = MyHelper::get('granted-feature?log_save=0');
 
 				$features = [];
 

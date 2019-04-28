@@ -1034,7 +1034,7 @@ class TransactionController extends Controller
     }
 
     public function transactionDetail($id, $key) {
-        $data = [];
+        // $data = [];
         $data = [
             'title'          => 'Transaction',
             'menu_active'    => 'transaction',
@@ -1042,30 +1042,47 @@ class TransactionController extends Controller
             'submenu_active' => 'transaction-'.$key
         ];
 
-        $detail = MyHelper::post('transaction/detail', ['id_transaction' => $id, 'type' => 'trx']);
-        // return $detail;
-        if (isset($detail['status']) && $detail['status'] == 'success') {
-            $data['result'] = $detail['result'];
-        } else {
-            return parent::redirect($detail, 'Data not valid');
-        }
+        // $detail = MyHelper::post('transaction/detail', ['id_transaction' => $id, 'type' => 'trx']);
+        // // return $detail;
+        // if (isset($detail['status']) && $detail['status'] == 'success') {
+        //     $data['data'] = $detail['result'];
+        // } else {
+        //     return parent::redirect($detail, 'Data not valid');
+        // }
 
-        $grand_total = MyHelper::post('transaction/grand-total', []);
-        if (empty($grand_total)) {
-            return view('transaction::not_found', ['messages' => ['Setting Not Found']]);
-        } else {
-            foreach ($grand_total as $key => $value) {
-                if ($value == 'shipping') {
-                    $grand_total[$key] = 'shipment';
-                }
+        // $grand_total = MyHelper::post('transaction/grand-total', []);
+        // if (empty($grand_total)) {
+        //     return view('transaction::not_found', ['messages' => ['Setting Not Found']]);
+        // } else {
+        //     foreach ($grand_total as $key => $value) {
+        //         if ($value == 'shipping') {
+        //             $grand_total[$key] = 'shipment';
+        //         }
 
-            }
-        }
+        //     }
+        // }
 
-        $data['setting'] = $grand_total;
+        // $data['setting'] = $grand_total;
         // return $data;
-        // return view('transaction::transactionDetail', $data);
-        return view('transaction::transactionDetail2', $data);
+        // return view('transaction::transactionDetail2', $data);
+        // return view('transaction::transactionDetail3', $data);
+
+        $post['id_transaction'] = $id;
+        $post['type'] = 'trx';
+        $post['check'] = 1;
+
+        $check = MyHelper::post('transaction/detail/webview?log_save=0', $post);
+        // $check = MyHelper::post('outletapp/order/detail/view?log_save=0', $data);
+    	if (isset($check['status']) && $check['status'] == 'success') {
+    		$data['data'] = $check['result'];
+    	} elseif (isset($check['status']) && $check['status'] == 'fail') {
+            return view('error', ['msg' => 'Data failed']);
+        } else {
+            return view('error', ['msg' => 'Something went wrong, try again']);
+        }
+
+        return view('transaction::transactionDetail3', $data);
+    	
     }
 
     public function transactionDelete($id) {

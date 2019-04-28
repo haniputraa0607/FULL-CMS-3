@@ -1,13 +1,12 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<?php
+    use App\Lib\MyHelper;
+    $configs = session('configs');
+ ?>
+@extends('layouts.main')
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
+@section('page-style')
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
     <style type="text/css">
         @font-face {
             font-family: 'Seravek';
@@ -44,6 +43,10 @@
             src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
         }
 
+        .swal-text {
+            text-align: center;
+        }
+
         .kotak {
             margin : 10px;
             padding: 10px;
@@ -76,8 +79,8 @@
         }
 
         .kotak-inside {
-        	padding-left: 25px;
-        	padding-right: 25px
+            padding-left: 25px;
+            padding-right: 25px
         }
 
         body {
@@ -105,15 +108,15 @@
         }
 
         .space-nice {
-        	padding-bottom: 20px;
+            padding-bottom: 20px;
         }
 
         .space-bottom-big {
-        	padding-bottom: 25px;
+            padding-bottom: 25px;
         }
 
         .space-top {
-        	padding-top: 5px;
+            padding-top: 5px;
         }
 
         .line-bottom {
@@ -180,6 +183,10 @@
 
         .text-grey-green {
             color: rgba(4,154,74,1);
+        }
+
+        .text-grey-white-light {
+            color: #b8b8b8;
         }
 
         .text-greyish-brown{
@@ -252,7 +259,7 @@
 
         .round-greyish-brown{
             border: 1px solid #6c5648;
-            border-radius: 50%;
+            border-radius: 50% !important;
             width: 10px;
             height: 10px;
             display: inline-block;
@@ -285,45 +292,6 @@
             padding-top: 5px;
         }
 
-        .top-5px{
-            top: -5px;
-        }
-        .top-10px{
-            top: -10px;
-        }
-        .top-15px{
-            top: -15px;
-        }
-        .top-20px{
-            top: -20px;
-        }
-        .top-25px{
-            top: -25px;
-        }
-        .top-30px{
-            top: -30px;
-        }
-        .top-35px{
-            top: -35px;
-        }
-
-        #map{
-            border-radius: 10px;
-            width: 100%;
-            height: 150px;
-        }
-
-        .label-free{
-            background: #6c5648;
-            padding: 3px 15px;
-            border-radius: 6.7px;
-            float: right;
-        }
-
-        .text-strikethrough{
-            text-decoration:line-through
-        }
-
         #modal-usaha {
             position: fixed;
             top: 0;
@@ -342,19 +310,99 @@
             margin-left: -125px;
             margin-top: -125px;
         }
-
-        .modal.fade .modal-dialog {
-            transform: translate3d(0, 0, 0);
+        
+        .kotak-full.pending{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#aaa;
         }
-        .modal.in .modal-dialog {
-            transform: translate3d(0, 0, 0);
+        
+        .kotak-full.on_going{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#ef9219;
+        }
+        
+        .kotak-full.complated{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#fff;
+        }
+        
+        .kotak-full.ready{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#15977b;
+        }
+        
+        .kotak-full.pending .text-greyish-brown,
+        .kotak-full.on_going .text-greyish-brown,
+        .kotak-full.ready .text-greyish-brown,
+        
+        .kotak-full.pending .text-grey-white-light,
+        .kotak-full.on_going .text-grey-white-light,
+        .kotak-full.ready .text-grey-white-light
+        {
+            color:#fff;
+        }
+        
+        .kotak-full.redbg{
+            margin-top:-10px;
+            background-color:#c10100;
+        }
+        
+        .kotak-full.redbg #content-taken{
+            text-transform : uppercase;
+            color:#fff;
+            text-align:center;
+            padding:10px;
         }
 
+        @media (min-width: 1200px) {
+        .container {
+        max-width: 1170px; } }
+
+        .page-header{
+            position: fixed;
+        }
+
+        .page-logo {
+            margin-right:auto;
+        }
+            
     </style>
-  </head>
-  <body>
-{{ csrf_field() }}
-    <!-- Modal -->
+@endsection
+
+@section('page-script')
+
+<script>
+        
+</script>
+@endsection
+
+@section('content')
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="/">Home</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>{{ $title }}</span>
+                @if (!empty($sub_title))
+                    <i class="fa fa-circle"></i>
+                @endif
+            </li>
+            @if (!empty($sub_title))
+            <li>
+                <span>{{ $sub_title }}</span>
+            </li>
+            @endif
+        </ul>
+    </div><br>
+    
+    @include('layouts.notifications')
+
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content" style="border-radius: 42.3px; border: 0;">
@@ -367,90 +415,86 @@
 
     <!-- <div id="modal-usaha">
         <div class="modal-usaha-content">
-            <img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}">
         </div>
     </div> -->
-
+    <div style="max-width: 480px; margin: auto">
     @if ($data['trasaction_type'] != 'Offline')
-        <div class="kotak-full">
-            <div class="container">
-                <div class="row text-center">
-                    <div class="col-12 text-16-7px text-greyish-brown seravek-font">
-                        @if($data['detail']['reject_at'] != null)
-                            Pesanan Anda Ditolak
-                        @elseif($data['detail']['taken_at'] != null)
-                            Pesanan Sudah Diambil
-                        @elseif($data['detail']['ready_at'] != null)
-                            Pesanan Anda Sudah Siap
-                        @elseif($data['detail']['receive_at'] != null)
-                            Pesanan Diterima
-                        @else
-                            Pesanan Anda Menunggu Konfirmasi
-                        @endif
+        <div class="kotak-full {{ str_replace(' ', '_', strtolower($data['status'])) }}">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-6 text-21-7px text-greyish-brown seravek-medium-font">
+                      {{strtoupper($data['status'])}}
+                    </div>
+                    <div class="col-6 text-16-7px text-grey-white-light seravek-font text-right" style="padding-top:5px">
+                      {{date('d F Y H:i',strtotime($data['transaction_date']))}}
                     </div>
                 </div>
             </div>
         </div>
-
-        @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
-            <div class="kotak-biasa">
-                <div class="container">
-                    <div class="row text-center">
-                        <div class="col-12 seravek-font text-15px space-nice text-grey">Detail Pengiriman</div>
-                        <div class="col-12 text-greyish-brown text-21-7px space-bottom seravek-medium-font">GO-SEND</div>
-                        <div class="col-12 text-16-7px text-black space-bottom seravek-light-font">
-                            {{ $data['detail']['transaction_pickup_go_send']['destination_name'] }}
-                            <br>
-                            {{ $data['detail']['transaction_pickup_go_send']['destination_phone'] }}
-                        </div>
-                        <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center seravek-light-font">{{ $data['detail']['transaction_pickup_go_send']['destination_address'] }}</div>
-                        </div>
-                        <div class="col-12 text-15px space-bottom text-black seravek-light-font">Map</div>
-                        <div class="col-12 space-bottom-big">
-                            <div class="container">
-                                <div id="map"></div>
+        
+        @if(isset($data['status']))
+            @if($data['status'] == "Taken" || $data['status'] == "Reject")
+                <div class="kotak-full redbg">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="content-taken" class="seravek-medium-font">
+                                    @if($data['status'] == "Taken")
+                                        Order sudah selesai <br/>dan sudah diambil
+                                    @else
+                                        Order di reject <br/> {{ $data['detail']['reject_reason'] }}
+                                    @endif
+                                </div>            
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
-            </div>
-        @else
-            <div class="kotak-biasa">
-                <div class="container">
-                    <div class="row text-center">
-                        <div class="col-12 seravek-font text-15px space-text text-grey">Kode Pickup Anda</div>
-                        
-                        <div class="kotak-qr" data-toggle="modal" data-target="#exampleModal">
-                            <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
-                        </div>
-
-                        <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
-                        <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{ $data['outlet']['outlet_name'] }}</div>
-                        <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center seravek-font">{{ $data['outlet']['outlet_address'] }}</div>
-                        </div>
-                        @if ($data['detail']['pickup_type'] == 'set time')
-                            <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan siap pada</div>
-                        @else
-                            <div class="col-12 text-16-7px space-nice text-black seravek-light-font">Pesanan Anda akan diproses pada</div>
-                        @endif
-                            <div class="col-12 text-16-7px space-text text-greyish-brown seravek-medium-font">{{ date('d F Y', strtotime($data['transaction_date'])) }}</div>
-                        @if ($data['detail']['pickup_type'] == 'set time')
-                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
-                        @elseif($data['detail']['pickup_type'] == 'at arrival')
-                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Kedatangan</div>
-                        @else
-                            <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Ini</div>
-                        @endif
-                    </div>
-                </div>
-            </div>
+            @endif
         @endif
     @endif
 
+        <div class="kotak-biasa">
+            <div class="col-12">
+                <div class="row text-center space-nice">
+
+                @if ($data['trasaction_type'] != 'Offline')
+                    <div class="col-12 seravek-font text-15px space-text text-grey">Kode Pickup</div>
+                    
+                    <div class="kotak-qr" data-toggle="modal" data-target="#exampleModal">
+                        <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
+                    </div>
+
+                    <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
+                @endif
+                
+                    <div class="col-12 text-16-7px text-black space-text seravek-font">{{ strtoupper($data['user']['name']) }}</div>
+                    <div class="col-12 text-16-7px text-black space-bottom-big seravek-font">{{ $data['user']['phone'] }}</div>
+
+                @if ($data['trasaction_type'] != 'Offline')  
+                    @if ($data['detail']['pickup_type'] == 'set time')
+                        <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan siap pada</div>
+                    @else
+                        <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan diproses pada</div>
+                    @endif
+                    @if ($data['detail']['pickup_type'] == 'set time')
+                        <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
+                    @elseif($data['detail']['pickup_type'] == 'at arrival')
+                        <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Kedatangan</div>
+                    @else
+                        <div class="col-12 text-21-7px space-nice text-greyish-brown seravek-medium-font">Saat Ini</div>
+                    @endif
+
+                    @if($data['detail']['receive_at'] != null)
+                        <div class="col-12 text-16-7px space-text text-grey seravek-font">Waktu Order Diterima</div>
+                        <div class="col-12 text-16-7px space-nice text-black seravek-font">{{ date('d F Y H:i', strtotime($data['detail']['receive_at'])) }}</div>
+                    @endif
+                @endif
+                </div>
+            </div>
+        </div>
+
     <div class="kotak">
-        <div class="container line-bottom">
+        <div class="col-12 line-bottom">
             <div class="row space-bottom">
                 <div class="col-6 text-grey-black text-14-3px seravek-font">{{ $data['outlet']['outlet_name'] }}</div>
                 <div class="col-6 text-right text-medium-grey text-13-3px seravek-light-font">{{ date('d F Y H:i', strtotime($data['transaction_date'])) }}</div>
@@ -460,7 +504,7 @@
                 <div class="col-8 text-right text-medium-grey-black text-13-3px seravek-font">#{{ $data['transaction_receipt_number'] }}</div>
             </div>
         </div>
-        <div class="container">
+        <div class="col-12">
             <div class="row">
                 <div class="col-12 text-13-3px text-grey-light seravek-light-font">
                     Transaksi Anda 
@@ -471,8 +515,8 @@
                     <div class="col-7 text-13-3px text-black seravek-light-font">{{ $val['product']['product_name'] }}</div>
                     <div class="col-5 text-right text-13-3px text-black seravek-light-font">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal'])) }}</div>
                     <div class="col-12 text-grey text-12-7px text-black-grey-light seravek-light-font">{{ $val['transaction_product_qty'] }} x {{ str_replace(',', '.', number_format($val['transaction_product_price'])) }}</div>
-                    <div class="space-bottom col-8">
-                        <div class="space-bottom text-12-7px text-grey-medium-light seravek-italic-font" style="word-break: break-word">
+                    <div class="space-bottom col-12">
+                        <div class="space-bottom text-12-7px text-grey-medium-light seravek-italic-font" style="word-wrap: break-word;">
                             @if (isset($val['transaction_product_note']))
                                 {{ $val['transaction_product_note'] }}
                             @else
@@ -491,45 +535,26 @@
     </div>
 
     <div class="kotak">
-        <div class="container">
+        <div class="col-12">
             <div class="row">
                 <div class="col-12 text-14-3px space-top seravek-font text-greyish-brown">Detail Pembayaran <hr> </div>
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">SubTotal ({{$countQty}} item)</div>
-                <div class="col-6 text-13-3px text-right space-text seravek-light-font text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_subtotal'])) }}</div>
+                <div class="col-6 text-13-3px text-right space-text seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['transaction_subtotal'])) }}</div>
                 
                 @if($data['transaction_tax'] > 0)
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
-                <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_tax'])) }}</div>
+                <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['transaction_tax'])) }}</div>
                 @endif
                 
-                @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
-                <div class="col-6 text-13-3px space-text seravek-light-font text-black">Ongkos Kirim</div>
-                    @if($data['transaction_is_free'] == '1')
-                        <div class="col-6 text-13-3px text-right seravek-font text-white"><div class="label-free">FREE</div></div>
-                    @else
-                        @if($data['transaction_shipment_go_send'] != $data['transaction_shipment'])
-                            <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black text-strikethrough">{{ str_replace(',', '.', number_format($data['transaction_shipment_go_send'])) }}</div>
-                            <div class="col-12 space-text text-13-3px text-right seravek-light-font text-greyish-brown">{{ str_replace(',', '.', number_format($data['transaction_shipment'])) }}</div>
-                        @else
-                            <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_shipment'])) }}</div>
-                        @endif
-                    @endif
-                @endif
-
-                @if($data['transaction_discount'] > 0)
-                <div class="col-6 text-13-3px space-text seravek-light-font">Diskon</div>
-                <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ str_replace(',', '.', number_format($data['transaction_discount'])) }}</div>
-                @endif
-
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text seravek-light-font">Kenangan Points</div>
-                <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ str_replace(',', '.', number_format(abs($data['balance']))) }}</div>
+                <div class="col-6 text-13-3px space-text seravek-light-font text-black">Kenangan Points</div>
+                <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['balance'])) }}</div>
                 @endif
-
+                
                 <div class="col-12 text-12-7px text-right"><hr></div>
                 <div class="col-6 text-13-3px seravek-font text-black ">Total Pembayaran</div>
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px text-right seravek-font text-black">{{ str_replace(',', '.', number_format($data['transaction_grandtotal'] - $data['balance'])) }}</div>
+                <div class="col-6 text-13-3px text-right seravek-font text-black">{{ str_replace(',', '.', number_format($data['transaction_grandtotal'] + $data['balance'])) }}</div>
                 @else
                 <div class="col-6 text-13-3px text-right seravek-font text-black">{{ str_replace(',', '.', number_format($data['transaction_grandtotal'])) }}</div>
                 @endif
@@ -687,58 +712,5 @@
     </div>
     @endif
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
-    
-    @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
-    
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&callback=initMap">
-    </script>
-    
-    <script>    
-        // Initialize and add the map
-        function initMap() {
-            // The location of Uluru
-            var uluru = {lat: parseFloat("{{$data['detail']['transaction_pickup_go_send']['destination_latitude']}}"), lng: parseFloat("{{$data['detail']['transaction_pickup_go_send']['destination_longitude']}}")};
-            // The map, centered at Uluru
-            var map = new google.maps.Map(
-                document.getElementById('map'), {
-                    zoom: 15, 
-                    center: uluru,
-                    disableDefaultUI: true
-                });
-            // The marker, positioned at Uluru
-            var marker = new google.maps.Marker({position: uluru, map: map});
-        }
-    </script>
-    @endif
-
-    <script>
-        $(document).ready(function() {
-            $('#exampleModal').on('show.bs.modal', function(e) {
-
-                var url = window.location.href;
-                var result = url.replace("#true", "");
-                result = result.replace("#false", "");
-
-                window.location.href = result + '#true'
-            });
-
-            $('#exampleModal').on('hide.bs.modal', function(e) {
-                window.location.href = window.location.href + '#false'
-
-                var url = window.location.href;
-                var result = url.replace("#true", "");
-                result = result.replace("#false", "");
-
-                window.location.href = result + '#false'
-            });
-        });
-    </script>
-    
-  </body>
-</html>
+    </div>
+@endsection

@@ -291,8 +291,8 @@
 			if(result){
 				document.getElementById("log-url").value = result.url;
 				document.getElementById("log-status").value = result.response_status;
-				document.getElementById("log-request").innerHTML = result.request;
-				document.getElementById("log-response").innerHTML = result.response;
+				document.getElementById("log-request").innerHTML = JSON.stringify(JSON.parse(result.request), null, 4);
+				document.getElementById("log-response").innerHTML = JSON.stringify(JSON.parse(result.response), null, 4);
 				document.getElementById("log-ip").value = result.ip;
 				document.getElementById("log-useragent").value = result.useragent;
 				$('#logModal').modal('show');
@@ -397,22 +397,26 @@
 												@endif
 											<li class="list-group-item" style="padding: 5px !important;" title="User City & Province">
 												<i class="fa fa-map"></i> {{$profile['city_name']}}, {{$profile['province_name']}} </li>
-											<li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
-												<i class="fa fa-heart"></i> {{$profile['relationship']}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Birthday">
 												<i class="fa fa-birthday-cake"></i> @if($profile['birthday']){{date("d F Y", strtotime($profile['birthday']))}} @endif</li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Register date & time">
 												<i class="fa fa-registered"></i> {{date("d F Y", strtotime($profile['created_at']))}} </li>
-											<li class="list-group-item" style="padding: 5px !important;" title="User Kenangan Points">
-												<i class="fa fa-gift"></i> {{number_format($profile['balance'], 0, ',', '.')}} </li>
+											<li class="list-group-item" style="padding: 5px !important;" title="User Membership">
+												<i class="icon-badge"></i> @if(isset($profile['user_membership']['membership_name'])){{$profile['user_membership']['membership_name']}} @endif</li>
+                        					<li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
+												<i class="fa fa-heart"></i> {{$profile['relationship']}} </li>
+											<li class="list-group-item" style="padding: 5px !important;" title="Total Kenangan Points Obtained By The User">
+												<i class="fa fa-gift"></i> {{number_format($profile['balance_acquisition'], 0, ',', '.')}} </li>
+											<li class="list-group-item" style="padding: 5px !important;" title="Remaining User Kenangan Points">
+												<i class="fa fa-star"></i> {{number_format($profile['balance'], 0, ',', '.')}} </li>
 										</ul>
 									</div>
 									<!--end col-md-8-->
 									<div class="col-md-8">
 										@if(isset($log))
-											<button class="btn btn-sm btn-yellow" type="button" style="float:right">
+											<a href="{{url('user/log/'.$profile['phone'])}}" class="btn btn-sm yellow" type="button" style="float:right">
 												Show All Activity
-											</button>
+											</a>
     										<h4 class="font-blue sbold uppercase" style="margin-top: 0px;margin-bottom: 50px;font-size: 24px;">Latest Activity Log</h4>
 										    <div class="tabbable-line tabbable-full-width">
 												<ul class="nav nav-tabs">
@@ -464,14 +468,14 @@
             																		<span class="label label-success label-sm"> Success
             																		</span>
             																		@endif
-            																		 from IP {{$logs['ip']}}
+            																		&nbsp;from IP {{$logs['ip']}}
             																		 
             																		 <?php 
             																		//  $request =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['request']))));
             																		 
             																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
             																		 ?>
-            																		<span class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
             																		
             																		</span>
             																	</div>
@@ -522,14 +526,14 @@
             																		<span class="label label-success label-sm"> Success
             																		</span>
             																		@endif
-            																		 from IP {{$logs['ip']}}
+																					&nbsp;from IP {{$logs['ip']}}
             																		 
             																		 <?php 
             																		//  $request =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['request']))));
             																		 
             																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
             																		 ?>
-            																		<span class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
             																		
             																		</span>
             																	</div>
@@ -584,6 +588,7 @@
 																  <tr>
 																	  <th>Date</th>
 																	  <th>Outlet</th>
+																	  <th>Type</th>
 																	  <th>Receipt Number</th>
 																	  <th>Total Price</th>
 																	  <th>Order Status</th>
@@ -594,20 +599,31 @@
 																	@foreach($profile['on_going'] as $res)
 																		<tr>
 																			<td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
+																			<td>{{ $res['trasaction_type'] }}</td>
 																			<td>{{ $res['transaction_receipt_number'] }}</td>
 																			<td>{{ $res['outlet_name']['outlet_name'] }}</td>
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
 																			<td>
 																			    @if($res['reject_at'] != null)
+																					<span class="label label-danger label-sm"> 
 																			        Rejected
+																					</span>
 																			    @elseif($res['taken_at'] != null)
+																					<span class="label label-sm" style="background-color:#28a745;"> 
 																			        Taken
+																					</span>
 																			    @elseif($res['ready_at'] != null)
+																					<span class="label label-success label-sm"> 
 																			        Ready
+																					</span>
 																			    @elseif($res['receive_at'] != null)
+																					<span class="label label-info label-sm"> 
 																			        Accepted
+																					</span>
 																			    @else
+																					<span class="label label-sm" style="background-color: #95A5A6"> 
 																			        Pending
+																					</span>
 																			    @endif
 																			</td>
 																			<td>
@@ -632,6 +648,7 @@
 																  <tr>
 																	  <th>Date</th>
 																	  <th>Outlet</th>
+																	  <th>Type</th>
 																	  <th>Receipt Number</th>
 																	  <th>Total Price</th>
 																	  <th>Payment Status</th>
@@ -643,9 +660,28 @@
 																		<tr>
 																			<td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
 																			<td>{{ $res['outlet_name']['outlet_name'] }}</td>
+																			<td>{{ $res['trasaction_type'] }}</td>
 																			<td>{{ $res['transaction_receipt_number'] }}</td>
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
-																			<td>{{ $res['transaction_payment_status'] }}</td>
+																			<td>
+																				@if($res['transaction_payment_status'] == 'Cancelled')
+																					<span class="label label-danger label-sm"> 
+																						{{$res['transaction_payment_status']}}
+																					</span>
+																				@elseif($res['transaction_payment_status'] == 'Completed')
+																					<span class="label label-sm" style="background-color:#28a745;"> 
+																						{{$res['transaction_payment_status']}}
+																					</span>
+																				@elseif($res['transaction_payment_status'] == 'Pending')
+																					<span class="label label-sm" style="background-color: #95A5A6"> 
+																						{{$res['transaction_payment_status']}}
+																					</span>
+																				@else
+																					<span class="label label-primary label-sm"> 
+																						{{$res['transaction_payment_status']}}
+																					</span>
+																				@endif
+																			</td>
 																			<td>
 																				<a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail/'.$res['id_transaction'].'/'.$res['trasaction_type']) }}"><i class="icon-pencil"></i> Detail </a>
 																			</td>
@@ -941,10 +977,10 @@
 											<i class="fa fa-cog"></i> Personal info </a>
 										<span class="after"> </span>
 									</li>
-									<li>
+									<!-- <li>
 										<a data-toggle="tab" href="#tab_2-2">
 											<i class="fa fa-picture-o"></i> Change Photo </a>
-									</li>
+									</li> -->
 									<li>
 										<a data-toggle="tab" href="#tab_3-3">
 											<i class="fa fa-lock"></i> Change PIN </a>
@@ -1038,14 +1074,14 @@
 											</div>
 										</form>
 									</div>
-									<div id="tab_2-2" class="tab-pane">
+									<!-- <div id="tab_2-2" class="tab-pane">
 										<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" >
 										{{ csrf_field() }}
 											<div class="margin-top-10">
 												<button class="btn green"> Save Changes </button>
 											</div>
 										</form>
-									</div>
+									</div> -->
 									<div id="tab_3-3" class="tab-pane">
 										<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" method="POST">
 										{{ csrf_field() }}
@@ -1226,11 +1262,11 @@
 						</div>
 						<div class="form-group">
 							<label>Request</label>
-							<textarea class="form-control" rows="4" readonly id="log-request"></textarea>
+							<pre  id="log-request"></pre>
 						</div>
 						<div class="form-group">
 							<label>Response</label>
-							<textarea class="form-control" rows="4" readonly id="log-response"></textarea>
+							<pre id="log-response"></pre>
 						</div>
 					</div>
 				</form>

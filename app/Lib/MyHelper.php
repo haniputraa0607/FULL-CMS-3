@@ -126,7 +126,7 @@ class MyHelper
         'Authorization'   => $bearer,
         'Accept'          => 'application/json',
         'Content-Type'    => 'application/json',
-        'ip-address-view' => $_SERVER["REMOTE_ADDR"],
+        'ip-address-view' => \Request::ip(),
         'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
       ]
     );
@@ -169,7 +169,7 @@ class MyHelper
         'Authorization'   => $ses,
         'Accept'          => 'application/json',
         'Content-Type'    => 'application/json',
-        'ip-address-view' => $_SERVER["REMOTE_ADDR"],
+        'ip-address-view' => \Request::ip(),
         'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
       ]
     );
@@ -213,7 +213,7 @@ class MyHelper
         'Authorization' => $ses,
         'Accept'        => 'application/json',
         'Content-Type'  => 'application/json',
-        'ip-address-view' => $_SERVER["REMOTE_ADDR"],
+        'ip-address-view' => \Request::ip(),
         'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
       ],
       'json' => (array) $post
@@ -290,7 +290,7 @@ class MyHelper
         'Authorization' => $bearer,
         'Accept'        => 'application/json',
         'Content-Type'  => 'application/json',
-        'ip-address-view' => $_SERVER["REMOTE_ADDR"],
+        'ip-address-view' => \Request::ip(),
         'user-agent-view' => $_SERVER['HTTP_USER_AGENT'],
       ],
       'json' => (array) $post

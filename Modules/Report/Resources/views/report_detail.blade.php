@@ -73,7 +73,7 @@
         </div>
         <div class="portlet-body form">
             <div class="row widget-row">
-				<div class="col-md-3">
+				<!-- <div class="col-md-3">
 					<ul class="list-unstyled profile-nav">
 						<li>
 							@if(isset($detail['user']['photo']) && $detail['user']['photo'] != "")
@@ -83,7 +83,7 @@
 							@endif
 						</li>
 					</ul>
-				</div>
+				</div> -->
 				<div class="col-md-9">
 					<div class="row">
 						<div class="col-md-8 profile-info">

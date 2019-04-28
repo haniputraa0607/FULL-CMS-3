@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 // use Illuminate\Routing\Controller;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Lib\MyHelper;
 use Session;
 use Excel;
@@ -542,7 +543,7 @@ class UsersController extends Controller
 		}
 		
 		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
-// 		return $getUser;exit;
+		// return $getUser;exit;
 		$getLogMobile = MyHelper::post('users/log?log_save=0', ['phone' => $phone,'type'=> 'mobile', 'skip' => 0, 'take' => 50]);
 		$getLogBE = MyHelper::post('users/log?log_save=0', ['phone' => $phone,'type'=> 'backend', 'skip' => 0, 'take' => 50]);
 
@@ -591,6 +592,94 @@ class UsersController extends Controller
         return view('users::detail', $data);
     }
     
+    public function showAllLog($phone, Request $request)
+    {
+		$post = $request->except('_token');
+		if(empty($post)){
+			Session::forget('form_filter_log');
+			// $data['']
+		}
+		
+		$data = [ 'title'             => 'User',
+			'menu_active'       => 'user',
+			'submenu_active'    => 'user-list',
+			'phone'             => $phone,
+			'date_start'     => date('01 F Y 00:00'),
+			'date_end'       => date('d F Y 23:59'),
+			'rule'			=> 'and'
+		];
+
+		if(isset($post['date_start'])){
+			$data['date_start'] = $post['date_start'];
+		}
+
+		if(isset($post['rule'])){
+			$data['rule'] = $post['rule'];
+		}
+
+		if(isset($post['date_end'])){
+			$data['date_end'] = $post['date_end'];
+		}
+
+		if(isset($post['conditions'])){
+			Session::put('form_filter_log',$post['conditions']);
+		}else{
+			if(!empty(Session::get('form_filter_log'))){
+				Session::forget('form_filter_log');
+			}
+		}
+
+		if(!isset($post['pagem'])){
+			$data['pagem'] = 1;
+		}else{
+			$data['pagem'] = $post['pagem'];
+		}
+	
+		if(!isset($post['pageb'])){
+			$data['pageb'] = 1;
+		}else{
+			$data['pageb'] = $post['pageb'];
+		}
+
+		if(isset($post['page'])){
+			if(isset($post['tipe']) && $post['tipe'] == 'mobile'){
+				$data['pagem'] = $post['page'];
+			}
+			if(isset($post['tipe']) && $post['tipe'] == 'backend'){
+				$data['pageb'] = $post['page'];
+				$data['tipe'] = 'backend';
+			}
+		}
+
+		if(!empty(Session::get('form_filter_log'))){
+			$data['conditions'] = Session::get('form_filter_log');
+		}else{
+			$data['conditions'] = [];
+		}
+	
+		$getLogMobile = MyHelper::post('users/log?log_save=0&page='.$data['pagem'], ['phone' => $phone,'type'=> 'mobile', 'pagination' => 1, 'take' => 20, 'conditions' =>$data['conditions'], 'date_start' => $data['date_start'], 'date_end' => $data['date_end'], 'rule' => $data['rule']]);
+		$getLogBE = MyHelper::post('users/log?log_save=0&page='.$data['pageb'], ['phone' => $phone,'type'=> 'backend', 'pagination' => 1, 'take' => 20, 'conditions' =>$data['conditions'], 'date_start' => $data['date_start'], 'date_end' => $data['date_end'], 'rule' => $data['rule']]);
+		
+		$data['log']['mobile'] = [];
+		$data['log']['backend'] = [];
+		
+		if(isset($getLogMobile['result'])){
+			$data['log']['mobile'] = $getLogMobile['result']['data'];
+			$data['mobile_page'] = new LengthAwarePaginator($getLogMobile['result']['data'], $getLogMobile['result']['total'], $getLogMobile['result']['per_page'], $getLogMobile['result']['current_page'], ['path' => url('user/log/'.$phone.'?tipe=mobile&pageb='.$data['pageb'])]);
+		} 
+		if(isset($getLogBE['result'])){
+			$data['log']['backend'] = $getLogBE['result']['data'];
+			$data['backend_page'] = new LengthAwarePaginator($getLogBE['result']['data'], $getLogBE['result']['total'], $getLogBE['result']['per_page'], $getLogBE['result']['current_page'], ['path' => url('user/log/'.$phone.'?tipe=backend&pagem='.$data['pagem'])]);
+		} 
+		
+		$profile = MyHelper::post('users/get-detail?log_save=0', ['phone' => $phone]);
+		if(isset($profile['result'])){
+			$data['profile'] = $profile['result'];
+		}
+
+		return view('users::log_all', $data);
+	}
+	
     public function showLog($phone, Request $request)
     {
 		$post = $request->except('_token');
