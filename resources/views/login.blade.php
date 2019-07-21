@@ -3,11 +3,11 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8" />
-        <title>Kopi Kenangan | User Login</title>
+        <title>{{env('TITLE', 'CRM System')}} | User Login</title>
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Kopi Kenangan Admin Portal" name="description" />
+        <meta content="{{env('TITLE', 'CRM System')}} Admin Portal" name="description" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
 		
 		<meta property="og:description" content="Technopartner Indonesia CRM System" />
@@ -18,10 +18,10 @@
 		<meta property="og:image:height" content="200" />
 		<link href="{{env('AWS_ASSET_URL') }}{{ ('images/logo_face_200.png')}}" rel="image_src" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<link rel="shortcut icon" sizes="200x200" href="{{env('AWS_ASSET_URL') }}{{ ('images/logo_face_200.png')}}">
+		<link rel="shortcut icon" sizes="200x200" href="{{env('AWS_ASSET_URL') }}{{ ('images/icon.png')}}">
 		
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -40,7 +40,7 @@
         <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
-		<link rel="shortcut icon" href="{{env('AWS_ASSET_URL') }}{{ ('images/favicon-behave.ico')}}" />
+		<link rel="shortcut icon" href="{{env('AWS_ASSET_URL') }}{{ ('images/icon.png')}}" />
 
         <style type="text/css">
             .captcha_div > div{
@@ -52,11 +52,11 @@
 	</head>
     <!-- END HEAD -->
 
-    <body class=" login">
+    <body class="login" @if(env('BACKGROUND_LOGIN')) style="background-color:{{env('BACKGROUND_LOGIN')}} !important" @endif>
         <!-- BEGIN LOGO -->
         <div class="logo">
             <a href="index.html">
-                <img src="images/logo_kk.png?" alt="" style="width:250px" /> </a>
+                <img src="images/logo.png?" alt="" style="height:70px; margin: 40px" /> </a>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->
@@ -102,7 +102,7 @@
             <!-- END LOGIN FORM -->
            
         </div>
-        <div class="copyright"> Copyright © 2018 Technopartner Indonesia</div>
+        <div class="copyright"> Copyright © 2019 Technopartner Indonesia</div>
         <!--[if lt IE 9]>
 <script src="assets/global/plugins/respond.min.js"></script>
 <script src="assets/global/plugins/excanvas.min.js"></script> 

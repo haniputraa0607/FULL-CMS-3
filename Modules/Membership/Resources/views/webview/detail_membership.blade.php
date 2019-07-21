@@ -405,7 +405,7 @@
   @php 
     $text = "rupiah";
     if($data['user_membership']['membership_type'] == 'balance'){
-        $text = "Kenangan Points";
+        $text = "env('POINT_NAME', 'Points')";
     }
   @endphp
 

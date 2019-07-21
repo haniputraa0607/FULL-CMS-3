@@ -302,6 +302,7 @@ class DealsController extends Controller
         $data       = $dataDeals['data'];
         $post       = $dataDeals['post'];
         $post['newest'] = 1;
+        $post['web'] = 1;
 
         $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
 
@@ -320,6 +321,7 @@ class DealsController extends Controller
         $post                   = $dataDeals['post'];
         $post['id_deals']       = $id;
         $post['deals_promo_id'] = $promo;
+        $post['web'] = 1;
 
         // DEALS
         $data['deals']   = parent::getData(MyHelper::post('deals/list', $post));

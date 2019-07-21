@@ -40,7 +40,7 @@
      }
    </style>
 @endsection
-    
+
 @section('page-script')
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
@@ -56,24 +56,24 @@
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/typeahead/handlebars.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
      <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
-    <script>   
-		
+    <script>
+
      $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
         'todayHighlight' : true,
         'autoclose' : true
-    }); 
+    });
         var map;
 
         @if (!empty($news[0]['news_event_latitude']))
           var lat = "{{$news[0]['news_event_latitude']}}";
-        @else 
+        @else
           var lat = "-7.7972";
         @endif
 
         @if (!empty($news[0]['news_event_longitude']))
           var long = "{{$news[0]['news_event_longitude']}}";
-        @else 
+        @else
           var long = "110.3688";
         @endif
 
@@ -97,8 +97,8 @@
               content: '<p>Marker Location:</p>'
           });
 
-          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
-            
+          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
           var input = /** @type  {HTMLInputElement} */(
               document.getElementById('pac-input'));
 
@@ -164,7 +164,7 @@
             position: location,
             map: map
           });
-          
+
           $('#lat').val(location.lat());
           $('#lng').val(location.lng());
           markers.push(marker);
@@ -199,7 +199,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             token = '<?php echo csrf_token()?>';
-            
+
             $('.summernote').summernote({
                 placeholder: 'News Content Long',
                 tabsize: 2,
@@ -245,7 +245,7 @@
                             $('#'+id).summernote('editor.saveRange');
 							$('#'+id).summernote('editor.restoreRange');
 							$('#'+id).summernote('editor.focus');
-                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                         }
                         // document.getElementById('loadingDiv').style.display = "none";
                     },
@@ -266,7 +266,7 @@
             /* BUTTON TO TEXT */
             @if (empty($news[0]['news_button_form_text']))
               $('.featureForm').hide();
-            @else 
+            @else
               $('.featureForm').show();
               $('.featureFormForm').prop('required',true);
             @endif
@@ -318,19 +318,19 @@
             /* sortable */
             $( "#sortable" ).sortable();
             $( "#sortable" ).disableSelection();
-			
+
 			/* OUTLET */
             @if (empty($news[0]['news_outlet']))
               $('.featureOutlet').hide();
-            @else 
+            @else
               $('.featureOutlet').show();
               $('.featureOutletForm').prop('required',true);
             @endif
-			
+
             /* PRODUCT */
             @if (empty($news[0]['news_product']))
               $('.featureProduct').hide();
-            @else 
+            @else
               $('.featureProduct').show();
               $('.featureProductForm').prop('required',true);
             @endif
@@ -338,7 +338,7 @@
             /* VIDEO */
             @if (empty($news[0]['news_video']))
               $('.featureVideo').hide();
-            @else 
+            @else
               $('.featureVideo').show();
               $('.featureVideoForm').prop('required',true);
             @endif
@@ -346,7 +346,7 @@
             /* LOCATION */
             @if (empty($news[0]['news_event_location_name']))
               $('.featureLocation').hide();
-            @else 
+            @else
               $('.featureLocation').show();
               $('.featureLocationForm').prop('required',true);
             @endif
@@ -354,7 +354,7 @@
             /* DATE */
             @if (empty($news[0]['news_event_date_start']))
               $('.featureDate').hide();
-            @else 
+            @else
               $('.featureDate').show();
               $('.featureDateForm').prop('required',true);
             @endif
@@ -362,18 +362,18 @@
             /* TIME */
             @if (empty($news[0]['news_event_time_start']))
               $('.featureTime').hide();
-            @else 
+            @else
               $('.featureTime').show();
               $('.featureTimeForm').prop('required',true);
             @endif
-            
+
 			 /* BUTTON TO FORM */
             $('#featureForm').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureForm', state);
                 $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
                 $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
             });
-			
+
             /* OUTLET */
             $('#featureOutlet').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureOutlet', state);
@@ -420,7 +420,7 @@
             $('.publishType').click(function() {
               // tampil duluk
               $('.showPublish').show();
-              
+
               if ($(this).val() == "always") {
                 $('.always').hide();
                 $('.always').removeAttr('required');
@@ -441,8 +441,8 @@
                 heightImg = 500;
                 }
                 else {
-                widthImg  = 500;
-                heightImg = 250;              
+                widthImg  = 750;
+                heightImg = 375;
                 }
 
                 var _URL = window.URL || window.webkitURL;
@@ -450,7 +450,7 @@
 
                 if ((file = this.files[0])) {
                     image = new Image();
-                    
+
                     image.onload = function() {
                         if (this.width == widthImg && this.height == heightImg) {
                             // image.src = _URL.createObjectURL(file);
@@ -467,13 +467,13 @@
                             }
                             else {
                                 $('#field_image_landscape').val("");
-                                $('#image_landscape').children('img').attr('src', 'http://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_landscape').children('img').attr('src', 'http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                             console.log($(this).val())
                             // console.log(document.getElementsByName('news_image_luar'))
                         }
                     };
-                
+
                     image.src = _URL.createObjectURL(file);
                 }
 
@@ -573,7 +573,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -594,7 +594,7 @@
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Post Date
-                                <span class="required" aria-required="true"> * </span>  
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Tanggal news dibuat" data-container="body"></i>
                                 </label>
                             </div>
@@ -624,7 +624,7 @@
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Publish Date
-                                <span class="required" aria-required="true"> * </span>  
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Pilih apakah new akan selalu ditampilkan atau dalam waktu yang dibatasi (always show/ date limit)" data-container="body"></i>
                                 </label>
                             </div>
@@ -676,7 +676,7 @@
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Header Title
-                                <span class="required" aria-required="true"> * </span>  
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Masukkan Header news" data-container="body"></i>
                                 </label>
                             </div>
@@ -684,12 +684,12 @@
                                 <input type="text" id="" class="form-control" name="news_title" value="{{ old('news_title') }}" placeholder="Header Title" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 News Title
-                                <span class="required" aria-required="true"> * </span>  
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Masukkan judul news" data-container="body"></i>
                                 </label>
                             </div>
@@ -702,9 +702,9 @@
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Image Square
-                                <span class="required" aria-required="true"> * </span> 
+                                <span class="required" aria-required="true"> * </span>
                                 <br>
-                                <span class="required" aria-required="true"> (500*500) </span> 
+                                <span class="required" aria-required="true"> (500*500) </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran persegi ditampilkan pada list news" data-container="body"></i>
                                 </label>
                             </div>
@@ -719,7 +719,7 @@
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
                                         <input type="file" id="field_image_square" class="file" accept="image/*" data-jenis="square" name="news_image_luar" required>
-                                        
+
                                         </span>
 
                                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -732,16 +732,16 @@
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Image Landscape
-                                <span class="required" aria-required="true"> * </span> 
+                                <span class="required" aria-required="true"> * </span>
                                 <br>
-                                <span class="required" aria-required="true"> (500*250) </span> 
+                                <span class="required" aria-required="true"> (750*375) </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
                                 </label>
                             </div>
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                    <img src="http://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                    <img src="http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
                                     <div>
@@ -749,7 +749,7 @@
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
                                         <input type="file" accept="image/*" id="field_image_landscape" class="file" name="news_image_dalam" data-jenis="landscape" required>
-                                        
+
                                         </span>
 
                                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -762,7 +762,7 @@
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Content Short
-                                <span class="required" aria-required="true"> * </span> 
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat news" data-container="body"></i>
                                 </label>
                             </div>
@@ -775,7 +775,7 @@
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Content Long
-                                <span class="required" aria-required="true"> * </span> 
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Isi konten news" data-container="body"></i>
                                 </label>
                             </div>
@@ -783,7 +783,7 @@
                                 <textarea name="news_content_long" id="field_content_long" class="form-control summernote">{{ old('news_content_long') }}</textarea>
                             </div>
                         </div>
-                        
+
                         <!-- EVENT DATE -->
                         <div class="form-group">
                             <div class="input-icon right">
@@ -795,7 +795,7 @@
                             <div class="col-md-9">
                                 <span class="m-switch">
                                     <label>
-                                    <input type="checkbox" class="make-switch" id="featureDate" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_event_date_start'))) checked @endif> 
+                                    <input type="checkbox" class="make-switch" id="featureDate" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_event_date_start'))) checked @endif>
                                     <span></span>
                                     </label>
                                 </span>
@@ -851,7 +851,7 @@
                             <div class="col-md-9">
                                 <span class="m-switch">
                                     <label>
-                                    <input type="checkbox" class="make-switch" id="featureTime" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_event_time_start'))) checked @endif> 
+                                    <input type="checkbox" class="make-switch" id="featureTime" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_event_time_start'))) checked @endif>
                                     <span></span>
                                     </label>
                                 </span>
@@ -907,7 +907,7 @@
                             <div class="col-md-9">
                                 <span class="m-switch">
                                     <label>
-                                    <input type="checkbox" class="make-switch" id="featureLocation" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_event_location_name'))) checked @endif> 
+                                    <input type="checkbox" class="make-switch" id="featureLocation" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_event_location_name'))) checked @endif>
                                     <span></span>
                                     </label>
                                 </span>
@@ -991,7 +991,7 @@
                             <div class="col-md-9">
                                 <span class="m-switch">
                                     <label>
-                                    <input type="checkbox" class="make-switch" id="featureVideo" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_video_text'))) checked @endif> 
+                                    <input type="checkbox" class="make-switch" id="featureVideo" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_video_text'))) checked @endif>
                                     <span></span>
                                     </label>
                                 </span>
@@ -1033,7 +1033,7 @@
                             <div class="col-md-9">
                                 <span class="m-switch">
                                     <label>
-                                    <input type="checkbox" class="make-switch" id="featureOutlet" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_outlet_text'))) checked @endif> 
+                                    <input type="checkbox" class="make-switch" id="featureOutlet" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_outlet_text'))) checked @endif>
                                     <span></span>
                                     </label>
                                 </span>
@@ -1071,7 +1071,7 @@
                                 </div>
                             </div>
                         </div>
-        
+
                         <!-- PRODUCT -->
                         <div class="form-group">
                             <div class="input-icon right">
@@ -1083,7 +1083,7 @@
                             <div class="col-md-9">
                                 <span class="m-switch">
                                     <label>
-                                    <input type="checkbox" class="make-switch" id="featureProduct" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_product_text'))) checked @endif> 
+                                    <input type="checkbox" class="make-switch" id="featureProduct" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_product_text'))) checked @endif>
                                     <span></span>
                                     </label>
                                 </span>
@@ -1133,13 +1133,13 @@
 							<div class="col-md-9">
 								<span class="m-switch">
 									<label>
-									<input name="custom_form_checkbox" type="checkbox" class="make-switch" id="featureForm" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_button_form_text'))) checked @endif> 
+									<input name="custom_form_checkbox" type="checkbox" class="make-switch" id="featureForm" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_button_form_text'))) checked @endif>
 									<span></span>
 									</label>
 								</span>
 							</div>
 						</div>
-		
+
 						<div class="form-group featureForm">
 							<label class="col-md-3 control-label"></label>
 							<div class="col-md-9">
@@ -1151,7 +1151,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="form-group featureForm">
 							<label class="col-md-3 control-label"></label>
 							<div class="col-md-9">
@@ -1182,7 +1182,7 @@
                 </div>
               </div>
             </div>
-						
+
 						<div class="form-group featureForm">
 							<label class="col-md-3 control-label"></label>
 							<div class="col-md-9">
@@ -1290,7 +1290,7 @@
                               </div>
                             </div>
                           </div>
-                          
+
                           <div class="col-md-12 is_unique" style="margin-top:20px;">
                             <div class="input-icon right">
                               <div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
@@ -1306,7 +1306,7 @@
                                       <span></span>
                                   </label>
                                 </div>
-                                
+
                               </div>
                             </div>
                           </div>

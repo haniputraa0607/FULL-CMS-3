@@ -499,7 +499,7 @@
                 @endif
                 
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text seravek-light-font text-black">Kenangan Points</div>
+                <div class="col-6 text-13-3px space-text seravek-light-font text-black">env('POINT_NAME', 'Points')</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['balance'])) }}</div>
                 @endif
                 

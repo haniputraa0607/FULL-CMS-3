@@ -134,7 +134,7 @@ class SettingController extends Controller
         } elseif ($key == 'balance_reset') {
             $sub = 'balance-reset';
             $active = 'balance-reset';
-            $subTitle = 'Kenangan Points Reset';
+            $subTitle = 'env('POINT_NAME', 'Points') Reset';
         }
             
         $data = [

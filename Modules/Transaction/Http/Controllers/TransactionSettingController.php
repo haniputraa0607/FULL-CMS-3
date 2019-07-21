@@ -15,7 +15,7 @@ class TransactionSettingController extends Controller
         $data = [
             'title'          => 'Setting',
             'menu_active'    => 'order',
-            'sub_title'      => 'Global Kenangan Points',
+            'sub_title'      => 'Global env('POINT_NAME', 'Points')',
             'submenu_active' => 'transaction-setting'
         ];
         

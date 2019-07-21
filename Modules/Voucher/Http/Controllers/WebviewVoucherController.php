@@ -22,7 +22,7 @@ class WebviewVoucherController extends Controller
         
         $data['voucher'] = parent::getData(MyHelper::postWithBearer('voucher/me?log_save=0', $post, $bearer));
         
-        return view('voucher::webview.voucher_detail', $data);
+        return view('voucher::webview.voucher_detail_v3', $data);
     }
 
     public function voucherDetailV2(Request $request, $id_deals_user)
@@ -39,7 +39,7 @@ class WebviewVoucherController extends Controller
         
         $data['voucher'] = parent::getData(MyHelper::postWithBearer('voucher/me?log_save=0', $post, $bearer));
         
-        return view('voucher::webview.voucher_detail_v2', $data);
+        return view('voucher::webview.voucher_detail_v4', $data);
     }
 
     // display detail voucher after used

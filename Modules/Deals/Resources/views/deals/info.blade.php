@@ -8,7 +8,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Title
-                            <span class="required" aria-required="true"> * </span> 
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Judul deals" data-container="body"></i>
                             </label>
                         </div>
@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Second Title  
+                            Second Title
                             <i class="fa fa-question-circle tooltips" data-original-title="Sub judul deals jika ada" data-container="body"></i>
                             </label>
                         </div>
@@ -34,7 +34,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Promo Type
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Tipe promosi berdasarkan Promo ID atau nominal promo" data-container="body"></i>
                             </label>
                         </div>
@@ -71,7 +71,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat tentang deals yang dibuat" data-container="body"></i>
                             </label>
                         </div>
@@ -84,7 +84,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Long
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang deals yang dibuat" data-container="body"></i>
                             </label>
                         </div>
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     @if ($val['deals_type'] == "Deals")
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Publish Periode <span class="required" aria-required="true"> * </span> </label>
@@ -167,7 +167,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Image
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                             <br>
                             <span class="required" aria-required="true"> (500*500) </span>
@@ -184,7 +184,7 @@
                                     <span class="fileinput-new"> Select image </span>
                                     <span class="fileinput-exists"> Change </span>
                                     <input type="file" accept="image/*" name="deals_image" id="file">
-                                    
+
                                     </span>
 
                                     <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -192,7 +192,7 @@
                             </div>
                         </div>
                     </div>
-                
+
                     @php
                         if (!empty($val['outlets'])) {
                             $outletselected = array_pluck($val['outlets'],'id_outlet');
@@ -206,7 +206,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Outlet Available
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
                             </label>
                         </div>
@@ -224,34 +224,24 @@
                                             @foreach($outlets as $suw)
                                                 <option value="{{ $suw['id_outlet'] }}" >{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
                                             @endforeach
-                                        @else 
+                                        @else
                                             @foreach($outlets as $suw)
                                                 <option value="{{ $suw['id_outlet'] }}" @if (!empty($outletselected)) @if (in_array($suw['id_outlet'], $outletselected)) selected @endif  @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
                                             @endforeach
                                         @endif
-                                        
+
                                     @endif
                                 </optgroup>
                             </select>
                         </div>
                     </div>
-                    
-                    @if ($val['deals_voucher_type'] == "Auto generate")
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Voucher Total <span class="required" aria-required="true"> * </span></label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="deals_total_voucher" value="{{ $val['deals_total_voucher'] }}" placeholder="Total Voucher" required="">
-                            
-                        </div>
-                    </div>
-                    @endif
-                    
+
                     @if ($val['deals_type'] != "Hidden")
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Voucher Price
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Tipe pembayaran voucher (gratis, menggunakan point, atau menggunakan uang)" data-container="body"></i>
                             </label>
                         </div>
@@ -310,7 +300,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Voucher Type
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Tipe pembuatan voucher, di list secara manual, auto generate atau unlimited" data-container="body"></i>
                             </label>
                         </div>
@@ -319,7 +309,7 @@
                                 <div class="col-md-3">
                                     <div class="md-radio-inline">
                                         <div class="md-radio">
-                                            <input type="radio" name="deals_voucher_type" id="radio1" value="Auto generated" class="voucherType" @if ($val['deals_voucher_type'] == "Auto generated") checked @endif> 
+                                            <input type="radio" name="deals_voucher_type" id="radio1" value="Auto generated" class="voucherType" @if ($val['deals_voucher_type'] == "Auto generated") checked @endif>
                                             <label for="radio1">
                                                 <span></span>
                                                 <span class="check"></span>
@@ -330,7 +320,7 @@
                                 <div class="col-md-3">
                                     <div class="md-radio-inline">
                                         <div class="md-radio">
-                                            <input type="radio" name="deals_voucher_type" id="radio2" value="List Vouchers" class="voucherType" @if ($val['deals_voucher_type'] == "List Vouchers") checked @endif required> 
+                                            <input type="radio" name="deals_voucher_type" id="radio2" value="List Vouchers" class="voucherType" @if ($val['deals_voucher_type'] == "List Vouchers") checked @endif required>
                                             <label for="radio2">
                                                 <span></span>
                                                 <span class="check"></span>
@@ -341,7 +331,7 @@
                                 <div class="col-md-3">
                                     <div class="md-radio-inline">
                                         <div class="md-radio">
-                                            <input type="radio" name="deals_voucher_type" id="radio3" value="Unlimited" class="voucherType" @if ($val['deals_voucher_type'] == "Unlimited") checked @endif required> 
+                                            <input type="radio" name="deals_voucher_type" id="radio3" value="Unlimited" class="voucherType" @if ($val['deals_voucher_type'] == "Unlimited") checked @endif required>
                                             <label for="radio3">
                                                 <span></span>
                                                 <span class="check"></span>
@@ -349,17 +339,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
-                    
+
+                    @if ($val['deals_voucher_type'] == "Auto generated" || $val['deals_voucher_type'] == "List Vouchers")
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Voucher Total <span class="required" aria-required="true"> * </span></label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="deals_total_voucher" value="{{ $val['deals_total_voucher'] }}" placeholder="Total Voucher" required="">
+
+                        </div>
+                    </div>
+                    @endif
+
                     <br>
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Voucher Expiry
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Masa berlaku voucher, bisa diatur berdasarkan durasi deal atau tanggal expirednya" data-container="body"></i>
                             </label>
                         </div>
@@ -410,7 +410,7 @@
                                         day after claimed
                                     </span>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -419,7 +419,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             User Limit
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Batasan user untuk claim voucher, input 0 untuk unlimited" data-container="body"></i>
                             </label>
                         </div>
@@ -430,7 +430,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             @else
                 @include('deals::deals.info-point')

@@ -405,9 +405,9 @@
 												<i class="icon-badge"></i> @if(isset($profile['user_membership']['membership_name'])){{$profile['user_membership']['membership_name']}} @endif</li>
                         					<li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
 												<i class="fa fa-heart"></i> {{$profile['relationship']}} </li>
-											<li class="list-group-item" style="padding: 5px !important;" title="Total Kenangan Points Obtained By The User">
+											<li class="list-group-item" style="padding: 5px !important;" title="Total env('POINT_NAME', 'Points') Obtained By The User">
 												<i class="fa fa-gift"></i> {{number_format($profile['balance_acquisition'], 0, ',', '.')}} </li>
-											<li class="list-group-item" style="padding: 5px !important;" title="Remaining User Kenangan Points">
+											<li class="list-group-item" style="padding: 5px !important;" title="Remaining User env('POINT_NAME', 'Points')">
 												<i class="fa fa-star"></i> {{number_format($profile['balance'], 0, ',', '.')}} </li>
 										</ul>
 									</div>
