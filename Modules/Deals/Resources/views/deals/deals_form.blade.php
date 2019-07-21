@@ -99,7 +99,7 @@ $configs = session('configs');
                     </div>
                 </div>
             </div>
-            @if(MyHelper::hasAccess([18], $configs))
+            @if(MyHelper::hasAccess([19], $configs))
             <div class="col-md-3">
                     <div class="md-radio-inline">
                         <div class="md-radio">

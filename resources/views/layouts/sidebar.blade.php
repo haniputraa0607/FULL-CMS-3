@@ -188,7 +188,7 @@
 			<li class="nav-item {{($menu_active == 'balance-reset') ? 'active' : ''}}">
 				<a href="{{url('setting/balance_reset')}}" class="nav-link">
 					<i class="fa fa-refresh"></i>
-					<span class="title">Setting Kenangan Points Reset</span>
+					<span class="title">Setting env('POINT_NAME', 'Points') Reset</span>
 				</a>
 			</li>
 			@endif
@@ -480,7 +480,7 @@
 				<li class="nav-item {{($menu_active == 'balance') ? 'active' : ''}}">
 					<a href="{{url('transaction/balance')}}" class="nav-link nav-toggle">
 						<i class="fa fa-clock-o"></i>
-						<span class="title">Kenangan Points Log History</span>
+						<span class="title">env('POINT_NAME', 'Points') Log History</span>
 					</a>
 				</li>
 				@endif
@@ -522,7 +522,7 @@
 					@if(MyHelper::hasAccess([58,59,60,62], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'transaction-setting') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/cashback')}}" class="nav-link ">
-							<span class="title">Global Kenangan Points Setting</span>
+							<span class="title">Global env('POINT_NAME', 'Points') Setting</span>
 						</a>
 					</li>
 					@endif
@@ -643,19 +643,21 @@
 								</a>
 							</li>
 							@endif
-							@if(MyHelper::hasAccess([74], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'deals-point-create') ? 'active open' : ''}}">
-								<a href="{{url('deals-point/create')}}" class="nav-link ">
-									<span class="title">New Point Deals</span>
-								</a>
-							</li>
-							@endif
-							@if(MyHelper::hasAccess([72], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'deals-point-list') ? 'active open' : ''}}">
-								<a href="{{url('deals-point')}}" class="nav-link ">
-									<span class="title">Deals Point List</span>
-								</a>
-							</li>
+							@if(MyHelper::hasAccess([18], $configs))
+								@if(MyHelper::hasAccess([74], $grantedFeature))
+								<li class="nav-item {{($submenu_active == 'deals-point-create') ? 'active open' : ''}}">
+									<a href="{{url('deals-point/create')}}" class="nav-link ">
+										<span class="title">New Point Deals</span>
+									</a>
+								</li>
+								@endif
+								@if(MyHelper::hasAccess([72], $grantedFeature))
+								<li class="nav-item {{($submenu_active == 'deals-point-list') ? 'active open' : ''}}">
+									<a href="{{url('deals-point')}}" class="nav-link ">
+										<span class="title">Deals Point List</span>
+									</a>
+								</li>
+								@endif
 							@endif
 						</ul>
 					</li>

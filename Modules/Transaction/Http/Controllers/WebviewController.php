@@ -55,17 +55,17 @@ class WebviewController extends Controller
 
         if ($data['transaction_payment_status'] == 'Pending') {
             $view = 'transaction_proccess';
-            if (isset($data['data_payment'])) {
-                foreach ($data['data_payment'] as $key => $value) {
-                    if ($value['type'] != 'Midtrans') {
-                        continue;
-                    } else {
-                        if (!isset($value['signature_key'])) {
-                            $view = 'transaction_pending';
-                        }
-                    }
-                }
-            }
+            // if (isset($data['data_payment'])) {
+            //     foreach ($data['data_payment'] as $key => $value) {
+            //         if ($value['type'] != 'Midtrans') {
+            //             continue;
+            //         } else {
+            //             if (!isset($value['signature_key'])) {
+            //                 $view = 'transaction_pending';
+            //             }
+            //         }
+            //     }
+            // }
         }
 
         if ($data['transaction_payment_status'] == 'Cancelled') {

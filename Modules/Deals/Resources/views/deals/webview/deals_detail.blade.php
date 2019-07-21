@@ -35,40 +35,61 @@
     	}
     	.title{
     		font-size: 18px;
-    		color: #000;
+    		color: #666666;
     	}
     	#timer{
-            width: 85px;
     		position: absolute;
-    		top: 0px;
+    		top: -25px;
     		right: 0px;
-    		padding: 5px 15px;
-    		border-bottom-left-radius: 7px !important;
+    		padding: 5px 30px;
+    		/*border-bottom-left-radius: 7px !important;*/
     		color: #fff;
             display: none;
     	}
+        .bg-yellow{
+            background-color: #d1af28;
+        }
         .bg-red{
             background-color: #c02f2fcc;
         }
         .bg-black{
             background-color: #000c;
         }
+        .bg-grey{
+            background-color: #cccccc;
+        }
     	.fee{
 			margin-top: 30px;
 			font-size: 18px;
 			color: #000;
     	}
-    	.description-wrapper,
-    	.outlet-wrapper{
+    	.description-wrapper{
     		padding: 15px;
     	}
+		.outlet-wrapper{
+		    padding: 0 15px 15px;
+		}
+    	.description{
+    	    padding-top: 10px;
+    	    font-size: 15px;
+    	}
     	.subtitle{
-    		font-weight: 600;
     		margin-bottom: 10px;
-    		color: #c0c0c0;
+    		color: #000;
+    		font-size: 15px;
+    	}
+    	.outlet{
+    	    font-size: 14.5px;
     	}
     	.outlet-city:not(:first-child){
     		margin-top: 10px;
+    	}
+
+    	.voucher{
+    	    margin-top: 30px;
+    	}
+    	.font-red{
+    	    color: #990003;
     	}
 
         @media only screen and (min-width: 768px) {
@@ -87,37 +108,50 @@
 			@php
 				$deals = $deals[0];
                 if ($deals['deals_voucher_price_cash'] != "") {
-                    $deals_fee = "IDR " . MyHelper::thousand_number_format($deals['deals_voucher_price_cash']);
+                    $deals_fee = MyHelper::thousand_number_format($deals['deals_voucher_price_cash']);
                 }
                 elseif ($deals['deals_voucher_price_point']) {
-                    $deals_fee = $deals['deals_voucher_price_point'] . " pts";
+                    $deals_fee = $deals['deals_voucher_price_point'] . " poin";
                 }
                 else {
-                    $deals_fee = "Free";
+                    $deals_fee = "GRATIS";
                 }
 			@endphp
 			<div class="col-md-4 col-md-offset-4">
 				<img class="deals-img center-block" src="{{ $deals['url_deals_image'] }}" alt="">
 
 				<div class="title-wrapper clearfix">
-					<div class="col-left title">
-						{{ $deals['deals_title'] }}
+					<div class="col-left voucher font-red">
+					    @if($deals['deals_voucher_type'] != 'Unlimited')
+						    {{ $deals['deals_total_voucher'] }}/{{ $deals['deals_total_claimed'] }}
+						@endif
+						kupon tersedia
 					</div>
 					<div class="col-right">
-						<div id="timer" class="text-center"></div>
-						<div class="fee text-right">{{ $deals_fee }}</div>
+					    <div id="timer" class="text-center">
+					        <span id="timerchild">Bearkhir Dalam</span>
+					    </div>
+						<div class="fee text-right font-red GoogleSans-Medium">{{ $deals_fee }}</div>
+					</div>
+				</div>
+				<div class="title-wrapper clearfix GoogleSans-Medium">
+					<div class="title">
+						{{ $deals['deals_title'] }}
+						@if($deals['deals_second_title'] != null)
+						<br>
+						{{ $deals['deals_second_title'] }}
+						@endif
 					</div>
 				</div>
 
                 @if($deals['deals_description'] != "")
 				<div class="description-wrapper">
-					<div class="subtitle">DESKRIPSI</div>
 					<div class="description">{!! $deals['deals_description'] !!}</div>
 				</div>
                 @endif
 
 				<div class="outlet-wrapper">
-					<div class="subtitle">TERSEDIA DI OUTLET INI</div>
+					<div class="subtitle">Dapat digunakan di outlet:</div>
 					<div class="outlet">
 						@foreach($deals['outlet_by_city'] as $key => $outlet_city)
 						<div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
@@ -142,6 +176,8 @@
 @section('page-script')
     @if(!empty($deals))
         <script type="text/javascript">
+            @php $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', "Juli", 'Agustus', 'September', 'Oktober', 'November', 'Desember']; @endphp
+
             // timer
             var deals_start = "{{ strtotime($deals['deals_start']) }}";
             var deals_end   = "{{ strtotime($deals['deals_end']) }}";
@@ -152,20 +188,32 @@
             if (server_time >= deals_start && server_time <= deals_end) {
                 // deals date is valid and count the timer
                 difference = deals_end - server_time;
-                document.getElementById('timer').classList.add("bg-red");
+                document.getElementById('timer').classList.add("bg-yellow");
             }
             else {
                 // deals is not yet start
                 difference = deals_start - server_time;
-                document.getElementById('timer').classList.add("bg-black");
+                document.getElementById('timer').classList.add("bg-grey");
             }
 
             var display_flag = 0;
             this.interval = setInterval(() => {
                 if(difference >= 0) {
                     timer_text = timer(difference);
-                    document.getElementById('timer').innerText = timer_text;
-                    // $('#timer').text(timer_text);
+					@if($deals['deals_status'] == 'available')
+					if(timer_text.includes('lagi')){
+						document.getElementById("timer").innerHTML = "Berakhir dalam";
+					}else{
+						document.getElementById("timer").innerHTML = "Berakhir pada";
+					}
+                    document.getElementById("timer").innerHTML += "<br>";
+                    document.getElementById('timer').innerHTML += timer_text;
+                    @elseif($deals['deals_status'] == 'soon')
+                    document.getElementById("timer").innerHTML = "Akan dimulai pada";
+                    document.getElementById("timer").innerHTML += "<br>";
+                    document.getElementById('timer').innerHTML += "{{ date('d', strtotime($deals['deals_start'])) }} {{$month[date('m', strtotime($deals['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_start'])) }} jam {{ date('H:i', strtotime($deals['deals_start'])) }}";
+                    @endif
+
                     difference--;
                 }
                 else {
@@ -190,11 +238,12 @@
                 }
 
                 var daysDifference, hoursDifference, minutesDifference, secondsDifference, timer;
-                
+
                 // countdown
                 daysDifference = Math.floor(difference/60/60/24);
                 if (daysDifference > 0) {
-                    timer = daysDifference + (daysDifference===1 ? " day" : " days");
+					timer = "{{ date('d', strtotime($deals['deals_end'])) }} {{$month[ date('m', strtotime($deals['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_end'])) }}";
+                  //  timer = daysDifference + " hari";
                     console.log('timer d', timer);
                 }
                 else {
@@ -221,10 +270,10 @@
                     console.log('timer m', minutesDifference);
                     console.log('timer s', secondsDifference);
 
-                    timer = hoursDifference + ":" + minutesDifference + ":" + secondsDifference;
+                    timer = hoursDifference + ": jam " + minutesDifference + " menit lagi";
                     console.log('timer', timer);
                 }
-                
+
                 return timer;
             }
         </script>

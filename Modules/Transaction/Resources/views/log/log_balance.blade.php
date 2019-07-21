@@ -75,7 +75,7 @@
     <div class="portlet light portlet-fit bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-red sbold uppercase">Kenangan Points Log User</span>
+                <span class="caption-subject font-red sbold uppercase">env('POINT_NAME', 'Points') Log User</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -98,8 +98,10 @@
                         <tr>
                             @if (isset($res['user']['name']))
                                 <td>{{ $res['user']['name'] }}</td>
-                            @else
+                            @elseif(isset($res['name']))
                                 <td>{{ $res['name'] }}</td>
+                            @else
+                                <td></td>
                             @endif
                             <td>{{ number_format($res['balance']) }}</td>
                             <td>{{ ucwords($res['source']) }}</td>

@@ -840,9 +840,9 @@
 									</div>
 								</div>
 								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Kenangan Points
+									<label class="control-label col-md-4">Completion env('POINT_NAME', 'Points')
 										<span class="required" aria-required="true"> * </span> 
-										<i class="fa fa-question-circle tooltips" data-original-title="Kenangan Points yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="env('POINT_NAME', 'Points') yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
 										<input class="form-control" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}" required>

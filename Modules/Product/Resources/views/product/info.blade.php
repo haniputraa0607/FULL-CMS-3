@@ -111,16 +111,16 @@
         <!--    </div>-->
         <!--</div>-->
         
-        <!--<div class="form-group">-->
-        <!--    <label for="multiple" class="control-label col-md-3">Description-->
-        <!--        <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>-->
-        <!--    </label>-->
-        <!--    <div class="col-md-8">-->
-        <!--        <div class="input-icon right">-->
-        <!--            <textarea name="product_description" id="pro_text" class="form-control summernote">{{ $syu['product_description'] }}</textarea>-->
-        <!--        </div>-->
-        <!--    </div>-->
-        <!--</div>-->
+        <div class="form-group">
+           <label for="multiple" class="control-label col-md-3">Description
+               <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>
+           </label>
+           <div class="col-md-8">
+               <div class="input-icon right">
+                   <textarea name="product_description" id="pro_text" class="form-control summernote">{{ $syu['product_description'] }}</textarea>
+               </div>
+           </div>
+        </div>
           <!-- {{--<div class="form-group">
             <label for="multiple" class="control-label col-md-3">Tag
                 {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}

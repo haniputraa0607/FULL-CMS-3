@@ -348,7 +348,7 @@
 						<select class="form-control" name="membership_type" onChange="typeChange(this.value)">
 							<!-- <option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
 							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option> -->
-							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By Kenangan Points Received </option>
+							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By env('POINT_NAME', 'Points') Received </option>
 						</select>
 					</div>
 				</div>
@@ -468,7 +468,7 @@
 													<button class="btn blue" type="button" >IDR</button>
 												</span>
 												<span class="input-group-btn levelReqBalance" @if($value != 'balance') style="display:none;" @endif>
-													<button class="btn blue" type="button" >Kenangan Points</button>
+													<button class="btn blue" type="button" >env('POINT_NAME', 'Points')</button>
 												</span>
 												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @endif placeholder="Level Requirement">
 												<span class="input-group-btn levelReqX" @if($value != 'count') style="display:none;" @endif>
@@ -491,7 +491,7 @@
 													<button class="btn blue" type="button" >IDR</button>
 												</span>
 												<span class="input-group-btn levelRetBalance" @if($value != 'balance') style="display:none;" @endif>
-													<button class="btn blue" type="button" >Kenangan Points</button>
+													<button class="btn blue" type="button" >env('POINT_NAME', 'Points')</button>
 												</span>
 												<input class="form-control price" type="text" name="min_retain_value" @if($value == 'value') value="{{$membership['retain_min_total_value']}}" @elseif($value == 'count') value="{{$membership['retain_min_total_count']}}" @elseif($value == 'balance') value="{{$membership['retain_min_total_balance']}}" @endif placeholder="Minimum Retain Value">
 												<span class="input-group-btn levelRetX" @if($value != 'count') style="display:none;" @endif>
@@ -530,13 +530,13 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														Kenangan Points Received
-														<i class="fa fa-question-circle tooltips" data-original-title="Persentase kenangan points yang diterima dengan acuan basic kenangan points setelah transaksi" data-container="body"></i>
+														env('POINT_NAME', 'Points') Received
+														<i class="fa fa-question-circle tooltips" data-original-title="Persentase env('POINT_NAME', 'Points') yang diterima dengan acuan basic env('POINT_NAME', 'Points') setelah transaksi" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="Kenangan Points Received">
+														<input class="form-control price" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="env('POINT_NAME', 'Points') Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -546,8 +546,8 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														Kenangan Points Maximum
-														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum kenangan points yang akan didapat oleh customer" data-container="body"></i>
+														env('POINT_NAME', 'Points') Maximum
+														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum env('POINT_NAME', 'Points') yang akan didapat oleh customer" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
@@ -555,7 +555,7 @@
 														<span class="input-group-btn">
 															<button class="btn blue" type="button">IDR</button>
 														</span>
-														<input class="form-control price" type="text" name="cashback_maximum" @if(empty($membership['cashback_maximum'])) value="0" @else value="{{$membership['cashback_maximum']}}" @endif placeholder="Kenangan Points Maximum">
+														<input class="form-control price" type="text" name="cashback_maximum" @if(empty($membership['cashback_maximum'])) value="0" @else value="{{$membership['cashback_maximum']}}" @endif placeholder="env('POINT_NAME', 'Points') Maximum">
 													</div>
 												</div>
 											</div>
@@ -783,13 +783,13 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														Kenangan Points Received
-														<i class="fa fa-question-circle tooltips" data-original-title="Persentase kenangan points yang diterima dengan acuan basic kenangan points setelah transaksi" data-container="body"></i>
+														env('POINT_NAME', 'Points') Received
+														<i class="fa fa-question-circle tooltips" data-original-title="Persentase env('POINT_NAME', 'Points') yang diterima dengan acuan basic env('POINT_NAME', 'Points') setelah transaksi" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" value="0" placeholder="Kenangan Points Received">
+														<input class="form-control price" type="text" name="benefit_cashback_multiplier" value="0" placeholder="env('POINT_NAME', 'Points') Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -799,8 +799,8 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														Kenangan Points Maximum
-														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum Kenangan points yang akan didapat oleh customer" data-container="body"></i>
+														env('POINT_NAME', 'Points') Maximum
+														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum env('POINT_NAME', 'Points') yang akan didapat oleh customer" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
@@ -808,7 +808,7 @@
 														<span class="input-group-btn">
 															<button class="btn blue" type="button">IDR</button>
 														</span>
-														<input class="form-control price" type="text" name="cashback_maximum" value="0" placeholder="Kenangan Points Maximum">
+														<input class="form-control price" type="text" name="cashback_maximum" value="0" placeholder="env('POINT_NAME', 'Points') Maximum">
 													</div>
 												</div>
 											</div>

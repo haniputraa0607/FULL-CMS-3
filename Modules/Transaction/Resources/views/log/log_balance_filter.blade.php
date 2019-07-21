@@ -105,7 +105,7 @@
 										<div class="col-md-4">
 											<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 												<option value="name" @if ($con['subject'] == 'name') selected @endif>Name</option>
-												<option value="balance" @if ($con['subject'] == 'balance') selected @endif>Kenangan Points</option>
+												<option value="balance" @if ($con['subject'] == 'balance') selected @endif>env('POINT_NAME', 'Points')</option>
 												<option value="source" @if ($con['subject'] == 'source') selected @endif>Source</option>
 												<option value="grand_total" @if ($con['subject'] == 'grand_total') selected @endif>Grand Total</option>
 												<option value="ccashback_conversion" @if ($con['subject'] == 'ccashback_conversion') selected @endif>Cashback Convers</option>
@@ -156,7 +156,7 @@
 											<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 												<option value="" selected disabled></option>
 												<option value="name">Name</option>
-												<option value="balance">Kenangan Points</option>
+												<option value="balance">env('POINT_NAME', 'Points')</option>
 												<option value="source">Source</option>
 												<option value="grand_total">Grand Total</option>
 												<option value="ccashback_conversion">Cashback Convers</option>
@@ -191,7 +191,7 @@
 										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 											<option value="" selected disabled></option>
 											<option value="name">Name</option>
-											<option value="balance">Kenangan Points</option>
+											<option value="balance">env('POINT_NAME', 'Points')</option>
 											<option value="source">Source</option>
 											<option value="grand_total">Grand Total</option>
 											<option value="ccashback_conversion">Cashback Convers</option>

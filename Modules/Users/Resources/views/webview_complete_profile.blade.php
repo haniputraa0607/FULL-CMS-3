@@ -144,7 +144,7 @@
 @section('content')
     <div class="col-md-4 col-md-offset-4" style="position: unset;">
         <div class="text-brown" style="margin-top: 20px; margin-bottom: 20px; text-align: justify;">
-            Silakan lengkapi data di bawah ini dan dapatkan Kenangan Points
+            Silakan lengkapi data di bawah ini dan dapatkan env('POINT_NAME', 'Points')
         </div>
 
         @if(isset($errors))

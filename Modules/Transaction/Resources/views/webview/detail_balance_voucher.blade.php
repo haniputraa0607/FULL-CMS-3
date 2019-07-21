@@ -10,6 +10,16 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
     <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
+        @font-face {
+                font-family: "GoogleSans";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+        }
+        .GoogleSans{
+            font-family: "GoogleSans";
+        }
+        
     	.kotak {
     		margin : 10px;
     		padding: 10px;
@@ -19,7 +29,7 @@
 			box-shadow: 0px 0px 21px 0px rgba(168,168,168,1);
 			border-radius: 3px;
 			background: #fff;
-			font-family: 'Open Sans', sans-serif;
+			font-family: 'GoogleSans', sans-serif;
     	}
 
     	body {
@@ -78,6 +88,10 @@
     	.text-grey-green {
     		color: #049a4a;
     	}
+    	
+    	.text-grey2{
+    	    color: #676767;
+    	}
 
     	.open-sans-font {
     		font-family: 'Open Sans', sans-serif;
@@ -114,35 +128,43 @@
   </head>
   <body>
     {{ csrf_field() }}
+    @php
+        $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'Septempber', 'Oktober', 'November', 'Desember'];
+        $data['date'] = date('d', strtotime($data['date'])).' '.$month[(int)date('m', strtotime($data['date']))-1].' '.date('Y H:i', strtotime($data['date']));
+        
+        if (!empty($data['detail']['used_at'])){
+            $data['detail']['used_at'] = date('d', strtotime($data['detail']['used_at'])).' '.$month[(int)date('m', strtotime($data['detail']['used_at']))-1].' '.date('Y H:i', strtotime($data['detail']['used_at']));
+        }
+    @endphp
   	<div class="kotak">
   		<div class="container line-bottom">
 	   		<div class="row space-bottom">
-	   			<div class="col-5 text-grey-black text-14-3px">Buy Voucher</div>
-	   			<div class="col-7 text-right text-medium-grey text-12-7px">{{ date('l', strtotime($data['date'])) }}, {{ date('d F Y H:i', strtotime($data['date'])) }}</div>
+	   			<div class="col-5 text-grey-black text-14-3px">Beli Kupon</div>
+	   			<div class="col-7 text-right text-medium-grey text-13-3px">{{ $data['date'] }}</div>
 	   		</div>
 	   		<div class="row space-text">
 	   			<div class="col-6"></div>
-	   			<div class="col-12 text-right bold text-12-7px">{{ $data['detail']['deal_voucher']['voucher_code'] }}</div>
+	   			<div class="col-12 text-right text-13-3px">#{{ $data['detail']['deal_voucher']['voucher_code'] }}</div>
 	   		</div>
 	   	</div>
 	   	<div class="container">
 	   		<div class="row">
-                <div class="col-12 text-grey text-13-3px">YOUR TRANSACTION</div>
+                <div class="col-12 text-grey text-13-3px">Transaksi Anda</div>
 	   			<div class="col-12"><hr></div>
 	   		</div>
 	   		<div class="row">
-	   			<div class="col-6 text-14px text-black">{{ $data['detail']['deal_voucher']['deal']['deals_title'] }}</div>
-	   			<div class="col-6 text-right text-14px text-black">{{ $data['point'] }} Points</div>
+	   			<div class="col-6 text-14px text-black">{{ $data['detail']['deal_voucher']['deal']['deals_title'] }}<br>{{ $data['detail']['deal_voucher']['deal']['deals_second_title'] }}</div>
+	   			<div class="col-6 text-right text-13-3px text-grey2">{{ $data['balance'] }} Poin</div>
                 <div class="col-12"><hr></div>
 	   		</div>
 	   		<div class="row">
-	   			<div class="col-6 text-14px text-black">Voucher Status</div>
-	   			<div class="col-6 text-right text-14px text-black">@if (empty($data['detail']['used_at'])) NOT USED @else USED @endif</div>
+	   			<div class="col-6 text-14px text-black">Status Kupon</div>
+	   			<div class="col-6 text-right text-14px text-grey2">@if (empty($data['detail']['used_at'])) Belum Digunakan @else Digunakan @endif</div>
                 <div class="col-12"><hr></div>
 	   		</div>
 	   		<div class="row space-text">
-	   			<div class="col-6 text-14px text-black">Used Date</div>
-	   			<div class="col-6 text-right text-14px text-black">@if (empty($data['detail']['used_at'])) - @else {{ date('Y-m-d H:i', strtotime($data['detail']['used_at'])) }} @endif</div>
+	   			<div class="col-6 text-14px text-black">Tanggal Digunakan</div>
+	   			<div class="col-6 text-right text-14px text-grey2">@if (empty($data['detail']['used_at'])) - @else {{ $data['detail']['used_at'] }} @endif</div>
 	   		</div>
 	   	</div>
   	</div>

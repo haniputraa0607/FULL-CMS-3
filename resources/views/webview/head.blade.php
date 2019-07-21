@@ -15,12 +15,71 @@
     <style type="text/css">
         @font-face {
                 font-family: "Seravek";
+                font-style: normal;
+                font-weight: 400;
                 src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/Seravek.ttf') }}');
+        }
+        @font-face {
+                font-family: "GoogleSans-Bold";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
+        }
+        @font-face {
+                font-family: "GoogleSans-BoldItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
+        }
+        @font-face {
+                font-family: "GoogleSans-Italic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
+        }
+        @font-face {
+                font-family: "GoogleSans-Medium";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
+        }
+        @font-face {
+                font-family: "GoogleSans-MediumItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
+        }
+        @font-face {
+                font-family: "GoogleSans";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+        }
+        .Seravek{
+            font-family: "Seravek";
+        }
+        .GoogleSans{
+            font-family: "GoogleSans";
+        }
+        .GoogleSans-MediumItalic{
+            font-family: "GoogleSans-MediumItalic";
+        }
+        .GoogleSans-Medium{
+            font-family: "GoogleSans-Medium";
+        }
+        .GoogleSans-Italic{
+            font-family: "GoogleSans-Italic";
+        }
+        .GoogleSans-BoldItalic{
+            font-family: "GoogleSans-BoldItalic";
+        }
+        .GoogleSans-Bold{
+            font-family: "GoogleSans-Bold";
         }
         body{
             background-color: #fff;
             color: #858585;
-            font-family: "Seravek", sans-serif !important;
+            font-family: {{env('FONT_FAMILY', "Seravek")}}, sans-serif !important;
         }
         .pace .pace-progress{
             top: 0;

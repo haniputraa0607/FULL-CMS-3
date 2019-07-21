@@ -216,7 +216,7 @@
 	   			<div class="col-12"><hr></div>
 	   		</div>
 	   		<div class="row space-text">
-	   			<div class="col-6 text-13-3px text-black seravek-light-font margin-top5px">Kenangan Points</div>
+	   			<div class="col-6 text-13-3px text-black seravek-light-font margin-top5px">env('POINT_NAME', 'Points')</div>
 	   			<div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">@if($data['balance'] > 0) + @endif {{ str_replace(',', '.', number_format($data['balance'])) }}</div>
 	   		</div>
 			@else
@@ -229,7 +229,7 @@
 	   			<div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">{{ str_replace(',', '.', number_format($data['detail']['transaction_grandtotal'])) }}</div>
 	   		</div>
 	   		<div class="row">
-	   			<div class="col-6 text-13-3px text-black seravek-light-font">Kenangan Points</div>
+	   			<div class="col-6 text-13-3px text-black seravek-light-font">env('POINT_NAME', 'Points')</div>
 	   			<div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">@if($data['balance'] > 0) + @endif {{ str_replace(',', '.', number_format($data['balance'])) }}</div>
 				<div class="col-12"><hr></div>
 			</div>

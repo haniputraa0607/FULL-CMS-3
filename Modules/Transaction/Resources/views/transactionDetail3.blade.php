@@ -547,7 +547,7 @@
                 @endif
                 
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text seravek-light-font text-black">Kenangan Points</div>
+                <div class="col-6 text-13-3px space-text seravek-light-font text-black">env('POINT_NAME', 'Points')</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['balance'])) }}</div>
                 @endif
                 
@@ -569,7 +569,7 @@
                     <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Metode Pembayaran <hr> </div>
                     <div class="col-6 text-13-3px seravek-font text-black">
                         @if ($data['trasaction_payment_type'] == 'Balance') 
-                            Kenangan Points
+                            env('POINT_NAME', 'Points')
                         @elseif ($data['trasaction_payment_type'] == 'Midtrans') 
                             @if(isset($data['data_payment'][0]['payment_type']))
                                 {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['payment_type'])) }}

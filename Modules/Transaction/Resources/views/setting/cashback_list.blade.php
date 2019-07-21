@@ -76,7 +76,7 @@
     <div class="portlet light portlet-fit bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-red sbold uppercase">Kenangan Points Received</span>
+                <span class="caption-subject font-red sbold uppercase">env('POINT_NAME', 'Points') Received</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -100,7 +100,7 @@
                                         </div>
                                     </div>
                             		<div class="col-md-3">
-                            			<label for="exampleInputPassword1">Kenangan Points Percent : </label>
+                            			<label for="exampleInputPassword1">env('POINT_NAME', 'Points') Percent : </label>
                             			<div class="input-group">
                                             <input type="text" class="form-control price" name="cashback_percent" placeholder="Cashback Percent" value="{{ $val['cashback_percent'] }}" required>
                                             <span class="input-group-addon">
@@ -110,7 +110,7 @@
                             		</div>
 
                             		<div class="col-md-4">
-                            			<label for="exampleInputPassword1">Kenangan Points Maximum : </label>
+                            			<label for="exampleInputPassword1">env('POINT_NAME', 'Points') Maximum : </label>
                             			<input type="text" class="form-control price" name="cashback_maximum" placeholder="Cashback Maximum" value="{{ $val['cashback_maximum'] }}" required>
                             		</div>
                             	</div>

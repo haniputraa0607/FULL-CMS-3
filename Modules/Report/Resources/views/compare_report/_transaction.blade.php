@@ -44,7 +44,7 @@
                             <a href="#tab_trx_2" data-toggle="tab">Quantity Transaction</a>
                         </li>
                         <li>
-                            <a href="#tab_trx_3" data-toggle="tab">Kenangan Points</a>
+                            <a href="#tab_trx_3" data-toggle="tab">env('POINT_NAME', 'Points')</a>
                         </li>
                     </ul>
                     <div class="tab-content">

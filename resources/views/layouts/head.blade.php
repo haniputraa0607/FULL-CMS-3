@@ -1,6 +1,6 @@
 <head>
         <meta charset="utf-8" />
-        <title>Kopi Kenangan | {{$title}}</title>
+        <title>{{env('TITLE', 'CRM System')}} | {{$title}}</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Technopartner Indonesia CRM System" name="description" />
@@ -12,7 +12,7 @@
         <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/pace/themes/pace-theme-flash.css?') }}" rel="stylesheet" type="text/css" />
         <!-- END PAGE TOP STYLES -->
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -34,5 +34,5 @@
         <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/layouts/layout/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
 		
-        <link rel="shortcut icon" href="{{env('AWS_ASSET_URL') }}{{ ('images/favicon-behave.ico')}}" />
+        <link rel="shortcut icon" href="{{env('AWS_ASSET_URL') }}{{ ('images/icon.png')}}" />
 </head>
