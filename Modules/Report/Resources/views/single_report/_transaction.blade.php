@@ -88,7 +88,7 @@
                         <div class="details">
                             <div class="number">
                                 <span data-counter="counterup" data-value="0" id="card_trx_1">{{ $report['transactions']['total_idr'] }}</span> </div>
-                                <div class="desc"> 
+                                <div class="desc">
                                 Total Transaction (IDR)
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                         <div class="details">
                             <div class="number">
                                 <span data-counter="counterup" data-value="0" id="card_trx_2">{{ $report['transactions']['total_qty'] }}</span> </div>
-                                <div class="desc"> 
+                                <div class="desc">
                                 Total Transaction (Qty)
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                         <div class="details">
                             <div class="number">
                                 <span data-counter="counterup" data-value="0" id="card_trx_3">{{ $report['transactions']['average_idr'] }}</span> </div>
-                                <div class="desc"> 
+                                <div class="desc">
                                 Avg Transaction (IDR)
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                         <div class="details">
                             <div class="number">
                                 <span data-counter="counterup" data-value="0" id="card_trx_4">{{ $report['transactions']['total_male'] }}</span> </div>
-                                <div class="desc"> 
+                                <div class="desc">
                                 Total Male Customer
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                         <div class="details">
                             <div class="number">
                                 <span data-counter="counterup" data-value="0" id="card_trx_5">{{ $report['transactions']['total_female'] }}</span> </div>
-                                <div class="desc"> 
+                                <div class="desc">
                                 Total Female Customer
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                             <th data-data='date' class="col-date"> Date </th>
                             <th data-data='trx_count'> Total (Qty) </th>
                             <th data-data='trx_grand'> Total (IDR) </th>
-                            <th data-data='trx_cashback_earned'> User Kopi Point </th>
+                            <th data-data='trx_cashback_earned'> User {{env('POINT_NAME', 'Points')}} </th>
                             <th data-data='cust_male'> Male Customer </th>
                             <th data-data='cust_female'> Female Customer </th>
                             <th data-data='cust_android'> Android </th>

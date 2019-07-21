@@ -6,18 +6,18 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 
@@ -54,7 +54,7 @@
 @section('page-script')
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script> 
+	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
 	<script>
@@ -93,7 +93,7 @@
 		   slides[i].checked = true;
 		}
 	}
-	
+
 	function uncheckUsers(){
 		var slides = document.getElementsByClassName("md-check");
 		for(var i = 0; i < slides.length; i++)
@@ -101,13 +101,13 @@
 		   slides[i].checked = false;
 		}
 	}
-	
+
 	function addGreetingReplace(param){
 		var textvalue = $('#txt_greeting').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#txt_greeting').val(textvaluebaru);
     }
-	
+
 	function addGreetingReplace2(param){
 		var textvalue = $('#txt_greeting_2').val();
 		var textvaluebaru = textvalue+" "+param;
@@ -151,7 +151,7 @@
 	        placeholder: 'Success Page Content',
 	        tabsize: 2,
 	        height: 180,
-	        toolbar: [         
+	        toolbar: [
 	          ['style', ['style']],
 	          ['style', ['bold', 'underline', 'clear']],
 	          ['color', ['color']],
@@ -195,7 +195,7 @@
             contentType: false,
             success: function(url) {
                 if (url['status'] == "success") {
-                    $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                    $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                 }
                 // document.getElementById('loadingDiv').style.display = "none";
             },
@@ -212,7 +212,7 @@
 		var url     = $(this).data('url');
 		var image   = $(this).data('img');
 		var type    = $(this).data('type');
-    	
+
     	$('#modalBannerUpdate').on('shown.bs.modal', function () {
     		// on chrome
     		$('#modalBannerUpdate .select2').select2({ dropdownParent: $("#modalBannerUpdate .modal-body") });
@@ -238,7 +238,7 @@
 			else {
 				$('#modalBannerUpdate .click-to-radio[value="none"]').prop("checked", true);
 			}
-			
+
 			// reset var
 			url = "";
     	});
@@ -281,7 +281,7 @@
 
 		if ((file = this.files[0])) {
 			image = new Image();
-			
+
 			image.onload = function() {
 				if (this.width == widthImg && this.height == heightImg) {
 					// image.src = _URL.createObjectURL(file);
@@ -294,12 +294,12 @@
 
 					$('#field_splash').val("");
 					$('#div_splash').children('img').attr('src', 'http://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
-					
+
 					console.log($(this).val())
 					// console.log(document.getElementsByName('news_image_luar'))
 				}
 			};
-		
+
 			image.src = _URL.createObjectURL(file);
 		}
 
@@ -324,24 +324,24 @@
 @include('layouts.notifications')
 
 @if(MyHelper::hasAccess([30], $configs))
-	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalTimeSetting"> Time Setting 
+	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalTimeSetting"> Time Setting
 		<i class="fa fa-question-circle tooltips" data-original-title="Konfigurasi waktu dalam empat kategori, yaitu Morning, Afternoon, Evening, dan Late Night" data-container="body"></i>
 	</a>
 	@if(MyHelper::hasAccess([16], $grantedFeature))
 		@if(MyHelper::hasAccess([31], $configs))
-			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalGreeting"> New Greeting 
+			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalGreeting"> New Greeting
 				<i class="fa fa-question-circle tooltips" data-original-title="Membuat kalimat greeting baru" data-container="body"></i>
 			</a>
 		@endif
 		@if(MyHelper::hasAccess([32], $configs))
-			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background 
+			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background
 				<i class="fa fa-question-circle tooltips" data-original-title="Background home dapat disesuaikan dengan teks greeting" data-container="body"></i>
 			</a>
 		@endif
 	@endif
 @endif
 @if(MyHelper::hasAccess([145], $grantedFeature))
-	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBanner"> New Banner 
+	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBanner"> New Banner
 		<i class="fa fa-question-circle tooltips" data-original-title="Membuat banner di halaman home aplikasi mobile" data-container="body"></i>
 	</a>
 @endif
@@ -409,7 +409,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									
+
 									@if(!empty($greetings))
 										<?php $x = 1; ?>
 										@foreach($greetings as $key=>$row)
@@ -466,7 +466,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									
+
 									@if(!empty($background))
 										<?php $x = 1; ?>
 										@foreach($background as $key=>$row)
@@ -521,9 +521,9 @@
 										</div>
 									</div>
 									<div class="form-group col-md-12">
-											<label class="control-label col-md-3">Background Image 
+											<label class="control-label col-md-3">Background Image
 												<br>
-												<span class="required" aria-required="true"> (1080*270) </span> 
+												<span class="required" aria-required="true"> (1080*270) </span>
 											</label><br>
 											<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 												<div class="fileinput-new thumbnail">
@@ -577,9 +577,9 @@
 						<form role="form" class="form-horizontal" action="{{url('setting/default_home')}}" method="POST" enctype="multipart/form-data">
 							<div class="form-body">
 								<div class="form-group col-md-12">
-										<label class="control-label col-md-3">Splash Screen 
+										<label class="control-label col-md-3">Splash Screen
 											<br>
-											<span class="required" aria-required="true"> (1080*1920) </span> 
+											<span class="required" aria-required="true"> (1080*1920) </span>
 										</label><br>
 										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 											<div class="fileinput-new thumbnail">
@@ -611,7 +611,7 @@
 			</div>
 		</div>
 	</div>
-		
+
 	{{-- banner --}}
 	@if(MyHelper::hasAccess([144], $grantedFeature))
     <div class="tab-pane" id="banner">
@@ -707,7 +707,7 @@
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-3">Logo
 										<br>
-										<span class="required" aria-required="true"> (433*318) </span> 
+										<span class="required" aria-required="true"> (433*318) </span>
 									</label><br>
 									<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 										<div class="fileinput-new thumbnail">
@@ -739,7 +739,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	{{-- app navigation --}}
     <div class="tab-pane" id="app-navigation">
 		<div class="row" style="margin-top:20px">
@@ -823,7 +823,7 @@
 							<div class="form-body">
 								{{-- <div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completion Point
-										<span class="required" aria-required="true"> * </span> 
+										<span class="required" aria-required="true"> * </span>
 										<i class="fa fa-question-circle tooltips" data-original-title="Point yang diperoleh user ketika melengkapi data" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
@@ -832,7 +832,7 @@
 								</div> --}}
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completion Popup Text
-										<span class="required" aria-required="true"> * </span> 
+										<span class="required" aria-required="true"> * </span>
 										<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan pada popup lengkapi data profil" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-6">
@@ -840,9 +840,9 @@
 									</div>
 								</div>
 								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion env('POINT_NAME', 'Points')
-										<span class="required" aria-required="true"> * </span> 
-										<i class="fa fa-question-circle tooltips" data-original-title="env('POINT_NAME', 'Points') yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
+									<label class="control-label col-md-4">Completion {{env('POINT_NAME', 'Points')}}
+										<span class="required" aria-required="true"> * </span>
+										<i class="fa fa-question-circle tooltips" data-original-title="{{env('POINT_NAME', 'Points')}} yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
 										<input class="form-control" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}" required>
@@ -850,7 +850,7 @@
 								</div>
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completion Count
-										<span class="required" aria-required="true"> * </span> 
+										<span class="required" aria-required="true"> * </span>
 										<i class="fa fa-question-circle tooltips" data-original-title="Berapa kali aplikasi akan menawarkan user untuk melengkapi data profil" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
@@ -859,7 +859,7 @@
 								</div>
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completion Interval (Minutes)
-										<span class="required" aria-required="true"> * </span> 
+										<span class="required" aria-required="true"> * </span>
 										<i class="fa fa-question-circle tooltips" data-original-title="Jarak waktu penawaran hingga penawaran selanjutnya (menit)" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
@@ -893,7 +893,7 @@
 							<div class="form-body">
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-2">Content
-										<span class="required" aria-required="true"> * </span> 
+										<span class="required" aria-required="true"> * </span>
 										<i class="fa fa-question-circle tooltips" data-original-title="Konten halaman sukses setelah user melengkapi data" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-9">

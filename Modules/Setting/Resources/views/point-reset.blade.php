@@ -3,19 +3,19 @@
 @section('page-style')
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function(event) { 
-            $('.datepicker').datepicker({ 
-                'format' : 'd MM', 
-                'todayHighlight' : true, 
-                'todayBtn' : true, 
-                'autoclose' : true 
-            });  
+        document.addEventListener("DOMContentLoaded", function(event) {
+            $('.datepicker').datepicker({
+                'format' : 'd MM',
+                'todayHighlight' : true,
+                'todayBtn' : true,
+                'autoclose' : true
+            });
 
             if($('.datepicker').length >= 12){
                 $('.mt-repeater-add').attr('disabled', 'disabled')
@@ -27,11 +27,11 @@
             if($('.datepicker').length >= 12){
                 $('.mt-repeater-add').attr('disabled', 'disabled')
             }
-                $('.datepicker').datepicker({ 
-                    'format' : 'd MM', 
-                    'todayHighlight' : true, 
-                    'todayBtn' : true, 
-                    'autoclose' : true 
+                $('.datepicker').datepicker({
+                    'format' : 'd MM',
+                    'todayHighlight' : true,
+                    'todayBtn' : true,
+                    'autoclose' : true
                 });
             }, 100);
         }
@@ -72,7 +72,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light form-fit bordered">
@@ -91,11 +91,11 @@
                             @if($menu_active == 'point-reset')
                                 @php $type = 'point'; @endphp
                             @else
-                                @php $type = 'env('POINT_NAME', 'Points')'; @endphp
+                                @php $type = '{{env('POINT_NAME', 'Points')}}'; @endphp
                             @endif
                             <label class="col-md-3 control-label">
                                 Reset {{ucwords($type)}} Date
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Tanggal {{$type}} customer akan direset ulang. {{ucfirst($type)}} akan direset pada jam 00:00" data-container="body"></i>
                             </label>
                         </div>

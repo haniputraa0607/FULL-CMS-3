@@ -71,11 +71,11 @@
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-	
+
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-    
+
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/amcharts/amcharts4/core.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/amcharts/amcharts4/charts.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/amcharts/amcharts4/themes/animated.js') }}" type="text/javascript"></script>
@@ -137,7 +137,7 @@
     		searching: false
     	});
 
-    	// week picker 
+    	// week picker
     	$('.week-picker').datepicker({
     		format: 'dd/mm/yyyy',
     		autoclose: true
@@ -177,7 +177,7 @@
 
 		    	week_date = friendly_string;
 				var split_date = week_date.split(' to ');
-		    	
+
 		    	ajax_get_report(time_type, split_date[0], split_date[1]);
 			}
 		}
@@ -351,7 +351,7 @@
                 },
                 url : "{{ url('/report/ajax') }}",
                 success: function(result) {
-                    
+
                     if (result.status == "success") {
                         $('.date-range').text(result.date_range);
 
@@ -725,7 +725,7 @@
                 url : "{{ url('/report/ajax') }}",
                 success: function(result) {
                 	// console.log('membership_result', result);
-                    
+
                     if (result.status == "success"){
                     	toastr.info("Fetch membership data success");
                     	// $('.date-range').text(result.date_range);
@@ -1002,7 +1002,7 @@
 	    	am4core.useTheme(am4themes_animated);
 	    	// create chart instance
 			var chart = am4core.create(id_element, am4charts.XYChart);
-			
+
 			// Increase contrast by taking evey second color
 			chart.colors.step = 2;
 
@@ -1070,7 +1070,7 @@
 	    	am4core.useTheme(am4themes_animated);
 	    	// create chart instance
 			var chart = am4core.create(id_element, am4charts.XYChart);
-			
+
 			// increase contrast by taking evey second color
 			chart.colors.step = 2;
 
@@ -1157,7 +1157,7 @@
     	// create column series with one y axis
 		function createColumnSeries(chart, field, name) {
 			var series = chart.series.push(new am4charts.ColumnSeries());
-			series.dataFields.valueY = field; 
+			series.dataFields.valueY = field;
 			series.dataFields.categoryX = "date";
 			series.name = name;
 			series.columns.template.tooltipText = "[bold]{valueY}[/]";
@@ -1196,7 +1196,7 @@
 			trx_series = {
 				total_qty: ["Quantity", false],
 				total_idr: ["IDR", true],
-				kopi_point: ["Kopi Point", true]
+				kopi_point: ["{{env('POINT_NAME', 'Points')}}", true]
 			};
 		   	product_series = { total_qty: "Quantity" };
 	    	mem_series = { cust_total: "Total Customer" };
@@ -1239,7 +1239,7 @@
 		    	reg_device_data = {!! json_encode($report['registrations']['reg_device_chart']) !!};
 		    	reg_provider_data = {!! json_encode($report['registrations']['reg_provider_chart']) !!};
 
-				// registration charts 
+				// registration charts
 				single_axis_chart(reg_gender_data, "reg_gender_chart", "Quantity", gender_series);
 				single_axis_chart(reg_age_data, "reg_age_chart", "Quantity", age_series);
 				single_axis_chart(reg_device_data, "reg_device_chart", "Quantity", device_series);
@@ -1253,7 +1253,7 @@
 		    	mem_device_data = {!! json_encode($report['memberships']['mem_device_chart']) !!};
 		    	mem_provider_data = {!! json_encode($report['memberships']['mem_provider_chart']) !!};
 
-				// membership charts 
+				// membership charts
 				column_chart(mem_data, "mem_chart", mem_series);
 				/*single_axis_chart(mem_gender_data, "mem_gender_chart", "Quantity", gender_series);
 				single_axis_chart(mem_age_data, "mem_age_chart", "Quantity", age_series);
@@ -1268,7 +1268,7 @@
 		    	voucher_device_data = {!! json_encode($report['vouchers']['voucher_device_chart']) !!};
 		    	voucher_provider_data = {!! json_encode($report['vouchers']['voucher_provider_chart']) !!};
 
-				// voucher charts 
+				// voucher charts
 				column_chart(voucher_data, "voucher_chart", voucher_series);
 				single_axis_chart(voucher_gender_data, "voucher_gender_chart", "Quantity", gender_series);
 				single_axis_chart(voucher_age_data, "voucher_age_chart", "Quantity", age_series);
@@ -1300,7 +1300,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
 	<div class="portlet light bordered">
@@ -1466,9 +1466,9 @@
 
 	    {{-- Customer Membership --}}
 	    @include('report::single_report._membership')
-	    
+
 	    {{-- Voucher Redemption --}}
 	    @include('report::single_report._voucher_redemption')
-	    
+
     @endif
 @stop

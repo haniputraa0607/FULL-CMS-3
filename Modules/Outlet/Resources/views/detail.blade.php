@@ -14,7 +14,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
@@ -37,13 +37,13 @@
             autoclose: true,
             minuteStep: 5,
             showSeconds: false,
-            
+
         });
         // sortable
         $( "#sortable" ).sortable();
         $( "#sortable" ).disableSelection();
-    </script> 
-    <script>    
+    </script>
+    <script>
         var map;
 
         var markers = [];
@@ -66,8 +66,8 @@
               content: '<p>Marker Location:</p>'
           });
 
-          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
-            
+          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
           var input = /** @type  {HTMLInputElement} */(
               document.getElementById('pac-input'));
 
@@ -133,7 +133,7 @@
             position: location,
             map: map
           });
-          
+
           $('#lat').val(location.lat());
           $('#lng').val(location.lng());
           markers.push(marker);
@@ -167,17 +167,17 @@
     </script>
 
     <script type="text/javascript">
-        
+
         $(document).ready(function(){
             /* MAPS */
             longNow = "{{ $outlet[0]['outlet_longitude'] }}";
             latNow = "{{ $outlet[0]['outlet_latitude'] }}";
 
             if (latNow == "" || longNow == "") {
-              navigator.geolocation.getCurrentPosition(function(position){ 
+              navigator.geolocation.getCurrentPosition(function(position){
                   initialize(position.coords.latitude, position.coords.longitude);
               },
-              function (error) { 
+              function (error) {
                 if (error.code == error.PERMISSION_DENIED)
                   initialize(-7.7972, 110.3688);
               });
@@ -187,7 +187,7 @@
             }
 
             /*=====================================*/
-           
+
             // untuk show atau hide informasi photo
             if ($('.deteksi').data('dis') != 1) {
                 $('.deteksi-trigger').hide();
@@ -225,9 +225,9 @@
             //   initialize();
             // console.log(latNow)
             // console.log(latNow)
-            
+
             // initialize(latNow, longNow);
-              
+
             });
 
             $('#province').change(function() {
@@ -239,7 +239,7 @@
                     data    : "_token="+token+"&id_province="+isi,
                     success : function(result) {
                         if (result['status'] == "success") {
-                            $('#city').prop('disabled', false); 
+                            $('#city').prop('disabled', false);
 
                             var city           = result['result'];
                             var selectCity = '<option value=""></option>';
@@ -251,7 +251,7 @@
                             $('#city').html(selectCity);
                         }
                         else {
-                            $('#city').prop('disabled', true); 
+                            $('#city').prop('disabled', true);
                         }
                     }
                 });
@@ -264,6 +264,105 @@
 
                 $('#id_city').val(isi[0]);
             });
+
+            @foreach($product as $key => $pro)
+                var option =  '<option class="option-visibility" data-id={{$pro["id_product"]}}/{{$outlet[0]["id_outlet"]}}>{{$pro["product_code"]}} - {{$pro["product_name"]}}</option>'
+                @if(isset($pro['all_prices'][0]["product_visibility"]))
+                    $('#visibleglobal-{{lcfirst($pro["all_prices"][0]["product_visibility"])}}').append(option)
+                @else
+                    $('#visibleglobal-{{lcfirst($pro["product_visibility"])}}').append(option)
+                @endif
+            @endforeach
+
+            $('#move-hiden').click(function() {
+                if($('#visibleglobal-visible').val() == null){
+                    toastr.warning("Choose minimal 1 outlet in visible");
+                }else{
+                    var id =[];
+                    $('#visibleglobal-visible option:selected').each(function () {
+                        var $this = $(this);
+                        id.push($this.attr('data-id'))
+                    })
+                    let token  = "{{ csrf_token() }}";
+
+                    $.ajax({
+                        type : "POST",
+                        url : "{{ url('product/update/visible') }}",
+                        data : "_token="+token+"&id_visibility="+id+"&visibility=Hidden",
+                        success : function(result) {
+                            if (result.status == "success") {
+                                toastr.info("Visibility has been updated.");
+                                $('#visibleglobal-visible option:selected').each(function () {
+                                    var $this = $(this);
+                                    var option = '<option class="option-visibility" data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>'
+                                    $('#visibleglobal-hidden').append(option)
+                                    $(this).remove()
+                                })
+
+                            }
+                            else {
+                                toastr.warning("Something went wrong. Failed to update visibility.");
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#move-visible').click(function() {
+                if($('#visibleglobal-hidden').val() == null){
+                    toastr.warning("Choose minimal 1 outlet in hidden");
+                }else{
+                    var id =[];
+                    $('#visibleglobal-hidden option:selected').each(function () {
+                        var $this = $(this);
+                        id.push($this.attr('data-id'))
+                    })
+                    let token  = "{{ csrf_token() }}";
+
+                    $.ajax({
+                        type : "POST",
+                        url : "{{ url('product/update/visible') }}",
+                        data : "_token="+token+"&id_visibility="+id+"&visibility=Visible",
+                        success : function(result) {
+                            if (result.status == "success") {
+                                toastr.info("Visibility has been updated.");
+                                $('#visibleglobal-hidden option:selected').each(function () {
+                                    var $this = $(this);
+                                    var option = '<option class="option-visibility" data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>'
+                                    $('#visibleglobal-visible').append(option)
+                                    $(this).remove()
+                                })
+
+                            }
+                            else {
+                                toastr.warning("Something went wrong. Failed to update visibility.");
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#search-product').on("keyup", function(){
+                var search = $('#search-product').val();
+                $(".option-visibility").each(function(){
+                    if(!$(this).text().toLowerCase().includes(search.toLowerCase())){
+                        $(this).hide()
+                    }else{
+                        $(this).show()
+                    }
+                });
+                $('#btn-reset').show()
+                $('#div-left').hide()
+            })
+
+            $('#btn-reset').click(function(){
+                $('#search-product').val("")
+                $(".option-visibility").each(function(){
+                    $(this).show()
+                })
+                $('#btn-reset').hide()
+                $('#div-left').show()
+            })
 
         });
     </script>
@@ -317,7 +416,7 @@
                         $('#imageoutlet').children('img').attr('src', 'http://www.placehold.it/600x300/EFEFEF/AAAAAA&amp;text=no+image');
                     }
                 };
-            
+
                 image.src = _URL.createObjectURL(file);
             }
 
@@ -338,7 +437,7 @@
         $(this).parent().parent().parent().find('.kelas-close').focus();
         return false;
       }
-      
+
       if ($(this).is(':checked')) {
         var check = $('input[name="ampas[]"]:checked').length;
         var count = $('.same').prop('checked', false);
@@ -347,14 +446,14 @@
         if (check == 1) {
             var all_open = $('.kelas-open');
             var array_open = [];
-            for (i = 0; i < all_open.length; i++) { 
+            for (i = 0; i < all_open.length; i++) {
               array_open.push(all_open[i]['defaultValue']);
             }
             sessionStorage.setItem("item_open", array_open);
 
             var all_close = $('.kelas-close');
             var array_close = [];
-            for (i = 0; i < all_close.length; i++) { 
+            for (i = 0; i < all_close.length; i++) {
               array_close.push(all_close[i]['defaultValue']);
             }
             sessionStorage.setItem("item_close", array_close);
@@ -362,7 +461,7 @@
 
         $('.kelas-open').val(open);
         $('.kelas-close').val(close);
-        
+
       } else {
 
           var item_open = sessionStorage.getItem("item_open");
@@ -427,7 +526,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -436,7 +535,7 @@
                 <span class="caption-subject font-blue bold uppercase">{{ $outlet[0]['outlet_code'] }}</span>
             </div>
             <ul class="nav nav-tabs">
-                
+
                 <li class="active" id="infoOutlet">
                     <a href="#info" data-toggle="tab" > Info </a>
                 </li>
@@ -465,6 +564,9 @@
                 <li>
                     <a href="#schedule" data-toggle="tab"> Schedule </a>
                 </li>
+                <li>
+                    <a href="#visibility" data-toggle="tab"> Visibility </a>
+                </li>
             </ul>
         </div>
         <div class="portlet-body">
@@ -487,9 +589,12 @@
                 <div class="tab-pane" id="schedule">
                     @include('outlet::schedule_open')
                 </div>
+                <div class="tab-pane" id="visibility">
+                    @include('outlet::outlet_visibility')
+                </div>
             </div>
         </div>
     </div>
-        
-    
+
+
 @endsection

@@ -18,11 +18,11 @@
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			operator_value.options[operator_value.options.length] = new Option('=', '=');
 			operator_value.options[operator_value.options.length] = new Option('like', 'like');
-			
+
 			var parameter = "conditions["+index+"][parameter]";
 			document.getElementsByName(parameter)[0].type = 'text';
 		}
-		
+
 		if(subject_value == 'balance' || subject_value == 'grand_total' || subject_value == 'ccashback_conversion' || subject_value == 'membership_cashback_percentage'){
 			var operator = "conditions["+index+"][operator]";
 			var operator_value = document.getElementsByName(operator)[0];
@@ -32,18 +32,18 @@
 			operator_value.options[operator_value.options.length] = new Option('>', '>');
 			operator_value.options[operator_value.options.length] = new Option('<=', '<=');
 			operator_value.options[operator_value.options.length] = new Option('<', '<');
-			
+
 			var parameter = "conditions["+index+"][parameter]";
 			document.getElementsByName(parameter)[0].type = 'text';
 		}
-		
+
 		if(subject_value == 'source'){
 			var operator = "conditions["+index+"][operator]";
 			var operator_value = document.getElementsByName(operator)[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			operator_value.options[operator_value.options.length] = new Option('Transaction', 'Transaction');
 			operator_value.options[operator_value.options.length] = new Option('Voucher', 'Voucher');
-			
+
 			var parameter = "conditions["+index+"][parameter]";
 			document.getElementsByName(parameter)[0].type = 'hidden';
 		}
@@ -59,7 +59,7 @@
 		</div>
 	</div>
 	<div class="portlet-body form">
-		
+
 		<div class="form-body">
             <div class="form-group">
                 <label class="col-md-2 control-label">Date Start :</label>
@@ -105,7 +105,7 @@
 										<div class="col-md-4">
 											<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 												<option value="name" @if ($con['subject'] == 'name') selected @endif>Name</option>
-												<option value="balance" @if ($con['subject'] == 'balance') selected @endif>env('POINT_NAME', 'Points')</option>
+												<option value="balance" @if ($con['subject'] == 'balance') selected @endif>{{env('POINT_NAME', 'Points')}}</option>
 												<option value="source" @if ($con['subject'] == 'source') selected @endif>Source</option>
 												<option value="grand_total" @if ($con['subject'] == 'grand_total') selected @endif>Grand Total</option>
 												<option value="ccashback_conversion" @if ($con['subject'] == 'ccashback_conversion') selected @endif>Cashback Convers</option>
@@ -156,7 +156,7 @@
 											<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 												<option value="" selected disabled></option>
 												<option value="name">Name</option>
-												<option value="balance">env('POINT_NAME', 'Points')</option>
+												<option value="balance">{{env('POINT_NAME', 'Points')}}</option>
 												<option value="source">Source</option>
 												<option value="grand_total">Grand Total</option>
 												<option value="ccashback_conversion">Cashback Convers</option>
@@ -191,7 +191,7 @@
 										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 											<option value="" selected disabled></option>
 											<option value="name">Name</option>
-											<option value="balance">env('POINT_NAME', 'Points')</option>
+											<option value="balance">{{env('POINT_NAME', 'Points')}}</option>
 											<option value="source">Source</option>
 											<option value="grand_total">Grand Total</option>
 											<option value="ccashback_conversion">Cashback Convers</option>
@@ -219,7 +219,7 @@
 						<i class="fa fa-plus"></i> Add New Condition</a>
 					</div>
 				</div>
-				
+
 				<div class="form-action col-md-12" style="margin-top:15px">
 					<div class="col-md-5">
 						<select name="rule" class="form-control input-sm " placeholder="Search Rule" required>

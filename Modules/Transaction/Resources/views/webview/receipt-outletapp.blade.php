@@ -13,35 +13,35 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype');
         }
 
         .swal-text {
@@ -311,54 +311,54 @@
             margin-left: -125px;
             margin-top: -125px;
         }
-        
+
         .kotak-full.pending{
             padding-top:15px;
             padding-bottom:15px;
             background-color:#aaa;
         }
-        
+
         .kotak-full.on_going{
             padding-top:15px;
             padding-bottom:15px;
             background-color:#ef9219;
         }
-        
+
         .kotak-full.complated{
             padding-top:15px;
             padding-bottom:15px;
             background-color:#fff;
         }
-        
+
         .kotak-full.ready{
             padding-top:15px;
             padding-bottom:15px;
             background-color:#15977b;
         }
-        
+
         .kotak-full.pending .text-greyish-brown,
         .kotak-full.on_going .text-greyish-brown,
         .kotak-full.ready .text-greyish-brown,
-        
+
         .kotak-full.pending .text-grey-white-light,
         .kotak-full.on_going .text-grey-white-light,
         .kotak-full.ready .text-grey-white-light
         {
             color:#fff;
         }
-        
+
         .kotak-full.redbg{
             margin-top:-10px;
             background-color:#c10100;
         }
-        
+
         .kotak-full.redbg #content-taken{
             text-transform : uppercase;
             color:#fff;
             text-align:center;
             padding:10px;
         }
-        
+
     </style>
   </head>
   <body>
@@ -392,7 +392,7 @@
                 </div>
             </div>
         </div>
-        
+
         @if($data['status'] == "Taken" || $data['status'] == "Reject")
             <div class="kotak-full redbg">
                 <div class="container">
@@ -404,10 +404,10 @@
                                 @else
                                     Order di reject <br/> {{ $data['detail']['reject_reason'] }}
                                 @endif
-                            </div>            
+                            </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         @endif
 
@@ -415,7 +415,7 @@
             <div class="container">
                 <div class="row text-center space-nice">
                     <div class="col-12 seravek-font text-15px space-text text-grey">Kode Pickup</div>
-                    
+
                     <div class="kotak-qr" id="gambar-usaha">
                         <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
                     </div>
@@ -423,7 +423,7 @@
                     <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font">{{ $data['detail']['order_id'] }}</div>
                     <div class="col-12 text-16-7px text-black space-text seravek-font">{{ strtoupper($data['user']['name']) }}</div>
                     <div class="col-12 text-16-7px text-black space-bottom-big seravek-font">{{ $data['user']['phone'] }}</div>
-                    
+
                         @if ($data['detail']['pickup_type'] == 'set time')
                             <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan siap pada</div>
                         @else
@@ -459,7 +459,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-13-3px text-grey-light seravek-light-font">
-                    Transaksi Anda 
+                    Transaksi Anda
                     <hr style="margin:10px 0 20px 0">
                 </div>
                 @php $countQty = 0; @endphp
@@ -492,17 +492,17 @@
                 <div class="col-12 text-14-3px space-top seravek-font text-greyish-brown">Detail Pembayaran <hr> </div>
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">SubTotal ({{$countQty}} item)</div>
                 <div class="col-6 text-13-3px text-right space-text seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['transaction_subtotal'])) }}</div>
-                
+
                 @if($data['transaction_tax'] > 0)
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['transaction_tax'])) }}</div>
                 @endif
-                
+
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text seravek-light-font text-black">env('POINT_NAME', 'Points')</div>
+                <div class="col-6 text-13-3px space-text seravek-light-font text-black">{{env('POINT_NAME', 'Points')}}</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ str_replace(',', '.',number_format($data['balance'])) }}</div>
                 @endif
-                
+
                 <div class="col-12 text-12-7px text-right"><hr></div>
                 <div class="col-6 text-13-3px seravek-font text-black ">Total Pembayaran</div>
                 @if(isset($data['balance']))
@@ -522,7 +522,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    
+
     <script>
         $(document).ready(function() {
             var warning = ' {!! $data['warning'] !!}';

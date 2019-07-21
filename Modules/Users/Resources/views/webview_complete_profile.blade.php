@@ -40,7 +40,7 @@
           height: 17px;
           z-index: -1;
         }
-        
+
         /* select 2 */
         .select2-search__field{
             border: 1px solid #c2cad8;
@@ -144,7 +144,7 @@
 @section('content')
     <div class="col-md-4 col-md-offset-4" style="position: unset;">
         <div class="text-brown" style="margin-top: 20px; margin-bottom: 20px; text-align: justify;">
-            Silakan lengkapi data di bawah ini dan dapatkan env('POINT_NAME', 'Points')
+            Silakan lengkapi data di bawah ini dan dapatkan {{env('POINT_NAME', 'Points')}}
         </div>
 
         @if(isset($errors))
@@ -266,7 +266,7 @@
             placeholder : 'Pilih Kota Domisili',
             dropdownParent: $('#city-dropdown')
           });
-          
+
           $('#select2-gender').select2({
             positionDropdown: true,
             minimumResultsForSearch: -1,
@@ -311,7 +311,7 @@
           if (month == 2) {
             var d = new Date(year, month, 0);
             var last_day = d.getDate();
-            
+
             var date = $('#date-input').val();
             // reset selected date
             if (date > last_day) {
@@ -405,7 +405,7 @@
           }
           validateAge(month_input);
         }
-        
+
         function validateYear(e) {
           var year = year_input.value;
           var keycode = (typeof e.which == "number") ? e.which : e.keyCode;
@@ -494,6 +494,6 @@
           }
 
         });
-        
+
     </script>
 @stop

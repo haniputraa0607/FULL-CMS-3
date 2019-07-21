@@ -8,7 +8,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     {{-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
@@ -21,7 +21,7 @@
           $('.summernote').summernote({
             placeholder: 'Product Description',
             tabsize: 2,
-            toolbar: [         
+            toolbar: [
               ['style', ['style']],
               ['style', ['bold', 'underline', 'clear']],
               ['color', ['color']],
@@ -96,13 +96,13 @@
 
 		$('.price').change(function(){
 			id = $(this).attr('data-id');
-			
+
 			base = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) * 10 / 11;
 			base = base.toLocaleString( "id", {maximumFractionDigits: 2} );
-			
+
 			tax = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) / 11;
 			tax = tax.toLocaleString( "id", {maximumFractionDigits: 2} )
-	        
+
 			$('#price_base_'+id).val(base);
 			$('#price_tax_'+id).val(tax);
 		})
@@ -112,7 +112,7 @@
         	var url = '{{ url("product/price") }}/'+id;
         	window.location.href = url;
 		});
-		
+
     </script>
 
 @endsection
@@ -137,7 +137,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -158,7 +158,21 @@
 				    </select>
                 </div>
             </div>
-        </div>
+
+			<div class="col-md-12" style="padding:0; margin-bottom:15px">
+			<div style="width: 300px; float:right">
+				<form action="{{url('product/price/'.$key)}}" method="POST">
+					<div class="col-md-9" style="padding: 0px;">
+						<input type="text" class="form-control" name="product_name" placeholder="Search Product Name" @if(isset($product_name) && $product_name != "") value = "{{$product_name}}" @endif>
+					</div>
+					<div class="col-md-3" style="padding: 0px;">
+						{{ csrf_field() }}
+						<button type="submit" class="btn blue" id="checkBtn" style="width:100%">Search</button>
+					</div>
+				</form>
+			</div>
+			</div>
+
           @if (!empty($outlet))
         	@foreach ($outlet as $row => $data)
         		@if ($data['id_outlet'] == $key)
@@ -168,6 +182,7 @@
 								<table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
 									<thead>
 										<tr>
+											<th> Category </th>
 											<th> Product </th>
 											<th> Price </th>
 											<th> Price Base </th>
@@ -181,6 +196,7 @@
 										@if (!empty($product))
 											@foreach ($product as $col => $pro)
 												<tr>
+													<td>@if(isset($pro['category']['product_category_name'])) {{ $pro['category']['product_category_name'] }} @else Uncategorized @endif</td>
 													<td> {{ $pro['product_name'] }} </td>
 													<input type="hidden" name="id_outlet" value="{{ $key }}">
 													<input type="hidden" name="id_product[]" value="{{ $pro['id_product'] }}">
@@ -193,17 +209,18 @@
 																	@php
 																		$marker = 1;
 																	@endphp
-																	<td style="width: 15%"> 
+																	<td style="width: 15%">
 																		<input type="text" name="price[]" value="{{ $dpp['product_price'] }}" data-placeholder="input price" data-id="{{$pro['id_product']}}" class="form-control mt-repeater-input-inline price">
 																	</td>
-																	<td style="width: 15%"> 
+																	<td style="width: 15%">
 																		<input type="text" name="price_base[]" value="{{ $dpp['product_price_base'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_base_{{$pro['id_product']}}" readonly>
 																	</td>
-																	<td style="width: 15%"> 
+																	<td style="width: 15%">
 																		<input type="text" name="price_tax[]" value="{{ $dpp['product_price_tax'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_tax_{{$pro['id_product']}}" readonly>
 																	</td>
 																	<td style="width:15%">
 																		<select class="form-control" name="visible[]">
+																			<option></option>
 																			<option value="Visible" @if($dpp['product_visibility'] == 'Visible') selected @endif>Visible</option>
 																			<option value="Hidden" @if($dpp['product_visibility'] == 'Hidden') selected @endif>Hidden</option>
 																		</select>
@@ -221,55 +238,57 @@
 															@endforeach
 
 															@if ($marker == 0)
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price" data-id="{{$pro['id_product']}}">
 															</td>
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_base_{{$pro['id_product']}}" readonly>
 															</td>
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_tax_{{$pro['id_product']}}" readonly>
 															</td>
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<select class="form-control" name="visible[]">
+																	<option></option>
 																	<option value="Visible">Visible</option>
-																	<option value="Hidden" selected>Hidden</option>
+																	<option value="Hidden">Hidden</option>
 																</select>
 															</td>
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<select class="form-control" name="product_stock_status[]">
 																	<option value="Available">Available</option>
 																	<option value="Sold Out" selected>Sold Out</option>
 																</select>
 															</td>
-															<td style="width: 15%"> 
-																<input type="text" value="" class="form-control mt-repeater-input-inline" disabled> 
+															<td style="width: 15%">
+																<input type="text" value="" class="form-control mt-repeater-input-inline" disabled>
 															</td>
 															@endif
 														@else
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price" data-id="{{$pro['id_product']}}">
 															</td>
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_base_{{$pro['id_product']}}" readonly>
 															</td>
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_tax_{{$pro['id_product']}}" readonly>
 															</td>
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<select class="form-control" name="visible[]">
+																	<option></option>
 																	<option value="Visible">Visible</option>
 																	<option value="Hidden" selected>Hidden</option>
 																</select>
 															</td>
-															<td style="width: 15%"> 
+															<td style="width: 15%">
 																<select class="form-control" name="product_stock_status[]">
 																	<option value="Available">Available</option>
 																	<option value="Sold Out" selected>Sold Out</option>
 																</select>
 															</td>
-															<td style="width: 15%"> 
-																<input type="text" value="" class="form-control mt-repeater-input-inline" disabled> 
+															<td style="width: 15%">
+																<input type="text" value="" class="form-control mt-repeater-input-inline" disabled>
 															</td>
 														@endif
 													</td>

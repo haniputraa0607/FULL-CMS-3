@@ -14,35 +14,35 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype');
         }
 
         .kotak {
@@ -322,26 +322,81 @@
             text-decoration:line-through
         }
 
+        .kotak-full.pending{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#aaa;
+        }
+
+        .kotak-full.pending .text-greyish-brown,
+        .kotak-full.on_going .text-greyish-brown,
+        .kotak-full.ready .text-greyish-brown,
+
+        .kotak-full.pending .text-grey-white-light,
+        .kotak-full.on_going .text-grey-white-light,
+        .kotak-full.ready .text-grey-white-light
+        {
+            color:#fff;
+        }
+
+        .kotak-full.pending{
+            padding-top:15px;
+            padding-bottom:15px;
+            background-color:#aaa;
+        }
+
+        .kotak-full.pending #content-taken{
+            text-transform : uppercase;
+            color:#fff;
+            text-align:center;
+            padding:10px;
+        }
+
+        .body-admin{
+            max-width: 480px;
+            margin: auto;
+            /* background-color: #fafafa; */
+            border: 1px solid #7070701c;
+        }
+
     </style>
   </head>
-  <body>
+  <body style="@if(isset($data['admin'])) background:#fff @endif">
+  <div class="@if(isset($data['admin'])) body-admin @endif">
     {{ csrf_field() }}
     @php
         // print_r($data);die();
     @endphp
 
-    <div class="kotak-full">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12 text-13-3px text-black seravek-font">
-                    Terima kasih!
-                </div>
-                <div class="col-12 text-13-3px text-black seravek-font">
-                    Transaksi anda sedang di proses
+    <div class="kotak-full pending">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12">
+                    <div id="content-taken" class="seravek-medium-font text-21-7px">
+                       PENDING
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="kotak-full">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12 text-13-3px text-black seravek-font">
+                   Status transaksi Anda :
+                </div>
+                <div class="col-12 text-13-3px text-black seravek-font">
+                    Sedang menunggu konfirmasi pembayaran
+                </div>
+                @if(isset($data['admin']))
+                    <div class="col-12 text-16-7px text-black space-text space-top-all seravek-font">{{ strtoupper($data['user']['name']) }}</div>
+                    <div class="col-12 text-16-7px text-black seravek-font space-nice">{{ $data['user']['phone'] }}</div>
+                @endif
+            </div>
+        </div>
+    </div>
+
     <div class="kotak">
         <div class="container line-bottom">
             <div class="row space-bottom">
@@ -356,7 +411,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-13-3px text-grey-light seravek-light-font">
-                    Transaksi Anda 
+                    Transaksi Anda
                     <hr style="margin:10px 0 20px 0">
                 </div>
                 @php $countQty = 0; @endphp
@@ -394,7 +449,7 @@
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ number_format($data['transaction_tax'], 0, ',', '.') }}</div>
                 @endif
-                
+
                 @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
                 <div class="col-6 text-13-3px space-text seravek-light-font text-black">Ongkos Kirim</div>
                     @if($data['transaction_is_free'] == '1')
@@ -410,10 +465,10 @@
                 @endif
 
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text seravek-light-font">env('POINT_NAME', 'Points')</div>
+                <div class="col-6 text-13-3px space-text seravek-light-font">Kenangan Points</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ number_format(abs($data['balance']), 0, ',', '.') }}</div>
                 @endif
-                
+
                 <div class="col-12 text-12-7px text-right"><hr></div>
                 <div class="col-6 text-13-3px seravek-font text-black ">Total Pembayaran</div>
                 @if(isset($data['balance']))
@@ -425,47 +480,113 @@
         </div>
     </div>
 
-    @if ($data['transaction_payment_status'] == 'Completed'|| $data['transaction_payment_status'] == 'Paid')
         <div class="kotak">
             <div class="container">
                 <div class="row">
                     <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Metode Pembayaran <hr> </div>
-                    <div class="col-6 text-13-3px seravek-font text-black">
-                        @if ($data['trasaction_payment_type'] == 'Balance') 
-                            env('POINT_NAME', 'Points')
-                        @elseif ($data['trasaction_payment_type'] == 'Midtrans') 
-                            @if(isset($data['data_payment'][0]['payment_type']))
-                                {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['payment_type'])) }}
-                            @else
-                                Online Payment
+                        @if(count($data['data_payment']) > 1)
+                            @foreach($data['data_payment'] as $pay)
+                                @if(isset($pay['type']) && $pay['type'] == 'Midtrans')
+                                    @if(isset($pay['payment_type']))
+                                    <div class="col-6 text-13-3px seravek-font text-black">
+                                        {{ ucwords(str_replace('_', ' ', $pay['payment_type'])) }}
+                                    </div>
+                                    <div class="col-6 text-13-3px text-black text-right seravek-light-font">
+                                    </div>
+                                    @endif
+
+                                    @if(isset($pay['bank']))
+                                    <div class="col-6 text-black text-12-7px seravek-light-font">
+                                        {{ ucwords(str_replace('_', ' ', $pay['bank'])) }}
+                                    </div>
+                                    @endif
+
+                                    @if(!isset($pay['bank']) && !isset($pay['payment_type']))
+                                    <div class="col-6 text-black text-13-3px">
+                                        Online Payment
+                                    </div>
+                                    <div class="col-6 text-13-3px text-black text-right seravek-light-font">
+                                    </div>
+                                    @endif
+
+                                @elseif(isset($pay['type']) && $pay['type'] == 'Ovo')
+                                    <div class="col-6 text-13-3px seravek-font text-black">
+                                        Ovo
+                                    </div>
+                                    <div class="col-6 text-13-3px text-black text-right seravek-light-font">
+                                    </div>
+                                @endif
+                            @endforeach
+                        @else
+                        <div class="col-6 text-13-3px seravek-font text-black">
+                            @if ($data['trasaction_payment_type'] == 'Balance')
+                                Kenangan Points
+                            @elseif ($data['trasaction_payment_type'] == 'Midtrans')
+                                @if(isset($data['data_payment'][0]['payment_type']))
+                                    {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['payment_type'])) }}
+                                @else
+                                    Online Payment
+                                @endif
+                            @elseif ($data['trasaction_payment_type'] == 'Manual')
+                                Transfer Bank
+                            @elseif ($data['trasaction_payment_type'] == 'Ovo')
+                                Ovo
+                            @elseif ($data['trasaction_payment_type'] == 'Offline')
+                                @if(isset($data['data_payment'][0]['payment_bank']))
+                                    {{$data['data_payment'][0]['payment_bank']}}
+                                @else
+                                    TUNAI
+                                @endif
                             @endif
-                        @elseif ($data['trasaction_payment_type'] == 'Manual')
-                            Transfer Bank
-                        @elseif ($data['trasaction_payment_type'] == 'Offline')
-                            TUNAI 
+                        </div>
+                        <div class="col-6 text-13-3px text-right text-black seravek-light-font">
+                        @if ($data['trasaction_payment_type'] == 'Offline')
+                            SELESAI
+                        @else
                         @endif
-                    </div>
-                    <div class="col-6 text-12-7px text-right">
-                    @if ($data['trasaction_payment_type'] == 'Offline')
-                        SELESAI
-                    @else
-                        LUNAS
-                    @endif
-                    </div>
-                    
+                        </div>
+                        @endif
+
                     @if (isset($data['payment']['bank']))
-                        <div class="col-6 text-grey text-12-7px">{{ $data['payment']['bank'] }}</div>
+                        <div class="col-6 text-black text-12-7px seravek-light-font">{{ $data['payment']['bank'] }}</div>
                     @endif
 
                     @if (isset($data['payment']['payment_method']))
-                        <div class="col-6 text-grey text-12-7px">{{ $data['payment']['payment_method'] }}</div>
+                        <div class="col-6 text-black text-12-7px seravek-light-font">{{ $data['payment']['payment_method'] }}</div>
+                    @endif
+
+                    @if(isset($data['data_payment'][0]['bank']))
+                    <div class="col-6 text-black text-12-7px seravek-light-font">
+                        {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['bank'])) }}
+                    </div>
                     @endif
                 </div>
             </div>
         </div>
-        
+
+<<<<<<< HEAD
+=======
     @endif
-    <input type="hidden" id="payment" value="{{ json_encode($data['data_payment']) }}">  
+>>>>>>> origin/dev_bug_webview_profile
+
+    <div class="kotak">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Status Pesanan <hr> </div>
+                @php $top = 5; $bg = true; @endphp
+                <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
+                    <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
+                    Sedang menunggu konfirmasi pembayaran
+                </div>
+                <!-- <div class="col-12 text-11-7px seravek-light-font text-black space-bottom top-{{$top}}px">
+                    <div class="round-white"></div>
+                    {{date('d F Y H:i', strtotime($data['updated_at']))}}
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="payment" value="{{ json_encode($data['data_payment']) }}">
     <input type="hidden" id="url" value="{{ env('APP_URL') }}">
     {{ csrf_field() }}
 
@@ -475,12 +596,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
-       
+
     @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&callback=initMap">
     </script>
-    
-    <script>    
+
+    <script>
         // Initialize and add the map
         function initMap() {
             // The location of Uluru
@@ -488,7 +609,7 @@
             // The map, centered at Uluru
             var map = new google.maps.Map(
                 document.getElementById('map'), {
-                    zoom: 15, 
+                    zoom: 15,
                     center: uluru,
                     disableDefaultUI: true
                 });
@@ -497,6 +618,7 @@
         }
     </script>
     @endif
+  </div>
   </body>
 
   <script type="text/javascript">
@@ -514,7 +636,7 @@
           $temp.remove();
           $("#popover").popover('show');
           setTimeout(
-              function() 
+              function()
               {
                 $("#popover").popover('hide');
               }, 1000);
