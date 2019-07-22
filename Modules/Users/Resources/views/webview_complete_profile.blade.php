@@ -16,6 +16,9 @@
         .text-brown{
           color: #6C5648;
         }
+        .text-black{
+          color: #000;
+        }
         .text-red{
           color: #e64343;
         }
@@ -57,7 +60,7 @@
             line-height: 34px !important;
             padding-left: 0px !important;
             color: #000 !important;
-            font-family: "Seravek";
+            font-family: "GoogleSans";
             border-bottom: 1px solid #c2cad8;
         }
         .select2 .select2-selection--single{
@@ -69,7 +72,7 @@
             color: #000;
         }
         .select2-results__option--highlighted[aria-selected] {
-            background-color: #6C5648 !important;
+            background-color: #990003 !important;
             color: #fff;
         }
         .select2-selection__arrow{
@@ -138,13 +141,21 @@
           color: #000 !important;
           font-size: 15px;
         }
+        .btn-save{
+            background: #990003;
+            color: white;
+            border-radius: 5px !important;
+        }
+        .btn:hover{
+            color: white !important;
+        }
     </style>
 @stop
 
 @section('content')
     <div class="col-md-4 col-md-offset-4" style="position: unset;">
-        <div class="text-brown" style="margin-top: 20px; margin-bottom: 20px; text-align: justify;">
-            Silakan lengkapi data di bawah ini dan dapatkan {{env('POINT_NAME', 'Points')}}
+        <div class="text-black" style="margin-top: 20px; margin-bottom: 20px; text-align: justify;">
+            Silakan lengkapi data di bawah ini dan dapatkan Panda Points
         </div>
 
         @if(isset($errors))
@@ -236,7 +247,7 @@
                         <input type="hidden" name="bearer" value="{{ $bearer }}">
 
                         <div class="button-wrapper text-center">
-                            <input type="submit" value="SIMPAN" class="btn btn-round btn-outline brown">
+                            <input type="submit" value="Simpan" class="btn btn-save GoogleSans-Bold">
                         </div>
                     </div>
                 </div>
