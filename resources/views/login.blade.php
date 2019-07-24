@@ -9,7 +9,7 @@
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="{{env('TITLE', 'CRM System')}} Admin Portal" name="description" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-		
+
 		<meta property="og:description" content="Technopartner Indonesia CRM System" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="Behave" />
@@ -19,7 +19,7 @@
 		<link href="{{env('AWS_ASSET_URL') }}{{ ('images/logo_face_200.png')}}" rel="image_src" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<link rel="shortcut icon" sizes="200x200" href="{{env('AWS_ASSET_URL') }}{{ ('images/icon.png')}}">
-		
+
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -48,7 +48,7 @@
                 margin-right: auto;
             }
         </style>
-        
+
 	</head>
     <!-- END HEAD -->
 
@@ -82,7 +82,7 @@
                     {!!  GoogleReCaptchaV3::renderField('captcha_div','login', 'captcha_div') !!}
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn blue uppercase btn-block">Login</button>
+                    <button type="submit" class="btn uppercase btn-block" style="background: #990003; color: #fff">Login</button>
                     <!--
 					<label class="rememberme check mt-checkbox mt-checkbox-outline">
                         <input type="checkbox" name="remember" value="1" />Remember
@@ -100,13 +100,13 @@
 				-->
             </form>
             <!-- END LOGIN FORM -->
-           
+
         </div>
-        <div class="copyright"> Copyright © 2019 Technopartner Indonesia</div>
+        <div class="copyright" style="color: #fff"> Copyright © 2019 Technopartner Indonesia</div>
         <!--[if lt IE 9]>
 <script src="assets/global/plugins/respond.min.js"></script>
-<script src="assets/global/plugins/excanvas.min.js"></script> 
-<script src="assets/global/plugins/ie8.fix.min.js"></script> 
+<script src="assets/global/plugins/excanvas.min.js"></script>
+<script src="assets/global/plugins/ie8.fix.min.js"></script>
 <![endif]-->
         <!-- BEGIN CORE PLUGINS -->
         <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>

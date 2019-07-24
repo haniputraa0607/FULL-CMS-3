@@ -14,7 +14,7 @@
 		</li>
 		@if($level == "Super Admin")
 		<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-			<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Home</h3>
+			<h3 class="uppercase" style="color: #990003;font-weight: 600;">Home</h3>
 		</li>
 		<li class="nav-item {{($menu_active == 'home') ? 'active' : ''}}">
 			<a href="{{url('home')}}" class="nav-link">
@@ -32,7 +32,7 @@
 
 		@if(MyHelper::hasAccess([2,4,7,9], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Accounts</h3>
+				<h3 class="uppercase" style="color: #990003;font-weight: 600;">Accounts</h3>
 			</li>
 			<li class="nav-item {{($menu_active == 'user') ? 'active open' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
@@ -198,7 +198,7 @@
 
 		@if(MyHelper::hasAccess([19,21,24,26,32,33,34,43,45,48,50,56,57], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Browse</h3>
+				<h3 class="uppercase" style="color: #990003;font-weight: 600;">Browse</h3>
 			</li>
 			@if(MyHelper::hasAccess([34], $configs))
 				@if(MyHelper::hasAccess([19,21], $grantedFeature))
@@ -375,7 +375,7 @@
 
 		@if(MyHelper::hasAccess([58,59,60,61,62,63,64,66,69,71], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Order</h3>
+				<h3 class="uppercase" style="color: #990003;font-weight: 600;">Order</h3>
 			</li>
 
 			@if(MyHelper::hasAccess([69], $grantedFeature))
@@ -618,7 +618,7 @@
 		@if(MyHelper::hasAccess([25], $configs) || MyHelper::hasAccess([26], $configs))
 			@if(MyHelper::hasAccess([72,73,74,75,76,77,78,79,80,81,95], $grantedFeature))
 				<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-					<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Promo</h3>
+					<h3 class="uppercase" style="color: #990003;font-weight: 600;">Promo</h3>
 				</li>
 				@if(MyHelper::hasAccess([25], $configs))
 					@if(MyHelper::hasAccess([72,73,74,75,76], $grantedFeature))
@@ -807,7 +807,7 @@
 
 		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">CRM</h3>
+				<h3 class="uppercase" style="color: #990003;font-weight: 600;">CRM</h3>
 			</li>
 
 			@if(MyHelper::hasAccess([96,97], $grantedFeature))
@@ -868,7 +868,7 @@
 								@if(MyHelper::hasAccess([47], $configs))
 									<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-partnership') ? 'active open' : ''}}">
 										<a href="{{url('about/autoresponse/enquiry-partnership')}}" class="nav-link ">
-											<span class="title">[Response] Enquiry Partnership</span>
+											<span class="title">[Response] Enquiry Karir</span>
 										</a>
 									</li>
 								@endif
@@ -1074,7 +1074,7 @@
 
 		@if(MyHelper::hasAccess([15,16,17,18,144,145,146,147,148], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Settings</h3>
+				<h3 class="uppercase" style="color: #990003;font-weight: 600;">Settings</h3>
 			</li>
 			<li class="nav-item {{($menu_active == 'setting-home') ? 'active' : ''}}">
 				<a href="{{url('setting/home')}}" class="nav-link">
@@ -1127,7 +1127,7 @@
 
 		@if(MyHelper::hasAccess([85,86,87,88,89,90,91,94], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">About</h3>
+				<h3 class="uppercase" style="color: #990003;font-weight: 600;">About</h3>
 			</li>
 
 			@if(MyHelper::hasAccess([85], $grantedFeature))
@@ -1184,7 +1184,7 @@
 
 		@if(MyHelper::hasAccess([125,126,127,128,129], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #5C9ACF;font-weight: 600;">Report</h3>
+				<h3 class="uppercase" style="color: #990003;font-weight: 600;">Report</h3>
 			</li>
 			<li class="nav-item {{($menu_active == 'report-single') ? 'active' : ''}}">
 				<a href="{{url('report')}}" class="nav-link nav-toggle">
