@@ -250,7 +250,8 @@
 	$(document).ready(function () {
         $('.repeater').repeater({
 			show: function () {
-                $(this).slideDown();
+				$(this).slideDown();
+				$('.colorpicker-rgba').colorpicker();
             },hide: function (deleteElement) {
                 if(confirm('Are you sure you want to delete this element?')) {
                     $(this).slideUp(deleteElement);
@@ -277,7 +278,6 @@
 	});
 
 		$(".file").change(function(e) {
-			console.log('l')
                 widthImg  = 750;
                 heightImg = 250;
 
@@ -296,7 +296,7 @@
                             $(this).val("");
                             // $('#remove_square').click()
                             // image.src = _URL.createObjectURL();
-							console.log($(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img'))
+							console.log($(this))
 							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'http://www.placehold.it/750x250/EFEFEF/AAAAAA&amp;text=no+image');
                         }
                     };
@@ -407,7 +407,7 @@
 									</div>
 									</div>
 
-									<!--<div class="col-md-12" style="margin-top:20px">
+									<div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Text Color
@@ -416,10 +416,10 @@
 									</div>
 									<div class="col-md-4" >
 										<div class="input-icon right">
-											<input type="text" id="hue-demo" name="membership_name_color" class="form-control demo" data-control="hue" value="{{$membership['membership_name_color']}}">
+											<input type="text" name="membership_name_color" class="colorpicker-rgba form-control" value="{{$membership['membership_name_color']}}" data-color-format="rgba">
 										</div>
 									</div>
-									</div>-->
+									</div>
 
 									<div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
@@ -673,7 +673,7 @@
 									</div>
 									</div>
 
-									<!--<div class="col-md-12" style="margin-top:20px">
+									<div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Text Color
@@ -682,12 +682,12 @@
 									</div>
 									<div class="col-md-4" >
 										<div class="input-icon right">
-											<input type="text" id="hue-demo" name="membership_name_color" class="form-control demo" data-control="hue" value="">
+											<input type="text" name="membership_name_color" class="colorpicker-rgba form-control" value="" data-color-format="rgba">
 										</div>
 									</div>
-									</div>-->
+									</div>
 
-									<!--<div class="col-md-12" style="margin-top:20px">
+									<div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Image
@@ -713,7 +713,7 @@
 										</div>
 									</div>
 									</div>
-									-->
+
 									<div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
