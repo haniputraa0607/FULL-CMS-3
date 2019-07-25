@@ -184,7 +184,7 @@
               }
             @endphp
 
-            @if($user['birthday']==null || $user['gender']==null || $user['id_city']==null || $user['relationship']==null)
+            @if($user['birthday']==null || $user['gender']==null || $user['id_city']==null )
             {{-- form --}}
             <form role="form" action="{{ url('webview/complete-profile/submit') }}" method="post">
                 {!! csrf_field() !!}
@@ -231,17 +231,7 @@
                         <div id="error-city" class="text-red text-error"></div>
                     </div>
 
-                    <div class="form-group form-md-line-input">
-                        <label>Relationship</label>
-                        <select id="select2-relationship" class="form-control" name="relationship" required>
-                            <option></option>
-                            <option value="In a Relationship" {{ ($user['relationship']=='In a Relationship' ? 'selected' : '') }}>In a Relationship</option>
-                            <option value="Complicated" {{ ($user['relationship']=='Complicated' ? 'selected' : '') }}>Complicated</option>
-                            <option value="Jomblo" {{ ($user['relationship']=='Jomblo' ? 'selected' : '') }}>Jomblo</option>
-                        </select>
-                        <img class="select-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/arrow-down.png') }}" alt="">
-                        <div id="error-relationship" class="text-red text-error"></div>
-                    </div>
+
 
                     <div class="form-actions noborder">
                         <input type="hidden" name="bearer" value="{{ $bearer }}">
@@ -283,11 +273,8 @@
             minimumResultsForSearch: -1,
             placeholder : 'Pilih Jenis Kelamin'
           });
-          $('#select2-relationship').select2({
-            positionDropdown: true,
-            minimumResultsForSearch: -1,
-            placeholder : 'Pilih Relationship'
-          });
+
+
         })();
 
 
@@ -486,9 +473,10 @@
           var birthday_m = $('#month-input').val();
           var birthday_y = $('#year-input').val();
           var id_city = $('#id_city').val();
-          var relationship = $('#select2-relationship').val();
 
-          if (gender=="" || birthday_d=="" || birthday_m=="" || birthday_y=="" || id_city=="" || relationship=="") {
+
+
+          if (gender=="" || birthday_d=="" || birthday_m=="" || birthday_y=="" || id_city=="" ) {
             e.preventDefault();
             if (gender == "") {
               $('#error-gender').text('Jenis Kelamin tidak boleh kosong')
@@ -499,9 +487,7 @@
             if (id_city == "") {
               $('#error-city').text('Kota tidak boleh kosong')
             }
-            if (relationship == "") {
-              $('#error-relationship').text('Relationship tidak boleh kosong')
-            }
+
           }
 
         });

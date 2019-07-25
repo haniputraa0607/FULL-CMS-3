@@ -7,9 +7,18 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
     <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
+
+        @font-face {
+                font-family: "GoogleSans";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+        }
+        .GoogleSans{
+            font-family: "GoogleSans";
+        }
         .kotak {
             margin : 10px;
             padding: 10px;
@@ -19,7 +28,7 @@
             box-shadow: 0px 0px 21px 0px rgba(168,168,168,1);
             border-radius: 3px;
             background: #fff;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'GoogleSans';
         }
 
         body {
@@ -38,6 +47,10 @@
             padding-bottom: 15px;
         }
 
+        .space-bottom20 {
+            padding-bottom: 20px;
+        }
+
         .space-top {
             padding-top: 15px;
         }
@@ -54,6 +67,9 @@
         .text-grey {
             color: #aaaaaa;
         }
+        .text-grey2 {
+            color: #b6b6b6;
+        }
 
         .text-much-grey {
             color: #bfbfbf;
@@ -61,6 +77,10 @@
 
         .text-black {
             color: #000000;
+        }
+
+        .text-red {
+            color: #990003;
         }
 
         .text-medium-grey {
@@ -93,14 +113,6 @@
 
         .text-grey-green {
             color: rgba(4,154,74,1);
-        }
-
-        .open-sans-font {
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .questrial-font {
-            font-family: 'Questrial', sans-serif;
         }
 
         .text-14-3px {
@@ -136,50 +148,85 @@
     <div class="kotak">
         <div class="container line-bottom">
             <div class="row space-bottom">
-                <div class="col-6 text-grey-black text-14-3px">Buy Voucher</div>
-                <div class="col-6 text-right text-medium-grey text-12-7px">{{ date('l', strtotime($data['date'])) }}, {{ date('d F Y H:i', strtotime($data['date'])) }}</div>
+                <div class="col-6 text-grey-black text-14-3px">Beli Kupon</div>
+                @php $bulan = ['', 'Januari', 'Februari','Maret','April','Mei','Juni','Juli','Agustus','September','November','Desember']; @endphp
+                <div class="col-6 text-right text-medium-grey text-13-3px">{{ date('d', strtotime($data['date'])) }} {{$bulan[date('n', strtotime($data['date']))]}} {{date('Y H:i', strtotime($data['date'])) }}</div>
             </div>
             <div class="row space-text">
                 <div class="col-4"></div>
-                <div class="col-8 text-right bold text-12-7px">{{ $data['deal_voucher']['voucher_code'] }}</div>
+                <div class="col-8 text-right text-grey-black bold text-13-3px">#{{ $data['deal_voucher']['voucher_code'] }}</div>
             </div>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-12 text-grey text-13-3px">YOUR TRANSACTION</div>
+                <div class="col-12 text-grey2 text-13-3px">Transaksi Anda</div>
                 <div class="col-12"><hr></div>
             </div>
             {{-- @foreach ($data['product_transaction'] as $key => $pro) --}}
                 <div class="row">
-                    <div class="col-6 text-grey-white text-14px">{{ $data['deal_voucher']['deal']['deals_title'] }}</div>
-                    <div class="col-6 text-right text-grey-white">@if (!empty($data['voucher_price_cash'])) IDR {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
+                    <div class="col-6 text-black text-13-3px">{{ $data['deal_voucher']['deal']['deals_title'] }}</div>
+                    <div class="col-6 text-right text-black">@if (!empty($data['voucher_price_cash']))  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
                 </div>
                 <div class="row space-bottom">
-                    <div class="col-12 text-grey text-12-7px">1 x @if (!empty($data['voucher_price_cash'])) IDR {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
+                    @if($data['deal_voucher']['deal']['deals_second_title'])
+                    <div class="col-6 text-black text-13-3px">{{ $data['deal_voucher']['deal']['deals_second_title'] }}</div>
+                    @endif
+                </div>
+                <div class="row space-bottom">
+                    <div class="col-12 text-grey-white text-12-7px">1 x @if (!empty($data['voucher_price_cash']))  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
                 </div>
             {{-- @endforeach --}}
             <hr>
-
             <div class="row">
-                <div class="col-6 text-14px text-black">Sub Total</div>
-                <div class="col-6 text-right text-14px text-black">@if (!empty($data['voucher_price_cash'])) IDR {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
+                <div class="col-6 text-13-3px text-black">Subtotal (1 item)</div>
+                <div class="col-6 text-right text-14px text-black">@if (!empty($data['voucher_price_cash']))  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
                 <div class="col-12"><hr></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="kotak">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 text-red text-13-3px">Detail Pembayaran</div>
+                <div class="col-12"><hr></div>
+            </div>
+            <div class="row space-bottom20">
+                <div class="col-6 text-13-3px text-grey-black">Subtotal (1 item)</div>
+                <div class="col-6 text-right text-13-3px text-grey-black">@if (!empty($data['voucher_price_cash']))  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
+
             </div>
             @if (!empty($data['balance_nominal']))
                 <div class="row">
-                    <div class="col-6 text-14px text-black">Your Balance</div>
-                    <div class="col-6 text-right text-14px text-grey-red">IDR {{ str_replace(',', '.', number_format($data['balance_nominal'])) }}</div>
+                    <div class="col-6 text-14px text-black">Panda Poin</div>
+                    <div class="col-6 text-right text-14px text-grey-red">-  {{ str_replace(',', '.', number_format($data['balance_nominal'])) }}</div>
                     <div class="col-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-6 bold text-14px text-black">Total Payment</div>
-                    <div class="col-6 text-right bold text-14px text-black">IDR {{ str_replace(',', '.', number_format($data['balance_nominal'])) }}</div>
+                    <div class="col-6 bold text-14px text-black">Total Pembayaran</div>
+                    <div class="col-6 text-right bold text-14px text-black">
+                     @if(isset($data['payment']['gross_amount']))
+                        {{ str_replace(',', '.', number_format($data['payment']['gross_amount'])) }}
+                    @else
+                        {{ str_replace(',', '.', number_format($data['balance_nominal'])) }}
+                    @endif
+                    </div>
                     <div class="col-12"><hr></div>
                 </div>
             @else
                 <div class="row space-text">
-                    <div class="col-6 bold text-14px text-black">Total Payment</div>
-                    <div class="col-6 text-right bold text-14px text-black">@if (!empty($data['voucher_price_cash'])) IDR {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
+                    <div class="col-6 bold text-14px text-black">Total Pembayaran</div>
+                    <div class="col-6 text-right bold text-14px text-black">
+                        @if (!empty($data['voucher_price_cash']))
+                            @if(isset($data['payment']['gross_amount']))
+                                {{ str_replace(',', '.', number_format($data['payment']['gross_amount'])) }}
+                            @else
+                                {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }}
+                            @endif
+                        @else
+                            {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }}
+                        @endif</div>
                 </div>
             @endif
         </div>
@@ -189,15 +236,13 @@
         <div class="kotak">
             <div class="container">
                 <div class="row">
-                    <div class="col-6 questrial-font text-black text-14px">Payment Method</div>
+                    <div class="col-6 questrial-font text-black text-14px">Metode Pembayaran</div>
                     <div class="col-12"><hr></div>
                 </div>
                 <div class="row space-bottom">
-                    <div class="col-6 text-black text-12-7px">@if ($data['payment_method'] == 'Balance') BALANCE @endif @if ($data['payment_method'] == 'Midtrans') ONLINE PAYMENT @endif @if ($data['payment_method'] == 'Manual') BANK TRANSFER @endif</div>
-                    <div class="col-6 text-right text-black text-13-3px">@if ($data['payment_method'] == 'Balance') IDR {{ str_replace(',', '.', number_format(abs($data['balance_nominal']))) }} @else @if (!empty($data['voucher_price_cash'])) IDR {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif @endif</div>
-                    @if (isset($data['payment']['payment_type']))
-                         <div class="col-12 text-black text-11-7px">{{ $data['payment']['payment_type'] }}</div>
-                    @endif
+                    <div class="col-6 text-black text-12-7px">@if ($data['payment_method'] == 'Balance') Panda Poin @endif @if(isset($data['payment']['payment_type'])) {{$data['payment']['payment_type']}} @else @if ($data['payment_method'] == 'Midtrans') ONLINE PAYMENT @endif @if ($data['payment_method'] == 'Manual') BANK TRANSFER @endif @endif</div>
+                    <div class="col-6 text-right text-black text-13-3px">@if ($data['payment_method'] == 'Balance')  {{ str_replace(',', '.', number_format(abs($data['balance_nominal']))) }} @else @if (!empty($data['voucher_price_cash'])) @if(isset($data['balance'])) @php $data['voucher_price_cash'] + $data['balance'];  @endphp @endif  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif @endif</div>
+
 
                     @if (isset($data['payment']['payment_method']))
                          <div class="col-12 text-black text-11-7px">{{ $data['payment']['payment_method'] }}</div>
@@ -210,7 +255,7 @@
     <div class="kotak">
         <div class="container">
             <div class="row">
-                <div class="col-6 questrial-font text-black text-14px">Payment Status</div>
+                <div class="col-6 questrial-font text-black text-14px">Status Pembayaran</div>
             </div><hr>
             <div class="row space-bottom">
                 <div class="col-12 @if ($data['paid_status'] == 'Completed' || $data['paid_status'] == 'Free') text-grey-green @endif @if ($data['paid_status'] == 'Pending') text-grey-yellow @endif @if ($data['paid_status'] == 'Paid') text-grey-blue @endif @if ($data['paid_status'] == 'Cancelled') text-grey-red-cancel @endif text-12-7px">{{ $data['paid_status'] }}</div>
@@ -218,8 +263,8 @@
             </div>
         </div>
     </div>
-   
-    
+
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
