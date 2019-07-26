@@ -12,7 +12,7 @@
 
 		<meta property="og:description" content="Technopartner Indonesia CRM System" />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content="Behave" />
+		<meta property="og:title" content="{{env('TITLE', 'Behave')}}" />
 		<meta property="og:image" content="{{env('AWS_ASSET_URL') }}{{ ('images/logo_face_200.png')}}" />
 		<meta property="og:image:width" content="200" />
 		<meta property="og:image:height" content="200" />

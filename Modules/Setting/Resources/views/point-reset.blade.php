@@ -91,7 +91,7 @@
                             @if($menu_active == 'point-reset')
                                 @php $type = 'point'; @endphp
                             @else
-                                @php $type = '{{env('POINT_NAME', 'Points')}}'; @endphp
+                                @php $type = env('POINT_NAME', 'Points'); @endphp
                             @endif
                             <label class="col-md-3 control-label">
                                 Reset {{ucwords($type)}} Date

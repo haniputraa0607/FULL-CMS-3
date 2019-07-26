@@ -165,15 +165,15 @@
             {{-- @foreach ($data['product_transaction'] as $key => $pro) --}}
                 <div class="row">
                     <div class="col-6 text-black text-13-3px">{{ $data['deal_voucher']['deal']['deals_title'] }}</div>
-                    <div class="col-6 text-right text-black">@if (!empty($data['voucher_price_cash']))  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
+                    <div class="col-6 text-right text-black text-13-3px">@if (!empty($data['voucher_price_cash']))  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
                 </div>
-                <div class="row space-bottom">
+                <div class="row">
                     @if($data['deal_voucher']['deal']['deals_second_title'])
                     <div class="col-6 text-black text-13-3px">{{ $data['deal_voucher']['deal']['deals_second_title'] }}</div>
                     @endif
                 </div>
                 <div class="row space-bottom">
-                    <div class="col-12 text-grey-white text-12-7px">1 x @if (!empty($data['voucher_price_cash']))  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
+                    <div class="col-12 text-grey-white text-13-3px">1 x @if (!empty($data['voucher_price_cash']))  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif</div>
                 </div>
             {{-- @endforeach --}}
             <hr>
@@ -199,13 +199,13 @@
             </div>
             @if (!empty($data['balance_nominal']))
                 <div class="row">
-                    <div class="col-6 text-14px text-black">Panda Poin</div>
+                    <div class="col-6 text-14px text-grey-black">Panda Poin</div>
                     <div class="col-6 text-right text-14px text-grey-red">-  {{ str_replace(',', '.', number_format($data['balance_nominal'])) }}</div>
                     <div class="col-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-6 bold text-14px text-black">Total Pembayaran</div>
-                    <div class="col-6 text-right bold text-14px text-black">
+                    <div class="col-6 text-14px text-grey-black">Total Pembayaran</div>
+                    <div class="col-6 text-right text-14px text-grey-black">
                      @if(isset($data['payment']['gross_amount']))
                         {{ str_replace(',', '.', number_format($data['payment']['gross_amount'])) }}
                     @else
@@ -216,8 +216,8 @@
                 </div>
             @else
                 <div class="row space-text">
-                    <div class="col-6 bold text-14px text-black">Total Pembayaran</div>
-                    <div class="col-6 text-right bold text-14px text-black">
+                    <div class="col-6 text-14px text-grey-black">Total Pembayaran</div>
+                    <div class="col-6 text-right text-14px text-grey-black">
                         @if (!empty($data['voucher_price_cash']))
                             @if(isset($data['payment']['gross_amount']))
                                 {{ str_replace(',', '.', number_format($data['payment']['gross_amount'])) }}
@@ -236,12 +236,13 @@
         <div class="kotak">
             <div class="container">
                 <div class="row">
-                    <div class="col-6 questrial-font text-black text-14px">Metode Pembayaran</div>
+                    <div class="col-6 questrial-font text-black text-14-3px">Metode Pembayaran</div>
                     <div class="col-12"><hr></div>
                 </div>
                 <div class="row space-bottom">
-                    <div class="col-6 text-black text-12-7px">@if ($data['payment_method'] == 'Balance') Panda Poin @endif @if(isset($data['payment']['payment_type'])) {{$data['payment']['payment_type']}} @else @if ($data['payment_method'] == 'Midtrans') ONLINE PAYMENT @endif @if ($data['payment_method'] == 'Manual') BANK TRANSFER @endif @endif</div>
-                    <div class="col-6 text-right text-black text-13-3px">@if ($data['payment_method'] == 'Balance')  {{ str_replace(',', '.', number_format(abs($data['balance_nominal']))) }} @else @if (!empty($data['voucher_price_cash'])) @if(isset($data['balance'])) @php $data['voucher_price_cash'] + $data['balance'];  @endphp @endif  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif @endif</div>
+                    <div class="col-6 text-black text-13-3px">@if ($data['payment_method'] == 'Balance') Panda Poin @endif @if(isset($data['payment']['payment_type'])) {{$data['payment']['payment_type']}} @else @if ($data['payment_method'] == 'Midtrans') ONLINE PAYMENT @endif @if ($data['payment_method'] == 'Manual') BANK TRANSFER @endif @endif</div>
+                    {{--<div class="col-6 text-right text-black text-13-3px">@if ($data['payment_method'] == 'Balance')  {{ str_replace(',', '.', number_format(abs($data['balance_nominal']))) }} @else @if (!empty($data['voucher_price_cash'])) @if(isset($data['balance'])) @php $data['voucher_price_cash'] + $data['balance'];  @endphp @endif  {{ str_replace(',', '.', number_format($data['voucher_price_cash'])) }} @else {{ str_replace(',', '.', number_format($data['voucher_price_point'])) }} @endif @endif</div>--}}
+                    <div class="col-6 text-right text-balck text-13-3px">@if ($data['paid_status'] == 'Completed') LUNAS @elseif ($data['paid_status'] == 'Pending') Pending @elseif ($data['paid_status'] == 'Paid') DIBAYAR @elseif ($data['paid_status'] == 'Cancelled') DIABATALKAN @elseif ($data['paid_status'] == 'Free') GRATIS @endif</div>
 
 
                     @if (isset($data['payment']['payment_method']))
@@ -252,6 +253,7 @@
         </div>
     @endif
 
+    {{--
     <div class="kotak">
         <div class="container">
             <div class="row">
@@ -263,6 +265,7 @@
             </div>
         </div>
     </div>
+    --}}
 
 
 
