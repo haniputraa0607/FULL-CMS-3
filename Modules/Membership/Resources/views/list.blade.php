@@ -39,7 +39,7 @@
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
@@ -248,10 +248,17 @@
 	}
 
 	$(document).ready(function () {
+		$('.colorpicker').minicolors({
+			format: 'rgb',
+			theme: 'bootstrap'
+		})
         $('.repeater').repeater({
 			show: function () {
 				$(this).slideDown();
-				$('.colorpicker-rgba').colorpicker();
+				$('.colorpicker').minicolors({
+					format: 'rgb',
+					theme: 'bootstrap'
+				})
             },hide: function (deleteElement) {
                 if(confirm('Are you sure you want to delete this element?')) {
                     $(this).slideUp(deleteElement);
@@ -416,7 +423,7 @@
 									</div>
 									<div class="col-md-4" >
 										<div class="input-icon right">
-											<input type="text" name="membership_name_color" class="colorpicker-rgba form-control" value="{{$membership['membership_name_color']}}" data-color-format="rgba">
+											<input type="text" name="membership_name_color" class="form-control colorpicker" value="{{$membership['membership_name_color']}}" data-format="rgb">
 										</div>
 									</div>
 									</div>
@@ -682,7 +689,7 @@
 									</div>
 									<div class="col-md-4" >
 										<div class="input-icon right">
-											<input type="text" name="membership_name_color" class="colorpicker-rgba form-control" value="" data-color-format="rgba">
+											<input type="text" name="membership_name_color" class="form-control colorpicker"  value="" data-color-format="rgb">
 										</div>
 									</div>
 									</div>
