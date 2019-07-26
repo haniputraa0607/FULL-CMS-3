@@ -39,7 +39,7 @@
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.js') }}" type="text/javascript"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
@@ -249,14 +249,14 @@
 
 	$(document).ready(function () {
 		$('.colorpicker').minicolors({
-			format: 'rgb',
+			format: 'hex',
 			theme: 'bootstrap'
 		})
         $('.repeater').repeater({
 			show: function () {
 				$(this).slideDown();
 				$('.colorpicker').minicolors({
-					format: 'rgb',
+					format: 'hex',
 					theme: 'bootstrap'
 				})
             },hide: function (deleteElement) {
