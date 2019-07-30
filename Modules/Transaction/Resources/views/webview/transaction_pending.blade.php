@@ -10,39 +10,59 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
-        @font-face {
-            font-family: 'Seravek';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype');
+         @font-face {
+                font-family: "GoogleSans-Bold";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
         }
-
         @font-face {
-            font-family: 'Seravek Light';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
+                font-family: "GoogleSans-BoldItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
         }
-
         @font-face {
-            font-family: 'Seravek Medium';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype');
+                font-family: "GoogleSans-Italic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
         }
-
         @font-face {
-            font-family: 'Seravek Italic';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype');
+                font-family: "GoogleSans-Medium";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
         }
-
         @font-face {
-            font-family: 'Roboto Regular';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype');
+                font-family: "GoogleSans-MediumItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
+        }
+        @font-face {
+                font-family: "GoogleSans";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+        }
+        .GoogleSans{
+            font-family: "GoogleSans";
+        }
+        .GoogleSans-MediumItalic{
+            font-family: "GoogleSans-MediumItalic";
+        }
+        .GoogleSans-Medium{
+            font-family: "GoogleSans-Medium";
+        }
+        .GoogleSans-Italic{
+            font-family: "GoogleSans-Italic";
+        }
+        .GoogleSans-BoldItalic{
+            font-family: "GoogleSans-BoldItalic";
+        }
+        .GoogleSans-Bold{
+            font-family: "GoogleSans-Bold";
         }
 
         .kotak {
@@ -54,7 +74,7 @@
             box-shadow: 0px 1px 3.3px 0px rgba(168,168,168,1);
             /* border-radius: 3px; */
             background: #fff;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'GoogleSans';
         }
 
         .kotak-qr {
@@ -73,7 +93,7 @@
             margin-bottom : 15px;
             padding: 10px;
             background: #fff;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'GoogleSans';
         }
 
         .kotak-inside {
@@ -183,36 +203,8 @@
             color: rgba(4,154,74,1);
         }
 
-        .text-greyish-brown{
-            color: #6c5648;
-        }
-
-        .open-sans-font {
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .questrial-font {
-            font-family: 'Questrial', sans-serif;
-        }
-
-        .seravek-font {
-            font-family: 'Seravek';
-        }
-
-        .seravek-light-font {
-            font-family: 'Seravek Light';
-        }
-
-        .seravek-medium-font {
-            font-family: 'Seravek Medium';
-        }
-
-        .seravek-italic-font {
-            font-family: 'Seravek Italic';
-        }
-
-        .roboto-regular-font {
-            font-family: 'Roboto Regular';
+        .text-red{
+            color: #990003;
         }
 
         .text-21-7px {
@@ -251,8 +243,8 @@
             font-size: 11.7px;
         }
 
-        .round-greyish-brown{
-            border: 1px solid #6c5648;
+        .round-red{
+            border: 1px solid #990003;
             border-radius: 50%;
             width: 10px;
             height: 10px;
@@ -260,8 +252,8 @@
             margin-right:3px;
         }
 
-        .bg-greyish-brown{
-            background: #6c5648;
+        .bg-red{
+            background: #990003;
         }
 
         .round-white{
@@ -331,6 +323,7 @@
 
     </style>
   </head>
+  @php $bulan = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']; @endphp
   <body style="@if(isset($data['admin'])) background:#fff @endif">
   <div class="@if(isset($data['admin'])) body-admin @endif">
     {{ csrf_field() }}
@@ -342,8 +335,8 @@
         <div class="kotak-full">
             <div class="container">
                 <div class="row text-center">
-                    <div class="col-12 text-13-3px text-black seravek-font">
-                        Silahkan lakukan pembayaran terlebih dahulu
+                    <div class="col-12 text-13-3px text-black GoogleSans">
+                        Silakan lakukan pembayaran terlebih dahulu
                     </div>
                 </div>
             </div>
@@ -354,15 +347,15 @@
         			<div class="kotak-biasa">
 			            <div class="container">
 			                <div class="row text-center" id="cont">
-			                    <div class="col-12 seravek-font text-15px space-text text-grey">Virtual Number</div>
-                                <div class="col-12 text-greyish-brown text-21-7px space-bottom space-top-all seravek-medium-font"><span id="myInput">{{ $pay['eci'] }}</span> &nbsp;
+			                    <div class="col-12 GoogleSans text-15px space-text text-grey">Virtual Number</div>
+                                <div class="col-12 text-red text-21-7px space-bottom space-top-all GoogleSans-Medium"><span id="myInput">{{ $pay['eci'] }}</span> &nbsp;
                                     <i class="fa fa-clone clone" data-togle="tooltip" title="Hooray!" onclick="copyToClipboard('#myInput')" style="cursor: pointer;"><div id="popover" rel="popover" data-content="Copied to clipboard" data-original-title="Copied"></div></i>
                                 </div>
                                 @if (isset($pay['bank']))
-                                    <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{strtoupper($pay['bank'])}}</div>
+                                    <div class="col-12 text-16-7px text-black space-text GoogleSans">{{strtoupper($pay['bank'])}}</div>
                                 @endif
                                 @if (isset($pay['store']))
-                                    <div class="col-12 text-16-7px text-black space-text seravek-light-font">{{strtoupper($pay['store'])}}</div>
+                                    <div class="col-12 text-16-7px text-black space-text GoogleSans">{{strtoupper($pay['store'])}}</div>
                                 @endif
 			                </div>
 			            </div>
@@ -374,31 +367,31 @@
     <div class="kotak">
         <div class="container line-bottom">
             @if(isset($data['admin']))
-            <div class="col-12 text-16-7px text-black space-text seravek-font">{{ strtoupper($data['user']['name']) }}</div>
-            <div class="col-12 text-16-7px text-black seravek-font space-nice">{{ $data['user']['phone'] }}</div>
+            <div class="col-12 text-16-7px text-black space-text GoogleSans">{{ strtoupper($data['user']['name']) }}</div>
+            <div class="col-12 text-16-7px text-black GoogleSans space-nice">{{ $data['user']['phone'] }}</div>
             @endif
             <div class="row space-bottom">
-                <div class="col-6 text-grey-black text-14-3px seravek-font">{{ $data['outlet']['outlet_name'] }}</div>
-                <div class="col-6 text-right text-medium-grey text-13-3px seravek-light-font">{{ date('d F Y H:i', strtotime($data['transaction_date'])) }}</div>
+                <div class="col-6 text-grey-black text-14-3px GoogleSans">{{ $data['outlet']['outlet_name'] }}</div>
+                <div class="col-6 text-right text-medium-grey text-13-3px GoogleSans">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y', strtotime($data['transaction_date'])) }}</div>
             </div>
             <div class="row space-text">
                 <div class="col-4"></div>
-                <div class="col-8 text-right text-medium-grey-black text-13-3px seravek-font">#{{ $data['transaction_receipt_number'] }}</div>
+                <div class="col-8 text-right text-medium-grey-black text-13-3px GoogleSans">#{{ $data['transaction_receipt_number'] }}</div>
             </div>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-12 text-13-3px text-grey-light seravek-light-font">
+                <div class="col-12 text-13-3px text-grey-light GoogleSans">
                     Transaksi Anda
                     <hr style="margin:10px 0 20px 0">
                 </div>
                 @php $countQty = 0; @endphp
                 @foreach ($data['product_transaction'] as $key => $val)
-                    <div class="col-7 text-13-3px text-black seravek-light-font">{{ $val['product']['product_name'] }}</div>
-                    <div class="col-5 text-right text-13-3px text-black seravek-light-font">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal'])) }}</div>
-                    <div class="col-12 text-grey text-12-7px text-black-grey-light seravek-light-font">{{ $val['transaction_product_qty'] }} x {{ str_replace(',', '.', number_format($val['transaction_product_price'])) }}</div>
+                    <div class="col-7 text-13-3px text-black GoogleSans">{{ $val['product']['product_name'] }}</div>
+                    <div class="col-5 text-right text-13-3px text-black GoogleSans">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal'])) }}</div>
+                    <div class="col-12 text-grey text-12-7px text-black-grey-light GoogleSans">{{ $val['transaction_product_qty'] }} x {{ str_replace(',', '.', number_format($val['transaction_product_price'])) }}</div>
                     <div class="space-bottom col-12">
-                        <div class="space-bottom text-12-7px text-grey-medium-light seravek-italic-font" style="word-break: break-word">
+                        <div class="space-bottom text-12-7px text-grey-medium-light GoogleSans-Italic" style="word-break: break-word">
                             @if (isset($val['transaction_product_note']))
                                 {{ $val['transaction_product_note'] }}
                             @else
@@ -410,8 +403,8 @@
                 @endforeach
 
                 <div class="col-12 text-12-7px text-right"><hr style="margin:0"></div>
-                <div class="col-6 text-13-3px space-bottom space-top-all text-black seravek-font">SubTotal ({{$countQty}} item)</div>
-                <div class="col-6 text-13-3px space-bottom space-top-all text-black text-right seravek-font">{{ str_replace(',', '.', number_format($data['transaction_subtotal'])) }}</div>
+                <div class="col-6 text-13-3px space-bottom space-top-all text-black GoogleSans">Subtotal ({{$countQty}} item)</div>
+                <div class="col-6 text-13-3px space-bottom space-top-all text-black text-right GoogleSans">{{ str_replace(',', '.', number_format($data['transaction_subtotal'])) }}</div>
             </div>
         </div>
     </div>
@@ -419,40 +412,40 @@
     <div class="kotak">
         <div class="container">
             <div class="row">
-                <div class="col-12 text-14-3px space-top seravek-font text-greyish-brown">Detail Pembayaran <hr> </div>
-                <div class="col-6 text-13-3px space-text seravek-light-font text-black">SubTotal ({{$countQty}} item)</div>
-                <div class="col-6 text-13-3px text-right space-text seravek-light-font text-grey-black">{{ number_format($data['transaction_subtotal'], 0, ',', '.') }}</div>
+                <div class="col-12 text-14-3px space-top GoogleSans text-red">Detail Pembayaran <hr> </div>
+                <div class="col-6 text-13-3px space-text GoogleSans text-black">Subtotal ({{$countQty}} item)</div>
+                <div class="col-6 text-13-3px text-right space-text GoogleSans text-grey-black">{{ number_format($data['transaction_subtotal'], 0, ',', '.') }}</div>
 
                 @if($data['transaction_tax'] > 0)
-                <div class="col-6 text-13-3px space-text seravek-light-font text-black">Tax</div>
-                <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ number_format($data['transaction_tax'], 0, ',', '.') }}</div>
+                <div class="col-6 text-13-3px space-text GoogleSans text-black">Tax</div>
+                <div class="col-6 text-13-3px text-right GoogleSans text-grey-black">{{ number_format($data['transaction_tax'], 0, ',', '.') }}</div>
                 @endif
 
                 @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
-                <div class="col-6 text-13-3px space-text seravek-light-font text-black">Ongkos Kirim</div>
+                <div class="col-6 text-13-3px space-text GoogleSans text-black">Ongkos Kirim</div>
                     @if($data['transaction_is_free'] == '1')
-                        <div class="col-6 text-13-3px text-right seravek-font text-white"><div class="label-free">FREE</div></div>
+                        <div class="col-6 text-13-3px text-right GoogleSans text-white"><div class="label-free">FREE</div></div>
                     @else
                         @if($data['transaction_shipment_go_send'] != $data['transaction_shipment'])
-                            <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black text-strikethrough">{{ number_format($data['transaction_shipment_go_send'], 0, ',', '.') }}</div>
-                            <div class="col-12 space-text text-13-3px text-right seravek-light-font text-greyish-brown">{{ number_format($data['transaction_shipment'], 0, ',', '.') }}</div>
+                            <div class="col-6 text-13-3px text-right GoogleSans text-grey-black text-strikethrough">{{ number_format($data['transaction_shipment_go_send'], 0, ',', '.') }}</div>
+                            <div class="col-12 space-text text-13-3px text-right GoogleSans text-red">{{ number_format($data['transaction_shipment'], 0, ',', '.') }}</div>
                         @else
-                            <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">{{ number_format($data['transaction_shipment'], 0, ',', '.') }}</div>
+                            <div class="col-6 text-13-3px text-right GoogleSans text-grey-black">{{ number_format($data['transaction_shipment'], 0, ',', '.') }}</div>
                         @endif
                     @endif
                 @endif
 
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text seravek-light-font">Kenangan Points</div>
-                <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ number_format(abs($data['balance']), 0, ',', '.') }}</div>
+                <div class="col-6 text-13-3px space-text GoogleSans">Kenangan Points</div>
+                <div class="col-6 text-13-3px text-right GoogleSans text-red">- {{ number_format(abs($data['balance']), 0, ',', '.') }}</div>
                 @endif
 
                 <div class="col-12 text-12-7px text-right"><hr></div>
-                <div class="col-6 text-13-3px seravek-font text-black ">Total Pembayaran</div>
+                <div class="col-6 text-13-3px GoogleSans text-black ">Total Pembayaran</div>
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px text-right seravek-font text-black">{{ number_format(($data['transaction_grandtotal'] - $data['balance']), 0, ',', '.') }}</div>
+                <div class="col-6 text-13-3px text-right GoogleSans text-black">{{ number_format(($data['transaction_grandtotal'] - $data['balance']), 0, ',', '.') }}</div>
                 @else
-                <div class="col-6 text-13-3px text-right seravek-font text-black">{{ number_format($data['transaction_grandtotal'], 0, ',', '.') }}</div>
+                <div class="col-6 text-13-3px text-right GoogleSans text-black">{{ number_format($data['transaction_grandtotal'], 0, ',', '.') }}</div>
                 @endif
             </div>
         </div>
@@ -462,20 +455,20 @@
         <div class="kotak">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Metode Pembayaran <hr> </div>
+                    <div class="col-12 text-14-3px space-top text-red GoogleSans">Metode Pembayaran <hr> </div>
                         @if(count($data['data_payment']) > 1)
                             @foreach($data['data_payment'] as $pay)
                                 @if(isset($pay['type']) && $pay['type'] == 'Midtrans')
                                     @if(isset($pay['payment_type']))
-                                    <div class="col-6 text-13-3px seravek-font text-black">
+                                    <div class="col-6 text-13-3px GoogleSans text-black">
                                         {{ ucwords(str_replace('_', ' ', $pay['payment_type'])) }}
                                     </div>
-                                    <div class="col-6 text-13-3px text-black text-right seravek-light-font">
+                                    <div class="col-6 text-13-3px text-black text-right GoogleSans">
                                     </div>
                                     @endif
 
                                     @if(isset($pay['bank']))
-                                    <div class="col-6 text-black text-12-7px seravek-light-font">
+                                    <div class="col-6 text-black text-12-7px GoogleSans">
                                         {{ ucwords(str_replace('_', ' ', $pay['bank'])) }}
                                     </div>
                                     @endif
@@ -484,20 +477,19 @@
                                     <div class="col-6 text-black text-13-3px">
                                         Online Payment
                                     </div>
-                                    <div class="col-6 text-13-3px text-black text-right seravek-light-font">
+                                    <div class="col-6 text-13-3px text-black text-right GoogleSans">
                                     </div>
                                     @endif
                                 @elseif(isset($pay['type']) && $pay['type'] == 'Ovo')
-                                    <div class="col-6 text-13-3px seravek-font text-black">
+                                    <div class="col-6 text-13-3px GoogleSans text-black">
                                         Ovo
                                     </div>
-                                    <div class="col-6 text-13-3px text-black text-right seravek-light-font">
+                                    <div class="col-6 text-13-3px text-black text-right GoogleSans">
                                     </div>
-                                @endif
                                 @endif
                             @endforeach
                         @else
-                        <div class="col-6 text-13-3px seravek-font text-black">
+                        <div class="col-6 text-13-3px GoogleSans text-black">
                             @if ($data['trasaction_payment_type'] == 'Balance')
                                 Kenangan Points
                             @elseif ($data['trasaction_payment_type'] == 'Midtrans')
@@ -518,7 +510,7 @@
                                 @endif
                             @endif
                         </div>
-                        <div class="col-6 text-13-3px text-right text-black seravek-light-font">
+                        <div class="col-6 text-13-3px text-right text-black GoogleSans">
                         @if ($data['trasaction_payment_type'] == 'Offline')
                             SELESAI
                         @else
@@ -528,15 +520,15 @@
                         @endif
 
                     @if (isset($data['payment']['bank']))
-                        <div class="col-6 text-black text-12-7px seravek-light-font">{{ $data['payment']['bank'] }}</div>
+                        <div class="col-6 text-black text-12-7px GoogleSans">{{ $data['payment']['bank'] }}</div>
                     @endif
 
                     @if (isset($data['payment']['payment_method']))
-                        <div class="col-6 text-black text-12-7px seravek-light-font">{{ $data['payment']['payment_method'] }}</div>
+                        <div class="col-6 text-black text-12-7px GoogleSans">{{ $data['payment']['payment_method'] }}</div>
                     @endif
 
                     @if(isset($data['data_payment'][0]['bank']))
-                    <div class="col-6 text-black text-12-7px seravek-light-font">
+                    <div class="col-6 text-black text-12-7px GoogleSans">
                         {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['bank'])) }}
                     </div>
                     @endif

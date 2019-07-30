@@ -206,8 +206,8 @@
                 <div class="row">
                     <div class="col-6 text-14px text-grey-black">Total Pembayaran</div>
                     <div class="col-6 text-right text-14px text-grey-black">
-                     @if(isset($data['payment']['gross_amount']))
-                        {{ str_replace(',', '.', number_format($data['payment']['gross_amount'])) }}
+                     @if(!empty($data['voucher_price_cash']))
+                        {{ str_replace(',', '.', number_format($data['voucher_price_cash']-$data['balance_nominal'])) }}
                     @else
                         {{ str_replace(',', '.', number_format($data['balance_nominal'])) }}
                     @endif
