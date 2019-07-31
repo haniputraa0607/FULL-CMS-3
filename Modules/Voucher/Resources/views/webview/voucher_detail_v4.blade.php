@@ -203,19 +203,29 @@
                 @endif
 
 				<div class="outlet-wrapper">
-					<div class="subtitle">Dapat digunakan di outlet:</div>
-					<div class="outlet">
-						@foreach($voucher['deal_voucher']['deal']['outlet_by_city'] as $key => $outlet_city)
-							@if(isset($outlet_city['city_name']))
-							<div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
-							<ul class="nav">
-								@foreach($outlet_city['outlet'] as $key => $outlet)
-								<li>- {{ $outlet['outlet_name'] }}</li>
+                    @if ($voucher['deal_voucher']['deal']['label_outlet'] == 'Some' || $voucher['redeemed_at'] != null)
+						<div class="subtitle">Dapat digunakan di outlet:</div>
+						<div class="outlet">
+							@if($voucher['redeemed_at'] != null)
+								@if(isset($voucher['outlet_name']))
+								{{$voucher['outlet_name']}}
+								@endif
+							@else
+								@foreach($voucher['deal_voucher']['deal']['outlet_by_city'] as $key => $outlet_city)
+								@if(isset($outlet_city['city_name']))
+								<div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
+								<ul class="nav">
+									@foreach($outlet_city['outlet'] as $key => $outlet)
+									<li>- {{ $outlet['outlet_name'] }}</li>
+									@endforeach
+								</ul>
+								@endif
 								@endforeach
-							</ul>
 							@endif
-						@endforeach
-					</div>
+						</div>
+					@else
+						<div class="subtitle">TERSEDIA DI SEMUA OUTLET</div>
+					@endif
 				</div>
 
                 @if($voucher['redeemed_at'] == null)
