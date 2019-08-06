@@ -30,7 +30,7 @@ class CampaignController extends Controller
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-list'
 				];
-				
+
 		$post = $request->except(['_token']);
 		// print_r($post);exit;
 		if(!empty($post)){
@@ -54,22 +54,22 @@ class CampaignController extends Controller
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
 			$data['count'] = $action['count'];
-			$data['post'] = $post;
-			return view('campaign::list', $data);
 		} else{
-			return redirect('campaign/create')->withErrors($action['messages']);
+			$data['result'] =[];
 		}
+		$data['post'] = $post;
+		return view('campaign::list', $data);
     }
-	
+
 	public function emailOutboxDetail(Request $request, $id = null){
 		$data = [ 'title'             => 'Campaign Email Outbox Detail',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-email-outbox'
 				];
-				
+
 		$post = $request->except(['_token']);
 		$action = MyHelper::post('campaign/email/outbox/detail', ['id_campaign_email_sent' => $id]);
-		
+
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
 			$data['post'] = $post;
@@ -79,13 +79,13 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function emailOutbox(Request $request, $page = null){
 		$data = [ 'title'             => 'Campaign Email Outbox List',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-email-outbox'
 				];
-				
+
 		$post = $request->except(['_token']);
 		// print_r($post);exit;
 		if(!empty($post)){
@@ -115,16 +115,16 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function emailQueueDetail(Request $request, $id = null){
 		$data = [ 'title'             => 'Campaign Email Queue Detail',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-email-queue'
 				];
-				
+
 		$post = $request->except(['_token']);
 		$action = MyHelper::post('campaign/email/queue/detail', ['id_campaign_email_queue' => $id]);
-		
+
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
 			$data['post'] = $post;
@@ -134,13 +134,13 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function emailQueue(Request $request, $page = null){
 		$data = [ 'title'             => 'Campaign Email Queue List',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-email-queue'
 				];
-				
+
 		$post = $request->except(['_token']);
 		// print_r($post);exit;
 		if(!empty($post)){
@@ -170,16 +170,16 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function smsOutboxDetail(Request $request, $id = null){
 		$data = [ 'title'             => 'Campaign SMS Outbox Detail',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-sms-outbox'
 				];
-				
+
 		$post = $request->except(['_token']);
 		$action = MyHelper::post('campaign/sms/outbox/detail', ['id_campaign_sms_sent' => $id]);
-		
+
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
 			$data['post'] = $post;
@@ -189,13 +189,13 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function smsOutbox(Request $request, $page = null){
 		$data = [ 'title'             => 'Campaign SMS Outbox List',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-sms-outbox'
 				];
-				
+
 		$post = $request->except(['_token']);
 		// print_r($post);exit;
 		if(!empty($post)){
@@ -225,16 +225,16 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function smsQueueDetail(Request $request, $id = null){
 		$data = [ 'title'             => 'Campaign SMS Queue Detail',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-sms-queue'
 				];
-				
+
 		$post = $request->except(['_token']);
 		$action = MyHelper::post('campaign/sms/queue/detail', ['id_campaign_sms_queue' => $id]);
-		
+
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
 			$data['post'] = $post;
@@ -244,13 +244,13 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function smsQueue(Request $request, $page = null){
 		$data = [ 'title'             => 'Campaign SMS Queue List',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-sms-queue'
 				];
-				
+
 		$post = $request->except(['_token']);
 		// print_r($post);exit;
 		if(!empty($post)){
@@ -280,13 +280,13 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function pushOutboxDetail(Request $request, $id = null){
 		$data = [ 'title'             => 'Campaign Push Notification Outbox Detail',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-push-outbox'
 				];
-				
+
 		$post = $request->except(['_token']);
 		$action = MyHelper::post('campaign/push/outbox/detail', ['id_campaign_push_sent' => $id]);
 		// print_r($action);exit;
@@ -299,13 +299,13 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function pushOutbox(Request $request, $page = null){
 		$data = [ 'title'             => 'Campaign Push Notification Outbox List',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-push-outbox'
 				];
-				
+
 		$post = $request->except(['_token']);
 		// print_r($post);exit;
 		if(!empty($post)){
@@ -335,16 +335,16 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function pushQueueDetail(Request $request, $id = null){
 		$data = [ 'title'             => 'Campaign Push Notification Queue Detail',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-push-queue'
 				];
-				
+
 		$post = $request->except(['_token']);
 		$action = MyHelper::post('campaign/push/queue/detail', ['id_campaign_push_queue' => $id]);
-		
+
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
 			$data['post'] = $post;
@@ -354,13 +354,13 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function pushQueue(Request $request, $page = null){
 		$data = [ 'title'             => 'Campaign Push Notification Queue List',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-push-queue'
 				];
-				
+
 		$post = $request->except(['_token']);
 		// print_r($post);exit;
 		if(!empty($post)){
@@ -390,13 +390,13 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
 	}
-	
+
 	public function whatsappList(Request $request, $page = null){
 		$data = [ 'title'             => 'Campaign Whatsapp Outbox List',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-whatsapp-outbox'
 				];
-				
+
 		$post = $request->except(['_token']);
 		// print_r($post);exit;
 		if(!empty($post)){
@@ -421,7 +421,7 @@ class CampaignController extends Controller
 		}else{
 			$action = MyHelper::post('campaign/whatsapp/queue/list', $post);
 			$data['title'] = 'Campaign Whatsapp Queue List';
-			$data['submenu_active'] = 'campaign-whatsapp-queue'; 
+			$data['submenu_active'] = 'campaign-whatsapp-queue';
 			$data['type'] = 'queue';
 		}
 		// print_r($action);exit;
@@ -434,13 +434,13 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
     }
-	
+
 	public function whatsappDetail(Request $request, $id = null){
 		$data = [ 'title'             => 'Campaign Whatsapp Outbox Detail',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-whatsapp-outbox'
 				];
-				
+
 		$post = $request->except(['_token']);
 		if(strpos(url()->current(), 'outbox') !== false){
 			$action = MyHelper::post('campaign/whatsapp/outbox/list', ['id_campaign_whatsapp_sent' => $id]);
@@ -451,7 +451,7 @@ class CampaignController extends Controller
 			$data['submenu_active'] = 'campaign-whatsapp-queue';
 			$data['type'] = 'queue';
 		}
-		
+
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
 			$data['post'] = $post;
@@ -461,7 +461,7 @@ class CampaignController extends Controller
 			return redirect('campaign')->withErrors($action['messages']);
 		}
 	}
-	
+
 	public function create(){
 		$data = [ 'title'             => 'Campaign',
 				  'menu_active'       => 'campaign',
@@ -470,22 +470,22 @@ class CampaignController extends Controller
 
 		$getCity = MyHelper::get('city/list');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
-		
+
 		$getProvince = MyHelper::get('province/list');
 		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
-        
+
 		$getCourier = MyHelper::get('courier/list');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
-		
+
 		$getOutlet = MyHelper::get('outlet/list');
 		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
-		
+
 		$getProduct = MyHelper::get('product/list');
 		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
-		
+
 		$getTag = MyHelper::get('product/tag/list');
 		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
-		
+
 		$getMembership = MyHelper::post('membership/list', []);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
@@ -494,10 +494,10 @@ class CampaignController extends Controller
 		}else{
 			$data['api_key_whatsapp'] = null;
 		}
-		
+
 		return view('campaign::create-step-1', $data);
     }
-	
+
 	public function createPost(Request $request){
 		$post = $request->except('_token');
 		// print_r($post);exit;
@@ -509,7 +509,7 @@ class CampaignController extends Controller
 			return back()->withErrors($action['messages']);
 		}
 	}
-	
+
 	public function campaignStep1($id_campaign){
 		$action = MyHelper::post('campaign/step2', ['id_campaign' => $id_campaign]);
 		// dd($action);exit;
@@ -518,30 +518,30 @@ class CampaignController extends Controller
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-create'
 				];
-			
+
 			$data['result'] = $action['result'];
-			
+
 			$getCity = MyHelper::get('city/list');
 			if(isset($getCity['status']) && $getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
-			
+
 			$getProvince = MyHelper::get('province/list');
 			if(isset($getProvince['status']) && $getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
-			
+
 			$getCourier = MyHelper::get('courier/list');
 			if(isset($getCourier['status']) && $getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
-			
+
 			$getOutlet = MyHelper::get('outlet/list');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
-			
+
 			$getProduct = MyHelper::get('product/list');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
-			
+
 			$getTag = MyHelper::get('product/tag/list');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
 			$getMembership = MyHelper::post('membership/list',[]);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
-			
+
 			$getApiKey = MyHelper::get('setting/whatsapp');
 			if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
 				$data['api_key_whatsapp'] = $getApiKey['result']['value'];
@@ -565,7 +565,7 @@ class CampaignController extends Controller
 			return back()->withErrors($action['messages']);
 		}
 	}
-	
+
     public function campaignStep2($id_campaign){
 		$action = MyHelper::post('campaign/step2', ['id_campaign' => $id_campaign]);
 		// print_r($action);exit;
@@ -575,18 +575,18 @@ class CampaignController extends Controller
 				  'submenu_active'    => 'campaign-create'
 				];
 			$test = MyHelper::get('autocrm/textreplace');
-			
+
 			$data['result'] = $action['result'];
 			if($test['status'] == 'success'){
 				$data['textreplaces'] = $test['result'];
 			}
-			
+
 			$getOutlet = MyHelper::get('outlet/list');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
-			
+
 			$getProduct = MyHelper::get('product/list');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
-			
+
 			$getTag = MyHelper::get('product/tag/list');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
@@ -598,31 +598,31 @@ class CampaignController extends Controller
 			return back()->withErrors($action['messages']);
 		}
     }
-	
-	
+
+
 	public function campaignStep2Post(Request $request, $id_campaign){
 		$post = $request->except(['_token','sample_1_length','files']);
 		$post['id_campaign'] = $id_campaign;
-		
+
 		if(isset($post['campaign_email_receipient']))
 		$post['campaign_email_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_email_receipient']));
-	
+
 		if(isset($post['campaign_sms_receipient']))
 		$post['campaign_sms_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_sms_receipient']));
-	
+
 		if(isset($post['campaign_push_receipient']))
 		$post['campaign_push_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_push_receipient']));
-	
+
 		if(isset($post['campaign_inbox_receipient']))
 		$post['campaign_inbox_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_inbox_receipient']));
 
 		if(isset($post['campaign_whatsapp_receipient']))
 		$post['campaign_whatsapp_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_whatsapp_receipient']));
-		
+
 		if (isset($post['campaign_push_image'])) {
 			$post['campaign_push_image'] = MyHelper::encodeImage($post['campaign_push_image']);
 		}
-		
+
 		if (isset($post['campaign_whatsapp_content'])) {
 			foreach($post['campaign_whatsapp_content'] as $key => $content){
 				if($content['content'] || isset($content['content_file']) && $content['content_file']){
@@ -640,14 +640,14 @@ class CampaignController extends Controller
 		}
 		$action = MyHelper::post('campaign/update', $post);
 		// print_r($action);exit;
-		
+
 		if($action['status'] == 'success'){
 			return redirect('campaign/step3/'.$id_campaign);
 		} else{
 			return back()->withErrors($action['messages']);
 		}
     }
-	
+
 	public function campaignStep3($id_campaign){
 		$action = MyHelper::post('campaign/step2', ['id_campaign' => $id_campaign]);
 		// print_r($action);exit;
@@ -657,36 +657,36 @@ class CampaignController extends Controller
 				  'submenu_active'    => 'campaign-create'
 				];
 			$test = MyHelper::get('autocrm/textreplace');
-			
+
 			$data['result'] = $action['result'];
 			if($test['status'] == 'success'){
 				$data['textreplaces'] = $test['result'];
 			}
-			
+
 			$setting = MyHelper::get('setting/email?is_log=0');
-			
+
 			if($setting['status'] == 'success'){
 				$data['setting'] = $setting['result'];
 			}
-			
+
 			$getOutlet = MyHelper::get('outlet/list');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
-			
+
 			$getProduct = MyHelper::get('product/list');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
-			
+
 			$getTag = MyHelper::get('product/tag/list');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
 			$getMembership = MyHelper::post('membership/list',[]);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
-		
+
 			return view('campaign::create-step-3', $data);
 		} else{
 			return back()->withErrors($action['messages']);
 		}
     }
-	
+
 	public function campaignStep3Post(Request $request, $id_campaign){
 		$action = MyHelper::post('campaign/send', ['id_campaign' => $id_campaign]);
 		if($action['status'] == 'success'){

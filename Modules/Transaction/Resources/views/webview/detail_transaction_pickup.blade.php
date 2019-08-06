@@ -203,10 +203,6 @@
         }
 
         .text-red{
-            color: #6c5648;
-        }
-
-        .text-red{
             color: #990003;
         }
 

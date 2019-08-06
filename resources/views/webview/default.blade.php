@@ -11,11 +11,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <style type="text/css">
-        @font-face {
-            font-family: 'Seravek';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf?")}}') format('truetype');
+         @font-face {
+                font-family: "GoogleSans";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('fonts/GoogleSans-Regular.ttf') }}');
+        }
+ 		.GoogleSans{
+            font-family: "GoogleSans";
         }
 
     	.kotak1 {
@@ -76,8 +79,8 @@
 		    padding-bottom: 10px;
     	}
 
-    	.text-greyish-brown {
-    		color: #6c5648;
+    	.text-red {
+    		color: #990003;
     	}
 
     	.text-grey {
@@ -132,26 +135,6 @@
     		color: rgba(4,154,74,1);
     	}
 
-		.seravek-font {
-            font-family: 'Seravek';
-        }
-
-        .seravek-light-font {
-            font-family: 'Seravek Light';
-        }
-
-        .seravek-medium-font {
-            font-family: 'Seravek Medium';
-        }
-
-        .seravek-italic-font {
-            font-family: 'Seravek Italic';
-        }
-
-        .roboto-regular-font {
-            font-family: 'Roboto Regular';
-        }
-
     	.text-16-7px {
     		font-size: 16.7px;
     	}
@@ -198,19 +181,27 @@
       }
 
     </style>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+        $(document).ready(function(){
+            var height = $('#row').height();
+            $('#row').css('margin-top', 'calc((100vh - '+height+'px)/2)')
+			console.log($('#row').css('margin-top'))
+		})
+	</script>
 
   </head>
   <body>
     {{ csrf_field() }}
   	<div class="kotak1" style="height:100vh">
-   		<div class="row" style="margin-top: -20px;">
-   			<div class="space-bottom" style="margin: auto; margin-top:30%">
-			   <img class="img-responsive" style="width: 80px;" src="{{ env('AWS_ASSET_URL') }}{{ ('img/webview/heart-oops.png') }}">
+   		<div class="row" id="row">
+   			<div class="space-bottom" style="margin: auto;">
+			   <img class="img-responsive" style="width: 80px;" src="{{ env('AWS_ASSET_URL') }}{{ ('img/webview/gif-empty.gif') }}">
 			</div>
-			<div class="col-12 text-23-3px text-greyish-brown seravek-font space-sch" style="margin: auto; text-align:center">
+			<div class="col-12 text-23-3px text-red GoogleSans space-sch" style="margin: auto; text-align:center">
 			Oops!
 			</div>
-			<div class="col-12 text-16-7px text-grey-light seravek-font" style="margin: auto; text-align:center">
+			<div class="col-12 text-16-7px text-grey-light GoogleSans" style="margin: auto; text-align:center">
 			Please refresh this page and try again
 			</div>
 
