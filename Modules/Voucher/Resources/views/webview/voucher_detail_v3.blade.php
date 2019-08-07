@@ -162,7 +162,7 @@
 
 				<div class="title-wrapper clearfix">
 					<div class="col-left voucher font-red">
-					   Kedaluwarsa {{ date('d M Y H:i') }}
+					   Kedaluwarsa {{ date('d M Y H:i') }} Kedaluwarsa {{ date('d M Y H:i', strtotime($voucher['voucher_expired_at'])) }}
 					</div>
 				</div>
 				<div class="title-wrapper clearfix GoogleSans-Medium">
