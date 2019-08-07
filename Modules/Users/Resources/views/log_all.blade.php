@@ -8,10 +8,10 @@
 @section('page-style')
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />  
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
@@ -78,13 +78,13 @@
                     @if($profile['level'] == 'Super Admin')
                         <span class="sale-num font-red sbold">Super Admin</span>
                     @endif
-                    @if($profile['level'] == 'Admin') 
+                    @if($profile['level'] == 'Admin')
                         <span class="sale-num font-red sbold">Admin</span>
                     @endif
-                    @if($profile['level'] == 'Customer') 
+                    @if($profile['level'] == 'Customer')
                         <span class="sale-num font-blue sbold">Customer</span>
                     @endif
-                    @if($profile['level'] == 'Admin Outlet') 
+                    @if($profile['level'] == 'Admin Outlet')
                         <span class="sale-num font-blue sbold">Admin Outlet</span>
                     @endif
                 </div>
@@ -101,8 +101,8 @@
                                 @if($profile['gender'] == 'Male')<i class="fa fa-male"></i> {{$profile['gender']}} </li>@else<i class="fa fa-female"></i> {{$profile['gender']}} </li>
                                 @endif
                             <li class="list-group-item" style="padding: 5px !important;" title="User City & Province">
-                                <i class="fa fa-map"></i> 
-                                @if(isset($profile['city']['city_name'])){{$profile['city']['city_name']}}@endif 
+                                <i class="fa fa-map"></i>
+                                @if(isset($profile['city']['city_name'])){{$profile['city']['city_name']}}@endif
                                 @if(isset($profile['city']['province']['province_name'])) ,{{$profile['city']['province']['province_name']}} @endif
                             </li>
                             <li class="list-group-item" style="padding: 5px !important;" title="User Birthday">
@@ -115,9 +115,9 @@
                                 <i class="icon-badge"></i> @if(isset($profile['user_membership']['membership_name'])){{$profile['user_membership']['membership_name']}} @endif</li>
                             <li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
                                 <i class="fa fa-heart"></i> {{$profile['relationship']}} </li>
-                            <li class="list-group-item" style="padding: 5px !important;" title="Total Kenangan Points Obtained By The User">
+                            <li class="list-group-item" style="padding: 5px !important;" title="Total {{env('POINT_NAME', 'Points')}} Obtained By The User">
                                 <i class="fa fa-gift"></i> {{number_format($profile['balance_acquisition'], 0, ',', '.')}} </li>
-                            <li class="list-group-item" style="padding: 5px !important;" title="Remaining User Kenangan Points">
+                            <li class="list-group-item" style="padding: 5px !important;" title="Remaining User {{env('POINT_NAME', 'Points')}}">
                                 <i class="fa fa-star"></i> {{number_format($profile['balance'], 0, ',', '.')}} </li>
                         </div>
                     </ul>
@@ -129,7 +129,7 @@
     <form role="form" action="{{ url('user/log/'.$phone) }}" method="post">
         @include('users::log_all_filter')
     </form>
-    
+
     @if (!empty($search))
         <div class="alert alert-block alert-info fade in">
             <button type="button" class="close" data-dismiss="alert"></button>
@@ -203,7 +203,7 @@
                             @endif
                         </tbody>
                     </table>
-                    
+
                     @if ($mobile_page)
                       {{ $mobile_page->links() }}
                     @endif
@@ -259,7 +259,7 @@
                     @endif
                 </div>
             </div>
-                   
+
         </div>
     </div>
 

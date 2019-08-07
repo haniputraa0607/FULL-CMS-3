@@ -9,7 +9,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
-    
+
     <!-- SLICK -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
     <!-- Add the slick-theme.css if you want default styling -->
@@ -20,14 +20,14 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
         }
 
         .kotak {
@@ -82,7 +82,7 @@
             border-radius: 10px;
             padding: 8px;
             transition: all 0.2s ease 0s;
-           
+
         }
 
         .img-status{
@@ -123,16 +123,16 @@
         }
 
         .progress {
-            background-image: linear-gradient(to right, #fff, rgba(108, 86, 72, 0.2)); 
+            background-image: linear-gradient(to right, #fff, rgba(108, 86, 72, 0.2));
             /* width: {{100-$data['progress_active']}}%; */
             width: calc({{100-$data['progress_active']}}% + 15px);
             height: 13.3px;
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
         }
-        
+
         .progress-active {
-            background: #6c5648; 
+            background: #6c5648;
             width: {{$data['progress_active']}}%;
             height: 13.3px;
             border-top-left-radius: 10px;
@@ -402,10 +402,10 @@
   </head>
   <body>
 
-  @php 
+  @php
     $text = "rupiah";
     if($data['user_membership']['membership_type'] == 'balance'){
-        $text = "Kenangan Points";
+        $text = "{{env('POINT_NAME', 'Points')}}";
     }
   @endphp
 
@@ -413,46 +413,46 @@
         <div class="container">
             <div class="row text-center" id="div-now">
                 <div class="col-12 text-15px text-greyish-brown seravek-font space-top-all" id="status">
-                    @if(isset($data['user_membership']['membership_name'])) 
+                    @if(isset($data['user_membership']['membership_name']))
                         Sekarang :
                     @else
                         Terkunci :
                     @endif
                 </div>
                 <div class="col-12 text-16-7px text-greyish-brown seravek-font bold" id="status_name">
-                    @if(isset($data['user_membership']['membership_name'])) 
-                        {{ucfirst($data['user_membership']['membership_name'])}} 
+                    @if(isset($data['user_membership']['membership_name']))
+                        {{ucfirst($data['user_membership']['membership_name'])}}
                     @else
                         @if(isset($data['all_membership'][0]['membership_name']))
-                            {{ucfirst($data['all_membership'][0]['membership_name'])}} 
+                            {{ucfirst($data['all_membership'][0]['membership_name'])}}
                         @endif
                     @endif
                 </div>
             </div>
-            
+
             <div class="list-status space-top-all space-bottom" style="display:none">
                 @php $now = false; $listStatus = []; $keyStatusNow = 0; @endphp
-                
-                @if(!isset($data['user_membership']['id_log_membership'])) 
-                    @php 
+
+                @if(!isset($data['user_membership']['id_log_membership']))
+                    @php
                         $now = true;
-                        $data['all_membership'][0]['type2'] = "Sekarang"; 
-                    @endphp 
+                        $data['all_membership'][0]['type2'] = "Sekarang";
+                    @endphp
                 @endif
-                
+
                 @foreach($data['all_membership'] as $key => $membership)
                     @if(isset($data['user_membership']['membership_name']) && $membership['membership_name'] == $data['user_membership']['membership_name'])
                         <div class="kotak-status">
                             <img class="img-responsive img-status" src="{{ $membership['membership_image'] }}">
                         </div>
-                        @php 
+                        @php
                             $now = true;
                             $data['all_membership'][$key]['type'] = "Sekarang";
                             $keyStatusNow = $key;
                         @endphp
                     @else
                         @if($now == false)
-                            <div class="kotak-lock" style="background: url('{{$membership['membership_image']}}'); 
+                            <div class="kotak-lock" style="background: url('{{$membership['membership_image']}}');
                                                             background-color: #c1c0c0;
                                                             background-repeat: no-repeat;
                                                             -ms-background-size: 31.7px 34.2px, cover;
@@ -462,11 +462,11 @@
                                                             background-size: 31.7px 34.2px, cover;
                                                             background-position: center;">
                             </div>
-                            @php 
+                            @php
                                 $data['all_membership'][$key]['type'] = "Terbuka";
                             @endphp
                         @else
-                            <div class="kotak-lock" style="background: url('{{$membership['membership_image']}}'); 
+                            <div class="kotak-lock" style="background: url('{{$membership['membership_image']}}');
                                                             background-color: #c1c0c0;
                                                             background-repeat: no-repeat;
                                                             -ms-background-size: 31.7px 34.2px, cover;
@@ -477,14 +477,14 @@
                                                             background-position: center;">
                                 <img class="img-responsive img-lock" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/lock.png') }}">
                             </div>
-                            @php 
+                            @php
                                 $data['all_membership'][$key]['type'] = "Terkunci";
                             @endphp
                         @endif
                     @endif
                     @php  $data['all_membership'][$key]['membership_name'] = ucfirst($data['all_membership'][$key]['membership_name']); @endphp
                 @endforeach
-                
+
             </div>
         </div>
     </div>
@@ -514,7 +514,7 @@
                     <div class="text-14-3px progress-active"></div>
                     <div class="progress-now"></div>
                     <div class="text-14-3px progress"></div>
-                    
+
                     <!--<img class="img-responsive img-progress" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/icon-heart2.png') }}" style="width:24.7px">-->
                     <img class="img-responsive img-progress" src="{{ $data['all_membership'][$keyStatusNow+1]['membership_image'] }}" style="width:32px; height:32px;vertical-align:top">
                 </div>
@@ -568,7 +568,7 @@
                         <img class="img-responsive" style="width: 23.3px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/cash.png') }}">
                     </div>
                     <div class="text-16-7px space-top space-bottom seravek-light-font text-black display-inline" id="status_benefit">
-                        Cashback sebanyak {{$data['all_membership'][$keyStatusNow]['benefit_cashback_multiplier']}}% 
+                        Cashback sebanyak {{$data['all_membership'][$keyStatusNow]['benefit_cashback_multiplier']}}%
                         (maximum {{number_format($data['all_membership'][$keyStatusNow]['cashback_maximum'], 0, ',', '.')}})
                     </div>
                 </div>
@@ -688,7 +688,7 @@
 
         // credit: http://www.javascriptkit.com/javatutors/touchevents2.shtml
         function swipedetect(el, callback){
-        
+
             var touchsurface = el,
             swipedir,
             startX,
@@ -744,7 +744,7 @@
         swipedetect(el, function(swipedir){
         // swipedir contains either "none", "left", "right", "top", or "down"
         //   el.innerHTML = 'Swiped <span style="color:yellow;margin: 0 5px;">' + swipedir +'</span>';
-            
+
             console.log(swipedir)
             if(swipedir == 'left'){
                 if(slideNow < {{count($data['all_membership'])}}){
@@ -758,7 +758,7 @@
                 }
             }
         });
-        
+
         <?php
             print str_pad('',4096)."\n";
             ob_flush();

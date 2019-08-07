@@ -26,7 +26,7 @@ class OutletController extends Controller
 
         // outlet
         $outlet = MyHelper::get('outlet/list');
-        
+
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
         }
@@ -36,8 +36,13 @@ class OutletController extends Controller
 
         return view('outlet::list', $data);
     }
-	
+
 	public function indexAjax(Request $request) {
+        $post = $request->except('_token');
+
+        if($post){
+
+        }
         $outlet = MyHelper::get('outlet/list?log_save=0');
 
 		if (isset($outlet['status']) && $outlet['status'] == "success") {
@@ -49,6 +54,23 @@ class OutletController extends Controller
 		return response()->json($data);
     }
 
+    public function indexAjaxFilter(Request $request, $type) {
+        $post['latitude'] = 0;
+        $post['longitude'] = 0;
+        if($type == 'Order'){
+            $post['type'] = 'transaction';
+        }
+        $outlet = MyHelper::post('outlet/filter?log_save=0', $post);
+        if (isset($outlet['result'])) {
+            $data = $outlet['result'];
+        }
+        else {
+            $data = [];
+        }
+        return response()->json($data);
+    }
+
+
     /**
      * create
      */
@@ -56,17 +78,17 @@ class OutletController extends Controller
         $post = $request->except('_token');
 
         if (empty($post)) {
-            
+
             $data = [
                 'title'          => 'Outlet',
                 'sub_title'      => 'New Outlet',
                 'menu_active'    => 'outlet',
                 'submenu_active' => 'outlet-new',
             ];
-            
+
             // province
             $data['province'] = $this->getPropinsi();
-        
+
             return view('outlet::create', $data);
         }
         else {
@@ -86,7 +108,7 @@ class OutletController extends Controller
                     'min'       => 'PIN must 6 digit',
                     'max'       => 'PIN must 6 digit'
                 ]);
-        
+
                 if ($validator->fails()) {
                     return back()
                             ->withErrors($validator)
@@ -96,7 +118,7 @@ class OutletController extends Controller
 
             if(!empty($post['outlet_open_hours'])) $post['outlet_open_hours'] = date('H:i:s', strtotime($post['outlet_open_hours']));
             if(!empty($post['outlet_open_hours'])) $post['outlet_close_hours'] = date('H:i:s', strtotime($post['outlet_close_hours']));
-            
+
             $post = array_filter($post);
 
             $save = MyHelper::post('outlet/create', $post);
@@ -112,14 +134,14 @@ class OutletController extends Controller
                    if (isset($save['errors'])) {
                        return back()->withErrors($save['errors'])->withInput();
                    }
-   
+
                    if (isset($save['status']) && $save['status'] == "fail") {
                        return back()->withErrors($save['messages'])->withInput();
                    }
-                   
+
                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
                }
-           
+
         }
     }
 
@@ -143,11 +165,20 @@ class OutletController extends Controller
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
+                $product = MyHelper::get('product/list/price/'.$outlet['result'][0]['id_outlet']);
+
+                if (isset($product['status']) && $product['status'] == "success") {
+                    $data['product']    = $product['result'];
+                }
+                else {
+                    $data['product'] = [];
+                }
             }
             else {
                 $e = ['e' => 'Data outlet not found.d'];
                 return back()->witherrors($e);
             }
+
 
             // province
             $data['province'] = $this->getPropinsi();
@@ -167,14 +198,14 @@ class OutletController extends Controller
                     'min'       => 'PIN must 6 digit',
                     'max'       => 'PIN must 6 digit'
                 ]);
-        
+
                 if ($validator->fails()) {
                     return redirect('outlet/detail/'.$code.'#pin')
                                 ->withErrors($validator)
                                 ->withInput();
                 }else{
                     $save = MyHelper::post('outlet/update/pin', $post);
-                    return parent::redirect($save, 'Outlet pin has been changed.', 'outlet/detail/'.$code.'#pin'); 
+                    return parent::redirect($save, 'Outlet pin has been changed.', 'outlet/detail/'.$code.'#pin');
                 }
             }
 
@@ -184,7 +215,7 @@ class OutletController extends Controller
 
                 // save
                 $save          = MyHelper::post('outlet/photo/create', $post);
-                return parent::redirect($save, 'Outlet photo has been added.', 'outlet/detail/'.$code.'#photo'); 
+                return parent::redirect($save, 'Outlet photo has been added.', 'outlet/detail/'.$code.'#photo');
             }
 
             // order photo
@@ -199,14 +230,14 @@ class OutletController extends Controller
                      * save product photo
                      */
                     $save = MyHelper::post('outlet/photo/update', $data);
-                   
+
                     if (!isset($save['status']) || $save['status'] != "success") {
                         return redirect('outlet/detail/'.$code.'#photo')->witherrors(['Something went wrong. Please try again.']);
                     }
                 }
 
                 return redirect('outlet/detail/'.$code.'#photo')->with('success', ['Photo\'s order has been updated']);
-            }  
+            }
 
             // update
             if (isset($post['id_outlet'])) {
@@ -222,18 +253,18 @@ class OutletController extends Controller
                        if (isset($save['errors'])) {
                            return back()->withErrors($save['errors'])->withInput();
                        }
-       
+
                        if (isset($save['status']) && $save['status'] == "fail") {
                            return back()->withErrors($save['messages'])->withInput();
                        }
-                       
+
                        return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
                 }
-                      
-            } 
+
+            }
         }
     }
-    
+
    public function updateStatus(Request $request){
         $post = $request->except('_token');
         $update = MyHelper::post('outlet/update/status', $post);
@@ -245,7 +276,7 @@ class OutletController extends Controller
             return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update outlet status'];
         }
     }
-    
+
     /*
     Propinsi
     */
@@ -276,7 +307,7 @@ class OutletController extends Controller
         $post   = $request->all();
 
         $delete = MyHelper::post('outlet/photo/delete', ['id_outlet_photo' => $post['id_outlet_photo']]);
-       
+
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
         }
@@ -290,7 +321,7 @@ class OutletController extends Controller
         $post   = $request->all();
 
         $delete = MyHelper::post('outlet/delete', ['id_outlet' => $post['id_outlet']]);
-        
+
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
         }
@@ -307,7 +338,7 @@ class OutletController extends Controller
             'submenu_active' => 'outlet-holiday',
         ];
         $outlet = MyHelper::get('outlet/list');
-        
+
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
         }
@@ -328,23 +359,23 @@ class OutletController extends Controller
     public function createHoliday(Request $request) {
         $post = $request->except('_token');
         if (empty($post)) {
-            
+
             $data = [
                 'title'          => 'Outlet',
                 'sub_title'      => 'Outlet Holliday',
                 'menu_active'    => 'outlet',
                 'submenu_active' => 'outlet-holiday',
             ];
-            
+
             $outlet = MyHelper::get('outlet/list');
-    
+
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet'] = $outlet['result'];
             }
             else {
                 return redirect('outlet/create')->withErrors('Create Outlet First');
             }
-    
+
             return view('outlet::holiday', $data);
         }
         else {
@@ -358,11 +389,11 @@ class OutletController extends Controller
                    if (isset($save['errors'])) {
                        return back()->withErrors($save['errors'])->withInput();
                    }
-   
+
                    if (isset($save['status']) && $save['status'] == "fail") {
                        return back()->withErrors($save['messages'])->withInput();
                    }
-                   
+
                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
                }
         }
@@ -370,9 +401,9 @@ class OutletController extends Controller
 
     function deleteHoliday(Request $request) {
         $post   = $request->all();
-        
+
         $delete = MyHelper::post('outlet/holiday/delete', ['id_holiday' => $post['id_holiday']]);
-        
+
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
         }
@@ -412,7 +443,7 @@ class OutletController extends Controller
                 $e = ['e' => 'Data outlet not found.'];
                 return redirect('outlet/list')->witherrors($e);
             }
-            
+
             return view('outlet::outlet_holiday_update', $data);
         }
         //update
@@ -430,7 +461,7 @@ class OutletController extends Controller
                 if (isset($save['status']) && $save['status'] == "fail") {
                     return back()->withErrors($save['messages'])->withInput();
                 }
-                
+
                 return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
         }
@@ -457,26 +488,26 @@ class OutletController extends Controller
                 'menu_active'    => 'outlet',
                 'submenu_active' => 'outlet-import',
             ];
-    
+
             return view('outlet::import', $data);
         }else{
             if($request->file('import_file')){
 
-                $path = $request->file('import_file')->getRealPath(); 
-                $save = MyHelper::postFile('outlet/import', 'import_file', $path); 
+                $path = $request->file('import_file')->getRealPath();
+                $save = MyHelper::postFile('outlet/import', 'import_file', $path);
                 // dd($save);
-                if (isset($save['status']) && $save['status'] == "success") { 
-                    return parent::redirect($save, $save['message'], 'outlet/list'); 
-                }else { 
-                    if (isset($save['errors'])) { 
-                        return back()->withErrors($save['errors'])->withInput(); 
-                    } 
-     
-                    if (isset($save['status']) && $save['status'] == "fail") { 
-                        return back()->withErrors($save['messages'])->withInput(); 
-                    } 
-                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput(); 
-                } 
+                if (isset($save['status']) && $save['status'] == "success") {
+                    return parent::redirect($save, $save['message'], 'outlet/list');
+                }else {
+                    if (isset($save['errors'])) {
+                        return back()->withErrors($save['errors'])->withInput();
+                    }
+
+                    if (isset($save['status']) && $save['status'] == "fail") {
+                        return back()->withErrors($save['messages'])->withInput();
+                    }
+                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+                }
                 return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }else{
                 return back()->withErrors(['File is required.'])->withInput();
@@ -498,13 +529,13 @@ class OutletController extends Controller
         }else {
             return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
         }
-        
+
     }
 
     function createAdminOutlet(Request $request, $outlet_code) {
         $post = $request->except('_token');
         if (empty($post)) {
-            
+
             $data = [
                 'title'          => 'Outlet',
                 'sub_title'      => 'Outlet Admin',
@@ -533,11 +564,11 @@ class OutletController extends Controller
                    if (isset($save['errors'])) {
                        return back()->withErrors($save['errors'])->withInput();
                    }
-   
+
                    if (isset($save['status']) && $save['status'] == "fail") {
                        return back()->withErrors($save['messages'])->withInput();
                    }
-                   
+
                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
                }
         }
@@ -575,10 +606,10 @@ class OutletController extends Controller
             if (isset($get['status']) && $get['status'] == "fail") {
                 return back()->withErrors($get['messages'])->withInput();
             }
-            
+
             return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
         }
-        
+
         return view('outlet::edit_admin_outlet', $data);
     }
 
@@ -597,7 +628,7 @@ class OutletController extends Controller
                 if (isset($save['status']) && $save['status'] == "fail") {
                     return back()->withErrors($save['messages'])->withInput();
                 }
-                
+
                 return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
     }
@@ -614,7 +645,7 @@ class OutletController extends Controller
             $post['conditions'][0]['rule_next'] = 'or';
             unset($post['q']);
         }
-        
+
         $user = parent::getData(MyHelper::post('users/list', $post));
 
         return $user;
@@ -636,7 +667,7 @@ class OutletController extends Controller
     public function qrcodePrint()
     {
         $outlet = MyHelper::post('outlet/list', ['qrcode'=>true]);
-        
+
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
         }
@@ -661,7 +692,7 @@ class OutletController extends Controller
         }else{
             $outlet = MyHelper::post('outlet/list', ['qrcode'=>true, 'qrcode_paginate'=>true]);
         }
-        
+
         $data['from'] = 0;
         $data['to'] = 0;
         $data['total'] = 0;

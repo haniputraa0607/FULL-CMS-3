@@ -51,6 +51,6 @@ var ComponentsColorPickers = function() {
 
 }();
 
-jQuery(document).ready(function() {    
-   ComponentsColorPickers.init(); 
+jQuery(document).ready(function() {
+   ComponentsColorPickers.init();
 });

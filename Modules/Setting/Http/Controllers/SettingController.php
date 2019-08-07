@@ -38,7 +38,7 @@ class SettingController extends Controller
                 $data['value'] =preg_replace('/face="[^;"]*(")?/', 'div class="seravek-light-font"' , $data['result']['value_text']);
                 $data['value'] =preg_replace('/face="[^;"]*(")?/', '' , $data['value']);
             }
-            
+
             if($data['result']['value']){
                 $data['value'] =preg_replace('/<\/font>?/', '</div>' , $data['value']);
             }
@@ -58,19 +58,19 @@ class SettingController extends Controller
 		// print_r($result);exit;
         return parent::redirect($result, 'Default Application Logo has been updated.');
     }
-	
+
 	public function appSidebarSave(Request $request){
         $post = $request->except('_token');
         $result = MyHelper::post('setting/app_sidebar', $post);
         return parent::redirect($result, 'Application Side Navigation Text has been updated.');
     }
-	
+
 	public function appNavbarSave(Request $request){
         $post = $request->except('_token');
         $result = MyHelper::post('setting/app_navbar', $post);
         return parent::redirect($result, 'Application Top Navigation Text has been updated.');
     }
-	
+
     public function settingList($key)
     {
         $data = [];
@@ -134,9 +134,9 @@ class SettingController extends Controller
         } elseif ($key == 'balance_reset') {
             $sub = 'balance-reset';
             $active = 'balance-reset';
-            $subTitle = 'Kenangan Points Reset';
+            $subTitle = env('POINT_NAME', 'Points').' Reset';
         }
-            
+
         $data = [
             'title'          => 'Setting',
             'menu_active'    => $active,
@@ -161,13 +161,13 @@ class SettingController extends Controller
             }else {
                 return view('setting::point-reset', $data)->withErrors($request['messages']);
             }
-            
+
         }else{
             $request = MyHelper::post('setting', ['key' => $key]);
             if (isset($request['status']) && $request['status'] == 'success') {
                 $result = $request['result'];
                 $data['id'] = $result['id_setting'];
-    
+
                 if (is_null($result['value'])) {
                     $data['value'] = $result['value_text'];
                     $data['key'] = 'value_text';
@@ -178,7 +178,7 @@ class SettingController extends Controller
             } else {
                 return view('setting::index', $data)->withErrors($request['messages']);
             }
-           
+
             return view('setting::index', $data);
         }
     }
@@ -188,7 +188,7 @@ class SettingController extends Controller
         $post = $request->except('_token');
 
         $update = MyHelper::post('setting/update', ['id_setting' => $id, $post['key'] => $post['value']]);
-        
+
         return parent::redirect($update, 'Setting data has been updated.');
     }
 
@@ -213,7 +213,7 @@ class SettingController extends Controller
         if (isset($faqList['status']) && $faqList['status'] == 'success') {
             $data['result'] = $faqList['result'];
         } else {
-            if (isset($faqList['status']) && $faqList['status'] == 'fail') { 
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
                 $data['result'] = [];
 
             } else {
@@ -221,7 +221,7 @@ class SettingController extends Controller
                 return view('setting::faqList', $data)->withErrors($e);
             }
         }
-       
+
         return view('setting::faqList', $data);
     }
 
@@ -253,7 +253,7 @@ class SettingController extends Controller
         ];
 
         $edit = MyHelper::post('setting/faq/edit', ['id_faq' => $id]);
-        
+
         if (isset($edit['status']) && $edit['status'] == 'success') {
             $data['faq'] = $edit['result'];
             return view('setting::faqEdit', $data);
@@ -296,7 +296,7 @@ class SettingController extends Controller
         if (isset($level['status']) && $level['status'] == 'success') {
             $data['result'] = $level['result'];
         } else {
-            if (isset($level['status']) && $level['status'] == 'fail') { 
+            if (isset($level['status']) && $level['status'] == 'fail') {
                 $data['result'] = [];
 
             } else {
@@ -337,7 +337,7 @@ class SettingController extends Controller
         ];
 
         $edit = MyHelper::post('setting/level/edit', ['id_level' => $id]);
-    
+
         if (isset($edit['status']) && $edit['status'] == 'success') {
             $data['level'] = $edit['result'];
             return view('setting::level.levelEdit', $data);
@@ -383,7 +383,7 @@ class SettingController extends Controller
         if (isset($holiday['status']) && $holiday['status'] == 'success') {
             $data['result'] = $holiday['result'];
         } else {
-            if (isset($holiday['status']) && $holiday['status'] == 'fail') { 
+            if (isset($holiday['status']) && $holiday['status'] == 'fail') {
                 $data['result'] = [];
             } else {
                 $e = ['e' => 'Something went wrong. Please try again.'];
@@ -421,7 +421,7 @@ class SettingController extends Controller
         $data = $request->except('_token');
 
         $insert = MyHelper::post('setting/holiday/store', $data);
-  
+
         return parent::redirect($insert, 'Holiday has been created.');
     }
 
@@ -434,7 +434,7 @@ class SettingController extends Controller
         ];
 
         $edit = MyHelper::post('setting/holiday/edit', ['id_holiday' => $id]);
-    
+
         if (isset($edit['status']) && $edit['status'] == 'success') {
             $data['holiday'] = $edit['result'];
             return view('setting::holiday.holidayEdit', $data);
@@ -454,9 +454,9 @@ class SettingController extends Controller
             'day'               => $request['day'],
             'id_outlet'         => $request['id_outlet'],
         ];
-   
+
         $update = MyHelper::post('setting/holiday/update', $post);
-  
+
         if (isset($update['status']) && $update['status'] == 'success') {
             session(['success' => ['Holiday data updated']]);
             return redirect('setting/holiday');
@@ -488,7 +488,7 @@ class SettingController extends Controller
         if (isset($detail['status']) && $detail['status'] == 'success') {
             $data['result'] = $detail['result'];
         } else {
-            if (isset($detail['status']) && $detail['status'] == 'fail') { 
+            if (isset($detail['status']) && $detail['status'] == 'fail') {
                 $data['result'] = [];
             } else {
                 $e = ['e' => 'Something went wrong. Please try again.'];
@@ -498,7 +498,7 @@ class SettingController extends Controller
 
         return view('setting::holiday.holidayDetail', $data);
     }
-	
+
 	function homeSetting(Request $request) {
 		$post = $request->except('_token');
 		if($post){
@@ -511,29 +511,29 @@ class SettingController extends Controller
             'menu_active'    => 'setting-home',
             'submenu_active' => 'setting-home-list'
         ];
-		
+
 		$request = MyHelper::get('timesetting');
 
 		if(isset($request['result']))
 			$data['timesetting'] = $request['result'];
-		else 
+		else
 			$data['timesetting'] = [];
-		
+
 		$request = MyHelper::get('greetings');
-		
+
 		if(isset($request['result']))
 			$data['greetings'] = $request['result'];
-		else 
+		else
 			$data['greetings'] = [];
-		
+
 		$request = MyHelper::get('background');
 		if(isset($request['result']))
 			$data['background'] = $request['result'];
-		else 
+		else
 			$data['background'] = [];
-		
+
 		$test = MyHelper::get('autocrm/textreplace');
-		
+
 		if($test['status'] == 'success'){
 			$data['textreplaces'] = $test['result'];
         }
@@ -542,7 +542,7 @@ class SettingController extends Controller
         $request = MyHelper::get('setting/banner/list');
         if(isset($request['result']))
             $data['banners'] = $request['result'];
-        else 
+        else
             $data['banners'] = [];
 
         // news for banner
@@ -553,7 +553,7 @@ class SettingController extends Controller
         $request = MyHelper::post('news/list', $news_req);
         if(isset($request['result']))
             $data['news'] = $request['result'];
-        else 
+        else
             $data['news'] = [];
 
         // complete profile
@@ -578,10 +578,10 @@ class SettingController extends Controller
 		// print_r($data);exit;
 		return view('setting::home', $data);
 	}
-	
+
 	function createGreeting(Request $request) {
 		$post = $request->except('_token');
-		
+
 		if(!empty($post)){
 			$create = MyHelper::post('greetings/create', $post);
 
@@ -592,9 +592,9 @@ class SettingController extends Controller
                 $e = ['e' => 'Something went wrong. Please try again.'];
                 return redirect('setting/home')->withErrors($e);
             }
-		} 
+		}
 	}
-	
+
 	function createBackground(Request $request) {
 		$post = $request->except('_token');
 		if(!empty($post)){
@@ -606,7 +606,7 @@ class SettingController extends Controller
 			return redirect('setting/home');
 		}
 	}
-	
+
 	function deleteBackground(Request $request) {
 		$post = $request->except('_token');
 		if(!empty($post)){
@@ -620,14 +620,14 @@ class SettingController extends Controller
 			return redirect('setting/home');
 		}
 	}
-	
+
 	function updateGreetings(Request $request, $id) {
 		$post = $request->except('_token');
-		
+
 		if(!empty($post)){
 			$data = $post;
 			$data['id_greetings'] = $id;
-			
+
 			$query = MyHelper::post('greetings/update', $data);
 			if ($query['status'] == 'success') {
 				session(['success' => ['Greeting data updated']]);
@@ -637,11 +637,11 @@ class SettingController extends Controller
                 return redirect('setting/home')->withErrors($e);
             }
 		}
-		
+
 	}
 	function deleteGreetings(Request $request) {
 		$post = $request->except('_token');
-		
+
 		if(!empty($post)){
 			$query = MyHelper::post('greetings/delete', $post);
 			if ($query['status'] == 'success') {
@@ -679,9 +679,9 @@ class SettingController extends Controller
 					  'menu_active'       => 'crm-setting',
 					  'submenu_active'    => 'email'
 					];
-					
+
 			$setting = MyHelper::get('setting/email');
-			
+
 			if($setting['status'] == 'success'){
 				$data['setting'] = $setting['result'];
 			}
@@ -701,7 +701,7 @@ class SettingController extends Controller
                 if (isset($update['status']) && $update['status'] == "fail") {
                     return back()->withErrors($update['messages'])->withInput();
                 }
-                
+
                 return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
 		}
@@ -719,11 +719,11 @@ class SettingController extends Controller
         $result = MyHelper::post('setting/default_home', $post);
         return parent::redirect($result, 'Default Home Background has been updated.');
     }
-	
+
 	function dashboardSetting(Request $request){
         $post = $request->except('_token');
 
-        $data = [ 
+        $data = [
             'title'             => 'Home Setting',
             'menu_active'       => 'setting-home-user',
             'submenu_active'    => 'setting-home-user'
@@ -741,7 +741,7 @@ class SettingController extends Controller
                 if (isset($save['status']) && $save['status'] == "fail") {
                     return back()->withErrors($save['messages'])->withInput();
                 }
-                
+
                 return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
         }
@@ -752,7 +752,7 @@ class SettingController extends Controller
         }
         else {
             $data['dasboard'] = [];
-        }   
+        }
 
         return view('setting::dashboard.form', $data);
     }
@@ -810,7 +810,7 @@ class SettingController extends Controller
             if (isset($save['status']) && $save['status'] == "fail") {
                 return back()->withErrors($save['messages'])->withInput();
             }
-            
+
             return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
         }
     }
@@ -818,7 +818,7 @@ class SettingController extends Controller
     function whatsApp(Request $request){
         $post = $request->except('_token');
 
-        $data = [ 
+        $data = [
             'title'             => 'Setting WhatsApp',
             'menu_active'       => 'crm-setting',
             'submenu_active'    => 'whatsapp'
@@ -844,7 +844,7 @@ class SettingController extends Controller
                 if (isset($save['status']) && $save['status'] == "fail") {
                     return back()->withErrors($save['messages'])->withInput();
                 }
-                
+
                 return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
         }
@@ -858,7 +858,7 @@ class SettingController extends Controller
         ]);
 
         $post = $request->except('_token');
-        
+
         if(isset($post['banner_image'])){
             $post['image'] = MyHelper::encodeImage($post['banner_image']);
             unset($post['banner_image']);
@@ -874,7 +874,7 @@ class SettingController extends Controller
             // remove click_to index
             unset($post['click_to']);
         }
-        
+
         $result = MyHelper::post('setting/banner/create', $post);
         return parent::redirect($result, 'New banner has been created.', 'setting/home#banner');
     }
@@ -887,7 +887,7 @@ class SettingController extends Controller
         ]);
 
         $post = $request->except('_token');
-        
+
         if(isset($post['banner_image'])){
             $post['image'] = MyHelper::encodeImage($post['banner_image']);
             unset($post['banner_image']);
@@ -922,7 +922,7 @@ class SettingController extends Controller
     public function deleteBanner($id_banner)
     {
         $post['id_banner'] = $id_banner;
-        
+
         $result = MyHelper::post('setting/banner/delete', $post);
 
         return parent::redirect($result, 'Banner has been deleted.', 'setting/home#banner');
@@ -968,7 +968,7 @@ class SettingController extends Controller
     function versionSetting(Request $request){
         $post = $request->except('_token');
 
-        $data = [ 
+        $data = [
             'title'             => 'Version Control Setting',
             'menu_active'       => 'setting-version',
             'submenu_active'    => 'setting-version'
@@ -989,7 +989,7 @@ class SettingController extends Controller
                 if (isset($save['status']) && $save['status'] == "fail") {
                     return back()->withErrors($save['messages'])->withInput();
                 }
-                
+
                 return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
         }
@@ -1000,7 +1000,7 @@ class SettingController extends Controller
         }
         else {
             $data['version'] = [];
-        }   
+        }
 
         return view('setting::version.setting-version', $data);
     }

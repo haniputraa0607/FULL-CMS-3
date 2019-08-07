@@ -16,6 +16,9 @@
         .text-brown{
           color: #6C5648;
         }
+        .text-black{
+          color: #000;
+        }
         .text-red{
           color: #e64343;
         }
@@ -40,7 +43,7 @@
           height: 17px;
           z-index: -1;
         }
-        
+
         /* select 2 */
         .select2-search__field{
             border: 1px solid #c2cad8;
@@ -57,7 +60,7 @@
             line-height: 34px !important;
             padding-left: 0px !important;
             color: #000 !important;
-            font-family: "Seravek";
+            font-family: "GoogleSans";
             border-bottom: 1px solid #c2cad8;
         }
         .select2 .select2-selection--single{
@@ -69,7 +72,7 @@
             color: #000;
         }
         .select2-results__option--highlighted[aria-selected] {
-            background-color: #6C5648 !important;
+            background-color: #990003 !important;
             color: #fff;
         }
         .select2-selection__arrow{
@@ -138,13 +141,21 @@
           color: #000 !important;
           font-size: 15px;
         }
+        .btn-save{
+            background: #990003;
+            color: white;
+            border-radius: 5px !important;
+        }
+        .btn:hover{
+            color: white !important;
+        }
     </style>
 @stop
 
 @section('content')
     <div class="col-md-4 col-md-offset-4" style="position: unset;">
-        <div class="text-brown" style="margin-top: 20px; margin-bottom: 20px; text-align: justify;">
-            Silakan lengkapi data di bawah ini dan dapatkan Kenangan Points
+        <div class="text-black" style="margin-top: 20px; margin-bottom: 20px; text-align: justify;">
+            Silakan lengkapi data di bawah ini dan dapatkan Panda Points
         </div>
 
         @if(isset($errors))
@@ -173,7 +184,7 @@
               }
             @endphp
 
-            @if($user['birthday']==null || $user['gender']==null || $user['id_city']==null || $user['relationship']==null)
+            @if($user['birthday']==null || $user['gender']==null || $user['id_city']==null )
             {{-- form --}}
             <form role="form" action="{{ url('webview/complete-profile/submit') }}" method="post">
                 {!! csrf_field() !!}
@@ -220,23 +231,13 @@
                         <div id="error-city" class="text-red text-error"></div>
                     </div>
 
-                    <div class="form-group form-md-line-input">
-                        <label>Relationship</label>
-                        <select id="select2-relationship" class="form-control" name="relationship" required>
-                            <option></option>
-                            <option value="In a Relationship" {{ ($user['relationship']=='In a Relationship' ? 'selected' : '') }}>In a Relationship</option>
-                            <option value="Complicated" {{ ($user['relationship']=='Complicated' ? 'selected' : '') }}>Complicated</option>
-                            <option value="Jomblo" {{ ($user['relationship']=='Jomblo' ? 'selected' : '') }}>Jomblo</option>
-                        </select>
-                        <img class="select-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/arrow-down.png') }}" alt="">
-                        <div id="error-relationship" class="text-red text-error"></div>
-                    </div>
+
 
                     <div class="form-actions noborder">
                         <input type="hidden" name="bearer" value="{{ $bearer }}">
 
                         <div class="button-wrapper text-center">
-                            <input type="submit" value="SIMPAN" class="btn btn-round btn-outline brown">
+                            <input type="submit" value="Simpan" class="btn btn-save GoogleSans-Bold">
                         </div>
                     </div>
                 </div>
@@ -266,17 +267,14 @@
             placeholder : 'Pilih Kota Domisili',
             dropdownParent: $('#city-dropdown')
           });
-          
+
           $('#select2-gender').select2({
             positionDropdown: true,
             minimumResultsForSearch: -1,
             placeholder : 'Pilih Jenis Kelamin'
           });
-          $('#select2-relationship').select2({
-            positionDropdown: true,
-            minimumResultsForSearch: -1,
-            placeholder : 'Pilih Relationship'
-          });
+
+
         })();
 
 
@@ -311,7 +309,7 @@
           if (month == 2) {
             var d = new Date(year, month, 0);
             var last_day = d.getDate();
-            
+
             var date = $('#date-input').val();
             // reset selected date
             if (date > last_day) {
@@ -405,7 +403,7 @@
           }
           validateAge(month_input);
         }
-        
+
         function validateYear(e) {
           var year = year_input.value;
           var keycode = (typeof e.which == "number") ? e.which : e.keyCode;
@@ -475,9 +473,10 @@
           var birthday_m = $('#month-input').val();
           var birthday_y = $('#year-input').val();
           var id_city = $('#id_city').val();
-          var relationship = $('#select2-relationship').val();
 
-          if (gender=="" || birthday_d=="" || birthday_m=="" || birthday_y=="" || id_city=="" || relationship=="") {
+
+
+          if (gender=="" || birthday_d=="" || birthday_m=="" || birthday_y=="" || id_city=="" ) {
             e.preventDefault();
             if (gender == "") {
               $('#error-gender').text('Jenis Kelamin tidak boleh kosong')
@@ -488,12 +487,10 @@
             if (id_city == "") {
               $('#error-city').text('Kota tidak boleh kosong')
             }
-            if (relationship == "") {
-              $('#error-relationship').text('Relationship tidak boleh kosong')
-            }
+
           }
 
         });
-        
+
     </script>
 @stop

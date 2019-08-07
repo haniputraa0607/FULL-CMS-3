@@ -53,22 +53,22 @@ class WebviewController extends Controller
             $view = 'transaction_success';
         }
 
-        if ($data['transaction_payment_status'] == 'Pending') {
+        if (isset($data['transaction_payment_status']) && $data['transaction_payment_status'] == 'Pending') {
             $view = 'transaction_proccess';
-            if (isset($data['data_payment'])) {
-                foreach ($data['data_payment'] as $key => $value) {
-                    if ($value['type'] != 'Midtrans') {
-                        continue;
-                    } else {
-                        if (!isset($value['signature_key'])) {
-                            $view = 'transaction_pending';
-                        }
-                    }
-                }
-            }
+            // if (isset($data['data_payment'])) {
+            //     foreach ($data['data_payment'] as $key => $value) {
+            //         if ($value['type'] != 'Midtrans') {
+            //             continue;
+            //         } else {
+            //             if (!isset($value['signature_key'])) {
+            //                 $view = 'transaction_pending';
+            //             }
+            //         }
+            //     }
+            // }
         }
 
-        if ($data['transaction_payment_status'] == 'Cancelled') {
+        if (isset($data['transaction_payment_status']) && $data['transaction_payment_status'] == 'Cancelled') {
             $view = 'transaction_failed';
         }
 
@@ -89,7 +89,7 @@ class WebviewController extends Controller
         // if ($request->isMethod('get')) {
         //     return view('error', ['msg' => 'Url method is POST']);
         // }
-        
+
         $data = json_decode(base64_decode($request->get('data')), true);
         $data['check'] = 1;
         $check = MyHelper::postWithBearer('outletapp/order/detail/view?log_save=0', $data, $bearer);
@@ -152,7 +152,7 @@ class WebviewController extends Controller
         // if ($request->isMethod('get')) {
         //     return view('error', ['msg' => 'Url method is POST']);
         // }
-        
+
         $data = json_decode(base64_decode($request->get('data')), true);
         $data['check'] = 1;
         $check = MyHelper::postWithBearer('transaction/detail/webview/balance?log_save=0', $data, $bearer);
@@ -168,7 +168,7 @@ class WebviewController extends Controller
         if ($data['type'] == 'trx') {
             $view = 'detail_balance_online';
         }
-        
+
         if ($data['type'] == 'voucher') {
             $view = 'detail_balance_voucher';
         }
@@ -194,7 +194,7 @@ class WebviewController extends Controller
 
         $data = json_decode(base64_decode($request->get('data')), true);
     	$check = MyHelper::postWithBearer('outletapp/order/detail/view?log_save=0', $data, $bearer);
-      
+
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data = $check['result'];
     	} elseif (isset($check['status']) && $check['status'] == 'fail') {

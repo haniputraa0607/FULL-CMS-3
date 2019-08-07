@@ -5,23 +5,23 @@
  @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+
 	<style type="text/css">
 	    #sample_1_filter label, #sample_5_filter label, #sample_4_filter label, .pagination, .dataTables_filter label {
 	        float: right;
 	    }
-	    
+
 	    .cont-col2{
 	        margin-left: 30px;
 	    }
@@ -60,7 +60,7 @@
 			}
 		}
 	}
-	
+
 	function checkSingle(var1,var2){
 		var compare=0;
 		var2 = $('.checkbox'+var1).length;
@@ -77,7 +77,7 @@
 			document.getElementById('module_'+var1).checked = false;
 		}
 	}
-	
+
 	$('.sample_1').dataTable({
                 language: {
                     aria: {
@@ -226,7 +226,7 @@
                 pageLength: 10,
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
-        
+
     $('#sample_5').dataTable({
                 language: {
                     aria: {
@@ -256,19 +256,19 @@
                 pageLength: 10,
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
-        
+
 	$(document).ready(function() {
 		$.fn.modal.Constructor.prototype.enforceFocus = function() {};
 	});
-	
+
 	function scheduleIdStore(id_outlet){
 		document.getElementById('id_outlet_schedule').value = id_outlet;
 	}
-	
+
 	function centang(no){
 		alert(no);
 	}
-	
+
 	function checkUsers(){
 		var slides = document.getElementsByClassName("md-check");
 		for(var i = 0; i < slides.length; i++)
@@ -276,7 +276,7 @@
 		   slides[i].checked = true;
 		}
 	}
-	
+
 	function uncheckUsers(){
 		var slides = document.getElementsByClassName("md-check");
 		for(var i = 0; i < slides.length; i++)
@@ -284,7 +284,7 @@
 		   slides[i].checked = false;
 		}
 	}
-	
+
 	// function viewLogDetail(url, status, request, response, ip, useragent){
 	function viewLogDetail(id_log){
 		$.get("{{url('user/ajax/log')}}"+'/'+id_log, function(result){
@@ -342,30 +342,30 @@
 									<div class="col-md-4 profile-info">
 										<h1 class="font-blue sbold uppercase">{{$profile['name']}}</h1>
 										<div class="portlet sale-summary">
-											<div class="portlet-title"> 
+											<div class="portlet-title">
 												<div class="caption font-blue sbold"> {{$profile['level']}} </div>
 											</div>
 											<div class="portlet-body">
 												<ul class="list-unstyled">
 													<li>
-														<span class="sale-info"> Level 
+														<span class="sale-info"> Level
 															<i class="fa fa-img-up"></i>
 														</span>
 														@if($profile['level'] == 'Super Admin')
 															<span class="sale-num font-red sbold">Super Admin</span>
 														@endif
-														@if($profile['level'] == 'Admin') 
+														@if($profile['level'] == 'Admin')
 															<span class="sale-num font-red sbold">Admin</span>
 														@endif
-														@if($profile['level'] == 'Customer') 
+														@if($profile['level'] == 'Customer')
 															<span class="sale-num font-blue sbold">Customer</span>
 														@endif
-														@if($profile['level'] == 'Admin Outlet') 
+														@if($profile['level'] == 'Admin Outlet')
 															<span class="sale-num font-blue sbold">Admin Outlet</span>
 														@endif
 													</li>
 													<li>
-														<span class="sale-info"> Phone 
+														<span class="sale-info"> Phone
 															<i class="fa fa-img-up"></i>
 														</span>
 														@if($profile['phone_verified']==1)
@@ -405,9 +405,9 @@
 												<i class="icon-badge"></i> @if(isset($profile['user_membership']['membership_name'])){{$profile['user_membership']['membership_name']}} @endif</li>
                         					<li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
 												<i class="fa fa-heart"></i> {{$profile['relationship']}} </li>
-											<li class="list-group-item" style="padding: 5px !important;" title="Total Kenangan Points Obtained By The User">
+											<li class="list-group-item" style="padding: 5px !important;" title="Total {{env('POINT_NAME', 'Points')}} Obtained By The User">
 												<i class="fa fa-gift"></i> {{number_format($profile['balance_acquisition'], 0, ',', '.')}} </li>
-											<li class="list-group-item" style="padding: 5px !important;" title="Remaining User Kenangan Points">
+											<li class="list-group-item" style="padding: 5px !important;" title="Remaining User {{env('POINT_NAME', 'Points')}}">
 												<i class="fa fa-star"></i> {{number_format($profile['balance'], 0, ',', '.')}} </li>
 										</ul>
 									</div>
@@ -430,9 +430,9 @@
 											</div>
 											<div class="tab-content" style="margin-top:20px">
 												<div class="tab-pane active" id="log_mobile">
-											
+
     										        <div class="tabbable-line tabbable-custom-profile">
-    										            
+
             											<div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
             											    @if(count($log['mobile']) > 0)
             												<ul class="feeds">
@@ -448,7 +448,7 @@
             																	@else
         																			<i class="fa fa-circle-o" style="color:white"></i>
         																		@endif
-        																		
+
             																	@if($logs['response_status'] == 'fail')
             																		<div class="label label-danger">
             																			<i class="fa fa-exclamation-circle"></i>
@@ -460,7 +460,7 @@
             																	@endif
             																</div>
             																<div class="cont-col2">
-            																	<div class="desc"> {{$logs['subject']}} 
+            																	<div class="desc"> {{$logs['subject']}}
             																		@if($logs['response_status'] == 'fail')
             																		<span class="label label-danger label-sm"> Failed
             																		</span>
@@ -469,14 +469,14 @@
             																		</span>
             																		@endif
             																		&nbsp;from IP {{$logs['ip']}}
-            																		 
-            																		 <?php 
+
+            																		 <?php
             																		//  $request =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['request']))));
-            																		 
+
             																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
             																		 ?>
             																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
-            																		
+
             																		</span>
             																	</div>
             																</div>
@@ -494,9 +494,9 @@
             											</div>
     										        </div>
 										        </div>
-										        
+
 												<div class="tab-pane" id="log_backend">
-											
+
     										        <div class="tabbable-line tabbable-custom-profile">
             											<div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
             											     @if(count($log['backend']) > 0)
@@ -518,7 +518,7 @@
             																	@endif
             																</div>
             																<div class="cont-col2">
-            																	<div class="desc"> {{$logs['subject']}} 
+            																	<div class="desc"> {{$logs['subject']}}
             																		@if($logs['response_status'] == 'fail')
             																		<span class="label label-danger label-sm"> Failed
             																		</span>
@@ -527,14 +527,14 @@
             																		</span>
             																		@endif
 																					&nbsp;from IP {{$logs['ip']}}
-            																		 
-            																		 <?php 
+
+            																		 <?php
             																		//  $request =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['request']))));
-            																		 
+
             																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
             																		 ?>
             																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
-            																		
+
             																		</span>
             																	</div>
             																</div>
@@ -553,11 +553,11 @@
             										</div>
         										</div>
 										    </div>
-										
+
 										@endif
-										
+
 									</div>
-									
+
 									<div class="col-md-12" style="margin-top:30px">
 										<h4 class="font-blue sbold uppercase">HISTORY</h4>
 											<div class="tabbable-line tabbable-full-width">
@@ -605,23 +605,23 @@
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
 																			<td>
 																			    @if($res['reject_at'] != null)
-																					<span class="label label-danger label-sm"> 
+																					<span class="label label-danger label-sm">
 																			        Rejected
 																					</span>
 																			    @elseif($res['taken_at'] != null)
-																					<span class="label label-sm" style="background-color:#28a745;"> 
+																					<span class="label label-sm" style="background-color:#28a745;">
 																			        Taken
 																					</span>
 																			    @elseif($res['ready_at'] != null)
-																					<span class="label label-success label-sm"> 
+																					<span class="label label-success label-sm">
 																			        Ready
 																					</span>
 																			    @elseif($res['receive_at'] != null)
-																					<span class="label label-info label-sm"> 
+																					<span class="label label-info label-sm">
 																			        Accepted
 																					</span>
 																			    @else
-																					<span class="label label-sm" style="background-color: #95A5A6"> 
+																					<span class="label label-sm" style="background-color: #95A5A6">
 																			        Pending
 																					</span>
 																			    @endif
@@ -665,19 +665,19 @@
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
 																			<td>
 																				@if($res['transaction_payment_status'] == 'Cancelled')
-																					<span class="label label-danger label-sm"> 
+																					<span class="label label-danger label-sm">
 																						{{$res['transaction_payment_status']}}
 																					</span>
 																				@elseif($res['transaction_payment_status'] == 'Completed')
-																					<span class="label label-sm" style="background-color:#28a745;"> 
+																					<span class="label label-sm" style="background-color:#28a745;">
 																						{{$res['transaction_payment_status']}}
 																					</span>
 																				@elseif($res['transaction_payment_status'] == 'Pending')
-																					<span class="label label-sm" style="background-color: #95A5A6"> 
+																					<span class="label label-sm" style="background-color: #95A5A6">
 																						{{$res['transaction_payment_status']}}
 																					</span>
 																				@else
-																					<span class="label label-primary label-sm"> 
+																					<span class="label label-primary label-sm">
 																						{{$res['transaction_payment_status']}}
 																					</span>
 																				@endif
@@ -730,7 +730,7 @@
 																			</thead>
 																			@if(!empty($profile['history_balance']))
 																				@foreach ($profile['history_balance'] as $balance)
-																					<tr 
+																					<tr
 																					{{--@if ($balance['source'] == 'voucher') style="color: red" @else style="color: blue" @endif --}}
 																					>
 																						<td> {{ ucwords($balance['source']) }} </td>
@@ -738,16 +738,16 @@
 																						<td> {{ date('d F Y', strtotime($balance['created_at'])) }} </td>
 																						<td> {{ date('H:i:s', strtotime($balance['created_at'])) }} </td>
 																						@if ($balance['source'] != 'voucher' || $balance['source'] != 'Complete Profile')
-																							<td> 
+																							<td>
 																							<a href="{{ url('transaction/detail/'.$balance['detail_trx']['id_transaction'].'/'.$balance['detail_trx']['trasaction_type']) }}">
-		
-																							    {{ $balance['detail_trx']['transaction_receipt_number'] }} 
+
+																							    {{ $balance['detail_trx']['transaction_receipt_number'] }}
 																							</a>
 																							</td>
 																						@else
 																							<td> {{ $balance['detail_trx']['trx_id'] }} </td>
 																						@endif
-																						
+
 																					</tr>
 																				@endforeach
 																			@endif
@@ -759,7 +759,7 @@
 												@endif
 											</div>
 										</div>
-										
+
 									<div class="col-md-12" style="margin-top:30px">
 										<h4 class="font-blue sbold uppercase">Voucher</h4>
 											<div class="tabbable-line tabbable-full-width">
@@ -799,7 +799,7 @@
 																		<tr>
 																			<td>{{ $vou['deals_voucher']['deals']['deals_title'] }} {{ $vou['deals_voucher']['deals']['deals_second_title'] }}</td>
 																			<td>
-																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid') 
+																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid')
 																			        Promo ID : {{ $vou['deals_voucher']['deals']['deals_promo_id'] }}
 																			    @else
 																			        Nominal : {{number_format($vou['deals_voucher']['deals']['deals_promo_id'], 0, ',','.')}}
@@ -820,7 +820,7 @@
 													</div>
 													<!-- END: Comments -->
 												</div>
-												
+
 												<div class="tab-pane" id="voucher_invalidate">
 													<!-- BEGIN: Comments -->
 													<div class="mt-comments">
@@ -843,7 +843,7 @@
 																		<tr>
 																			<td>{{ $vou['deals_voucher']['deals']['deals_title'] }} {{ $vou['deals_voucher']['deals']['deals_second_title'] }}</td>
 																			<td>
-																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid') 
+																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid')
 																			        Promo ID : {{ $vou['deals_voucher']['deals']['deals_promo_id'] }}
 																			    @else
 																			        Nominal : {{number_format($vou['deals_voucher']['deals']['deals_promo_id'], 0, ',','.')}}
@@ -866,7 +866,7 @@
 													</div>
 													<!-- END: Comments -->
 												</div>
-											
+
 												<div class="tab-pane" id="voucher_used">
 													<!-- BEGIN: Comments -->
 													<div class="mt-comments">
@@ -890,7 +890,7 @@
 																		<tr>
 																			<td>{{ $vou['deals_voucher']['deals']['deals_title'] }} {{ $vou['deals_voucher']['deals']['deals_second_title'] }}</td>
 																			<td>
-																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid') 
+																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid')
 																			        Promo ID : {{ $vou['deals_voucher']['deals']['deals_promo_id'] }}
 																			    @else
 																			        Nominal : {{number_format($vou['deals_voucher']['deals']['deals_promo_id'], 0, ',','.')}}
@@ -914,7 +914,7 @@
 													</div>
 													<!-- END: Comments -->
 												</div>
-											
+
 												<div class="tab-pane" id="voucher_expired">
 													<!-- BEGIN: Comments -->
 													<div class="mt-comments">
@@ -937,7 +937,7 @@
 																		<tr>
 																			<td>{{ $vou['deals_voucher']['deals']['deals_title'] }} {{ $vou['deals_voucher']['deals']['deals_second_title'] }}</td>
 																			<td>
-																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid') 
+																			    @if($vou['deals_voucher']['deals']['deals_promo_id_type'] == 'promoid')
 																			        Promo ID : {{ $vou['deals_voucher']['deals']['deals_promo_id'] }}
 																			    @else
 																			        Nominal : {{number_format($vou['deals_voucher']['deals']['deals_promo_id'], 0, ',','.')}}
@@ -960,7 +960,7 @@
 													</div>
 													<!-- END: Comments -->
 												</div>
-											
+
 											</div>
 										</div>
 								</div>
@@ -994,7 +994,7 @@
 										{{ csrf_field() }}
 											<div class="form-group">
 												<label class="control-label">Name</label>
-												<input type="text" name="name" placeholder="User Name (Required)" class="form-control" value="{{$profile['name']}}" /> 
+												<input type="text" name="name" placeholder="User Name (Required)" class="form-control" value="{{$profile['name']}}" />
 											</div>
 											<div class="form-group">
 												<label class="control-label">Phone</label>
@@ -1105,16 +1105,16 @@
 					<div class="tab-pane" id="permission">
 						<div class="row">
 							<h1 style="text-align:center;">{{$profile['name']}} has access as <b>{{$profile['level']}}</b>.</h1>
-							<h3 style="text-align:center;"><b>{{$profile['level']}}</b> 
+							<h3 style="text-align:center;"><b>{{$profile['level']}}</b>
 							@if($profile['level'] == 'Super Admin') has access to All Features.@endif
 							@if($profile['level'] == 'Admin') has access to limited features.@endif
 							@if($profile['level'] == 'Customer') has no access to backend.@endif
 							@if($profile['level'] == 'Admin Outlet') has access to manage delivery, pickup and outlet enquiry @endif
-							
+
 							</h3>
-							
+
 							<h3 style="text-align:center;margin-bottom:50px">Do You want to change {{$profile['name']}}'s access level?</h3>
-							
+
 							@if($profile['level'] != 'Customer')
 							<div class="col-md-4">
 								<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" style="text-align:center;">
@@ -1125,7 +1125,7 @@
 								</form>
 							</div>
 							@endif
-							
+
 							@if($profile['level'] != 'Admin')
 							<div class="col-md-4">
 								<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" style="text-align:center;">
@@ -1136,7 +1136,7 @@
 								</form>
 							</div>
 							@endif
-							
+
 							@if($profile['level'] != 'Super Admin' && Session::get('level') == 'Super Admin')
 							<div class="col-md-4">
 								<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" style="text-align:center;">
@@ -1147,7 +1147,7 @@
 								</form>
 							</div>
 							@endif
-							
+
 @if($profile['level'] == 'Admin')
 	<div class="col-md-12" style="margin-top:30px">
 		<div class="portlet light bordered">

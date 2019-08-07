@@ -8,7 +8,7 @@
 @section('page-style')
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
       <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
@@ -59,7 +59,7 @@
     <form role="form" action="{{ url('transaction/balance/filter', date('Ymd')) }}" method="post">
         @include('transaction::log.log_balance_filter')
     </form>
-    
+
     @include('layouts.notifications')
 
     @if (!empty($search))
@@ -75,7 +75,7 @@
     <div class="portlet light portlet-fit bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-red sbold uppercase">Kenangan Points Log User</span>
+                <span class="caption-subject font-red sbold uppercase">{{env('POINT_NAME', 'Points')}} Log User</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -83,7 +83,7 @@
             <thead>
               <tr>
                   <th>User Name</th>
-                  <th>Kopi Point</th>
+                  <th>{{env('POINT_NAME', 'Points')}}</th>
                   <th>Source</th>
                   <th>Grand Total</th>
                   <th>Cashback Convers</th>
@@ -98,8 +98,10 @@
                         <tr>
                             @if (isset($res['user']['name']))
                                 <td>{{ $res['user']['name'] }}</td>
-                            @else
+                            @elseif(isset($res['name']))
                                 <td>{{ $res['name'] }}</td>
+                            @else
+                                <td></td>
                             @endif
                             <td>{{ number_format($res['balance']) }}</td>
                             <td>{{ ucwords($res['source']) }}</td>

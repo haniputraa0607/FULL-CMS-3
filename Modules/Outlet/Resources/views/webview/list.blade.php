@@ -28,8 +28,8 @@
       height: 100%
     	}
 
-    	.brown div {
-    		color: #6c5648;
+    	.red div {
+    		color: #990003;
     	}
 
     	.completed {
@@ -54,6 +54,7 @@
 
     	.space-sch {
     		padding-bottom: 5px;
+    		margin-left: 0 !important;
     	}
 
     	.min-left {
@@ -83,7 +84,7 @@
     	}
 
     	.text-grey-white {
-    		color: #666;
+    		color: #666666;
     	}
 
     	.text-grey-black {
@@ -91,7 +92,7 @@
     	}
 
 		.text-grey-2{
-			color: #a9a9a9;
+			color: #979797;
 		}
 
     	.text-grey-red {
@@ -114,66 +115,60 @@
     		color: rgba(4,154,74,1);
     	}
 
-		@font-face {
-            font-family: 'Seravek';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype'); 
-        }
 
         @font-face {
-            font-family: 'Seravek Light';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+                font-family: "GoogleSans-Bold";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
         }
-
         @font-face {
-            font-family: 'Seravek Medium';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+                font-family: "GoogleSans-BoldItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
         }
-
         @font-face {
-            font-family: 'Seravek Italic';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+                font-family: "GoogleSans-Italic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
         }
-
         @font-face {
-            font-family: 'Roboto Regular';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+                font-family: "GoogleSans-Medium";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
         }
-
-    	.open-sans-font {
-    		font-family: 'Open Sans', sans-serif;
-    	}
-
-    	.questrial-font {
-    		font-family: 'Questrial', sans-serif;
-    	}
-		.seravek-font {
-            font-family: 'Seravek';
+        @font-face {
+                font-family: "GoogleSans-MediumItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
         }
-
-        .seravek-light-font {
-            font-family: 'Seravek Light';
+        @font-face {
+                font-family: "GoogleSans";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
         }
-
-        .seravek-medium-font {
-            font-family: 'Seravek Medium';
+		.GoogleSans{
+            font-family: "GoogleSans";
         }
-
-        .seravek-italic-font {
-            font-family: 'Seravek Italic';
+        .GoogleSans-MediumItalic{
+            font-family: "GoogleSans-MediumItalic";
         }
-
-        .roboto-regular-font {
-            font-family: 'Roboto Regular';
+        .GoogleSans-Medium{
+            font-family: "GoogleSans-Medium";
+        }
+        .GoogleSans-Italic{
+            font-family: "GoogleSans-Italic";
+        }
+        .GoogleSans-BoldItalic{
+            font-family: "GoogleSans-BoldItalic";
+        }
+        .GoogleSans-Bold{
+            font-family: "GoogleSans-Bold";
         }
 
     	.text-14-3px {
@@ -225,7 +220,7 @@
       }
 
       .image-caption-outlet {
-       
+
       }
 
       .owl-carousel {
@@ -283,50 +278,51 @@
   </head>
   <body>
 
-  	<div class="kotak1">
-  		<div class="container">
-	   		<div class="row">
-	   			<div class="col-12 text-black text-15px seravek-font space-bottom">{{ $data[0]['outlet_name'] }}</div>
-	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/location.png') }}"></div>
-	   			<div class="col-10 text-grey-black text-13-3px seravek-light-font space-text"><span> {{ $data[0]['outlet_address'] }} </span></div>
-	   		</div>
-	   		<div class="row space-bottom line-bottom">
-	   			<div class="col-1 text-grey-black text-13-3px seravek-light-font space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/phone.png') }}"></div>
-	   			<div class="col-10 text-grey-black text-13-3px seravek-light-font space-text"><span> {{ $data[0]['call'] }} </span></div>
-	   		</div>
-	   	</div>
-  	</div>
+  	<!--<div class="kotak1">-->
+  	<!--	<div class="container">-->
+	  <!-- 		<div class="row">-->
+	  <!-- 			<div class="col-12 text-black text-15px GoogleSans-Medium space-bottom">{{ $data[0]['outlet_name'] }}</div>-->
+	  <!-- 			<div class="col-1 text-grey-black text-13-3px GoogleSans-Medium space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/phone.png') }}"></div>-->
+	  <!-- 			<div class="col-10 text-grey-black text-13-3px GoogleSans-Medium space-text"><span> {{ $data[0]['call'] }} </span></div>-->
+	  <!-- 		</div>-->
+	  <!-- 		<div class="row space-bottom line-bottom">-->
+	  <!-- 		    <div class="col-12 text-grey-black text-13-3px GoogleSans-Medium space-text">Lokasi</div>-->
+	  <!-- 			<div class="col-10 text-grey-2 text-13-3px GoogleSans-Regular space-text"><span> {{ $data[0]['outlet_address'] }} </span></div>-->
+	  <!-- 		</div>-->
+	  <!-- 	</div>-->
+  	<!--</div>-->
 
     <div class="kotak1">
   		<div class="container">
+  		    <div class="text-grey-black text-13-3px GoogleSans-Medium space-text">Jam Operasional</div>
   			@php
   				$hari = date ("D");
- 
+
 			switch($hari){
 				case 'Sun':
 					$hari_ini = "Minggu";
 				break;
-		 
-				case 'Mon':			
+
+				case 'Mon':
 					$hari_ini = "Senin";
 				break;
-		 
+
 				case 'Tue':
 					$hari_ini = "Selasa";
 				break;
-		 
+
 				case 'Wed':
 					$hari_ini = "Rabu";
 				break;
-		 
+
 				case 'Thu':
 					$hari_ini = "Kamis";
 				break;
-		 
+
 				case 'Fri':
 					$hari_ini = "Jumat";
 				break;
-		 
+
 				default:
 					$hari_ini = "Sabtu";
 				break;
@@ -334,22 +330,22 @@
 
   			@endphp
   			@foreach ($data[0]['outlet_schedules'] as $key => $val)
-		   		<div class="row space-sch @if ($val['day'] == $hari_ini) brown @endif">
-		   			<div class="text-grey-2 text-13-3px seravek-light-font day-alphabet @if ($val['day'] == $hari_ini) day-alphabet-today @endif">{{ substr($val['day'], 0,1) }}</div>
-		   			<div class="col-2 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) seravek-font @else seravek-light-font @endif min-left "> {{ $val['day'] }} </div>
-		   			<div class="col-5 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) seravek-font @else seravek-light-font @endif"> 
+		   		<div class="row space-sch @if ($val['day'] == $hari_ini) red @endif">
+		   			<!--<div class="text-grey-2 text-13-3px seravek-light-font day-alphabet @if ($val['day'] == $hari_ini) day-alphabet-today @endif">{{ substr($val['day'], 0,1) }}</div>-->
+		   			<div class="col-2 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) GoogleSans-Bold @else GoogleSans-Regular @endif min-left "> {{ $val['day'] }} </div>
+		   			<div class="col-5 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) GoogleSans-Bold @else GoogleSans-Regular @endif">
     		   			@if($val['is_closed'] == '1')
 					   		TUTUP
 						@else
-							{{date('H:i', strtotime($val['open']))}} - {{date('H:i', strtotime($val['close']))}} 
+							{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
 						@endif
 		   			</div>
 		   		</div>
 		   	@endforeach
 	   	</div>
   	</div>
-   
-   	
+
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -21,7 +21,8 @@ class WebviewDealsController extends Controller
         $post['id_deals'] = $id_deals;
         $post['publish'] = 1;
         $post['deals_type'] = $deals_type;
-        
+        $post['web'] = 1;
+
         $data['deals'] = parent::getData(MyHelper::postWithBearer('deals/list', $post, $bearer));
 
         if (empty($data['deals'])) {
@@ -30,7 +31,7 @@ class WebviewDealsController extends Controller
                 'messages' => ['Deals is not found']
             ];
         }
-        
+
         return view('deals::deals.webview.deals_detail', $data);
     }
 

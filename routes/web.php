@@ -39,3 +39,7 @@ Route::group(['middleware' => 'web'], function(){
     Route::post('summernote/picture/delete/{type}', 'Controller@deleteImageSummernote');
   });
 });
+
+Route::get('webview/default', function(){
+  return view('webview.default');
+});

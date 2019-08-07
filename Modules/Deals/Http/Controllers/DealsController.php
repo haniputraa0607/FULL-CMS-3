@@ -18,7 +18,7 @@ class DealsController extends Controller
         date_default_timezone_set('Asia/Jakarta');
     }
 
-    
+
 
     /* IDENTIFIER */
     function identifier($type="") {
@@ -36,7 +36,7 @@ class DealsController extends Controller
 
             return $dealsType[1];
         }
-        
+
     }
 
     /* SAVE DEAL */
@@ -48,7 +48,7 @@ class DealsController extends Controller
         else {
             $post['deals_promo_id'] = $post['deals_promo_id_nominal'];
         }
-        
+
         unset($post['deals_promo_id_promoid']);
         unset($post['deals_promo_id_nominal']);
 
@@ -73,7 +73,7 @@ class DealsController extends Controller
         if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
             $post['deals_publish_end']   = date('Y-m-d H:i:s', strtotime($post['deals_publish_end']));
         }
-        
+
         if (isset($post['deals_image'])) {
             $post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
         }
@@ -105,8 +105,8 @@ class DealsController extends Controller
 
         unset($post['deals_promo_id_promoid']);
         unset($post['deals_promo_id_nominal']);
-        
-        // $post['deals_voucher_type']  = "Auto generated"; 
+
+        // $post['deals_voucher_type']  = "Auto generated";
         $post['deals_start']         = date('Y-m-d H:i:s', strtotime($post['deals_start']));
         $post['deals_end']           = date('Y-m-d H:i:s', strtotime($post['deals_end']));
         $post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
@@ -131,7 +131,7 @@ class DealsController extends Controller
             $data = implode(",", $data);
 
             // SET SESSION
-            Session::flash('deals_recipient', $data); 
+            Session::flash('deals_recipient', $data);
 
             if (is_null($redirect)) {
                 return back()->with('success', ['Data customer has been added.']);
@@ -172,7 +172,7 @@ class DealsController extends Controller
                 $data['deals_type'] = "Deals";
 
             break;
-            case 'hidden-deals': 
+            case 'hidden-deals':
                 if ($type == "") {
                     $data = [
                         'title'          => 'Hidden Deals',
@@ -295,13 +295,14 @@ class DealsController extends Controller
 
     /* LIST */
     function deals(Request $request) {
-        
+
         $identifier = $this->identifier();
         $dataDeals  = $this->dataDeals($identifier);
-        
+
         $data       = $dataDeals['data'];
         $post       = $dataDeals['post'];
         $post['newest'] = 1;
+        $post['web'] = 1;
 
         $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
 
@@ -320,6 +321,7 @@ class DealsController extends Controller
         $post                   = $dataDeals['post'];
         $post['id_deals']       = $id;
         $post['deals_promo_id'] = $promo;
+        $post['web'] = 1;
 
         // DEALS
         $data['deals']   = parent::getData(MyHelper::post('deals/list', $post));
@@ -327,7 +329,7 @@ class DealsController extends Controller
         if (empty($data['deals'])) {
             return back()->withErrors(['Data deals not found.']);
         }
-        
+
         // DEALS USER VOUCHER
         $user = $this->voucherUserList($id, $request->get('page'));
 
@@ -350,25 +352,25 @@ class DealsController extends Controller
 
         $getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
-		
+
 		$getProvince = MyHelper::get('province/list?log_save=0');
 		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
-		
+
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
-		
+
 		$getOutlet = MyHelper::get('outlet/list?log_save=0');
 		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
-			
+
 		$getProduct = MyHelper::get('product/list?log_save=0');
 		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
-		
+
 		$getTag = MyHelper::get('product/tag/list?log_save=0');
 		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
 		$getMembership = MyHelper::post('membership/list?log_save=0',[]);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
-		
+
         if(!empty(Session::get('filter_user'))){
             $data['conditions'] = Session::get('filter_user');
         }else{
@@ -376,11 +378,11 @@ class DealsController extends Controller
         }
 
         return view('deals::deals.detail', $data);
-    } 
+    }
 
     /* */
 
-    /* UPDATE REQUEST */  
+    /* UPDATE REQUEST */
     function updateReq(Create $request) {
         $post = $request->except('_token');
         $url  = explode(url('/'), url()->previous());
@@ -427,7 +429,7 @@ class DealsController extends Controller
         ];
 
         Session::put('filter_user',$post['conditions']);
-        
+
         $save = MyHelper::post('hidden-deals/create/autoassign', $post);
         return $save;
     }
@@ -496,9 +498,9 @@ class DealsController extends Controller
             }
             else {
                 $post['deals_promo_id'] = $post['deals_promo_id_nominal'];
-            }    
+            }
         }
-        
+
         unset($post['deals_promo_id_promoid']);
         unset($post['deals_promo_id_nominal']);
 
@@ -582,7 +584,7 @@ class DealsController extends Controller
             return "fail";
         }
     }
-    
+
     /* TRX DEALS */
     function transaction(Request $request) {
         $data = [
@@ -610,10 +612,10 @@ class DealsController extends Controller
         }
 
         $data['outlet']    = parent::getData(MyHelper::get('outlet/list?log_save=0'));
-        $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => ["Deals", "Hidden"]]));
+        $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => ["Deals", "Hidden"], 'web' => 1]));
         // $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
 
-        
+
         foreach ($post as $key => $value) {
             $data[$key] = $value;
         }
@@ -635,7 +637,7 @@ class DealsController extends Controller
         if (empty($post)) {
             return redirect('deals/transaction');
         }
-        
+
         if (isset($post['page'])) {
             $post['date_start'] = session('date_start');
             $post['date_end']   = session('date_end');
@@ -754,7 +756,7 @@ class DealsController extends Controller
         if (isset($post['deals_publish_start']) && !empty($post['deals_publish_start'])) {
             $post['deals_publish_end']   = date('Y-m-d H:i:s', strtotime($post['deals_publish_end']));
         }
-        
+
         if (isset($post['deals_image'])) {
             $post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
         }
@@ -767,10 +769,10 @@ class DealsController extends Controller
 
     // list deals subscription
     public function subscriptionDeals(Request $request) {
-        
+
         $identifier = $this->identifier();
         $dataDeals  = $this->dataDeals($identifier);
-        
+
         $data       = $dataDeals['data'];
         $post       = $dataDeals['post'];
 
@@ -848,4 +850,3 @@ class DealsController extends Controller
         }
     }
 }
-
