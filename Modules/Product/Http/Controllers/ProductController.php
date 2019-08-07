@@ -26,7 +26,7 @@ class ProductController extends Controller
             'menu_active'    => 'product',
             'submenu_active' => 'product-position',
         ];
-        
+
         $catParent = MyHelper::get('product/category/list');
 
         if (isset($catParent['status']) && $catParent['status'] == "success") {
@@ -35,9 +35,9 @@ class ProductController extends Controller
         else {
             $data['category'] = [];
         }
-        
+
         $product = MyHelper::get('product/list');
-        
+
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
@@ -45,7 +45,7 @@ class ProductController extends Controller
             $data['product'] = [];
         }
         // dd($data);
-        
+
         return view('product::product.product-position', $data);
     }
 
@@ -66,27 +66,27 @@ class ProductController extends Controller
 
     public function categoryAssign(Request $request) {
 		$post = $request->except('_token');
-		
+
 		$data = [
             'title'          => 'Manage Product Category',
             'sub_title'      => 'Assign Products to Categories',
             'menu_active'    => 'product',
             'submenu_active' => 'product-category',
         ];
-		
+
 		if (!empty($post)) {
 			$update = MyHelper::post('product/category/assign', $post);
-			
+
 			if (isset($update['status']) && $update['status'] == 'success') {
 				// print_r($update);exit;
-				return parent::redirect($update, 'Product categories has been updated.', 'product/category/assign'); 
+				return parent::redirect($update, 'Product categories has been updated.', 'product/category/assign');
 			} elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
 				return back()->withErrors($update['messages']);
 			} else {
 				return back()->witherrors(['Update Failed']);
 			}
 		}
-		
+
 		$catParent = MyHelper::get('product/category/list');
 
         if (isset($catParent['status']) && $catParent['status'] == "success") {
@@ -95,20 +95,20 @@ class ProductController extends Controller
 		else {
             $data['category'] = [];
         }
-		
+
         $product = MyHelper::get('product/list');
-		
+
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
         else {
             $data['product'] = [];
         }
-		
+
         return view('product::product.product-category', $data);
 
 	}
-	
+
     public function importProduct() {
         $data = [
             'title'          => 'Product',
@@ -124,7 +124,7 @@ class ProductController extends Controller
         $listProduct = MyHelper::get('product/list');
         $listOutlet = MyHelper::post('outlet/list', ['admin' => 1]);
         $dataPrice = [];
-        
+
         if (isset($listProduct['status']) && $listProduct['status'] == 'fail') {
              $dataProduct = [];
         } elseif (!isset($listProduct['status'])) {
@@ -175,7 +175,7 @@ class ProductController extends Controller
                 });
             })->export('xls');
         }
-        
+
         Excel::create('product', function($excel) use($dataProduct, $dataOutlet, $dataPrice){
             $excel->sheet('Product', function($sheet) use($dataProduct){
                 $sheet->fromArray($dataProduct);
@@ -247,7 +247,7 @@ class ProductController extends Controller
             $data['parent'] = $this->category();
             $tags = MyHelper::get('product/tag/list');
             $data['tags'] = parent::getData($tags);
-            
+
             return view('product::product.create', $data);
         }
         else {
@@ -260,15 +260,14 @@ class ProductController extends Controller
                 unset($post['id_product_category']);
             }
 
-            $post['product_visibility'] = 'Visible';
             // print_r($post);exit;
-            
+
             if (isset($post['photo'])) {
                 $post['photo']      = MyHelper::encodeImage($post['photo']);
             }
 
             $save = MyHelper::post('product/create', $post);
-            // return $save;
+
             if (isset($save['status']) && $save['status'] == 'success') {
                 if (isset($post['id_tag']))  {
                     $saveRelation = app($this->tag)->createProductTag($save['result']['id_product'], $post['id_tag']);
@@ -294,8 +293,8 @@ class ProductController extends Controller
             'menu_active'    => 'product',
             'submenu_active' => 'product-list',
         ];
-        
-        $product = MyHelper::get('product/list');
+
+        $product = MyHelper::post('product/list', ['admin_list' => 1]);
 		// print_r($product);exit;
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
@@ -308,7 +307,7 @@ class ProductController extends Controller
         return view('product::product.list', $data);
 
     }
-	
+
 	function listProductAjax(Request $request) {
         $product = MyHelper::get('product/list?log_save=0');
 
@@ -332,8 +331,8 @@ class ProductController extends Controller
             'submenu_active' => 'product-list',
         ];
 
-        $product = MyHelper::post('product/list', ['product_code' => $code]);
-        
+        $product = MyHelper::post('product/list', ['product_code' => $code, 'outlet_prices' => 1]);
+        // dd($product);
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
@@ -348,18 +347,17 @@ class ProductController extends Controller
             $data['parent'] = $this->category();
             $tags = MyHelper::get('product/tag/list');
             $data['tags'] = parent::getData($tags);
-			
-			$outlet = MyHelper::post('outlet/list', ['admin' => 1]);
+			$outlet = MyHelper::post('outlet/list', ['admin' => 1, 'id_product' => $data['product'][0]['id_product']]);
 			if (isset($outlet['status']) && $outlet['status'] == 'success') {
 				$data['outlet'] = $outlet['result'];
-			} 
-			// print_r($data);exit;
-		
+            }
+			// dd($outlet);exit;
+
             return view('product::product.detail', $data);
         }
         else {
 			// print_r($post);exit;
-			
+
 			 /**
              * update info
              */
@@ -372,12 +370,12 @@ class ProductController extends Controller
                 if (isset($post['photo'])) {
                     $post['photo'] = MyHelper::encodeImage($post['photo']);
                 }
-                
+
                 // update data
                 $save = MyHelper::post('product/update', $post);
-                
+
                 unset($post['photo']);
-                
+
                 // update product tag
                 if (isset($save['status']) && $save['status'] == 'success') {
                     // delete dulu
@@ -389,9 +387,9 @@ class ProductController extends Controller
                     }
                 }
 
-                return parent::redirect($save, 'Product info has been updated.', 'product/detail/'.$post['product_code'].'#info'); 
+                return parent::redirect($save, 'Product info has been updated.', 'product/detail/'.$post['product_code'].'#info');
             }
-			
+
             /**
              * jika price
              */
@@ -400,7 +398,7 @@ class ProductController extends Controller
 				// print_r($save);exit;
                 return parent::redirect($save, 'Product price & visibility setting has been updated.', 'product/detail/'.$code.'#price');
 			}
-			
+
 			/**
              * jika diskon
              */
@@ -434,7 +432,7 @@ class ProductController extends Controller
                  * save
                  */
                 $save          = MyHelper::post('product/photo/create', $post);
-                return parent::redirect($save, 'Product photo has been added.', 'product/detail/'.$code.'#photo'); 
+                return parent::redirect($save, 'Product photo has been added.', 'product/detail/'.$code.'#photo');
             }
 
             /**
@@ -470,7 +468,7 @@ class ProductController extends Controller
         $post   = $request->all();
 
         $delete = MyHelper::post('product/photo/delete', ['id_product_photo' => $post['id_product_photo']]);
-        
+
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
         }
@@ -521,10 +519,10 @@ class ProductController extends Controller
         }
         else {
             return "fail";
-        }   
+        }
     }
 
-    public function price(Request $request, $key = null) 
+    public function price(Request $request, $key = null)
     {
         $data = [
             'title'          => 'Order',
@@ -532,12 +530,23 @@ class ProductController extends Controller
             'menu_active'    => 'product-price',
             'submenu_active' => 'product-price',
         ];
-        
+
         $post = $request->except('_token');
         if(isset($post['page'])){
             $page = $post['page'];
             unset($post['page']);
         }
+
+        if(array_key_exists('product_name', $post)){
+            if($post['product_name'] != NULL){
+                $data['product_name'] = $post['product_name'];
+                Session::put('search_product_name',  $data['product_name']);
+            }else{
+                Session::forget('search_product_name');
+            }
+        }
+        unset($post['product_name']);
+
         if ($post) {
             return $this->priceProcess($post);
         }
@@ -552,8 +561,14 @@ class ProductController extends Controller
         }
 
         $data['pagination'] = true;
+        $data['orderBy'] = 'product_name';
+
+        if(!isset($data['product_name']) && Session::get('search_product_name')){
+            $data['product_name'] = Session::get('search_product_name');
+        }
+
         if(isset($page)){
-            $product = MyHelper::post('product/list?page='.$page, $data);    
+            $product = MyHelper::post('product/list?page='.$page, $data);
         }else{
             $product = MyHelper::post('product/list', $data);
         }
@@ -571,14 +586,12 @@ class ProductController extends Controller
         } else {
             $data['key'] = $data['outlet'][0]['id_outlet'];
         }
-        
-        // print_r($data);die();
 
         return view('product::product.price', $data);
     }
-  
+
     /* PROSES HARGA */
-    function priceProcess($post) 
+    function priceProcess($post)
     {
         $price = array_filter($post['price']);
         if (!empty($price)) {
@@ -592,7 +605,6 @@ class ProductController extends Controller
                     'product_stock_status'  => $post['product_stock_status'][$key],
                     'id_outlet'             => $post['id_outlet'],
                 ];
-
                 $save = MyHelper::post('product/prices', $data);
                 if (isset($save['status']) && $save['status'] != "success") {
                     return back()->witherrors(['Product price failed to update']);
@@ -607,7 +619,7 @@ class ProductController extends Controller
     {
         $post = $request->except('_token');
         $update = MyHelper::post('product/update/allow_sync', $post);
-        
+
         if (isset($update['status']) && $update['status'] == "success") {
             return ['status' => 'success'];
         }elseif (isset($update['status']) && $update['status'] == 'fail') {
@@ -617,7 +629,21 @@ class ProductController extends Controller
         }
     }
 
-    public function visibility(Request $request, $key = null) 
+    public function updateVisibility(Request $request)
+    {
+        $post = $request->except('_token');
+        $update = MyHelper::post('product/update/visibility/global', $post);
+
+        if (isset($update['status']) && $update['status'] == "success") {
+            return ['status' => 'success'];
+        }elseif (isset($update['status']) && $update['status'] == 'fail') {
+            return ['status' => 'fail', 'messages' => $update['messages']];
+        } else {
+            return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update product visibility'];
+        }
+    }
+
+    public function visibility(Request $request, $key = null)
     {
         $visibility = strpos(url()->current(), 'visible');
         if($visibility <= 0){
@@ -679,14 +705,14 @@ class ProductController extends Controller
                    if (isset($save['errors'])) {
                        return back()->withErrors($save['errors'])->withInput();
                    }
-   
+
                    if (isset($save['status']) && $save['status'] == "fail") {
                        return back()->withErrors($save['messages'])->withInput();
                    }
-                   
+
                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
-           
+
         }
 
         $outlet = MyHelper::get('outlet/list');
@@ -771,7 +797,7 @@ class ProductController extends Controller
                                 if($i % 10 == 0){
                                     $page++;
                                 }
-                                $i++; 
+                                $i++;
                                 $countProduct++;
                             }
                         }
@@ -792,7 +818,7 @@ class ProductController extends Controller
                         if($i % 10 == 0){
                             $page++;
                         }
-                        $i++; 
+                        $i++;
                         $countProduct++;
                     }
                 }
@@ -820,7 +846,7 @@ class ProductController extends Controller
 
     public function photoDefault(Request $request) {
         $post = $request->except('_token');
-       
+
         if (empty($post)) {
             $data = [
                 'title'          => 'Product',
@@ -843,6 +869,22 @@ class ProductController extends Controller
                 return back()->witherrors(['Product Not Found']);
             }
         }
+    }
+
+    public function updateVisibilityProduct(Request $request){
+        $post = $request->except('_token');
+        $post['id_visibility'] = explode(',', $post['id_visibility']);
+        $save = MyHelper::post('product/update/visibility', $post);
+        if (isset($save['status']) && $save['status'] == "success") {
+            $data = ['status' => 'success'];
+        }
+        else {
+            $data = ['status' => 'fail'];
+            if(isset($save['messages'])){
+                $data['messages'] = $save['messages'];
+            }
+        }
+		return response()->json($data);
     }
 
 }
