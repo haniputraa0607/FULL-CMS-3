@@ -6,7 +6,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
     {{-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
@@ -19,7 +19,7 @@
           $('.summernote').summernote({
             placeholder: 'Category Description',
             tabsize: 2,
-            toolbar: [         
+            toolbar: [
               ['style', ['style']],
               ['style', ['bold', 'underline', 'clear']],
               ['color', ['color']],
@@ -54,7 +54,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -67,7 +67,7 @@
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Name 
+                        <label class="col-md-3 control-label">Name
                             <span class="required" aria-required="true"> *
                             </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama Kategori Produk" data-container="body"></i>
@@ -108,8 +108,9 @@
                             </div>
                         </div>
                     </div>
+                    {{--
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Image <br> <span class="required" aria-required="true"> (300*300) </span> 
+                        <label class="col-md-3 control-label">Image <br> <span class="required" aria-required="true"> (300*300) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar Kategori Produk" data-container="body"></i>
                         </label>
                         <div class="col-md-1">
@@ -131,6 +132,7 @@
                             </div>
                         </div>
                     </div>
+                    --}}
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}

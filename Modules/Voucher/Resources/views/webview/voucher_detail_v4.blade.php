@@ -89,7 +89,7 @@
     	.outlet-city:not(:first-child){
     		margin-top: 10px;
     	}
-    	
+
     	.voucher{
     	    font-size: 16px;
     	    padding-bottom: 0 !important;
@@ -97,15 +97,15 @@
     	.font-red{
     	    color: #990003;
     	}
-    	
+
     	#invalidate {
             color:#fff;
-            background-color: #990003; 
+            background-color: #990003;
             border: none;
             border-radius: 5px;
             margin-bottom: 70px;
             margin-top: 30px;
-            width: 100%;
+            width: 90%;
             height: 48px;
             font-size: 18px;
         }
@@ -133,7 +133,7 @@
             border-radius: 42.3px;
             border: 0;
         }
-        
+
          .deals-qr {
             background: #fff;
             width: 135px;
@@ -174,7 +174,7 @@
 						@endif
 					</div>
 				</div>
-				
+
 				<!-- Modal QR Code -->
                 @if($voucher['redeemed_at'] != null && $voucher['used_at'] == null)
                 <a id="qr-code-modal" href="#">
@@ -182,7 +182,7 @@
                         <img class="img-responsive" src="{{ $voucher['voucher_hash'] }}">
                     </div>
                 </a>
-               
+
                 <div class="description-wrapper">
                     <div class="subtitle2 text-center GoogleSans">Tunjukkan QR Code di bawah ke kasir</div>
 
@@ -203,21 +203,31 @@
                 @endif
 
 				<div class="outlet-wrapper">
-					<div class="subtitle">Dapat digunakan di outlet:</div>
-					<div class="outlet">
-						@foreach($voucher['deal_voucher']['deal']['outlet_by_city'] as $key => $outlet_city)
-							@if(isset($outlet_city['city_name']))
-							<div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
-							<ul class="nav">
-								@foreach($outlet_city['outlet'] as $key => $outlet)
-								<li>- {{ $outlet['outlet_name'] }}</li>
+                    @if ($voucher['deal_voucher']['deal']['label_outlet'] == 'Some' || $voucher['redeemed_at'] != null)
+						<div class="subtitle">Dapat digunakan di outlet:</div>
+						<div class="outlet">
+							@if($voucher['redeemed_at'] != null)
+								@if(isset($voucher['outlet_name']))
+								{{$voucher['outlet_name']}}
+								@endif
+							@else
+								@foreach($voucher['deal_voucher']['deal']['outlet_by_city'] as $key => $outlet_city)
+								@if(isset($outlet_city['city_name']))
+								<div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
+								<ul class="nav">
+									@foreach($outlet_city['outlet'] as $key => $outlet)
+									<li>- {{ $outlet['outlet_name'] }}</li>
+									@endforeach
+								</ul>
+								@endif
 								@endforeach
-							</ul>
 							@endif
-						@endforeach
-					</div>
+						</div>
+					@else
+						<div class="subtitle">TERSEDIA DI SEMUA OUTLET</div>
+					@endif
 				</div>
-                
+
                 @if($voucher['redeemed_at'] == null)
                     <center>
                         <button type="button" id="invalidate" class="btn btn-primary GoogleSans-Bold">Invalidate</button>
@@ -279,7 +289,7 @@
                 //     var result = url.replace("#true", "");
                 //     result = result.replace("#false", "");
                 //     result = result.replace("#", "");
-    
+
                 //     window.location.href = result + '#true';
                 // } else {
                 //     console.log('true');
@@ -289,7 +299,7 @@
 
                 //     window.location.href = result + '#false';
                 // }
-                
+
             });
 
         });

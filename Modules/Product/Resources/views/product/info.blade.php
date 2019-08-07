@@ -60,10 +60,38 @@
                 </div>
             </div>
         </div>
-        
+        <div class="form-group">
+            <label class="col-md-3 control-label">Product Visible
+                <i class="fa fa-question-circle tooltips" data-original-title="Setting apakah produk akan ditampilkan di aplikasi" data-container="body"></i>
+            </label>
+            <div class="input-icon right">
+                <div class="col-md-2">
+                    <div class="md-radio-inline">
+                        <div class="md-radio">
+                            <input type="radio" id="radio1" name="product_visibility" class="md-radiobtn req-type" value="Visible" required @if($syu['product_visibility'] == 'Visible') checked @endif>
+                            <label for="radio1">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> Visible</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="md-radio-inline">
+                        <div class="md-radio">
+                            <input type="radio" id="radio2" name="product_visibility" class="md-radiobtn req-type" value="Hidden" required @if($syu['product_visibility'] == 'Hidden') checked @endif>
+                            <label for="radio2">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> Hidden </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
          <div class="form-group">
             <label class="col-md-3 control-label">
-                Photo <span class="required" aria-required="true">* <br>(300*300) </span> 
+                Photo <span class="required" aria-required="true">* <br>(300*300) </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>
             </label>
             <div class="col-md-8">
@@ -110,7 +138,7 @@
         <!--        </div>-->
         <!--    </div>-->
         <!--</div>-->
-        
+
         <div class="form-group">
            <label for="multiple" class="control-label col-md-3">Description
                <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>

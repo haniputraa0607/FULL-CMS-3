@@ -11,7 +11,7 @@ $configs = session('configs');
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 
 	<style type="text/css">
     .show{
@@ -19,7 +19,7 @@ $configs = session('configs');
     }
     </style>
 @endsection
-    
+
 @section('page-script')
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
@@ -33,13 +33,13 @@ $configs = session('configs');
     <script type="text/javascript">
 		$(document).ready(function() {
 			$.fn.modal.Constructor.prototype.enforceFocus = function() {};
-			
-				
+
+
 	$('.summernote').summernote({
         placeholder: 'Enquiry Reply',
         tabsize: 2,
         height: 120,
-        toolbar: [         
+        toolbar: [
           ['style', ['style']],
           ['style', ['bold', 'underline', 'clear']],
           ['color', ['color']],
@@ -95,7 +95,7 @@ $configs = session('configs');
         })
     }
         });
-		
+
 		function setIdEnquiry(idnya){
 			let token  = "{{ csrf_token() }}";
 			document.getElementById('id_enquiry').value = idnya;
@@ -107,13 +107,13 @@ $configs = session('configs');
 					console.log(result);
 					if(result[0]['reply_email_subject'] != "" && result[0]['reply_email_subject'] != null){
 						document.getElementById('reply_email_subject').value = result[0]['reply_email_subject'];
-						
+
 						$('#reply_email_content').val(result[0]['reply_email_content']);
 						$('#reply_email_content').summernote('editor.saveRange');
 						$('#reply_email_content').summernote('editor.restoreRange');
 						$('#reply_email_content').summernote('editor.focus');
 						$('#reply_email_content').summernote('code', result[0]['reply_email_content']);
-						
+
 						document.getElementById('reply_email_subject').disabled  = true;
 						$('#reply_email_content').summernote('disable');
 					} else {
@@ -123,11 +123,11 @@ $configs = session('configs');
 						$('#reply_email_content').summernote('editor.restoreRange');
 						$('#reply_email_content').summernote('editor.focus');
 						$('#reply_email_content').summernote('code.insertText', " ");
-						
+
 						document.getElementById('reply_email_subject').disabled  = false;
 						$('#reply_email_content').summernote('enable');
 					}
-					
+
 					if(result[0]['reply_sms_content'] != "" && result[0]['reply_sms_content'] != null){
 						document.getElementById('reply_sms_content').value = result[0]['reply_sms_content'];
 						document.getElementById('reply_sms_content').disabled  = true;
@@ -135,28 +135,28 @@ $configs = session('configs');
 						document.getElementById('reply_sms_content').value = "";
 						document.getElementById('reply_sms_content').disabled  = false;
 					}
-					
+
 					if(result[0]['reply_push_subject'] != "" && result[0]['reply_push_subject'] != null){
 						document.getElementById('reply_push_subject').value = result[0]['reply_push_subject'];
 						if(result[0]['reply_push_content'] != "" && result[0]['reply_push_content'] != null){
 							document.getElementById('reply_push_content').value = result[0]['reply_push_content'];
 						}
-						
+
 						if(result[0]['reply_push_image'] != "" && result[0]['reply_push_image'] != null){
 							document.getElementById('reply_push_image').src = "http://crmapi.staging.co.id/"+result[0]['reply_push_image'];
 						}
-						
+
 						if(result[0]['reply_push_clickto'] != "" && result[0]['reply_push_clickto'] != null){
 							document.getElementById('reply_push_clickto').src = "http://crmapi.staging.co.id/"+result[0]['reply_push_image'];
 						}
-						
+
 						/* document.getElementById('reply_push_subject').disabled  = true;
 						document.getElementById('reply_push_content').disabled  = true;
 						document.getElementById('reply_push_clickto').disabled  = true;
 						document.getElementById('autocrm_push_id_reference').disabled  = true;
 						document.getElementById('autocrm_push_link').disabled  = true;
 						document.getElementById('reply_push_image_btn').disabled  = true; */
-						
+
 					} else {
 						/* document.getElementById('reply_push_subject').disabled  = false;
 						document.getElementById('reply_push_content').disabled  = false;
@@ -165,13 +165,13 @@ $configs = session('configs');
 						document.getElementById('autocrm_push_link').disabled  = false;
 						document.getElementById('reply_push_image_btn').disabled  = false; */
 					}
-					
-					
-					
+
+
+
 				}
 			});
 		}
-		
+
         $('.tablesData').dataTable({
                 language: {
                     aria: {
@@ -293,7 +293,7 @@ $configs = session('configs');
 
 	function fetchDetail(det){
 		let token  = "{{ csrf_token() }}";
-			
+
 		if(det == 'Product'){
 			$.ajax({
 				type : "GET",
@@ -311,7 +311,7 @@ $configs = session('configs');
 			});
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Outlet'){
 			$.ajax({
 				type : "GET",
@@ -329,7 +329,7 @@ $configs = session('configs');
 			});
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'News'){
 			$.ajax({
 				type : "GET",
@@ -347,49 +347,49 @@ $configs = session('configs');
 			});
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Home'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'E-Magazine'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Inbox'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Deals'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Contact Us'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Link'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'block';
 		}
-		
+
 		if(det == 'Logout'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
@@ -421,7 +421,7 @@ $configs = session('configs');
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
 
@@ -446,7 +446,7 @@ $configs = session('configs');
 				@endif
 				@if(MyHelper::hasAccess([59], $configs))
 					<li>
-					<a href="#partnership" data-toggle="tab"> Partnership </a>
+					<a href="#partnership" data-toggle="tab"> Karir </a>
 					</li>
 				@endif
     	      </ul>
@@ -455,15 +455,15 @@ $configs = session('configs');
     	        	<div class="portlet">
 	    	        	<div class="portlet-title">
 	    	        	    <div class="caption">
-	    	        	        
+
 	    	        	    </div>
 	    	        	</div>
 						<div class="portlet-body form">
 		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" width="100%" id="tablesDataQuestion">
 		    	        	    <thead>
 		    	        	        <tr>
-		    	        	            <th> No </th>				   
-		    	        	            <th> Date </th>				   
+		    	        	            <th> No </th>
+		    	        	            <th> Date </th>
 		    	        	            <th> Name </th>
 		    	        	            <th> Phone </th>
 		    	        	            <th> Email </th>
@@ -479,20 +479,20 @@ $configs = session('configs');
    		    	        	                <tr>
    		    	        	                    <td>{{ $no }}</td>
    		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
-																					 
+
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
    		    	        	                    <td>
    		    	        	                    	<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
    		    	        	                    </td>
-   		    	        	                    <td class="noExport show"> 
+   		    	        	                    <td class="noExport show">
 													@if(MyHelper::hasAccess([84], $grantedFeature))
-														<a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a> 
-														
-														<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ $value['enquiry_subject'] }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a> 
+														<a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
+
+														<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ $value['enquiry_subject'] }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
 														@if(MyHelper::hasAccess([57], $configs))
-															<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a> 
+															<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
 														@endif
 													@endif
 												</td>
@@ -517,17 +517,17 @@ $configs = session('configs');
 	   		    	        	                                </div>
    		    	        	                                @endif
    		    	        	                              </div>
-   		    	        	                           </div> 
+   		    	        	                           </div>
    		    	        	                           <div class="modal-footer">
    		    	        	                               <button type="button" data-dismiss="modal" class="btn green">Close</button>
    		    	        	                           </div>
    		    	        	                       </div>
    		    	        	                   </div>
-   		    	        	                </div>  
-   		    	        	                <?php $no++; ?> 
+   		    	        	                </div>
+   		    	        	                <?php $no++; ?>
    		    	        	                @endif
    		    	        	            @endforeach
-   		    	        	        @endif	
+   		    	        	        @endif
 		    	        	    </tbody>
 		    	        	</table>
 	    	        	</div>
@@ -537,15 +537,15 @@ $configs = session('configs');
     	        	<div class="portlet">
 	    	        	<div class="portlet-title">
 	    	        	    <div class="caption">
-	    	        	        
+
 	    	        	    </div>
 	    	        	</div>
 						<div class="portlet-body form">
 		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataComplaint" width="100%">
 		    	        	    <thead>
 		    	        	        <tr>
-		    	        	            <th> No </th>		   
-		    	        	            <th> Date </th>		   
+		    	        	            <th> No </th>
+		    	        	            <th> Date </th>
 		    	        	            <th> Name </th>
 		    	        	            <th> Phone </th>
 		    	        	            <th> Email </th>
@@ -567,12 +567,12 @@ $configs = session('configs');
    		    	        	                    <td>
    		    	        	                    	<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
    		    	        	                    </td>
-   		    	        	                    <td class="noExport show"> 
-   		    	        	                       <a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a> 
-   		    	        	                        
-													<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ $value['enquiry_subject'] }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a> 
+   		    	        	                    <td class="noExport show">
+   		    	        	                       <a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
+
+													<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ $value['enquiry_subject'] }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
 													@if(MyHelper::hasAccess([57], $configs))
-														<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a> 
+														<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
 													@endif
    		    	        	                    </td>
    		    	        	                </tr>
@@ -596,13 +596,13 @@ $configs = session('configs');
 	   		    	        	                                </div>
    		    	        	                                @endif
    		    	        	                              </div>
-   		    	        	                           </div> 
+   		    	        	                           </div>
    		    	        	                           <div class="modal-footer">
    		    	        	                               <button type="button" data-dismiss="modal" class="btn green">Close</button>
    		    	        	                           </div>
    		    	        	                       </div>
    		    	        	                   </div>
-   		    	        	                </div> 
+   		    	        	                </div>
 											<?php $no++; ?>
 		    	        	                @endif
 		    	        	            @endforeach
@@ -616,15 +616,15 @@ $configs = session('configs');
     	        	<div class="portlet">
 	    	        	<div class="portlet-title">
 	    	        	    <div class="caption">
-	    	        	        
+
 	    	        	    </div>
 	    	        	</div>
 						<div class="portlet-body form">
 		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataPartnership" width="100%">
 		    	        	    <thead>
 		    	        	        <tr>
-		    	        	            <th> No </th>		   
-		    	        	            <th> Date </th>		   
+		    	        	            <th> No </th>
+		    	        	            <th> Date </th>
 		    	        	            <th> Name </th>
 		    	        	            <th> Phone </th>
 		    	        	            <th> Email </th>
@@ -646,12 +646,12 @@ $configs = session('configs');
    		    	        	                    <td class="noExport">
    		    	        	                    	<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
    		    	        	                    </td>
-   		    	        	                    <td class="noExport show"> 
-   		    	        	                        <a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a> 
-   		    	        	                        
-													<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ $value['enquiry_subject'] }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a> 
+   		    	        	                    <td class="noExport show">
+   		    	        	                        <a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
+
+													<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ $value['enquiry_subject'] }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
 													@if(MyHelper::hasAccess([57], $configs))
-														<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a> 
+														<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
 													@endif
 												</td>
    		    	        	                </tr>
@@ -675,13 +675,13 @@ $configs = session('configs');
 	   		    	        	                                </div>
    		    	        	                                @endif
    		    	        	                              </div>
-   		    	        	                           </div> 
+   		    	        	                           </div>
    		    	        	                           <div class="modal-footer">
    		    	        	                               <button type="button" data-dismiss="modal" class="btn green">Close</button>
    		    	        	                           </div>
    		    	        	                       </div>
    		    	        	                   </div>
-   		    	        	                </div> 
+   		    	        	                </div>
 											<?php $no++; ?>
 		    	        	                @endif
 		    	        	            @endforeach
@@ -754,7 +754,7 @@ $configs = session('configs');
 										<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 											<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="reply_push_image" />
 										</div>
-											
+
 										<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
 										<div>
 											<span class="btn default btn-file">

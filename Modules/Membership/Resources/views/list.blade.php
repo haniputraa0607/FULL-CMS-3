@@ -6,20 +6,20 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-	
+
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
 @endsection
@@ -61,7 +61,7 @@
 			for (h = 0; h < Req.length; h++) {
 				Req[h].className = 'input-icon input-group levelReq';
 			}
-			
+
 			var reqIDR = document.getElementsByClassName('levelReqIDR');
 			var i;
 			for (i = 0; i < reqIDR.length; i++) {
@@ -73,19 +73,19 @@
 			for (i = 0; i < reqBalance.length; i++) {
 				reqBalance[i].style.display = 'none';
 			}
-			
+
 			var reqX = document.getElementsByClassName('levelReqX');
 			var j;
 			for (j = 0; j < reqX.length; j++) {
 				reqX[j].style.display = 'table-cell';
 			}
-			
+
 			var retIDR = document.getElementsByClassName('levelRetIDR');
 			var k;
 			for (k = 0; k < retIDR.length; k++) {
 				retIDR[k].style.display = 'none';
 			}
-			
+
 			var retX = document.getElementsByClassName('levelRetX');
 			var l;
 			for (l = 0; l < retX.length; l++) {
@@ -97,7 +97,7 @@
 			for (l = 0; l < retBalance.length; l++) {
 				retBalance[l].style.display = 'none';
 			}
-			
+
 			var Ret = document.getElementsByClassName('levelRet');
 			var m;
 			for (m = 0; m < Ret.length; m++) {
@@ -109,7 +109,7 @@
 			for (h = 0; h < Req.length; h++) {
 				Req[h].className = 'input-icon input-group right levelReq';
 			}
-			
+
 			var reqIDR = document.getElementsByClassName('levelReqIDR');
 			var i;
 			for (i = 0; i < reqIDR.length; i++) {
@@ -121,19 +121,19 @@
 			for (i = 0; i < reqBalance.length; i++) {
 				reqBalance[i].style.display = 'none';
 			}
-			
+
 			var reqX = document.getElementsByClassName('levelReqX');
 			var j;
 			for (j = 0; j < reqX.length; j++) {
 				reqX[j].style.display = 'none';
 			}
-			
+
 			var retIDR = document.getElementsByClassName('levelRetIDR');
 			var k;
 			for (k = 0; k < retIDR.length; k++) {
 				retIDR[k].style.display = 'table-cell';
 			}
-			
+
 			var retX = document.getElementsByClassName('levelRetX');
 			var l;
 			for (l = 0; l < retX.length; l++) {
@@ -145,7 +145,7 @@
 			for (l = 0; l < retBalance.length; l++) {
 				retBalance[l].style.display = 'none';
 			}
-			
+
 			var Ret = document.getElementsByClassName('levelRet');
 			var m;
 			for (m = 0; m < Ret.length; m++) {
@@ -157,7 +157,7 @@
 			for (h = 0; h < Req.length; h++) {
 				Req[h].className = 'input-icon input-group right levelReq';
 			}
-			
+
 			var reqIDR = document.getElementsByClassName('levelReqIDR');
 			var i;
 			for (i = 0; i < reqIDR.length; i++) {
@@ -169,19 +169,19 @@
 			for (i = 0; i < reqBalance.length; i++) {
 				reqBalance[i].style.display = 'table-cell';
 			}
-			
+
 			var reqX = document.getElementsByClassName('levelReqX');
 			var j;
 			for (j = 0; j < reqX.length; j++) {
 				reqX[j].style.display = 'none';
 			}
-			
+
 			var retIDR = document.getElementsByClassName('levelRetIDR');
 			var k;
 			for (k = 0; k < retIDR.length; k++) {
 				retIDR[k].style.display = 'none';
 			}
-			
+
 			var retX = document.getElementsByClassName('levelRetX');
 			var l;
 			for (l = 0; l < retX.length; l++) {
@@ -193,7 +193,7 @@
 			for (l = 0; l < retBalance.length; l++) {
 				retBalance[l].style.display = 'table-cell';
 			}
-			
+
 			var Ret = document.getElementsByClassName('levelRet');
 			var m;
 			for (m = 0; m < Ret.length; m++) {
@@ -217,7 +217,7 @@
 			$( ".price" ).on( "keyup", numberFormat);
 
 			$( ".price" ).on( "blur", checkFormat);
-		
+
         }, 100);
 	}
 
@@ -248,9 +248,17 @@
 	}
 
 	$(document).ready(function () {
+		$('.colorpicker').minicolors({
+			format: 'hex',
+			theme: 'bootstrap'
+		})
         $('.repeater').repeater({
 			show: function () {
-                $(this).slideDown();
+				$(this).slideDown();
+				$('.colorpicker').minicolors({
+					format: 'hex',
+					theme: 'bootstrap'
+				})
             },hide: function (deleteElement) {
                 if(confirm('Are you sure you want to delete this element?')) {
                     $(this).slideUp(deleteElement);
@@ -275,18 +283,17 @@
             }]
         });
 	});
-	
+
 		$(".file").change(function(e) {
-			console.log('l')
-                widthImg  = 300;
-                heightImg = 300;              
+                widthImg  = 750;
+                heightImg = 250;
 
                 var _URL = window.URL || window.webkitURL;
                 var image, file;
 
                 if ((file = this.files[0])) {
                     image = new Image();
-                    
+
                     image.onload = function() {
                         if (this.width == widthImg && this.height == heightImg) {
                             // image.src = _URL.createObjectURL(file);
@@ -296,11 +303,11 @@
                             $(this).val("");
                             // $('#remove_square').click()
                             // image.src = _URL.createObjectURL();
-							console.log($(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img'))
-							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+							console.log($(this))
+							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'http://www.placehold.it/750x250/EFEFEF/AAAAAA&amp;text=no+image');
                         }
                     };
-                
+
                     image.src = _URL.createObjectURL(file);
                 }
 
@@ -335,20 +342,20 @@
 						</label>
 					</div>
 					<div class="col-md-4">
-						<?php 
+						<?php
 							if(isset($result) && !empty($result)){
 								if($result[0]['membership_type']){
 									$value = $result[0]['membership_type'];
 								}else{
 									$value="value";
 								}
-							}							
+							}
 						?>
-						
+
 						<select class="form-control" name="membership_type" onChange="typeChange(this.value)">
 							<!-- <option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
 							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option> -->
-							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By env('POINT_NAME', 'Points') Received </option>
+							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By {{env('POINT_NAME', 'Points')}} Received </option>
 						</select>
 					</div>
 				</div>
@@ -383,9 +390,9 @@
 							<div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
 								<div class="mt-repeater-cell">
 									<div class="col-md-12">
-									
+
 									<input type="hidden" name="id_membership" value="{{$membership['id_membership']}}">
-									
+
 									@if(MyHelper::hasAccess([14], $grantedFeature))
 									<div class="col-md-1 col-md-offset-1">
 										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
@@ -406,8 +413,8 @@
 										</div>
 									</div>
 									</div>
-									
-									<!--<div class="col-md-12" style="margin-top:20px">
+
+									<div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Text Color
@@ -416,37 +423,37 @@
 									</div>
 									<div class="col-md-4" >
 										<div class="input-icon right">
-											<input type="text" id="hue-demo" name="membership_name_color" class="form-control demo" data-control="hue" value="{{$membership['membership_name_color']}}">
+											<input type="text" name="membership_name_color" class="form-control colorpicker" value="{{$membership['membership_name_color']}}" data-format="rgb">
 										</div>
 									</div>
-									</div>-->
-									
+									</div>
+
 									<div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Image
 											<i class="fa fa-question-circle tooltips" data-original-title="Icon membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
 										    <br>
-										    <span class="required" aria-required="true"> (300*300) </span>
+										    <span class="required" aria-required="true"> (750*250) </span>
 										</div>
 									</div>
 									<div class="col-md-4" >
 										<div class="input-icon right">
 											<div class="fileinput fileinput-new" data-provides="fileinput">
-												<div class="fileinput-new thumbnail" style="max-width: 100px;">
+												<div class="fileinput-new thumbnail" style="max-width: 2500px;">
 													@if($membership['membership_image'] != "")
-														<img src="{{env('AWS_URL')}}{{$membership['membership_image']}}" alt="" /> 
+														<img src="{{env('AWS_URL')}}{{$membership['membership_image']}}" alt="" />
 													@else
-														<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> 
+														<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 													@endif
 												</div>
-													
-												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
+
+												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
 												<div class="aa">
 													<span class="btn default btn-file">
 														<span class="fileinput-new"> Select image </span>
 														<span class="fileinput-exists"> Change </span>
-														<input class="file" type="file" name="membership_image"> 
+														<input class="file" type="file" name="membership_image">
 													</span>
 													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 												</div>
@@ -454,7 +461,7 @@
 										</div>
 									</div>
 									</div>
-									
+
 									<div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
@@ -468,7 +475,7 @@
 													<button class="btn blue" type="button" >IDR</button>
 												</span>
 												<span class="input-group-btn levelReqBalance" @if($value != 'balance') style="display:none;" @endif>
-													<button class="btn blue" type="button" >env('POINT_NAME', 'Points')</button>
+													<button class="btn blue" type="button" >{{env('POINT_NAME', 'Points')}}</button>
 												</span>
 												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @endif placeholder="Level Requirement">
 												<span class="input-group-btn levelReqX" @if($value != 'count') style="display:none;" @endif>
@@ -491,7 +498,7 @@
 													<button class="btn blue" type="button" >IDR</button>
 												</span>
 												<span class="input-group-btn levelRetBalance" @if($value != 'balance') style="display:none;" @endif>
-													<button class="btn blue" type="button" >env('POINT_NAME', 'Points')</button>
+													<button class="btn blue" type="button" >{{env('POINT_NAME', 'Points')}}</button>
 												</span>
 												<input class="form-control price" type="text" name="min_retain_value" @if($value == 'value') value="{{$membership['retain_min_total_value']}}" @elseif($value == 'count') value="{{$membership['retain_min_total_count']}}" @elseif($value == 'balance') value="{{$membership['retain_min_total_balance']}}" @endif placeholder="Minimum Retain Value">
 												<span class="input-group-btn levelRetX" @if($value != 'count') style="display:none;" @endif>
@@ -530,13 +537,13 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														env('POINT_NAME', 'Points') Received
-														<i class="fa fa-question-circle tooltips" data-original-title="Persentase env('POINT_NAME', 'Points') yang diterima dengan acuan basic env('POINT_NAME', 'Points') setelah transaksi" data-container="body"></i>
+														{{env('POINT_NAME', 'Points')}} Received
+														<i class="fa fa-question-circle tooltips" data-original-title="Persentase {{env('POINT_NAME', 'Points')}} yang diterima dengan acuan basic {{env('POINT_NAME', 'Points')}} setelah transaksi" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="env('POINT_NAME', 'Points') Received">
+														<input class="form-control price" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="{{env('POINT_NAME', 'Points')}} Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -546,8 +553,8 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														env('POINT_NAME', 'Points') Maximum
-														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum env('POINT_NAME', 'Points') yang akan didapat oleh customer" data-container="body"></i>
+														{{env('POINT_NAME', 'Points')}} Maximum
+														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum {{env('POINT_NAME', 'Points')}} yang akan didapat oleh customer" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
@@ -555,7 +562,7 @@
 														<span class="input-group-btn">
 															<button class="btn blue" type="button">IDR</button>
 														</span>
-														<input class="form-control price" type="text" name="cashback_maximum" @if(empty($membership['cashback_maximum'])) value="0" @else value="{{$membership['cashback_maximum']}}" @endif placeholder="env('POINT_NAME', 'Points') Maximum">
+														<input class="form-control price" type="text" name="cashback_maximum" @if(empty($membership['cashback_maximum'])) value="0" @else value="{{$membership['cashback_maximum']}}" @endif placeholder="{{env('POINT_NAME', 'Points')}} Maximum">
 													</div>
 												</div>
 											</div>
@@ -591,7 +598,7 @@
 											</div>
 											<div class="col-md-6">
 												<!-- <div class="input-icon right">
-													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea> 
+													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea>
 												</div> -->
 												<div class="inner-repeater">
           											<div data-repeater-list="benefit_promo_id">
@@ -649,9 +656,9 @@
 							<div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
 								<div class="mt-repeater-cell">
 									<div class="col-md-12">
-									
+
 									<input type="hidden" name="id_membership" value="">
-									
+
 									@if(MyHelper::hasAccess([14], $grantedFeature))
 									<div class="col-md-1 col-md-offset-1">
 										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
@@ -672,8 +679,8 @@
 										</div>
 									</div>
 									</div>
-									
-									<!--<div class="col-md-12" style="margin-top:20px">
+
+									<div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Text Color
@@ -682,12 +689,12 @@
 									</div>
 									<div class="col-md-4" >
 										<div class="input-icon right">
-											<input type="text" id="hue-demo" name="membership_name_color" class="form-control demo" data-control="hue" value="">
+											<input type="text" name="membership_name_color" class="form-control colorpicker"  value="" data-color-format="rgb">
 										</div>
 									</div>
-									</div>-->
-									
-									<!--<div class="col-md-12" style="margin-top:20px">
+									</div>
+
+									<div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Image
@@ -698,9 +705,9 @@
 										<div class="input-icon right">
 											<div class="fileinput fileinput-new" data-provides="fileinput">
 												<div class="fileinput-new thumbnail" style="width: 200px;">
-													<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> 
+													<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 												</div>
-													
+
 												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
 												<div>
 													<span class="btn default btn-file">
@@ -713,7 +720,7 @@
 										</div>
 									</div>
 									</div>
-									-->
+
 									<div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
@@ -783,13 +790,13 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														env('POINT_NAME', 'Points') Received
-														<i class="fa fa-question-circle tooltips" data-original-title="Persentase env('POINT_NAME', 'Points') yang diterima dengan acuan basic env('POINT_NAME', 'Points') setelah transaksi" data-container="body"></i>
+														{{env('POINT_NAME', 'Points')}} Received
+														<i class="fa fa-question-circle tooltips" data-original-title="Persentase {{env('POINT_NAME', 'Points')}} yang diterima dengan acuan basic {{env('POINT_NAME', 'Points')}} setelah transaksi" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" value="0" placeholder="env('POINT_NAME', 'Points') Received">
+														<input class="form-control price" type="text" name="benefit_cashback_multiplier" value="0" placeholder="{{env('POINT_NAME', 'Points')}} Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -799,8 +806,8 @@
 											<div class="col-md-12" style="margin-top:20px">
 												<div class="input-icon right">
 													<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-														env('POINT_NAME', 'Points') Maximum
-														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum env('POINT_NAME', 'Points') yang akan didapat oleh customer" data-container="body"></i>
+														{{env('POINT_NAME', 'Points')}} Maximum
+														<i class="fa fa-question-circle tooltips" data-original-title="Nilai maksimum {{env('POINT_NAME', 'Points')}} yang akan didapat oleh customer" data-container="body"></i>
 													</div>
 												</div>
 												<div class="col-md-4">
@@ -808,7 +815,7 @@
 														<span class="input-group-btn">
 															<button class="btn blue" type="button">IDR</button>
 														</span>
-														<input class="form-control price" type="text" name="cashback_maximum" value="0" placeholder="env('POINT_NAME', 'Points') Maximum">
+														<input class="form-control price" type="text" name="cashback_maximum" value="0" placeholder="{{env('POINT_NAME', 'Points')}} Maximum">
 													</div>
 												</div>
 											</div>
@@ -844,7 +851,7 @@
 											</div>
 											<div class="col-md-6">
 												<!-- <div class="input-icon right">
-													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea> 
+													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea>
 												</div> -->
 												<div class="inner-repeater">
           											<div data-repeater-list="benefit_promo_id">

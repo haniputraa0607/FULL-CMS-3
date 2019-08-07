@@ -6,17 +6,17 @@ $configs    		= session('configs');
  @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
@@ -29,7 +29,7 @@ $configs    		= session('configs');
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	
+
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
@@ -43,21 +43,21 @@ $configs    		= session('configs');
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js') }}" type="text/javascript"></script>
-	<script>   
+	<script>
     $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
         'todayHighlight' : true,
         'autoclose' : true
-    }); 
+    });
 	$('.timepicker').timepicker();
 	$(".form_datetime").datetimepicker({
         format: "d-M-yyyy hh:ii",
         autoclose: true,
         todayBtn: true
-    }); 
-        
+    });
+
     </script>
-	
+
 	<script>
 	$(document).ready(function() {
 		$('.summernote').summernote({
@@ -101,7 +101,7 @@ $configs    		= session('configs');
 						$('#'+id).summernote('editor.saveRange');
 						$('#'+id).summernote('editor.restoreRange');
 						$('#'+id).summernote('editor.focus');
-						$('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+						$('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
 					}
 					// document.getElementById('loadingDiv').style.display = "none";
 				},
@@ -110,7 +110,7 @@ $configs    		= session('configs');
 				}
 			})
 		}
-	  
+
 		@if(count($result['contents']) > 0)
 			@if($result['promotion_series'] > 0)
 				@for($x = 1;$x <= $result['promotion_series']; $x++)
@@ -131,7 +131,7 @@ $configs    		= session('configs');
 				@if(isset($result['contents'][$x-1]['promotion_inbox_id_reference']))
 					var idrefInbox 	 = "{{$result['contents'][$x-1]['promotion_inbox_id_reference']}}";
 				@endif
-			
+
 				if(clickto != null) {
 					if(idref != null){
 						fetchDetail("{{$x}}", "push", clickto, idref);
@@ -182,7 +182,7 @@ $configs    		= session('configs');
 				}
 			@endif
 		@endif
-		
+
 		var _URL = window.URL || window.webkitURL;
 
 		$('.price').each(function() {
@@ -195,7 +195,7 @@ $configs    		= session('configs');
 			});
 		});
 		token = '<?php echo csrf_token();?>';
-		
+
 		$('.summernote').summernote({
 			placeholder: 'Deals Content Long',
 			tabsize: 2,
@@ -203,11 +203,11 @@ $configs    		= session('configs');
 			height: 120
 		});
 	});
-	
+
 	function dealsPromoType(channel, series){
 		var checkboxStatus = document.getElementById('radio_'+series+'_dealstype_'+channel+'').checked;
-		if(channel == 'promoid'){ 
-			var antichannel = 'nominal'; 
+		if(channel == 'promoid'){
+			var antichannel = 'nominal';
 			document.getElementById('voucher_value_'+series).readOnly = false;
 		} else {
 			var antichannel = 'promoid';
@@ -222,14 +222,14 @@ $configs    		= session('configs');
 		var value = document.getElementById('deals_promo_id_nominal_'+series).value
 		document.getElementById('voucher_value_'+series).value = value;
 	}
-	
+
 	function dealsVoucherExpiry(channel, series){
 		var checkboxStatus = document.getElementById('voucher_expiry_'+channel+'_'+series+'').checked;
 		if(channel == 'bydate') var antichannel = 'duration'; else var antichannel = 'bydate';
 		document.getElementById('voucher_'+channel+'_'+series+'').style.display = 'block';
 		document.getElementById('voucher_'+antichannel+'_'+series+'').style.display = 'none';
 	}
-	
+
 	function dealsVoucherType(channel, series){
 		var checkboxStatus = document.getElementById('voucher_type_'+channel+'_'+series+'').checked;
 		if(channel == 'unlimited'){
@@ -238,8 +238,8 @@ $configs    		= session('configs');
 			document.getElementById('vouchertype_autogenerated_input_'+series+'').value = '';
 			document.getElementById('vouchertype_listvoucher_input_'+series+'').value = '';
 		} else {
-			if(channel == 'autogenerated'){ 
-				var antichannel = 'listvoucher'; 
+			if(channel == 'autogenerated'){
+				var antichannel = 'listvoucher';
 			}else {
 				var antichannel = 'autogenerated';
 			}
@@ -248,7 +248,7 @@ $configs    		= session('configs');
 			document.getElementById('vouchertype_'+antichannel+'_input_'+series+'').value = '';
 		}
 	}
-	
+
 	function campaignChannel(channel, series){
 		var checkboxStatus = document.getElementById('checkbox_'+series+'_'+channel+'').checked;
 		if(checkboxStatus == true){
@@ -257,13 +257,13 @@ $configs    		= session('configs');
 			document.getElementById('content_'+channel+'_'+series+'').style.display = 'none';
 		}
 	}
-	
+
 	function addEmailSubject(series,param){
 		var textvalue = $('#promotion_email_subject_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_email_subject_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addEmailContent(series,param){
 		var textvalue = $('#promotion_email_content_'+series+'').val();
 
@@ -274,31 +274,31 @@ $configs    		= session('configs');
 		$('#promotion_email_content_'+series+'').summernote('editor.focus');
 		$('#promotion_email_content_'+series+'').summernote('editor.insertText', param);
     }
-	
+
 	function addSmsContent(series,param){
 		var textvalue = $('#promotion_sms_content_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_sms_content_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addPushSubject(series,param){
 		var textvalue = $('#promotion_push_subject_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_push_subject_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addPushContent(series,param){
 		var textvalue = $('#promotion_push_content_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_push_content_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addInboxSubject(series,param){
 		var textvalue = $('#promotion_inbox_subject_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_inbox_subject_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addInboxContent(series,param){
 		var textvalue = $('#promotion_inbox_content_'+series+'').val();
 
@@ -309,7 +309,7 @@ $configs    		= session('configs');
 		$('#promotion_inbox_content_'+series+'').summernote('editor.focus');
 		$('#promotion_inbox_content_'+series+'').summernote('editor.insertText', param);
     }
-	
+
 	function fetchDetail(series, type, det, idref){
 		let token  = "{{ csrf_token() }}";
 
@@ -335,11 +335,11 @@ $configs    		= session('configs');
 			document.getElementById('link_'+type+'_'+series).style.display = 'none';
 			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
-		
-		if(det == 'Outlet'){
+
+		if(det == 'Outlet' || det == 'Order'){
 			$.ajax({
 				type : "GET",
-				url : "{{ url('outlet/ajax') }}",
+				url : "{{ url('outlet/ajax/filter') }}"+'/'+det,
 				data : "_token="+token,
 				success : function(result) {
 					document.getElementById('atd_'+type+'_'+series).style.display = 'block';
@@ -358,7 +358,7 @@ $configs    		= session('configs');
 			document.getElementById('link_'+type+'_'+series).style.display = 'none';
 			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
-		
+
 		else if(det == 'News'){
 			$.ajax({
 				type : "GET",
@@ -506,7 +506,7 @@ $configs    		= session('configs');
 		console.log($('#voucher_type_unlimited_'+x))
 	})
 	</script>
-	
+
 @endsection
 
 @section('content')
@@ -541,7 +541,7 @@ $configs    		= session('configs');
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-md-12">
 		<div class="col-md-8">
 			<div class="portlet box blue-hoki">
@@ -600,14 +600,14 @@ $configs    		= session('configs');
 									@endif
 									@if(isset($result['promotion_type']) && $result['promotion_type'] == "Scheduled Campaign")
 										<div class="col-md-12">
-											<p class="form-control-static"><b>At 
+											<p class="form-control-static"><b>At
 											{{date('d F Y', strtotime($result['schedules'][0]['schedule_exact_date']))}} at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
 										</div>
 									@endif
-									
+
 									@if(isset($result['promotion_type']) && ($result['promotion_type'] == "Recurring Campaign" || $result['promotion_type'] == "Campaign Series"))
 										@if(isset($result['schedules'][0]['schedule_date_month']) && $result['schedules'][0]['schedule_date_month'] != "")
-											<?php 
+											<?php
 												$year = date('Y');
 												$x = explode('-',$result['schedules'][0]['schedule_date_month']);
 											?>
@@ -616,7 +616,7 @@ $configs    		= session('configs');
 											</div>
 										@endif
 										@if(isset($result['schedules'][0]['schedule_date_every_month']) && $result['schedules'][0]['schedule_date_every_month'] != "")
-											<?php 
+											<?php
 												$ends = array('th','st','nd','rd','th','th','th','th','th','th');
 												if (($result['schedules'][0]['schedule_date_every_month'] %100) >= 11 && ($result['schedules'][0]['schedule_date_every_month']%100) <= 13)
 												   $abbreviation = $result['schedules'][0]['schedule_date_every_month']. 'th';
@@ -627,9 +627,9 @@ $configs    		= session('configs');
 												<p class="form-control-static"><b>Every {{$abbreviation}} each month at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
 											</div>
 										@endif
-										
-										@if(isset($result['schedules'][0]['schedule_day_every_week']) && $result['schedules'][0]['schedule_day_every_week'] != "") 
-											<?php 
+
+										@if(isset($result['schedules'][0]['schedule_day_every_week']) && $result['schedules'][0]['schedule_day_every_week'] != "")
+											<?php
 												$ends = array('th','st','nd','rd','th','th','th','th','th','th');
 												if (($result['schedules'][0]['schedule_week_in_month'] %100) >= 11 && ($result['schedules'][0]['schedule_week_in_month']%100) <= 13)
 												   $abbreviation = $result['schedules'][0]['schedule_week_in_month']. 'th';
@@ -637,16 +637,16 @@ $configs    		= session('configs');
 												   $abbreviation = $result['schedules'][0]['schedule_week_in_month']. $ends[$result['schedules'][0]['schedule_week_in_month'] % 10];
 											?>
 											<div class="col-md-12">
-												<p class="form-control-static"><b>Every {{$result['schedules'][0]['schedule_day_every_week']}} 
-												
-												@if($result['schedules'][0]['schedule_week_in_month'] != 0) 
+												<p class="form-control-static"><b>Every {{$result['schedules'][0]['schedule_day_every_week']}}
+
+												@if($result['schedules'][0]['schedule_week_in_month'] != 0)
 													on {{$abbreviation}} week
 												@else
 													every week
 												@endif
 												at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
 											</div>
-										
+
 										@endif
 
 										@if(isset($result['schedules'][0]['schedule_everyday']) && $result['schedules'][0]['schedule_everyday'] == 'Yes')
@@ -654,7 +654,7 @@ $configs    		= session('configs');
 												<p class="form-control-static"><b>Every Day at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
 											</div>
 										@endif
-										
+
 									@endif
 									</div>
 								</div>
@@ -697,10 +697,10 @@ $configs    		= session('configs');
 											<div class="portlet light bordered" style="margin-bottom:10px">
 												@foreach($ruleParent['rules'] as $rule)
 												<div class="row static-info">
-													<div class="col-md-12 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif 
+													<div class="col-md-12 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif
 													@if($rule['subject'] == 'trx_outlet' || $rule['subject'] == 'trx_outlet_not')
 														<?php $name = null; ?>
-														@foreach($outlets as $outlet) 
+														@foreach($outlets as $outlet)
 															@if($outlet['id_outlet'] == $rule['parameter'])
 																<?php $name = $outlet['outlet_name']; ?>
 															@endif
@@ -708,7 +708,7 @@ $configs    		= session('configs');
 														{{$name}}
 													@elseif($rule['subject'] == 'trx_product' || $rule['subject'] == 'trx_product_not')
 														<?php $name = null; ?>
-														@foreach($products as $product) 
+														@foreach($products as $product)
 															@if($product['id_product'] == $rule['parameter'])
 																<?php $name = $product['product_name']; ?>
 															@endif
@@ -716,7 +716,7 @@ $configs    		= session('configs');
 														{{$name}}
 													@elseif($rule['subject'] == 'trx_product_tag' || $rule['subject'] == 'trx_product_tag_not')
 														<?php $name = null; ?>
-														@foreach($tags as $tag) 
+														@foreach($tags as $tag)
 															@if($tag['id_tag'] == $rule['parameter'])
 																<?php $name = $tag['tag_name']; ?>
 															@endif
@@ -724,7 +724,7 @@ $configs    		= session('configs');
 														{{$name}}
 													@elseif($rule['subject'] == 'membership')
 														<?php $name = null; ?>
-														@foreach($memberships as $membership) 
+														@foreach($memberships as $membership)
 															@if($membership['id_membership'] == $rule['parameter'])
 																<?php $name = $membership['membership_name']; ?>
 															@endif
@@ -774,7 +774,7 @@ $configs    		= session('configs');
 			<div class="portlet box blue-hoki">
 				<div class="portlet-title">
 					<div class="caption">
-						<i class="fa fa-gift"></i>Promotion Content 
+						<i class="fa fa-gift"></i>Promotion Content
 					</div>
 				</div>
 				<div class="portlet-body">
@@ -803,17 +803,17 @@ $configs    		= session('configs');
 											</div>
 											<div class="portlet-body">
 												<div class="row">
-														Campaign no {{$x}} will be send 
-														<input type="text" 
-															class="form-control" 
-															required 
-															style="display:inline !important;width:10%" 
-															name="promotion_series_days[]" 
-															id="promotion_series_days_{{$x}}" 
+														Campaign no {{$x}} will be send
+														<input type="text"
+															class="form-control"
+															required
+															style="display:inline !important;width:10%"
+															name="promotion_series_days[]"
+															id="promotion_series_days_{{$x}}"
 														@if(isset($result['contents'][$x-1]))
 															value={{$result['contents'][$x-1]['promotion_series_days']}}
 														@endif
-														> days after previous campaign (campaign no {{$x-1}}) 
+														> days after previous campaign (campaign no {{$x-1}})
 												</div>
 											</div>
 										</div>
@@ -849,11 +849,11 @@ $configs    		= session('configs');
 												<div class="form-md-checkboxes">
 													<div class="md-checkbox-inline">
 														<div class="md-checkbox">
-															<input type="checkbox" 
-																id="checkbox_{{$x}}_email" 
-																name="promotion_channel[{{$x-1}}][]" 
+															<input type="checkbox"
+																id="checkbox_{{$x}}_email"
+																name="promotion_channel[{{$x-1}}][]"
 																value="email"
-																class="md-check channel_{{$x-1}}" 
+																class="md-check channel_{{$x-1}}"
 																onClick="campaignChannel('email','{{$x}}')"
 															@if(isset($result['contents'][$x-1]))
 																@if($result['contents'][$x-1]['promotion_channel_email'] == '1')
@@ -867,11 +867,11 @@ $configs    		= session('configs');
 																<span class="box"></span>Email</label>
 														</div>
 														<div class="md-checkbox">
-															<input type="checkbox" 
-																id="checkbox_{{$x}}_sms" 
-																name="promotion_channel[{{$x-1}}][]" 
-																value="sms" 
-																class="md-check channel_{{$x-1}}" 
+															<input type="checkbox"
+																id="checkbox_{{$x}}_sms"
+																name="promotion_channel[{{$x-1}}][]"
+																value="sms"
+																class="md-check channel_{{$x-1}}"
 																onClick="campaignChannel('sms','{{$x}}')"
 															@if(isset($result['contents'][$x-1]))
 																@if($result['contents'][$x-1]['promotion_channel_sms'] == '1')
@@ -885,11 +885,11 @@ $configs    		= session('configs');
 																<span class="box"></span>SMS</label>
 														</div>
 														<div class="md-checkbox">
-															<input type="checkbox" 
-																id="checkbox_{{$x}}_push" 
-																name="promotion_channel[{{$x-1}}][]" 
+															<input type="checkbox"
+																id="checkbox_{{$x}}_push"
+																name="promotion_channel[{{$x-1}}][]"
 																value="push"
-																class="md-check channel_{{$x-1}}" 
+																class="md-check channel_{{$x-1}}"
 																onClick="campaignChannel('push','{{$x}}')"
 															@if(isset($result['contents'][$x-1]))
 																@if($result['contents'][$x-1]['promotion_channel_push'] == '1')
@@ -903,11 +903,11 @@ $configs    		= session('configs');
 																<span class="box"></span>Push Notification</label>
 														</div>
 														<div class="md-checkbox">
-															<input type="checkbox" 
-																id="checkbox_{{$x}}_inbox" 
-																name="promotion_channel[{{$x-1}}][]" 
+															<input type="checkbox"
+																id="checkbox_{{$x}}_inbox"
+																name="promotion_channel[{{$x-1}}][]"
 																value="inbox"
-																class="md-check channel_{{$x-1}}" 
+																class="md-check channel_{{$x-1}}"
 																onClick="campaignChannel('inbox','{{$x}}')"
 															@if(isset($result['contents'][$x-1]))
 																@if($result['contents'][$x-1]['promotion_channel_inbox'] == '1')
@@ -922,11 +922,11 @@ $configs    		= session('configs');
 														</div>
 														@if(MyHelper::hasAccess([75], $configs))
 														<div class="md-checkbox">
-															<input type="checkbox" 
-																id="checkbox_{{$x}}_whatsapp" 
-																name="promotion_channel[{{$x-1}}][]" 
+															<input type="checkbox"
+																id="checkbox_{{$x}}_whatsapp"
+																name="promotion_channel[{{$x-1}}][]"
 																value="whatsapp"
-																class="md-check channel_{{$x-1}}" 
+																class="md-check channel_{{$x-1}}"
 																onClick="campaignChannel('whatsapp','{{$x}}')"
 															@if(isset($result['contents'][$x-1]))
 																@if($result['contents'][$x-1]['promotion_channel_whatsapp'] == '1')
@@ -944,11 +944,11 @@ $configs    		= session('configs');
 														</div>
 														@endif
 														<div class="md-checkbox">
-															<input type="checkbox" 
-																id="checkbox_{{$x}}_deals" 
-																name="promotion_channel[{{$x-1}}][]" 
+															<input type="checkbox"
+																id="checkbox_{{$x}}_deals"
+																name="promotion_channel[{{$x-1}}][]"
 																value="deals"
-																class="md-check channel_{{$x-1}}" 
+																class="md-check channel_{{$x-1}}"
 																onClick="campaignChannel('deals','{{$x}}')"
 															@if(isset($result['contents'][$x-1]))
 																@if($result['contents'][$x-1]['id_deals'] != "")
@@ -961,7 +961,7 @@ $configs    		= session('configs');
 																@endif
 															@endif
 															>
-															
+
 															@if(MyHelper::hasAccess([26], $configs))
 															<label for="checkbox_{{$x}}_deals">
 																<span></span>
@@ -995,11 +995,11 @@ $configs    		= session('configs');
 													<div class="form-group" style="margin-bottom:30px">
 														<label class="col-md-2 control-label">Subject</label>
 														<div class="col-md-10">
-															<input type="text" 
-																placeholder="Email Subject" 
-																class="form-control" 
-																name="promotion_email_subject[]" 
-																id="promotion_email_subject_{{$x}}" 
+															<input type="text"
+																placeholder="Email Subject"
+																class="form-control"
+																name="promotion_email_subject[]"
+																id="promotion_email_subject_{{$x}}"
 																@if(isset($result['contents'][$x-1]['promotion_email_subject']))
 																	value="{{$result['contents'][$x-1]['promotion_email_subject']}}"
 																@endif
@@ -1036,7 +1036,7 @@ $configs    		= session('configs');
 											</div>
 										</div>
 									</div>
-									
+
 									@if(isset($result['contents'][$x-1]))
 										@if($result['contents'][$x-1]['promotion_channel_sms'] == '1')
 											<div class="col-md-12" style="display:block;" id="content_sms_{{$x}}">
@@ -1076,7 +1076,7 @@ $configs    		= session('configs');
 											</div>
 										</div>
 									</div>
-									
+
 									@if(isset($result['contents'][$x-1]))
 										@if($result['contents'][$x-1]['promotion_channel_push'] == '1')
 											<div class="col-md-12" style="display:block;" id="content_push_{{$x}}">
@@ -1098,11 +1098,11 @@ $configs    		= session('configs');
 													<div class="form-group">
 														<label class="col-md-2 control-label">Subject</label>
 														<div class="col-md-10">
-															<input type="text" 
-																placeholder="Push Notification Subject" 
-																class="form-control" 
-																name="promotion_push_subject[]" 
-																id="promotion_push_subject_{{$x}}" 
+															<input type="text"
+																placeholder="Push Notification Subject"
+																class="form-control"
+																name="promotion_push_subject[]"
+																id="promotion_push_subject_{{$x}}"
 																@if(isset($result['contents'][$x-1]['promotion_push_subject']))
 																	value="{{$result['contents'][$x-1]['promotion_push_subject']}}"
 																@endif>
@@ -1143,11 +1143,11 @@ $configs    		= session('configs');
 																<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 																	@if(isset($result['contents'][$x-1]['promotion_push_image']) && $result['contents'][$x-1]['promotion_push_image'] != "")
 																		<img src="{{env('AWS_URL')}}{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
-																	@else 
+																	@else
 																		<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 																	@endif
 																</div>
-																	
+
 																<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
 																<div>
 																	<span class="btn default btn-file">
@@ -1201,7 +1201,7 @@ $configs    		= session('configs');
 											</div>
 										</div>
 									</div>
-									
+
 									@if(isset($result['contents'][$x-1]))
 										@if($result['contents'][$x-1]['promotion_channel_inbox'] == '1')
 											<div class="col-md-12" style="display:block;" id="content_inbox_{{$x}}">
@@ -1223,11 +1223,11 @@ $configs    		= session('configs');
 													<div class="form-group">
 														<label class="col-md-2 control-label">Subject</label>
 														<div class="col-md-10">
-															<input type="text" 
-																placeholder="Inbox Subject" 
-																class="form-control" 
-																name="promotion_inbox_subject[]" 
-																id="promotion_inbox_subject_{{$x}}" 
+															<input type="text"
+																placeholder="Inbox Subject"
+																class="form-control"
+																name="promotion_inbox_subject[]"
+																id="promotion_inbox_subject_{{$x}}"
 																@if(isset($result['contents'][$x-1]['promotion_inbox_subject']))
 																	value="{{$result['contents'][$x-1]['promotion_inbox_subject']}}"
 																@endif>
@@ -1267,7 +1267,7 @@ $configs    		= session('configs');
 																<option value="Contact Us" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 																<option value="Link" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>
 																<option value="Logout" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Logout") selected @endif>Logout</option>
-															
+
 															</select>
 														</div>
 													</div>
@@ -1404,9 +1404,9 @@ $configs    		= session('configs');
 																							<span class="fileinput-new"> Select image </span>
 																							<span class="fileinput-exists"> Change </span>
 																							<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																							
+
 																							</span>
-													
+
 																							<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 																						</div>
 																					</div>
@@ -1482,9 +1482,9 @@ $configs    		= session('configs');
 																						<span class="fileinput-new"> Select image </span>
 																						<span class="fileinput-exists"> Change </span>
 																						<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																						
+
 																						</span>
-												
+
 																						<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 																					</div>
 																				</div>
@@ -1498,14 +1498,14 @@ $configs    		= session('configs');
 															<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
 																<i class="fa fa-plus"></i> Add Content</a>
 															<br>
-															<br> 
+															<br>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									@endif
-									
+
 									@if(isset($result['contents'][$x-1]))
 										@if($result['contents'][$x-1]['id_deals'] != '')
 											<div class="col-md-12" style="display:block;" id="content_deals_{{$x}}">
@@ -1581,7 +1581,7 @@ $configs    		= session('configs');
 																		</div>
 																	</div>
 																</div>
-															</div>    
+															</div>
 														</div>
 													</div>
 													<div class="form-group">
@@ -1590,21 +1590,21 @@ $configs    		= session('configs');
 															@if(isset($result['contents'][$x-1]['deals']['deals_promo_id_type']))
 																@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'promoid')
 																	<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_{{$x}}" style="display:block;" value="{{$result['contents'][$x-1]['deals']['deals_promo_id']}}" placeholder="Input Promo ID">
-																
+
 																	<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_{{$x}}" style="display:none;" value="" placeholder="Input Promo nominal" onchange="changeNominalVoucher('{{$x}}')">
 																@elseif($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'nominal')
 																	<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_{{$x}}" style="display:none;" value="" placeholder="Input Promo ID">
-																
+
 																	<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_{{$x}}" style="display:block;" value="{{$result['contents'][$x-1]['deals']['deals_promo_id']}}" placeholder="Input Promo nominal" onchange="changeNominalVoucher('{{$x}}')">
 																@endif
 															@else
 																<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_{{$x}}" style="display:none;" value="" placeholder="Input Promo ID">
-																
+
 																<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_{{$x}}" style="display:none;" value="" placeholder="Input Promo nominal" onchange="changeNominalVoucher('{{$x}}')">
 															@endif
 														</div>
 													</div>
-													
+
 													<div class="form-group">
 														<label class="col-md-2 control-label">Nominal Voucher</label>
 														<div class="col-md-10">
@@ -1676,7 +1676,7 @@ $configs    		= session('configs');
 																				$jmlOutletSelected = count($ou);
 																			@endphp
 																		@endif
-																	
+
 																		@if ($jmlOutlet == $jmlOutletSelected)
 																			<option value="all" selected>All Outlets</option>
 																			@foreach($outlets as $suw)
@@ -1685,8 +1685,8 @@ $configs    		= session('configs');
 																		@else
 																			<option value="all" @if (old('id_outlet')) @if(in_array('all', old('id_outlet'))) selected @endif @endif>All Outlets</option>
 																			@foreach($outlets as $suw)
-																				<option value="{{ $suw['id_outlet'] }}" 
-																					@if(in_array($suw['id_outlet'], $ou)) selected @endif 
+																				<option value="{{ $suw['id_outlet'] }}"
+																					@if(in_array($suw['id_outlet'], $ou)) selected @endif
 																				>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
 																			@endforeach
 																		@endif
@@ -1737,7 +1737,7 @@ $configs    		= session('configs');
 															</div>
 														</div>
 													</div>
-				
+
 													<div class="form-group" style="display: block;">
 														<label class="col-md-2 control-label"></label>
 														<div class="col-md-10">
@@ -1753,7 +1753,7 @@ $configs    		= session('configs');
 																			</span>
 																		</div>
 																	</div>
-																	
+
 																	<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: none;">
 																		<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day">
 																	</div>
@@ -1768,7 +1768,7 @@ $configs    		= session('configs');
 																			</span>
 																		</div>
 																	</div>
-																	
+
 																	<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: block;">
 																		<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" value="@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration'])){{$result['contents'][$x-1]['deals']['deals_voucher_duration']}}@endif">
 																	</div>
@@ -1784,14 +1784,14 @@ $configs    		= session('configs');
 																		</span>
 																	</div>
 																</div>
-																
+
 																<div class="col-md-3" id="voucher_duration_{{$x}}" style="display: none;">
 																	<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" value="@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration'])){{$result['contents'][$x-1]['deals']['deals_voucher_duration']}}@endif">
 																</div>
 															@endif
 														</div>
 													</div> -->
-													
+
 													<div class="form-group">
 														<label class="col-md-2 control-label"> Voucher Type  </label>
 														<div class="col-md-10">
@@ -1805,7 +1805,7 @@ $configs    		= session('configs');
 																					checked
 																				@endif
 																			@endif
-																			> 
+																			>
 																			<label for="voucher_type_autogenerated_{{$x}}">
 																				<span></span>
 																				<span class="check"></span>
@@ -1822,7 +1822,7 @@ $configs    		= session('configs');
 																					checked
 																				@endif
 																			@endif
-																			> 
+																			>
 																			<label for="voucher_type_listvoucher_{{$x}}">
 																				<span></span>
 																				<span class="check"></span>
@@ -1839,7 +1839,7 @@ $configs    		= session('configs');
 																					checked
 																				@endif
 																			@endif
-																			> 
+																			>
 																			<label for="voucher_type_unlimited_{{$x}}">
 																				<span></span>
 																				<span class="check"></span>
@@ -1863,12 +1863,12 @@ $configs    		= session('configs');
 																	</div>
 																</div>
 															</div>
-															
+
 															<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: none;">
 																<label class="col-md-2 control-label"></label>
 																<div class="col-md-10">
 																	<div class="col-md-3">
-																		<label class="control-label">Input Voucher 
+																		<label class="control-label">Input Voucher
 																			<br> <small> Separated by new line </small>
 																		</label>
 																	</div>
@@ -1889,12 +1889,12 @@ $configs    		= session('configs');
 																	</div>
 																</div>
 															</div>
-															
+
 															<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: block;">
 																<label class="col-md-2 control-label"></label>
 																<div class="col-md-10">
 																	<div class="col-md-3">
-																		<label class="control-label">Input Voucher 
+																		<label class="control-label">Input Voucher
 																			<br> <small> Separated by new line </small>
 																		</label>
 																	</div>
@@ -1915,12 +1915,12 @@ $configs    		= session('configs');
 																	</div>
 																</div>
 															</div>
-															
+
 															<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: none;">
 																<label class="col-md-2 control-label"></label>
 																<div class="col-md-10">
 																	<div class="col-md-3">
-																		<label class="control-label">Input Voucher 
+																		<label class="control-label">Input Voucher
 																			<br> <small> Separated by new line </small>
 																		</label>
 																	</div>
@@ -1942,12 +1942,12 @@ $configs    		= session('configs');
 																</div>
 															</div>
 														</div>
-														
+
 														<div class="form-group" id="vouchertype_listvoucher_{{$x}}" style="display: none;">
 															<label class="col-md-2 control-label"></label>
 															<div class="col-md-10">
 																<div class="col-md-3">
-																	<label class="control-label">Input Voucher 
+																	<label class="control-label">Input Voucher
 																		<br> <small> Separated by new line </small>
 																	</label>
 																</div>
@@ -1975,22 +1975,22 @@ $configs    		= session('configs');
 										</div>
 									</div>
 								</div>
-								<input type="hidden" 
-								name="id_deals[]" 
-								id="id_deals_{{$x}}" 
+								<input type="hidden"
+								name="id_deals[]"
+								id="id_deals_{{$x}}"
 								@if(isset($result['contents'][$x-1]['deals']['id_deals']))
 									value={{$result['contents'][$x-1]['deals']['id_deals']}}
 								@endif>
-								<input type="hidden" 
-								name="id_promotion_content[]" 
-								id="id_promotion_content_{{$x}}" 
+								<input type="hidden"
+								name="id_promotion_content[]"
+								id="id_promotion_content_{{$x}}"
 								@if(isset($result['contents'][$x-1]['id_promotion_content']))
 									value={{$result['contents'][$x-1]['id_promotion_content']}}
 								@endif>
 								@endfor
 							</div>
 						</div>
-				
+
 					</div>
 				</div>
 			</div>
@@ -1998,7 +1998,7 @@ $configs    		= session('configs');
 			<div class="portlet box blue-hoki">
 				<div class="portlet-title">
 					<div class="caption">
-						<i class="fa fa-gift"></i>Promotion Content 
+						<i class="fa fa-gift"></i>Promotion Content
 					</div>
 				</div>
 				@if(isset($result['contents'][0]))
@@ -2036,18 +2036,18 @@ $configs    		= session('configs');
 											<div class="alert alert-warning" role="alert">
 												<p> To use Hidden Deals & Voucher you have to create deals promotion first in <a href="{{url('promotion/deals/create')}}">New Deals Promotion</a>. </p>
 											</div>
-										@endif										
+										@endif
 									@endif
 								@endif
 								<div class="portlet-body form">
 									<div class="form-md-checkboxes">
 										<div class="md-checkbox-inline">
 											<div class="md-checkbox">
-												<input type="checkbox" 
-													id="checkbox_0_email" 
-													name="promotion_channel[0][]" 
-													value="email" 
-													class="md-check" 
+												<input type="checkbox"
+													id="checkbox_0_email"
+													name="promotion_channel[0][]"
+													value="email"
+													class="md-check"
 													onClick="campaignChannel('email','0')"
 												@if(isset($result['contents'][0]))
 													@if($result['contents'][0]['promotion_channel_email'] == '1')
@@ -2061,11 +2061,11 @@ $configs    		= session('configs');
 													<span class="box"></span>Email</label>
 											</div>
 											<div class="md-checkbox">
-												<input type="checkbox" 
-													id="checkbox_0_sms" 
-													name="promotion_channel[0][]" 
-													value="sms" 
-													class="md-check channel_0" 
+												<input type="checkbox"
+													id="checkbox_0_sms"
+													name="promotion_channel[0][]"
+													value="sms"
+													class="md-check channel_0"
 													onClick="campaignChannel('sms','0')"
 												@if(isset($result['contents'][0]))
 													@if($result['contents'][0]['promotion_channel_sms'] == '1')
@@ -2079,11 +2079,11 @@ $configs    		= session('configs');
 													<span class="box"></span>SMS</label>
 											</div>
 											<div class="md-checkbox">
-												<input type="checkbox" 
-													id="checkbox_0_push" 
-													name="promotion_channel[0][]" 
-													value="push" 
-													class="md-check channel_0" 
+												<input type="checkbox"
+													id="checkbox_0_push"
+													name="promotion_channel[0][]"
+													value="push"
+													class="md-check channel_0"
 													onClick="campaignChannel('push','0')"
 												@if(isset($result['contents'][0]))
 													@if($result['contents'][0]['promotion_channel_push'] == '1')
@@ -2097,11 +2097,11 @@ $configs    		= session('configs');
 													<span class="box"></span>Push Notification</label>
 											</div>
 											<div class="md-checkbox">
-												<input type="checkbox" 
-													id="checkbox_0_inbox" 
-													name="promotion_channel[0][]" 
-													value="inbox" 
-													class="md-check channel_0" 
+												<input type="checkbox"
+													id="checkbox_0_inbox"
+													name="promotion_channel[0][]"
+													value="inbox"
+													class="md-check channel_0"
 													onClick="campaignChannel('inbox','0')"
 												@if(isset($result['contents'][0]))
 													@if($result['contents'][0]['promotion_channel_inbox'] == '1')
@@ -2116,11 +2116,11 @@ $configs    		= session('configs');
 											</div>
 											@if(MyHelper::hasAccess([75], $configs))
 											<div class="md-checkbox">
-												<input type="checkbox" 
-													id="checkbox_0_whatsapp" 
-													name="promotion_channel[0][]" 
-													value="inbox" 
-													class="md-check channel_0" 
+												<input type="checkbox"
+													id="checkbox_0_whatsapp"
+													name="promotion_channel[0][]"
+													value="inbox"
+													class="md-check channel_0"
 													onClick="campaignChannel('whatsapp','0')"
 												@if(isset($result['contents'][0]))
 													@if($result['contents'][0]['promotion_channel_whatsapp'] == '1')
@@ -2138,11 +2138,11 @@ $configs    		= session('configs');
 											</div>
 											@endif
 											<div class="md-checkbox">
-												<input type="checkbox" 
-													id="checkbox_0_deals" 
-													name="promotion_channel[0][]" 
-													value="deals" 
-													class="md-check channel_0" 
+												<input type="checkbox"
+													id="checkbox_0_deals"
+													name="promotion_channel[0][]"
+													value="deals"
+													class="md-check channel_0"
 													onClick="campaignChannel('deals','0')"
 												@if(isset($result['contents'][0]))
 													@if($result['contents'][0]['id_deals'] != "")
@@ -2186,11 +2186,11 @@ $configs    		= session('configs');
 										<div class="form-group" style="margin-bottom:30px">
 											<label class="col-md-2 control-label">Subject</label>
 											<div class="col-md-10">
-												<input type="text" 
-													placeholder="Email Subject" 
-													class="form-control" 
-													name="promotion_email_subject[]" 
-													id="promotion_email_subject_0" 
+												<input type="text"
+													placeholder="Email Subject"
+													class="form-control"
+													name="promotion_email_subject[]"
+													id="promotion_email_subject_0"
 													@if(isset($result['contents'][0]))
 														@if($result['contents'][0]['promotion_email_subject'])
 															value={{$result['contents'][0]['promotion_email_subject']}}
@@ -2229,7 +2229,7 @@ $configs    		= session('configs');
 								</div>
 							</div>
 						</div>
-							
+
 						@if(isset($result['contents'][0]))
 							@if($result['contents'][0]['promotion_channel_sms'] == '1')
 								<div class="col-md-12" style="display:block;" id="content_sms_0">
@@ -2269,7 +2269,7 @@ $configs    		= session('configs');
 								</div>
 							</div>
 						</div>
-							
+
 						@if(isset($result['contents'][0]))
 							@if($result['contents'][0]['promotion_channel_push'] == '1')
 								<div class="col-md-12" style="display:block;" id="content_push_0">
@@ -2291,11 +2291,11 @@ $configs    		= session('configs');
 										<div class="form-group">
 											<label class="col-md-2 control-label">Subject</label>
 											<div class="col-md-10">
-												<input type="text" 
-												placeholder="Push Notification Subject" 
-												class="form-control" 
-												name="promotion_push_subject[]" 
-												id="promotion_push_subject_0" 
+												<input type="text"
+												placeholder="Push Notification Subject"
+												class="form-control"
+												name="promotion_push_subject[]"
+												id="promotion_push_subject_0"
 												@if(isset($result['contents'][0]))
 													@if($result['contents'][0]['promotion_push_subject'])
 														value={{$result['contents'][0]['promotion_push_subject']}}
@@ -2338,11 +2338,11 @@ $configs    		= session('configs');
 													<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 														@if(isset($result['contents'][0]['promotion_push_image']) && $result['contents'][0]['promotion_push_image'] != "")
 															<img src="{{ env('AWS_URL')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
-														@else 
+														@else
 															<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 														@endif
 													</div>
-														
+
 													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
 													<div>
 														<span class="btn default btn-file">
@@ -2396,7 +2396,7 @@ $configs    		= session('configs');
 								</div>
 							</div>
 						</div>
-							
+
 						@if(isset($result['contents'][0]))
 							@if($result['contents'][0]['promotion_channel_inbox'] == '1')
 								<div class="col-md-12" style="display:block;" id="content_inbox_0">
@@ -2418,11 +2418,11 @@ $configs    		= session('configs');
 										<div class="form-group" style="margin-bottom:30px">
 											<label class="col-md-2 control-label">Subject</label>
 											<div class="col-md-10">
-												<input type="text" 
-												placeholder="Inbox Subject" 
-												class="form-control" 
-												name="promotion_inbox_subject[]" 
-												id="promotion_inbox_subject_0" 
+												<input type="text"
+												placeholder="Inbox Subject"
+												class="form-control"
+												name="promotion_inbox_subject[]"
+												id="promotion_inbox_subject_0"
 												@if(isset($result['contents'][0]))
 													@if($result['contents'][0]['promotion_inbox_subject'])
 														value={{$result['contents'][0]['promotion_inbox_subject']}}
@@ -2464,7 +2464,7 @@ $configs    		= session('configs');
 													<option value="Contact Us" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 													<option value="Link" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Link") selected @endif>Link</option>
 													<option value="Logout" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Logout") selected @endif>Logout</option>
-												
+
 												</select>
 											</div>
 										</div>
@@ -2600,9 +2600,9 @@ $configs    		= session('configs');
 																				<span class="fileinput-new"> Select image </span>
 																				<span class="fileinput-exists"> Change </span>
 																				<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																				
+
 																				</span>
-										
+
 																				<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 																			</div>
 																		</div>
@@ -2678,9 +2678,9 @@ $configs    		= session('configs');
 																			<span class="fileinput-new"> Select image </span>
 																			<span class="fileinput-exists"> Change </span>
 																			<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																			
+
 																			</span>
-									
+
 																			<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 																		</div>
 																	</div>
@@ -2694,7 +2694,7 @@ $configs    		= session('configs');
 												<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
 													<i class="fa fa-plus"></i> Add Content</a>
 												<br>
-												<br> 
+												<br>
 											</div>
 										</div>
 									</div>
@@ -2777,7 +2777,7 @@ $configs    		= session('configs');
 															</div>
 														</div>
 													</div>
-												</div>    
+												</div>
 											</div>
 										</div>
 										<div class="form-group">
@@ -2786,21 +2786,21 @@ $configs    		= session('configs');
 												@if(isset($result['contents'][0]['deals']['deals_promo_id_type']))
 													@if($result['contents'][0]['deals']['deals_promo_id_type'] == 'promoid')
 														<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_0" style="display:block;" value="{{$result['contents'][0]['deals']['deals_promo_id']}}" placeholder="Input Promo ID">
-													
+
 														<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_0" style="display:none;" value="" placeholder="Input Promo nominal" onchange="changeNominalVoucher('0')">
 													@elseif($result['contents'][0]['deals']['deals_promo_id_type'] == 'nominal')
 														<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_0" style="display:none;" value="" placeholder="Input Promo ID">
-													
+
 														<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_0" style="display:block;" value="{{$result['contents'][0]['deals']['deals_promo_id']}}" placeholder="Input Promo nominal" onchange="changeNominalVoucher('0')">
 													@endif
 												@else
 													<input type="text" class="form-control" name="deals_promo_id[]" id="deals_promo_id_promoid_0" style="display:none;" value="" placeholder="Input Promo ID">
-													
+
 													<input type="text" class="form-control price" name="deals_nominal[]" id="deals_promo_id_nominal_0" style="display:none;" value="" placeholder="Input Promo nominal" onchange="changeNominalVoucher('0')">
 												@endif
 											</div>
 										</div>
-										
+
 										<div class="form-group">
 											<label class="col-md-2 control-label">Nominal Voucher</label>
 											<div class="col-md-10">
@@ -2813,7 +2813,7 @@ $configs    		= session('configs');
 											<div class="col-md-4">
 												<div class="input-icon right">
 													<div class="input-group">
-														<input type="text" class="form_datetime form-control" name="deals_start[]" 
+														<input type="text" class="form_datetime form-control" name="deals_start[]"
 														@if(isset($result['contents'][0]['deals']['deals_start']))
 															@if($result['contents'][0]['deals']['deals_start'] != '')
 																value = "{{date('d-M-Y H:i',strtotime($result['contents'][0]['deals']['deals_start']))}}"
@@ -2834,7 +2834,7 @@ $configs    		= session('configs');
 											<div class="col-md-4">
 												<div class="input-icon right">
 													<div class="input-group">
-														<input type="text" class="form_datetime form-control" name="deals_end[]" 
+														<input type="text" class="form_datetime form-control" name="deals_end[]"
 														@if(isset($result['contents'][0]['deals']['deals_end']))
 															@if($result['contents'][0]['deals']['deals_end'] != '')
 																value = "{{date('d-M-Y H:i',strtotime($result['contents'][0]['deals']['deals_end']))}}"
@@ -2872,7 +2872,7 @@ $configs    		= session('configs');
 																	$jmlOutletSelected = count($ou);
 																@endphp
 															@endif
-														
+
 															@if ($jmlOutlet == $jmlOutletSelected)
 																<option value="all" selected>All Outlets</option>
 																@foreach($outlets as $suw)
@@ -2881,8 +2881,8 @@ $configs    		= session('configs');
 															@else
 																<option value="all" @if (old('id_outlet')) @if(in_array('all', old('id_outlet'))) selected @endif @endif>All Outlets</option>
 																@foreach($outlets as $suw)
-																	<option value="{{ $suw['id_outlet'] }}" 
-																		@if(in_array($suw['id_outlet'], $ou)) selected @endif 
+																	<option value="{{ $suw['id_outlet'] }}"
+																		@if(in_array($suw['id_outlet'], $ou)) selected @endif
 																	>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
 																@endforeach
 															@endif
@@ -2933,7 +2933,7 @@ $configs    		= session('configs');
 												</div>
 											</div>
 										</div>
-	
+
 										<div class="form-group" style="display: block;">
 											<label class="col-md-2 control-label"></label>
 											<div class="col-md-9">
@@ -2949,7 +2949,7 @@ $configs    		= session('configs');
 																</span>
 															</div>
 														</div>
-														
+
 														<div class="col-md-3" id="voucher_duration_0" style="display: none;">
 															<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day">
 														</div>
@@ -2964,7 +2964,7 @@ $configs    		= session('configs');
 																</span>
 															</div>
 														</div>
-														
+
 														<div class="col-md-3" id="voucher_duration_0" style="display: block;">
 															<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" @if(isset($result['contents'][0]['deals']['deals_voucher_duration'])) value="{{$result['contents'][0]['deals']['deals_voucher_duration']}}"@endif>
 														</div>
@@ -2980,7 +2980,7 @@ $configs    		= session('configs');
 															</span>
 														</div>
 													</div>
-													
+
 													<div class="col-md-3" id="voucher_duration_0" style="display: none;">
 														<input type="number" min="1" class="form-control" name="deals_voucher_expiry_duration[]" placeholder="in day" @if(isset($result['contents'][0]['deals']['deals_voucher_duration']))  value="{{$result['contents'][0]['deals']['deals_voucher_duration']}}" @endif>
 													</div>
@@ -3002,7 +3002,7 @@ $configs    		= session('configs');
 																		checked
 																	@endif
 																@endif
-																> 
+																>
 																<label for="voucher_type_autogenerated_0">
 																	<span></span>
 																	<span class="check"></span>
@@ -3019,7 +3019,7 @@ $configs    		= session('configs');
 																		checked
 																	@endif
 																@endif
-																> 
+																>
 																<label for="voucher_type_listvoucher_0">
 																	<span></span>
 																	<span class="check"></span>
@@ -3036,7 +3036,7 @@ $configs    		= session('configs');
 																		checked
 																	@endif
 																@endif
-																> 
+																>
 																<label for="voucher_type_unlimited_0">
 																	<span></span>
 																	<span class="check"></span>
@@ -3044,7 +3044,7 @@ $configs    		= session('configs');
 															</div>
 														</div>
 													</div>
-													
+
 												</div>
 											</div>
 										</div>
@@ -3061,12 +3061,12 @@ $configs    		= session('configs');
 														</div>
 													</div>
 												</div>
-												
+
 												<div class="form-group" id="vouchertype_listvoucher_0" style="display: none;">
 													<label class="col-md-2 control-label"></label>
 													<div class="col-md-10">
 														<div class="col-md-3">
-															<label class="control-label">Input Voucher 
+															<label class="control-label">Input Voucher
 																<br> <small> Separated by new line </small>
 															</label>
 														</div>
@@ -3087,12 +3087,12 @@ $configs    		= session('configs');
 														</div>
 													</div>
 												</div>
-												
+
 												<div class="form-group" id="vouchertype_listvoucher_0" style="display: block;">
 													<label class="col-md-2 control-label"></label>
 													<div class="col-md-10">
 														<div class="col-md-3">
-															<label class="control-label">Input Voucher 
+															<label class="control-label">Input Voucher
 																<br> <small> Separated by new line </small>
 															</label>
 														</div>
@@ -3113,12 +3113,12 @@ $configs    		= session('configs');
 														</div>
 													</div>
 												</div>
-												
+
 												<div class="form-group" id="vouchertype_listvoucher_0" style="display: none;">
 													<label class="col-md-2 control-label"></label>
 													<div class="col-md-10">
 														<div class="col-md-3">
-															<label class="control-label">Input Voucher 
+															<label class="control-label">Input Voucher
 																<br> <small> Separated by new line </small>
 															</label>
 														</div>
@@ -3140,12 +3140,12 @@ $configs    		= session('configs');
 													</div>
 												</div>
 											</div>
-											
+
 											<div class="form-group" id="vouchertype_listvoucher_0" style="display: none;">
 												<label class="col-md-2 control-label"></label>
 												<div class="col-md-10">
 													<div class="col-md-3">
-														<label class="control-label">Input Voucher 
+														<label class="control-label">Input Voucher
 															<br> <small> Separated by new line </small>
 														</label>
 													</div>
@@ -3177,13 +3177,13 @@ $configs    		= session('configs');
 			</div>
 			@endif
 		</div>
-	
+
 	@if($result['promotion_type'] == 'Instant Campaign')
 	<div class="col-md-12" style="padding-left: 30px;padding-right: 30px;">
 		<div class="portlet box blue-hoki">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-users"></i>Promotion Receipient 
+					<i class="fa fa-users"></i>Promotion Receipient
 				</div>
 			</div>
 			<div class="portlet-body form scroller"  style="background-color: white;" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
@@ -3229,7 +3229,7 @@ $configs    		= session('configs');
 					</tbody>
 				</table>
 			</div>
-		</div>	
+		</div>
 	</div>
 	@endif
 	<div class="col-md-12" style="padding-left: 30px;padding-right: 30px;">
@@ -3249,7 +3249,7 @@ $configs    		= session('configs');
 								<button type="submit" class="btn blue">Next Step</button>
 							@endif
 						@endif
-						
+
 					</div>
 				</div>
 			</div>

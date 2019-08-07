@@ -17,11 +17,11 @@ use GoogleReCaptchaV3;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-	
+
 	function __construct() {
         date_default_timezone_set('Asia/Jakarta');
 	}
-	
+
 	function login(loginRequest $request){
 
         $captcha = GoogleReCaptchaV3::verifyResponse($request->input('g-recaptcha-response'))->isSuccess();
@@ -29,14 +29,14 @@ class Controller extends BaseController
         	return redirect()->back()->withErrors(['Recaptcha failed']);
         }
 
-		
+
 		if(strlen($request->input('password')) != 6){
 			return redirect('login')->withErrors(['Pin must be 6 digits' => 'Pin must be 6 digits'])->withInput();
 		}
 
 		$post = $request->all();
 		$postLogin =  MyHelper::postLogin($request);
-		
+
         if(isset($postLogin['error'])){
         	// untuk log request
 			$postLoginClient =  MyHelper::postLoginClient();
@@ -47,7 +47,7 @@ class Controller extends BaseController
 				]);
 			}
 			$checkpin = MyHelper::post('users/pin/check', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
-			
+
 			// if(isset($checkpin['status']) && $checkpin['status'] != "success")
 				return redirect('login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
 		}
@@ -65,11 +65,6 @@ class Controller extends BaseController
 				return redirect('login')->withErrors($postLogin['messages'])->withInput();
         	}
         	else {
-				$postLoginClient =  MyHelper::postLoginClient();
-				
-				session([
-					'access_token'  => 'Bearer '.$postLoginClient['access_token']
-				]);
 
 				$checkpin = MyHelper::post('users/pin/check', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
 				session([
@@ -103,7 +98,7 @@ class Controller extends BaseController
 				if(isset($getConfig['status']) && $getConfig['status'] == 'success' && !empty($getConfig['result'])) {
 					$configs = $getConfig['result'];
 				}
-				
+
 	          	session([
 	            	'granted_features'  => $features,
 	            	'configs'  			=> $configs,
@@ -138,8 +133,8 @@ class Controller extends BaseController
     		'history'
     	];
     }
-	
-	function getHome(Request $request, $year = null, $month = null){       	
+
+	function getHome(Request $request, $year = null, $month = null){
 		$data = [ 'title'             => 'Home',
 				  'menu_active'       => 'home',
 				  'submenu_active'    => ''
@@ -158,14 +153,14 @@ class Controller extends BaseController
 					// $data['date_start']   = date("Y-m-1");
 					// $data['date_end']     = date("Y-m-t");
 				}
-				
+
 				if($year != null && $month != null){
 					$timestamp    = strtotime("".$month." ".$year."");
 					$last		  = date('t', $timestamp);
 					$data['date_start'] = date("".$year."-".$month."-01");
 					$data['date_end'] = date("".$year."-".$month."-".$last);
 				}
-				
+
 				if($year == 'last7days'){
 					$data['date_end'] = date("Y-m-d");
 					$data['date_start']= date('Y-m-d', strtotime('-7 days', strtotime($data['date_end'])));
@@ -183,7 +178,7 @@ class Controller extends BaseController
 			$data['year'] = $year;
 
 			if($month == null) $data['month'] = date('m');
-		
+
 			$dashboard = MyHelper::post('setting/dashboard', $data);
 			// dd($data);
 			if(isset($dashboard['status']) && $dashboard['status'] == 'success'){
@@ -201,7 +196,7 @@ class Controller extends BaseController
             return view('home', $data);
         }
     }
-	
+
 	function getProfile(Request $request){
 		if(empty(Session::get('secure'))){
 			$data = [ 'title'             => 'User',
@@ -211,7 +206,7 @@ class Controller extends BaseController
 					];
 			return view('password', $data);
 		}
-		
+
 		$data = [ 'title'             => 'Home',
 				  'menu_active'       => 'home',
 				  'submenu_active'    => ''
@@ -224,17 +219,17 @@ class Controller extends BaseController
         else{
 			$getUser = MyHelper::post('users/detail', ['phone' => Session::get('phone')]);
 			if($getUser['status'] == 'success') $data['profile'] = $getUser['result']; else $data['profile'] = null;
-			
+
 			$getCity = MyHelper::get('city/list');
 			if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
-			
+
 			$getProvince = MyHelper::get('province/list');
 			if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
-		
+
             return view('profile', $data);
         }
     }
-	
+
 	function getTextReplace(Request $request){
 		$post = $request->except('_token');
 		if(empty($post)){
@@ -242,9 +237,9 @@ class Controller extends BaseController
 					  'menu_active'       => 'crm-setting',
 					  'submenu_active'    => 'textreplace'
 					];
-					
+
 			$replace = MyHelper::get('autocrm/textreplace/all');
-			
+
 			if($replace['status'] == 'success'){
 				$data['textreplaces'] = $replace['result'];
 			}
@@ -255,20 +250,20 @@ class Controller extends BaseController
 			return back()->with('success', ['Text Replace has been updated']);
 		}
 	}
-	
+
 	function getEmailHeaderFooter(Request $request){
 		$post = $request->except('_token');
-		
+
 		if(empty($post)){
 			$data = [ 'title'             => 'Email Header and Footer Settings',
 					  'menu_active'       => 'crm-setting',
 					  'submenu_active'    => 'email'
 					];
-					
+
 			$emailSettings = MyHelper::post('setting', ['key-like' => 'email']);
 			// print_r($emailSettings);exit;
-			
-			
+
+
 			if($emailSettings['status'] == 'success'){
 				$settings = [];
 				foreach($emailSettings['result'] as $key => $row){
@@ -282,18 +277,18 @@ class Controller extends BaseController
 			if (isset($post['email_logo'])) {
                 $post['email_logo']   = MyHelper::encodeImage($post['email_logo']);
 			}
-			
+
 			$update = MyHelper::post('setting/email/update',$post);
 			// print_r($update);exit;
 			return back()->with('success', ['Email Header and Footer Settings has been updated']);
 		}
 	}
-	
+
     function redirect($save, $messagesSuccess, $next=null, $view=[]) {
         if (isset($save['status']) && $save['status'] == 'success') {
 
             if (!empty($view)) {
-            	
+
             	// custom
             	if (isset($view['data'])) {
             		$data = $view['data'];
@@ -329,7 +324,7 @@ class Controller extends BaseController
     		return [];
     	}
 	}
-	
+
 	public function uploadImageSummernote(Request $request, $type) {
         $post = $request->all();
         $post['type'] = $type;
@@ -338,7 +333,7 @@ class Controller extends BaseController
 
         return $myAsk;
 	}
-	
+
 	public function deleteImageSummernote(Request $request, $type) {
 		$post = $request->all();
 
@@ -358,10 +353,10 @@ class Controller extends BaseController
         }
 
         $image = substr($image, 0, -1);
-        
+
         $post['type'] 	= $type;
 		$post['image']  = $image;
-		
+
         $myAsk = MyHelper::post('summernote/delete/image', $post);
 
         return $myAsk;

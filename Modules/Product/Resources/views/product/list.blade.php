@@ -13,9 +13,9 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
 
-    
+
     @endsection
-    
+
     @section('page-script')
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
@@ -145,6 +145,7 @@
         $('#sample_1').on('draw.dt', function() {
             $(".changeStatus").bootstrapSwitch();
             $('input[name="allow_sync"]').bootstrapSwitch();
+            $('input[name="product_visibility"]').bootstrapSwitch();
             $('[data-toggle=confirmation]').confirmation({ btnOkClass: 'btn btn-sm btn-success', btnCancelClass: 'btn btn-sm btn-danger'});
         });
 
@@ -158,6 +159,30 @@
                 success : function(result) {
                     if (result.status == "success") {
                         toastr.info("Product allow sync has been updated.");
+                    }
+                    else {
+                        toastr.warning(result.messages);
+                    }
+                }
+            });
+        });
+
+        $('#sample_1').on('switchChange.bootstrapSwitch', 'input[name="product_visibility"]', function(event, state) {
+            var id     = $(this).data('id');
+            var token  = "{{ csrf_token() }}";
+            if(state == true){
+                state = 'Visible'
+            }
+            else if(state == false){
+                state = 'Hidden'
+            }
+            $.ajax({
+                type : "POST",
+                url : "{{ url('product/update/visibility/global') }}",
+                data : "_token="+token+"&id_product="+id+"&product_visibility="+state,
+                success : function(result) {
+                    if (result.status == "success") {
+                        toastr.info("Product visibility has been updated.");
                     }
                     else {
                         toastr.warning(result.messages);
@@ -190,7 +215,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -208,6 +233,9 @@
                         <th> Category </th>
                         <th> Name </th>
                         <th> Allow Sync </th>
+                        <th >Default Visibility Product</th>
+                        <th> Override Visible </th>
+                        <th> Override Hidden </th>
                         @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
                             <th> Action </th>
                         @endif
@@ -225,7 +253,7 @@
                                     <td>{{ $value['category']['product_category_name'] }}</td>
                                 @endif
                                 <td>{{ $value['product_name'] }}</td>
-                                <td> 
+                                <td>
                                     <div class="bootstrap-switch-container">
                                         <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>
                                         <span class="bootstrap-switch-label" style="width: 35px;">&nbsp;</span>
@@ -233,14 +261,23 @@
                                         <input type="checkbox" name="allow_sync" @if($value['product_allow_sync'] == '1') checked @endif data-id="{{ $value['id_product'] }}" class="make-switch switch-large switch-change" data-label-icon="fa fa-fullscreen" data-on-text="<i class='fa fa-check'></i>" data-off-text="<i class='fa fa-times'></i>">
                                     </div>
                                 </td>
-
-                                @if(MyHelper::hasAccess([49,51,52], $grantedFeature)) 
-                                    <td style="width: 80px;"> 
+                                <td>
+                                    <div class="bootstrap-switch-container">
+                                        <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>
+                                        <span class="bootstrap-switch-label" style="width: 35px;">&nbsp;</span>
+                                        <span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 35px;"></span>
+                                        <input type="checkbox" name="product_visibility" @if($value['product_visibility'] == 'Visible') checked @endif data-id="{{ $value['id_product'] }}" class="make-switch switch-large switch-change" data-on-text="Visible" data-off-text="Hidden">
+                                    </div>
+                                </td>
+                                <td><a href="{{ url('product/detail') }}/{{ $value['product_code'] }}#visibility">{{ $value['product_prices_count'] }}</a></td>
+                                <td><a href="{{ url('product/detail') }}/{{ $value['product_code'] }}#visibility">{{ $value['product_price_hiddens_count'] }}</td>
+                                @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
+                                    <td style="width: 80px;">
                                         @if(MyHelper::hasAccess([52], $grantedFeature))
-                                            <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_product'] }}"><i class="fa fa-trash-o"></i></a> 
+                                            <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_product'] }}"><i class="fa fa-trash-o"></i></a>
                                         @endif
                                         @if(MyHelper::hasAccess([49,51], $grantedFeature))
-                                            <a href="{{ url('product/detail') }}/{{ $value['product_code'] }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a> 
+                                            <a href="{{ url('product/detail') }}/{{ $value['product_code'] }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
                                         @endif
                                     </td>
                                 @endif

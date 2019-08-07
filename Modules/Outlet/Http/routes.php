@@ -5,6 +5,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::get('list', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@index']);
     Route::get('getuser', ['middleware' => 'feature_control:40', 'uses' => 'OutletController@getUser']);
     Route::get('ajax', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@indexAjax']);
+    Route::get('ajax/filter/{type}', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@indexAjaxFilter']);
     Route::any('create', ['middleware' => 'feature_control:26', 'uses' => 'OutletController@create']);
     Route::get('detail/{id}', ['middleware' => 'feature_control:25', 'uses' => 'OutletController@detail']);
     Route::post('detail/{id}', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@detail']);
@@ -16,11 +17,11 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::post('import', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@importOutlet']);
     Route::get('qrcode', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@qrcodeView']);
     Route::get('qrcode/print', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@qrcodePrint']);
-    
+
     // photo
     Route::post('photo/delete', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@deletePhoto']);
     Route::post('schedule/save', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@scheduleSave']);
-    
+
     // holiday
     Route::group(['middleware' => 'config_control:4'], function()
     {
@@ -29,7 +30,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
         Route::post('create/holiday', ['middleware' => 'feature_control:36', 'uses' => 'OutletController@createHoliday']);
         Route::post('delete/holiday', ['middleware' => 'feature_control:38', 'uses' => 'OutletController@deleteHoliday']);
     });
-    
+
     Route::group(['prefix' => 'detail/{outlet_code}/admin', 'middleware' => 'config_control:5'], function()
     {
         Route::any('create', ['middleware' => 'feature_control:40', 'uses' => 'OutletController@createAdminOutlet']);
@@ -37,7 +38,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
         Route::get('edit/{id_user_outlet}', ['middleware' => 'feature_control:39', 'uses' => 'OutletController@detailAdminOutlet']);
         Route::post('edit/{id_user_outlet}', ['middleware' => 'feature_control:41', 'uses' => 'OutletController@updateAdminOutlet']);
     });
-    
+
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet', 'namespace' => 'Modules\Advert\Http\Controllers'], function()

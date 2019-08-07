@@ -16,7 +16,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
@@ -30,7 +30,7 @@
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-bootstrap-select.min.js') }}"  type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
-        
+
         $(document).ready(function(){
 
             $('.summernote').summernote({
@@ -118,7 +118,7 @@
 
             $('.disc').click(function() {
                 let type = $(this).data('type');
-             
+
                 if (type == "percentage") {
                     $('.'+type+'-div').show();
                     $('.'+type).prop('required', true);
@@ -130,20 +130,238 @@
                     $('.'+type+'-div').show();
                     $('.'+type).prop('required', true);
                     $('.percentage-div').hide();
-                    $('.percentage').removeAttr('required');   
+                    $('.percentage').removeAttr('required');
                     $('.percentage').val('');
                 }
             });
-        });
 
-          $(".price_float").each(function() {
-			var input = $(this).val();
-			var input = input.replace(/[^[^0-9]\s\_\-]+/g, "");
-	        input = input ? parseFloat( input ) : 0;
-	        $(this).val( function() {
-	            return ( input === 0 ) ? "" : input.toLocaleString( "id", {minimumFractionDigits: 2} );
-	        } );
-	      });
+            @foreach($outlet as $key => $ou)
+            <?php $marker = 0; ?>
+                @foreach($ou['product_prices'] as $keyPrice => $price)
+                    @if($price['id_product'] == $product[0]['id_product'])
+                        @php $marker = 1; break; @endphp
+                    @endif
+                @endforeach
+                var option =  '<option class="option-visibility" data-id={{$product[0]["id_product"]}}/{{$ou["id_outlet"]}}>{{$ou["outlet_code"]}} - {{$ou["outlet_name"]}}</option>'
+                @if($marker == 1 && $price["product_visibility"])
+                        $('#visibleglobal-{{lcfirst($price["product_visibility"])}}').append(option)
+                @else
+                    $('#visibleglobal-default').append(option)
+                @endif
+            @endforeach
+
+            $('#move-hiden').click(function() {
+                if($('#visibleglobal-visible').val() == null){
+                    toastr.warning("Choose minimal 1 outlet in visible");
+                }else{
+                    var id =[];
+                    $('#visibleglobal-visible option:selected').each(function () {
+                        var $this = $(this);
+                        id.push($this.attr('data-id'))
+                    })
+                    let token  = "{{ csrf_token() }}";
+
+                    $.ajax({
+                        type : "POST",
+                        url : "{{ url('product/update/visible') }}",
+                        data : "_token="+token+"&id_visibility="+id+"&visibility=Hidden",
+                        success : function(result) {
+                            if (result.status == "success") {
+                                toastr.info("Visibility has been updated.");
+                                $('#visibleglobal-visible option:selected').each(function () {
+                                    var $this = $(this);
+                                    var option = '<option class="option-visibility" data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>'
+                                    $('#visibleglobal-hidden').append(option)
+                                    $(this).remove()
+                                })
+
+                            }
+                            else {
+                                toastr.warning("Something went wrong. Failed to update visibility.");
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#move-visible').click(function() {
+                if($('#visibleglobal-hidden').val() == null){
+                    toastr.warning("Choose minimal 1 outlet in hidden");
+                }else{
+                    var id =[];
+                    $('#visibleglobal-hidden option:selected').each(function () {
+                        var $this = $(this);
+                        id.push($this.attr('data-id'))
+                    })
+                    let token  = "{{ csrf_token() }}";
+
+                    $.ajax({
+                        type : "POST",
+                        url : "{{ url('product/update/visible') }}",
+                        data : "_token="+token+"&id_visibility="+id+"&visibility=Visible",
+                        success : function(result) {
+                            if (result.status == "success") {
+                                toastr.info("Visibility has been updated.");
+                                $('#visibleglobal-hidden option:selected').each(function () {
+                                    var $this = $(this);
+                                    var option = '<option class="option-visibility" data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>'
+                                    $('#visibleglobal-visible').append(option)
+                                    $(this).remove()
+                                })
+
+                            }
+                            else {
+                                toastr.warning("Something went wrong. Failed to update visibility.");
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#default-to-hidden').click(function() {
+                if($('#visibleglobal-default').val() == null){
+                    toastr.warning("Choose minimal 1 outlet in default visibility");
+                }else{
+                    var id =[];
+                    $('#visibleglobal-default option:selected').each(function () {
+                        var $this = $(this);
+                        id.push($this.attr('data-id'))
+                    })
+                    let token  = "{{ csrf_token() }}";
+
+                    $.ajax({
+                        type : "POST",
+                        url : "{{ url('product/update/visible') }}",
+                        data : "_token="+token+"&id_visibility="+id+"&visibility=Hidden",
+                        success : function(result) {
+                            if (result.status == "success") {
+                                toastr.info("Visibility has been updated.");
+                                $('#visibleglobal-default option:selected').each(function () {
+                                    var $this = $(this);
+                                    var option = '<option class="option-visibility" data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>'
+                                    $('#visibleglobal-hidden').append(option)
+                                    $(this).remove()
+                                })
+
+                            }
+                            else {
+                                toastr.warning("Something went wrong. Failed to update visibility.");
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#default-to-visible').click(function() {
+                if($('#visibleglobal-default').val() == null){
+                    toastr.warning("Choose minimal 1 outlet in default visibility");
+                }else{
+                    var id =[];
+                    $('#visibleglobal-default option:selected').each(function () {
+                        var $this = $(this);
+                        id.push($this.attr('data-id'))
+                    })
+                    let token  = "{{ csrf_token() }}";
+
+                    $.ajax({
+                        type : "POST",
+                        url : "{{ url('product/update/visible') }}",
+                        data : "_token="+token+"&id_visibility="+id+"&visibility=Visible",
+                        success : function(result) {
+                            if (result.status == "success") {
+                                toastr.info("Visibility has been updated.");
+                                $('#visibleglobal-default option:selected').each(function () {
+                                    var $this = $(this);
+                                    var option = '<option class="option-visibility" data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>'
+                                    $('#visibleglobal-visible').append(option)
+                                    $(this).remove()
+                                })
+
+                            }
+                            else {
+                                toastr.warning("Something went wrong. Failed to update visibility.");
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#move-default').click(function() {
+                if($('#visibleglobal-hidden').val() == null && $('#visibleglobal-visible').val() == null){
+                    toastr.warning("Choose minimal 1 outlet in hidden or visible");
+                }else{
+                    var id =[];
+                    $('#visibleglobal-hidden option:selected').each(function () {
+                        var $this = $(this);
+                        id.push($this.attr('data-id'))
+                    })
+                    $('#visibleglobal-visible option:selected').each(function () {
+                        var $this = $(this);
+                        id.push($this.attr('data-id'))
+                    })
+                    let token  = "{{ csrf_token() }}";
+
+                    $.ajax({
+                        type : "POST",
+                        url : "{{ url('product/update/visible') }}",
+                        data : "_token="+token+"&id_visibility="+id+"&visibility=",
+                        success : function(result) {
+                            if (result.status == "success") {
+                                toastr.info("Visibility has been updated.");
+                                $('#visibleglobal-hidden option:selected').each(function () {
+                                    var $this = $(this);
+                                    var option = '<option class="option-visibility" data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>'
+                                    $('#visibleglobal-default').append(option)
+                                    $(this).remove()
+                                })
+                                $('#visibleglobal-visible option:selected').each(function () {
+                                    var $this = $(this);
+                                    var option = '<option class="option-visibility" data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>'
+                                    $('#visibleglobal-default').append(option)
+                                    $(this).remove()
+                                })
+
+                            }
+                            else {
+                                toastr.warning("Something went wrong. Failed to update visibility.");
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#search-outlet').on("keyup", function(){
+                var search = $('#search-outlet').val();
+                $(".option-visibility").each(function(){
+                    if(!$(this).text().toLowerCase().includes(search.toLowerCase())){
+                        $(this).hide()
+                    }else{
+                        $(this).show()
+                    }
+                });
+                $('#btn-reset').show()
+                $('#div-left').hide()
+            })
+
+            $('#btn-reset').click(function(){
+                $('#search-outlet').val("")
+                $(".option-visibility").each(function(){
+                    $(this).show()
+                })
+                $('#btn-reset').hide()
+                $('#div-left').show()
+            })
+        });
+        $(document).ready(function() {
+            $(".price_float").each(function() {
+                var input = $(this).val();
+                var input = input.replace(/[^[^0-9]\s\_\-]+/g, "");
+                input = input ? parseFloat( input ) : 0;
+                $(this).val( function() {
+                    return ( input === 0 ) ? "" : input.toLocaleString( "id", {minimumFractionDigits: 2} );
+                } );
+            });
+		});
 
 		$('.price').each(function() {
 			var input = $(this).val();
@@ -198,17 +416,15 @@
 
 		$('.price').change(function(){
 			id = $(this).attr('data-id');
-			if(id){
-    			base = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) * 10 / 11;
-    			base = base.toLocaleString( "id", {maximumFractionDigits: 2} );
-    			
-    			tax = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) / 11;
-    			tax = tax.toLocaleString( "id", {maximumFractionDigits: 2} )
-    	        
-    			$('#price_base_'+id).val(base);
-    			$('#price_tax_'+id).val(tax);
-			}
-			
+
+			base = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) * 10 / 11;
+			base = base.toLocaleString( "id", {maximumFractionDigits: 2} );
+
+			tax = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) / 11;
+			tax = tax.toLocaleString( "id", {maximumFractionDigits: 2} )
+
+			$('#price_base_'+id).val(base);
+			$('#price_tax_'+id).val(tax);
 		})
     </script>
     <script type="text/javascript">
@@ -321,7 +537,7 @@
 
                     }
                 };
-            
+
                 image.src = _URL.createObjectURL(file);
             }
 
@@ -407,18 +623,12 @@
         return false;
       }
 
-      if (visibility == '') {
-        alert('Visibility field cannot be empty');
-        $(this).parent().parent().parent().find('.product-price-tax').focus();
+      if (stock == '') {
+        alert('Stock field cannot be empty');
+        $(this).parent().parent().parent().find('.product-price-stock').focus();
         return false;
       }
 
-      if (stock == '') {
-        alert('Stock field cannot be empty');
-        $(this).parent().parent().parent().find('.product-price-tax').focus();
-        return false;
-      }
-      
       if ($(this).is(':checked')) {
         var check = $('input[name="sameall[]"]:checked').length;
         var count = $('.same').prop('checked', false);
@@ -427,35 +637,35 @@
         if (check == 1) {
             var all_price = $('.product-price');
             var array_price = [];
-            for (i = 0; i < all_price.length; i++) { 
+            for (i = 0; i < all_price.length; i++) {
                 array_price.push(all_price[i]['defaultValue']);
             }
             sessionStorage.setItem("product_price", array_price);
 
             var all_price_base = $('.product-price-base');
             var array_price_base = [];
-            for (i = 0; i < all_price_base.length; i++) { 
+            for (i = 0; i < all_price_base.length; i++) {
                 array_price_base.push(all_price_base[i]['defaultValue']);
             }
             sessionStorage.setItem("product_price_base", array_price_base);
 
             var all_price_tax = $('.product-price-tax');
             var array_price_tax = [];
-            for (i = 0; i < all_price_tax.length; i++) { 
+            for (i = 0; i < all_price_tax.length; i++) {
                 array_price_tax.push(all_price_tax[i]['defaultValue']);
             }
             sessionStorage.setItem("product_price_tax", array_price_tax);
 
             var all_visibility = $('.product-visibility-value');
             var array_visibility = [];
-            for (i = 0; i < all_visibility.length; i++) { 
+            for (i = 0; i < all_visibility.length; i++) {
                 array_visibility.push(all_visibility[i]['defaultValue']);
             }
             sessionStorage.setItem("product_visibility", array_visibility);
 
             var all_stock = $('.product-stock-value');
             var array_stock = [];
-            for (i = 0; i < all_price.length; i++) { 
+            for (i = 0; i < all_price.length; i++) {
                 array_stock.push(all_stock[i]['defaultValue']);
             }
             sessionStorage.setItem("product_stock", array_stock);
@@ -467,7 +677,7 @@
         $('.product-price-tax').val(priceTax);
         $('.product-visibility').val(visibility);
         $('.product-stock').val(stock);
-        
+
       } else {
 
           var item_price = sessionStorage.getItem("product_price");
@@ -530,7 +740,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     @php
@@ -543,7 +753,7 @@
                 <span class="caption-subject bold uppercase font-blue">{{ $product[0]['product_name'] }}</span>
             </div>
             <ul class="nav nav-tabs">
-                
+
                 <li class="active">
                     <a href="#info" data-toggle="tab"> Info </a>
                 </li>
@@ -554,6 +764,9 @@
                 @endif -->
                 <li>
                     <a href="#price" data-toggle="tab"> Outlet Setting </a>
+                </li>
+                <li>
+                    <a href="#visibility" data-toggle="tab"> Visibility </a>
                 </li>
 				<!-- <li>
                     <a href="#discount" data-toggle="tab"> Discount </a>
@@ -574,9 +787,12 @@
                 <div class="tab-pane" id="discount">
                     @include('product::product.discount')
                 </div>
+                <div class="tab-pane" id="visibility">
+                    @include('product::product.visibility_global')
+                </div>
             </div>
         </div>
     </div>
-        
-    
+
+
 @endsection

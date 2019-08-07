@@ -33,8 +33,9 @@ $id_product = $product[0]['id_product'];
 					</div>
 					<div style="width:10%; display:inline-block">
 						<select class="form-control product-visibility" name="product_visibility[]">
+							<option></option>
 							<option value="Visible" @if($price['product_visibility'] == 'Visible') selected @endif>Visible</option>
-							<option value="Hidden" @if($price['product_visibility'] != 'Visible') selected @endif>Hidden</option>
+							<option value="Hidden" @if($price['product_visibility'] == 'Hidden') selected @endif>Hidden</option>
 						</select>
 						<input type="hidden" value="{{$price['product_visibility']}}" class="product-visibility-value">
 					</div>
@@ -64,8 +65,9 @@ $id_product = $product[0]['id_product'];
 				</div>
 				<div style="width:10%; display:inline-block">
 					<select class="form-control product-visibility" name="product_visibility[]">
+						<option></option>
 						<option value="Visible">Visible</option>
-						<option value="Hidden" selected>Hidden</option>
+						<option value="Hidden">Hidden</option>
 					</select>
 					<input type="hidden" value="Hidden" class="product-visibility-value">
 				</div>

@@ -13,35 +13,35 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype'); 
+            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype');
         }
 
         .kotak {
@@ -420,7 +420,7 @@
                 <div class="container">
                     <div class="row text-center">
                         <div class="col-12 seravek-font text-15px space-text text-grey">Kode Pickup Anda</div>
-                        
+
                         <div class="kotak-qr" data-toggle="modal" data-target="#exampleModal">
                             <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
                         </div>
@@ -459,7 +459,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-13-3px text-grey-light seravek-light-font">
-                    Transaksi Anda 
+                    Transaksi Anda
                     <hr style="margin:10px 0 20px 0">
                 </div>
                 @php $countQty = 0; @endphp
@@ -514,9 +514,9 @@
                 <div class="col-6 text-13-3px space-text seravek-light-font text-greyish-brown">Diskon</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-grey-black">- {{ str_replace(',', '.', number_format($data['transaction_discount'])) }}</div>
                 @endif
-                
+
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text seravek-light-font">env('POINT_NAME', 'Points')</div>
+                <div class="col-6 text-13-3px space-text seravek-light-font">{{env('POINT_NAME', 'Points')}}</div>
                 <div class="col-6 text-13-3px text-right seravek-light-font text-greyish-brown">- {{ str_replace(',', '.', number_format(abs($data['balance']))) }}</div>
                 @endif
 
@@ -537,9 +537,9 @@
                 <div class="row">
                     <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Metode Pembayaran <hr> </div>
                     <div class="col-6 text-13-3px seravek-font text-black">
-                        @if ($data['trasaction_payment_type'] == 'Balance') 
-                            env('POINT_NAME', 'Points')
-                        @elseif ($data['trasaction_payment_type'] == 'Midtrans') 
+                        @if ($data['trasaction_payment_type'] == 'Balance')
+                            {{env('POINT_NAME', 'Points')}}
+                        @elseif ($data['trasaction_payment_type'] == 'Midtrans')
                             @if(isset($data['payment']['payment_type']))
                                 {{ ucwords(str_replace('_', ' ', $data['payment']['payment_type'])) }}
                             @else
@@ -548,7 +548,7 @@
                         @elseif ($data['trasaction_payment_type'] == 'Manual')
                             Transfer Bank
                         @elseif ($data['trasaction_payment_type'] == 'Offline')
-                            TUNAI 
+                            TUNAI
                         @endif
                     </div>
                     <div class="col-6 text-12-7px text-right">
@@ -558,7 +558,7 @@
                         LUNAS
                     @endif
                     </div>
-                    
+
                     @if (isset($data['payment']['bank']))
                         <div class="col-6 text-grey text-12-7px">{{ $data['payment']['bank'] }}</div>
                     @endif
@@ -683,13 +683,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
-    
+
     @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
-    
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&callback=initMap">
     </script>
-    
-    <script>    
+
+    <script>
         // Initialize and add the map
         function initMap() {
             // The location of Uluru
@@ -697,7 +697,7 @@
             // The map, centered at Uluru
             var map = new google.maps.Map(
                 document.getElementById('map'), {
-                    zoom: 15, 
+                    zoom: 15,
                     center: uluru,
                     disableDefaultUI: true
                 });
@@ -719,6 +719,6 @@
             });
         });
     </script>
-    
+
   </body>
 </html>

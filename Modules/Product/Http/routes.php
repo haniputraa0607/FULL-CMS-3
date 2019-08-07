@@ -9,22 +9,24 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	Route::any('/visible/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::any('/hidden/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::post('/id_visibility', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addIdVisibility']);
+	Route::post('update/visible', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@updateVisibilityProduct']);
 	Route::get('import', ['middleware' => ['feature_control:56,57', 'config_control:10,11,or'], 'uses' => 'ProductController@importProduct']);
 	Route::post('import/save', ['middleware' => ['feature_control:56', 'config_control:10'], 'uses' => 'ProductController@importProductSave']);
 	Route::get('ajax', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProductAjax']);
 	Route::any('create', ['middleware' => 'feature_control:50', 'uses' => 'ProductController@create']);
 	Route::any('update', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@update']);
 	Route::post('update/allow_sync', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@updateAllowSync']);
+	Route::post('update/visibility/global', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@updateVisibility']);
 	Route::any('delete', ['middleware' => 'feature_control:52', 'uses' => 'ProductController@delete']);
 	Route::any('detail/{product_code}', ['middleware' => 'feature_control:49', 'uses' => 'ProductController@detail']);
 	Route::any('example', ['middleware' => ['feature_control:57', 'config_control:11'], 'uses' => 'ProductController@example']);
-	Route::any('price/{key?}', ['middleware' => ['feature_control:57', 'config_control:11'], 'uses' => 'ProductController@price']);
+	Route::any('price/{key?}', ['middleware' => ['feature_control:62', 'config_control:11'], 'uses' => 'ProductController@price']);
 	Route::any('category/assign', ['middleware' => ['feature_control:44', 'config_control:11'], 'uses' => 'ProductController@categoryAssign']);
-	
+
 	Route::get('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'ProductController@positionAssign']);
 	// ajax for ordering position
 	Route::post('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'ProductController@positionProductAssign']);
-	
+
 	/**
 	 * photo
 	 */
@@ -51,7 +53,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	Route::group(['prefix' => 'discount'], function() {
     	Route::any('delete', 'ProductController@deleteDiscount');
 	});
-	
+
 	/**
 	 * tag
 	 */
@@ -72,4 +74,3 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
     /* ADVERT */
     Route::any('advert', 'AdvertController@index');
 });
-

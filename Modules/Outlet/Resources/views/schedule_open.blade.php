@@ -3,7 +3,7 @@
   		<div class="form-group" id="parent">
   			@if (empty($outlet[0]['outlet_schedules']))
   				@php
-  					$sch = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+  					$sch = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
   				@endphp
 
   				@foreach ($sch as $i => $val)

@@ -19,10 +19,10 @@ class MembershipController extends Controller
 				  'menu_active'       => 'membership',
 				  'submenu_active'    => 'membership-list'
 				];
-				
+
 		$post = $request->except('_token');
 		if(!empty($post)){
-			
+
 			$post['membership'] = array_values($post['membership']);
 			// dd($post);exit;
 			foreach($post['membership'] as $key => $membership){
@@ -33,7 +33,7 @@ class MembershipController extends Controller
 				}
 			}
 			$action = MyHelper::post('membership/update', $post);
-// 			dd($action);exit;
+			// dd($action);exit;
 			if(isset($action['status']) && $action['status'] == 'success'){
 				session(['success' => ['Membership has been updated']]);
 				return redirect('membership');
@@ -42,7 +42,7 @@ class MembershipController extends Controller
     				return redirect('membership')->withErrors($action['messages']);
 			    }else{
     				return redirect('membership')->withErrors(['Something went wrong.']);
-			        
+
 			    }
 			}
 		} else {
@@ -58,7 +58,7 @@ class MembershipController extends Controller
 		}
     }
 
-    
+
     public function create(Request $request) {
 		$post = $request->except('_token');
 		$data = [
@@ -80,7 +80,7 @@ class MembershipController extends Controller
 			}
 		}
     }
-	
+
 	public function update(Request $request, $id_membership) {
 		$post = $request->except('_token');
 		$data = [
@@ -106,7 +106,7 @@ class MembershipController extends Controller
 			}
 			else {
 			    if(isset($save['messages'])){
-			        
+
                 return redirect('membership/update/'.$id_membership)->withErrors($save['messages']);
 			    }else{
 			        return redirect('membership/update/'.$id_membership)->withErrors('Something Went Wrong.');
@@ -114,7 +114,7 @@ class MembershipController extends Controller
 			}
 		}
     }
-	
+
 	public function delete($id_membership) {
 		$save = MyHelper::post('membership/delete', ['id_membership' => $id_membership]);
 		// print_r($save);exit;
@@ -126,14 +126,14 @@ class MembershipController extends Controller
 			return redirect('membership')->withErrors($save['messages']);
 		}
 	}
-	
+
 	public function detailWebview(Request $request)
     {
 		$bearer = $request->header('Authorization');
         if ($bearer == "") {
             return view('error', ['msg' => 'Unauthenticated']);
 		}
-		
+
     	$data = json_decode(base64_decode($request->get('data')), true);
     	$data['check'] = 1;
     	$check = MyHelper::postWithBearer('membership/detail/webview?log_save=0', $data, $bearer);
@@ -145,8 +145,8 @@ class MembershipController extends Controller
         } else {
             return view('error', ['msg' => 'Something went wrong, try again']);
 		}
-		
+
         return view('membership::webview.detail_membership')->with(compact('data'));
     }
-	
+
 }

@@ -11,9 +11,9 @@ $configs = session('configs');
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
@@ -111,30 +111,30 @@ $configs = session('configs');
 			@endif
 
         });
-		
+
 		function viewEmail(id){
 			var subject = document.getElementById('autocrm_email_subject_'+id).value;
 			var content = document.getElementById('autocrm_email_content_'+id).value;
-			
+
 			document.getElementById('autocrm_email_subject').value = subject;
 			document.getElementById('id_autocrm_email').value = id;
-			
+
 			$('#autocrm_email_content').summernote('code', content);
 		}
-		
+
 		function viewSms(id){
 			var messages = document.getElementById('autocrm_sms_content_'+id).value;
-			
+
 			document.getElementById('autocrm_sms_content').value = messages;
 			document.getElementById('id_autocrm_sms').value = id;
 		}
-		
+
 		function viewPush(id){
 			function sleep(ms) {
 		  return new Promise(resolve => setTimeout(resolve, ms));
 		}
 
-		
+
 			var subject 	= document.getElementById('autocrm_push_subject_'+id).value;
 			var content 	= document.getElementById('autocrm_push_content_'+id).value;
 			var clickto 	= document.getElementById('autocrm_push_clickto_'+id).value;
@@ -145,36 +145,36 @@ $configs = session('configs');
 			document.getElementById('autocrm_push_subject').value = subject;
 			document.getElementById('autocrm_push_content').value = content;
 			$('#autocrm_push_clickto').val(clickto).trigger('change');
-			
+
 			document.getElementById('autocrm_push_link').value = link;
 			document.getElementById('autocrm_push_image').src = "http://crmsys-api.staging.co.id/"+image;
 			document.getElementById('id_autocrm_push').value = id;
-			setTimeout(function(){ 
+			setTimeout(function(){
 				$('#autocrm_push_id_reference').val(idreference).trigger('change');
 			}, 1000);
-			
+
 		}
-		
+
 		function viewInbox(id){
 			var subject = document.getElementById('autocrm_inbox_subject_'+id).value;
 			var content = document.getElementById('autocrm_inbox_content_'+id).value;
-			
+
 			document.getElementById('autocrm_inbox_subject').value = subject;
 			$('#autocrm_inbox_content').summernote('code', content);
 			document.getElementById('id_autocrm_inbox').value = id;
 		}
-		
+
 		function viewForward(id){
 			var forward = document.getElementById('autocrm_forward_email_'+id).value;
 			var subject = document.getElementById('autocrm_forward_email_subject_'+id).value;
 			var content = document.getElementById('autocrm_forward_email_content_'+id).value;
-			
+
 			document.getElementById('autocrm_forward_email').value = forward;
 			document.getElementById('autocrm_forward_email_subject').value = subject;
 			$('#autocrm_forward_email_content').summernote('code', content);
 			document.getElementById('id_autocrm_forward').value = id;
 		}
-		
+
 	function addEmailContent(param){
 		var textvalue = $('#autocrm_email_content').val();
 
@@ -191,31 +191,31 @@ $configs = session('configs');
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_email_subject').val(textvaluebaru);
     }
-	
+
 	function addSmsContent(param){
 		var textvalue = $('#autocrm_sms_content').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_sms_content').val(textvaluebaru);
     }
-	
+
 	function addPushSubject(param){
 		var textvalue = $('#autocrm_push_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_push_subject').val(textvaluebaru);
     }
-	
+
 	function addPushContent(param){
 		var textvalue = $('#autocrm_push_content').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_push_content').val(textvaluebaru);
     }
-	
+
 	function addInboxSubject(param){
 		var textvalue = $('#autocrm_inbox_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_inbox_subject').val(textvaluebaru);
     }
-	
+
 	function addInboxContent(param){
 		var textvalue = $('#autocrm_inbox_content').val();
 
@@ -226,13 +226,13 @@ $configs = session('configs');
 		$('#autocrm_inbox_content').summernote('editor.focus');
 		$('#autocrm_inbox_content').summernote('editor.insertText', param);
     }
-	
+
 	function addForwardSubject(param){
 		var textvalue = $('#autocrm_forward_email_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_forward_email_subject').val(textvaluebaru);
     }
-	
+
 	function addForwardContent(param){
 		var textvalue = $('#autocrm_forward_email_content').val();
 
@@ -250,10 +250,10 @@ $configs = session('configs');
 		var textvaluebaru = textvalue+" "+param;
 		$(textarea).val(textvaluebaru);
     }
-	
+
 	function fetchDetail(det, type, idref=null){
 		let token  = "{{ csrf_token() }}";
-			
+
 		if(det == 'Product'){
 			$.ajax({
 				type : "GET",
@@ -276,7 +276,7 @@ $configs = session('configs');
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		else if(det == 'Outlet' || det == 'Order'){
 			$.ajax({
 				type : "GET",
@@ -299,7 +299,7 @@ $configs = session('configs');
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		else if(det == 'News'){
 			$.ajax({
 				type : "GET",
@@ -322,7 +322,7 @@ $configs = session('configs');
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		else if(det == 'Home'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -330,7 +330,7 @@ $configs = session('configs');
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		else if(det == 'Inbox'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -338,7 +338,7 @@ $configs = session('configs');
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		else if(det == 'Voucher'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -346,7 +346,7 @@ $configs = session('configs');
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		else if(det == 'Contact Us' || det == 'Transaction'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -354,7 +354,7 @@ $configs = session('configs');
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		else if(det == 'Link'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -362,7 +362,7 @@ $configs = session('configs');
 			document.getElementById('link_'+type).style.display = 'block';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		else if(det == 'Content'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -397,7 +397,7 @@ $configs = session('configs');
 				document.getElementById('div_sms_content').style.display = 'none';
 			}
 		}
-		
+
 		if(apa == 'push'){
 			if(nilai=='1'){
 				document.getElementById('div_push_subject').style.display = 'block';
@@ -413,7 +413,7 @@ $configs = session('configs');
 				document.getElementById('link_push').style.display = 'none';
 			}
 		}
-		
+
 		if(apa == 'inbox'){
 			if(nilai=='1'){
 				document.getElementById('div_inbox_subject').style.display = 'block';
@@ -426,7 +426,7 @@ $configs = session('configs');
 				document.getElementById('link_inbox').style.display = 'none';
 			}
 		}
-		
+
 		if(apa == 'forward'){
 			if(nilai=='1'){
 				document.getElementById('div_forward_address').style.display = 'block';
@@ -561,6 +561,7 @@ $configs = session('configs');
 			<i class="fa fa-circle"></i>
 		</li>
 		<li>
+		@if($title == 'Auto Response Enquiry partnership') @php $title = 'Auto Response Enquiry Karir'; @endphp @endif
 			<span>{{ $title }}</span>
 			@if (!empty($sub_title))
 				<i class="fa fa-circle"></i>
@@ -579,6 +580,7 @@ $configs = session('configs');
 <div class="portlet light bordered">
 	<div class="portlet-title">
 		<div class="caption">
+			@if($subject == 'enquiry-partnership') @php $subject = 'enquiry-karir'; @endphp @endif
 			<span class="caption-subject font-dark sbold uppercase font-blue">Auto Response {{ucfirst(str_replace('-',' ',$subject))}}</span>
 		</div>
 	</div>
@@ -592,7 +594,7 @@ $configs = session('configs');
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Status
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit template email auto response ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
 								</label>
 							</div>
@@ -603,12 +605,12 @@ $configs = session('configs');
 								</select>
 							</div>
 						</div>
-						
+
 						<div class="form-group" id="div_email_subject" @if($data['autocrm_email_toogle'] == 0) style="display:none;" @endif>
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Subject
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Diisi dengan subjek email, tambahkan text replacer bila perlu" data-container="body"></i>
 								</label>
 							</div>
@@ -637,7 +639,7 @@ $configs = session('configs');
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Content
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Diisi dengan konten email, tambahkan text replacer bila perlu" data-container="body"></i>
 								</label>
 							</div>
@@ -671,7 +673,7 @@ $configs = session('configs');
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Status
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit template sms auto response ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
 								</label>
 							</div>
@@ -680,14 +682,14 @@ $configs = session('configs');
 									<option value="0" @if($data['autocrm_sms_toogle'] == 0) selected @endif>Disabled</option>
 									<option value="1" @if($data['autocrm_sms_toogle'] == 1) selected @endif>Enabled</option>
 								</select>
-								
+
 							</div>
 						</div>
 						<div class="form-group" id="div_sms_content" @if($data['autocrm_sms_toogle'] == 0) style="display:none;" @endif>
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Description
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Isi pesan sms, tambahkan text replacer bila perlu" data-container="body"></i>
 								</label>
 							</div>
@@ -722,7 +724,7 @@ $configs = session('configs');
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Status
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit template push notification ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
 								</label>
 							</div>
@@ -731,14 +733,14 @@ $configs = session('configs');
 									<option value="0" @if($data['autocrm_push_toogle'] == 0) selected @endif>Disabled</option>
 									<option value="1" @if($data['autocrm_push_toogle'] == 1) selected @endif>Enabled</option>
 								</select>
-								
+
 							</div>
 						</div>
 						<div class="form-group" id="div_push_subject" @if($data['autocrm_push_toogle'] == 0) style="display:none;" @endif>
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Subject
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Subjek/ judul push notification, tambahkan text replacer bila perlu" data-container="body"></i>
 								</label>
 							</div>
@@ -768,7 +770,7 @@ $configs = session('configs');
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Content
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Konten push notification, tambahkan text replacer bila perlu" data-container="body"></i>
 								</label>
 							</div>
@@ -809,7 +811,7 @@ $configs = session('configs');
 										<img src="{{ env('AWS_URL')}}{{$data['autocrm_push_image']}}" id="autocrm_push_image" />
 										@endif
 									</div>
-										
+
 									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
 									<div>
 										<span class="btn default btn-file">
@@ -825,7 +827,7 @@ $configs = session('configs');
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Click Action
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Action/ menu yang terbuka saat user membuka push notification" data-container="body"></i>
 								</label>
 							</div>
@@ -849,7 +851,7 @@ $configs = session('configs');
 									@if(isset($deals))
 									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
 									@endif
-									@if(isset($type) && $type == 'trx')	
+									@if(isset($type) && $type == 'trx')
 									<option value="Transaction" @if($data['autocrm_push_clickto'] == 'Transaction') selected @endif>Transaction</option>
 									@endif
 								</select>
@@ -888,7 +890,7 @@ $configs = session('configs');
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Status
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit template inbox ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
 								</label>
 							</div>
@@ -897,14 +899,14 @@ $configs = session('configs');
 									<option value="0" @if($data['autocrm_inbox_toogle'] == 0) selected @endif>Disabled</option>
 									<option value="1" @if($data['autocrm_inbox_toogle'] == 1) selected @endif>Enabled</option>
 								</select>
-								
+
 							</div>
 						</div>
 						<div class="form-group" id="div_inbox_subject" @if($data['autocrm_inbox_toogle'] == 0) style="display:none;" @endif>
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Subject
-								<span class="required" aria-required="true"> * </span>  
+								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Subjek/ judul pesan inbox, tambahkan text replacer bila perlu" data-container="body"></i>
 								</label>
 							</div>
@@ -953,7 +955,7 @@ $configs = session('configs');
 									@if(isset($deals))
 									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
 									@endif
-									@if(isset($type) && $type == 'trx')	
+									@if(isset($type) && $type == 'trx')
 									<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
 									@endif
 								</select>
@@ -1124,9 +1126,9 @@ $configs = session('configs');
 																	<span class="fileinput-new"> Select image </span>
 																	<span class="fileinput-exists"> Change </span>
 																	<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																	
+
 																	</span>
-							
+
 																	<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 																</div>
 															</div>
@@ -1221,9 +1223,9 @@ $configs = session('configs');
 																<span class="fileinput-new"> Select image </span>
 																<span class="fileinput-exists"> Change </span>
 																<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																
+
 																</span>
-						
+
 																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 															</div>
 														</div>
@@ -1237,7 +1239,7 @@ $configs = session('configs');
 									<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
 										<i class="fa fa-plus"></i> Add Content</a>
 									<br>
-									<br> 
+									<br>
 								</div>
 							</div>
 						@endif
@@ -1250,7 +1252,7 @@ $configs = session('configs');
 					<div class="input-icon right">
 					    <label class="col-md-3 control-label">
 					    Status
-					    <span class="required" aria-required="true"> * </span>  
+					    <span class="required" aria-required="true"> * </span>
 					    <i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit auto response forward ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
 					    </label>
 					</div>
@@ -1259,14 +1261,14 @@ $configs = session('configs');
 							<option value="0" @if($data['autocrm_forward_toogle'] == 0) selected @endif>Disabled</option>
 							<option value="1" @if($data['autocrm_forward_toogle'] == 1) selected @endif>Enabled</option>
 						</select>
-						
+
 					</div>
 				</div>
 				<div class="form-group" id="div_forward_address" @if($data['autocrm_forward_toogle'] == 0) style="display:none;" @endif>
 					<div class="input-icon right">
 					    <label class="col-md-3 control-label">
 					    Forward Address
-					    <span class="required" aria-required="true"> * </span>  
+					    <span class="required" aria-required="true"> * </span>
 					    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan alamat email tujuan forward untuk setiap auto response sistem" data-container="body"></i>
 					    </label>
 					</div>
@@ -1278,7 +1280,7 @@ $configs = session('configs');
 					<div class="input-icon right">
 					    <label class="col-md-3 control-label">
 					    Subject
-					    <span class="required" aria-required="true"> * </span>  
+					    <span class="required" aria-required="true"> * </span>
 					    <i class="fa fa-question-circle tooltips" data-original-title="Subjek pesan yang akan diforward, tambahkan text replacer bila perlu" data-container="body"></i>
 					    </label>
 					</div>
@@ -1309,7 +1311,7 @@ $configs = session('configs');
 					<div class="input-icon right">
 					    <label class="col-md-3 control-label">
 					    Content
-					    <span class="required" aria-required="true"> * </span>  
+					    <span class="required" aria-required="true"> * </span>
 					    <i class="fa fa-question-circle tooltips" data-original-title="Konten pesan, tambahkan text replacer bila perlu" data-container="body"></i>
 					    </label>
 					</div>

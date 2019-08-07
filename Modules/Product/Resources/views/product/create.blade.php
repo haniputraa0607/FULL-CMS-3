@@ -10,7 +10,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     {{-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
@@ -81,7 +81,7 @@
         placeholder: 'Product Description',
         tabsize: 2,
         height: 120,
-        toolbar: [         
+        toolbar: [
           ['style', ['style']],
           ['style', ['bold', 'underline', 'clear']],
           ['color', ['color']],
@@ -136,7 +136,7 @@
             }
         })
     }
-    
+
     $(".file").change(function(e) {
         var widthImg  = 300;
         var heightImg = 300;
@@ -146,7 +146,7 @@
 
         if ((file = this.files[0])) {
             image = new Image();
-            
+
             image.onload = function() {
                 if (this.width == widthImg && this.height == heightImg) {
                     // image.src = _URL.createObjectURL(file);
@@ -162,7 +162,7 @@
                     console.log($(this).val())
                 }
             };
-        
+
             image.src = _URL.createObjectURL(file);
         }
 
@@ -191,7 +191,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -204,7 +204,7 @@
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3">Category <span class="required" aria-required="true"> * </span> 
+                        <label for="multiple" class="control-label col-md-3">Category <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih Kategori Produk" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
@@ -247,10 +247,38 @@
                             </div>
                         </div>
                     </div>
-                    
-                        <div class="form-group">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Product Visible
+                            <i class="fa fa-question-circle tooltips" data-original-title="Setting apakah produk akan ditampilkan di aplikasi" data-container="body"></i>
+                        </label>
+                        <div class="input-icon right">
+                            <div class="col-md-2">
+                                <div class="md-radio-inline">
+                                    <div class="md-radio">
+                                        <input type="radio" id="radio1" name="product_visibility" class="md-radiobtn req-type" value="Visible" required>
+                                        <label for="radio1">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> Visible</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="md-radio-inline">
+                                    <div class="md-radio">
+                                        <input type="radio" id="radio2" name="product_visibility" class="md-radiobtn req-type" value="Hidden" required>
+                                        <label for="radio2">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> Hidden </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">
-                            Photo <span class="required" aria-required="true">* <br>(300*300) </span> 
+                            Photo <span class="required" aria-required="true">* <br>(300*300) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
@@ -271,7 +299,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!--<div class="form-group">-->
                     <!--    <label class="col-md-3 control-label">Video-->
                     <!--        <br>-->
@@ -296,7 +324,7 @@
                     <!--        </div>-->
                     <!--    </div>-->
                     <!--</div>-->
-                   
+
                     <div class="form-group">
                        <label for="multiple" class="control-label col-md-3">Description
                            <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>
@@ -307,7 +335,7 @@
                            </div>
                        </div>
                     </div>
-                    
+
                     <!--<div class="form-group">-->
                     <!--    <label for="multiple" class="control-label col-md-3">Tag-->
                     <!--        {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}-->
