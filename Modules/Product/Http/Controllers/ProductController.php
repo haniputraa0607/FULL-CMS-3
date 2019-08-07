@@ -351,6 +351,15 @@ class ProductController extends Controller
 			if (isset($outlet['status']) && $outlet['status'] == 'success') {
 				$data['outlet'] = $outlet['result'];
             }
+
+            $nextId = MyHelper::get('product/next/'.$data['product'][0]['id_product']);
+            if (isset($nextId['result']['product_code'])) {
+                $data['next_id'] = $nextId['result']['product_code'];
+            }
+            else {
+                $data['next_id'] = null;
+            }
+
 			// dd($outlet);exit;
 
             return view('product::product.detail', $data);
