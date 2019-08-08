@@ -35,9 +35,28 @@
       }
 
     });
+
     $(document).ready(function(){
-    	$('#manualFilter').show();
-    });
+    	var collapsed=false;
+    	$('#manualFilter').collapse('show');
+    	$('.collapser').on('click',function(){
+    		if(collapsed){
+		    	$('#manualFilter input,#manualFilter select').removeAttr('disabled');
+		    	$('#manualFilter').collapse('show');
+		    	$('#csvFilter').collapse('hide');
+		    	$('#campaign-csv-file').attr('disabled','disabled');
+		    	$('input[name="csv_content"]').attr('disabled','disabled');
+		    	$('#campaign-csv-file').attr('disabled','disabled');
+    		}else{
+		    	$('input[name="csv_content"]').removeAttr('disabled');
+		    	$('#campaign-csv-file').removeAttr('disabled');
+		    	$('#manualFilter').collapse('hide');
+		    	$('#csvFilter').collapse('show');
+		    	$('#manualFilter input,#manualFilter select').attr('disabled','disabled');
+    		}
+    		collapsed=!collapsed;
+    	});
+    })
 	</script>
 
 @endsection
@@ -175,11 +194,8 @@
 				?>
 			@endif
 			<?php $tombolsubmit = 'hidden'; ?>
-			@if(isset($csv)&&$csv)
-				@include('filter-csv') 
-			@else
-				@include('filter') 
-			@endif
+			@include('filter') 
+			@include('filter-csv') 
 		</div>
 		<div class="col-md-8">
 			<div class="portlet light bordered">

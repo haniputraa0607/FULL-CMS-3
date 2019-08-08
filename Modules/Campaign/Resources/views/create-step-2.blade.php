@@ -535,6 +535,8 @@
 											@endif
 										@endforeach
 										{{$name}}
+									@elseif($rule['operator'] == 'WHERE IN')
+										{{'{'.$rule['parameter'].'}'}}
 									@else
 										{{$rule['parameter']}}
 									@endif
