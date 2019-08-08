@@ -75,7 +75,7 @@
 				</div>
 				<div class="col-md-4 mt-step-col ">
 					<div class="mt-step-number bg-white">2</div>
-					<div class="mt-step-title uppercase font-grey-cascade">Receipient & Content</div>
+					<div class="mt-step-title uppercase font-grey-cascade">Recipient & Content</div>
 					<div class="mt-step-content font-grey-cascade">Review Campaign Content</div>
 				</div>
 				<div class="col-md-4 mt-step-col last">
@@ -86,8 +86,8 @@
 			</div>
 		</div>
 	</div>
-
-	<form role="form" action="" method="POST">
+	
+	<form role="form" action="" method="POST" enctype="multipart/form-data">
 		<div class="col-md-4">
 			<div class="portlet light bordered">
 				<div class="portlet-title">
@@ -119,25 +119,25 @@
 							<div class="mt-checkbox-list">
 								@if(MyHelper::hasAccess([51], $configs))
 									<label class="mt-checkbox mt-checkbox-outline"> Email
-										<input type="checkbox" value="Email" name="campaign_media[]" @if(isset($result['campaign_media_email']) && $result['campaign_media_email'] == "Yes") checked @endif/>
+										<input type="checkbox" value="Email" name="campaign_media[]" @if((isset($result['campaign_media_email']) && $result['campaign_media_email'] == "Yes")||(isset($result['campaign_media'])&&in_array('Email',$result['campaign_media']))) checked @endif/>
 										<span></span>
 									</label>
 								@endif
 								@if(MyHelper::hasAccess([52], $configs))
 									<label class="mt-checkbox mt-checkbox-outline"> SMS
-										<input type="checkbox" value="SMS" name="campaign_media[]" @if(isset($result['campaign_media_sms']) && $result['campaign_media_sms'] == "Yes") checked @endif/>
+										<input type="checkbox" value="SMS" name="campaign_media[]" @if((isset($result['campaign_media_sms']) && $result['campaign_media_sms'] == "Yes")||(isset($result['campaign_media'])&&in_array('SMS',$result['campaign_media']))) checked @endif/>
 										<span></span>
 									</label>
 								@endif
 								@if(MyHelper::hasAccess([53], $configs))
 									<label class="mt-checkbox mt-checkbox-outline"> Push Notification
-										<input type="checkbox" value="Push Notification" name="campaign_media[]" @if(isset($result['campaign_media_push']) && $result['campaign_media_push'] == "Yes") checked @endif />
+										<input type="checkbox" value="Push Notification" name="campaign_media[]" @if((isset($result['campaign_media_push']) && $result['campaign_media_push'] == "Yes")||(isset($result['campaign_media'])&&in_array('Push Notification',$result['campaign_media']))) checked @endif />
 										<span></span>
 									</label>
 								@endif
 								@if(MyHelper::hasAccess([54], $configs))
 									<label class="mt-checkbox mt-checkbox-outline"> Inbox
-										<input type="checkbox" value="Inbox" name="campaign_media[]" @if(isset($result['campaign_media_inbox']) && $result['campaign_media_inbox'] == "Yes") checked @endif />
+										<input type="checkbox" value="Inbox" name="campaign_media[]" @if((isset($result['campaign_media_inbox']) && $result['campaign_media_inbox'] == "Yes")||(isset($result['campaign_media'])&&in_array('Inbox',$result['campaign_media']))) checked @endif />
 										<span></span>
 									</label>
 								@endif
@@ -148,7 +148,7 @@
 										</div>
 									@endif
 									<label class="mt-checkbox mt-checkbox-outline"  @if(!$api_key_whatsapp) style="cursor:not-allowed;" @endif/> WhatsApp
-										<input type="checkbox" value="Whatsapp" name="campaign_media[]" @if($api_key_whatsapp) @if(isset($result['campaign_media_whatsapp']) && $result['campaign_media_whatsapp'] == "Yes") checked @endif @else disabled @endif/>
+										<input type="checkbox" value="Whatsapp" name="campaign_media[]" @if($api_key_whatsapp) @if((isset($result['campaign_media_whatsapp']) && $result['campaign_media_whatsapp'] == "Yes")||(isset($result['campaign_media'])&&in_array('Whatsapp',$result['campaign_media']))) checked @endif @else disabled @endif/>
 										<span></span>
 									</label>
 								@endif
@@ -175,14 +175,18 @@
 				?>
 			@endif
 			<?php $tombolsubmit = 'hidden'; ?>
-			@include('filter')
+			@if(isset($csv)&&$csv)
+				@include('filter-csv') 
+			@else
+				@include('filter') 
+			@endif
 		</div>
 		<div class="col-md-8">
 			<div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption font-blue ">
 						<i class="icon-settings font-blue "></i>
-						<span class="caption-subject bold uppercase">When to generate Receipient?</span>
+						<span class="caption-subject bold uppercase">When to generate Recipient?</span>
 					</div>
 				</div>
 				<div class="portlet-body">

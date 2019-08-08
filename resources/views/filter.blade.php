@@ -1035,8 +1035,23 @@ $configs = session('configs');
 	}
 </script>
 
-<div id="manualFilter<?php if(!isset($show) || $show){echo "1";} ?>" class="collapse  @if(!isset($show) || $show) show @endif">
-	<div id="div-rule">
+<div class="portlet light bordered">
+	<div class="portlet-title">
+		<div class="caption font-blue ">
+			<i class="icon-settings font-blue "></i>
+			<span class="caption-subject bold uppercase">User Search</span>
+		</div>
+		@if(!is_array($conditions) || count($conditions) <= 0)
+		<div class="actions">
+			<div class="btn-group">
+				<input type="hidden" name="filter" value="csv">
+				<button class="btn btn-sm green dropdown-toggle" type="submit" formmethod="GET" formaction="{{url('campaign/create')}}" formnovalidate> Upload CSV
+				</button>
+			</div>
+		</div>
+		@endif
+	</div>
+<div id="div-rule">
 		@if(!is_array($conditions) || count($conditions) <= 0)
 			<div id="rule0">
 				<div class="portlet light bordered">
@@ -1289,6 +1304,7 @@ $configs = session('configs');
 																	<option value="all_user" @if($row['subject'] == 'all_user') selected @endif>All User</option>
 																</optgroup>
 																<optgroup label="Profile">
+																	<option value="id" @if($row['subject'] == 'id') selected @endif>User Id</option>
 																	<option value="name" @if($row['subject'] == 'name') selected @endif>Name</option>
 																	<option value="phone" @if($row['subject'] == 'phone') selected @endif>Phone</option>
 																	<option value="email" @if($row['subject'] == 'email') selected @endif>Email</option>

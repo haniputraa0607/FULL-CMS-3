@@ -248,7 +248,7 @@ class MyHelper
     }
   }
 
-  public static function postFile($url, $name_field, $path){ 
+  public static function postFile($url, $name_field, $path,$postData=null){ 
     $api = env('APP_API_URL'); 
     $client = new Client(); 
 
@@ -268,7 +268,12 @@ class MyHelper
           ] 
       ] 
     ); 
-
+    if(is_array($postData)){
+      $postData=array_map(function($val,$key){
+        return array('name'=>$key,'contents'=>json_encode($val));
+      }, $postData,array_keys($postData));
+      array_push($content['multipart'],...$postData);
+    }
     try {
       $response = $client->post($api.'api/'.$url,$content);
       if(!is_array(json_decode($response->getBody(), true)));
