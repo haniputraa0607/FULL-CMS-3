@@ -10,12 +10,14 @@ $configs = session('configs');
 			<i class="icon-settings font-blue "></i>
 			<span class="caption-subject bold uppercase">Upload CSV</span>
 		</div>
+		@if(!is_array($conditions) || count($conditions) <= 0)
 		<div class="actions">
 			<div class="btn-group">
-				<button class="btn btn-sm btn-danger collapser" type="button"> Back to Manual Filter
+				<button class="btn btn-sm green collapser" type="button"> Manual Filter
 				</button>
 			</div>
 		</div>
+		@endif
 	</div>
 	<div class="portlet-body form">
 		<div class="form-body">
@@ -73,6 +75,12 @@ $configs = session('configs');
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 control-label text-right">Description</label>
+				<div class="col-md-6">
+					<textarea class="form-control" name="campaign_description">{{isset($result['campaign_description'])?$result['campaign_description']:''}}</textarea>
 				</div>
 			</div>
 		</div>

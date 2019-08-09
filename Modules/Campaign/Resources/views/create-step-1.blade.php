@@ -44,12 +44,9 @@
 		    	$('#manualFilter input,#manualFilter select').removeAttr('disabled');
 		    	$('#manualFilter').collapse('show');
 		    	$('#csvFilter').collapse('hide');
-		    	$('#campaign-csv-file').attr('disabled','disabled');
-		    	$('input[name="csv_content"]').attr('disabled','disabled');
-		    	$('#campaign-csv-file').attr('disabled','disabled');
+		    	$('#csvFilter input,#csvFilter select,#csvFilter textarea').attr('disabled','disabled');
     		}else{
-		    	$('input[name="csv_content"]').removeAttr('disabled');
-		    	$('#campaign-csv-file').removeAttr('disabled');
+		    	$('#csvFilter input,#csvFilter select,#csvFilter textarea').removeAttr('disabled');
 		    	$('#manualFilter').collapse('hide');
 		    	$('#csvFilter').collapse('show');
 		    	$('#manualFilter input,#manualFilter select').attr('disabled','disabled');
@@ -194,8 +191,16 @@
 				?>
 			@endif
 			<?php $tombolsubmit = 'hidden'; ?>
+			<?php if($conditions&&!empty($conditions)&&isset($conditions[0]['rules'])&&!empty($conditions[0]['rules'])){
+				$show=true;if(strtoupper($conditions[0]['rules'][0]['operator'])=='WHERE IN'){?>
+					@include('filter-csv') 
+				<?php }else{ ?>
+					@include('filter') 
+				<?php }
+			}else{$show=false; ?>
 			@include('filter') 
 			@include('filter-csv') 
+			<?php } ?>
 		</div>
 		<div class="col-md-8">
 			<div class="portlet light bordered">

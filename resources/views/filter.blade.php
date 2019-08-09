@@ -1035,13 +1035,21 @@ $configs = session('configs');
 	}
 </script>
 
-<div id="manualFilter" class="collapse">
+<div id="manualFilter<?php if($show){echo "1";} ?>" class="collapse  @if($show) show @endif">
 <div class="portlet light bordered">
 	<div class="portlet-title">
 		<div class="caption font-blue ">
 			<i class="icon-settings font-blue "></i>
 			<span class="caption-subject bold uppercase">User Search</span>
 		</div>
+		@if(!is_array($conditions) || count($conditions) <= 0)
+		<div class="actions">
+			<div class="btn-group">
+				<button class="btn btn-sm green collapser" type="button"> Upload CSV
+				</button>
+			</div>
+		</div>
+		@endif
 	</div>
 <div id="div-rule">
 		@if(!is_array($conditions) || count($conditions) <= 0)
@@ -1271,7 +1279,7 @@ $configs = session('configs');
 										@endif
 										<?php
 										if($row['subject'] != '' && $row['subject'] != 'all_user'){
-											$arrayOp = ['=','like','WHERE IN','<','<=','>','>='];
+											$arrayOp = ['=','like','<','<=','>','>='];
 											if(!in_array($row['operator'],$arrayOp)){
 												$row['parameter'] = $row['operator'];
 											}
@@ -1554,8 +1562,6 @@ $configs = session('configs');
 																<i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="(1). Operator '=' untuk mendapatkan hasil pencarian yang sama persis dengan keyword.
 
 																(2). Operator 'like' untuk mendapatkan hasil pencarian yang mirip atau mengandung keyword
-
-																(3). Operator 'WHERE IN' untuk mencari dalam daftar
 																" data-container="body"></i>
 															</span>
 															</div>
@@ -1663,12 +1669,6 @@ $configs = session('configs');
 		<a href="javascript:;" class="btn btn-success mt-repeater-add" onClick="addRule();changeSelect()">
 			<i class="fa fa-plus"></i> Add New Rule</a>
 	</div>
-	@if(!is_array($conditions) || count($conditions) <= 0)
-	<div class="col-md-1 text-center">OR</div>
-	<div class="col-md-3">
-			<button class="btn btn-green collapser" type="button"><i class="fa fa-file-o"></i> Upload CSV </button>
-	</div>
-	@endif
 	<div class="form-group mt-repeater">
 		@if(isset($tombolsubmit))
 		@else

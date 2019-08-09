@@ -253,7 +253,11 @@ class MyHelper
     $client = new Client(); 
 
     $ses = session('access_token');
-
+    if($path){
+      $content=fopen($path, 'r');
+    }else{
+      $content='';
+    }
     $content = array( 
       'headers' => [ 
         'Authorization' => $ses, 
@@ -263,7 +267,7 @@ class MyHelper
       'multipart' => [ 
           [ 
               'name'     => $name_field, 
-              'contents' => fopen($path, 'r'), 
+              'contents' => $content, 
               // 'filename' => $name 
           ] 
       ] 

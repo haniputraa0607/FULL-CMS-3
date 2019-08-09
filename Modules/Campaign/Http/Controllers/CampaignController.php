@@ -572,10 +572,20 @@ class CampaignController extends Controller
 		}
     }
 	public function campaignStep1Post(Request $request, $id_campaign){
-		$post = $request->except(['_token','sample_1_length','files']);
+		$post = $request->except(['_token','sample_1_length','files','import_file']);
 		$post['id_campaign'] = $id_campaign;
-		$action = MyHelper::post('campaign/create', $post);
-		// dd($action);exit;
+		if(in_array($request->post('csv_content'),array('id','phone'))){
+			if($request->file('import_file')){
+				$path = $request->file('import_file')->getRealPath();
+				$action = MyHelper::postFile('campaign/create', 'import_file',$path,$post);
+			}else{
+				$action = MyHelper::postFile('campaign/create', 'import_file',null,$post);
+			}
+		}else{
+			$action = MyHelper::post('campaign/create', $post);
+		}//		$action = MyHelper::post('campaign/create', $post);
+		//print json_encode($post);die();
+		//dd($action);exit;
 		if(isset($action['status']) && $action['status'] == 'success'){
 			return redirect('campaign/step2/'.$id_campaign);
 		} else{
