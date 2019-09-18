@@ -7,6 +7,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- another css plugin -->
@@ -14,67 +15,49 @@
 
     <style type="text/css">
         @font-face {
-                font-family: "Seravek";
+                font-family: "ProductSans-Bold";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/Seravek.ttf') }}');
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Bold.ttf') }}');
         }
         @font-face {
-                font-family: "GoogleSans-Bold";
+                font-family: "ProductSans-BoldItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-BoldItalic.ttf') }}');
         }
         @font-face {
-                font-family: "GoogleSans-BoldItalic";
+                font-family: "ProductSans-Italic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Italic.ttf') }}');
         }
         @font-face {
-                font-family: "GoogleSans-Italic";
+                font-family: "ProductSans";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
-        }
-        @font-face {
-                font-family: "GoogleSans-Medium";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
-        }
-        @font-face {
-                font-family: "GoogleSans-MediumItalic";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
-        }
-        @font-face {
-                font-family: "GoogleSans";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
         }
         .Seravek{
             font-family: "Seravek";
         }
-        .GoogleSans{
-            font-family: "GoogleSans";
+        .ProductSans{
+            font-family: "ProductSans";
         }
-        .GoogleSans-MediumItalic{
-            font-family: "GoogleSans-MediumItalic";
+        .ProductSans-MediumItalic{
+            font-family: "ProductSans-MediumItalic";
         }
-        .GoogleSans-Medium{
-            font-family: "GoogleSans-Medium";
+        .ProductSans-Medium{
+            font-family: "ProductSans-Medium";
         }
-        .GoogleSans-Italic{
-            font-family: "GoogleSans-Italic";
+        .ProductSans-Italic{
+            font-family: "ProductSans-Italic";
         }
-        .GoogleSans-BoldItalic{
-            font-family: "GoogleSans-BoldItalic";
+        .ProductSans-BoldItalic{
+            font-family: "ProductSans-BoldItalic";
         }
-        .GoogleSans-Bold{
-            font-family: "GoogleSans-Bold";
+        .ProductSans-Bold{
+            font-family: "ProductSans-Bold";
         }
         body{
             background-color: #fff;
