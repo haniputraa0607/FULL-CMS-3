@@ -170,15 +170,15 @@
                             <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                             <br>
-                            <span class="required" aria-required="true"> (500*500) </span>
+                            <span class="required" aria-required="true"> (600*450) </span>
                             </label>
                         </div>
                         <div class="col-md-9">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 153px;">
                                   <img src="{{ $val['url_deals_image'] }}" alt="Image Deals">
                                 </div>
-                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 153px;"></div>
                                 <div>
                                     <span class="btn default btn-file">
                                     <span class="fileinput-new"> Select image </span>

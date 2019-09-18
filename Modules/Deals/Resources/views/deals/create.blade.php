@@ -520,14 +520,14 @@
                             <span class="required" aria-required="true"> * </span> 
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                             <br>
-                            <span class="required" aria-required="true"> (500*500) </span>
+                            <span class="required" aria-required="true"> (600*450) </span>
                             </label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                      <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 153px;">
+                                      <img src="http://www.placehold.it/600x450/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
