@@ -72,6 +72,7 @@
     	.description{
     	    padding-top: 10px;
     	    font-size: 14px;
+			height: 20px;
     	}
     	.subtitle{
     		margin-bottom: 10px;
@@ -99,94 +100,94 @@
 	    		height: auto;
 	    	}
         }
+		.card {
+			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+			transition: 0.3s;
+			width: 100%;
+			border-radius: 10px;
+			/* background: url("{{ $deals['deals']['url_deals_image'] }}"); */
+			background-repeat: no-repeat;
+			background-size: 40% 100%;
+			background-position: right;
+		}
+
+		.card:hover {
+			box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
+		}
+
+		 .image-4 {
+         clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
+		}
     </style>
 @stop
 
 @section('content')
 	<div class="deals-detail">
 		@if(!empty($deals))
-			@php
-				$deals = $deals[0];
-                if ($deals['deals_voucher_price_cash'] != "") {
-                    $deals_fee = MyHelper::thousand_number_format($deals['deals_voucher_price_cash']);
-                }
-                elseif ($deals['deals_voucher_price_point']) {
-                    $deals_fee = $deals['deals_voucher_price_point'] . " poin";
-                }
-                else {
-                    $deals_fee = "GRATIS";
-                }
-			@endphp
 			<div class="col-md-4 col-md-offset-4">
-				<div class="title-wrapper clearfix">
-					<img class="deals-img center-block" src="{{ $deals['url_deals_image'] }}" alt="">
-					<div style="font-size: 12px;" class="text-right" id="timer">
-						<span id="timerchild"><i class="fas fa-clock"></i>Berakhir Dalam</span>
-					</div>
-				</div>
-				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
+				<div style="background-color: rgb(255, 255, 255); padding: 10px;" class="text-center col-md-12 clearfix ProductSans">
 					<div class="title">
-						{{ $deals['deals_title'] }}
-						@if($deals['deals_second_title'] != null)
-						<br>
-						{{ $deals['deals_second_title'] }}
-						@endif
+						YEAY!
+					</div>
+					<div style="color: rgba(0, 0, 0, 0.7)">
+						Selamat kamu berhasil mendapatkan voucher
 					</div>
 				</div>
-				@if($deals['deals_voucher_type'] != 'Unlimited')
-				<div style="background-color: rgb(255, 255, 255);" class="col-md-12">
-					<div style="padding: 10px 5px;">
-						<div class="progress" style="height:9px; width: 190px; margin-top: -10px; margin-bottom: 0px;">
-							<div style="background-color: rgb(128,0,0); width: {{ 100 - ((($deals['deals_total_voucher'] - $deals['deals_total_claimed']) / $deals['deals_total_voucher']) * 100) }}%;" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+				
+				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 clearfix ProductSans">
+					<div class="card">
+						
+						<div class="container" style="padding-right: 0px;">
+							<div class="pull-left" style="margin-top: 10px;width: 60%;">
+								@php $bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
+								<p style="font-size:13.5px; color:rgba(32, 32, 32)">{{$deals['deals']['deals_title']}}</p>
+								<br>
+								<p style="font-size:10px; color:rgba(170, 170, 170)">Masa berlaku habis</p>
+								<p style="font-size:10px; color:rgba(170, 170, 170)">{{date('d', strtotime($deals['deals']['deals_end']))}} {{$bulan[date('m', strtotime($deals['deals']['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals']['deals_end'])) }}</p>
+								<br>
+							</div>
+							<div class="pull-right" style="width: 20%;">
+								<img style="height:100px; width:150px; border-bottom-right-radius: 10px; border-top-right-radius: 10px;" class="pull-right image-4" src="{{ $deals['deals']['url_deals_image'] }}" alt="">
+							</div>
+							
 						</div>
 					</div>
 				</div>
-				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
-					<div style="margin-top: -15px; font-size: 13px;" class="fee text-right ProductSans">{{ $deals['deals_total_voucher'] - $deals['deals_total_claimed'] }} kupon tersedia</div>
-				</div>
-				@endif
-
-				<hr style="margin-top: 0px; margin-bottom: 15px;">
-
-				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
-					@php $bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
-					<div style="margin-top: -15px; font-size: 13px;" class="fee text-right ProductSans"><i class="far fa-calendar"></i> Masa berlaku : <b>{{date('d', strtotime($deals['deals_start']))}} {{$bulan[date('m', strtotime($deals['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_start'])) }} - {{date('d', strtotime($deals['deals_end']))}} {{$bulan[date('m', strtotime($deals['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_end'])) }}</b></div>
-				</div>
-
-				<hr style="margin-top: 0px; margin-bottom: 0px;">
 				
-                @if($deals['deals_description'] != "")
-				<div style="padding-top: 0px;" class="description-wrapper">
-					<div class="description">{!! $deals['deals_description'] !!}</div>
-				</div>
-				@endif
-				
+				<br>
+
 				<div style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
-					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div>
+					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Transaksi</div>
 				</div>
 				
-                @if($deals['deals_description'] != "")
-				<div style="padding-top: 0px;" class="description-wrapper">
-					<div class="description">{!! $deals['deals_description'] !!}</div>
+				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px;" class="description-wrapper ProductSans">
+					<div class="description pull-left">Tanggal</div>
+					<div class="description pull-right">{{date('d', strtotime($deals['claimed_at']))}} {{$bulan[date('m', strtotime($deals['claimed_at']))-1]}} {{ date('Y', strtotime($deals['claimed_at'])) }} {{date('H:i', strtotime($deals['claimed_at']))}}</div>
 				</div>
-				@endif
 				
-				<div style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
-					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
+				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px;" class="description-wrapper ProductSans">
+					<div class="description pull-left">ID Transaksi</div>
+					<div class="description pull-right">{{strtotime($deals['claimed_at'])}}</div>
 				</div>
 
-				<div class="outlet-wrapper" style="padding-top: 10px;">
-					<div class="outlet">
-						@foreach($deals['outlet_by_city'] as $key => $outlet_city)
-						<div class="outlet-city" style="color: rgb(0, 0, 0);">{{ $outlet_city['city_name'] }}</div>
-						<ul class="nav" style="color: rgb(84, 84, 84);">
-							@foreach($outlet_city['outlet'] as $key => $outlet)
-							<li>- {{ strtoupper($outlet['outlet_name']) }}</li>
-							@endforeach
-						</ul>
-						@endforeach
-					</div>
+				@php
+					if ($deals['voucher_price_point'] != null) {
+						$payment = number_format($deals['voucher_price_point']);
+					} elseif ($deals['voucher_price_cash'] != null) {
+						$payment = number_format($deals['voucher_price_cash']);
+					} else {
+						$payment = 'Free';
+					}
+				@endphp
+				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px;" class="description-wrapper ProductSans">
+					<div class="description pull-left">Total Pembayaran</div>
+					<div class="description pull-right">{{$payment}} points</div>
 				</div>
+
+				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px; position: fixed; bottom: 0; width: 100%;" class="description-wrapper ProductSans">
+					<input style="width:100%; background-color:rgb(74, 0, 0)" class="btn btn-primary ProductSans" type="button" value="Lihat Voucher">
+				</div>
+				
 			</div>
 		@else
 			<div class="col-md-4 col-md-offset-4">
@@ -202,9 +203,8 @@
             @php $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', "Juli", 'Agustus', 'September', 'Oktober', 'November', 'Desember']; @endphp
 
             // timer
-            var deals_start = "{{ strtotime($deals['deals_start']) }}";
-            var deals_end   = "{{ strtotime($deals['deals_end']) }}";
-            var server_time = "{{ strtotime($deals['time_server']) }}";
+            var deals_start = "{{ strtotime($deals['deals']['deals_start']) }}";
+            var deals_end   = "{{ strtotime($deals['deals']['deals_end']) }}";
             var timer_text;
             var difference;
 
@@ -223,7 +223,7 @@
             this.interval = setInterval(() => {
                 if(difference >= 0) {
                     timer_text = timer(difference);
-					@if($deals['deals_status'] == 'available')
+					@if($deals['deals']['deals_status'] == 'available')
 					if(timer_text.includes('lagi')){
 						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir dalam";
 					}else{
@@ -231,10 +231,10 @@
 					}
                     document.getElementById("timer").innerHTML += " ";
                     document.getElementById('timer').innerHTML += timer_text;
-                    @elseif($deals['deals_status'] == 'soon')
+                    @elseif($deals['deals']['deals_status'] == 'soon')
                     document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Akan dimulai pada";
                     document.getElementById("timer").innerHTML += " ";
-                    document.getElementById('timer').innerHTML += "{{ date('d', strtotime($deals['deals_start'])) }} {{$month[date('m', strtotime($deals['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_start'])) }} : {{ date('H:i', strtotime($deals['deals_start'])) }}";
+                    document.getElementById('timer').innerHTML += "{{ date('d', strtotime($deals['deals']['deals_start'])) }} {{$month[date('m', strtotime($deals['deals']['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals']['deals_start'])) }} : {{ date('H:i', strtotime($deals['deals']['deals_start'])) }}";
                     @endif
 
                     difference--;
@@ -265,7 +265,7 @@
                 // countdown
                 daysDifference = Math.floor(difference/60/60/24);
                 if (daysDifference > 0) {
-					timer = "{{ date('d', strtotime($deals['deals_end'])) }} {{$month[ date('m', strtotime($deals['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_end'])) }}";
+					timer = "{{ date('d', strtotime($deals['deals']['deals_end'])) }} {{$month[ date('m', strtotime($deals['deals']['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals']['deals_end'])) }}";
                   //  timer = daysDifference + " hari";
                     console.log('timer d', timer);
                 }

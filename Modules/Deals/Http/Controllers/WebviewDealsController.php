@@ -14,6 +14,7 @@ class WebviewDealsController extends Controller
     public function dealsDetail(Request $request, $id_deals, $deals_type)
     {
         $bearer = $request->header('Authorization');
+
         if ($bearer == "") {
             return abort(404);
         }
@@ -35,4 +36,25 @@ class WebviewDealsController extends Controller
         return view('deals::deals.webview.deals_detail', $data);
     }
 
+    public function dealsClaim(Request $request, $id_deals_user)
+    {
+        $bearer = $request->header('Authorization');
+
+        if ($bearer == "") {
+            return abort(404);
+        }
+
+        $post['id_deals_user'] = $id_deals_user;
+
+        $data['deals'] = parent::getData(MyHelper::postWithBearer('deals/me', $post, $bearer));
+
+        if (empty($data['deals'])) {
+            return [
+                'status' => 'fail',
+                'messages' => ['Deals is not found']
+            ];
+        }
+
+        return view('deals::deals.webview.deals_claim', $data);
+    }
 }
