@@ -129,6 +129,7 @@ class MembershipController extends Controller
 
 	public function detailWebview(Request $request)
     {
+		return abort(503);
 		$bearer = $request->header('Authorization');
         if ($bearer == "") {
             return view('error', ['msg' => 'Unauthenticated']);
