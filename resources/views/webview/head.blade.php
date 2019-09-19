@@ -55,6 +55,30 @@
                 font-weight: 400;
                 src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
         }
+        @font-face {
+                font-family: "ProductSans-Bold";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Bold.ttf') }}');
+        }
+        @font-face {
+                font-family: "ProductSans-BoldItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-BoldItalic.ttf') }}');
+        }
+        @font-face {
+                font-family: "ProductSans-Italic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Italic.ttf') }}');
+        }
+        @font-face {
+                font-family: "ProductSans";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
+        }
         .Seravek{
             font-family: "Seravek";
         }
@@ -75,6 +99,27 @@
         }
         .GoogleSans-Bold{
             font-family: "GoogleSans-Bold";
+        }
+        .Seravek{
+            font-family: "Seravek";
+        }
+        .ProductSans{
+            font-family: "ProductSans";
+        }
+        .ProductSans-MediumItalic{
+            font-family: "ProductSans-MediumItalic";
+        }
+        .ProductSans-Medium{
+            font-family: "ProductSans-Medium";
+        }
+        .ProductSans-Italic{
+            font-family: "ProductSans-Italic";
+        }
+        .ProductSans-BoldItalic{
+            font-family: "ProductSans-BoldItalic";
+        }
+        .ProductSans-Bold{
+            font-family: "ProductSans-Bold";
         }
         body{
             background-color: #fff;
