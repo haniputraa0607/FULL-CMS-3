@@ -14,7 +14,6 @@ class WebviewController extends Controller
     public function detail(Request $request)
     {
         $bearer = $request->header('Authorization');
-        $bearer = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjNhNzE1Zjg2N2E2NTFlMWY5MmRkZGExMTczNDJjYTBiOTllMTVkZDgzZjU1N2RjYzBkNGU4NTAyZWZlOTJmYTM5ZDQ5Mzk3ZmExMTNlODdhIn0.eyJhdWQiOiIyIiwianRpIjoiM2E3MTVmODY3YTY1MWUxZjkyZGRkYTExNzM0MmNhMGI5OWUxNWRkODNmNTU3ZGNjMGQ0ZTg1MDJlZmU5MmZhMzlkNDkzOTdmYTExM2U4N2EiLCJpYXQiOjE1Njg5NDkzMDQsIm5iZiI6MTU2ODk0OTMwNCwiZXhwIjoyODY0OTQ5MzAyLCJzdWIiOiI4Iiwic2NvcGVzIjpbIioiXX0.pmeZ4vXGP56GWL_AHB5Roc258ubrbsE1xmVV-iN8wWFuDILC5iF4PeIH994EGqH2xcsKl5b7rkiaNWHSYLEXM_SGoFB8WThwNJPxVh-InlaUgZJjg1_U5Ahc_fW9n3U95azBhxW0wcEbvjtqrAFgl97mNAAoGE3rcBCxIPlF7OMLO76T18w7pgFQDoEulaSZQvTOao5R4hOR8U5-NoBJYMg1lNJ9ZUl8rhOWmax0dMe23UYseMNnf_xFiABoPe0STfHMg296DGiXBo1uVnyOwmm9MXqdk40WFXgpkEnpva0XyLOPBMtASrZoZJT0YVAMxvOeNRYj47yzVRpTTNx-A5efp01kJcbPq5iTih8dq12UUsYDM00Eu9lSNyVCTRQGRFi4KY5Em4JHJ1yJXQRldlOJq2EmbwsAkaQXVdbYvzXwpldpmOkW4mYtg5TlyeSk13U_3yYWy9Oix7e3o2VL9u6RvXOxdIwv2GYlz08EUvYVXcW6i13LyrNNCmoWFlimMPw9qLFjuUpBabvVryVs1G_ftu_8ZQ6D7ut5wXHNxf9ShZoxAsz7PCrjke48pQ_eVktxOD46n6R-pnRdlesgFw6X0tN32hs1wEWfvDLbAYbhhLb6GQDPctS9vDBwyYBwvhoOKEbRQg_4YAvXCpLKQ41rdGeRxnP9-37avnQDyJY";
         if ($bearer == "") {
             return view('error', ['msg' => 'Unauthenticated']);
         }
