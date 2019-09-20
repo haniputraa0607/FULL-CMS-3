@@ -129,8 +129,8 @@ class MembershipController extends Controller
 
 	public function detailWebview(Request $request)
     {
-		return abort(503);
 		$bearer = $request->header('Authorization');
+		
         if ($bearer == "") {
             return view('error', ['msg' => 'Unauthenticated']);
 		}
@@ -140,14 +140,14 @@ class MembershipController extends Controller
     	$check = MyHelper::postWithBearer('membership/detail/webview?log_save=0', $data, $bearer);
         // return $check;
     	if (isset($check['status']) && $check['status'] == 'success') {
-    		$data = $check['result'];
+    		$data['result'] = $check['result'];
 		} elseif (isset($check['status']) && $check['status'] == 'fail') {
             return view('error', ['msg' => 'Data failed']);
         } else {
             return view('error', ['msg' => 'Something went wrong, try again']);
 		}
-
-        return view('membership::webview.detail_membership')->with(compact('data'));
+		// dd($data);
+        return view('membership::webview.detail_membership', $data);
     }
 
 }
