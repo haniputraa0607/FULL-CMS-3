@@ -196,9 +196,9 @@
     		font-size: 14px;
     	}
 
-      .text-15px {
-        font-size: 15px;
-      }
+      	.text-15px {
+			font-size: 15px;
+		}
 
     	.text-13-3px {
     		font-size: 13.3px;
@@ -364,8 +364,8 @@
 					@foreach ($data[0]['outlet_schedules'] as $key => $val)
 					@if ($val['day'] == $hari_ini)
 						<div id="today" class="row space-sch">
-							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-4 min-left "> @if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif </div>
-							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-8">
+							<div style="@if ($val['day'] == $hari_ini) color: rgb(128, 0, 0); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-4 min-left "> @if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif </div>
+							<div style="@if ($val['day'] == $hari_ini) color: rgb(128, 0, 0); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-8">
 								@if($val['is_closed'] == '1')
 									TUTUP
 								@else
