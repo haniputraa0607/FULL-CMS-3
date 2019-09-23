@@ -5,17 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
     <style type="text/css">
     	.kotak1 {
     		padding-top: 10px;
-    		padding-bottom: 10px;
-    		padding-left: 26.3px;
-    		padding-right: 26.3px;
+    		padding-bottom: 0;
+    		padding-left: 20px;
+    		padding-right: 20px;
 			background: #fff;
-			font-family: 'Open Sans', sans-serif;
     	}
 
     	.kotak2 {
@@ -24,7 +24,6 @@
     		padding-left: 26.3px;
     		padding-right: 26.3px;
 			background: #fff;
-			font-family: 'Open Sans', sans-serif;
       height: 100%
     	}
 
@@ -152,6 +151,18 @@
                 font-weight: 400;
                 src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
         }
+		@font-face {
+                font-family: "ProductSans-Medium";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Medium.ttf') }}');
+        }
+        @font-face {
+                font-family: "ProductSans";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
+        }
 		.GoogleSans{
             font-family: "GoogleSans";
         }
@@ -169,6 +180,12 @@
         }
         .GoogleSans-Bold{
             font-family: "GoogleSans-Bold";
+        }
+		.ProductSans{
+            font-family: "ProductSans";
+        }
+        .ProductSans-MediumItalic{
+            font-family: "ProductSans-Medium";
         }
 
     	.text-14-3px {
@@ -272,29 +289,41 @@
 		background: #6c5648;
 	}
 
+	.fa-angle-down{
+		transform: rotate(0deg);
+		transition: transform 0.25s linear;
+	}
+
+	.fa-angle-down.open{
+		transform: rotate(180deg);
+		transition: transform 0.25s linear;
+	}
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
   </head>
   <body>
 
-  	<!--<div class="kotak1">-->
-  	<!--	<div class="container">-->
-	  <!-- 		<div class="row">-->
-	  <!-- 			<div class="col-12 text-black text-15px GoogleSans-Medium space-bottom">{{ $data[0]['outlet_name'] }}</div>-->
-	  <!-- 			<div class="col-1 text-grey-black text-13-3px GoogleSans-Medium space-text"><img class="logo-img" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/phone.png') }}"></div>-->
-	  <!-- 			<div class="col-10 text-grey-black text-13-3px GoogleSans-Medium space-text"><span> {{ $data[0]['call'] }} </span></div>-->
-	  <!-- 		</div>-->
-	  <!-- 		<div class="row space-bottom line-bottom">-->
-	  <!-- 		    <div class="col-12 text-grey-black text-13-3px GoogleSans-Medium space-text">Lokasi</div>-->
-	  <!-- 			<div class="col-10 text-grey-2 text-13-3px GoogleSans-Regular space-text"><span> {{ $data[0]['outlet_address'] }} </span></div>-->
-	  <!-- 		</div>-->
-	  <!-- 	</div>-->
-  	<!--</div>-->
+	<div class="kotak1">
+  		<div class="container">
+  		    <div class="ProductSans space-text" style="color: rgb(128, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Alamat</div>
+			<hr style="margin: 0;">
+			<div class="ProductSans space-text" style="color: rgb(0, 0, 0); font-size: 12.7px; padding-bottom: 0;">{{$data[0]['outlet_address']}}</div>
+	   	</div>
+	</div>
+	  
+	<div class="kotak1">
+  		<div class="container">
+  		    <div class="ProductSans space-text" style="color: rgb(128, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Nomor Telepon</div>
+			<hr style="margin: 0;">
+			<div class="ProductSans space-text" style="color: rgb(0, 0, 0); font-size: 12.7px; padding-bottom: 0;">{{$data[0]['outlet_phone']}}</div>
+	   	</div>
+  	</div>
 
     <div class="kotak1">
   		<div class="container">
-  		    <div class="text-grey-black text-13-3px GoogleSans-Medium space-text">Jam Operasional</div>
+  		    <div class="ProductSans space-text" style="color: rgb(128, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Jam Operasional</div>
   			@php
   				$hari = date ("D");
 
@@ -328,24 +357,54 @@
 				break;
 			}
 
-  			@endphp
-  			@foreach ($data[0]['outlet_schedules'] as $key => $val)
-		   		<div class="row space-sch @if ($val['day'] == $hari_ini) red @endif">
-		   			<!--<div class="text-grey-2 text-13-3px seravek-light-font day-alphabet @if ($val['day'] == $hari_ini) day-alphabet-today @endif">{{ substr($val['day'], 0,1) }}</div>-->
-		   			<div class="col-2 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) GoogleSans-Bold @else GoogleSans-Regular @endif min-left "> {{ $val['day'] }} </div>
-		   			<div class="col-5 text-grey-2 text-13-3px  @if ($val['day'] == $hari_ini) GoogleSans-Bold @else GoogleSans-Regular @endif">
-    		   			@if($val['is_closed'] == '1')
-					   		TUTUP
-						@else
-							{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
+			@endphp
+			<hr style="margin: 0;">
+			<div class="row">
+				<div class="col-8"> 
+					@foreach ($data[0]['outlet_schedules'] as $key => $val)
+					@if ($val['day'] == $hari_ini)
+						<div id="today" class="row space-sch">
+							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-4 min-left "> @if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif </div>
+							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-8">
+								@if($val['is_closed'] == '1')
+									TUTUP
+								@else
+									{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
+								@endif
+							</div>
+						</div>
 						@endif
-		   			</div>
-		   		</div>
-		   	@endforeach
+					@endforeach
+					@foreach ($data[0]['outlet_schedules'] as $key => $val)
+					<div style="display: none;" class="anotherDay row space-sch">
+						<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-4 min-left "> @if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif </div>
+						<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-8">
+							@if($val['is_closed'] == '1')
+								TUTUP
+							@else
+								{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
+							@endif
+						</div>
+						@if ($val['day'] == "Minggu")
+						@endif
+					</div>
+					@endforeach
+				</div>
+				<div class="col-4"> 
+					<i class="icon fa fa-angle-down"></i>
+				</div>
+			</div>
 	   	</div>
   	</div>
 
-
+	@if($data[0]['big_order'] == 1)
+	<div class="kotak1">
+  		<div class="container">
+  		    <div class="ProductSans text-center space-text" style="color: rgb(0, 0, 0); font-size: 15px; padding-bottom: 5px;">Big Order Delivery Service</div>
+		  <div class="ProductSans space-text" style="color: rgb(102, 102, 102); font-size: 12.7px; padding-bottom: 0;">Khusus pemesanan diatas 50 pax, silahkan menghubungi <a style="color: rgb(128, 0, 0); text-decoration: underline;" href="#delivery_service">Call Center</a> kami untuk mendapatkan penawaran special</div>
+	   	</div>
+	</div>
+	@endif
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -353,7 +412,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	<script>
+	var open = true;
+	$(".icon").click(function() {
+		if(open){
+			this.className = 'fa fa-angle-down open';
+			$("#today").hide()
+			$(".anotherDay").show()
+		} else{
+			this.className = 'fa fa-angle-down';
+			$(".anotherDay").hide()
+			$("#today").show()
+		}
+		open = !open;
+	});
+	// (function(document){
+	// 	var div = document.getElementById('container');
+	// 	var icon = document.getElementById('icon');
+	// 	var open = false;
+		
+	// 	div.addEventListener('click', function(){
+	// 		if(open){
+	// 			icon.className = 'fa fa-arrow-down';  
+	// 		} else{
+	// 			icon.className = 'fa fa-arrow-down open';
+	// 		}
+	// 		open = !open;
+	// 	});
+	// })(document);
+	</script>
   </body>
 </html>
