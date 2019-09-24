@@ -11,6 +11,60 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <style type="text/css">
+        @font-face {
+                font-family: "ProductSans-Bold";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
+        }
+        @font-face {
+                font-family: "ProductSans-BoldItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-BoldItalic.ttf') }}');
+        }
+        @font-face {
+                font-family: "ProductSans-Italic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Italic.ttf') }}');
+        }
+        @font-face {
+                font-family: "ProductSans-Medium";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Medium.ttf') }}');
+        }
+        @font-face {
+                font-family: "ProductSans-MediumItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-MediumItalic.ttf') }}');
+        }
+        @font-face {
+                font-family: "ProductSans";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
+        }
+        .ProductSans{
+            font-family: "ProductSans";
+        }
+        .ProductSans-MediumItalic{
+            font-family: "ProductSans-MediumItalic";
+        }
+        .ProductSans-Medium{
+            font-family: "ProductSans-Medium";
+        }
+        .ProductSans-Italic{
+            font-family: "ProductSans-Italic";
+        }
+        .ProductSans-BoldItalic{
+            font-family: "ProductSans-BoldItalic";
+        }
+        .ProductSans-Bold{
+            font-family: "ProductSans-Bold";
+        }
         .kotak {
             margin : 10px;
             padding: 10px;
@@ -52,27 +106,21 @@
 		
 
         .kotak-full {
-            padding: 10px;
+            margin: 18.3px;
+            margin-top: 16.7px;
+            padding: 18.5px;
             background: #fff;
             font-family: 'Open Sans', sans-serif;
+            box-shadow: 0 1pt 6.7px 0 rgba(0,0,0,0.08);
+            font-size: 13px;
         }
 
         .kotak-full a:active, .kotak-full a:hover {
             text-decoration: none;
         }
 
-        .kotak-biasa {
-            margin-left: 5px;
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .kotak-inside {
-        	padding-left: 25px;
-        	padding-right: 25px
-        }
-
         body {
-            background: #fafafa;
+            background: #fff;
         }
 
         .completed {
@@ -158,36 +206,6 @@
         .text-grey-green {
             color: rgba(4,154,74,1);
         }
-
-        @font-face {
-            font-family: 'Seravek';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype'); 
-        }
-
-        @font-face {
-            font-family: 'Seravek Light';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
-        }
-
-        .seravek-font {
-            font-family: 'Seravek';
-        }
-
-        .seravek-light-font {
-            font-family: 'Seravek Light';
-        }
-        .open-sans-font {
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .questrial-font {
-            font-family: 'Questrial', sans-serif;
-        }
-
         .text-21-7px {
             font-size: 21.7px;
         }
@@ -224,6 +242,9 @@
             font-size: 11.7px;
         }
 
+        .brownishGrey {
+            color: rgb(102,102,102);
+        }
     </style>
   </head>
   <body>
@@ -232,25 +253,22 @@
     @endphp
 
     @foreach ($faq as $key => $value)
-	    <div class="kotak-full line-bottom div-panah" >
-	        <div class="container">
+	    <div class="kotak-full" >
+	        <div class="div-panah brownishGrey">
                 <a href="#" data-toggle="collapse" data-target="#multi-collapse{{ $key }}" aria-expanded="false">
     	            <div class="row">
-    	                <div class="col-10 text-13-3px seravek-light-font text-grey-white">{{ $value['question'] }}</div>
-    	                <div class="col-2 text-13-3px panah text-right"> <i class="fa fa-angle-down kelas-panah add"></i></div>
+    	                <div class="col-10 ProductSans text-grey-white">{{ $value['question'] }}</div>
+    	                <div class="col-2 ProductSans panah text-right" style="color: #000"> <i class="fa fa-angle-down kelas-panah add"></i></div>
     	            </div>
                 </a>
-	        </div>
+            </div>
+            <div class="collapse ProductSans" id="multi-collapse{{ $key }}" style="color: rgb(128,0,0);padding-top: 16px">
+                <div class="row">
+                    <div class="col-12">{{ $value['answer'] }}</div>
+                </div>
+            </div>
 	    </div>
 
-	    <div class="kotak-biasa collapse space-top" id="multi-collapse{{ $key }}">
-	        <div class="container">
-	            <div class="row">
-	                <div class="col-10 text-13-3px space-text text-black space-left seravek-font">{{ $value['answer'] }}</div>
-	                
-	            </div>
-	        </div>
-	    </div>
    @endforeach
     
 
