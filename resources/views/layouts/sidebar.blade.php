@@ -1125,6 +1125,32 @@
 		</li>
 		@endif
 
+		@if(MyHelper::hasAccess([149,150,151,152,153], $grantedFeature))
+		<li class="nav-item {{($menu_active == 'custom-page') ? 'active open' : ''}}">
+			<a href="javascript:;" class="nav-link nav-toggle">
+				<i class="icon-book-open"></i>
+				<span class="title">Custom Page</span>
+				<span class="arrow {{($menu_active == 'custom-page') ? 'open' : ''}}"></span>
+			</a>
+			<ul class="sub-menu">
+				@if(MyHelper::hasAccess([150], $grantedFeature))
+				<li class="nav-item {{($submenu_active == 'custom-page-create') ? 'active open' : ''}}">
+					<a href="{{url('custom-page/create')}}" class="nav-link ">
+						<span class="title">New Custom Page</span>
+					</a>
+				</li>
+				@endif
+				@if(MyHelper::hasAccess([149,151,152,153], $grantedFeature))
+				<li class="nav-item {{($submenu_active == 'custom-page-list') ? 'active open' : ''}}">
+					<a href="{{url('custom-page')}}" class="nav-link ">
+						<span class="title">Custom Page List</span>
+					</a>
+				</li>
+				@endif
+			</ul>
+		</li>
+		@endif
+
 		@if(MyHelper::hasAccess([85,86,87,88,89,90,91,94], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #990003;font-weight: 600;">About</h3>
