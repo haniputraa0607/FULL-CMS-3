@@ -556,6 +556,8 @@ class UsersController extends Controller
 		$getVoucher = MyHelper::post('deals/voucher/user?log_save=0', ['phone' => $phone]);
 // 		return $getVoucher;
 		
+		$getInbox = MyHelper::post('inbox/user',['phone'=>$phone]);
+
 		$data = [ 'title'             => 'User',
 				  'menu_active'       => 'user',
 				  'submenu_active'    => 'user-list'
@@ -579,6 +581,7 @@ class UsersController extends Controller
 		if(isset($getFeatureAll['result'])) $data['featuresall'] = $getFeatureAll['result'];
 		if(isset($getFeatureModule['result'])) $data['featuresmodule'] = $getFeatureModule['result'];
 		if(isset($getVoucher['result'])) $data['voucher'] = $getVoucher['result'];
+		$data['inboxes'] = $getInbox['result']??[];
 
 		$getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
