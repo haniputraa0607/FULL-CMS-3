@@ -487,6 +487,14 @@ class UsersController extends Controller
     {
 		$post = $request->except('_token');
 		// print_r($post);exit;
+		if($request->post('action')=='delete_inbox'&&!empty($request->post('id_inbox'))){
+			$delete = MyHelper::post('inbox/delete', ['id_inbox' => $request->post('id_inbox')]);
+			if(($delete['status']=='success')??false){
+				return redirect('user/detail/'.$phone)->with('success',['Delete success']);
+			}else{
+				return back()->withErrors(['Delete Failed']);
+			}
+		}
 		if(isset($post['password'])){
 			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password']));
 			/* print_r($checkpin);exit;
