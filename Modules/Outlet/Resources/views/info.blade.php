@@ -55,6 +55,7 @@
             </div>
             <div class="col-md-9">
                 <select class="select2 form-control" multiple="multiple" name="outlet_brands[]">
+                    <option value="*">All Brands</option>
                     @foreach($brands as $brand)
                     <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],array_column($val['brands'],'id_brand'))) selected="selected" @endif>{{$brand['name_brand']}}</option>
                     @endforeach
@@ -178,7 +179,7 @@
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Delivery Service
-                <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman outlet akan menampilkan ketersediaan delivery service untuk outlet" data-container="body"></i>
+                <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman detail outlet di aplikasi akan menampilkan ketersediaan delivery service untuk outlet" data-container="body"></i>
                 </label>
             </div>
             <div class="col-md-9">
