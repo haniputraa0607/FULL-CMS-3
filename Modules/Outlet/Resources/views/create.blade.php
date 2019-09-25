@@ -372,6 +372,23 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
+                            Brand
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="select2 form-control" multiple="multiple" name="outlet_brands[]">
+                                @foreach($brands as $brand)
+                                <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],old('brands',[]))) selected @endif>{{$brand['name_brand']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>        
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
                             PIN
                             <i class="fa fa-question-circle tooltips" data-original-title="Pin outlet berupa 6 digit angka" data-container="body"></i>
                             </label>
@@ -540,7 +557,31 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="deep_link" value="{{ old('deep_link') }}" placeholder="Deep link gojek">
+                            <input type="text" class="form-control" name="deep_link_gojek" value="{{ old('deep_link_gojek') }}" placeholder="Deep link gojek">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Deep Link Grab
+                            <i class="fa fa-question-circle tooltips" data-original-title="Deep link grab" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="deep_link_grab" value="{{ old('deep_link_grab') }}" placeholder="Deep link grab">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Delivery Service
+                            <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman outlet akan menampilkan ketersediaan delivery service untuk outlet" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="checkbox" name="big_order" @if(old('big_order') == '1') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="1">
                         </div>
                     </div>
 
