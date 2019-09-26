@@ -16,16 +16,16 @@ class DeliveryServiceController extends Controller
      */
     public function index()
     {
-        return view('deliveryservice::index');
-    }
+        $data = [
+            'title'             => 'Setting',
+            'sub_title'         => 'Delivery Service',
+            'menu_active'       => 'delivery-service',
+            'submenu_active'    => 'delivery-service'
+        ];
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('deliveryservice::create');
+        $action = MyHelper::get('delivery-service/');
+        $data['result'] = $action['result'];
+        return view('deliveryservice::index', $data);
     }
 
     /**
@@ -34,40 +34,22 @@ class DeliveryServiceController extends Controller
      * @return Response
      */
     public function store(Request $request)
-    { }
-
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
     {
-        return view('deliveryservice::show');
+        $post = $request->except(['_token']);
+        $data = [
+            'title'             => 'Setting',
+            'sub_title'         => 'Delivery Service',
+            'menu_active'       => 'delivery-service',
+            'submenu_active'    => 'delivery-service'
+        ];
+
+        $action = MyHelper::post('delivery-service/store', $post);
+
+        if (isset($action['status']) && $action['status'] == 'success') {
+            $data['result'] = $action['result'];
+            return view('deliveryservice::index', $data);
+        }
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('deliveryservice::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    { }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
-    { }
 
     public function detailWebview(Request $request)
     {
