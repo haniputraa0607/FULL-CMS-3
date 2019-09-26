@@ -1219,7 +1219,7 @@
                                                         <p style=" margin-top: 7px; margin-bottom: 5px;">Area</p>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <input value="{{$item['nama_area']}}" type="text" class="form-control" name="nama_area" placeholder="Area">
+                                                        <input value="{{$item['area_name']}}" type="text" class="form-control" name="area_name" placeholder="Area">
                                                     </div>
                                                     <div class="col-md-2">
                                                         <p style=" margin-top: 7px; margin-bottom: 5px;">Call Us</p>
@@ -1240,7 +1240,7 @@
                                                     <p style=" margin-top: 7px; margin-bottom: 5px;">Area</p>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="text" class="form-control" name="nama_area" placeholder="Area">
+                                                    <input type="text" class="form-control" name="area_name" placeholder="Area">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <p style=" margin-top: 7px; margin-bottom: 5px;">Call Us</p>
