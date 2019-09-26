@@ -1172,6 +1172,14 @@
 				</a>
 			</li>
 			@endif
+			@if(MyHelper::hasAccess([154,155,156,157], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'tos') ? 'active' : ''}}">
+				<a href="{{url('setting/tos')}}" class="nav-link nav-toggle">
+					<i class="icon-social-dropbox"></i>
+					<span class="title">Delivery Services</span>
+				</a>
+			</li>
+			@endif
 			<!-- @if(MyHelper::hasAccess([87], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'contact') ? 'active' : ''}}">
 				<a href="{{url('setting/contact')}}" class="nav-link nav-toggle">
