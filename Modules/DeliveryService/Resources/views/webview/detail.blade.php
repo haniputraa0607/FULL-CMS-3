@@ -246,5 +246,8 @@
 		$("select").change(function() {
 			$("a").attr("href", "#"+this.value)
 		});
+		$( document ).ready(function() {
+			$( "select" ).trigger( "change" );
+		});
     </script>
 @stop
