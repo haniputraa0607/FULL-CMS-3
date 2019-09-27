@@ -185,16 +185,13 @@
 @section('content')
 	<div class="deals-detail">
 		@if(!empty($voucher))
-			@php
-				$voucher = $voucher[0];
-			@endphp
 			<div class="col-md-4 col-md-offset-4">
 				<div class="title-wrapper clearfix">
 					<img class="deals-img center-block" src="{{ $voucher['deal_voucher']['deal']['url_deals_image'] }}" alt="">
 				</div>
 
 				<!-- Modal QR Code -->
-				@if($voucher['redeemed_at'] != null && $voucher['used_at'] == null)
+				@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null && isset($voucher['used_at']) && $voucher['used_at'] == null)
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
 					@php $bulan = ['Janu', 'Febr', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
 					<div style="font-size: 13px; color: rgb(128,0,0);padding-bottom: 0px;" class="text-right ProductSans"></i> Berlaku sampai {{date('d', strtotime($voucher['voucher_expired_at']))}} {{$bulan[date('m', strtotime($voucher['voucher_expired_at']))-1]}} {{ date('Y', strtotime($voucher['voucher_expired_at'])) }} &nbsp; {{ date('H:i', strtotime($voucher['voucher_expired_at'])) }}</div>
@@ -303,7 +300,7 @@
 				</div>
 
 				<div class="outlet-wrapper" style="padding-top: 10px;">
-					@if ($voucher['deal_voucher']['deal']['label_outlet'] == 'Some' || $voucher['redeemed_at'] != null)
+					@if ($voucher['deal_voucher']['deal']['label_outlet'] == 'Some' || isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
 						<div class="outlet">
 							@if($voucher['redeemed_at'] != null)
 								@if(isset($voucher['outlet_name']))
@@ -327,7 +324,7 @@
 					@endif
 				</div>
 
-				@if($voucher['redeemed_at'] == null)
+				@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] == null)
 					<center>
 						<button type="button" id="invalidate" class="btn btn-primary GoogleSans-Bold">Invalidate</button>
 					</center>
