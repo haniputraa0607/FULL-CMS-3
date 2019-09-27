@@ -196,7 +196,7 @@
 		<div class="col-md-4 col-md-offset-4">
 			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 				<div style="font-size:12px" class="title">
-					{{$result['head']['description']}}
+					{!!$result['head']['description']!!}
 				</div>
 			</div>
 
@@ -204,13 +204,13 @@
 
 			<div style="background-color: rgb(255, 255, 255); justify-content:center;" class="title-wrapper col-md-12 clearfix ProductSans">
 				<div style="font-size:14px;padding-bottom: 0px;" class="title">
-					{{$result['content']['head_content']}}
+					{!!$result['content']['head_content']!!}
 				</div>
 			</div>
 
 			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 				<div style="font-size:12px" class="title">
-					{{$result['content']['description_content']}}
+					{!!$result['content']['description_content']!!}
 				</div>
 			</div>
 
@@ -238,6 +238,7 @@
 			</div>
 		</div>
 	</div>
+	<br>
 @stop
 
 @section('page-script')
