@@ -5,6 +5,7 @@ namespace Modules\Brand\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use App\Lib\MyHelper;
 
 class BrandController extends Controller
 {
@@ -23,7 +24,13 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('brand::create');
+        $data = [
+            'title'          => 'New Brand',
+            'menu_active'    => 'brand',
+            'submenu_active' => 'brand-new',
+        ];
+
+        return view('brand::form', $data);
     }
 
     /**
@@ -33,33 +40,51 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+        $post = $request->except(['_token']);
+
+        $data = [
+            'title'          => 'New Brand',
+            'menu_active'    => 'brand',
+            'submenu_active' => 'brand-new',
+        ];
+        
+        if (isset($post['logo_brand']) && $post['logo_brand'] != null) {
+            $post['logo_brand'] = MyHelper::encodeImage($post['logo_brand']);
+        }
+
+        if (isset($post['image_brand']) && $post['image_brand'] != null) {
+            $post['image_brand'] = MyHelper::encodeImage($post['image_brand']);
+        }
+
+        $action = MyHelper::post('brand/store', $post);
+        
+        if (isset($action['status']) && $action['status'] == 'success') {
+            return redirect('brand/show/' . $action['result']['id_brand']);
+        } else {
+            return redirect('brand/create')->withInput()->withErrors($action['messages']);
+        }
     }
 
     /**
      * Show the specified resource.
      * @return Response
      */
-    public function show()
+    public function show($id_brand)
     {
-        return view('brand::show');
-    }
+        $data = [
+            'title'          => 'New Brand',
+            'menu_active'    => 'brand',
+            'submenu_active' => 'brand-new',
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('brand::edit');
-    }
+        $action = MyHelper::post('brand/show', ['id_brand' => $id_brand]);
 
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
+        if (isset($action['status']) && $action['status'] == 'success') {
+            $data['result'] = $action['result'];
+            return view('brand::form', $data);
+        } else {
+            return redirect('brand/create')->withInput()->withErrors($action['messages']);
+        }
     }
 
     /**
@@ -67,6 +92,5 @@ class BrandController extends Controller
      * @return Response
      */
     public function destroy()
-    {
-    }
+    { }
 }
