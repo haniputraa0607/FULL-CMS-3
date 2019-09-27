@@ -223,7 +223,7 @@
 			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 				<select class="browser-default" style="font-size:12px; width:100%; color: rgb(128, 0, 0);">
 					@foreach ($result['area'] as $item)
-					<option value="{{$item['phone_number']}}">{{$item['nama_area']}}</option>
+					<option value="{{$item['phone_number']}}">{{$item['area_name']}}</option>
 					@endforeach
 				</select>
 			</div>
