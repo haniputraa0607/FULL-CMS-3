@@ -305,7 +305,7 @@
 				<div class="outlet-wrapper" style="padding-top: 10px;">
 					@if ($voucher['deal_voucher']['deal']['label_outlet'] == 'Some' || isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
 						<div class="outlet">
-							@if($voucher['redeemed_at'] != null)
+							@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
 								@if(isset($voucher['outlet_name']))
 								{{$voucher['outlet_name']}}
 								@endif
