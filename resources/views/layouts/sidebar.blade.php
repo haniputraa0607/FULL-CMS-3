@@ -228,6 +228,32 @@
 				@endif
 			@endif
 
+			@if(MyHelper::hasAccess([155,156,157,158,159], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'brand') ? 'active' : ''}}">
+				<a href="javascript:;" class="nav-link nav-toggle">
+					<i class="icon-badge"></i>
+					<span class="title">Brand</span>
+					<span class="arrow {{($menu_active == 'brand') ? 'open' : ''}}"></span>
+				</a>
+				<ul class="sub-menu">
+					@if(MyHelper::hasAccess([156], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'brand-new') ? 'active open' : ''}}">
+						<a href="{{url('brand/create')}}" class="nav-link ">
+							<span class="title">New Brand</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([155,157,158,159], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'brand-list') ? 'active open' : ''}}">
+						<a href="{{url('brand')}}" class="nav-link ">
+							<span class="title">List Brand</span>
+						</a>
+					</li>
+					@endif
+				</ul>
+			</li>
+			@endif
+
 			@if(MyHelper::hasAccess([24,26,32,33,34], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'outlet') ? 'active' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
