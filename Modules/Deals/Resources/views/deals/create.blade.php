@@ -155,7 +155,7 @@
 
             // upload & delete image on summernote
             $('.summernote').summernote({
-                placeholder: 'Deals Content Long',
+                placeholder: true,
                 tabsize: 2,
                 height: 120,
                 toolbar: [         
@@ -168,6 +168,11 @@
                   ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
                 callbacks: {
+                    onInit: function(e) {
+                      this.placeholder 
+                        ? e.editingArea.find(".note-placeholder").html(this.placeholder)
+                        : e.editingArea.remove(".note-placeholder");
+                    },
                     onImageUpload: function(files){
                         sendFile(files[0]);
                     },
@@ -260,7 +265,24 @@
             //             $('#file').removeAttr('src');
             //         }
             //     };
-            // });
+            // });            
+            $('.fileinput-preview').bind('DOMSubtreeModified', function() {
+                var mentah    = $(this).find('img')
+                // set image
+                var cariImage = mentah.attr('src')
+                var ko        = new Image()
+                ko.src        = cariImage
+                // load image
+                ko.onload     = function(){
+                    if (this.naturalHeight === 450 && this.naturalWidth === 600) {
+                    } else {
+                        mentah.attr('src', "")
+                        $('#file').val("");
+                        toastr.warning("Please check dimension of your photo.");
+                    }
+                };                
+            })
+
         });
     </script>
 @endsection
@@ -437,7 +459,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="deals_description" id="field_content_long" class="form-control summernote">{{ old('deals_description') }}</textarea>
+                                <textarea name="deals_description" id="field_content_long" class="form-control summernote" placeholder="Deals Content Long">{{ old('deals_description') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -452,7 +474,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="deals_tos" id="field_tos" class="form-control summernote">{{ old('deals_tos') }}</textarea>
+                                <textarea name="deals_tos" id="field_tos" class="form-control summernote" placeholder="Deals Terms and Conditions">{{ old('deals_tos') }}</textarea>
                             </div>
                         </div>
                     </div>
