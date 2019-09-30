@@ -377,7 +377,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="deals_voucher_start" value="{{ old('deals_voucher_start',$val['deals_publish_start']) }}" required>
+                                    <input type="text" class="form_datetime form-control" name="deals_voucher_start" value="{{ old('deals_voucher_start',$val['deals_voucher_start']) }}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
