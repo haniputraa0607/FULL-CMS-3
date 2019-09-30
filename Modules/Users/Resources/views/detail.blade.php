@@ -257,6 +257,36 @@
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
 
+    $('.datatable').dataTable({
+                language: {
+                    aria: {
+                        sortAscending: ": activate to sort column ascending",
+                        sortDescending: ": activate to sort column descending"
+                    },
+                    emptyTable: "No data available in table",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    infoEmpty: "No entries found",
+                    infoFiltered: "(filtered1 from _MAX_ total entries)",
+                    lengthMenu: "_MENU_ entries",
+                    search: "Search:",
+                    zeroRecords: "No matching records found"
+                },
+                buttons: [],
+                responsive: {
+                    details: {
+                        type: "column",
+                        target: "tr"
+                    }
+                },
+                order: [2, "desc"],
+                lengthMenu: [
+                    [5, 10, 15, 20, -1],
+                    [5, 10, 15, 20, "All"]
+                ],
+                pageLength: 10,
+                dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+        });
+
 	$(document).ready(function() {
 		$.fn.modal.Constructor.prototype.enforceFocus = function() {};
 	});
@@ -576,6 +606,9 @@
 															<a href="#portlet_comments_4" data-toggle="tab"> Point </a>
 														</li>
 													@endif
+                                                    <li>
+                                                        <a href="#user_inboxes" data-toggle="tab"> Inboxes </a>
+                                                    </li>
 												</ul>
 											</div>
 											<div class="tab-content" style="margin-top:20px">
@@ -757,6 +790,41 @@
 															</div>
 													</div>
 												@endif
+                                                <div class="tab-pane" id="user_inboxes">
+                                                    <table class="table table-hover table-striped datatable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Date</th>
+                                                                <th>Subject</th>
+                                                                <th>Type</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($inboxes as $inbox)
+                                                            @foreach($inbox['list'] as $it)
+                                                            <tr>
+                                                                <td>{{date('d/m/Y H:i',strtotime($it['created_at']))}}</td>
+                                                                <td>{{$it['subject']}}</td>
+                                                                <td>{{$it['type']}}</td>
+                                                                <td>{{$it['status']}}</td>
+                                                                <td>@if($it['type']=='private')<form action="#" method="POST">
+                                                                    {{csrf_field()}}
+                                                                    <input type="hidden" name="action" value="delete_inbox">
+                                                                    <input type="hidden" name="id_inbox" value="{{$it['id_inbox']}}">
+                                                                    <button class="btn btn-sm btn-danger" data-toggle="confirmation"
+                                                                    data-btn-ok-label="Delete" data-btn-ok-class="btn btn-danger"
+                                                                    data-btn-ok-icon-class="material-icons" data-btn-ok-icon-content="check"
+                                                                    data-btn-cancel-label="No" data-btn-cancel-class="btn-info"
+                                                                    data-btn-cancel-icon-class="material-icons" data-btn-cancel-icon-content="close"
+                                                                    data-title="Are you sure want to delete this inbox?"><i class="fa fa-trash"></i> Delete</button></form></td>@endif
+                                                            </tr>
+                                                            @endforeach
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
 											</div>
 										</div>
 

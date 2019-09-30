@@ -487,6 +487,14 @@ class UsersController extends Controller
     {
 		$post = $request->except('_token');
 		// print_r($post);exit;
+		if($request->post('action')=='delete_inbox'&&!empty($request->post('id_inbox'))){
+			$delete = MyHelper::post('inbox/delete', ['id_inbox' => $request->post('id_inbox')]);
+			if(($delete['status']=='success')??false){
+				return redirect('user/detail/'.$phone)->with('success',['Delete success']);
+			}else{
+				return back()->withErrors(['Delete Failed']);
+			}
+		}
 		if(isset($post['password'])){
 			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password']));
 			/* print_r($checkpin);exit;
@@ -556,6 +564,8 @@ class UsersController extends Controller
 		$getVoucher = MyHelper::post('deals/voucher/user?log_save=0', ['phone' => $phone]);
 // 		return $getVoucher;
 		
+		$getInbox = MyHelper::post('inbox/user',['phone'=>$phone]);
+
 		$data = [ 'title'             => 'User',
 				  'menu_active'       => 'user',
 				  'submenu_active'    => 'user-list'
@@ -579,6 +589,7 @@ class UsersController extends Controller
 		if(isset($getFeatureAll['result'])) $data['featuresall'] = $getFeatureAll['result'];
 		if(isset($getFeatureModule['result'])) $data['featuresmodule'] = $getFeatureModule['result'];
 		if(isset($getVoucher['result'])) $data['voucher'] = $getVoucher['result'];
+		$data['inboxes'] = $getInbox['result']??[];
 
 		$getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
