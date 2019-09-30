@@ -388,7 +388,7 @@
 		<div class="portlet-title">
 			<div class="caption font-blue ">
 				<i class="icon-settings font-blue "></i>
-				<span class="caption-subject bold uppercase">Filter Promo Campaign List</span>
+				<span class="caption-subject bold uppercase">Filter Deals List</span>
 			</div>
 		</div>
 		<div class="portlet-body form">
