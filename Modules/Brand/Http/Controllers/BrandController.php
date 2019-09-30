@@ -15,7 +15,22 @@ class BrandController extends Controller
      */
     public function index()
     {
-        return view('brand::index');
+        $data = [
+            'title'          => 'Brand',
+            'sub_title'      => 'Brand List',
+            'menu_active'    => 'brand',
+            'submenu_active' => 'brand-list',
+        ];
+
+        $brand = MyHelper::get('brand');
+
+        if (isset($brand['status']) && $brand['status'] == "success") {
+            $data['brand'] = $brand['result'];
+        } else {
+            $data['brand'] = [];
+        }
+
+        return view('brand::index', $data);
     }
 
     /**
@@ -47,7 +62,7 @@ class BrandController extends Controller
             'menu_active'    => 'brand',
             'submenu_active' => 'brand-new',
         ];
-        
+
         if (isset($post['logo_brand']) && $post['logo_brand'] != null) {
             $post['logo_brand'] = MyHelper::encodeImage($post['logo_brand']);
         }
@@ -57,7 +72,7 @@ class BrandController extends Controller
         }
 
         $action = MyHelper::post('brand/store', $post);
-        
+
         if (isset($action['status']) && $action['status'] == 'success') {
             return redirect('brand/show/' . $action['result']['id_brand']);
         } else {
@@ -91,6 +106,16 @@ class BrandController extends Controller
      * Remove the specified resource from storage.
      * @return Response
      */
-    public function destroy()
-    { }
+    public function destroy(Request $request)
+    {
+        $post   = $request->all();
+
+        $delete = MyHelper::post('brand/delete', ['id_brand' => $post['id_brand']]);
+
+        if (isset($delete['status']) && $delete['status'] == "success") {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
 }
