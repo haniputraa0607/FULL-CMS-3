@@ -90,11 +90,12 @@ class DealsController extends Controller
         $save = MyHelper::post('deals/create', $post);
         if (isset($save['status']) && $save['status'] == "success") {
             if ($post['deals_voucher_type'] == "List Vouchers") {
-                return parent::redirect($this->saveVoucherList($save['result']['id_deals'], $post['voucher_code']), "Deals has been created.");
+                return parent::redirect($this->saveVoucherList($save['result']['id_deals'], $post['voucher_code']), "Deals has been created.","deals/detail/{$save['result']['id_deals']}/{$save['result']['deals_promo_id']}");
             }
+            return parent::redirect($save, 'Deals has been created.',"deals/detail/{$save['result']['id_deals']}/{$save['result']['deals_promo_id']}");
+        }else{
+            return back()->withError($save['messages']??['Something went wrong'])->withInput();
         }
-        return redirect("deals/detail/{$save['result']['id_deals']}/{$save['result']['deals_promo_id']}")->with('success',['Deals has been created.']);
-        return parent::redirect($save, 'Deals has been created.');
     }
 
     /* SAVE HIDDEN DEALS */
