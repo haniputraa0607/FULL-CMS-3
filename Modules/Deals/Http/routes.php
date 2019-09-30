@@ -30,7 +30,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:26'], 
 
 /* HIDDEN */
 Route::group(['middleware' => ['web', 'validate_session', 'config_control:26'], 'prefix' => 'hidden-deals', 'namespace' => 'Modules\Deals\Http\Controllers'], function () {
-    Route::get('/', ['middleware' => 'feature_control:77', 'uses' => 'DealsController@deals']);
+    Route::any('/', ['middleware' => 'feature_control:77', 'uses' => 'DealsController@deals']);
     Route::any('create', ['middleware' => 'feature_control:79', 'uses' => 'DealsController@create']);
     Route::any('detail/{id}/{promo}', ['middleware' => 'feature_control:78', 'uses' => 'DealsController@detail']);
     Route::any('update', ['middleware' => 'feature_control:80', 'uses' => 'DealsController@updateReq']);
