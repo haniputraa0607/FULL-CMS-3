@@ -196,7 +196,7 @@
 		<div class="col-md-4 col-md-offset-4">
 			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 				<div style="font-size:12px" class="title">
-					{{$result['head']['description']}}
+					{!!$result['head']['description']!!}
 				</div>
 			</div>
 
@@ -204,13 +204,13 @@
 
 			<div style="background-color: rgb(255, 255, 255); justify-content:center;" class="title-wrapper col-md-12 clearfix ProductSans">
 				<div style="font-size:14px;padding-bottom: 0px;" class="title">
-					{{$result['content']['head_content']}}
+					{!!$result['content']['head_content']!!}
 				</div>
 			</div>
 
 			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 				<div style="font-size:12px" class="title">
-					{{$result['content']['description_content']}}
+					{!!$result['content']['description_content']!!}
 				</div>
 			</div>
 
@@ -233,11 +233,12 @@
 			
 			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 				<div style="font-size:10px;padding-bottom: 0px; width: 100%;" class="title">
-					<a style="width: 100%; background-color: rgb(128, 0, 0);" class="btn btn-primary">Call Us</a>
+					<a style="width: 100%;background-color: rgb(128, 0, 0);text-decoration: none;border-color: transparent;" class="btn btn-primary">Call Us</a>
 				</div>
 			</div>
 		</div>
 	</div>
+	<br>
 @stop
 
 @section('page-script')
@@ -245,6 +246,9 @@
 	<script type="text/javascript">
 		$("select").change(function() {
 			$("a").attr("href", "#"+this.value)
+		});
+		$( document ).ready(function() {
+			$( "select" ).trigger( "change" );
 		});
     </script>
 @stop
