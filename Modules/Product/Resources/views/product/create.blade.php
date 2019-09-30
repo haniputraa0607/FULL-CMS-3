@@ -277,6 +277,24 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Brand
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <select class="select2 form-control" multiple="multiple" name="product_brands[]">
+                                <option value="*">All Brand</option>
+                                @foreach($brands as $brand)
+                                <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],old('product_brands',[]))) selected="selected" @endif>{{$brand['name_brand']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>        
+
+                    <div class="form-group">
                         <label class="col-md-3 control-label">
                             Photo <span class="required" aria-required="true">* <br>(300*300) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>

@@ -88,6 +88,7 @@ class OutletController extends Controller
 
             // province
             $data['province'] = $this->getPropinsi();
+            $data['brands'] = MyHelper::get('brand/list')['result']??[];
 
             return view('outlet::create', $data);
         }
@@ -122,7 +123,7 @@ class OutletController extends Controller
             $post = array_filter($post);
 
             $save = MyHelper::post('outlet/create', $post);
-
+            // return $save;
             if (isset($save['status']) && $save['status'] == "success") {
                 if (isset($next)) {
                     return parent::redirect($save, 'Outlet has been created.', 'outlet/detail/'.$save['result']['outlet_code'].'#photo');
@@ -161,6 +162,7 @@ class OutletController extends Controller
             ];
 
             $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code, 'qrcode' => 1]);
+            $data['brands'] = MyHelper::get('brand/list')['result']??[];
             // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
@@ -246,7 +248,7 @@ class OutletController extends Controller
 
                 $post = array_filter($post);
                 $save = MyHelper::post('outlet/update', $post);
-                // return $save;
+
                 if (isset($save['status']) && $save['status'] == "success") {
                     return parent::redirect($save, 'Outlet has been updated.', 'outlet/detail/'.$code.'#info');
                 }else {
