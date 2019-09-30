@@ -185,6 +185,9 @@
 @section('content')
 	<div class="deals-detail">
 		@if(!empty($voucher))
+			@php
+				$voucher = $voucher[0];
+			@endphp
 			<div class="col-md-4 col-md-offset-4">
 				<div class="title-wrapper clearfix">
 					<img class="deals-img center-block" src="{{ $voucher['deal_voucher']['deal']['url_deals_image'] }}" alt="">
