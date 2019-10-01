@@ -236,7 +236,7 @@
 
             // upload & delete image on summernote
             $('.summernote').summernote({
-                placeholder: 'Deals Content Long',
+                placeholder: true,
                 tabsize: 2,
                 height: 120,
                 toolbar: [         
@@ -249,6 +249,11 @@
                   ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
                 callbacks: {
+                    onInit: function(e) {
+                      this.placeholder 
+                        ? e.editingArea.find(".note-placeholder").html(this.placeholder)
+                        : e.editingArea.remove(".note-placeholder");
+                    },
                     onImageUpload: function(files){
                         sendFile(files[0]);
                     },

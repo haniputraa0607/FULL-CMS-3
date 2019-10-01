@@ -155,7 +155,7 @@
 
             // upload & delete image on summernote
             $('.summernote').summernote({
-                placeholder: 'Deals Content Long',
+                placeholder: true,
                 tabsize: 2,
                 height: 120,
                 toolbar: [         
@@ -168,6 +168,11 @@
                   ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
                 callbacks: {
+                    onInit: function(e) {
+                      this.placeholder 
+                        ? e.editingArea.find(".note-placeholder").html(this.placeholder)
+                        : e.editingArea.remove(".note-placeholder");
+                    },
                     onImageUpload: function(files){
                         sendFile(files[0]);
                     },
@@ -260,7 +265,24 @@
             //             $('#file').removeAttr('src');
             //         }
             //     };
-            // });
+            // });            
+            $('.fileinput-preview').bind('DOMSubtreeModified', function() {
+                var mentah    = $(this).find('img')
+                // set image
+                var cariImage = mentah.attr('src')
+                var ko        = new Image()
+                ko.src        = cariImage
+                // load image
+                ko.onload     = function(){
+                    if (this.naturalHeight === 450 && this.naturalWidth === 600) {
+                    } else {
+                        mentah.attr('src', "")
+                        $('#file').val("");
+                        toastr.warning("Please check dimension of your photo.");
+                    }
+                };                
+            })
+
         });
     </script>
 @endsection
@@ -412,7 +434,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+<!--                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
@@ -425,7 +447,7 @@
                                 <textarea name="deals_short_description" class="form-control" required>{{ old('deals_short_description') }}</textarea>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -437,7 +459,22 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="deals_description" id="field_content_long" class="form-control summernote">{{ old('deals_description') }}</textarea>
+                                <textarea name="deals_description" id="field_content_long" class="form-control summernote" placeholder="Deals Content Long">{{ old('deals_description') }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Terms and Conditions
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Syarat dan ketentuan mengenai deals" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <textarea name="deals_tos" id="field_tos" class="form-control summernote" placeholder="Deals Terms and Conditions">{{ old('deals_tos') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -512,7 +549,7 @@
                         </div>
                     </div>
                     @endif
-                    
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -587,6 +624,28 @@
                                         @endforeach
                                     @endif
                                 </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Brand
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand" required>
+                                    <option></option>
+                                @if (!empty($brands))
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand['id_brand'] }}" @if (old('id_brand')) @if($brand['id_brand'] == old('id_brand')) selected @endif @endif>{{ $brand['name_brand'] }}</option>
+                                    @endforeach
+                                @endif
                                 </select>
                             </div>
                         </div>

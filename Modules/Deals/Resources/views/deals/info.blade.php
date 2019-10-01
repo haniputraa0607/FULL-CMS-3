@@ -67,7 +67,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+<!--                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
@@ -78,7 +78,7 @@
                         <div class="col-md-9">
                             <textarea name="deals_short_description" class="form-control" required>{{ $val['deals_short_description'] }}</textarea>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -214,28 +214,38 @@
                             <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple>
                                 <optgroup label="Outlet List">
                                     @if (!empty($outlets))
-                                        @php
-                                            $jmlOutlet = count($outlets);
-                                            $jmlOutletSelected = count($outletselected);
-                                        @endphp
-
-                                        @if ($jmlOutlet == $jmlOutletSelected)
-                                            <option value="all" selected>All Outlets</option>
-                                            @foreach($outlets as $suw)
-                                                <option value="{{ $suw['id_outlet'] }}" >{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
-                                            @endforeach
-                                        @else
-                                            @foreach($outlets as $suw)
-                                                <option value="{{ $suw['id_outlet'] }}" @if (!empty($outletselected)) @if (in_array($suw['id_outlet'], $outletselected)) selected @endif  @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
-                                            @endforeach
-                                        @endif
-
+                                        @foreach($outlets as $suw)
+                                            <option value="{{ $suw['id_outlet'] }}" @if (!empty($outletselected)) @if (in_array($suw['id_outlet'], $outletselected)) selected @endif  @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
+                                        @endforeach
                                     @endif
                                 </optgroup>
                             </select>
                         </div>
                     </div>
 
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Brand
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand" required>
+                                    <option></option>
+                                @if (!empty($brands))
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand['id_brand'] }}" @if (old('id_brand',$val['id_brand'])) @if($brand['id_brand'] == old('id_brand',$val['id_brand'])) selected @endif @endif>{{ $brand['name_brand'] }}</option>
+                                    @endforeach
+                                @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
                     @if ($val['deals_type'] != "Hidden")
                     <div class="form-group">
                         <div class="input-icon right">
@@ -267,7 +277,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+<!--                         <div class="col-md-3">
                             <div class="md-radio-inline">
                                 <div class="md-radio">
                                     <input type="radio" name="prices_by" id="radio8" value="money" class="prices md-radiobtn" required @if (!empty($val['deals_voucher_price_cash'])) checked @endif>
@@ -277,7 +287,7 @@
                                         <span class="box"></span> Money </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="form-group" id="prices" @if (empty($val['deals_voucher_price_point']) && empty($val['deals_voucher_price_cash'])) style="display: none;" @endif>
@@ -355,6 +365,32 @@
                     @endif
 
                     <br>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Voucher Start Date
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal voucher mulai dapat digunakan, kosongkan bila voucher tidak memiliki minimal tanggal penggunaan" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input type="text" class="form_datetime form-control" name="deals_voucher_start" value="{{ old('deals_voucher_start',$val['deals_voucher_start']) }}" required>
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                        <button class="btn default" type="button">
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal voucher mulai dapat digunakan" data-container="body"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">

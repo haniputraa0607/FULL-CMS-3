@@ -119,6 +119,32 @@
 </div>
  -->
 <br>
+
+<div class="form-group">
+    <div class="input-icon right">
+        <label class="col-md-3 control-label">
+        Voucher Start Date
+        <span class="required" aria-required="true"> * </span>  
+        <i class="fa fa-question-circle tooltips" data-original-title="Tanggal voucher mulai dapat digunakan, kosongkan bila voucher tidak memiliki minimal tanggal penggunaan" data-container="body"></i>
+        </label>
+    </div>
+    <div class="col-md-4">
+        <div class="input-icon right">
+            <div class="input-group">
+                <input type="text" class="form_datetime form-control" name="deals_voucher_start" value="{{ old('deals_voucher_start') }}" required>
+                <span class="input-group-btn">
+                    <button class="btn default" type="button">
+                        <i class="fa fa-calendar"></i>
+                    </button>
+                    <button class="btn default" type="button">
+                        <i class="fa fa-question-circle tooltips" data-original-title="Tanggal voucher mulai dapat digunakan" data-container="body"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="form-group">
     <div class="input-icon right">
         <label class="col-md-3 control-label">
@@ -171,7 +197,14 @@
             </div>
         </div>
         <div class="col-md-9 voucherTime" id="duration" @if (old('duration') == "duration") style="display: block;" @else style="display: none;" @endif>
-            <input type="number" class="form-control duration datesOpp" name="deals_voucher_duration" value="{{ old('deals_voucher_duration') }}" placeholder="in day">
+            <div class="input-group">
+                <input type="number" class="form-control duration datesOpp" name="deals_voucher_duration" value="{{ old('deals_voucher_duration') }}" required>
+                <span class="input-group-btn">
+                    <button class="btn default" type="button">
+                        <i class="fa fa-question-circle tooltips" data-original-title="Jumlah hari masa berlaku voucher. Jika voucher start date diisi, maka dihitung berdasarkan voucher start date. Jika tidak, berdasarkan tanggal claim voucher" data-container="body"></i>
+                    </button>
+                </span>
+            </div>
         </div>
     </div>
 </div>

@@ -758,10 +758,16 @@
 
 			@if(MyHelper::hasAccess([49], $configs))
 				@if(MyHelper::hasAccess([95], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'user-autoresponse-deals') ? 'active open' : ''}}">
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-deals-success') ? 'active open' : ''}}">
+						<a href="{{url('user/autoresponse/claim-deals-success')}}" class="nav-link ">
+							<i class="fa fa-mail-forward"></i>
+							<span class="title">Auto Response Claim Deals Success</span>
+						</a>
+					</li>
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-deals') ? 'active open' : ''}}">
 						<a href="{{url('user/autoresponse/deals')}}" class="nav-link ">
 							<i class="fa fa-mail-forward"></i>
-							<span class="title">Auto Response Deals</span>
+							<span class="title">Auto Response Redeems Deals</span>
 						</a>
 					</li>
 				@endif

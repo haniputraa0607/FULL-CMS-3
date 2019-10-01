@@ -83,14 +83,19 @@ class DealsController extends Controller
             $post['deals_voucher_expired'] = date('Y-m-d H:i:s', strtotime($post['deals_voucher_expired']));
         }
 
+        if (isset($post['deals_voucher_start']) && !empty($post['deals_voucher_start'])) {
+            $post['deals_voucher_start'] = date('Y-m-d H:i:s', strtotime($post['deals_voucher_start']));
+        }
+
         $save = MyHelper::post('deals/create', $post);
         if (isset($save['status']) && $save['status'] == "success") {
             if ($post['deals_voucher_type'] == "List Vouchers") {
-                return parent::redirect($this->saveVoucherList($save['result']['id_deals'], $post['voucher_code']), "Deals has been created.");
+                return parent::redirect($this->saveVoucherList($save['result']['id_deals'], $post['voucher_code']), "Deals has been created.","deals/detail/{$save['result']['id_deals']}/{$save['result']['deals_promo_id']}");
             }
+            return parent::redirect($save, 'Deals has been created.',"deals/detail/{$save['result']['id_deals']}/{$save['result']['deals_promo_id']}");
+        }else{
+            return back()->withError($save['messages']??['Something went wrong'])->withInput();
         }
-
-        return parent::redirect($save, 'Deals has been created.');
     }
 
     /* SAVE HIDDEN DEALS */
@@ -257,6 +262,9 @@ class DealsController extends Controller
             $dataDeals  = $this->dataDeals($identifier, "create");
             $data       = $dataDeals['data'];
 
+            // DATA BRAND
+            $data['brands'] = parent::getData(MyHelper::get('brand/list'));
+
             // DATA PRODUCT
             $data['product'] = parent::getData(MyHelper::get('product/list?log_save=0'));
 
@@ -343,6 +351,9 @@ class DealsController extends Controller
         foreach ($voucher as $key => $value) {
             $data[$key] = $value;
         }
+
+        // DATA BRAND
+        $data['brands'] = parent::getData(MyHelper::get('brand/list'));
 
         // DATA PRODUCT
         // $data['product'] = parent::getData(MyHelper::get('product/list'));

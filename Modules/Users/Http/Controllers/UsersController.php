@@ -58,6 +58,21 @@ class UsersController extends Controller
 				  'menu_active'       => 'user',
 				  'submenu_active'    => 'user-autoresponse-'.$subject
 				];
+		switch ($subject) {
+			case 'deals':
+				$data['menu_active'] = 'deals-autoresponse';
+				$data['submenu_active'] = 'deals-autoresponse-deals';
+				break;
+			
+			case 'claim-deals-success':
+				$data['menu_active'] = 'deals-autoresponse';
+				$data['submenu_active'] = 'deals-autoresponse-claim-deals-success';
+				break;
+						
+			default:
+				# code...
+				break;
+		}
 		$query = MyHelper::get('autocrm/list');
 		$test = MyHelper::get('autocrm/textreplace?log_save=0');
 		$auto = null;
