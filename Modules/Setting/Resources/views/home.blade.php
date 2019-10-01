@@ -212,7 +212,9 @@
 		var url     = $(this).data('url');
 		var image   = $(this).data('img');
 		var type    = $(this).data('type');
-
+		var banner_start	= $(this).data('start');
+		var banner_end		= $(this).data('end');
+		
     	$('#modalBannerUpdate').on('shown.bs.modal', function () {
     		// on chrome
     		$('#modalBannerUpdate .select2').select2({ dropdownParent: $("#modalBannerUpdate .modal-body") });
@@ -222,6 +224,8 @@
 			$('#modalBannerUpdate .click-to-news').val(id_news).trigger('change');
 			$('#modalBannerUpdate .click-to-url').val(url);
 			$('#edit-banner-img').attr('src', image);
+			$('#banner_start').val(banner_start);
+			$('#banner_end').val(banner_end);
 
 			if (url != "") {
 				if (type == 'general') {
@@ -640,7 +644,7 @@
 											</div>
 											<div class="col-md-10 text-right">
 												@if(MyHelper::hasAccess([146], $grantedFeature))
-												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}"><i class="fa fa-pencil"></i> </a>
+												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ date("d F Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))) }}" data-end="{{ date("d F Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]])))}}"><i class="fa fa-pencil"></i> </a>
 												@endif
 												@if(MyHelper::hasAccess([147], $grantedFeature))
 												<a class="btn red-mint btn-circle btn-delete" data-id="{{ $banner['id_banner'] }}"><i class="fa fa-trash-o"></i> </a>
@@ -670,7 +674,11 @@
 					 			 		@endphp
 
 					 			 		<div>Click to:</div>
-					 			 		<div>{{ $click_to }}</div>
+										<div>{{ $click_to }}</div>
+										<div>Date Start:</div>
+										<div>{{ date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))) }}</div>
+										<div>Date End:</div>
+					 			 		<div>{{ date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))) }}</div>
 					 			 	</div>
 					 			</div>
 					 			@endforeach
@@ -1075,10 +1083,10 @@
 				<form role="form" action="{{url('setting/banner/create')}}" method="POST" enctype="multipart/form-data">
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (800*600)</span></label><br>
+							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (750*375)</span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=800+x+600" alt="">
+									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1132,8 +1140,36 @@
 								<input class="form-control click-to-url" type="text" name="url" placeholder="https://www.google.com">
                             </div>
 						</div>
-
 					</div>
+
+					<div class="form-group clearfix">
+						<label class="col-md-3 control-label">Date Start</label>
+						<div class="col-md-6">
+							<div class="input-group date form_datetime form_datetime bs-datetime">
+								<input type="text" autocomplete="off" name="banner_start" size="16" class="form-control">
+								<span class="input-group-addon">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group clearfix">
+						<label class="col-md-3 control-label">Date End</label>
+						<div class="col-md-6">
+							<div class="input-group date form_datetime form_datetime bs-datetime">
+								<input type="text" autocomplete="off" name="banner_end" size="16" class="form-control">
+								<span class="input-group-addon">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
 						<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
@@ -1159,10 +1195,10 @@
 					<input type="hidden" name="id_banner" id="id_banner">
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (800*600)</span></label><br>
+							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (750*375)</span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=800+x+600" alt="" id="edit-banner-img">
+									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="" id="edit-banner-img">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1218,6 +1254,35 @@
 						</div>
 
 					</div>
+
+					<div class="form-group clearfix">
+						<label class="col-md-3 control-label">Date Start</label>
+						<div class="col-md-6">
+							<div class="input-group date form_datetime form_datetime bs-datetime">
+								<input type="text" autocomplete="off" id="banner_start" name="banner_start" size="16" class="form-control">
+								<span class="input-group-addon">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group clearfix">
+						<label class="col-md-3 control-label">Date End</label>
+						<div class="col-md-6">
+							<div class="input-group date form_datetime form_datetime bs-datetime">
+								<input type="text" autocomplete="off" id="banner_end" name="banner_end" size="16" class="form-control">
+								<span class="input-group-addon">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
 						<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>

@@ -575,7 +575,6 @@ class SettingController extends Controller
         $data['app_logo'] = parent::getData(MyHelper::get('setting/app_logo'));
         $data['app_sidebar'] = parent::getData(MyHelper::get('setting/app_sidebar'));
         $data['app_navbar'] = parent::getData(MyHelper::get('setting/app_navbar'));
-		// print_r($data);exit;
 		return view('setting::home', $data);
 	}
 
@@ -854,7 +853,7 @@ class SettingController extends Controller
     public function createBanner(Request $request)
     {
         $validatedData = $request->validate([
-            'banner_image' => 'required|dimensions:width=800,height=600'
+            'banner_image' => 'required|dimensions:width=750,height=375'
         ]);
 
         $post = $request->except('_token');
@@ -875,6 +874,14 @@ class SettingController extends Controller
             unset($post['click_to']);
         }
 
+        if(isset($post['banner_start'])){
+            $post['banner_start'] = MyHelper::convertDateTime2($post['banner_start']);
+        }
+        
+        if(isset($post['banner_end'])){
+            $post['banner_end'] = MyHelper::convertDateTime2($post['banner_end']);
+        }
+        
         $result = MyHelper::post('setting/banner/create', $post);
         return parent::redirect($result, 'New banner has been created.', 'setting/home#banner');
     }
@@ -883,7 +890,7 @@ class SettingController extends Controller
     {
         $validatedData = $request->validate([
             'id_banner'    => 'required',
-            'banner_image' => 'sometimes|dimensions:width=800,height=600'
+            'banner_image' => 'sometimes|dimensions:width=750,height=375'
         ]);
 
         $post = $request->except('_token');
@@ -904,6 +911,14 @@ class SettingController extends Controller
             unset($post['click_to']);
         }
 
+        if(isset($post['banner_start'])){
+            $post['banner_start'] = MyHelper::convertDateTime2($post['banner_start']);
+        }
+        
+        if(isset($post['banner_end'])){
+            $post['banner_end'] = MyHelper::convertDateTime2($post['banner_end']);
+        }
+        
         $result = MyHelper::post('setting/banner/update', $post);
         return parent::redirect($result, 'Banner has been updated.', 'setting/home#banner');
     }
@@ -912,7 +927,6 @@ class SettingController extends Controller
     {
         $post = $request->except("_token");
         // dd($post['id_banners']);
-
         $result = MyHelper::post('setting/banner/reorder', $post);
 
         return parent::redirect($result, 'Banner has been sorted.', 'setting/home#banner');
