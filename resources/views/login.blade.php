@@ -13,10 +13,10 @@
 		<meta property="og:description" content="Technopartner Indonesia CRM System" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="{{env('TITLE', 'Behave')}}" />
-		<meta property="og:image" content="{{env('AWS_ASSET_URL') }}{{ ('images/logo_face_200.png')}}" />
+		<meta property="og:image" content="{{env('AWS_ASSET_URL') }}{{ ('images/logo.png')}}" />
 		<meta property="og:image:width" content="200" />
 		<meta property="og:image:height" content="200" />
-		<link href="{{env('AWS_ASSET_URL') }}{{ ('images/logo_face_200.png')}}" rel="image_src" />
+		<link href="{{env('AWS_ASSET_URL') }}{{ ('images/logo.png')}}" rel="image_src" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<link rel="shortcut icon" sizes="200x200" href="{{env('AWS_ASSET_URL') }}{{ ('images/icon.png')}}">
 
