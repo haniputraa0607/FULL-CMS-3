@@ -1,4 +1,4 @@
-
+@include('deals::deals.list_filter')
 <?php
 use App\Lib\MyHelper;
 $grantedFeature     = session('granted_features');
@@ -108,7 +108,7 @@ $grantedFeature     = session('granted_features');
             });
         });
     </script>
-
+    @yield('child-script')
 @endsection
 
 @section('content')
@@ -134,6 +134,7 @@ $grantedFeature     = session('granted_features');
     
     @include('layouts.notifications')
 
+    @yield('filter')
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">

@@ -303,7 +303,15 @@ class DealsController extends Controller
 
     /* LIST */
     function deals(Request $request) {
-
+        $post=$request->except('_token');
+        if($post){
+            if(($post['clear']??false)=='session'){
+                session(['deals_filter'=>[]]);
+            }else{
+                session(['deals_filter'=>$post]);
+            }
+            return back();
+        }
         $identifier = $this->identifier();
         $dataDeals  = $this->dataDeals($identifier);
 
@@ -311,9 +319,25 @@ class DealsController extends Controller
         $post       = $dataDeals['post'];
         $post['newest'] = 1;
         $post['web'] = 1;
-
+        if(($filter=session('deals_filter'))&&is_array($filter)){
+            $post=array_merge($filter,$post);
+            if($filter['rule']??false){
+                $data['rule']=array_map('array_values', $filter['rule']);
+            }
+            if($filter['operator']??false){
+                $data['operator']=$filter['operator'];
+            }
+        }
+        // return MyHelper::post('deals/list', $post);
         $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
-
+        $outlets = parent::getData(MyHelper::get('outlet/list'));
+        $brands = parent::getData(MyHelper::get('brand/list'));
+        $data['outlets']=array_map(function($var){
+            return [$var['id_outlet'],$var['outlet_name']];
+        }, $outlets);
+        $data['brands']=array_map(function($var){
+            return [$var['id_brand'],$var['name_brand']];
+        }, $brands);
         return view('deals::deals.list', $data);
     }
 
