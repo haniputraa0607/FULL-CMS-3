@@ -49,6 +49,12 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('banner/reorder', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@reorderBanner']);
     Route::get('banner/delete/{id_banner}', ['middleware' => 'feature_control:147', 'uses' => 'SettingController@deleteBanner']);
 
+    /* featured_deal */
+    Route::post('featured_deal/create', ['middleware' => 'feature_control:145', 'uses' => 'SettingController@createFeaturedDeal']);
+    Route::post('featured_deal/update', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@updateFeaturedDeal']);
+    Route::post('featured_deal/reorder', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@reorderFeaturedDeal']);
+    Route::get('featured_deal/delete/{id_featured_deal}', ['middleware' => 'feature_control:147', 'uses' => 'SettingController@deleteFeaturedDeal']);
+    
     /* complete profile */
     Route::post('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
     Route::post('complete-profile-success-page', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfileSuccessPage']);
