@@ -369,10 +369,16 @@
             /* BUTTON */
             @if (isset($detail) && empty($detail['custom_page_button_form']))
               $('.featureButton').hide();
+              $('#custom_page_button_form').val('');
+              $('#custom_page_button_form_text').val('');
             @elseif (isset($result) && empty($result['custom_page_button_form']))
               $('.featureButton').hide();
+              $('#custom_page_button_form').val('');
+              $('#custom_page_button_form_text').val('');
             @elseif (empty($detail['custom_page_button_form']) && empty($result['custom_page_button_form']))
               $('.featureButton').hide();
+              $('#custom_page_button_form').val('');
+              $('#custom_page_button_form_text').val('');
             @else
               $('.featureButton').show();
               $('.featureButtonForm').prop('required',false);
@@ -1259,7 +1265,7 @@
                                     <input type="text" class="form-control" name="custom_page_button_form_text" @if (isset($detail['custom_page_button_form_text'])) value="{{$detail['custom_page_button_form_text']}}" disabled @elseif (isset($result['custom_page_button_form_text'])) value="{{$result['custom_page_button_form_text']}}" @else value="{{ old('custom_page_button_form_text') }}" @endif placeholder="Featured Button Value">
                                 </div>
                                 <div hidden id="selectValue" class="col-md-9">
-                                    <select class="form-control" name="custom_page_button_form_text" @if (isset($detail)) disabled @endif>
+                                    <select class="form-control" id="custom_page_button_form_text" name="custom_page_button_form_text" @if (isset($detail)) disabled @endif>
                                         <option value="Home" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Home") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Home") selected @else @endif>Home</option>
                                         <option value="News" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "News") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "News") selected @else @endif>News</option>
                                         <option value="Product" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Product") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Product") selected @else @endif>Product</option>
