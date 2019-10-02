@@ -155,6 +155,42 @@
 			opsi:[],
 			type:'number'
 		},
+		voucher_claim_time:{
+			display:'Date & Time Claim Deals',
+			operator:[
+			['=','='],
+			['<','<'],
+			['>','>'],
+			['<=','<='],
+			['>=','>=']
+			],
+			opsi:[],
+			type:'datetime'
+		},
+		voucher_redeem_time:{
+			display:'Date & Time Redeem Voucher',
+			operator:[
+			['=','='],
+			['<','<'],
+			['>','>'],
+			['<=','<='],
+			['>=','>=']
+			],
+			opsi:[],
+			type:'datetime'
+		},
+		voucher_used_time:{
+			display:'Date & Time Used Voucher',
+			operator:[
+			['=','='],
+			['<','<'],
+			['>','>'],
+			['<=','<='],
+			['>=','>=']
+			],
+			opsi:[],
+			type:'datetime'
+		},
 		user_limit:{
 			display:'User Limit',
 			operator:[
@@ -256,6 +292,7 @@
 		operator: 'or',
 		value: {!!json_encode(array_values($rule??[]))!!}
 	};
+	var updatedatetime=false;
 	function optionWriter(value,show,option=''){
 		return '<option value="'+value+'" '+option+'>'+show+'</option>'
 	}
@@ -299,6 +336,10 @@
 	function inputBuilder(type,value='',id='::n::'){
 		if(type==undefined){
 			type='text';
+		}
+		if(type=='datetime'){
+			updatedatetime=true;
+			return '<input type="text" placeholder="Insert datetime" class="form-control datetime" name="rule['+id+'][parameter]" value="'+value+'"  required/>';
 		}
 		return '<input type="'+type+'" placeholder="Keyword" class="form-control" name="rule['+id+'][parameter]" value="'+value+'"  required/>';
 
@@ -348,6 +389,15 @@
 		}
 		$('#repeaterContainer').append(rowBuilder(newValue));
 		$('.select2').select2();
+		if(updatedatetime){
+			$('.datetime').datetimepicker({
+		        format: "dd M yyyy hh:ii",
+		        autoclose: true,
+		        todayBtn: true,
+		        minuteStep:5
+		    });
+			updatedatetime=false;
+		}
 	}
 	$(document).ready(function(){
 		if(database.value.length<1){
@@ -376,6 +426,15 @@
 				$(this).parents('.mt-repeater-cell').first().find('.valCol').hide();
 				$(this).parents('.mt-repeater-cell').first().find('.valCol').html('');
 				$('.select2').select2();
+			}
+			if(updatedatetime){
+				$('.datetime').datetimepicker({
+			        format: "dd M yyyy hh:ii",
+			        autoclose: true,
+			        todayBtn: true,
+			        minuteStep:5
+			    });
+				updatedatetime=false;
 			}
 		});
 		$('input[name="operator"]').val(database.operator);
