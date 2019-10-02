@@ -375,7 +375,7 @@
               $('.featureButton').hide();
             @else
               $('.featureButton').show();
-              $('.featureButtonForm').prop('required',true);
+              $('.featureButtonForm').prop('required',false);
             @endif
 
             /* VIDEO */
@@ -594,11 +594,9 @@
             $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
         })
         $("input[name='publish_type']").change(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}")
             $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}")
         })
         $(".field_publish_date").focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}")
             $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}")
         })
         $(document).on('focus', '#selectOutlet .select2', function (e) {
@@ -608,6 +606,16 @@
         $(document).on('focus', '#selectProduct .select2', function (e) {
             $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
             $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
+        })
+
+        $(document).on('change', '#custom_page_button_form', function (e) {
+            if (this.value == "Open Page") {
+                $('#inputValue').hide().prop('required',false);
+                $('#selectValue').show().prop('required',true);
+            } else {
+                $('#inputValue').show().prop('required',true);
+                $('#selectValue').hide().prop('required',false);
+            }
         })
     </script>
 @endsection
@@ -638,13 +646,12 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase ">New News</span>
+                <span class="caption-subject font-blue sbold uppercase ">New Custom Page</span>
             </div>
         </div>
         <div class="portlet-body m-form__group row">
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                     <div class="col-md-4">
-                        <img src="{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}" style="width:100%" alt="tutorial" id="tutorial1">
                         <img src="{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
                     </div>
                     <div class="col-md-8">
@@ -690,6 +697,139 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- IMAGE HEADER -->
+						<div class="form-group">
+							<div class="input-icon right">
+								<label class="col-md-3 control-label">
+								Featured Image Header
+								<i class="fa fa-question-circle tooltips" data-original-title="Image Header 'ON' jika custom page memiliki image header" data-container="body"></i>
+								</label>
+							</div>
+							<div class="col-md-9">
+								<span class="m-switch">
+									<label>
+									<input name="custom_form_checkbox" type="checkbox" class="make-switch" id="featureImage" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (isset($detail['custom_page_image_header'])) checked disabled @elseif (isset($result['custom_page_image_header'])) checked @endif @if (!empty(old('custom_page_image_header'))) checked @endif>
+									<span></span>
+									</label>
+								</span>
+							</div>
+                        </div>
+                        
+						<div class="form-group featureImage">
+							<label class="col-md-3 control-label"></label>
+							<div class="col-md-9">
+								<div class="col-md-12">
+									<div class="form-group mt-repeater">
+										<div data-repeater-list="customform" id="sortable">
+                                            @php
+                                                if (isset($detail['custom_page_image_header'])) {
+                                                    $custom_page_image_header = $detail['custom_page_image_header'];
+                                                } elseif (isset($result['custom_page_image_header'])) {
+                                                    $custom_page_image_header = $result['custom_page_image_header'];
+                                                } else {
+                                                    $custom_page_image_header = null;
+                                                }
+                                            @endphp
+                                            @if ($custom_page_image_header != null)
+                                            @foreach ($custom_page_image_header as $item)
+                                            <div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
+                                                <div class="mt-repeater-cell" style="position: relative;">
+                                                    <div class="sort-icon">
+                                                        <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-2">
+                                                            <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
+                                                                <i class="fa fa-close"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="input-icon right">
+                                                            <label class="col-md-3 control-label">
+                                                            Image Landscape
+                                                            <span class="required" aria-required="true"> * </span>
+                                                            <br>
+                                                            <span class="required" aria-required="true"> (750*375) </span>
+                                                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
+                                                                <img class='previewImage' src="{{env('AWS_URL')}}{{$item['custom_page_image']}}" alt="">
+                                                                </div>
+                                                                <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
+                                                                <div class='btnImage' hidden>
+                                                                    <span class="btn default btn-file">
+                                                                    <span class="fileinput-new"> Select image </span>
+                                                                    <span class="fileinput-exists"> Change </span>
+                                                                    <input type="text" accept="image/*" value="{{'id_image_header='.$item['id_custom_page_image']}}" id="field_image_landscape" class="file form-control demo featureImageForm" name="custom_page_image_header" data-jenis="landscape">
+                                                                    </span>
+                                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                            @else
+                                            <div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
+                                                <div class="mt-repeater-cell" style="position: relative;">
+                                                    <div class="sort-icon">
+                                                        <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-2">
+                                                            <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
+                                                                <i class="fa fa-close"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="input-icon right">
+                                                            <label class="col-md-3 control-label">
+                                                            Image Landscape
+                                                            <span class="required" aria-required="true"> * </span>
+                                                            <br>
+                                                            <span class="required" aria-required="true"> (750*375) </span>
+                                                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
+                                                                <img class='previewImage' src="http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                                                </div>
+                                                                <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
+                                                                <div class='btnImage'>
+                                                                    <span class="btn default btn-file">
+                                                                    <span class="fileinput-new"> Select image </span>
+                                                                    <span class="fileinput-exists"> Change </span>
+                                                                    <input type="file" accept="image/*" id="field_image_landscape" class="file form-control demo featureImageForm" name="custom_page_image_header" data-jenis="landscape">
+                                                                    </span>
+                                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        </div>
+                                        @if (!isset($detail))
+										<div class="form-action col-md-12">
+											<div class="col-md-2"></div>
+											<div class="col-md-10">
+												@if(MyHelper::hasAccess([12], $grantedFeature))
+													<a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add">
+													<i class="fa fa-plus"></i> Add New Input</a>
+												@endif
+											</div>
+										</div>
+                                        @endif
+									</div>
+								</div>
+							</div>
+						</div>
 
                         <div class="form-group">
                             <div class="input-icon right">
@@ -1087,7 +1227,7 @@
                                     <label class="control-label">Button Form <span class="required" aria-required="true"> * </span> </label>
                                 </div>
                                 <div class="col-md-9" id="selectProduct">
-                                    <select class="form-control" name="custom_page_button_form" @if (isset($detail)) disabled @endif>
+                                    <select class="form-control" id="custom_page_button_form" name="custom_page_button_form" @if (isset($detail)) disabled @endif>
                                         <option value="Call" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Call") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Call") selected @else @endif>Call</option>
                                         <option value="Link" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Link") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Link") selected @else @endif>Link</option>
                                         <option value="Open Page" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Open Page") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Open Page") selected @else @endif>Open Page</option>
@@ -1100,146 +1240,26 @@
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
                                 <div class="col-md-3">
-                                    <label class="control-label">Value <span class="required" aria-required="true"> * </span> </label>
+                                    <label class="control-label">Value<span class="required" aria-required=""> * </span> </label>
                                 </div>
-                                <div class="col-md-9">
-                                    <input type="text" id="field_button_value" class="form-control featureButtonForm" name="custom_page_button_form_text" @if (isset($detail['custom_page_button_form_text'])) value="{{$detail['custom_page_button_form_text']}}" disabled @elseif (isset($result['custom_page_button_form_text'])) value="{{$result['custom_page_button_form_text']}}" @else value="{{ old('custom_page_button_form_text') }}" @endif placeholder="Featured Button Value">
+                                <div id="inputValue" class="col-md-9">
+                                    <input type="text" class="form-control" name="custom_page_button_form_text" @if (isset($detail['custom_page_button_form_text'])) value="{{$detail['custom_page_button_form_text']}}" disabled @elseif (isset($result['custom_page_button_form_text'])) value="{{$result['custom_page_button_form_text']}}" @else value="{{ old('custom_page_button_form_text') }}" @endif placeholder="Featured Button Value">
+                                </div>
+                                <div hidden id="selectValue" class="col-md-9">
+                                    <select class="form-control" name="custom_page_button_form_text" @if (isset($detail)) disabled @endif>
+                                        <option value="Home" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Home") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Home") selected @else @endif>Home</option>
+                                        <option value="News" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "News") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "News") selected @else @endif>News</option>
+                                        <option value="Product" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Product") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Product") selected @else @endif>Product</option>
+                                        <option value="Outlet" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Outlet") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Outlet") selected @else @endif>Outlet</option>
+                                        <option value="Inbox" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Inbox") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Inbox") selected @else @endif>Inbox</option>
+                                        <option value="Deals" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Deals") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Deals") selected @else @endif>Deals</option>
+                                        <option value="Contact Us" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Contact Us") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Contact Us") selected @else @endif>Contact Us</option>
+                                        <option value="Link" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Link") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Link") selected @else @endif>Link</option>
+                                        <option value="Logout" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Logout") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Logout") selected @else @endif>Logout</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-
-						<!-- IMAGE HEADER -->
-						<div class="form-group">
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-								Featured Image Header
-								<i class="fa fa-question-circle tooltips" data-original-title="Image Header 'ON' jika custom page memiliki image header" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<span class="m-switch">
-									<label>
-									<input name="custom_form_checkbox" type="checkbox" class="make-switch" id="featureImage" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (isset($detail['custom_page_image_header'])) checked disabled @elseif (isset($result['custom_page_image_header'])) checked @endif @if (!empty(old('custom_page_image_header'))) checked @endif>
-									<span></span>
-									</label>
-								</span>
-							</div>
-                        </div>
-                        
-						<div class="form-group featureImage">
-							<label class="col-md-3 control-label"></label>
-							<div class="col-md-9">
-								<div class="col-md-12">
-									<div class="form-group mt-repeater">
-										<div data-repeater-list="customform" id="sortable">
-                                            @php
-                                                if (isset($detail['custom_page_image_header'])) {
-                                                    $custom_page_image_header = $detail['custom_page_image_header'];
-                                                } elseif (isset($result['custom_page_image_header'])) {
-                                                    $custom_page_image_header = $result['custom_page_image_header'];
-                                                } else {
-                                                    $custom_page_image_header = null;
-                                                }
-                                            @endphp
-                                            @if ($custom_page_image_header != null)
-                                            @foreach ($custom_page_image_header as $item)
-                                            <div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
-                                                <div class="mt-repeater-cell" style="position: relative;">
-                                                    <div class="sort-icon">
-                                                        <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="col-md-2">
-                                                            <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
-                                                                <i class="fa fa-close"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="input-icon right">
-                                                            <label class="col-md-3 control-label">
-                                                            Image Landscape
-                                                            <span class="required" aria-required="true"> * </span>
-                                                            <br>
-                                                            <span class="required" aria-required="true"> (750*375) </span>
-                                                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                                                <img class='previewImage' src="{{env('AWS_URL')}}{{$item['custom_page_image']}}" alt="">
-                                                                </div>
-                                                                <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
-                                                                <div class='btnImage' hidden>
-                                                                    <span class="btn default btn-file">
-                                                                    <span class="fileinput-new"> Select image </span>
-                                                                    <span class="fileinput-exists"> Change </span>
-                                                                    <input type="text" accept="image/*" value="{{'id_image_header='.$item['id_custom_page_image']}}" id="field_image_landscape" class="file form-control demo featureImageForm" name="custom_page_image_header" data-jenis="landscape">
-                                                                    </span>
-                                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endforeach
-                                            @else
-                                            <div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
-                                                <div class="mt-repeater-cell" style="position: relative;">
-                                                    <div class="sort-icon">
-                                                        <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="col-md-2">
-                                                            <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
-                                                                <i class="fa fa-close"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="input-icon right">
-                                                            <label class="col-md-3 control-label">
-                                                            Image Landscape
-                                                            <span class="required" aria-required="true"> * </span>
-                                                            <br>
-                                                            <span class="required" aria-required="true"> (750*375) </span>
-                                                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                                                <img class='previewImage' src="http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-                                                                </div>
-                                                                <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
-                                                                <div class='btnImage'>
-                                                                    <span class="btn default btn-file">
-                                                                    <span class="fileinput-new"> Select image </span>
-                                                                    <span class="fileinput-exists"> Change </span>
-                                                                    <input type="file" accept="image/*" id="field_image_landscape" class="file form-control demo featureImageForm" name="custom_page_image_header" data-jenis="landscape">
-                                                                    </span>
-                                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endif
-                                        </div>
-                                        @if (!isset($detail))
-										<div class="form-action col-md-12">
-											<div class="col-md-2"></div>
-											<div class="col-md-10">
-												@if(MyHelper::hasAccess([12], $grantedFeature))
-													<a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add">
-													<i class="fa fa-plus"></i> Add New Input</a>
-												@endif
-											</div>
-										</div>
-                                        @endif
-									</div>
-								</div>
-							</div>
-						</div>
                     </div>
                     </div>
                 </div>
