@@ -674,9 +674,9 @@
 					 			 		@endphp
 
 					 			 		<div>Click to:</div>
-										<div>{{ $click_to }}</div>
+										<div>{{ $click_to }}</div><br>
 										<div>Date Start:</div>
-										<div>{{ date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))) }}</div>
+										<div>{{ date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))) }}</div><br>
 										<div>Date End:</div>
 					 			 		<div>{{ date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))) }}</div>
 					 			 	</div>
