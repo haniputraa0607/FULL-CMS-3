@@ -16,7 +16,8 @@ class CustomPageController extends Controller
     public function index()
     {
         $data = [
-            'title'             => 'Custom Page',
+            'title'             => 'Settings',
+            'sub_title'         => 'Custom Page',
             'menu_active'       => 'custom-page',
             'submenu_active'    => 'custom-page-list'
         ];
@@ -39,7 +40,8 @@ class CustomPageController extends Controller
     public function create()
     {
         $data = [
-            'title'             => 'Custom Page',
+            'title'             => 'Settings',
+            'sub_title'         => 'Custom Page',
             'menu_active'       => 'custom-page',
             'submenu_active'    => 'custom-page-create'
         ];
@@ -111,7 +113,7 @@ class CustomPageController extends Controller
         if (isset($post['custom_page_icon_image']) && $post['custom_page_icon_image'] != null) {
             $post['custom_page_icon_image'] = MyHelper::encodeImage($post['custom_page_icon_image']);
         }
-        dd($post);
+        
         $action = MyHelper::post('custom-page/create', $post);
 
         if (isset($action['status']) && $action['status'] == 'success') {
@@ -128,7 +130,8 @@ class CustomPageController extends Controller
     public function show($id_custom_page)
     {
         $data = [
-            'title'             => 'Custom Page',
+            'title'             => 'Settings',
+            'sub_title'         => 'Custom Page',
             'menu_active'       => 'custom-page',
             'submenu_active'    => 'custom-page-create'
         ];
@@ -153,7 +156,8 @@ class CustomPageController extends Controller
     public function edit($id_custom_page)
     {
         $data = [
-            'title'             => 'Custom Page',
+            'title'             => 'Settings',
+            'sub_title'         => 'Custom Page',
             'menu_active'       => 'custom-page',
             'submenu_active'    => 'custom-page-create'
         ];
