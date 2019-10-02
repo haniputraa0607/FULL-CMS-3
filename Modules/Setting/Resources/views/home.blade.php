@@ -139,6 +139,9 @@
     // banner: re-order image
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
+    // featured deals
+    $( "#sortable2" ).sortable();
+    $( "#sortable2" ).disableSelection();
 
     $(document).ready(function() {
 		/* on chrome */
@@ -249,6 +252,38 @@
 
     });
 
+    $('#featured_deals .btn-edit').click(function() {
+		var id         = $(this).data('id');
+		var end_date   = $(this).data('end-date');
+		var start_date = $(this).data('start-date');
+		var id_deals   = $(this).data('id-deals');
+		var deals_title   = $(this).data('deals-title');
+
+		// assign value to form
+		$('#id_featured_deals').val(id);
+		$('#end_date').val(end_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#start_date').val(start_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#id_deals').find('option').first().attr('value',id_deals).text(deals_title);
+		$('#id_deals').select2().trigger('change');
+    });
+
+	$('.datetime').datetimepicker({
+        format: "dd M yyyy hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        minuteStep:1
+    });
+
     // clear banner edit form when modal close
     $('#modalBannerUpdate').on('hide.bs.modal', function () {
 		$('#id_banner').val('');
@@ -265,6 +300,23 @@
 		var link 	= "{{ url('setting/banner/delete') }}/" + id;
 		swal({
 		  title: "Are you sure want to delete banner image ? ",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "Yes, delete it",
+		  closeOnConfirm: false
+		},
+		function(){
+			window.location = link;
+		});
+    });
+
+    // banner: delete
+    $('#featured_deals .btn-delete').click(function() {
+		var id 		= $(this).data('id');
+		var link 	= "{{ url('setting/featured_deal/delete') }}/" + id;
+		swal({
+		  title: "Are you sure want to delete this featured deals ? ",
 		  type: "warning",
 		  showCancelButton: true,
 		  confirmButtonClass: "btn-danger",
@@ -338,9 +390,9 @@
 			</a>
 		@endif
 		@if(MyHelper::hasAccess([32], $configs))
-			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background
+<!-- 			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background
 				<i class="fa fa-question-circle tooltips" data-original-title="Background home dapat disesuaikan dengan teks greeting" data-container="body"></i>
-			</a>
+			</a> -->
 		@endif
 	@endif
 @endif
@@ -349,6 +401,9 @@
 		<i class="fa fa-question-circle tooltips" data-original-title="Membuat banner di halaman home aplikasi mobile" data-container="body"></i>
 	</a>
 @endif
+<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalFeaturedDeals"> New Featured Deals
+	<i class="fa fa-question-circle tooltips" data-original-title="Membuat featured deals di halaman home aplikasi mobile" data-container="body"></i>
+</a>
 <br>
 <br>
 <div class="tabbable-line">
@@ -359,9 +414,9 @@
             <a href="#greeting" data-toggle="tab">Greeting</a>
         </li>
 		@endif
-        <li>
+<!--         <li>
             <a href="#home-background" data-toggle="tab">Home Background</a>
-        </li>
+        </li> -->
 	@endif
         <li class="active">
             <a href="#splash-screen" data-toggle="tab">Splash Screen</a>
@@ -371,6 +426,9 @@
             <a href="#banner" data-toggle="tab">Banner</a>
         </li>
 		@endif
+        <li>
+            <a href="#featured_deals" data-toggle="tab">Featured Deals</a>
+        </li>
         <!-- <li>
             <a href="#app-logo" data-toggle="tab">Application Logo</a>
         </li> -->
@@ -446,7 +504,7 @@
 		</div>
 
 	{{-- background login/ not login --}}
-        <div class="tab-pane" id="home-background">
+<!--         <div class="tab-pane" id="home-background">
 			@if(MyHelper::hasAccess([32], $configs))
 				<div class="row" style="margin-top:20px">
 					<div class="col-md-12">
@@ -563,7 +621,7 @@
 				{{csrf_field()}}
 				<input type="hidden" name="id_home_background" id="txtvalue2">
 			</form>
-		</div>
+		</div> -->
 	@endif
 
 	{{-- splash screen --}}
@@ -697,6 +755,7 @@
 		</div>
     </div>
 	@endif
+	@include('setting::featured_deals')
 
 	{{-- app logo --}}
     <div class="tab-pane" id="app-logo">

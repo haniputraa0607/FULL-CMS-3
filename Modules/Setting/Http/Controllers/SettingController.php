@@ -545,6 +545,18 @@ class SettingController extends Controller
         else
             $data['banners'] = [];
 
+        // featured deals
+        $request = MyHelper::get('setting/featured_deal/list');
+        if(isset($request['result']))
+            $data['featured_deals'] = $request['result'];
+        else
+            $data['featured_deals'] = [];
+
+        // deals
+        $dp=['deals_type'=>'Deals','forSelect2'=>true];
+        $request = MyHelper::post('deals/list',$dp);
+        $data['deals'] = $request['result']??[];
+
         // news for banner
         $news_req = [
             'published' => 1,
@@ -940,6 +952,46 @@ class SettingController extends Controller
         $result = MyHelper::post('setting/banner/delete', $post);
 
         return parent::redirect($result, 'Banner has been deleted.', 'setting/home#banner');
+    }
+
+
+    /* Featured Deal */
+    public function createFeaturedDeal(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $result = MyHelper::post('setting/featured_deal/create', $post);
+        return parent::redirect($result, 'New featured deal has been created.', 'setting/home#featured_deals');
+    }
+
+    public function updateFeaturedDeal(Request $request)
+    {
+        $post = $request->except('_token');
+        $validatedData = $request->validate([
+            'id_featured_deals'    => 'required'
+        ]);
+        $result = MyHelper::post('setting/featured_deal/update', $post);
+        return parent::redirect($result, 'Featured Deal has been updated.', 'setting/home#featured_deals');
+    }
+
+    public function reorderFeaturedDeal(Request $request)
+    {
+        $post = $request->except("_token");
+        // dd($post['id_featured_deals']);
+
+        $result = MyHelper::post('setting/featured_deal/reorder', $post);
+
+        return parent::redirect($result, 'Featured Deal has been sorted.', 'setting/home#featured_deals');
+    }
+
+    // delete featured_deal
+    public function deleteFeaturedDeal($id_featured_deal)
+    {
+        $post['id_featured_deals'] = $id_featured_deal;
+
+        $result = MyHelper::post('setting/featured_deal/delete', $post);
+
+        return parent::redirect($result, 'Featured Deal has been deleted.', 'setting/home#featured_deals');
     }
 
     // complete user profile settings
