@@ -93,9 +93,8 @@
                 <thead>
                     <tr>
                         <th> Title </th>
-                        <th> Description </th>
+                        <th> Menu Title </th>
                         <th> Button </th>
-                        <th> Type </th>
                         <th> Value Type </th>
                         @if(MyHelper::hasAccess([156,157], $grantedFeature))
                             <th> Action </th>
@@ -106,11 +105,10 @@
                     @if(!empty($result))
                         @foreach($result as $res)
                             <tr>
-                                <td> {{ $res['title'] }} </td>
-                                <td> {{ $res['description'] }} </td>
-                                <td> {{ $res['action_button'] }} </td>
-                                <td> {{ $res['action_type'] }} </td>
-                                <td> {{ $res['value_action_type'] }} </td>
+                                <td> {{ $res['custom_page_title'] }} </td>
+                                <td> {{ $res['custom_page_menu'] }} </td>
+                                <td> {{ $res['custom_page_button_form'] }} </td>
+                                <td> {{ $res['custom_page_button_form_text'] }} </td>
                                 @if(MyHelper::hasAccess([156,157], $grantedFeature))
                                     <td>
                                         @if(MyHelper::hasAccess([156], $grantedFeature))
