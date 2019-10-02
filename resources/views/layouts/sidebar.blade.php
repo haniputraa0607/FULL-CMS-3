@@ -222,6 +222,16 @@
 								<span class="title">News List</span>
 							</a>
 						</li>
+						<li class="nav-item {{($submenu_active == 'news-category') ? 'active open' : ''}}">
+							<a href="{{url('news/category')}}" class="nav-link ">
+								<span class="title">News Category</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'news-category-new') ? 'active open' : ''}}">
+							<a href="{{url('news/category/create')}}" class="nav-link ">
+								<span class="title">New News Category</span>
+							</a>
+						</li>
 						@endif
 					</ul>
 				</li>
