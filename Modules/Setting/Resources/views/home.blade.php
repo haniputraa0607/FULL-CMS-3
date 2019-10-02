@@ -464,7 +464,7 @@
 											<th class="all" width="4%">No</th>
 											<th class="all" width="20%">When to Display</th>
 											<th class="all">Title</th>
-											<th class="all">Subtitle</th>
+<!-- 											<th class="all">Subtitle</th> -->
 											@if(MyHelper::hasAccess([18], $grantedFeature))
 												<th class="noExport" width="10%">Actions</th>
 											@endif
@@ -479,7 +479,7 @@
 											<td> {{ $x }} </td>
 											<td> {{ str_replace('_',' ', $row['when']) }} </td>
 											<td> {{ $row['greeting'] }} </td>
-											<td> {{ $row['greeting2'] }} </td>
+<!-- 											<td> || $row['greeting2'] || </td> -->
 											@if(MyHelper::hasAccess([18], $grantedFeature))
 												<td class="noExport">
 													<a onClick="hapus1('{{$row['id_greetings']}}')" class="btn red uppercase" >Delete</a>
@@ -1046,7 +1046,7 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label">Title <span class="required" aria-required="true"> * </span></label>
-							<input type="text" name="greeting" id="txt_greeting" class="form-control">
+							<input type="text" name="greeting" id="txt_greeting" class="form-control" maxlength="">
 							<div class="row" style="margin-top:30px">
 								@foreach($textreplaces as $key=>$row)
 									<div class="col-md-3" style="margin-bottom:5px;">
@@ -1055,17 +1055,17 @@
 								@endforeach
 							</div>
 						</div>
-						<div class="form-group">
+<!-- 						<div class="form-group">
 							<label class="control-label">Subtitle <span class="required" aria-required="true"> * </span></label>
 							<input type="text" name="greeting2" id="txt_greeting_2" class="form-control">
 							<div class="row" style="margin-top:30px">
-								@foreach($textreplaces as $key=>$row)
+								@ foreach($textreplaces as $key=>$row)
 									<div class="col-md-3" style="margin-bottom:5px;">
-										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addGreetingReplace2('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{ { $row['keyword'] } }' with user's { { $row['reference'] } }" onClick="addGreetingReplace2('{ { $row['keyword'] } }');">{ { str_replace('_',' ',$row['keyword']) } }</span>
 									</div>
-								@endforeach
+								@ endforeach
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
