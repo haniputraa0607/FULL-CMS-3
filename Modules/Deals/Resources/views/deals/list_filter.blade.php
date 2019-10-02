@@ -428,7 +428,6 @@
 				$('.select2').select2();
 			}
 			if(updatedatetime){
-				console.log('hsuhdfuhf');
 				$('.datetime').datetimepicker({
 			        format: "dd M yyyy hh:ii",
 			        autoclose: true,
