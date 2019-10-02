@@ -105,7 +105,7 @@
 	function addGreetingReplace(param){
 		var textvalue = $('#txt_greeting').val();
 		var textvaluebaru = textvalue+" "+param;
-		$('#txt_greeting').val(textvaluebaru);
+		$('#txt_greeting').val(textvaluebaru.substring(0,25));
     }
 
 	function addGreetingReplace2(param){
@@ -144,6 +144,9 @@
     $( "#sortable2" ).disableSelection();
 
     $(document).ready(function() {
+    	$('#txt_greeting').on('keyup',function(){
+    		$(this).val($(this).val().substring(0,25));
+    	});
 		/* on chrome */
     	$('#modalBanner').on('shown.bs.modal', function () {
     		$('#modalBanner .select2').select2({ dropdownParent: $("#modalBanner .modal-body") });
@@ -1046,7 +1049,7 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label">Title <span class="required" aria-required="true"> * </span></label>
-							<input type="text" name="greeting" id="txt_greeting" class="form-control" maxlength="">
+							<input type="text" name="greeting" id="txt_greeting" class="form-control" maxlength="25">
 							<div class="row" style="margin-top:30px">
 								@foreach($textreplaces as $key=>$row)
 									<div class="col-md-3" style="margin-bottom:5px;">
