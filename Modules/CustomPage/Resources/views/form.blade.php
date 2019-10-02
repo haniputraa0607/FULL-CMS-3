@@ -673,6 +673,19 @@
                         <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
+                                Menu Title
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama untuk menu" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="" class="form-control" name="custom_page_menu" @if (isset($detail['custom_page_menu'])) value="{{ $detail['custom_page_menu'] }}" disabled @elseif (isset($result['custom_page_menu'])) value="{{ $result ['custom_page_menu'] }}" @else value="{{ old('custom_page_menu') }}" @endif placeholder="Menu Title" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
                                 Icon Image
                                 <span class="required" aria-required="true"> * </span>
                                 <br>
