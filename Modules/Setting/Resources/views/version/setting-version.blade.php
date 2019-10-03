@@ -593,7 +593,7 @@
                                         '</div>'+
                                         '<div class="col-md-5">'+
                                             '<div class="input-group">'+
-                                                '<input type="text" class="form-control" name="'+id+'['+number+'][app_version]" value="@if(isset($version[`'+name+'`])){{ $version[`'+name+'`] }}@endif" required placeholder="'+device+' Version">'+
+                                                '<input type="text" class="form-control" name="'+id+'['+number+'][app_version]" value="@if(isset($version['+name+'])){{ $version['+name+'] }}@endif" required placeholder="'+device+' Version">'+
                                                 '<span class="input-group-addon">'+
                                                     '<i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Versi aplikasi '+device+' terbaru" data-container="body"></i>'+
                                                 '</span>'+
