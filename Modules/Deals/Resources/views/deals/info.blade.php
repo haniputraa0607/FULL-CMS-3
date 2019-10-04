@@ -370,14 +370,13 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Voucher Start Date
-                            <span class="required" aria-required="true"> * </span>  
                             <i class="fa fa-question-circle tooltips" data-original-title="Tanggal voucher mulai dapat digunakan, kosongkan bila voucher tidak memiliki minimal tanggal penggunaan" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="deals_voucher_start" value="{{ old('deals_voucher_start',$val['deals_voucher_start']) }}" required>
+                                    <input type="text" class="form_datetime form-control" name="deals_voucher_start" value="{{ old('deals_voucher_start',$val['deals_voucher_start']) }}" >
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
