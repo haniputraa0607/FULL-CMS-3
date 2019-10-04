@@ -68,6 +68,11 @@ class UsersController extends Controller
 				$data['menu_active'] = 'deals-autoresponse';
 				$data['submenu_active'] = 'deals-autoresponse-claim-deals-success';
 				break;
+
+			case 'point-achievements':
+				$data['menu_active'] = 'point-achievements';
+				$data['submenu_active'] = '';
+				break;
 						
 			default:
 				# code...

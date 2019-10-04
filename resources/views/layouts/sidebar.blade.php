@@ -522,6 +522,13 @@
 				@endif
 			@endif
 
+			<li class="nav-item {{($menu_active == 'point-achievements') ? 'active' : ''}}">
+				<a href="{{url('user/autoresponse/point-achievements')}}" class="nav-link nav-toggle">
+					<i class="fa fa-history"></i>
+					<span class="title">[Response] Point Achievements</span>
+				</a>
+			</li>
+
 			@if(MyHelper::hasAccess([58,59,60,61,62,63], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'order') ? 'active' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
