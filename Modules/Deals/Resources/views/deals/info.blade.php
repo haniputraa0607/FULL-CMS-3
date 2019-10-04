@@ -327,6 +327,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if($val['deals_type']=='Deals')
                                 <div class="col-md-3">
                                     <div class="md-radio-inline">
                                         <div class="md-radio">
@@ -338,6 +339,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="col-md-3">
                                     <div class="md-radio-inline">
                                         <div class="md-radio">
