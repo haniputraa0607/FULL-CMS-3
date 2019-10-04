@@ -128,7 +128,7 @@ class DealsController extends Controller
     }
 
     /* IMPORT DATA FROM EXCEL */
-    function importDataExcel($fileExcel, $redirect=null) {
+    function importDataExcel($fileExcel, $redirect=null,$return=false) {
 
         $path = $fileExcel->getRealPath();
         $data = \Excel::load($path)->get()->toArray();
@@ -136,6 +136,9 @@ class DealsController extends Controller
         if (!empty($data)) {
             $data = array_unique(array_pluck($data, 'phone'));
             $data = implode(",", $data);
+            if($return){
+                return $data;
+            }
 
             // SET SESSION
             Session::flash('deals_recipient', $data);
@@ -423,10 +426,18 @@ class DealsController extends Controller
     function updateReq(Create $request) {
         $post = $request->except('_token');
         $url  = explode(url('/'), url()->previous());
-
         // IMPORT FILE
         if (isset($post['import_file'])) {
-            return $this->importDataExcel($post['import_file'], $url[1].'#participate');
+            $participate=$this->importDataExcel($post['import_file'], $url[1].'#participate',true);
+            $post['conditions'][0]=[
+                [
+                    'subject'=>$post['csv_content']??'id',
+                    'operator'=>'WHERE IN',
+                    'parameter'=>$participate
+                ],
+                'rule'=>'and',
+                'rule_next'=>'and',
+            ];
         }
 
         // ADD VOUCHER CODE

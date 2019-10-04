@@ -855,15 +855,22 @@
 	}
 </script>
 
+<div id="manualFilter" class="collapse">
 <div class="portlet light bordered">
 	<div class="portlet-title">
 		<div class="caption font-blue ">
 			<i class="icon-settings font-blue "></i>
 			<span class="caption-subject bold uppercase">User Search</span>
 		</div>
+		<div class="actions hidden" id="upload-csv-btn">
+			<div class="btn-group">
+				<input type="hidden" name="filter" value="csv">
+				<button class="btn btn-success collapser" type="button"><i class="fa fa-file-o"></i> Upload CSV </button>
+			</div>
+		</div>
 	</div>
 <div id="div-rule">
-		@if(!is_array($conditions) || count($conditions) <= 0)
+		@if(!is_array($conditions) || count($conditions) <= 0 || ($conditions[0][0]['operator']??false)=='WHERE IN')
 		<div id="rule0">
 				<div class="portlet light bordered">
 					<div class="col-md-12" style="padding: 0; margin-bottom: 15px;">
@@ -1821,4 +1828,5 @@
 		</div>
 		@endif
 	</div>
+</div>
 </div>

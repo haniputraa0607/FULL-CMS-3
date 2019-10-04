@@ -337,8 +337,30 @@
                     }
                 };                
             })
-
-           
+            @if(($conditions[0][0]['operator']??false)=="WHERE IN")
+                var collapsed=false;
+            @else
+                var collapsed=true;
+            @endif
+            function collapser(){
+                if(collapsed){
+                    $('#manualFilter input,#manualFilter select').removeAttr('disabled');
+                    $('#manualFilter').collapse('show');
+                    $('#csvFilter').collapse('hide');
+                    $('#campaign-csv-file').attr('disabled','disabled');
+                    $('input[name="csv_content"]').attr('disabled','disabled');
+                    $('#campaign-csv-file').attr('disabled','disabled');
+                }else{
+                    $('input[name="csv_content"]').removeAttr('disabled');
+                    $('#campaign-csv-file').removeAttr('disabled');
+                    $('#manualFilter').collapse('hide');
+                    $('#csvFilter').collapse('show');
+                    $('#manualFilter input,#manualFilter select').attr('disabled','disabled');
+                }
+                collapsed=!collapsed;
+            }
+            $('.collapser').on('click',collapser);
+            collapser();
         });
     </script>
 @endsection

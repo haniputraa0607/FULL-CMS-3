@@ -22,17 +22,6 @@
             <div class="col-md-3">
                 <div class="md-radio-inline">
                     <div class="md-radio">
-                        <input type="radio" name="deals_voucher_type" id="radio2" value="List Vouchers" class="voucherType" @if (old('deals_voucher_type') == "List Vouchers") checked @endif required> 
-                        <label for="radio2">
-                            <span></span>
-                            <span class="check"></span>
-                            <span class="box"></span> List Voucher </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="md-radio-inline">
-                    <div class="md-radio">
                         <input type="radio" name="deals_voucher_type" id="radio3" value="Unlimited" class="voucherType" @if (old('deals_voucher_type') == "Unlimited") checked @endif required> 
                         <label for="radio3">
                             <span></span>
