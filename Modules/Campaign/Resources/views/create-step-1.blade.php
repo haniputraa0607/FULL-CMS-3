@@ -35,6 +35,9 @@
       }
 
     });
+    $(document).ready(function(){
+    	$('#manualFilter').show();
+    });
 	</script>
 	
 @endsection
