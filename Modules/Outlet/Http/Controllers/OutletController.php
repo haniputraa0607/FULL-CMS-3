@@ -161,7 +161,7 @@ class OutletController extends Controller
                 'submenu_active' => 'outlet-list',
             ];
 
-            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code, 'qrcode' => 1]);
+            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
             $data['brands'] = MyHelper::get('brand/list')['result']??[];
             // return $outlet;
 
