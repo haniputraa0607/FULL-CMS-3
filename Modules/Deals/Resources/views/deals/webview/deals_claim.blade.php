@@ -105,7 +105,6 @@
 			transition: 0.3s;
 			width: 100%;
 			border-radius: 10px;
-			/* background: url("{{ $deals['deals']['url_deals_image'] }}"); */
 			background-repeat: no-repeat;
 			background-size: 40% 100%;
 			background-position: right;
@@ -140,14 +139,14 @@
 						<div class="container" style="padding-right: 0px;">
 							<div class="pull-left" style="margin-top: 10px;width: 60%;">
 								@php $bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
-								<p style="font-size:13.5px; color:rgba(32, 32, 32)">{{$deals['deals']['deals_title']}}</p>
+								<p style="font-size:13.5px; color:rgba(32, 32, 32)">{{$deals['deals_voucher']['deal']['deals_title']}}</p>
 								<br>
 								<p style="font-size:10px; color:rgba(170, 170, 170)">Masa berlaku habis</p>
-								<p style="font-size:10px; color:rgba(170, 170, 170)">{{date('d', strtotime($deals['deals']['deals_end']))}} {{$bulan[date('m', strtotime($deals['deals']['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals']['deals_end'])) }}</p>
+								<p style="font-size:10px; color:rgba(170, 170, 170)">{{date('d', strtotime($deals['deals_voucher']['deal']['deals_end']))}} {{$bulan[date('m', strtotime($deals['deals_voucher']['deal']['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_voucher']['deal']['deals_end'])) }}</p>
 								<br>
 							</div>
 							<div class="pull-right" style="width: 20%;">
-								<img style="height:100px; width:150px; border-bottom-right-radius: 10px; border-top-right-radius: 10px;" class="pull-right image-4" src="{{ $deals['deals']['url_deals_image'] }}" alt="">
+								<img style="height:100px; width:150px; border-bottom-right-radius: 10px; border-top-right-radius: 10px;" class="pull-right image-4" src="{{ env('API_URL').$deals['deals_voucher']['deal']['deals_image'] }}" alt="">
 							</div>
 							
 						</div>
@@ -172,16 +171,16 @@
 
 				@php
 					if ($deals['voucher_price_point'] != null) {
-						$payment = number_format($deals['voucher_price_point']);
+						$payment = number_format($deals['voucher_price_point']).' points';
 					} elseif ($deals['voucher_price_cash'] != null) {
-						$payment = number_format($deals['voucher_price_cash']);
+						$payment = number_format($deals['voucher_price_cash']).' points';
 					} else {
-						$payment = 'Free';
+						$payment = 'Gratis';
 					}
 				@endphp
 				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px;" class="description-wrapper ProductSans">
 					<div class="description pull-left">Total Pembayaran</div>
-					<div class="description pull-right">{{$payment}} points</div>
+					<div class="description pull-right">{{$payment}}</div>
 				</div>
 
 				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px; position: fixed; bottom: 0; width: 100%;" class="description-wrapper ProductSans">
@@ -203,8 +202,8 @@
             @php $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', "Juli", 'Agustus', 'September', 'Oktober', 'November', 'Desember']; @endphp
 
             // timer
-            var deals_start = "{{ strtotime($deals['deals']['deals_start']) }}";
-            var deals_end   = "{{ strtotime($deals['deals']['deals_end']) }}";
+            var deals_start = "{{ strtotime($deals['deals_voucher']['deal']['deals_start']) }}";
+            var deals_end   = "{{ strtotime($deals['deals_voucher']['deal']['deals_end']) }}";
             var timer_text;
             var difference;
 
@@ -223,7 +222,7 @@
             this.interval = setInterval(() => {
                 if(difference >= 0) {
                     timer_text = timer(difference);
-					@if($deals['deals']['deals_status'] == 'available')
+					@if($deals['deals_voucher']['deal']['deals_status'] == 'available')
 					if(timer_text.includes('lagi')){
 						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir dalam";
 					}else{
@@ -231,10 +230,10 @@
 					}
                     document.getElementById("timer").innerHTML += " ";
                     document.getElementById('timer').innerHTML += timer_text;
-                    @elseif($deals['deals']['deals_status'] == 'soon')
+                    @elseif($deals['deals_voucher']['deal']['deals_status'] == 'soon')
                     document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Akan dimulai pada";
                     document.getElementById("timer").innerHTML += " ";
-                    document.getElementById('timer').innerHTML += "{{ date('d', strtotime($deals['deals']['deals_start'])) }} {{$month[date('m', strtotime($deals['deals']['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals']['deals_start'])) }} : {{ date('H:i', strtotime($deals['deals']['deals_start'])) }}";
+                    document.getElementById('timer').innerHTML += "{{ date('d', strtotime($deals['deals_voucher']['deal']['deals_start'])) }} {{$month[date('m', strtotime($deals['deals_voucher']['deal']['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_voucher']['deal']['deals_start'])) }} : {{ date('H:i', strtotime($deals['deals_voucher']['deal']['deals_start'])) }}";
                     @endif
 
                     difference--;
@@ -265,7 +264,7 @@
                 // countdown
                 daysDifference = Math.floor(difference/60/60/24);
                 if (daysDifference > 0) {
-					timer = "{{ date('d', strtotime($deals['deals']['deals_end'])) }} {{$month[ date('m', strtotime($deals['deals']['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals']['deals_end'])) }}";
+					timer = "{{ date('d', strtotime($deals['deals_voucher']['deal']['deals_end'])) }} {{$month[ date('m', strtotime($deals['deals_voucher']['deal']['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_voucher']['deal']['deals_end'])) }}";
                   //  timer = daysDifference + " hari";
                     console.log('timer d', timer);
                 }
