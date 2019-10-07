@@ -181,7 +181,7 @@
 @stop
 
 @section('content')
-	<div class="deals-detail">
+	<div class="deals-detail" style="margin-bottom: 180px;">
 		@if(!empty($voucher))
 			@php
 				$voucher = $voucher[0];
@@ -324,23 +324,22 @@
 						<div class="outlet" style="color: rgb(0, 0, 0);">TERSEDIA DI SEMUA OUTLET</div>
 					@endif
 				</div>
-
-				@if(!isset($voucher['redeemed_at']) || $voucher['redeemed_at'] == null)
-					<center>
-						<button type="button" id="invalidate" class="btn btn-primary GoogleSans-Bold">Invalidate</button>
-					</center>
 				@endif
-				@endif
-				
+			
 				</div>
-				<br>
-				<br>
 		@else
 			<div class="col-md-4 col-md-offset-4">
 				<h4 class="text-center" style="margin-top: 30px;">Voucher not found</h4>
 			</div>
 		@endif
+		
 	</div>
+	
+	@if(!isset($voucher['redeemed_at']) || $voucher['redeemed_at'] == null)
+	<center style=" position: fixed; bottom: 20px; width: 100%; background-color: white;">
+		<button type="button" id="invalidate" style="margin-top: 20px;" class="btn btn-primary GoogleSans-Bold">{{$voucher['button_text']}}</button>
+	</center>
+	@endif
 @stop
 
 @section('page-script')
