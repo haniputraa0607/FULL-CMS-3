@@ -14,8 +14,20 @@
                 font-family: "GoogleSans";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+                src: url('{{ env("AWS_ASSET_URL") }}{{ ("/fonts/GoogleSans-Regular.ttf") }}');
         }
+
+		@font-face {
+                font-family: "ProductSans-Regular";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env("AWS_ASSET_URL") }}{{ ("fonts/ProductSans-Regular.ttf") }}');
+        }
+
+		.ProductSans-Regular{
+            font-family: "ProductSans-Regular";
+        }
+
         .GoogleSans{
             font-family: "GoogleSans";
         }
@@ -29,7 +41,7 @@
 			box-shadow: 0px 0px 21px 0px rgba(168,168,168,1);
 			border-radius: 3px;
 			background: #fff;
-			font-family: 'GoogleSans', sans-serif;
+			font-family: 'ProductSans-Regular', sans-serif;
     	}
 
     	body {
@@ -139,7 +151,7 @@
   	<div class="kotak">
   		<div class="container line-bottom">
 	   		<div class="row space-bottom">
-	   			<div class="col-5 text-grey-black text-14-3px">Beli Kupon</div>
+	   			<div class="col-5 text-grey-black text-14-3px">Pernukaran Voucher</div>
 	   			<div class="col-7 text-right text-medium-grey text-13-3px">{{ $data['date'] }}</div>
 	   		</div>
 	   		<div class="row space-text">
@@ -158,12 +170,12 @@
                 <div class="col-12"><hr></div>
 	   		</div>
 	   		<div class="row">
-	   			<div class="col-6 text-14px text-black">Status Kupon</div>
+	   			<div class="col-6 text-14px text-black">Status Voucher</div>
 	   			<div class="col-6 text-right text-14px text-grey2">@if (empty($data['detail']['used_at'])) Belum Digunakan @else Digunakan @endif</div>
                 <div class="col-12"><hr></div>
 	   		</div>
 	   		<div class="row space-text">
-	   			<div class="col-6 text-14px text-black">Tanggal Digunakan</div>
+	   			<div class="col-6 text-14px text-black">Tanggal Penggunaan</div>
 	   			<div class="col-6 text-right text-14px text-grey2">@if (empty($data['detail']['used_at'])) - @else {{ $data['detail']['used_at'] }} @endif</div>
 	   		</div>
 	   	</div>
