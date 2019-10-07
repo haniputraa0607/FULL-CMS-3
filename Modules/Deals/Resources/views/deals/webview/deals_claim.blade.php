@@ -5,7 +5,13 @@
 @extends('webview.main')
 
 @section('css')
-    <style type="text/css">
+	<style type="text/css">
+		@font-face {
+                font-family: "ProductSans-Regular";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('AWS_ASSET_URL') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
+        }
     	p{
     		margin-top: 0px !important;
     		margin-bottom: 0px !important;
@@ -13,6 +19,7 @@
     	.deals-detail > div{
     		padding-left: 0px;
     		padding-right: 0px;
+			font-family: 'ProductSans-Regular';
     	}
     	.deals-img{
     		width: 100%;
@@ -184,9 +191,10 @@
 				</div>
 
 				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px; position: fixed; bottom: 0; width: 100%;" class="description-wrapper ProductSans">
-					<input style="width:100%; background-color:rgb(74, 0, 0)" class="btn btn-primary ProductSans" type="button" value="Lihat Voucher">
+					<a style="width:100%; background-color:rgb(74, 0, 0); color: rgb(241, 228, 178);" class="btn btn-primary ProductSans" href="#yes">Lihat Voucher</a>
+					<br>
+					<br>
 				</div>
-				
 			</div>
 		@else
 			<div class="col-md-4 col-md-offset-4">
