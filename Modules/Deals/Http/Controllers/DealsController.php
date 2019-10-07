@@ -537,6 +537,10 @@ class DealsController extends Controller
             $post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
         }
 
+        if (isset($post['deals_voucher_start']) && !empty($post['deals_voucher_start'])) {
+            $post['deals_voucher_start'] = date('Y-m-d H:i:s', strtotime($post['deals_voucher_start']));
+        }
+
         if (isset($post['deals_voucher_expired']) && !empty($post['deals_voucher_expired'])) {
             $post['deals_voucher_expired'] = date('Y-m-d H:i:s', strtotime($post['deals_voucher_expired']));
         }
