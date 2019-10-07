@@ -88,6 +88,34 @@
     	}
 
 		@font-face {
+                font-family: "ProductSans-Bold";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env("AWS_ASSET_URL") }}{{ ("fonts/ProductSans-Bold.ttf") }}');
+        }
+
+        @font-face {
+                font-family: "ProductSans-BoldItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env("AWS_ASSET_URL") }}{{ ("fonts/ProductSans-BoldItalic.ttf") }}');
+        }
+
+        @font-face {
+                font-family: "ProductSans-Italic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env("AWS_ASSET_URL") }}{{ ("fonts/ProductSans-Italic.ttf") }}');
+        }
+		
+        @font-face {
+                font-family: "ProductSans-Regular";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env("AWS_ASSET_URL") }}{{ ("fonts/ProductSans-Regular.ttf") }}');
+        }
+
+		@font-face {
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
@@ -130,12 +158,12 @@
             font-family: 'Questrial', sans-serif;
         }
 
-        .seravek-font {
-            font-family: 'Seravek';
+        .product-sans {
+            font-family: 'ProductSans-Regular';
         }
 
-        .seravek-light-font {
-            font-family: 'Seravek Light';
+        .product-sans-reguler {
+            font-family: 'ProductSans-Regular';
         }
 
         .seravek-medium-font {
@@ -195,29 +223,29 @@
   	<div class="kotak">
   		<div class="container">
 	   		<div class="row space-bottom">
-	   			<div class="col-6 text-grey-black text-14-3px seravek-font">{{ $data['detail']['outlet']['outlet_name'] }}</div>
-	   			<div class="col-6 text-right text-medium-grey text-13-3px seravek-light-font">{{ date('d F Y H:i', strtotime($data['detail']['transaction_date'])) }}</div>
+	   			<div class="col-6 text-grey-black text-14-3px product-sans">{{ $data['detail']['outlet']['outlet_name'] }}</div>
+	   			<div class="col-6 text-right text-medium-grey text-13-3px product-sans-reguler">{{ date('d F Y H:i', strtotime($data['detail']['transaction_date'])) }}</div>
 	   		</div>
 	   		<div class="row space-text">
 	   			<div class="col-6"></div>
-	   			<div class="col-12 text-right bold text-13-3px seravek-font">#{{ $data['detail']['transaction_receipt_number'] }}</div>
+	   			<div class="col-12 text-right bold text-13-3px product-sans">#{{ $data['detail']['transaction_receipt_number'] }}</div>
 	   		</div>
 	   	</div>
 		<hr class="margin-10px">
 	   	<div class="container">
 	   		<div class="row">
-	   			<div class="col-12 text-grey-light text-13-3px seravek-light-font margin-top5px">Transaksi Anda</div>
+	   			<div class="col-12 text-grey-light text-13-3px product-sans-reguler margin-top5px">Transaksi Anda</div>
                 <div class="col-12"><hr></div>
 	   		</div>
 			@if($data['balance'] > 0)
 	   		<div class="row">
-	   			<div class="col-6 text-13-3px text-black seravek-light-font margin-top5px">Total Pembayaran</div>
-                <div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">{{ str_replace(',', '.', number_format($data['grand_total'])) }}</div>
+	   			<div class="col-6 text-13-3px text-black product-sans-reguler margin-top5px">Total Pembayaran</div>
+                <div class="col-6 text-right text-13-3px text-dark-grey product-sans-reguler">{{ str_replace(',', '.', number_format($data['grand_total'])) }}</div>
 	   			<div class="col-12"><hr></div>
 	   		</div>
 	   		<div class="row space-text">
-	   			<div class="col-6 text-13-3px text-black seravek-light-font margin-top5px">{{env('POINT_NAME', 'Points')}}</div>
-	   			<div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">@if($data['balance'] > 0) + @endif {{ str_replace(',', '.', number_format($data['balance'])) }}</div>
+	   			<div class="col-6 text-13-3px text-black product-sans-reguler margin-top5px">{{env('POINT_NAME', 'Points')}}</div>
+	   			<div class="col-6 text-right text-13-3px text-dark-grey product-sans-reguler">@if($data['balance'] > 0) + @endif {{ str_replace(',', '.', number_format($data['balance'])) }}</div>
 	   		</div>
 			@else
 	   		<div class="row space-text">
@@ -225,17 +253,17 @@
 				@foreach($data['detail']['product_transaction'] as $productTransaction)
 					@php $countItem += $productTransaction['transaction_product_qty']; @endphp
 				@endforeach
-	   			<div class="col-6 text-13-3px text-black seravek-light-font margin-top5px">Subtotal ({{$countItem}} item) </div>
-	   			<div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">{{ str_replace(',', '.', number_format($data['detail']['transaction_grandtotal'])) }}</div>
+	   			<div class="col-6 text-13-3px text-black product-sans-reguler margin-top5px">Subtotal ({{$countItem}} item) </div>
+	   			<div class="col-6 text-right text-13-3px text-dark-grey product-sans-reguler">{{ str_replace(',', '.', number_format($data['detail']['transaction_grandtotal'])) }}</div>
 	   		</div>
 	   		<div class="row">
-	   			<div class="col-6 text-13-3px text-black seravek-light-font">{{env('POINT_NAME', 'Points')}}</div>
-	   			<div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">@if($data['balance'] > 0) + @endif {{ str_replace(',', '.', number_format($data['balance'])) }}</div>
+	   			<div class="col-6 text-13-3px text-black product-sans-reguler">{{env('POINT_NAME', 'Points')}}</div>
+	   			<div class="col-6 text-right text-13-3px text-dark-grey product-sans-reguler">@if($data['balance'] > 0) + @endif {{ str_replace(',', '.', number_format($data['balance'])) }}</div>
 				<div class="col-12"><hr></div>
 			</div>
 			<div class="row space-text">
-	   			<div class="col-6 text-13-3px text-black seravek-light-font ">Total Pembayaran</div>
-                <div class="col-6 text-right text-13-3px text-dark-grey seravek-light-font">{{ str_replace(',', '.', number_format($data['grand_total'] + $data['balance'])) }}</div>
+	   			<div class="col-6 text-13-3px text-black product-sans-reguler ">Total Pembayaran</div>
+                <div class="col-6 text-right text-13-3px text-dark-grey product-sans-reguler">{{ str_replace(',', '.', number_format($data['grand_total'] + $data['balance'])) }}</div>
 	   		</div>
 			@endif
 	   	</div>
