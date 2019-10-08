@@ -214,26 +214,28 @@
 				</div>
 			</div>
 
-			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
-				<div style="font-size:10px;padding-bottom: 5px;" class="title">
-					Area Order
+			<div style="position: fixed;width: 100%;bottom: 20px;">
+				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
+					<div style="font-size:10px;padding-bottom: 5px;" class="title">
+						Area Order
+					</div>
 				</div>
-			</div>
 
-			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
-				<select class="browser-default" style="font-size:12px; width:100%; color: rgb(128, 0, 0);">
-					@foreach ($result['area'] as $item)
-					<option value="{{$item['phone_number']}}">{{$item['area_name']}}</option>
-					@endforeach
-				</select>
-			</div>
-			<div class="col-md-12">
-				<hr style="margin-top: 2px;">
-			</div>
-			
-			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
-				<div style="font-size:10px;padding-bottom: 0px; width: 100%;" class="title">
-					<a style="width: 100%;background-color: rgb(128, 0, 0);text-decoration: none;border-color: transparent;" class="btn btn-primary">Call Us</a>
+				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
+					<select class="browser-default" style="font-size:12px; width:100%; color: rgb(128, 0, 0);">
+						@foreach ($result['area'] as $item)
+						<option value="{{$item['phone_number']}}">{{$item['area_name']}}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="col-md-12">
+					<hr style="margin-top: 2px;">
+				</div>
+				
+				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
+					<div style="font-size:10px;padding-bottom: 0px; width: 100%;" class="title">
+						<a style="width: 100%;background-color: rgb(128, 0, 0);text-decoration: none;border-color: transparent;" class="btn btn-primary">Call Us</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -245,7 +247,7 @@
     <script type="text/javascript" src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		$("select").change(function() {
-			$("a").attr("href", "#"+this.value)
+			$("a").attr("href", "#call*"+this.value)
 		});
 		$( document ).ready(function() {
 			$( "select" ).trigger( "change" );
