@@ -582,7 +582,19 @@ class SettingController extends Controller
                 'complete_profile_success_page' => ''
             ];
         }
-
+        
+        //text menu setting
+        $request = MyHelper::post('setting/text_menu_list', $news_req);
+        if(isset($request['result']) && !empty($request['result'])) {
+            $data['text_menu_list'] = $request['result'];
+        }
+        else {
+            $data['text_menu_list'] = [
+                'text_menu_home' => [],
+                'text_menu_account'=> []
+            ];
+        }
+        
         $data['default_home'] = parent::getData(MyHelper::get('setting/default_home'));
         $data['app_logo'] = parent::getData(MyHelper::get('setting/app_logo'));
         $data['app_sidebar'] = parent::getData(MyHelper::get('setting/app_sidebar'));
@@ -1010,7 +1022,7 @@ class SettingController extends Controller
 
         // update complete profile
         $result = MyHelper::post('setting/complete-profile', $post);
-        // dd($result);
+        //dd($result);
 
         return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/home#user-profile');
     }
@@ -1065,5 +1077,18 @@ class SettingController extends Controller
             $data['version'] = ['Android' => [], 'IOS' => [], 'OutletApp' => []];
         }
         return view('setting::version.setting-version', $data);
+    }
+    
+    public function updateTextMenu(Request $request, $category) {
+        $post = $request->except('_token');
+        
+        $post = [
+            'category' => $category,
+            'data_menu' => $request->all()
+        ];
+        
+        $result = MyHelper::post('setting/text_menu/update', $post);
+        
+        return parent::redirect($result, 'Text menu has been updated.', 'setting/home#text-menu');
     }
 }
