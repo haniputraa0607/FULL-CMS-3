@@ -971,7 +971,7 @@ class SettingController extends Controller
             'id_featured_deals'    => 'required'
         ]);
         $result = MyHelper::post('setting/featured_deal/update', $post);
-        return parent::redirect($result, 'Featured Deal has been updated.', 'setting/home#featured_deals');
+        return parent::redirect($result, 'Featured Deal has been updated.', 'setting/home#featured_deals',[],true);
     }
 
     public function reorderFeaturedDeal(Request $request)

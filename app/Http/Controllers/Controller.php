@@ -284,7 +284,7 @@ class Controller extends BaseController
 		}
 	}
 
-    function redirect($save, $messagesSuccess, $next=null, $view=[]) {
+    function redirect($save, $messagesSuccess, $next=null, $view=[],$back=false) {
         if (isset($save['status']) && $save['status'] == 'success') {
 
             if (!empty($view)) {
@@ -312,7 +312,11 @@ class Controller extends BaseController
             elseif(isset($save['errors'])) $e = $save['errors'];
             elseif(isset($save['exception'])) $e = $save['message'];
             else $e = ['e' => 'Something went wrong. Please try again.'];
-            return back()->witherrors($e)->withInput();
+            if($back){
+                return redirect($next)->withErrors($e)->withInput();
+            }else{
+	            return back()->witherrors($e)->withInput();
+            }
         }
     }
 
