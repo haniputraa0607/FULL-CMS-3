@@ -225,6 +225,28 @@
                 </div>
 
                 <div class="tab-content" id="nav-tabContent">
+                    <div class="font-title">{{$result['user_membership']['membership_name']}} Level</div>
+                    <div class="level-container">
+                        <div class="level-wrapper">
+                            <div class="current-level-info">
+                                
+                                <div style="width: {{$result['progress_active']}}%;"></div>                                
+                                <img src="{{env('APP_URL')}}images/coin.png"/>
+                                <div class="font-regular-brown">{{number_format($result['progress_active'])}}</div>
+                            </div>
+                            
+                            <div class="level-progress-container">
+                                <div class="level-progress" style="width:{{$result['progress_active']}}%"></div>
+                            </div>
+
+                            <div class="level-info">
+                                <div class="font-regular-black">0</div>
+                                <div class="font-regular-black">{{number_format($result['next_trx'])}}</div>
+                            </div>
+                        </div>
+
+                        <img src="{{env('API_URL')}}{{$result['next_membership_image']}}"/>
+                    </div>
                     @foreach ($result['all_membership'] as $item)
                     <div class="tab-pane fade show @if($item['membership_name'] == $result['user_membership']['membership_name']) active @endif" id="nav-{{strtolower($item['membership_name'])}}" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="font-title">{{$item['membership_name']}} Benefit : </div>
@@ -269,30 +291,8 @@
                         </div>
                     </div>
                     @endforeach
-                    <div class="font-title">Member Level</div>
-                    <div class="font-regular-gray">Tingkatkan transaksimu!</div>
                     <div class="font-regular-gray">Rp{{number_format($result['next_trx'])}} menuju {{$result['next_membership_name']}} Member</div>
-                    <div class="level-container">
-                        <div class="level-wrapper">
-                            <div class="current-level-info">
-
-                                <div style="width: {{$result['progress_active']}}%;"></div>
-                                <img src="{{env('APP_URL')}}images/coin.png"/>
-                                <div class="font-regular-brown">{{number_format($result['progress_active'])}}</div>
-                            </div>
-
-                            <div class="level-progress-container">
-                                <div class="level-progress" style="width:{{$result['progress_active']}}%"></div>
-                            </div>
-
-                            <div class="level-info">
-                                <div class="font-regular-black">0</div>
-                                <div class="font-regular-black">{{number_format($result['next_trx'])}}</div>
-                            </div>
-                        </div>
-
-                        <img src="{{env('API_URL')}}{{$result['next_membership_image']}}"/>
-                    </div>
+                    <div class="font-regular-gray">Tingkatkan transaksimu!</div>
             </div>
         </div>
 

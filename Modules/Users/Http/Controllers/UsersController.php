@@ -69,9 +69,24 @@ class UsersController extends Controller
 				$data['submenu_active'] = 'deals-autoresponse-claim-deals-success';
 				break;
 
-			case 'point-achievements':
-				$data['menu_active'] = 'point-achievements';
-				$data['submenu_active'] = '';
+			case 'transaction-point-achievement':
+				$data['menu_active'] = 'transaction';
+				$data['submenu_active'] = 'transaction-point-achievement';
+				break;
+						
+			case 'transaction-failed-point-refund':
+				$data['menu_active'] = 'transaction';
+				$data['submenu_active'] = 'transaction-failed-point-refund';
+				break;
+						
+			case 'rejected-order-point-refund':
+				$data['menu_active'] = 'transaction';
+				$data['submenu_active'] = 'rejected-order-point-refund';
+				break;
+						
+			case 'complete-user-profile-point-bonus':
+				$data['menu_active'] = 'transaction';
+				$data['submenu_active'] = 'complete-user-profile-point-bonus';
 				break;
 						
 			default:

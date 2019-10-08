@@ -481,6 +481,28 @@
 							<span class="title">[Response] Cron Transaction</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'transaction-point-achievement') ? 'active' : ''}}">
+						<a href="{{url('user/autoresponse/transaction-point-achievement')}}" class="nav-link nav-toggle">
+							<span class="title">[Response] Transaction Point Achievement</span>
+						</a>
+					</li>
+					<li class="nav-item {{($submenu_active == 'transaction-failed-point-refund') ? 'active' : ''}}">
+						<a href="{{url('user/autoresponse/transaction-failed-point-refund')}}" class="nav-link nav-toggle">
+							<span class="title">[Response] Transaction Failed Point Refund</span>
+						</a>
+					</li>
+					<li class="nav-item {{($submenu_active == 'rejected-order-point-refund') ? 'active' : ''}}">
+						<a href="{{url('user/autoresponse/rejected-order-point-refund')}}" class="nav-link nav-toggle">
+							<span class="title">[Response] Rejected Order Point Refund</span>
+						</a>
+					</li>
+					<li class="nav-item {{($submenu_active == 'complete-user-profile-point-bonus') ? 'active' : ''}}">
+						<a href="{{url('user/autoresponse/complete-user-profile-point-bonus')}}" class="nav-link nav-toggle">
+							<span class="title">[Response] Complete User Profile Point Bonus</span>
+						</a>
+					</li>
+
+
 					<!-- <li class="nav-item {{($submenu_active == 'transaction-autoresponse-topup-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/topup-success')}}" class="nav-link ">
 							<span class="title">[Response] Topup Success</span>
@@ -521,13 +543,6 @@
 				</li>
 				@endif
 			@endif
-
-			<li class="nav-item {{($menu_active == 'point-achievements') ? 'active' : ''}}">
-				<a href="{{url('user/autoresponse/point-achievements')}}" class="nav-link nav-toggle">
-					<i class="fa fa-history"></i>
-					<span class="title">[Response] Point Achievements</span>
-				</a>
-			</li>
 
 			@if(MyHelper::hasAccess([58,59,60,61,62,63], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'order') ? 'active' : ''}}">
