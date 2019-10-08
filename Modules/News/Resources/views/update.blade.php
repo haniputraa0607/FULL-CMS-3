@@ -464,11 +464,11 @@
 
                             if (type == "square") {
                                 $('#field_image_square').val("");
-                                $('#image_square').children('img').attr('src', 'http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_square').children('img').attr('src', 'https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                             else {
                                 $('#field_image_landscape').val("");
-                                $('#image_landscape').children('img').attr('src', 'http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_landscape').children('img').attr('src', 'https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                             console.log($(this).val())
                             // console.log(document.getElementsByName('news_image_luar'))

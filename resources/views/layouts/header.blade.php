@@ -4,7 +4,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="{{url('/')}}">
-				<img src="{{ env('AWS_ASSET_URL') }}{{ ('images/logo.png?') }}" alt="logo" class="logo-default"  style="margin: 0; height:45px"/> </a>
+				<img src="{{ env('AWS_ASSET_URL') }}{{ ('images/logo.png') }}" alt="logo" class="logo-default"  style="margin: 0; height:45px"/> </a>
 			<div class="menu-toggler sidebar-toggler">
 				<span></span>
 			</div>

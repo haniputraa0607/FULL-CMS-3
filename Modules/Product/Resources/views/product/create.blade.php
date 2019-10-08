@@ -158,7 +158,7 @@
                     // image.src = _URL.createObjectURL();
 
                     $('#fieldphoto').val("");
-                    $('#imageproduct').children('img').attr('src', 'http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                    $('#imageproduct').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
                     console.log($(this).val())
                 }
             };
@@ -280,7 +280,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Brand
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
                             </label>
                         </div>
@@ -292,7 +292,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>        
+                    </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">
@@ -302,7 +302,7 @@
                         <div class="col-md-8">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                <img src="http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                <img src="https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                 </div>
                                 <div class="fileinput-preview fileinput-exists thumbnail" id="imageproduct" style="max-width: 200px; max-height: 200px;"></div>
                                 <div>

@@ -5,16 +5,12 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
@@ -98,10 +94,10 @@
                 success : function(result) {
                     if (result == "success") {
                         $('#sample_1').DataTable().row(column).remove().draw();
-                        toastr.info("Outlet has been deleted.");
+                        toastr.info("Brand has been deleted.");
                     }
                     else if(result == "fail"){
-                        toastr.warning("Failed to delete brand. Outlet has been used.");
+                        toastr.warning("Failed to delete brand. Brand has been used.");
                     }
                     else {
                         toastr.warning("Something went wrong. Failed to delete brand.");
@@ -133,13 +129,13 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">Outlet List</span>
+                <span class="caption-subject font-blue sbold uppercase">Brand List</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -177,11 +173,11 @@
                                 @endif
                                 @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                     <td style="width: 90px;">
-                                        @if(MyHelper::hasAccess([28], $grantedFeature)) 
+                                        @if(MyHelper::hasAccess([28], $grantedFeature))
                                             <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_brand'] }}"><i class="fa fa-trash-o"></i></a>
                                         @endif
-                                        @if(MyHelper::hasAccess([25,27], $grantedFeature)) 
-                                            <a href="{{ url('brand/show') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
+                                        @if(MyHelper::hasAccess([25,27], $grantedFeature))
+                                            <a href="{{ url('brand/show') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                         @endif
                                     </td>
                                 @endif

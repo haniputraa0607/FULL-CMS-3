@@ -110,7 +110,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label">Code
                             <span class="required" aria-required="true"> *
-                            </span> 
+                            </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Kode Brand (Unique)" data-container="body"></i>
                         </label>
                         <div class="col-md-7">
@@ -133,7 +133,7 @@
                                     @if(isset($result['logo_brand']) && $result['logo_brand'] != "")
                                         <img src="{{$result['logo_brand']}}" id="preview_logo_brand" />
                                     @else
-                                        <img id="preview_logo_brand" src="http://www.placehold.it/500x500/EFEFEF/AAAAAA"/>
+                                        <img id="preview_logo_brand" src="https://www.placehold.it/500x500/EFEFEF/AAAAAA"/>
                                     @endif
                                 </div>
 
@@ -162,7 +162,7 @@
                                     @if(isset($result['image_brand']) && $result['image_brand'] != "")
                                         <img src="{{$result['image_brand']}}" id="preview_image_brand" />
                                     @else
-                                        <img id="preview_image_brand" src="http://www.placehold.it/750x375/EFEFEF/AAAAAA"/>
+                                        <img id="preview_image_brand" src="https://www.placehold.it/750x375/EFEFEF/AAAAAA"/>
                                     @endif
                                 </div>
                                 <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>

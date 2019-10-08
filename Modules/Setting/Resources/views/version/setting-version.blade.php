@@ -1,10 +1,10 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     <script src="{{env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
@@ -44,7 +44,7 @@
     </div><br>
 
     @include('layouts.notifications')
-    
+
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
@@ -315,8 +315,8 @@
                                         <div class="form-group">
                                             <div class="input-icon right">
                                                 <label class="col-md-4 control-label">
-                                                Image 
-                                                <span class="required" aria-required="true"> * </span> 
+                                                Image
+                                                <span class="required" aria-required="true"> * </span>
                                                 <!--<br>-->
                                                 <!-- <span class="required" aria-required="true"> (500*500) </span>  -->
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran persegi ditampilkan pada aplikasi" data-container="body"></i>
@@ -328,7 +328,7 @@
                                                     @if(isset($version['version_image_mobile']))
                                                     <img src="{{ env('AWS_URL')}}{{$version['version_image_mobile']}}" alt="">
                                                     @else
-                                                    <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                                    <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                                     @endif
                                                     </div>
                                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
@@ -337,7 +337,7 @@
                                                         <span class="fileinput-new"> Select image </span>
                                                         <span class="fileinput-exists"> Change </span>
                                                         <input type="file" id="field_image_square" class="file" accept="image/*" data-jenis="square" name="Display[version_image_mobile]">
-                                                        
+
                                                         </span>
 
                                                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -349,7 +349,7 @@
                                             <div class="input-icon right">
                                                 <label class="col-md-4 control-label">
                                                     Text
-                                                    <span class="required" aria-required="true"> * </span>  
+                                                    <span class="required" aria-required="true"> * </span>
                                                     <i class="fa fa-question-circle tooltips" data-original-title="Kalimat yang akan ditampilkan pada aplikasi ketika versi aplikasi yang digunakan berbeda dengan versi terbaru" data-container="body"></i>
                                                 </label>
                                             </div>
@@ -369,7 +369,7 @@
                                             <div class="input-icon right">
                                                 <label class="col-md-4 control-label">
                                                     Button Text
-                                                    <span class="required" aria-required="true"> * </span>  
+                                                    <span class="required" aria-required="true"> * </span>
                                                     <i class="fa fa-question-circle tooltips" data-original-title="Teks pada button yang akan langsung menuju ke playstore / appstore" data-container="body"></i>
                                                 </label>
                                             </div>
@@ -399,8 +399,8 @@
                                         <div class="form-group">
                                             <div class="input-icon right">
                                                 <label class="col-md-4 control-label">
-                                                Image 
-                                                <span class="required" aria-required="true"> * </span> 
+                                                Image
+                                                <span class="required" aria-required="true"> * </span>
                                                 <!--<br>-->
                                                 <!-- <span class="required" aria-required="true"> (500*500) </span>  -->
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran persegi ditampilkan pada aplikasi" data-container="body"></i>
@@ -412,7 +412,7 @@
                                                     @if(isset($version['version_image_outlet']))
                                                     <img src="{{ env('AWS_URL')}}{{$version['version_image_outlet']}}" alt="">
                                                     @else
-                                                    <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                                    <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                                     @endif
                                                     </div>
                                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
@@ -421,7 +421,7 @@
                                                         <span class="fileinput-new"> Select image </span>
                                                         <span class="fileinput-exists"> Change </span>
                                                         <input type="file" id="field_image_square" class="file" accept="image/*" data-jenis="square" name="Display[version_image_outlet]">
-                                                        
+
                                                         </span>
 
                                                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -433,7 +433,7 @@
                                             <div class="input-icon right">
                                                 <label class="col-md-4 control-label">
                                                     Text
-                                                    <span class="required" aria-required="true"> * </span>  
+                                                    <span class="required" aria-required="true"> * </span>
                                                     <i class="fa fa-question-circle tooltips" data-original-title="Kalimat yang akan ditampilkan pada aplikasi ketika versi aplikasi yang digunakan berbeda dengan versi terbaru" data-container="body"></i>
                                                 </label>
                                             </div>
@@ -453,7 +453,7 @@
                                             <div class="input-icon right">
                                                 <label class="col-md-4 control-label">
                                                     Button Text
-                                                    <span class="required" aria-required="true"> * </span>  
+                                                    <span class="required" aria-required="true"> * </span>
                                                     <i class="fa fa-question-circle tooltips" data-original-title="Teks pada button yang akan langsung menuju ke playstore / appstore" data-container="body"></i>
                                                 </label>
                                             </div>
@@ -481,7 +481,7 @@
                 var noAndroid = 1;
                 var noIOS = 1;
                 var noOutletApp = 1;
-                
+
                 window.onload = function(event) {
                     var android = JSON.parse('{!! json_encode($version["Android"]) !!}');
                     var ios = JSON.parse('{!! json_encode($version["IOS"]) !!}');
@@ -579,7 +579,7 @@
                         noOutletApp++;
                     }
                 }
-                
+
                 function appendDiv(id, device, number, name) {
                     $("#add"+id).append(
                         '<div class="mt-repeater" id="'+id+number+'">'+

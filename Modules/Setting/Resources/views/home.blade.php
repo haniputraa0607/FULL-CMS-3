@@ -220,7 +220,7 @@
 		var type    = $(this).data('type');
 		var banner_start	= $(this).data('start');
 		var banner_end		= $(this).data('end');
-		
+
     	$('#modalBannerUpdate').on('shown.bs.modal', function () {
     		// on chrome
     		$('#modalBannerUpdate .select2').select2({ dropdownParent: $("#modalBannerUpdate .modal-body") });
@@ -352,7 +352,7 @@
 					// image.src = _URL.createObjectURL();
 
 					$('#field_splash').val("");
-					$('#div_splash').children('img').attr('src', 'http://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
+					$('#div_splash').children('img').attr('src', 'https://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
 
 					console.log($(this).val())
 					// console.log(document.getElementsByName('news_image_luar'))
@@ -595,7 +595,7 @@
 													@if(isset($default_home['default_home_image']))
 														<img src="{{ env('AWS_URL')}}{{$default_home['default_home_image']}}" alt="">
 													@else
-														<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+														<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 													@endif
 												</div>
 												<div class="fileinput-preview fileinput-exists thumbnail" id="div_background_default" style="max-width: 500px; max-height: 250px;"></div>
@@ -651,7 +651,7 @@
 												@if(isset($default_home['default_home_splash_screen']))
 													<img src="{{ env('AWS_URL')}}{{$default_home['default_home_splash_screen']}}?" alt="">
 												@else
-													<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+													<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 												@endif
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" id="div_splash" style="max-width: 500px; max-height: 250px;"></div>
@@ -784,7 +784,7 @@
 											@if(isset($app_logo['app_logo_3x']))
 												<img src="{{ env('AWS_URL')}}{{$app_logo['app_logo_3x']}}" alt="">
 											@else
-												<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+												<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 											@endif
 										</div>
 										<div class="fileinput-preview fileinput-exists thumbnail" id="div_background_default" style="max-width: 433px; max-height: 318px;"></div>
@@ -1108,7 +1108,7 @@
 							<label class="control-label">Background Image <span class="required" aria-required="true"> * </span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 100px;">
-									<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+									<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1148,7 +1148,7 @@
 							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (750*375)</span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="">
+									<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1231,7 +1231,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
 						<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
@@ -1260,7 +1260,7 @@
 							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (750*375)</span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="" id="edit-banner-img">
+									<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="" id="edit-banner-img">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
