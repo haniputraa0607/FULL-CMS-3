@@ -187,10 +187,6 @@
 				$voucher = $voucher[0];
 			@endphp
 			<div class="col-md-4 col-md-offset-4">
-				<div class="title-wrapper clearfix">
-					<img class="deals-img center-block" src="{{ $voucher['deal_voucher']['deal']['url_deals_image'] }}" alt="">
-				</div>
-
 				<!-- Modal QR Code -->
 				@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null || isset($voucher['used_at']) && $voucher['used_at'] == null)
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
@@ -245,6 +241,10 @@
 				<div class="width:80%; text-center ProductSans">Pastikan langkah ini dilakukan oleh kasir. Jangan terima voucher apabila sudah dalam keadaan terbuka</div>
 				
 				@else
+				<div class="title-wrapper clearfix">
+					<img class="deals-img center-block" src="{{ $voucher['deal_voucher']['deal']['url_deals_image'] }}" alt="">
+				</div>
+
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 					<div class="title">
 						{{ $voucher['deal_voucher']['deal']['deals_title'] }}
