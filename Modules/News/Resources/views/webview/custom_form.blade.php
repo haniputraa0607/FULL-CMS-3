@@ -15,7 +15,7 @@
         <!-- END THEME GLOBAL STYLES -->
         <!-- BEGIN PAGE LEVEL STYLES -->
         <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" /><link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" /><link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <link href="{{ env('AWS_ASSET_URL') }}{{('assets/layouts/layout4/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
@@ -90,7 +90,7 @@
     {{ csrf_field() }}
 
     <div class="form-body">
-        <?php 
+        <?php
             $old = session()->getOldInput();
             $checkbox_id = 1;
             $radio_id = 1;
@@ -102,7 +102,7 @@
                 <input type="hidden" name="news_form[{{$key}}][input_label]" value="{{ $item['form_input_label'] }}">
                 <input type="hidden" name="news_form[{{$key}}][is_unique]" value="{{$item['is_unique']}}">
 
-                <?php 
+                <?php
                     $field_name = "news_form[" .$key. "][input_value]";
                     $old_value = "";
                     if (!empty($old) && isset($old['news_form'][$key]['input_value'])) {
@@ -198,7 +198,7 @@
                     <label style="color: #888;">{{ucwords($item['form_input_label'])}} {!! MyHelper::isRequiredMark($item['is_required']) !!}</label>
                     <div class="fileinput fileinput-new" data-provides="fileinput" style="display:block;">
                         <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""> </div>
+                            <img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""> </div>
                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
                         <div>
                             <span class="btn default btn-file">
@@ -213,13 +213,13 @@
             </div>
         @endforeach
 
-        
+
         @if($form_action != "")
             <input type="hidden" name="bearer" value="{{ $bearer }}">
             <input type="hidden" name="flag" value="{{ $flag }}">
             <input type="hidden" name="id_news" value="{{ $news['id_news'] }}">
         @endif
-        
+
         <div class="form-actions noborder text-center">
             @if($form_action != "")
                 <input type="submit" value="Submit" class="btn btn-round btn-outline brown">
@@ -242,7 +242,7 @@
     <!-- END CONTAINER -->
 @stop
 
-@section('page-script')       
+@section('page-script')
     <!--[if lt IE 9] -->
     <!-- BEGIN CORE PLUGINS -->
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
@@ -254,7 +254,7 @@
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-    
+
     <!-- END THEME GLOBAL SCRIPTS -->
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>

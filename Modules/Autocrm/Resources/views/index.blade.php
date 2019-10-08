@@ -6,9 +6,9 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
@@ -92,7 +92,7 @@
 			$('.summernote').summernote({
 				placeholder: 'Product Description',
 				tabsize: 2,
-				toolbar: [         
+				toolbar: [
                   ['style', ['style']],
                   ['style', ['bold', 'underline', 'clear']],
                   ['color', ['color']],
@@ -104,30 +104,30 @@
 				height: 120
 			});
         });
-		
+
 		function viewEmail(id){
 			var subject = document.getElementById('autocrm_email_subject_'+id).value;
 			var content = document.getElementById('autocrm_email_content_'+id).value;
-			
+
 			document.getElementById('autocrm_email_subject').value = subject;
 			document.getElementById('id_autocrm_email').value = id;
-			
+
 			$('#autocrm_email_content').summernote('code', content);
 		}
-		
+
 		function viewSms(id){
 			var messages = document.getElementById('autocrm_sms_content_'+id).value;
-			
+
 			document.getElementById('autocrm_sms_content').value = messages;
 			document.getElementById('id_autocrm_sms').value = id;
 		}
-		
+
 		function viewPush(id){
 			function sleep(ms) {
 		  return new Promise(resolve => setTimeout(resolve, ms));
 		}
 
-		
+
 			var subject 	= document.getElementById('autocrm_push_subject_'+id).value;
 			var content 	= document.getElementById('autocrm_push_content_'+id).value;
 			var clickto 	= document.getElementById('autocrm_push_clickto_'+id).value;
@@ -138,36 +138,36 @@
 			document.getElementById('autocrm_push_subject').value = subject;
 			document.getElementById('autocrm_push_content').value = content;
 			$('#autocrm_push_clickto').val(clickto).trigger('change');
-			
+
 			document.getElementById('autocrm_push_link').value = link;
-			document.getElementById('autocrm_push_image').src = "http://natashaapi.staging.co.id/"+image;
+			document.getElementById('autocrm_push_image').src = env('AWS_ASSET_URL')+image;
 			document.getElementById('id_autocrm_push').value = id;
-			setTimeout(function(){ 
+			setTimeout(function(){
 				$('#autocrm_push_id_reference').val(idreference).trigger('change');
 			}, 1000);
-			
+
 		}
-		
+
 		function viewInbox(id){
 			var subject = document.getElementById('autocrm_inbox_subject_'+id).value;
 			var content = document.getElementById('autocrm_inbox_content_'+id).value;
-			
+
 			document.getElementById('autocrm_inbox_subject').value = subject;
 			$('#autocrm_inbox_content').summernote('code', content);
 			document.getElementById('id_autocrm_inbox').value = id;
 		}
-		
+
 		function viewForward(id){
 			var forward = document.getElementById('autocrm_forward_email_'+id).value;
 			var subject = document.getElementById('autocrm_forward_email_subject_'+id).value;
 			var content = document.getElementById('autocrm_forward_email_content_'+id).value;
-			
+
 			document.getElementById('autocrm_forward_email').value = forward;
 			document.getElementById('autocrm_forward_email_subject').value = subject;
 			$('#autocrm_forward_email_content').summernote('code', content);
 			document.getElementById('id_autocrm_forward').value = id;
 		}
-		
+
 	function addEmailContent(param){
 		var textvalue = $('#autocrm_email_content').val();
 
@@ -184,31 +184,31 @@
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_email_subject').val(textvaluebaru);
     }
-	
+
 	function addSmsContent(param){
 		var textvalue = $('#autocrm_sms_content').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_sms_content').val(textvaluebaru);
     }
-	
+
 	function addPushSubject(param){
 		var textvalue = $('#autocrm_push_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_push_subject').val(textvaluebaru);
     }
-	
+
 	function addPushContent(param){
 		var textvalue = $('#autocrm_push_content').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_push_content').val(textvaluebaru);
     }
-	
+
 	function addInboxSubject(param){
 		var textvalue = $('#autocrm_inbox_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_inbox_subject').val(textvaluebaru);
     }
-	
+
 	function addInboxContent(param){
 		var textvalue = $('#autocrm_inbox_content').val();
 
@@ -219,13 +219,13 @@
 		$('#autocrm_inbox_content').summernote('editor.focus');
 		$('#autocrm_inbox_content').summernote('editor.insertText', param);
     }
-	
+
 	function addForwardSubject(param){
 		var textvalue = $('#autocrm_forward_email_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_forward_email_subject').val(textvaluebaru);
     }
-	
+
 	function addForwardContent(param){
 		var textvalue = $('#autocrm_forward_email_content').val();
 
@@ -236,10 +236,10 @@
 		$('#autocrm_forward_email_content').summernote('editor.focus');
 		$('#autocrm_forward_email_content').summernote('editor.insertText', param);
     }
-	
+
 	function fetchDetail(det){
 		let token  = "{{ csrf_token() }}";
-			
+
 		if(det == 'Product'){
 			$.ajax({
 				type : "GET",
@@ -257,7 +257,7 @@
 			});
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Treatment'){
 			$.ajax({
 				type : "GET",
@@ -275,7 +275,7 @@
 			});
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Outlet'){
 			$.ajax({
 				type : "GET",
@@ -293,7 +293,7 @@
 			});
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'News'){
 			$.ajax({
 				type : "GET",
@@ -311,49 +311,49 @@
 			});
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Home'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'E-Magazine'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Inbox'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Voucher'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Contact Us'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'none';
 		}
-		
+
 		if(det == 'Link'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link').style.display = 'block';
 		}
-		
+
 		if(det == 'Logout'){
 			document.getElementById('atd').style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_push_id_reference')[0];
@@ -412,34 +412,34 @@
 						<tr>
 							<td>{{ $key+1 }}</td>
 							<td>{{ $value['autocrm_title'] }}</td>
-							<td>@if($value['autocrm_email_toogle'] == 1) 
-									<a href="#email" data-toggle="modal" class="btn btn-sm blue" onClick="viewEmail('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>  
-								@else 
-									<a class="btn btn-sm green" href="{{ url('autocrm/email/turnon') }}/{{ $value['id_autocrm'] }}">Enable Email <i class="fa fa-check-circle"></i></a> 
+							<td>@if($value['autocrm_email_toogle'] == 1)
+									<a href="#email" data-toggle="modal" class="btn btn-sm blue" onClick="viewEmail('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>
+								@else
+									<a class="btn btn-sm green" href="{{ url('autocrm/email/turnon') }}/{{ $value['id_autocrm'] }}">Enable Email <i class="fa fa-check-circle"></i></a>
 								@endif
 							</td>
-							<td>@if($value['autocrm_sms_toogle'] == 1) 
-									<a href="#sms" data-toggle="modal" class="btn btn-sm blue" onClick="viewSms('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>  
-								@else 
-									<a class="btn btn-sm green" href="{{ url('autocrm/sms/turnon') }}/{{ $value['id_autocrm'] }}">Enable Sms <i class="fa fa-check-circle"></i></a> 
+							<td>@if($value['autocrm_sms_toogle'] == 1)
+									<a href="#sms" data-toggle="modal" class="btn btn-sm blue" onClick="viewSms('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>
+								@else
+									<a class="btn btn-sm green" href="{{ url('autocrm/sms/turnon') }}/{{ $value['id_autocrm'] }}">Enable Sms <i class="fa fa-check-circle"></i></a>
 								@endif
 							</td>
-							<td>@if($value['autocrm_push_toogle'] == 1) 
-									<a href="#push" data-toggle="modal" class="btn btn-sm blue" onClick="viewPush('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>  
-								@else 
-									<a class="btn btn-sm green" href="{{ url('autocrm/push/turnon') }}/{{ $value['id_autocrm'] }}">Enable Push <i class="fa fa-check-circle"></i></a> 
+							<td>@if($value['autocrm_push_toogle'] == 1)
+									<a href="#push" data-toggle="modal" class="btn btn-sm blue" onClick="viewPush('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>
+								@else
+									<a class="btn btn-sm green" href="{{ url('autocrm/push/turnon') }}/{{ $value['id_autocrm'] }}">Enable Push <i class="fa fa-check-circle"></i></a>
 								@endif
 							</td>
-							<td>@if($value['autocrm_inbox_toogle'] == 1) 
-									<a href="#inbox" data-toggle="modal" class="btn btn-sm blue" onClick="viewInbox('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>  
-								@else 
-									<a class="btn btn-sm green" href="{{ url('autocrm/inbox/turnon') }}/{{ $value['id_autocrm'] }}">Enable Inbox <i class="fa fa-check-circle"></i></a> 
+							<td>@if($value['autocrm_inbox_toogle'] == 1)
+									<a href="#inbox" data-toggle="modal" class="btn btn-sm blue" onClick="viewInbox('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>
+								@else
+									<a class="btn btn-sm green" href="{{ url('autocrm/inbox/turnon') }}/{{ $value['id_autocrm'] }}">Enable Inbox <i class="fa fa-check-circle"></i></a>
 								@endif
 							</td>
-							<td>@if($value['autocrm_forward_toogle'] == 1) 
-									<a href="#forward" data-toggle="modal" class="btn btn-sm blue" onClick="viewForward('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>  
-								@else 
-									<a class="btn btn-sm green" href="{{ url('autocrm/forward/turnon') }}/{{ $value['id_autocrm'] }}">Enable Forward <i class="fa fa-check-circle"></i></a> 
+							<td>@if($value['autocrm_forward_toogle'] == 1)
+									<a href="#forward" data-toggle="modal" class="btn btn-sm blue" onClick="viewForward('{{ $value['id_autocrm'] }}')"> View Template <i class="fa fa-search-plus"></i></a>
+								@else
+									<a class="btn btn-sm green" href="{{ url('autocrm/forward/turnon') }}/{{ $value['id_autocrm'] }}">Enable Forward <i class="fa fa-check-circle"></i></a>
 								@endif
 							</td>
 							<input type="hidden" id="autocrm_email_subject_{{ $value['id_autocrm'] }}" value="{{$value['autocrm_email_subject']}}">
@@ -620,7 +620,7 @@
 									<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 										<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" />
 									</div>
-										
+
 									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
 									<div>
 										<span class="btn default btn-file">
@@ -660,10 +660,10 @@
 						<div class="form-group" id="link" style="display:none;">
 							<label for="autocrm_push_clickto" class="control-label col-md-3">Link</label>
 							<div class="col-md-9">
-								<input type="text" placeholder="http://" class="form-control" name="autocrm_push_link" id="autocrm_push_link">
+								<input type="text" placeholder="https://" class="form-control" name="autocrm_push_link" id="autocrm_push_link">
 							</div>
 						</div>
-						
+
 					</div>
 					<div class="form-actions">
 						{{ csrf_field() }}

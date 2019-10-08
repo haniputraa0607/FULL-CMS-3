@@ -14,7 +14,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
@@ -37,13 +37,13 @@
             autoclose: true,
             minuteStep: 5,
             showSeconds: false,
-            
+
         });
         // sortable
         $( "#sortable" ).sortable();
         $( "#sortable" ).disableSelection();
-    </script> 
-    <script>    
+    </script>
+    <script>
         var map;
 
         var markers = [];
@@ -66,8 +66,8 @@
               content: '<p>Marker Location:</p>'
           });
 
-          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
-            
+          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
           var input = /** @type  {HTMLInputElement} */(
               document.getElementById('pac-input'));
 
@@ -133,7 +133,7 @@
             position: location,
             map: map
           });
-          
+
           $('#lat').val(location.lat());
           $('#lng').val(location.lng());
           markers.push(marker);
@@ -167,17 +167,17 @@
     </script>
 
     <script type="text/javascript">
-        
+
         $(document).ready(function(){
             /* MAPS */
             longNow = "{{ $outlet[0]['outlet_longitude'] }}";
             latNow = "{{ $outlet[0]['outlet_latitude'] }}";
 
             if (latNow == "" || longNow == "") {
-              navigator.geolocation.getCurrentPosition(function(position){ 
+              navigator.geolocation.getCurrentPosition(function(position){
                   initialize(position.coords.latitude, position.coords.longitude);
               },
-              function (error) { 
+              function (error) {
                 if (error.code == error.PERMISSION_DENIED)
                   initialize(-7.7972, 110.3688);
               });
@@ -187,7 +187,7 @@
             }
 
             /*=====================================*/
-           
+
             // untuk show atau hide informasi photo
             if ($('.deteksi').data('dis') != 1) {
                 $('.deteksi-trigger').hide();
@@ -225,9 +225,9 @@
             //   initialize();
             // console.log(latNow)
             // console.log(latNow)
-            
+
             // initialize(latNow, longNow);
-              
+
             });
 
             $('#province').change(function() {
@@ -239,7 +239,7 @@
                     data    : "_token="+token+"&id_province="+isi,
                     success : function(result) {
                         if (result['status'] == "success") {
-                            $('#city').prop('disabled', false); 
+                            $('#city').prop('disabled', false);
 
                             var city           = result['result'];
                             var selectCity = '<option value=""></option>';
@@ -251,7 +251,7 @@
                             $('#city').html(selectCity);
                         }
                         else {
-                            $('#city').prop('disabled', true); 
+                            $('#city').prop('disabled', true);
                         }
                     }
                 });
@@ -314,10 +314,10 @@
                         toastr.warning("Please check dimension of your photo.");
                         $(this).val("");
 
-                        $('#imageoutlet').children('img').attr('src', 'http://www.placehold.it/600x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $('#imageoutlet').children('img').attr('src', 'https://www.placehold.it/600x300/EFEFEF/AAAAAA&amp;text=no+image');
                     }
                 };
-            
+
                 image.src = _URL.createObjectURL(file);
             }
 
@@ -338,7 +338,7 @@
         $(this).parent().parent().parent().find('.kelas-close').focus();
         return false;
       }
-      
+
       if ($(this).is(':checked')) {
         var check = $('input[name="ampas[]"]:checked').length;
         var count = $('.same').prop('checked', false);
@@ -347,14 +347,14 @@
         if (check == 1) {
             var all_open = $('.kelas-open');
             var array_open = [];
-            for (i = 0; i < all_open.length; i++) { 
+            for (i = 0; i < all_open.length; i++) {
               array_open.push(all_open[i]['defaultValue']);
             }
             sessionStorage.setItem("item_open", array_open);
 
             var all_close = $('.kelas-close');
             var array_close = [];
-            for (i = 0; i < all_close.length; i++) { 
+            for (i = 0; i < all_close.length; i++) {
               array_close.push(all_close[i]['defaultValue']);
             }
             sessionStorage.setItem("item_close", array_close);
@@ -362,7 +362,7 @@
 
         $('.kelas-open').val(open);
         $('.kelas-close').val(close);
-        
+
       } else {
 
           var item_open = sessionStorage.getItem("item_open");
@@ -405,7 +405,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -414,7 +414,7 @@
                 <span class="caption-subject font-blue bold uppercase">{{ $outlet[0]['outlet_code'] }}</span>
             </div>
             <ul class="nav nav-tabs">
-                
+
                 <li class="active" id="infoOutlet">
                     <a href="#info" data-toggle="tab" > Info </a>
                 </li>
@@ -468,6 +468,6 @@
             </div>
         </div>
     </div>
-        
-    
+
+
 @endsection

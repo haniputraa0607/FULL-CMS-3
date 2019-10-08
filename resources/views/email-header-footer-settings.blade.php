@@ -9,7 +9,7 @@
 	<link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 	 <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     <script src="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
@@ -112,7 +112,7 @@
 								@if(isset($settings['email_logo']))
 								  	<img src="{{ env('AWS_URL').$settings['email_logo'] }}" alt="Image Logo">
 								@else
-									<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+									<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 								@endif
                                 </div>
                                 <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
@@ -121,7 +121,7 @@
                                     <span class="fileinput-new"> Select image </span>
                                     <span class="fileinput-exists"> Change </span>
                                     <input type="file" accept="image/*" name="email_logo">
-                                    
+
                                     </span>
 
                                     <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -129,7 +129,7 @@
                             </div>
                         </div>
                     </div>
-					
+
 				<div class="form-group">
 					<label class="col-md-3 control-label">Position</label>
 					<div class="col-md-9">
@@ -140,9 +140,9 @@
 						</select>
 					</div>
 				</div>
-				
+
 				<h4>Email Footer</h4>
-				
+
 				<div class="form-group">
 					<label class="col-md-3 control-label">Copyright</label>
 					<div class="col-md-9">

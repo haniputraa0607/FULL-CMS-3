@@ -9,7 +9,7 @@
 		$( document ).ready(function() {
 			var messages = '{!! $messages[0] !!}';
 		    alert(messages);
-		    window.location = "http://www.google.co.id";
+		    window.location = "https://www.google.co.id";
 		});
 	</script>
 </body>

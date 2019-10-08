@@ -6,7 +6,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />\
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
     {{-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
@@ -21,7 +21,7 @@
 
             if ((file = this.files[0])) {
                 image = new Image();
-                
+
                 image.onload = function() {
                     if (this.width == widthImg && this.height == heightImg) {
                         // image.src = _URL.createObjectURL(file);
@@ -33,11 +33,11 @@
                         // image.src = _URL.createObjectURL();
 
                         $('#fieldphoto').val("");
-                        $('#imageproduct').children('img').attr('src', 'http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $('#imageproduct').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
                         console.log($(this).val())
                     }
                 };
-            
+
                 image.src = _URL.createObjectURL(file);
             }
 
@@ -66,7 +66,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -80,7 +80,7 @@
                 <div class="form-body">
                     <div class="form-group">
                         <label class="col-md-3 control-label">
-                            Photo <span class="required" aria-required="true">* <br>(300*300) </span> 
+                            Photo <span class="required" aria-required="true">* <br>(300*300) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
@@ -89,7 +89,7 @@
                                 @if(isset($photo))
                                 <img src="{{$photo}}" alt="photo default">
                                 @else
-                                <img src="http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                <img src="https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                 @endif
                                 </div>
                                 <div class="fileinput-preview fileinput-exists thumbnail" id="imageproduct" style="max-width: 200px; max-height: 200px;"></div>

@@ -65,7 +65,7 @@
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Brand
-                <span class="required" aria-required="true"> * </span>  
+                <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
                 </label>
             </div>
@@ -77,7 +77,7 @@
                     @endforeach
                 </select>
             </div>
-        </div>        
+        </div>
 
         <div class="form-group">
             <label class="col-md-3 control-label">Product Visible
@@ -203,12 +203,10 @@
             <div class="row">
                 <div class="col-md-offset-3 col-md-8">
                     <button type="submit" id="submit" class="btn green">Update</button>
-                </div>
                 @if($next_id)
-                <div class="col-md-offset-3 col-md-8">
-                    <a href="{{url('product/detail'.$next_id)}}" type="button" class="btn default">Next</button>
-                </div>
+                    <a href="{{url('product/detail'.$next_id)}}" type="button" class="btn default">Next</a>
                 @endif
+                </div>
             </div>
         </div>
     @endif
