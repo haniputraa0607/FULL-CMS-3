@@ -71,6 +71,7 @@
                     search: "Search:",
                     zeroRecords: "No matching records found"
                 },
+                info:false,
                 buttons: [],
                 responsive: {
                     details: {
@@ -161,18 +162,27 @@
                 if (nilai == "List Vouchers") {
                     $('#listVoucher').show();
                     $('.listVoucher').prop('required', true);
+                    $('.listVoucher').prop('disabled', false);
 
                     $('#generateVoucher').hide();
                     $('.generateVoucher').removeAttr('required');
-                    $('.generateVoucher').val('');
+                    $('.generateVoucher').prop('disabled', true);
                 }
-                else {
+                else if (nilai == "Auto generated"){
                     $('#generateVoucher').show();
                     $('.generateVoucher').prop('required', true);
+                    $('.generateVoucher').prop('disabled', false);
 
                     $('#listVoucher').hide();
                     $('.listVoucher').removeAttr('required');
-                    $('.listVoucher').val('');
+                    $('.listVoucher').prop('disabled', true);
+                }else{
+                    $('#generateVoucher').hide();
+                    $('.generateVoucher').removeAttr('required');
+                    $('.generateVoucher').prop('disabled', true);
+                    $('#listVoucher').hide();
+                    $('.listVoucher').removeAttr('required');
+                    $('.listVoucher').prop('disabled', true);
                 }
             });
 
