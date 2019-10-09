@@ -355,7 +355,7 @@
                             </div>
                         </div>
                     </div>
-
+{{-- 
                     @if ($val['deals_voucher_type'] == "Auto generated" || $val['deals_voucher_type'] == "List Vouchers")
                     <div class="form-group">
                         <label class="col-md-3 control-label">Voucher Total <span class="required" aria-required="true"> * </span></label>
@@ -365,6 +365,33 @@
                         </div>
                     </div>
                     @endif
+ --}}
+                    <div class="form-group" id="listVoucher" @if (old('voucher_code')||old('deals_voucher_type',$val['deals_voucher_type']) == "List Vouchers") style="display: block;" @else style="display: none;" @endif>
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-9">
+                            <div class="col-md-3">
+                                <label class="control-label">Input Voucher 
+                                    <span class="required" aria-required="true"> * </span> 
+                                    <br> <small> Separated by new line </small>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea name="voucher_code" class="form-control listVoucher" rows="10">{{ old('voucher_code') }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="generateVoucher" @if (!(old('voucher_code')||old('deals_voucher_type',$val['deals_voucher_type']) == "List Vouchers")&&old('deals_total_voucher',$val['deals_total_voucher'])) style="display: block;" @else style="display: none;" @endif>
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-9">
+                            <div class="col-md-3">
+                                <label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control generateVoucher" name="deals_total_voucher" value="{{ old('deals_total_voucher',$val['deals_total_voucher']) }}" min="$val['deals_total_voucher']??0" placeholder="Total Voucher">
+                            </div>
+                        </div>
+                    </div>
 
                     <br>
 
