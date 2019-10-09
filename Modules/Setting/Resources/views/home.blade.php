@@ -364,6 +364,12 @@
 
 	});
 
+
+	$('.nav-tabs a').on('shown.bs.tab', function(){
+		var href=$(this).attr('href');
+	    window.history.pushState(href, href, "{{url()->current()}}"+href);
+	});
+
 	</script>
 @endsection
 
