@@ -61,6 +61,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');
+    
+    
+    Route::post('text_menu/update/{category}', 'SettingController@updateTextMenu');
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
