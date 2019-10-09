@@ -30,7 +30,7 @@
 		</li>
 		@endif
 
-		@if(MyHelper::hasAccess([2,4,7,9], $grantedFeature))
+		@if(MyHelper::hasAccess([2,4,7,9,148], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #990003;font-weight: 600;">Accounts</h3>
 			</li>
@@ -183,6 +183,32 @@
 			@endif
 		@endif
 
+		@if(MyHelper::hasAccess([120,148], $grantedFeature))
+		<li class="nav-item {{($menu_active == 'profile-completion') ? 'active open' : ''}}">
+			<a href="javascript:;" class="nav-link nav-toggle">
+				<i class="icon-users"></i>
+				<span class="title">Profile Completion</span>
+				<span class="arrow {{($menu_active == 'profile-completion') ? 'open' : ''}}"></span>
+			</a>
+			<ul class="sub-menu">
+				@if(MyHelper::hasAccess([148], $grantedFeature))
+				<li class="nav-item {{($submenu_active == 'complete-profile') ? 'active open' : ''}}">
+					<a href="{{url('setting/complete-profile')}}" class="nav-link ">
+						<span class="title">User Profile Completion</span>
+					</a>
+				</li>
+				@endif
+				@if(MyHelper::hasAccess([120], $grantedFeature))
+				<li class="nav-item {{($submenu_active == 'complete-user-profile-point-bonus') ? 'active' : ''}}">
+					<a href="{{url('user/autoresponse/complete-user-profile-point-bonus')}}" class="nav-link nav-toggle">
+						<span class="title">[Response] User Profile Completion Point Bonus</span>
+					</a>
+				</li>
+				@endif
+			</ul>
+		</li>
+		@endif
+		
 		@if(MyHelper::hasAccess([19], $configs))
 			@if(MyHelper::hasAccess([78], $configs))
 			<li class="nav-item {{($menu_active == 'balance-reset') ? 'active' : ''}}">
@@ -494,11 +520,6 @@
 					<li class="nav-item {{($submenu_active == 'rejected-order-point-refund') ? 'active' : ''}}">
 						<a href="{{url('user/autoresponse/rejected-order-point-refund')}}" class="nav-link nav-toggle">
 							<span class="title">[Response] Rejected Order Point Refund</span>
-						</a>
-					</li>
-					<li class="nav-item {{($submenu_active == 'complete-user-profile-point-bonus') ? 'active' : ''}}">
-						<a href="{{url('user/autoresponse/complete-user-profile-point-bonus')}}" class="nav-link nav-toggle">
-							<span class="title">[Response] Complete User Profile Point Bonus</span>
 						</a>
 					</li>
 

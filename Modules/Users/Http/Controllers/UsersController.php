@@ -85,7 +85,7 @@ class UsersController extends Controller
 				break;
 						
 			case 'complete-user-profile-point-bonus':
-				$data['menu_active'] = 'transaction';
+				$data['menu_active'] = 'profile-completion';
 				$data['submenu_active'] = 'complete-user-profile-point-bonus';
 				break;
 						

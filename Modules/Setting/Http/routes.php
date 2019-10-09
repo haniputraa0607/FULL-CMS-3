@@ -24,6 +24,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 
     Route::any('version', 'SettingController@versionSetting');
 	
+    /* complete profile */
+    Route::any('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
+    
     Route::any('home', 'SettingController@homeSetting');
 	Route::any('date', 'SettingController@dateSetting');
     Route::get('{key}', 'SettingController@settingList');
@@ -54,10 +57,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('featured_deal/update', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@updateFeaturedDeal']);
     Route::post('featured_deal/reorder', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@reorderFeaturedDeal']);
     Route::get('featured_deal/delete/{id_featured_deal}', ['middleware' => 'feature_control:147', 'uses' => 'SettingController@deleteFeaturedDeal']);
-    
-    /* complete profile */
-    Route::post('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
-    Route::post('complete-profile-success-page', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfileSuccessPage']);
 
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');
