@@ -1009,22 +1009,32 @@ class SettingController extends Controller
     // complete user profile settings
     public function completeProfile(Request $request)
     {
-        $validatedData = $request->validate([
-            // 'complete_profile_point'    => 'required',
-            'complete_profile_cashback' => 'required',
-            'complete_profile_count'    => 'required',
-            'complete_profile_interval' => 'required'
-        ]);
+        $post=$request->except('_token');
+        if($post){
+            $validatedData = $request->validate([
+                'complete_profile_cashback' => 'required',
+            ]);
 
-        $post = $request->except('_token');
-        // remove this, if point feature is active
-        $post['complete_profile_point'] = 0;
+            $post = $request->except('_token');
+            // remove this, if point feature is active
+            $post['complete_profile_point'] = 0;
 
-        // update complete profile
-        $result = MyHelper::post('setting/complete-profile', $post);
-        //dd($result);
+            // update complete profile
+            $result = MyHelper::post('setting/complete-profile', $post);
 
-        return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/home#user-profile');
+            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/complete-profile');
+        }else{
+            $data = [
+                'title'         => 'Complete Profile Setting',
+                'menu_active'    => 'profile-completion',
+                'submenu_active' => 'complete-profile'
+            ];
+            $request = MyHelper::get('setting/complete-profile');
+            if(isset($request['result'])) {
+                $data['complete_profile'] = $request['result'];
+            }
+            return view('setting::profile-completion.profile-completion',$data);
+        }
     }
 
     // complete user profile success page content

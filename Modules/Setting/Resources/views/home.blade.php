@@ -443,13 +443,7 @@
         </li> -->
         <!-- <li>
             <a href="#app-navigation" data-toggle="tab">App Navigation Text</a>
-        </li> -->
-		@if(MyHelper::hasAccess([148], $grantedFeature))
-        <li>
-            <a href="#user-profile" data-toggle="tab">User Profile</a>
-        </li>
-		@endif
-                
+        </li> -->                
                 @if(MyHelper::hasAccess([160], $grantedFeature))
         <li>
             <a href="#text-menu" data-toggle="tab">Text Menu</a>
@@ -885,116 +879,6 @@
 			</div>
 		</div>
 	</div>
-
-
-	{{-- user profile --}}
-	@if(MyHelper::hasAccess([148], $grantedFeature))
-    <div class="tab-pane" id="user-profile">
-		<div class="row" style="margin-top:20px">
-			<div class="col-md-12">
-				<div class="portlet light bordered">
-					<div class="portlet-title">
-						<div class="caption font-blue ">
-							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">User Profile Completion</span>
-						</div>
-					</div>
-					<div class="portlet-body">
-
-						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile')}}" method="POST">
-							<div class="form-body">
-								{{-- <div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Point
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Point yang diperoleh user ketika melengkapi data" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_point" value="{{ $complete_profile['complete_profile_point'] }}" required>
-									</div>
-								</div> --}}
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Popup Text
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan pada popup lengkapi data profil" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-6">
-										<input class="form-control" maxlength="50" type="text" name="complete_profile_popup" value="@if(isset($complete_profile['complete_profile_popup'])){{ $complete_profile['complete_profile_popup'] }}@endif" required>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion {{env('POINT_NAME', 'Points')}}
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="{{env('POINT_NAME', 'Points')}} yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}" required>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Count
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Berapa kali aplikasi akan menawarkan user untuk melengkapi data profil" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_count" value="{{ $complete_profile['complete_profile_count'] }}" required>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Interval (Minutes)
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Jarak waktu penawaran hingga penawaran selanjutnya (menit)" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_interval" value="{{ $complete_profile['complete_profile_interval'] }}" required>
-									</div>
-								</div>
-							</div>
-							<div class="form-actions" style="text-align:center">
-								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		{{-- update user's profile success --}}
-		<div class="row" style="margin-top:20px">
-			<div class="col-md-12">
-				<div class="portlet light bordered">
-					<div class="portlet-title">
-						<div class="caption font-blue ">
-							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">User Profile Success Page</span>
-						</div>
-					</div>
-
-					<div class="portlet-body">
-						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile-success-page')}}" method="POST">
-							<div class="form-body">
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-2">Content
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Konten halaman sukses setelah user melengkapi data" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-9">
-                                		<textarea name="complete_profile_success_page" id="field_content_long" class="form-control summernote">{!! $complete_profile['complete_profile_success_page'] !!}</textarea>
-									</div>
-								</div>
-							</div>
-							<div class="form-actions" style="text-align:center">
-								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
-							</div>
-						</form>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	@endif
         
         {{-- text menu --}}
 	@if(MyHelper::hasAccess([160], $grantedFeature))
