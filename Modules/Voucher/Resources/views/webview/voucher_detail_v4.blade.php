@@ -184,7 +184,7 @@
 	<div class="deals-detail">
 		@if(!empty($voucher))
 			@php
-				$voucher = $voucher[0];
+				$voucher = $voucher['data'][0];
 			@endphp
 			<div class="col-md-4 col-md-offset-4">
 				<!-- Modal QR Code -->
