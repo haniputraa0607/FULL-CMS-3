@@ -327,7 +327,7 @@
 
 				@if(!isset($voucher['redeemed_at']) || $voucher['redeemed_at'] == null)
 					<center>
-						<button type="button" id="invalidate" class="btn btn-primary GoogleSans-Bold">Invalidate</button>
+						<button type="button" id="invalidate" class="btn btn-primary GoogleSans-Bold">{{$voucher['button_text']}}</button>
 					</center>
 				@endif
 				@endif
