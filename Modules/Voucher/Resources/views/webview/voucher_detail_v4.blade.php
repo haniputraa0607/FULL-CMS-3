@@ -300,7 +300,7 @@
 					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
 				</div>
 
-				<div class="outlet-wrapper" style="padding-top: 10px;">
+				<div class="outlet-wrapper" style="padding-top: 10px; margin-bottom: 35px;">
 					@if ($voucher['deal_voucher']['deal']['label_outlet'] == 'Some' || isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
 						<div class="outlet">
 							@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
@@ -326,8 +326,8 @@
 				</div>
 
 				@if(!isset($voucher['redeemed_at']) || $voucher['redeemed_at'] == null)
-					<center>
-						<button type="button" id="invalidate" class="btn btn-primary GoogleSans-Bold">{{$voucher['button_text']}}</button>
+					<center style="position: fixed; bottom: 0; width: 100%; background-color: rgb(255, 255, 255);">
+						<button style="margin-bottom: 15px; margin-top: 15px;" type="button" id="invalidate" class="btn btn-primary GoogleSans-Bold">{{$voucher['button_text']}}</button>
 					</center>
 				@endif
 				@endif
