@@ -482,69 +482,10 @@
             <div class="row">
                 <div class="col-12 text-13-3px text-grey-light GoogleSans">
                     Transaksi Anda
-                    <hr style="margin:10px 0 20px 0">
                 </div>
-                @php $countQty = 0; @endphp
-                @foreach ($data['product_transaction'] as $key => $val)
-                    <div class="col-7 text-13-3px text-black GoogleSans">{{ $val['product']['product_name'] }}</div>
-                    <div class="col-5 text-right text-13-3px text-black GoogleSans">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal'])) }}</div>
-                    <div class="col-12 text-grey text-12-7px text-black-grey-light GoogleSans">{{ $val['transaction_product_qty'] }} x {{ str_replace(',', '.', number_format($val['transaction_product_price'])) }}</div>
-                    <div class="space-bottom col-8">
-                        <div class="space-bottom text-12-7px text-grey-medium-light GoogleSans-Italic" style="word-break: break-word">
-                            @if (isset($val['transaction_product_note']))
-                                {{ $val['transaction_product_note'] }}
-                            @else
-                                -
-                            @endif
-                        </div>
-                    </div>
-                    @php $countQty += $val['transaction_product_qty']; @endphp
-                @endforeach
-
-                <div class="col-12 text-12-7px text-right"><hr style="margin:0"></div>
-                <div class="col-6 text-13-3px space-bottom space-top-all text-black GoogleSans">SubTotal ({{$countQty}} item)</div>
-                <div class="col-6 text-13-3px space-bottom space-top-all text-black text-right GoogleSans">{{ str_replace(',', '.', number_format($data['transaction_subtotal'])) }}</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="kotak">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-14-3px space-top GoogleSans text-red">Detail Pembayaran <hr> </div>
-                <div class="col-6 text-13-3px space-text GoogleSans text-black">Subtotal ({{$countQty}} item)</div>
-                <div class="col-6 text-13-3px text-right space-text GoogleSans text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_subtotal'])) }}</div>
-
-                @if($data['transaction_tax'] > 0)
-                <div class="col-6 text-13-3px space-text GoogleSans text-black">Tax</div>
-                <div class="col-6 text-13-3px text-right GoogleSans text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_tax'])) }}</div>
-                @endif
-
-                @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
-                <div class="col-6 text-13-3px space-text GoogleSans text-black">Ongkos Kirim</div>
-                    @if($data['transaction_is_free'] == '1')
-                        <div class="col-6 text-13-3px text-right GoogleSans text-white"><div class="label-free">FREE</div></div>
-                    @else
-                        @if($data['transaction_shipment_go_send'] != $data['transaction_shipment'])
-                            <div class="col-6 text-13-3px text-right GoogleSans text-grey-black text-strikethrough">{{ str_replace(',', '.', number_format($data['transaction_shipment_go_send'])) }}</div>
-                            <div class="col-12 space-text text-13-3px text-right GoogleSans text-red">{{ str_replace(',', '.', number_format($data['transaction_shipment'])) }}</div>
-                        @else
-                            <div class="col-6 text-13-3px text-right GoogleSans text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_shipment'])) }}</div>
-                        @endif
-                    @endif
-                @endif
-
-                @if($data['transaction_discount'] > 0)
-                <div class="col-6 text-13-3px space-text GoogleSans">Diskon</div>
-                <div class="col-6 text-13-3px text-right GoogleSans text-red">- {{ str_replace(',', '.', number_format($data['transaction_discount'])) }}</div>
-                @endif
-
-                @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text GoogleSans">Kenangan Points</div>
-                <div class="col-6 text-13-3px text-right GoogleSans text-red">- {{ str_replace(',', '.', number_format(abs($data['balance']))) }}</div>
-                @endif
 
                 <div class="col-12 text-12-7px text-right"><hr></div>
+                
                 <div class="col-6 text-13-3px GoogleSans text-black ">Total Pembayaran</div>
                 @if(isset($data['balance']))
                 <div class="col-6 text-13-3px text-right GoogleSans text-black">{{ str_replace(',', '.', number_format($data['transaction_grandtotal'] - $data['balance'])) }}</div>
@@ -554,93 +495,6 @@
             </div>
         </div>
     </div>
-
-    @if ($data['transaction_payment_status'] == 'Completed'|| $data['transaction_payment_status'] == 'Paid')
-        <div class="kotak">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-14-3px space-top text-red GoogleSans">Metode Pembayaran <hr> </div>
-                        @if(count($data['data_payment']) > 1)
-                            @foreach($data['data_payment'] as $pay)
-                                @if(isset($pay['type']) && $pay['type'] == 'Midtrans')
-                                    @if(isset($pay['payment_type']))
-                                    <div class="col-6 text-13-3px GoogleSans text-black">
-                                        {{ ucwords(str_replace('_', ' ', $pay['payment_type'])) }}
-                                    </div>
-                                    <div class="col-6 text-13-3px text-black text-right GoogleSans">
-                                        LUNAS
-                                    </div>
-                                    @endif
-
-                                    @if(isset($pay['bank']))
-                                    <div class="col-6 text-black text-12-7px GoogleSans">
-                                        {{ ucwords(str_replace('_', ' ', $pay['bank'])) }}
-                                    </div>
-                                    @endif
-
-                                    @if(!isset($pay['bank']) && !isset($pay['payment_type']))
-                                    <div class="col-6 text-black text-13-3px">
-                                        Online Payment
-                                    </div>
-                                    <div class="col-6 text-13-3px text-black text-right GoogleSans">
-                                        LUNAS
-                                    </div>
-                                    @endif
-                                @elseif(isset($pay['type']) && $pay['type'] == 'Ovo')
-                                    <div class="col-6 text-13-3px GoogleSans text-black">
-                                        Ovo
-                                    </div>
-                                    <div class="col-6 text-13-3px text-black text-right GoogleSans">
-                                        LUNAS
-                                    </div>
-                                @endif
-                            @endforeach
-                        @else
-                        <div class="col-6 text-13-3px GoogleSans text-black">
-                            @if ($data['trasaction_payment_type'] == 'Balance')
-                                Kenangan Points
-                            @elseif ($data['trasaction_payment_type'] == 'Midtrans')
-                                @if(isset($data['data_payment'][0]['payment_type']))
-                                    {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['payment_type'])) }}
-                                @else
-                                    Online Payment
-                                @endif
-                            @elseif ($data['trasaction_payment_type'] == 'Manual')
-                                Transfer Bank
-                            @elseif ($data['trasaction_payment_type'] == 'Offline')
-                                @if(isset($data['data_payment'][0]['payment_bank']))
-                                    {{$data['data_payment'][0]['payment_bank']}}
-                                @else
-                                    TUNAI
-                                @endif
-                            @endif
-                    </div>
-                    <div class="col-6 text-13-3px text-right text-black GoogleSans">
-                        @if ($data['trasaction_payment_type'] == 'Offline')
-                            SELESAI
-                        @else
-                            LUNAS
-                        @endif
-                    </div>
-                @endif
-
-    @if (isset($data['payment']['bank']))
-        <div class="col-6 text-black text-12-7px GoogleSans">{{ $data['payment']['bank'] }}</div>
-    @endif
-
-    @if (isset($data['payment']['payment_method']))
-        <div class="col-6 text-black text-12-7px GoogleSans">{{ $data['payment']['payment_method'] }}</div>
-    @endif
-
-    @if(isset($data['data_payment'][0]['bank']))
-    <div class="col-6 text-black text-12-7px GoogleSans">
-        {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['bank'])) }}
-    </div>
-    @endif
-                </div>
-            </div>
-        </div>
-    @endif
 
     @if ($data['trasaction_type'] != 'Offline')
     <div class="kotak">
