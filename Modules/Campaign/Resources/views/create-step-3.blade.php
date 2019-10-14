@@ -593,14 +593,25 @@
 					<button type="submit" class="btn blue">Send Campaingn</button>
 				</div>
 			</div>
+			@elseif($result['campaign_is_sent'] == 'Yes')
+			<form role="form" action="" method="POST">
+			<div class="col-md-12" style="text-align:center;">
+				<div class="form-actions">
+					This Campaign has already been sent
+					<div class="col-md-12" style="text-align:center;">
+						<div class="form-actions">
+							{{csrf_field()}}
+							<input type="hidden" name="resend" value="1">
+							<button type="submit" class="btn blue">Re-Send Campaign</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
 			@else
 			<div class="col-md-12" style="text-align:center;">
 				<div class="form-actions">
-					@if($result['campaign_send_at'] != null && $result['campaign_is_sent'] == 'No')
-						This Campaign will be sent automatically at desired time ({{date("d F Y - H:i", strtotime($result['campaign_send_at']))}})
-					@elseif($result['campaign_is_sent'] == 'Yes')
-						This Campaign has already sent
-					@endif
+					This Campaign will be sent automatically at desired time ({{date("d F Y - H:i", strtotime($result['campaign_send_at']))}})					
 				</div>
 			</div>
 		@endif

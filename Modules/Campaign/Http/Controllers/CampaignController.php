@@ -719,8 +719,9 @@ class CampaignController extends Controller
     }
 
 	public function campaignStep3Post(Request $request, $id_campaign){
-		$action = MyHelper::post('campaign/send', ['id_campaign' => $id_campaign]);
+		$action = MyHelper::post('campaign/send', ['id_campaign' => $id_campaign,'resend'=>$request->post('resend')]);
 		if($action['status'] == 'success'){
+			$id_campaign=$action['result']['id_campaign']??$id_campaign;
 			return redirect('campaign/step3/'.$id_campaign);
 		} else{
 			return back()->withErrors($action['messages']);
