@@ -817,8 +817,8 @@
 							<span class="title">Auto Response Claim Deals Success</span>
 						</a>
 					</li>
-					<li class="nav-item {{($submenu_active == 'deals-autoresponse-deals') ? 'active open' : ''}}">
-						<a href="{{url('user/autoresponse/deals')}}" class="nav-link ">
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-redeem-deals-success') ? 'active open' : ''}}">
+						<a href="{{url('user/autoresponse/redeem-voucher-success')}}" class="nav-link ">
 							<i class="fa fa-mail-forward"></i>
 							<span class="title">Auto Response Redeems Deals</span>
 						</a>
