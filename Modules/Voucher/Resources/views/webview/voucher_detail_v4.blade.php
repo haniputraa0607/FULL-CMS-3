@@ -238,8 +238,11 @@
 				
 				<hr style="width:80%;border-top: 1px dashed #aaaaaa;margin-top: 0px;margin-bottom: 10px;">
 
-				<div class="width:80%; text-center ProductSans">Pastikan langkah ini dilakukan oleh kasir. Jangan terima voucher apabila sudah dalam keadaan terbuka</div>
-				
+				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
+					<div class="text-center" style="padding-top: 0px; padding-bottom: 5px;">
+						Pastikan langkah ini dilakukan oleh kasir. Jangan terima voucher apabila sudah dalam keadaan terbuka
+					</div>
+				</div>
 				@else
 				<div class="title-wrapper clearfix">
 					<img class="deals-img center-block" src="{{ $voucher['deal_voucher']['deal']['url_deals_image'] }}" alt="">
