@@ -309,14 +309,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
         <div id="box" class="box-shadow"></div>
 
-        @if (isset($result['custom_page_product_text']))
+        @if (isset($result['custom_page_image_header']))
             <div class="kotak">
                 <div class="container">
-                    @if (isset($result['custom_page_product']))
+                    @if (isset($result['custom_page_image_header']))
                         <div class="row space-bottom">
-                            <div class="row container kotak-title">
-                                <div class="col-12 text-bot text-black GoogleSans-Medium" style=" line-height: 21px;padding-bottom: 10px;padding-top: 4px;"> <span> @if($result['custom_page_title'] == null){{ strtoupper($result['custom_page_title']) }} @else {{ strtoupper($result['custom_page_title']) }} @endif</span></div>
-                            </div>
                             <div class="owl-carousel owl-theme">
                                 @foreach ($result['custom_page_image_header'] as $key => $value)
                                 <div class="item"> <img style="height: 60vw !important; object-fit: cover" src="{{env('AWS_URL')}}{{ $value['custom_page_image'] }}"> <div class="questrial-font image-caption-all text-13-3px"></div> </div>
