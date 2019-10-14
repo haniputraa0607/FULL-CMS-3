@@ -823,6 +823,12 @@
 							<span class="title">Auto Response Redeems Deals</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-receive-hidden-deals') ? 'active open' : ''}}">
+						<a href="{{url('user/autoresponse/receive-hidden-deals')}}" class="nav-link ">
+							<i class="fa fa-mail-forward"></i>
+							<span class="title">Auto Response Receive Hidden Deals</span>
+						</a>
+					</li>
 				@endif
 			@endif
 

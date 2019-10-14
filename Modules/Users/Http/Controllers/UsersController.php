@@ -59,6 +59,11 @@ class UsersController extends Controller
 				  'submenu_active'    => 'user-autoresponse-'.$subject
 				];
 		switch ($subject) {
+			case 'receive-hidden-deals':
+				$data['menu_active'] = 'deals-autoresponse';
+				$data['submenu_active'] = 'deals-autoresponse-receive-hidden-deals';
+				break;
+
 			case 'redeem-voucher-success':
 				$data['menu_active'] = 'deals-autoresponse';
 				$data['submenu_active'] = 'deals-autoresponse-redeem-deals-success';
