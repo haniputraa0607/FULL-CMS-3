@@ -227,15 +227,19 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="font-title">{{$result['user_membership']['membership_name']}} Level</div>
                     <div class="font-regular-gray">Tingkatkan transaksimu!</div>
-                    <div class="font-regular-gray">Rp{{number_format($result['next_trx'])}} menuju {{$result['next_membership_name']}} Member</div>
 
                     @foreach ($result['all_membership'] as $item)
                     <div class="tab-pane fade show @if($item['membership_name'] == $result['user_membership']['membership_name']) active @endif" id="nav-{{strtolower($item['membership_name'])}}" role="tabpanel" aria-labelledby="nav-home-tab">
+                        @php
+                            $trx_total = $item['min_total_balance'] - $result['total_trx']
+                        @endphp
+                        @if ($trx_total <= 0)
+                            <div class="font-regular-gray">Anda telah melewati tingkatan ini</div>
+                        @else
+                            <div class="font-regular-gray">Rp {{number_format($trx_total)}} menuju {{$item['membership_name']}} Member</div>
+                        @endif
                         <div class="level-container">
                             <div class="level-wrapper">
-                                @php
-                                    $trx_total = $item['min_total_balance'] - $result['total_trx']
-                                @endphp
                                 @if ($trx_total <= 0)
                                     <div class="current-level-info">
                                         <div style="width:100%"></div>                                
@@ -243,8 +247,8 @@
                                         <div class="font-regular-brown">{{$item['min_total_balance']}}</div>
                                     </div>
                                     
-                                    <div class="level-progress-container">
-                                        <div class="level-progress" style="width:100%"></div>
+                                    <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
+                                        <div class="level-progress" style="width:100%; height: 6px;"></div>
                                     </div>
                                 @else
                                     <div class="current-level-info">
@@ -253,8 +257,8 @@
                                         <div class="font-regular-brown">{{number_format($result['total_trx'])}}</div>
                                     </div>
                                     
-                                    <div class="level-progress-container">
-                                        <div class="level-progress" style="width:{{ ($result['total_trx'] / $item['min_total_balance']) * 100 }}%"></div>
+                                    <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
+                                        <div class="level-progress" style="width:{{ ($result['total_trx'] / $item['min_total_balance']) * 100 }}%; height: 6px;"></div>
                                     </div>
                                 @endif
                                 
