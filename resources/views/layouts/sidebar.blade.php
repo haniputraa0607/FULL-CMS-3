@@ -1236,6 +1236,15 @@
 		</li>
 		@endif
 
+		@if(MyHelper::hasAccess([162,163], $grantedFeature))
+		<li class="nav-item {{($menu_active == 'confirmation-messages') ? 'active' : ''}}">
+			<a href="{{url('setting/confirmation-messages')}}" class="nav-link">
+				<i class="icon-speech"></i>
+				<span class="title">Confirmation Messages</span>
+			</a>
+		</li>
+		@endif
+
 		@if(MyHelper::hasAccess([85,86,87,88,89,90,91,94], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #990003;font-weight: 600;">About</h3>

@@ -26,7 +26,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 	
     /* complete profile */
     Route::any('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
-    
+
+    /* confirmation messages */
+    Route::any('confirmation-messages','SettingController@confirmationMessages');
+
     Route::any('home', 'SettingController@homeSetting');
 	Route::any('date', 'SettingController@dateSetting');
     Route::get('{key}', 'SettingController@settingList');

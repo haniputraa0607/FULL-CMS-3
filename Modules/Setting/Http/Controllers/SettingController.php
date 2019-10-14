@@ -1101,4 +1101,37 @@ class SettingController extends Controller
         
         return parent::redirect($result, 'Text menu has been updated.', 'setting/home#text-menu');
     }
+
+    public function confirmationMessages(Request $request){
+        $data = [
+            'title'          => 'Confirmation Messages',
+            'menu_active'    => 'confirmation-messages',
+            'submenu_active' => '',
+        ];
+        if($post=$request->except('_token')){
+            $data=[
+                'update'=>[
+                    'payment_messages'=>['value_text',$post['payment_messages']],
+                    'payment_messages_point'=>['value_text',$post['payment_messages_point']],
+                    'payment_success_messages'=>['value_text',$post['payment_success_messages']]
+                ]
+            ];
+            $result = MyHelper::post('setting/update2', $data);
+            if(($result['status']??'')=='success'){
+                return redirect('setting/confirmation-messages')->with('success',['Confirmation messages has been updated']);
+            }else{
+                return back()->withErrors($result['messages']??['Something went wrong']);
+            }
+        }else{
+            $payment_messages=MyHelper::post('setting',['key'=>'payment_messages'])['result']['value_text']??'Kamu yakin ingin mengambil voucher ini?';
+            $payment_messages_point=MyHelper::post('setting',['key'=>'payment_messages_point'])['result']['value_text']??'Anda akan menukarkan %point% points anda dengan Voucher %deals_title%?';
+            $payment_success_messages=MyHelper::post('setting',['key'=>'payment_success_messages'])['result']['value_text']??'Apakah kamu ingin menggunakan Voucher sekarang?';
+            $data['msg']=[
+                'payment_messages'=>$payment_messages,
+                'payment_messages_point'=>$payment_messages_point,
+                'payment_success_messages'=>$payment_success_messages
+            ];
+            return view('setting::confirmation-messages.confirmation-messages',$data);
+        }
+    }
 }
