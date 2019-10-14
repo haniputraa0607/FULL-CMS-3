@@ -236,7 +236,7 @@
                                 @php
                                     $trx_total = $item['min_total_balance'] - $result['total_trx']
                                 @endphp
-                                @if ($trx_total < 0)
+                                @if ($trx_total <= 0)
                                     <div class="current-level-info">
                                         <div style="width:100%"></div>                                
                                         <img src="{{env('APP_URL')}}images/coin.png"/>
