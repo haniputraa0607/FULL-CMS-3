@@ -4,7 +4,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="index.html">
-				<img src="{{ env('AWS_ASSET_URL') }}{{ ('images/logo_150_white.png') }}" alt="logo" class="logo-default"  style="margin: 8px 0 0;"/> </a>
+				<img src="{{ env('AWS_ASSET_URL') }}{{ ('images/logo.png') }}" alt="logo" class="logo-default"  style="margin: 8px 0 0;"/> </a>
 			<div class="menu-toggler sidebar-toggler">
 				<span></span>
 			</div>
@@ -18,7 +18,7 @@
 		<!-- BEGIN TOP NAVIGATION MENU -->
 		<div class="top-menu">
 			<ul class="nav navbar-nav pull-right">
-                        
+
 				<!-- BEGIN NOTIFICATION DROPDOWN -->
 				<!-- DOC: Apply "dropdown-dark" class after "dropdown-extended" to change the dropdown styte -->
 				<!-- DOC: Apply "dropdown-hoverable" class after below "dropdown" and remove data-toggle="dropdown" data-hover="dropdown" data-close-others="true" attributes to enable hover dropdown mode -->
