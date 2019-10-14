@@ -143,11 +143,11 @@ $configs = session('configs');
 						}
 
 						if(result[0]['reply_push_image'] != "" && result[0]['reply_push_image'] != null){
-							document.getElementById('reply_push_image').src = "http://crmapi.staging.co.id/"+result[0]['reply_push_image'];
+							document.getElementById('reply_push_image').src = "{{ env('AWS_URL') }}"+result[0]['reply_push_image'];
 						}
 
 						if(result[0]['reply_push_clickto'] != "" && result[0]['reply_push_clickto'] != null){
-							document.getElementById('reply_push_clickto').src = "http://crmapi.staging.co.id/"+result[0]['reply_push_image'];
+							document.getElementById('reply_push_clickto').src = "{{ env('AWS_URL') }}"+result[0]['reply_push_image'];
 						}
 
 						/* document.getElementById('reply_push_subject').disabled  = true;
@@ -792,7 +792,7 @@ $configs = session('configs');
 							<div class="form-group" id="link" style="display:none;">
 								<label for="reply_push_link" class="control-label col-md-3">Link</label>
 								<div class="col-md-9">
-									<input type="text" placeholder="http://" class="form-control" name="reply_push_link" id="reply_push_link">
+									<input type="text" placeholder="https://" class="form-control" name="reply_push_link" id="reply_push_link">
 								</div>
 							</div>
 						@endif

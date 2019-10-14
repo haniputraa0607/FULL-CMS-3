@@ -9,6 +9,9 @@
 			'todayHighlight' : true, 
 			'autoclose' : true 
 		});  
+		if(!($('#csvFilter').length)){
+			$('#manualFilter').show();
+		}
 	})
 
 	function changeSelect(){

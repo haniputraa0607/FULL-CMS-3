@@ -19,7 +19,7 @@ $configs = session('configs');
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
 
     <!-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
@@ -31,25 +31,25 @@ $configs = session('configs');
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
     {{-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script> --}}
     {{-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>     --}}
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>    
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
-    
-    <script>   
+
+    <script>
     /*$('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
         'todayHighlight' : true,
         'autoclose' : true
-    }); 
+    });
     $('.timepicker').timepicker(); */
-    
+
     $(".form_datetime").datetimepicker({
         format: "d-M-yyyy hh:ii",
         autoclose: true,
         todayBtn: true
     });
     </script>
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
             var _URL = window.URL || window.webkitURL;
@@ -64,7 +64,7 @@ $configs = session('configs');
                 });
             });
             token = '<?php echo csrf_token();?>';
-            
+
             /* TYPE VOUCHER */
             $('.voucherType').click(function() {
                 // tampil duluk
@@ -147,7 +147,7 @@ $configs = session('configs');
                 else {
                     $('.dealsPromoTypeValuePrice').show();
                     $('.dealsPromoTypeValuePrice').prop('required', true);
-                    
+
                     $('.dealsPromoTypeValuePromo').val('');
                     $('.dealsPromoTypeValuePromo').hide();
                     $('.dealsPromoTypeValuePromo').removeAttr('required', true);
@@ -159,7 +159,7 @@ $configs = session('configs');
                 placeholder: 'Deals Content Long',
                 tabsize: 2,
                 height: 120,
-                toolbar: [         
+                toolbar: [
                   ['style', ['style']],
                   ['style', ['bold', 'underline', 'clear']],
                   ['color', ['color']],
@@ -201,7 +201,7 @@ $configs = session('configs');
                     contentType: false,
                     success: function(url) {
                         if (url['status'] == "success") {
-                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                         }
                         // document.getElementById('loadingDiv').style.display = "none";
                     },
@@ -212,7 +212,7 @@ $configs = session('configs');
             }
 
             // $("#file").change(function(e) {
-                
+
             //     var image, file;
             //     if ((file = this.files[0])) {
             //         image = new Image();
@@ -251,12 +251,12 @@ $configs = session('configs');
             //     img.onload = function() {
             //         imgwidth  = this.width;
             //         imgheight = this.height;
-                    
+
             //         if(imgwidth == maxwidth && imgheight == maxheight){
-                        
+
             //         }else{
             //             toastr.warning("Please check dimension of your photo. Image size must be "+maxwidth+" X "+maxheight);
-            //             // img.src = _URL.createObjectURL('http://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image');
+            //             // img.src = _URL.createObjectURL('https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image');
             //             $('#file').val("");
             //             $('#file').removeAttr('src');
             //         }
@@ -286,7 +286,7 @@ $configs = session('configs');
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -301,8 +301,8 @@ $configs = session('configs');
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Title  
-                            <span class="required" aria-required="true"> * </span> 
+                            Title
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Judul deals" data-container="body"></i>
                             </label>
                         </div>
@@ -316,7 +316,7 @@ $configs = session('configs');
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Second Title  
+                            Second Title
                             <i class="fa fa-question-circle tooltips" data-original-title="Sub judul deals jika ada" data-container="body"></i>
                             </label>
                         </div>
@@ -326,12 +326,12 @@ $configs = session('configs');
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Promo Nominal
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nominal promo" data-container="body"></i>
                             </label>
                         </div>
@@ -345,7 +345,7 @@ $configs = session('configs');
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat tentang deals yang dibuat" data-container="body"></i>
                             </label>
                         </div>
@@ -360,7 +360,7 @@ $configs = session('configs');
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Long
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang deals yang dibuat" data-container="body"></i>
                             </label>
                         </div>
@@ -404,7 +404,7 @@ $configs = session('configs');
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Publish Periode <span class="required" aria-required="true"> * </span> </label>
                         <div class="col-md-4">
@@ -443,7 +443,7 @@ $configs = session('configs');
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Image
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                             <br>
                             <span class="required" aria-required="true"> (300*300) </span>
@@ -453,7 +453,7 @@ $configs = session('configs');
                             <div class="input-icon right">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                      <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                      <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
@@ -461,7 +461,7 @@ $configs = session('configs');
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
                                         <input type="file" accept="image/*" name="deals_image" required id="file">
-                                        
+
                                         </span>
 
                                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -475,7 +475,7 @@ $configs = session('configs');
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Outlet Available
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
                             </label>
                         </div>
@@ -494,10 +494,10 @@ $configs = session('configs');
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- IDENTIFIER DEALS OR HIDDEN -->
                     @include('deals::point.deals_form')
-                    
+
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}

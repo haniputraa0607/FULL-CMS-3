@@ -322,7 +322,7 @@
             });
 
             $('.mt-repeater-add').on('click', function(event) {
-                $('.previewImage').last().attr('src', 'http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
+                $('.previewImage').last().attr('src', 'https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
                 $('.btnImage').last().show();
                 $('.featureImageForm').last().prop('type', 'file');
                 $('.featureImageForm').last().val('');
@@ -478,7 +478,7 @@
                 $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
                 $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
             });
-            
+
 			 /* IMAGE HEADER */
             $('#featureImage').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureImage', state);
@@ -534,7 +534,7 @@
 
                             if (type == "square" || type == "icon") {
                                 $('#field_image_square').val("");
-                                $('#image_square').children('img').attr('src', 'http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_square').children('img').attr('src', 'https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                         }
                     };
@@ -662,7 +662,7 @@
                     </div>
                     <div class="col-md-8">
                     <div class="form-body">
-                        
+
                         <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
@@ -702,7 +702,7 @@
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                                    <img @if (isset($detail['custom_page_icon_image'])) src="{{env('AWS_URL')}}{{$detail['custom_page_icon_image']}}" disabled @elseif (isset($result['custom_page_icon_image'])) src="{{env('AWS_URL')}}{{$result['custom_page_icon_image']}}" @else src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" @endif alt="">
+                                    <img @if (isset($detail['custom_page_icon_image'])) src="{{env('AWS_URL')}}{{$detail['custom_page_icon_image']}}" disabled @elseif (isset($result['custom_page_icon_image'])) src="{{env('AWS_URL')}}{{$result['custom_page_icon_image']}}" @else src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" @endif alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_icon" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
@@ -734,7 +734,7 @@
 								</span>
 							</div>
                         </div>
-                        
+
 						<div class="form-group featureImage">
 							<label class="col-md-3 control-label"></label>
 							<div class="col-md-9">
@@ -816,7 +816,7 @@
                                                         <div class="col-md-6">
                                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                                                <img class='previewImage' src="http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                                                <img class='previewImage' src="https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                                                 </div>
                                                                 <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
                                                                 <div class='btnImage'>
@@ -1160,7 +1160,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- PRODUCT -->
                         <div class="form-group">
                             <div class="input-icon right">

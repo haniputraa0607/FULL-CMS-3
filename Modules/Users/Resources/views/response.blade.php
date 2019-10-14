@@ -147,7 +147,7 @@ $configs = session('configs');
 			$('#autocrm_push_clickto').val(clickto).trigger('change');
 
 			document.getElementById('autocrm_push_link').value = link;
-			document.getElementById('autocrm_push_image').src = "http://crmsys-api.staging.co.id/"+image;
+			document.getElementById('autocrm_push_image').src = "{{ env('AWS_URL') }}"+image;
 			document.getElementById('id_autocrm_push').value = id;
 			setTimeout(function(){
 				$('#autocrm_push_id_reference').val(idreference).trigger('change');
@@ -481,7 +481,7 @@ $configs = session('configs');
 	$('.repeat').repeater({
         show: function () {
 			$(this).find('.type_image').hide()
-			$(this).find('img').attr('src','http://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
+			$(this).find('img').attr('src','https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
 			$(this).find('.filename').remove()
 			$(this).find('.type_file').hide()
 			$(this).find('.type_text').hide()
@@ -877,7 +877,7 @@ $configs = session('configs');
 								</label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" placeholder="http://" class="form-control" name="autocrm_push_link" value="{{$data['autocrm_push_link']}}">
+								<input type="text" placeholder="https://" class="form-control" name="autocrm_push_link" value="{{$data['autocrm_push_link']}}">
 							</div>
 						</div>
 					<hr>
@@ -971,7 +971,7 @@ $configs = session('configs');
 						<div class="form-group" id="link_inbox" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 							<label for="autocrm_inbox_link" class="control-label col-md-3">Link</label>
 							<div class="col-md-9" >
-								<input type="text" placeholder="http://" class="form-control" name="autocrm_inbox_link" id="autocrm_inbox_link" @if(isset($data['autocrm_inbox_link'])) value="{{$data['autocrm_inbox_link']}}" @endif>
+								<input type="text" placeholder="https://" class="form-control" name="autocrm_inbox_link" id="autocrm_inbox_link" @if(isset($data['autocrm_inbox_link'])) value="{{$data['autocrm_inbox_link']}}" @endif>
 							</div>
 						</div>
 						<div class="form-group" id="div_inbox_content" style="margin-bottom:30px; display:none">
@@ -1117,7 +1117,7 @@ $configs = session('configs');
 																@if($content['content_type'] == 'image')
 																	<img src="{{$content['content']}}" alt="Whatsapp content image" style="max-width: 190px; max-height:190px">
 																@else
-																	<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																	<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																@endif
 																</div>
 																<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
@@ -1215,7 +1215,7 @@ $configs = session('configs');
 													<div class="col-md-8" style="padding-left:5px">
 														<div class="fileinput fileinput-new" data-provides="fileinput">
 															<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-															<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+															<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 															<div>
