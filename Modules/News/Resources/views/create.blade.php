@@ -463,11 +463,11 @@
 
                             if (type == "square") {
                                 $('#field_image_square').val("");
-                                $('#image_square').children('img').attr('src', 'http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_square').children('img').attr('src', 'https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                             else {
                                 $('#field_image_landscape').val("");
-                                $('#image_landscape').children('img').attr('src', 'http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_landscape').children('img').attr('src', 'https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                             console.log($(this).val())
                             // console.log(document.getElementsByName('news_image_luar'))
@@ -711,7 +711,7 @@
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                    <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                    <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
@@ -741,7 +741,7 @@
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                    <img src="http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                    <img src="https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
                                     <div>

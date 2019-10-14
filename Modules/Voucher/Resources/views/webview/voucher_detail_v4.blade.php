@@ -184,13 +184,9 @@
 	<div class="deals-detail">
 		@if(!empty($voucher))
 			@php
-				$voucher = $voucher[0];
+				$voucher = $voucher['data'][0];
 			@endphp
 			<div class="col-md-4 col-md-offset-4">
-				<div class="title-wrapper clearfix">
-					<img class="deals-img center-block" src="{{ $voucher['deal_voucher']['deal']['url_deals_image'] }}" alt="">
-				</div>
-
 				<!-- Modal QR Code -->
 				@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null || isset($voucher['used_at']) && $voucher['used_at'] == null)
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
@@ -242,9 +238,16 @@
 				
 				<hr style="width:80%;border-top: 1px dashed #aaaaaa;margin-top: 0px;margin-bottom: 10px;">
 
-				<div class="width:80%; text-center ProductSans">Pastikan langkah ini dilakukan oleh kasir. Jangan terima voucher apabila sudah dalam keadaan terbuka</div>
-				
+				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
+					<div class="text-center" style="padding-top: 0px; padding-bottom: 5px;">
+						Pastikan langkah ini dilakukan oleh kasir. Jangan terima voucher apabila sudah dalam keadaan terbuka
+					</div>
+				</div>
 				@else
+				<div class="title-wrapper clearfix">
+					<img class="deals-img center-block" src="{{ $voucher['deal_voucher']['deal']['url_deals_image'] }}" alt="">
+				</div>
+
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 					<div class="title">
 						{{ $voucher['deal_voucher']['deal']['deals_title'] }}
@@ -300,7 +303,7 @@
 					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
 				</div>
 
-				<div class="outlet-wrapper" style="padding-top: 10px;">
+				<div class="outlet-wrapper" style="padding-top: 10px; margin-bottom: 35px;">
 					@if ($voucher['deal_voucher']['deal']['label_outlet'] == 'Some' || isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
 						<div class="outlet">
 							@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
@@ -326,8 +329,8 @@
 				</div>
 
 				@if(!isset($voucher['redeemed_at']) || $voucher['redeemed_at'] == null)
-					<center>
-						<button type="button" id="invalidate" class="btn btn-primary GoogleSans-Bold">Invalidate</button>
+					<center style="position: fixed; bottom: 0; width: 100%; background-color: rgb(255, 255, 255);">
+						<button style="margin-bottom: 15px; margin-top: 15px;" type="button" id="invalidate" class="btn btn-primary GoogleSans-Bold">{{$voucher['button_text']}}</button>
 					</center>
 				@endif
 				@endif

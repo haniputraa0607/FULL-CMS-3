@@ -413,7 +413,7 @@
                         toastr.warning("Please check dimension of your photo.");
                         $(this).val("");
 
-                        $('#imageoutlet').children('img').attr('src', 'http://www.placehold.it/600x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $('#imageoutlet').children('img').attr('src', 'https://www.placehold.it/600x300/EFEFEF/AAAAAA&amp;text=no+image');
                     }
                 };
 

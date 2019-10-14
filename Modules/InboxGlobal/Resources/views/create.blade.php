@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
@@ -37,13 +37,13 @@
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
 	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	
+
 	<script>
 	$(document).ready(function() {
 	  $('.summernote').summernote({
 		placeholder: 'Content',
 		tabsize: 2,
-		toolbar: [         
+		toolbar: [
           ['style', ['style']],
           ['style', ['bold', 'underline', 'clear']],
           ['color', ['color']],
@@ -64,13 +64,13 @@
       }
 
     });
-	
+
 	function addInboxSubject(param){
 		var textvalue = $('#inbox_global_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#inbox_global_subject').val(textvaluebaru);
     }
-	
+
 	function addInboxContent(param){
 		var textvalue = $('#inbox_global_content').val();
 
@@ -105,7 +105,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Outlet'){
 			$.ajax({
 				type : "GET",
@@ -128,7 +128,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'News'){
 			$.ajax({
 				type : "GET",
@@ -154,7 +154,7 @@
 		}else{
 			document.getElementById('inbox_global_id_reference').required = false;
 		}
-		
+
 		if(det == 'Home'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('inbox_global_id_reference')[0];
@@ -162,7 +162,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Inbox'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('inbox_global_id_reference')[0];
@@ -170,7 +170,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Voucher'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('inbox_global_id_reference')[0];
@@ -178,7 +178,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Contact Us'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('inbox_global_id_reference')[0];
@@ -186,7 +186,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Link'){
 			console.log(idref)
 			document.getElementById('atd_'+type).style.display = 'none';
@@ -198,7 +198,7 @@
 		}else{
 			document.getElementById('inbox_global_link').required = false;
 		}
-		
+
 		if(det == 'Logout'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('inbox_global_id_reference')[0];
@@ -217,7 +217,7 @@
 	}
 
 	</script>
-	
+
 @endsection
 
 @section('content')
@@ -260,7 +260,7 @@
 				@endif
 			@endif
 			<?php $tombolsubmit = 'hidden'; ?>
-			@include('filter') 
+			@include('filter')
 		</div>
 		<div class="col-md-12">
 			<div class="portlet light bordered">
@@ -278,7 +278,7 @@
 									Subject
 									<i class="fa fa-question-circle tooltips" data-original-title="Subjek / judul pesan inbox, tambahkan text replacer bila perlu" data-container="body"></i>
 								</label>
-							</div>							
+							</div>
 							<div class="col-md-10">
 								<input type="text" placeholder="Inbox Subject" class="form-control" name="inbox_global_subject" id="inbox_global_subject" required>
 								<br>
@@ -336,7 +336,7 @@
 								</label>
 							</div>
 							<div class="col-md-10">
-								<input type="text" placeholder="http://" class="form-control" id="inbox_global_link" name="inbox_global_link" value="@if(old('inbox_global_link')){{old('inbox_global_link')}}@endif">
+								<input type="text" placeholder="https://" class="form-control" id="inbox_global_link" name="inbox_global_link" value="@if(old('inbox_global_link')){{old('inbox_global_link')}}@endif">
 							</div>
 						</div>
 						<div class="form-group" id="div_inbox_content" style="display:none">
@@ -365,7 +365,7 @@
 									Published
 									<i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai inbox ditampilkan ke user" data-container="body"></i>
 								</label>
-							</div>										
+							</div>
 							<div class="col-md-4" >
 								<div class="input-group date form_datetime form_datetime bs-datetime">
 									<input type="text" size="16" class="form-control" name="inbox_global_start" placeholder="Date to Start Displaying" required>
@@ -381,7 +381,7 @@
 									Expired
 									<i class="fa fa-question-circle tooltips" data-original-title="Tanggal berakhirnya inbox ditampilkan ke user" data-container="body"></i>
 								</label>
-							</div>	
+							</div>
 							<div class="col-md-4" >
 								<div class="input-group date form_datetime form_datetime bs-datetime">
 									<input type="text" size="16" class="form-control" name="inbox_global_end" placeholder="Date to Stop Displaying" required>
