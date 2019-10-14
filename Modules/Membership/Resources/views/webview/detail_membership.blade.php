@@ -225,8 +225,53 @@
                 </div>
 
                 <div class="tab-content" id="nav-tabContent">
+<<<<<<< Updated upstream
                     @foreach ($result['all_membership'] as $item)
                     <div class="tab-pane fade show @if($item['membership_name'] == $result['user_membership']['membership_name']) active @endif" id="nav-{{strtolower($item['membership_name'])}}" role="tabpanel" aria-labelledby="nav-home-tab">
+=======
+                    <div class="font-title">{{$result['user_membership']['membership_name']}} Level</div>
+                    <div class="font-regular-gray">Tingkatkan transaksimu!</div>
+                    <div class="font-regular-gray">Rp{{number_format($result['next_trx'])}} menuju {{$result['next_membership_name']}} Member</div>
+
+                    @foreach ($result['all_membership'] as $item)
+                    <div class="tab-pane fade show @if($item['membership_name'] == $result['user_membership']['membership_name']) active @endif" id="nav-{{strtolower($item['membership_name'])}}" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="level-container">
+                            <div class="level-wrapper">
+                                @php
+                                    $trx_total = $item['min_total_balance'] - $result['total_trx']
+                                @endphp
+                                @if ($trx_total < 0)
+                                    <div class="current-level-info">
+                                        <div style="width:100%"></div>                                
+                                        <img src="{{env('APP_URL')}}images/coin.png"/>
+                                        <div class="font-regular-brown">{{$item['min_total_balance']}}</div>
+                                    </div>
+                                    
+                                    <div class="level-progress-container">
+                                        <div class="level-progress" style="width:100%"></div>
+                                    </div>
+                                @else
+                                    <div class="current-level-info">
+                                        <div style="width:{{ ($result['total_trx'] / $item['min_total_balance']) * 100 }}%;"></div>                                
+                                        <img src="{{env('APP_URL')}}images/coin.png"/>
+                                        <div class="font-regular-brown">{{number_format($result['total_trx'])}}</div>
+                                    </div>
+                                    
+                                    <div class="level-progress-container">
+                                        <div class="level-progress" style="width:{{ ($result['total_trx'] / $item['min_total_balance']) * 100 }}%"></div>
+                                    </div>
+                                @endif
+                                
+
+                                <div class="level-info">
+                                    <div class="font-regular-black">0</div>
+                                    <div class="font-regular-black">{{number_format($item['min_total_balance'])}}</div>
+                                </div>
+                            </div>
+                            <img src="{{$item['membership_image']}}"/>
+                        </div>
+
+>>>>>>> Stashed changes
                         <div class="font-title">{{$item['membership_name']}} Benefit : </div>
                         <div class="content-list">
                             @if($item['benefit_point_multiplier'] != null && $item['benefit_point_multiplier'] > 0)
@@ -269,6 +314,7 @@
                         </div>
                     </div>
                     @endforeach
+<<<<<<< Updated upstream
                     <div class="font-title">Member Level</div>
                     <div class="font-regular-gray">Tingkatkan transaksimu!</div>
                     <div class="font-regular-gray">Rp{{number_format($result['next_trx'])}} menuju {{$result['next_membership_name']}} Member</div>
@@ -293,6 +339,8 @@
 
                         <img src="{{env('API_URL')}}{{$result['next_membership_image']}}"/>
                     </div>
+=======
+>>>>>>> Stashed changes
             </div>
         </div>
         
