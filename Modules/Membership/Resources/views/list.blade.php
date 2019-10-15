@@ -304,7 +304,7 @@
                             // $('#remove_square').click()
                             // image.src = _URL.createObjectURL();
 							console.log($(this))
-							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'http://www.placehold.it/750x250/EFEFEF/AAAAAA&amp;text=no+image');
+							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'https://www.placehold.it/750x250/EFEFEF/AAAAAA&amp;text=no+image');
                         }
                     };
 
@@ -444,7 +444,7 @@
 													@if($membership['membership_image'] != "")
 														<img src="{{env('AWS_URL')}}{{$membership['membership_image']}}" alt="" />
 													@else
-														<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+														<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 													@endif
 												</div>
 
@@ -705,7 +705,7 @@
 										<div class="input-icon right">
 											<div class="fileinput fileinput-new" data-provides="fileinput">
 												<div class="fileinput-new thumbnail" style="width: 200px;">
-													<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+													<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 												</div>
 
 												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>

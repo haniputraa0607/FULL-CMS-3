@@ -225,8 +225,52 @@
                 </div>
 
                 <div class="tab-content" id="nav-tabContent">
+                    <div class="font-title">{{$result['user_membership']['membership_name']}} Level</div>
+                    <div class="font-regular-gray">Tingkatkan transaksimu!</div>
+
                     @foreach ($result['all_membership'] as $item)
                     <div class="tab-pane fade show @if($item['membership_name'] == $result['user_membership']['membership_name']) active @endif" id="nav-{{strtolower($item['membership_name'])}}" role="tabpanel" aria-labelledby="nav-home-tab">
+                        @php
+                            $trx_total = $item['min_total_balance'] - $result['total_trx']
+                        @endphp
+                        @if ($trx_total <= 0)
+                            <div class="font-regular-gray">Anda telah melewati tingkatan ini</div>
+                        @else
+                            <div class="font-regular-gray">Rp {{number_format($trx_total)}} menuju {{$item['membership_name']}} Member</div>
+                        @endif
+                        <div class="level-container">
+                            <div class="level-wrapper">
+                                @if ($trx_total <= 0)
+                                    <div class="current-level-info">
+                                        <div style="width:100%"></div>                                
+                                        <img src="{{env('APP_URL')}}images/coin.png"/>
+                                        <div class="font-regular-brown">{{$item['min_total_balance']}}</div>
+                                    </div>
+                                    
+                                    <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
+                                        <div class="level-progress" style="width:100%; height: 6px;"></div>
+                                    </div>
+                                @else
+                                    <div class="current-level-info">
+                                        <div style="width:{{ ($result['total_trx'] / $item['min_total_balance']) * 100 }}%;"></div>                                
+                                        <img src="{{env('APP_URL')}}images/coin.png"/>
+                                        <div class="font-regular-brown">{{number_format($result['total_trx'])}}</div>
+                                    </div>
+                                    
+                                    <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
+                                        <div class="level-progress" style="width:{{ ($result['total_trx'] / $item['min_total_balance']) * 100 }}%; height: 6px;"></div>
+                                    </div>
+                                @endif
+                                
+
+                                <div class="level-info">
+                                    <div class="font-regular-black">0</div>
+                                    <div class="font-regular-black">{{number_format($item['min_total_balance'])}}</div>
+                                </div>
+                            </div>
+                            <img src="{{$item['membership_image']}}"/>
+                        </div>
+
                         <div class="font-title">{{$item['membership_name']}} Benefit : </div>
                         <div class="content-list">
                             @if($item['benefit_point_multiplier'] != null && $item['benefit_point_multiplier'] > 0)
@@ -241,7 +285,7 @@
                             <div class="content-list-item">
                                 <img src="{{$item['membership_image']}}"/>
                                 <div class=font-regular-gray>
-                                    <p style="margin-bottom: 0px;">Benefit Cashback {{number_format($item['benefit_cashback_multiplier'])}}</p>
+                                    <p style="margin-bottom: 0px;">Benefit Cashback {{number_format($item['benefit_cashback_multiplier'])}}%</p>
                                     @if($item['cashback_maximum'] != null)
                                     <p style="margin-bottom: 0px;">Cashback Maksimum {{number_format($item['cashback_maximum'])}}</p>
                                     @endif
@@ -256,33 +300,16 @@
                                 </div>
                             </div>
                             @endif
-                        </div>
-                        
-                        <div @if($item['membership_name'] != $result['user_membership']['membership_name']) hidden @endif> 
-                            <div class="font-title">Member Level</div>
-                            <div class="font-regular-gray">Tingkat transaksimu!</div>
-                            <div class="font-regular-gray">Rp{{number_format($result['next_trx'])}} menuju {{$result['next_membership_name']}} Member</div>
-                            <div class="level-container">
-                                <div class="level-wrapper">
-                                    <div class="current-level-info">
-                                        
-                                        <div style="width: {{$result['progress_active']}}%;"></div>                                
-                                        <img src="{{env('APP_URL')}}images/coin.png"/>
-                                        <div class="font-regular-brown">{{number_format($result['progress_active'])}}</div>
-                                    </div>
-                                    
-                                    <div class="level-progress-container">
-                                        <div class="level-progress" style="width:{{$result['progress_active']}}%"></div>
-                                    </div>
-
-                                    <div class="level-info">
-                                        <div class="font-regular-black">0</div>
-                                        <div class="font-regular-black">{{number_format($result['next_trx'])}}</div>
-                                    </div>
+                            @if($item['membership_promo_id'] != null && count($item['membership_promo_id']) > 0)
+                            <div class="content-list-item">
+                                <img src="{{$item['membership_image']}}"/>
+                                <div class=font-regular-gray>
+                                    @foreach ($item['membership_promo_id'] as $data)
+                                        <p style="margin-bottom: 0px;">{{$data['promo_name']}}</p>
+                                    @endforeach
                                 </div>
-
-                                <img src="{{env('API_URL')}}{{$result['next_membership_image']}}"/>
                             </div>
+                            @endif
                         </div>
                     </div>
                     @endforeach

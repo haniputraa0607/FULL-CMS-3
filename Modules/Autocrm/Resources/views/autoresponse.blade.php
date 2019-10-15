@@ -144,7 +144,7 @@ $configs = session('configs');
 			$('#autocrm_push_clickto').val(clickto).trigger('change');
 
 			document.getElementById('autocrm_push_link').value = link;
-			document.getElementById('autocrm_push_image').src = "http://crmsys-api.staging.co.id/"+image;
+			document.getElementById('autocrm_push_image').src = env('')+image;
 			document.getElementById('id_autocrm_push').value = id;
 			setTimeout(function(){
 				$('#autocrm_push_id_reference').val(idreference).trigger('change');
@@ -682,7 +682,7 @@ $configs = session('configs');
 							</label>
 						</div>
 						<div class="col-md-9">
-							<input type="text" placeholder="http://" class="form-control" name="autocrm_push_link" value="{{$data['autocrm_push_link']}}">
+							<input type="text" placeholder="https://" class="form-control" name="autocrm_push_link" value="{{$data['autocrm_push_link']}}">
 						</div>
 					</div>
 					<hr>

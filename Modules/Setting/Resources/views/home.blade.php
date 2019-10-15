@@ -220,7 +220,7 @@
 		var type    = $(this).data('type');
 		var banner_start	= $(this).data('start');
 		var banner_end		= $(this).data('end');
-		
+
     	$('#modalBannerUpdate').on('shown.bs.modal', function () {
     		// on chrome
     		$('#modalBannerUpdate .select2').select2({ dropdownParent: $("#modalBannerUpdate .modal-body") });
@@ -352,7 +352,7 @@
 					// image.src = _URL.createObjectURL();
 
 					$('#field_splash').val("");
-					$('#div_splash').children('img').attr('src', 'http://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
+					$('#div_splash').children('img').attr('src', 'https://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
 
 					console.log($(this).val())
 					// console.log(document.getElementsByName('news_image_luar'))
@@ -362,6 +362,12 @@
 			image.src = _URL.createObjectURL(file);
 		}
 
+	});
+
+
+	$('.nav-tabs a').on('shown.bs.tab', function(){
+		var href=$(this).attr('href');
+	    window.history.pushState(href, href, "{{url()->current()}}"+href);
 	});
 
 	</script>
@@ -437,10 +443,10 @@
         </li> -->
         <!-- <li>
             <a href="#app-navigation" data-toggle="tab">App Navigation Text</a>
-        </li> -->
-		@if(MyHelper::hasAccess([148], $grantedFeature))
+        </li> -->                
+                @if(MyHelper::hasAccess([160], $grantedFeature))
         <li>
-            <a href="#user-profile" data-toggle="tab">User Profile</a>
+            <a href="#text-menu" data-toggle="tab">Text Menu</a>
         </li>
 		@endif
     </ul>
@@ -595,7 +601,7 @@
 													@if(isset($default_home['default_home_image']))
 														<img src="{{ env('AWS_URL')}}{{$default_home['default_home_image']}}" alt="">
 													@else
-														<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+														<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 													@endif
 												</div>
 												<div class="fileinput-preview fileinput-exists thumbnail" id="div_background_default" style="max-width: 500px; max-height: 250px;"></div>
@@ -651,7 +657,7 @@
 												@if(isset($default_home['default_home_splash_screen']))
 													<img src="{{ env('AWS_URL')}}{{$default_home['default_home_splash_screen']}}?" alt="">
 												@else
-													<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+													<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 												@endif
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" id="div_splash" style="max-width: 500px; max-height: 250px;"></div>
@@ -784,7 +790,7 @@
 											@if(isset($app_logo['app_logo_3x']))
 												<img src="{{ env('AWS_URL')}}{{$app_logo['app_logo_3x']}}" alt="">
 											@else
-												<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+												<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 											@endif
 										</div>
 										<div class="fileinput-preview fileinput-exists thumbnail" id="div_background_default" style="max-width: 433px; max-height: 318px;"></div>
@@ -873,114 +879,85 @@
 			</div>
 		</div>
 	</div>
-
-
-	{{-- user profile --}}
-	@if(MyHelper::hasAccess([148], $grantedFeature))
-    <div class="tab-pane" id="user-profile">
-		<div class="row" style="margin-top:20px">
-			<div class="col-md-12">
-				<div class="portlet light bordered">
-					<div class="portlet-title">
-						<div class="caption font-blue ">
-							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">User Profile Completion</span>
-						</div>
-					</div>
-					<div class="portlet-body">
-
-						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile')}}" method="POST">
-							<div class="form-body">
-								{{-- <div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Point
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Point yang diperoleh user ketika melengkapi data" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_point" value="{{ $complete_profile['complete_profile_point'] }}" required>
-									</div>
-								</div> --}}
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Popup Text
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan pada popup lengkapi data profil" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-6">
-										<input class="form-control" maxlength="50" type="text" name="complete_profile_popup" value="@if(isset($complete_profile['complete_profile_popup'])){{ $complete_profile['complete_profile_popup'] }}@endif" required>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion {{env('POINT_NAME', 'Points')}}
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="{{env('POINT_NAME', 'Points')}} yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}" required>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Count
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Berapa kali aplikasi akan menawarkan user untuk melengkapi data profil" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_count" value="{{ $complete_profile['complete_profile_count'] }}" required>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Interval (Minutes)
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Jarak waktu penawaran hingga penawaran selanjutnya (menit)" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_interval" value="{{ $complete_profile['complete_profile_interval'] }}" required>
-									</div>
-								</div>
-							</div>
-							<div class="form-actions" style="text-align:center">
-								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		{{-- update user's profile success --}}
-		<div class="row" style="margin-top:20px">
-			<div class="col-md-12">
-				<div class="portlet light bordered">
-					<div class="portlet-title">
-						<div class="caption font-blue ">
-							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">User Profile Success Page</span>
-						</div>
-					</div>
-
-					<div class="portlet-body">
-						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile-success-page')}}" method="POST">
-							<div class="form-body">
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-2">Content
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Konten halaman sukses setelah user melengkapi data" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-9">
-                                		<textarea name="complete_profile_success_page" id="field_content_long" class="form-control summernote">{!! $complete_profile['complete_profile_success_page'] !!}</textarea>
-									</div>
-								</div>
-							</div>
-							<div class="form-actions" style="text-align:center">
-								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
-							</div>
-						</form>
-					</div>
-
-				</div>
-			</div>
-		</div>
+        
+        {{-- text menu --}}
+	@if(MyHelper::hasAccess([160], $grantedFeature))
+        <div class="tab-pane" id="text-menu">
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                                <div class="caption font-blue ">
+                                        <i class="icon-settings font-blue "></i>
+                                        <span class="caption-subject bold uppercase">Text Menu Home</span>
+                                </div>
+                        </div>
+                        @if(count($text_menu_list['text_menu_home']) > 0)
+                        <div class="portlet-body">
+                                <form role="form" class="form-horizontal" action="{{url('setting/text_menu/update','menu-home')}}" method="POST">
+                                    <div class="form-body">
+                                        @foreach($text_menu_list['text_menu_home'] as $key => $value)
+                                        <div class="form-group col-md-12">
+                                            <div class="col-md-6">
+                                                <p style="margin-bottom:1%;">{{$value['text_menu']}} (Text Menu)<span class="required" aria-required="true"> * </span></p>
+                                                <input class="form-control" type="text" name="{{$key}}_text_menu" value="{{$value['text_menu']}}" maxlength="10" required>
+                                                
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p style="margin-bottom:1%;">{{$value['text_menu']}} (Text Header)<span class="required" aria-required="true"> * </span></p>
+                                                <input class="form-control" type="text" name="{{$key}}_text_header" value="{{$value['text_header']}}" maxlength="30" required>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="form-actions" style="text-align:center">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn blue">Submit</button>
+                                    </div>
+                                </form>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                                <div class="caption font-blue ">
+                                        <i class="icon-settings font-blue "></i>
+                                        <span class="caption-subject bold uppercase">Text Menu Account</span>
+                                </div>
+                        </div>
+                        @if(count($text_menu_list['text_menu_account']) > 0)
+                        <div class="portlet-body">
+                                <form role="form" class="form-horizontal" action="{{url('setting/text_menu/update','menu-account')}}" method="POST">
+                                    <div class="form-body">
+                                        @foreach($text_menu_list['text_menu_account'] as $key => $value)
+                                        <div class="form-group col-md-12">
+                                            <div class="col-md-6">
+                                                <p style="margin-bottom:1%;">{{$value['text_menu']}} (Text Menu)<span class="required" aria-required="true"> * </span></p>
+                                                <input class="form-control" type="text" name="{{$key}}_text_menu" value="{{$value['text_menu']}}" maxlength="10" required>
+                                                
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p style="margin-bottom:1%;">{{$value['text_menu']}} (Text Header)<span class="required" aria-required="true"> * </span></p>
+                                                <input class="form-control" type="text" name="{{$key}}_text_header" value="{{$value['text_header']}}" maxlength="30" required>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="form-actions" style="text-align:center">
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn blue">Submit</button>
+                                    </div>
+                                </form>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
 	</div>
 	@endif
 
@@ -1108,7 +1085,7 @@
 							<label class="control-label">Background Image <span class="required" aria-required="true"> * </span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 100px;">
-									<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+									<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1148,7 +1125,7 @@
 							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (750*375)</span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="">
+									<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1231,7 +1208,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
 						<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
@@ -1260,7 +1237,7 @@
 							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (750*375)</span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="" id="edit-banner-img">
+									<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="" id="edit-banner-img">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>

@@ -15,7 +15,7 @@
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
 
     <!-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
@@ -26,18 +26,18 @@
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>    
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>    
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
-    
-    <script>   
+
+    <script>
     $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
         'todayHighlight' : true,
         'autoclose' : true
-    }); 
-    $('.timepicker').timepicker(); 
+    });
+    $('.timepicker').timepicker();
 
     $(".form_datetime").datetimepicker({
         format: "d-M-yyyy hh:ii",
@@ -45,9 +45,9 @@
         todayBtn: true,
         minuteStep:1
     });
-        
+
     </script>
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -63,7 +63,7 @@
                 });
             });
             token = '<?php echo csrf_token();?>';
-            
+
             /* TYPE VOUCHER */
             $('.voucherType').click(function() {
                 // tampil duluk
@@ -146,7 +146,7 @@
                 else {
                     $('.dealsPromoTypeValuePrice').show();
                     $('.dealsPromoTypeValuePrice').prop('required', true);
-                    
+
                     $('.dealsPromoTypeValuePromo').val('');
                     $('.dealsPromoTypeValuePromo').hide();
                     $('.dealsPromoTypeValuePromo').removeAttr('required', true);
@@ -158,7 +158,7 @@
                 placeholder: true,
                 tabsize: 2,
                 height: 120,
-                toolbar: [         
+                toolbar: [
                   ['style', ['style']],
                   ['style', ['bold', 'underline', 'clear']],
                   ['color', ['color']],
@@ -169,7 +169,7 @@
                 ],
                 callbacks: {
                     onInit: function(e) {
-                      this.placeholder 
+                      this.placeholder
                         ? e.editingArea.find(".note-placeholder").html(this.placeholder)
                         : e.editingArea.remove(".note-placeholder");
                     },
@@ -205,7 +205,7 @@
                     contentType: false,
                     success: function(url) {
                         if (url['status'] == "success") {
-                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                         }
                         // document.getElementById('loadingDiv').style.display = "none";
                     },
@@ -216,7 +216,7 @@
             }
 
             // $("#file").change(function(e) {
-                
+
             //     var image, file;
             //     if ((file = this.files[0])) {
             //         image = new Image();
@@ -255,17 +255,17 @@
             //     img.onload = function() {
             //         imgwidth  = this.width;
             //         imgheight = this.height;
-                    
+
             //         if(imgwidth == maxwidth && imgheight == maxheight){
-                        
+
             //         }else{
             //             toastr.warning("Please check dimension of your photo. Image size must be "+maxwidth+" X "+maxheight);
-            //             // img.src = _URL.createObjectURL('http://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image');
+            //             // img.src = _URL.createObjectURL('https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image');
             //             $('#file').val("");
             //             $('#file').removeAttr('src');
             //         }
             //     };
-            // });            
+            // });
             $('.fileinput-preview').bind('DOMSubtreeModified', function() {
                 var mentah    = $(this).find('img')
                 // set image
@@ -280,7 +280,7 @@
                         $('#file').val("");
                         toastr.warning("Please check dimension of your photo.");
                     }
-                };                
+                };
             })
 
         });
@@ -307,7 +307,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -348,8 +348,8 @@
                     <br>
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label">To 
-                            <span class="required" aria-required="true"> * </span> 
+                        <label class="col-md-3 control-label">To
+                            <span class="required" aria-required="true"> * </span>
                             <br> <small> Separated by coma (,) </small>
                         </label>
                         <div class="col-md-9">
@@ -362,8 +362,8 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Title  
-                            <span class="required" aria-required="true"> * </span> 
+                            Title
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Judul deals" data-container="body"></i>
                             </label>
                         </div>
@@ -377,7 +377,7 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Second Title  
+                            Second Title
                             <i class="fa fa-question-circle tooltips" data-original-title="Sub judul deals jika ada" data-container="body"></i>
                             </label>
                         </div>
@@ -387,12 +387,12 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Promo Type
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Tipe promosi berdasarkan Promo ID atau nominal promo" data-container="body"></i>
                             </label>
                         </div>
@@ -420,9 +420,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                         </div>
-                        
+
                     </div>
 
                     <div class="form-group dealsPromoTypeShow" @if (old('dealsPromoType')) style="display: block;" @else style="display: none;" @endif>
@@ -438,7 +438,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat tentang deals yang dibuat" data-container="body"></i>
                             </label>
                         </div>
@@ -453,7 +453,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Long
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang deals yang dibuat" data-container="body"></i>
                             </label>
                         </div>
@@ -468,7 +468,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Terms and Conditions
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Syarat dan ketentuan mengenai deals" data-container="body"></i>
                             </label>
                         </div>
@@ -512,7 +512,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     @if ($deals_type != "Hidden")
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Publish Periode <span class="required" aria-required="true"> * </span> </label>
@@ -554,7 +554,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Image
-                            <span class="required" aria-required="true"> * </span> 
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                             <br>
                             <span class="required" aria-required="true"> (600*450) </span>
@@ -564,7 +564,7 @@
                             <div class="input-icon right">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 153px;">
-                                      <img src="http://www.placehold.it/600x450/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                      <img src="https://www.placehold.it/600x450/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
@@ -572,7 +572,7 @@
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
                                         <input type="file" accept="image/*" name="deals_image" required id="file">
-                                        
+
                                         </span>
 
                                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -609,7 +609,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Outlet Available
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
                             </label>
                         </div>
@@ -633,7 +633,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Brand
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
                             </label>
                         </div>
@@ -650,19 +650,19 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- IDENTIFIER DEALS OR HIDDEN -->
                     @if ($deals_type == "Deals")
                         @include('deals::deals.deals_form')
                     @else
                         @include('deals::hidden.hidden_form')
                     @endif
-                    
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             User Limit
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Batasan user untuk claim voucher, input 0 untuk unlimited" data-container="body"></i>
                             </label>
                         </div>

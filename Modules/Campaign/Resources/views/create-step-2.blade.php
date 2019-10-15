@@ -329,7 +329,7 @@
 	$('.repeat').repeater({
         show: function () {
 			$(this).find('.type_image').hide()
-			$(this).find('img').attr('src','http://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
+			$(this).find('img').attr('src','https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
 			$(this).find('.filename').remove()
 			$(this).find('.type_file').hide()
 			$(this).find('.type_text').hide()
@@ -848,7 +848,7 @@
 							<div class="form-group" id="link_push" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 								<label for="campaign_push_link" class="control-label col-md-2" style="padding-top:30px;">Link</label>
 								<div class="col-md-10" style="padding-top:30px;">
-									<input type="text" placeholder="http://" class="form-control" name="campaign_push_link" id="campaign_push_link" @if(isset($result['campaign_push_link'])) value="{{$result['campaign_push_link']}}" @endif>
+									<input type="text" placeholder="https://" class="form-control" name="campaign_push_link" id="campaign_push_link" @if(isset($result['campaign_push_link'])) value="{{$result['campaign_push_link']}}" @endif>
 								</div>
 							</div>
 						</div>
@@ -921,7 +921,7 @@
 							<div class="form-group" id="link_inbox" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 								<label for="campaign_inbox_link" class="control-label col-md-2" style="padding-top:30px;">Link</label>
 								<div class="col-md-10" style="padding-top:30px;">
-									<input type="text" placeholder="http://" class="form-control" name="campaign_inbox_link" id="campaign_inbox_link" @if(isset($result['campaign_inbox_link'])) value="{{$result['campaign_inbox_link']}}" @endif>
+									<input type="text" placeholder="https://" class="form-control" name="campaign_inbox_link" id="campaign_inbox_link" @if(isset($result['campaign_inbox_link'])) value="{{$result['campaign_inbox_link']}}" @endif>
 								</div>
 							</div>
 							<div class="form-group" id="div_inbox_content" style="margin-bottom:30px; display:none">
@@ -1028,7 +1028,7 @@
 															@if($content['content_type'] == 'image')
 																<img src="{{$content['content']}}" alt="">
 															@else
-																<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 															@endif
 															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
@@ -1107,7 +1107,7 @@
 												<div class="col-md-9">
 													<div class="fileinput fileinput-new" data-provides="fileinput">
 														<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-														<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+														<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 														</div>
 														<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 														<div>

@@ -582,7 +582,19 @@ class SettingController extends Controller
                 'complete_profile_success_page' => ''
             ];
         }
-
+        
+        //text menu setting
+        $request = MyHelper::post('setting/text_menu_list', $news_req);
+        if(isset($request['result']) && !empty($request['result'])) {
+            $data['text_menu_list'] = $request['result'];
+        }
+        else {
+            $data['text_menu_list'] = [
+                'text_menu_home' => [],
+                'text_menu_account'=> []
+            ];
+        }
+        
         $data['default_home'] = parent::getData(MyHelper::get('setting/default_home'));
         $data['app_logo'] = parent::getData(MyHelper::get('setting/app_logo'));
         $data['app_sidebar'] = parent::getData(MyHelper::get('setting/app_sidebar'));
@@ -971,7 +983,7 @@ class SettingController extends Controller
             'id_featured_deals'    => 'required'
         ]);
         $result = MyHelper::post('setting/featured_deal/update', $post);
-        return parent::redirect($result, 'Featured Deal has been updated.', 'setting/home#featured_deals');
+        return parent::redirect($result, 'Featured Deal has been updated.', 'setting/home#featured_deals',[],true);
     }
 
     public function reorderFeaturedDeal(Request $request)
@@ -997,22 +1009,32 @@ class SettingController extends Controller
     // complete user profile settings
     public function completeProfile(Request $request)
     {
-        $validatedData = $request->validate([
-            // 'complete_profile_point'    => 'required',
-            'complete_profile_cashback' => 'required',
-            'complete_profile_count'    => 'required',
-            'complete_profile_interval' => 'required'
-        ]);
+        $post=$request->except('_token');
+        if($post){
+            $validatedData = $request->validate([
+                'complete_profile_cashback' => 'required',
+            ]);
 
-        $post = $request->except('_token');
-        // remove this, if point feature is active
-        $post['complete_profile_point'] = 0;
+            $post = $request->except('_token');
+            // remove this, if point feature is active
+            $post['complete_profile_point'] = 0;
 
-        // update complete profile
-        $result = MyHelper::post('setting/complete-profile', $post);
-        // dd($result);
+            // update complete profile
+            $result = MyHelper::post('setting/complete-profile', $post);
 
-        return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/home#user-profile');
+            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/complete-profile');
+        }else{
+            $data = [
+                'title'         => 'Complete Profile Setting',
+                'menu_active'    => 'profile-completion',
+                'submenu_active' => 'complete-profile'
+            ];
+            $request = MyHelper::get('setting/complete-profile');
+            if(isset($request['result'])) {
+                $data['complete_profile'] = $request['result'];
+            }
+            return view('setting::profile-completion.profile-completion',$data);
+        }
     }
 
     // complete user profile success page content
@@ -1065,5 +1087,51 @@ class SettingController extends Controller
             $data['version'] = ['Android' => [], 'IOS' => [], 'OutletApp' => []];
         }
         return view('setting::version.setting-version', $data);
+    }
+    
+    public function updateTextMenu(Request $request, $category) {
+        $post = $request->except('_token');
+        
+        $post = [
+            'category' => $category,
+            'data_menu' => $request->all()
+        ];
+        
+        $result = MyHelper::post('setting/text_menu/update', $post);
+        
+        return parent::redirect($result, 'Text menu has been updated.', 'setting/home#text-menu');
+    }
+
+    public function confirmationMessages(Request $request){
+        $data = [
+            'title'          => 'Confirmation Messages',
+            'menu_active'    => 'confirmation-messages',
+            'submenu_active' => '',
+        ];
+        if($post=$request->except('_token')){
+            $data=[
+                'update'=>[
+                    'payment_messages'=>['value_text',$post['payment_messages']],
+                    'payment_messages_point'=>['value_text',$post['payment_messages_point']],
+                    'payment_success_messages'=>['value_text',$post['payment_success_messages']]
+                ]
+            ];
+            $result = MyHelper::post('setting/update2', $data);
+            if(($result['status']??'')=='success'){
+                return redirect('setting/confirmation-messages')->with('success',['Confirmation messages has been updated']);
+            }else{
+                return back()->withErrors($result['messages']??['Something went wrong']);
+            }
+        }else{
+            $payment_messages=MyHelper::post('setting',['key'=>'payment_messages'])['result']['value_text']??'Kamu yakin ingin mengambil voucher ini?';
+            $payment_messages_point=MyHelper::post('setting',['key'=>'payment_messages_point'])['result']['value_text']??'Anda akan menukarkan %point% points anda dengan Voucher %deals_title%?';
+            $payment_success_messages=MyHelper::post('setting',['key'=>'payment_success_messages'])['result']['value_text']??'Apakah kamu ingin menggunakan Voucher sekarang?';
+            $data['msg']=[
+                'payment_messages'=>$payment_messages,
+                'payment_messages_point'=>$payment_messages_point,
+                'payment_success_messages'=>$payment_success_messages
+            ];
+            return view('setting::confirmation-messages.confirmation-messages',$data);
+        }
     }
 }
