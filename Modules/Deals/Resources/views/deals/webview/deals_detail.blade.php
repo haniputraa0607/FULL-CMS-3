@@ -136,8 +136,8 @@
 				@if($deals['deals_voucher_type'] != 'Unlimited')
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12">
 					<div style="padding: 10px 5px;">
-						<div class="progress" style="height:9px; width: 190px; margin-top: -10px; margin-bottom: 0px;">
-							<div style="background-color: rgb(128,0,0); width: {{ 100 - ((($deals['deals_total_voucher'] - $deals['deals_total_claimed']) / $deals['deals_total_voucher']) * 100) }}%;" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+						<div class="progress" style="background-color: rgb(235, 235, 235); height:6px; width: 190px; margin-top: -10px; margin-bottom: 0px;">
+							<div style="background-color: rgb(128,0,0); width: {{ ((($deals['deals_total_voucher'] - $deals['deals_total_claimed']) / $deals['deals_total_voucher']) * 100) }}%;" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 						</div>
 					</div>
 				</div>
