@@ -294,9 +294,9 @@
 					<div class="title" id="showSK" style="font-size: 15px; color: rgb(102, 102, 102);">Show</div>
 				</div>
 				
-				@if($voucher['deal_voucher']['deal']['deals_description'] != "")
+				@if($voucher['deal_voucher']['deal']['deals_tos'] != "")
 				<div id="textSK" style="padding-top: 0px;" class="description-wrapper">
-					<div class="description">{!! $voucher['deal_voucher']['deal']['deals_description'] !!}</div>
+					<div class="description">{!! $voucher['deal_voucher']['deal']['deals_tos'] !!}</div>
 				</div>
 				@endif
 
