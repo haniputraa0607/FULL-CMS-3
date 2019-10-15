@@ -161,21 +161,22 @@
 				</div>
 				@endif
 				
-				<div style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
+				<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div>
+					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></i></div>
 				</div>
 				
-                @if($deals['deals_description'] != "")
-				<div style="padding-top: 0px;" class="description-wrapper">
-					<div class="description">{!! $deals['deals_description'] !!}</div>
+                @if($deals['deals_tos'] != "")
+				<div id="textSK" style="padding-top: 0px;" class="description-wrapper">
+					<div class="description">{!! $deals['deals_tos'] !!}</div>
 				</div>
 				@endif
 				
-				<div style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
+				<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
 				</div>
 
-				<div class="outlet-wrapper" style="padding-top: 10px;">
+				<div id="textTP" class="outlet-wrapper" style="padding-top: 10px;">
 					<div class="outlet">
 						@foreach($deals['outlet_by_city'] as $key => $outlet_city)
 						<div class="outlet-city" style="color: rgb(0, 0, 0);">{{ $outlet_city['city_name'] }}</div>
@@ -198,7 +199,30 @@
 
 @section('page-script')
     @if(!empty($deals))
-        <script type="text/javascript">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#textSK').hide();
+				$('#textTP').css('display','none');
+				$('#showTP').css('margin-bottom','50px');
+				$(document).on('click', '#showSK', function() {
+					$('#textSK').slideDown( "slow" );
+					$( "#showSK" ).replaceWith( '<div id="hideSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></i></div></div>' );
+				});
+				$(document).on('click', '#hideSK', function() {
+					$('#textSK').slideUp( "slow" );
+					$( "#hideSK" ).replaceWith( '<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></i></div></div>' );
+				});
+				$(document).on('click', '#showTP', function() {
+					$('#textTP').slideDown( "slow" );
+					$( "#showTP" ).replaceWith( '<div id="hideTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></div></div>' );
+					$('#hideTP').css('margin-bottom','0px');
+				});
+				$(document).on('click', '#hideTP', function() {
+					$('#textTP').slideUp( "slow" );
+					$( "#hideTP" ).replaceWith( '<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></div></div>' );
+					$('#showTP').css('margin-bottom','50px');
+				});
+			});
             @php $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', "Juli", 'Agustus', 'September', 'Oktober', 'November', 'Desember']; @endphp
 
             // timer
