@@ -5,6 +5,7 @@
 @extends('webview.main')
 
 @section('css')
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <style type="text/css">
     	p{
     		margin-top: 0px !important;
@@ -289,20 +290,20 @@
 				</div>
 				@endif
 				
-				<div style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
+				<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div>
-					<div class="title" id="showSK" style="font-size: 15px; color: rgb(102, 102, 102);">Show</div>
+					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></i></div>
 				</div>
 				
 				@if($voucher['deal_voucher']['deal']['deals_tos'] != "")
-				<div id="textSK" style="padding-top: 0px;" class="description-wrapper">
+				<div id="textSK" style="padding-top: 0px;" class="collapse description-wrapper">
 					<div class="description">{!! $voucher['deal_voucher']['deal']['deals_tos'] !!}</div>
 				</div>
 				@endif
 
-				<div id="formTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
+				<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
-					<div class="title" id="showTP" style="font-size: 15px; color: rgb(102, 102, 102);">Show</div>
+					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></div>
 				</div>
 
 				<div id="textTP" class="outlet-wrapper" style="padding-top: 10px; margin-bottom: 40px;">
@@ -437,24 +438,24 @@
         $(document).ready(function() {
 			$('#textSK').hide();
 			$('#textTP').css('display','none');
-			$('#formTP').css('margin-bottom','50px');
+			$('#showTP').css('margin-bottom','50px');
 			$(document).on('click', '#showSK', function() {
-				$('#textSK').show();
-				$( "#showSK" ).replaceWith( '<div class="title" id="hideSK" style="font-size: 15px; color: rgb(102, 102, 102);">Hide</div>' );
+				$('#textSK').slideDown( "slow" );
+				$( "#showSK" ).replaceWith( '<div id="hideSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></i></div></div>' );
 			});
 			$(document).on('click', '#hideSK', function() {
-				$('#textSK').hide();
-				$( "#hideSK" ).replaceWith( '<div class="title" id="showSK" style="font-size: 15px; color: rgb(102, 102, 102);">Show</div>' );
+				$('#textSK').slideUp( "slow" );
+				$( "#hideSK" ).replaceWith( '<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></i></div></div>' );
 			});
 			$(document).on('click', '#showTP', function() {
-				$('#formTP').css('margin-bottom','0px');
-				$('#textTP').show();
-				$( "#showTP" ).replaceWith( '<div class="title" id="hideTP" style="font-size: 15px; color: rgb(102, 102, 102);">Hide</div>' );
+				$('#textTP').slideDown( "slow" );
+				$( "#showTP" ).replaceWith( '<div id="hideTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></div></div>' );
+				$('#hideTP').css('margin-bottom','0px');
 			});
 			$(document).on('click', '#hideTP', function() {
-				$('#formTP').css('margin-bottom','50px');
-				$('#textTP').hide();
-				$( "#hideTP" ).replaceWith( '<div class="title" id="showTP" style="font-size: 15px; color: rgb(102, 102, 102);">Show</div>' );
+				$('#textTP').slideUp( "slow" );
+				$( "#hideTP" ).replaceWith( '<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></div></div>' );
+				$('#showTP').css('margin-bottom','50px');
 			});
 
             $(document).on('click', '.deals-qr', function(e) {
