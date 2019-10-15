@@ -296,7 +296,7 @@
 				</div>
 				
 				@if($voucher['deal_voucher']['deal']['deals_tos'] != "")
-				<div id="textSK" style="padding-top: 0px;" class="collapse description-wrapper">
+				<div id="textSK" style="padding-top: 0px;" class="description-wrapper">
 					<div class="description">{!! $voucher['deal_voucher']['deal']['deals_tos'] !!}</div>
 				</div>
 				@endif
