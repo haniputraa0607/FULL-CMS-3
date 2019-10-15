@@ -287,20 +287,22 @@
 				@endif
 				
 				<div style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
-					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div>
+					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div>
+					<div class="title" id="showSK" style="font-size: 15px; color: rgb(102, 102, 102);">Show</div>
 				</div>
 				
 				@if($voucher['deal_voucher']['deal']['deals_description'] != "")
-				<div style="padding-top: 0px;" class="description-wrapper">
+				<div id="textSK" style="padding-top: 0px;" class="description-wrapper">
 					<div class="description">{!! $voucher['deal_voucher']['deal']['deals_description'] !!}</div>
 				</div>
 				@endif
 
-				<div style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
-					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
+				<div id="formTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
+					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
+					<div class="title" id="showTP" style="font-size: 15px; color: rgb(102, 102, 102);">Show</div>
 				</div>
 
-				<div class="outlet-wrapper" style="padding-top: 10px;">
+				<div id="textTP" class="outlet-wrapper" style="padding-top: 10px; margin-bottom: 40px;">
 					@if ($voucher['deal_voucher']['deal']['label_outlet'] == 'Some' || isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
 						<div class="outlet">
 							@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
@@ -430,6 +432,27 @@
 	</script>
 	<script type="text/javascript">
         $(document).ready(function() {
+			$('#textSK').hide();
+			$('#textTP').css('display','none');
+			$('#formTP').css('margin-bottom','50px');
+			$(document).on('click', '#showSK', function() {
+				$('#textSK').show();
+				$( "#showSK" ).replaceWith( '<div class="title" id="hideSK" style="font-size: 15px; color: rgb(102, 102, 102);">Hide</div>' );
+			});
+			$(document).on('click', '#hideSK', function() {
+				$('#textSK').hide();
+				$( "#hideSK" ).replaceWith( '<div class="title" id="showSK" style="font-size: 15px; color: rgb(102, 102, 102);">Show</div>' );
+			});
+			$(document).on('click', '#showTP', function() {
+				$('#formTP').css('margin-bottom','0px');
+				$('#textTP').show();
+				$( "#showTP" ).replaceWith( '<div class="title" id="hideTP" style="font-size: 15px; color: rgb(102, 102, 102);">Hide</div>' );
+			});
+			$(document).on('click', '#hideTP', function() {
+				$('#formTP').css('margin-bottom','50px');
+				$('#textTP').hide();
+				$( "#hideTP" ).replaceWith( '<div class="title" id="showTP" style="font-size: 15px; color: rgb(102, 102, 102);">Show</div>' );
+			});
 
             $(document).on('click', '.deals-qr', function(e) {
                 e.preventDefault();
