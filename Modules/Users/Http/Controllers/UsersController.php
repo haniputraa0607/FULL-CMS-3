@@ -587,8 +587,7 @@ class UsersController extends Controller
 		
 		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
 		// return $getUser;exit;
-		$getLogMobile = MyHelper::post('users/log?log_save=0', ['phone' => $phone,'type'=> 'mobile', 'skip' => 0, 'take' => 50]);
-		$getLogBE = MyHelper::post('users/log?log_save=0', ['phone' => $phone,'type'=> 'backend', 'skip' => 0, 'take' => 50]);
+		$getLog = MyHelper::post('users/log?log_save=0', ['phone' => $phone, 'skip' => 0, 'take' => 50]);
 
 		$getFeature = MyHelper::post('users/granted-feature?log_save=0', ['phone' => $phone]);
 
@@ -612,14 +611,14 @@ class UsersController extends Controller
 		$data['featuresall'] = null;
 		$data['featuresmodule'] = null;
 		$data['voucher'] = null;
-		
+
 		if(isset($getUser['result'])){
 			$data['profile'] = $getUser['result'];
 // 			$data['trx'] = $getUser['trx'];
 // 			$data['voucher'] = $getUser['voucher'];
 		}
-		if(isset($getLogMobile['result'])) $data['log']['mobile'] = $getLogMobile['result'];
-		if(isset($getLogBE['result'])) $data['log']['backend'] = $getLogBE['result'];
+		if(isset($getLog['result']['mobile'])) $data['log']['mobile'] = $getLog['result']['mobile'];
+		if(isset($getLog['result']['be'])) $data['log']['backend'] = $getLog['result']['be'];
 		if(isset($getFeature['result'])) $data['features'] = $getFeature['result'];
 		if(isset($getFeatureAll['result'])) $data['featuresall'] = $getFeatureAll['result'];
 		if(isset($getFeatureModule['result'])) $data['featuresmodule'] = $getFeatureModule['result'];
@@ -702,22 +701,21 @@ class UsersController extends Controller
 		}else{
 			$data['conditions'] = [];
 		}
-	
-		$getLogMobile = MyHelper::post('users/log?log_save=0&page='.$data['pagem'], ['phone' => $phone,'type'=> 'mobile', 'pagination' => 1, 'take' => 20, 'conditions' =>$data['conditions'], 'date_start' => $data['date_start'], 'date_end' => $data['date_end'], 'rule' => $data['rule']]);
-		$getLogBE = MyHelper::post('users/log?log_save=0&page='.$data['pageb'], ['phone' => $phone,'type'=> 'backend', 'pagination' => 1, 'take' => 20, 'conditions' =>$data['conditions'], 'date_start' => $data['date_start'], 'date_end' => $data['date_end'], 'rule' => $data['rule']]);
-		
+
+		$getLog = MyHelper::post('users/log?log_save=0&page='.$data['pagem'], ['phone' => $phone, 'pagination' => 1, 'take' => 20, 'conditions' =>$data['conditions'], 'date_start' => $data['date_start'], 'date_end' => $data['date_end'], 'rule' => $data['rule']]);
+
 		$data['log']['mobile'] = [];
 		$data['log']['backend'] = [];
-		
-		if(isset($getLogMobile['result'])){
-			$data['log']['mobile'] = $getLogMobile['result']['data'];
-			$data['mobile_page'] = new LengthAwarePaginator($getLogMobile['result']['data'], $getLogMobile['result']['total'], $getLogMobile['result']['per_page'], $getLogMobile['result']['current_page'], ['path' => url('user/log/'.$phone.'?tipe=mobile&pageb='.$data['pageb'])]);
+
+		if(isset($getLog['result']['mobile'])){
+			$data['log']['mobile'] = $getLog['result']['mobile']['data'];
+			$data['mobile_page'] = new LengthAwarePaginator($getLog['result']['mobile']['data'], $getLog['result']['mobile']['total'], $getLog['result']['mobile']['per_page'], $getLog['result']['mobile']['current_page'], ['path' => url('user/log/'.$phone.'?tipe=mobile&pageb='.$data['pageb'])]);
 		} 
-		if(isset($getLogBE['result'])){
-			$data['log']['backend'] = $getLogBE['result']['data'];
-			$data['backend_page'] = new LengthAwarePaginator($getLogBE['result']['data'], $getLogBE['result']['total'], $getLogBE['result']['per_page'], $getLogBE['result']['current_page'], ['path' => url('user/log/'.$phone.'?tipe=backend&pagem='.$data['pagem'])]);
+		if(isset($getLog['result']['be'])){
+			$data['log']['backend'] = $getLog['result']['be']['data'];
+			$data['backend_page'] = new LengthAwarePaginator($getLog['result']['be']['data'], $getLog['result']['be']['total'], $getLog['result']['be']['per_page'], $getLog['result']['be']['current_page'], ['path' => url('user/log/'.$phone.'?tipe=backend&pagem='.$data['pagem'])]);
 		} 
-		
+
 		$profile = MyHelper::post('users/get-detail?log_save=0', ['phone' => $phone]);
 		if(isset($profile['result'])){
 			$data['profile'] = $profile['result'];
@@ -743,9 +741,9 @@ class UsersController extends Controller
         return view('users::detail_log', $data);
     }
     
-    public function showDetailLog($id, Request $request)
+    public function showDetailLog($id, $log_type, Request $request)
     {
-		$getLog = MyHelper::get('users/log/detail/'.$id);
+		$getLog = MyHelper::get('users/log/detail/'.$id.'/'.$log_type);
 		$data = [];
 		
 		if(isset($getLog['result'])) $data = $getLog['result'];
@@ -802,7 +800,7 @@ class UsersController extends Controller
 				  'submenu_active'    => 'user-log'
 				];
 				
-		if(!isset($post['order_field'])) $post['order_field'] = 'id_log_activity';
+		if(!isset($post['order_field'])) $post['order_field'] = '';
 		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
 		if(!isset($post['take'])) $post['take'] = 10;
 		$post['skip'] = 0 + (($page-1) * $post['take']);
@@ -810,23 +808,38 @@ class UsersController extends Controller
 		// print_r($post);exit;
 		$getLog = MyHelper::post('users/activity', $post);
 
-		if(isset($getLog['status']) && $getLog['status'] == 'success') $data['content'] = $getLog['result']; else $data['content'] = null;
-		if(isset($getLog['status']) && $getLog['status'] == 'success') $data['total'] = $getLog['total']; else $data['total'] = null;
+		if(isset($getLog['status']) && $getLog['status'] == 'success') {
+            $data['content']['mobile'] = $getLog['result']['mobile']['data'];
+            $data['content']['be'] = $getLog['result']['be']['data'];
+        }else{
+		    $data['content']['mobile'] = null;
+            $data['content']['be'] = null;
+        }
+
+		if(isset($getLog['status']) && $getLog['status'] == 'success') {
+            $data['total']['mobile'] = $getLog['result']['mobile']['total'];
+            $data['total']['be'] = $getLog['result']['be']['total'];
+        }
+		else {
+            $data['total']['mobile'] = null;
+            $data['total']['be'] = null;
+        }
 		
 		$data['begin'] = $post['skip'] + 1;
 		$data['last'] = $post['take'] + $post['skip'];
-			if($data['total'] <= $data['last']) $data['last'] = $data['total'];
+
+		if($data['total']['mobile'] <= $data['last']) $data['last'] = $data['total']['mobile'];
 		$data['page'] = $page;
-		if(!is_array($data['content'])){
+		if(!is_array($data['content']['mobile'])){
 			$data['jumlah'] = null;
 		}else{
-			$data['jumlah'] = count($data['content']);
+			$data['jumlah'] = count($data['content']['mobile']);
 		}
 		foreach($post as $key => $row){
 			$data[$key] = $row;
 		}
 		
-		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']." data)";
+		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
 		
 		// print_r($data);exit;
 		return view('users::log', $data);
