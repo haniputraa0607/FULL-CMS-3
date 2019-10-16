@@ -79,6 +79,15 @@
 										<input class="form-control" type="text" name="payment_success_messages" value="{{ old('payment_success_messages',$msg['payment_success_messages']??'') }}" required>
 									</div>
 								</div>
+								<div class="form-group col-md-12">
+									<label class="control-label col-md-4">Confirmation Fail Messages
+										<span class="required" aria-required="true"> * </span>
+										<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan tampil apabila point kurang saat pembelian deals" data-container="body"></i>
+									</label>
+									<div class="fileinput fileinput-new col-md-8">
+										<input class="form-control" type="text" name="payment_fail_messages" value="{{ old('payment_fail_messages',$msg['payment_fail_messages']??'') }}" required>
+									</div>
+								</div>
 							</div>
 							<div class="form-actions" style="text-align:center">
 								{{ csrf_field() }}
