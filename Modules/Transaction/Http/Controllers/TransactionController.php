@@ -85,6 +85,41 @@ class TransactionController extends Controller
                   'submenu_active'    => 'transaction-autoresponse-'.$subject,
                   'type'              => 'trx'  
 				];
+        switch ($subject) {
+            case 'receive-hidden-deals':
+                $data['menu_active'] = 'deals-autoresponse';
+                $data['submenu_active'] = 'deals-autoresponse-receive-hidden-deals';
+                break;
+
+            case 'redeem-voucher-success':
+                $data['menu_active'] = 'deals-autoresponse';
+                $data['submenu_active'] = 'deals-autoresponse-redeem-deals-success';
+                break;
+            
+            case 'claim-deals-success':
+                $data['menu_active'] = 'deals-autoresponse';
+                $data['submenu_active'] = 'deals-autoresponse-claim-deals-success';
+                break;
+
+            case 'transaction-point-achievement':
+                $data['menu_active'] = 'transaction';
+                $data['submenu_active'] = 'transaction-point-achievement';
+                break;
+                        
+            case 'transaction-failed-point-refund':
+                $data['menu_active'] = 'transaction';
+                $data['submenu_active'] = 'transaction-failed-point-refund';
+                break;
+                        
+            case 'rejected-order-point-refund':
+                $data['menu_active'] = 'transaction';
+                $data['submenu_active'] = 'rejected-order-point-refund';
+                break;
+
+            default:
+                # code...
+                break;
+        }
         $query = MyHelper::get('autocrm/list');
 		$test = MyHelper::get('autocrm/textreplace');
 		$auto = null;
