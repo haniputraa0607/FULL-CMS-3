@@ -30,6 +30,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     /* confirmation messages */
     Route::any('confirmation-messages','SettingController@confirmationMessages');
 
+    /*Text menu*/
+    Route::any('text_menu', 'SettingController@textMenu');
+    Route::post('text_menu/update/{category}', 'SettingController@updateTextMenu');
+
     Route::any('home', 'SettingController@homeSetting');
 	Route::any('date', 'SettingController@dateSetting');
     Route::get('{key}', 'SettingController@settingList');
@@ -63,9 +67,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');
-    
-    
-    Route::post('text_menu/update/{category}', 'SettingController@updateTextMenu');
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function()

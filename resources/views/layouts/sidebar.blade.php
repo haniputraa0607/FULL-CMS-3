@@ -1175,6 +1175,15 @@
 			</li>
 		@endif
 
+		@if(MyHelper::hasAccess([160], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'setting-text-menu') ? 'active' : ''}}">
+				<a href="{{url('setting/text_menu')}}" class="nav-link">
+					<i class="fa fa-bars"></i>
+					<span class="title">Text Menu</span>
+				</a>
+			</li>
+		@endif
+
 		@if(MyHelper::hasAccess([33], $configs))
 		@if (!empty($advert))
 			@if(MyHelper::hasAccess([124], $grantedFeature))
