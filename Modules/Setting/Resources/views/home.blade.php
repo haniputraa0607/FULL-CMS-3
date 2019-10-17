@@ -443,12 +443,7 @@
         </li> -->
         <!-- <li>
             <a href="#app-navigation" data-toggle="tab">App Navigation Text</a>
-        </li> -->                
-                @if(MyHelper::hasAccess([160], $grantedFeature))
-        <li>
-            <a href="#text-menu" data-toggle="tab">Text Menu</a>
-        </li>
-		@endif
+        </li> -->
     </ul>
 </div>
 
@@ -879,87 +874,6 @@
 			</div>
 		</div>
 	</div>
-        
-        {{-- text menu --}}
-	@if(MyHelper::hasAccess([160], $grantedFeature))
-        <div class="tab-pane" id="text-menu">
-            <div class="row" style="margin-top:20px">
-                <div class="col-md-12">
-                    <div class="portlet light bordered">
-                        <div class="portlet-title">
-                                <div class="caption font-blue ">
-                                        <i class="icon-settings font-blue "></i>
-                                        <span class="caption-subject bold uppercase">Text Menu Home</span>
-                                </div>
-                        </div>
-                        @if(count($text_menu_list['text_menu_home']) > 0)
-                        <div class="portlet-body">
-                                <form role="form" class="form-horizontal" action="{{url('setting/text_menu/update','menu-home')}}" method="POST">
-                                    <div class="form-body">
-                                        @foreach($text_menu_list['text_menu_home'] as $key => $value)
-                                        <div class="form-group col-md-12">
-                                            <div class="col-md-6">
-                                                <p style="margin-bottom:1%;">{{$value['text_menu']}} (Text Menu)<span class="required" aria-required="true"> * </span></p>
-                                                <input class="form-control" type="text" name="{{$key}}_text_menu" value="{{$value['text_menu']}}" maxlength="10" required>
-                                                
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p style="margin-bottom:1%;">{{$value['text_menu']}} (Text Header)<span class="required" aria-required="true"> * </span></p>
-                                                <input class="form-control" type="text" name="{{$key}}_text_header" value="{{$value['text_header']}}" maxlength="30" required>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                    <div class="form-actions" style="text-align:center">
-                                        {{ csrf_field() }}
-                                        <button type="submit" class="btn blue">Submit</button>
-                                    </div>
-                                </form>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row" style="margin-top:20px">
-                <div class="col-md-12">
-                    <div class="portlet light bordered">
-                        <div class="portlet-title">
-                                <div class="caption font-blue ">
-                                        <i class="icon-settings font-blue "></i>
-                                        <span class="caption-subject bold uppercase">Text Menu Account</span>
-                                </div>
-                        </div>
-                        @if(count($text_menu_list['text_menu_account']) > 0)
-                        <div class="portlet-body">
-                                <form role="form" class="form-horizontal" action="{{url('setting/text_menu/update','menu-account')}}" method="POST">
-                                    <div class="form-body">
-                                        @foreach($text_menu_list['text_menu_account'] as $key => $value)
-                                        <div class="form-group col-md-12">
-                                            <div class="col-md-6">
-                                                <p style="margin-bottom:1%;">{{$value['text_menu']}} (Text Menu)<span class="required" aria-required="true"> * </span></p>
-                                                <input class="form-control" type="text" name="{{$key}}_text_menu" value="{{$value['text_menu']}}" maxlength="10" required>
-                                                
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p style="margin-bottom:1%;">{{$value['text_menu']}} (Text Header)<span class="required" aria-required="true"> * </span></p>
-                                                <input class="form-control" type="text" name="{{$key}}_text_header" value="{{$value['text_header']}}" maxlength="30" required>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                    <div class="form-actions" style="text-align:center">
-                                            {{ csrf_field() }}
-                                            <button type="submit" class="btn blue">Submit</button>
-                                    </div>
-                                </form>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-	</div>
-	@endif
 
 </div>
 

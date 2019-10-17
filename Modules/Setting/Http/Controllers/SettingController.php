@@ -582,19 +582,7 @@ class SettingController extends Controller
                 'complete_profile_success_page' => ''
             ];
         }
-        
-        //text menu setting
-        $request = MyHelper::post('setting/text_menu_list', $news_req);
-        if(isset($request['result']) && !empty($request['result'])) {
-            $data['text_menu_list'] = $request['result'];
-        }
-        else {
-            $data['text_menu_list'] = [
-                'text_menu_home' => [],
-                'text_menu_account'=> []
-            ];
-        }
-        
+
         $data['default_home'] = parent::getData(MyHelper::get('setting/default_home'));
         $data['app_logo'] = parent::getData(MyHelper::get('setting/app_logo'));
         $data['app_sidebar'] = parent::getData(MyHelper::get('setting/app_sidebar'));
@@ -1088,18 +1076,47 @@ class SettingController extends Controller
         }
         return view('setting::version.setting-version', $data);
     }
-    
+
+    public function textMenu(Request $request) {
+        //text menu setting
+        $data = [
+            'title'   		=> 'Text Menu Setting',
+            'menu_active'    => 'setting-text-menu',
+            'submenu_active' => 'setting-text-menu-list'
+        ];
+
+        $request = MyHelper::get('setting/text_menu_list');
+        if(isset($request['result']) && !empty($request['result'])) {
+            $data['text_menu_list'] = $request['result'];
+        }
+        else {
+            $data['text_menu_list'] = [
+                'text_menu_home' => [],
+                'text_menu_account'=> []
+            ];
+        }
+
+        return view('setting::text_menu', $data);
+    }
+
     public function updateTextMenu(Request $request, $category) {
         $post = $request->except('_token');
-        
+        $allData = $request->all();
+
+        if($category == 'menu-account' && isset($allData['images'])){
+            foreach($allData['images'] as $key => $value){
+                $allData['images'][$key] = MyHelper::encodeImage($allData['images'][$key]);
+            }
+        }
+
         $post = [
             'category' => $category,
-            'data_menu' => $request->all()
+            'data_menu' => $allData
         ];
-        
+
         $result = MyHelper::post('setting/text_menu/update', $post);
         
-        return parent::redirect($result, 'Text menu has been updated.', 'setting/home#text-menu');
+        return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu');
     }
 
     public function confirmationMessages(Request $request){
