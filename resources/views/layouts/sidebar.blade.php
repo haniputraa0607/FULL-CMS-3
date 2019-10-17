@@ -307,15 +307,6 @@
 						</li>
 						@endif
 					@endif
-					<!--@if(MyHelper::hasAccess([2], $configs) || MyHelper::hasAccess([3], $configs))-->
-					<!--	@if(MyHelper::hasAccess([32, 33], $grantedFeature))-->
-					<!--	<li class="nav-item {{($submenu_active == 'outlet-import') ? 'active open' : ''}}">-->
-					<!--		<a href="{{url('outlet/import')}}" class="nav-link ">-->
-					<!--			<span class="title">Export & Import Outlet</span>-->
-					<!--		</a>-->
-					<!--	</li>-->
-					<!--	@endif-->
-					<!--@endif-->
 					@if(MyHelper::hasAccess([24], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'outlet-list') ? 'active open' : ''}}">
 						<a href="{{url('outlet/list')}}" class="nav-link ">
@@ -335,6 +326,15 @@
 						<li class="nav-item {{($submenu_active == 'outlet-holiday') ? 'active open' : ''}}">
 							<a href="{{url('outlet/holiday')}}" class="nav-link ">
 								<span class="title">Outlet Holiday Setting</span>
+							</a>
+						</li>
+						@endif
+					@endif
+					@if(MyHelper::hasAccess([2], $configs) || MyHelper::hasAccess([3], $configs))
+						@if(MyHelper::hasAccess([32, 33], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'outlet-export') ? 'active open' : ''}}">
+							<a href="{{url('outlet/export')}}" class="nav-link ">
+								<span class="title">Export Outlet</span>
 							</a>
 						</li>
 						@endif

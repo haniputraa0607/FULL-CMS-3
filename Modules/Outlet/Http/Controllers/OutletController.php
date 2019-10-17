@@ -517,16 +517,31 @@ class OutletController extends Controller
         }
     }
 
-    function exportData(Request $request) {
+    function exportForm(Request $request) {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Export Outlet',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-export',
+        ];
 
-        $outlet = MyHelper::get('outlet/export');
+        $data['brands'] = MyHelper::get('brand/list')['result']??[];
+
+        return view('outlet::export', $data);
+    }
+
+    function exportData(Request $request) {
+        $post=$request->except('_token');
+        $outlet = MyHelper::post('outlet/export',$post);
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data = $outlet['result'];
             $download = Excel::create('Data_Outlets_'.date('Ymdhis'), function($excel) use ($data) {
-                $excel->sheet('Sheet 01', function($sheet) use ($data) {
-                    $sheet->fromArray($data);
-                });
-            })->download('xls');
+                foreach ($data as $key => $outlets) {
+                    $excel->sheet($key, function($sheet) use ($outlets) {
+                        $sheet->fromArray($outlets);
+                    });
+                }
+            })->download('xlsx');
 
         }else {
             return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
