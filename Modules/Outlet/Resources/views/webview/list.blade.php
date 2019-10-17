@@ -119,49 +119,49 @@
                 font-family: "GoogleSans-Bold";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-BoldItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-Italic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-Medium";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-MediumItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
         }
 		@font-face {
                 font-family: "ProductSans-Medium";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Medium.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Medium.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
         }
 		.GoogleSans{
             font-family: "GoogleSans";
@@ -312,7 +312,7 @@
 			<div class="ProductSans space-text" style="color: rgb(0, 0, 0); font-size: 12.7px; padding-bottom: 0;">{{$data[0]['outlet_address']}}</div>
 	   	</div>
 	</div>
-	  
+
 	<div class="kotak1">
   		<div class="container">
   		    <div class="ProductSans space-text" style="color: rgb(128, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Nomor Telepon</div>
@@ -360,7 +360,7 @@
 			@endphp
 			<hr style="margin: 0;">
 			<div class="row">
-				<div class="col-8"> 
+				<div class="col-8">
 					@foreach ($data[0]['outlet_schedules'] as $key => $val)
 					@if ($val['day'] == $hari_ini)
 						<div id="today" class="row space-sch">
@@ -390,7 +390,7 @@
 					</div>
 					@endforeach
 				</div>
-				<div class="col-4"> 
+				<div class="col-4">
 					<i class="icon fa fa-angle-down"></i>
 				</div>
 			</div>
@@ -431,10 +431,10 @@
 	// 	var div = document.getElementById('container');
 	// 	var icon = document.getElementById('icon');
 	// 	var open = false;
-		
+
 	// 	div.addEventListener('click', function(){
 	// 		if(open){
-	// 			icon.className = 'fa fa-arrow-down';  
+	// 			icon.className = 'fa fa-arrow-down';
 	// 		} else{
 	// 			icon.className = 'fa fa-arrow-down open';
 	// 		}

@@ -5,43 +5,43 @@ $grantedFeature     = session('granted_features');
  @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
 	<script>
 	$('#checkBtn').click(function() {
       checked = $("input[type=checkbox]:checked").length;
@@ -52,7 +52,7 @@ $grantedFeature     = session('granted_features');
       }
 
     });
-	
+
 	function showform(type){
 		if(type == 'instant'){
 			document.getElementById('scheduled_date').style.display = 'none';
@@ -60,7 +60,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring').style.display = 'none';
 			document.getElementById('series').style.display = 'none';
 			document.getElementById('mask_number').value = 0;
-			
+
 			document.getElementById('recurring_date_month').style.display = 'none';
 			document.getElementById('recurring_day_week').style.display = 'none';
 			document.getElementById('recurring_week_month').style.display = 'none';
@@ -71,7 +71,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring').style.display = 'none';
 			document.getElementById('series').style.display = 'none';
 			document.getElementById('mask_number').value = 0;
-			
+
 			document.getElementById('recurring_date_month').style.display = 'none';
 			document.getElementById('recurring_date_year').style.display = 'none';
 			document.getElementById('recurring_day_week').style.display = 'none';
@@ -90,7 +90,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring').style.display = 'block';
 			document.getElementById('series').style.display = 'block';
 			document.getElementById('mask_number').value = 1;
-			
+
 			document.getElementById('recurring_date_month').style.display = 'none';
 			document.getElementById('recurring_date_year').style.display = 'none';
 			document.getElementById('recurring_day_week').style.display = 'none';
@@ -101,7 +101,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('user_limit').style.display = 'block';
 		}
 	}
-	
+
 	function showRecurring(type){
 		if(type == 'date_every_month'){
 			document.getElementById('recurring_date_month').style.display = 'block';
@@ -110,7 +110,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring_week_month').style.display = 'none';
 			document.getElementById('scheduled_time').style.display = 'block';
 		}
-		
+
 		if(type == 'date_every_year'){
 			document.getElementById('recurring_date_month').style.display = 'none';
 			document.getElementById('recurring_date_year').style.display = 'block';
@@ -118,7 +118,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring_week_month').style.display = 'none';
 			document.getElementById('scheduled_time').style.display = 'block';
 		}
-		
+
 		if(type == 'day_every_week'){
 			document.getElementById('recurring_date_month').style.display = 'none';
 			document.getElementById('recurring_date_year').style.display = 'none';
@@ -126,7 +126,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring_week_month').style.display = 'block';
 			document.getElementById('scheduled_time').style.display = 'block';
 		}
-		
+
 		if(type == 'everyday'){
 			document.getElementById('recurring_date_month').style.display = 'none';
 			document.getElementById('recurring_date_year').style.display = 'none';
@@ -135,7 +135,7 @@ $grantedFeature     = session('granted_features');
 		}
 	}
 	</script>
-	
+
 @endsection
 
 @section('content')
@@ -183,18 +183,18 @@ $grantedFeature     = session('granted_features');
 					<div class="form-body">
 						<div class="form-group">
 							<label>Promotion Name</label>
-							<input type="text" class="form-control" placeholder="Promotion Name" name="promotion_name" required @if(isset($result['promotion_name']) && $result['promotion_name'] != "") value="{{$result['promotion_name']}}" @endif style="width:50%"> 
+							<input type="text" class="form-control" placeholder="Promotion Name" name="promotion_name" required @if(isset($result['promotion_name']) && $result['promotion_name'] != "") value="{{$result['promotion_name']}}" @endif style="width:50%">
 						</div>
 						<div class="form-group">
 							<label>Promotion Type</label>
 							<div class="md-radio-list">
 								<div class="md-radio">
-									<input type="radio" id="instant_campaign" name="promotion_type" value="Instant Campaign" class="md-radiobtn" 
-									@if(isset($result['promotion_type']) && $result['promotion_type'] == "Instant Campaign") 
-										checked 
-									@else 
-										@if(!isset($result['promotion_type'])) checked @endif 
-									@endif 
+									<input type="radio" id="instant_campaign" name="promotion_type" value="Instant Campaign" class="md-radiobtn"
+									@if(isset($result['promotion_type']) && $result['promotion_type'] == "Instant Campaign")
+										checked
+									@else
+										@if(!isset($result['promotion_type'])) checked @endif
+									@endif
 									onClick="showform('instant');">
 									<label for="instant_campaign" class="tooltips" data-placement="right" data-original-title="Pilih ini jika Anda ingin mengirim 1 campaign sekarang">
 										<span></span>
@@ -207,7 +207,7 @@ $grantedFeature     = session('granted_features');
 										<span></span>
 										<span class="check"></span>
 										<span class="box"></span> Scheduled Campaign </label>
-										 
+
 								</div>
 								<div class="md-radio">
 									<input type="radio" id="recurring_campaign" name="promotion_type" value="Recurring Campaign" class="md-radiobtn" onClick="showform('recurring');" @if(isset($result['promotion_type']) && $result['promotion_type'] == "Recurring Campaign") checked @endif>
@@ -229,7 +229,7 @@ $grantedFeature     = session('granted_features');
 							<label>Number of Campaign</label>
 							<input class="form-control" id="mask_number" type="text" name="promotion_series" placeholder="10" @if(isset($result['promotion_series']) && $result['promotion_series'] != "") value="{{$result['promotion_series']}}" @endif />
 						</div>
-						
+
 						<div class="form-group" id="scheduled_date" @if(isset($result['promotion_type']) && $result['promotion_type'] == "Scheduled Campaign") style="display:block;" @else style="display:none;" @endif>
 							<label>Scheduled Date</label>
 							<div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d" style="width:40%">
@@ -241,7 +241,7 @@ $grantedFeature     = session('granted_features');
 								</span>
 							</div>
 						</div>
-						
+
 						<div class="form-group" id="recurring" @if(isset($result['promotion_type'])) @if($result['promotion_type'] == "Recurring Campaign" || $result['promotion_type'] == "Campaign Series") style="display:block;"  @else style="display:none;" @endif @else style="display:none;" @endif>
 							<label>Recurring Rule</label>
 							<select name="recurring_rule" class="form-control input-sm select2" data-placeholder="Select Recurring Rule" onChange="showRecurring(this.value);">
@@ -252,7 +252,7 @@ $grantedFeature     = session('granted_features');
 								<option value="everyday" @if(isset($result['schedules'][0]['schedule_everyday']) && $result['schedules'][0]['schedule_everyday'] == "Yes") selected @endif>Everyday</option>
 							</select>
 						</div>
-						
+
 						<div class="form-group" id="recurring_date_year" @if(isset($result['schedules'][0]['schedule_date_month']) && $result['schedules'][0]['schedule_date_month'] != "") style="display:block;" @else style="display:none;" @endif>
 							<label>Date / Month for Every Year</label>
 							<div class="input-group input-medium date date-picker" data-date-format="dd-mm" data-date-start-date="+0d" style="width:40%">
@@ -264,7 +264,7 @@ $grantedFeature     = session('granted_features');
 								</span>
 							</div>
 						</div>
-						
+
 						<div class="form-group" id="recurring_date_month" @if(isset($result['schedules'][0]['schedule_date_every_month']) && $result['schedules'][0]['schedule_date_every_month'] != "") style="display:block;" @else style="display:none;" @endif>
 							<label>Date for Every Month</label>
 							<select name="schedule_date_every_month" class="form-control input-sm select2" data-placeholder="Date">
@@ -276,13 +276,13 @@ $grantedFeature     = session('granted_features');
 										@else
 											<option value="{{$x}}" >{{$x}}</option>
 										@endif
-									@else 
+									@else
 										<option value="{{$x}}" >{{$x}}</option>
 									@endif
 								@endfor
 							</select>
 						</div>
-						
+
 						<div class="form-group" id="recurring_day_week" @if(isset($result['schedules'][0]['schedule_day_every_week']) && $result['schedules'][0]['schedule_day_every_week'] != "") style="display:block;" @else style="display:none;" @endif>
 							<label>Day for Every Week</label>
 							<select name="schedule_day_every_week" class="form-control input-sm select2" data-placeholder="Days">
@@ -297,7 +297,7 @@ $grantedFeature     = session('granted_features');
 
 							</select>
 						</div>
-						
+
 						<div class="form-group" id="recurring_week_month" @if(isset($result['schedules'][0]['schedule_day_every_week']) && $result['schedules'][0]['schedule_day_every_week'] != "") style="display:block;" @else style="display:none;" @endif>
 							<label>Week for Every Month</label>
 							<select name="schedule_week_in_month" class="form-control input-sm select2" data-placeholder="Week">
@@ -316,16 +316,16 @@ $grantedFeature     = session('granted_features');
 								@endfor
 							</select>
 						</div>
-						
-						<div class="form-group" id="scheduled_time" 
+
+						<div class="form-group" id="scheduled_time"
 						   @if(isset($result['promotion_type']))
-							@if($result['promotion_type'] == "Scheduled Campaign" || 
-							 $result['promotion_type'] == "Recurring Campaign" || 
+							@if($result['promotion_type'] == "Scheduled Campaign" ||
+							 $result['promotion_type'] == "Recurring Campaign" ||
 							 $result['promotion_type'] == "Campaign Series") ||
-								style="display:block;" @else style="display:none;" 
+								style="display:block;" @else style="display:none;"
 							@endif
 							@else
-								style="display:none;" 
+								style="display:none;"
 							@endif
 							>
 							<label>Time to Send Campaign</label>
@@ -411,7 +411,7 @@ $grantedFeature     = session('granted_features');
 				@endif
 			@endif
 			<?php $tombolsubmit = 'hidden'; ?>
-			@include('filter') 
+			@include('filter')
 		</div>
 		<div class="col-md-8 col-md-offset-2">
 			<div class="portlet light bordered">

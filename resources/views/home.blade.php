@@ -40,16 +40,16 @@
 			chart.dataProvider[x][colorKey] = color;
 			}
 		}
-		
+
 	}, ["serial"]);
 </script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{ ('assets/pages/scripts/table-datatables-scroller.min.js')}}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/table-datatables-scroller.min.js')}}" type="text/javascript"></script>
 	<script>
 		$('.sample').DataTable({
                 "searching": false,
@@ -76,8 +76,8 @@
 			</li>
 		</ul>
 	</div>
-	<h1 class="page-title"> 
-		<i class="fa fa-home font-blue"></i> 
+	<h1 class="page-title">
+		<i class="fa fa-home font-blue"></i>
 		<span class="caption-subject font-blue-sharp sbold">{{$title}}</span>
 	</h1>
 	<div class="portlet light">
@@ -86,15 +86,15 @@
 			Hello<br>
 			<b>{{Session::get('name')}}</b><br>
 			<b>{{Session::get('phone')}}</b><br><br>
-			
+
 			<?php setlocale(LC_MONETARY, 'id_ID'); ?>
-			<?php date_default_timezone_set("Asia/Jakarta"); 
+			<?php date_default_timezone_set("Asia/Jakarta");
 			$thn = $year;
 			$bln = $month;
 
 			$m_start    = date('m', strtotime($bln));
 			$date_start = $thn.'-'.$m_start.'-01';
-			
+
 			$m_end      = date('m-t', strtotime($bln));
 			$date_end   = $thn.'-'.$m_end;
 
@@ -218,7 +218,7 @@
 																				@endif
 																			@endforeach
 																			<td>
-																				<a class="btn btn-block yellow btn-xs" 
+																				<a class="btn btn-block yellow btn-xs"
 																					@if(strpos($card['card_name'], 'User') !== false || strpos($card['card_name'], 'Customer') !== false)
 																						href="{{ url('report/customer/detail/'.$value[$head[1]].'/transactions') }}">
 																					@elseif(strpos($card['card_name'], 'Product') !== false)
@@ -226,8 +226,8 @@
 																					@elseif(strpos($card['card_name'], 'Outlet') !== false)
 																						href="{{ url('report/outlet/detail/'.$value[$head[1]].'/'.$card['url']) }}">
 																					@endif
-																					<i class="icon-pencil"></i> 
-																					Detail 
+																					<i class="icon-pencil"></i>
+																					Detail
 																				</a>
 																			</td>
 																		</tr>
@@ -239,7 +239,7 @@
 														<div id="chart-{{$card['id_dashboard_card']}}" class="chartdiv"></div>
 														@if(!empty($card['value']))
 														<script type="text/javascript">
-															<?php 
+															<?php
 																$header = array_keys($card['value'][0]);
 															?>
 															<?php $dataGraphic =  json_encode($card['value']); ?>
@@ -270,7 +270,7 @@
 															"export": {
 																"enabled": true
 															}
-													
+
 															});
 														</script>
 														@endif
@@ -317,13 +317,13 @@
 													<div class="details">
 														<div class="number">
 															<span data-counter="counterup" data-value="{{$card['value']}}">{{number_format($card['value'], 0, '.', ',')}}</span> </div>
-														<div class="desc"> 
-															{{$card['card_name']}} 
+														<div class="desc">
+															{{$card['card_name']}}
 														</div>
 													</div>
 
 													@if(strpos($card['card_name'], 'Customer') !== false || strpos($card['card_name'], 'Admin') !== false || strpos($card['card_name'], 'User') !== false)
-														<a class="more" href="{{url('report/customer/summary/?'.$card['url'])}}"> 
+														<a class="more" href="{{url('report/customer/summary/?'.$card['url'])}}">
 															@if(strpos($card['card_name'], 'New') !== false )
 																Register Within {{$dashboard['daterange']}}
 															@else
@@ -336,9 +336,9 @@
 															<i class="m-icon-swapright m-icon-white"></i>
 														</a>
 													@else
-														<a class="more" 
+														<a class="more"
 															@if(strpos($card['card_name'], 'Transaction') !== false )
-																href="{{url('report/global/?'.$card['url'])}}"> 
+																href="{{url('report/global/?'.$card['url'])}}">
 																@if(strpos($dashboard['daterange'], 'months') !== false || strpos($dashboard['daterange'], 'days') !== false)
 																	Last {{$dashboard['daterange']}}
 																@else
@@ -357,7 +357,7 @@
 						</div>
 					</div>
 				@endforeach
-		@endif 
+		@endif
 
 	</div>
 	<script>

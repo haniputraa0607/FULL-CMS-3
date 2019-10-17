@@ -45,7 +45,7 @@
         .bg-black{
             background-color: #000c;
         }
-		
+
         .bg-yellow{
             background-color: #d1af28;
         }
@@ -194,7 +194,7 @@
 					@php $bulan = ['Janu', 'Febr', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
 					<div style="font-size: 13px; color: rgb(128,0,0);padding-bottom: 0px;" class="text-right ProductSans"></i> Berlaku sampai {{date('d', strtotime($voucher['voucher_expired_at']))}} {{$bulan[date('m', strtotime($voucher['voucher_expired_at']))-1]}} {{ date('Y', strtotime($voucher['voucher_expired_at'])) }} &nbsp; {{ date('H:i', strtotime($voucher['voucher_expired_at'])) }}</div>
 				</div>
-				
+
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 					<div class="title" style="padding-top: 5px; padding-bottom: 0px;">
 						{{ $voucher['deal_voucher']['deal']['deals_title'] }}
@@ -218,7 +218,7 @@
 				</div>
 
 				<hr style="border-top: 1px dashed #aaaaaa; margin-top: 0px; margin-bottom: 15px;">
-				
+
                 <a id="qr-code-modal" href="#">
                     <div id="qr-code-modal-content">
                         <img class="img-responsive" src="{{ $voucher['voucher_hash'] }}">
@@ -236,7 +236,7 @@
                     <center class="voucher-code font-red ProductSans" style="color: rgba(32, 32, 32);">{{ strtoupper($voucher['deal_voucher']['voucher_code']) }}</center>
                     <div class="line"></div>
 				</div>
-				
+
 				<hr style="width:80%;border-top: 1px dashed #aaaaaa;margin-top: 0px;margin-bottom: 10px;">
 
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
@@ -283,18 +283,18 @@
 						</div>
 					</div>
 				</div>
-				
+
 				@if($voucher['deal_voucher']['deal']['deals_description'] != "")
 				<div style="padding-top: 0px;" class="description-wrapper">
 					<div class="description">{!! $voucher['deal_voucher']['deal']['deals_description'] !!}</div>
 				</div>
 				@endif
-				
+
 				<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div>
 					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></i></div>
 				</div>
-				
+
 				@if($voucher['deal_voucher']['deal']['deals_tos'] != "")
 				<div id="textSK" style="padding-top: 0px;" class="description-wrapper">
 					<div class="description">{!! $voucher['deal_voucher']['deal']['deals_tos'] !!}</div>
@@ -337,7 +337,7 @@
 					</center>
 				@endif
 				@endif
-				
+
 				</div>
 				<br>
 				<br>
@@ -350,7 +350,7 @@
 @stop
 
 @section('page-script')
-    <script type="text/javascript" src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		@php $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', "Juli", 'Agustus', 'September', 'Oktober', 'November', 'Desember']; @endphp
 

@@ -7,20 +7,20 @@
  @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 language: {
@@ -133,7 +133,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -149,7 +149,7 @@
                         <div class="input-icon right">
                             <label class="col-md-2 control-label">
                             Tag Name
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             {{-- <i class="fa fa-question-circle tooltips" data-original-title="Judul/ nama hari libur" data-container="body"></i> --}}
                             </label>
                         </div>
@@ -191,10 +191,10 @@
                         @foreach($tag as $value)
                             <tr>
                                 <td>{{ $value['tag_name'] }}</td>
-                                <td style="width:225px"> 
-                                    <a href="{{ url('product/tag/detail') }}/{{ $value['id_tag'] }}" class="btn btn-sm blue btn-xs"><i class="fa fa-search"></i> List Product</a> 
-                                    <a data-toggle="modal" data-target="#modalEdit{{$value['id_tag']}}" class="btn btn-sm yellow  btn-xs"><i class="fa fa-pencil"></i> Edit</a> 
-                                    <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete btn-xs" data-id="{{ $value['id_tag'] }}"><i class="fa fa-trash-o"></i> Delete</a> 
+                                <td style="width:225px">
+                                    <a href="{{ url('product/tag/detail') }}/{{ $value['id_tag'] }}" class="btn btn-sm blue btn-xs"><i class="fa fa-search"></i> List Product</a>
+                                    <a data-toggle="modal" data-target="#modalEdit{{$value['id_tag']}}" class="btn btn-sm yellow  btn-xs"><i class="fa fa-pencil"></i> Edit</a>
+                                    <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete btn-xs" data-id="{{ $value['id_tag'] }}"><i class="fa fa-trash-o"></i> Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -217,8 +217,8 @@
                         <div class="form-group">
                             <div class="input-icon">
                                 <label class="control-label">
-                                    Tag Name 
-                                    <span class="required" aria-required="true"> * </span> : 
+                                    Tag Name
+                                    <span class="required" aria-required="true"> * </span> :
                                     {{-- <i class="fa fa-question-circle tooltips" data-original-title="Judul/ nama hari libur" data-container="body"></i> --}}
                                 </label>
                             </div>
@@ -234,7 +234,7 @@
                 </form>
             </div>
         </div>
-    </div> 
+    </div>
     @endforeach
 
 @endsection

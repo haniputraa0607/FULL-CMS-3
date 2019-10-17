@@ -2,22 +2,22 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
 	<script>
 		$('.datepicker').datepicker({
 			'format' : 'd-M-yyyy',
@@ -53,7 +53,7 @@
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    Date Start
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    </label>
 							</div>
 							<div class="col-md-4">
@@ -71,7 +71,7 @@
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    Date End
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    </label>
 							</div>
 							<div class="col-md-4">
@@ -89,23 +89,23 @@
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    Number Of Transactions
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    </label>
 							</div>
 							<div class="col-md-4">
 								<input type="number" name="how_many" placeholder="Number of Transactions" class="form-control" required value="{{old('how_many')}}"/>
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label class="col-md-3 control-label"> Number Of Item </label>
 							<div class="col-md-2">
 								<label class="control-label">From</label>
-								<input type="text" name="qty_start" class="form-control price" value="{{old('qty_start')}}"> 
+								<input type="text" name="qty_start" class="form-control price" value="{{old('qty_start')}}">
 							</div>
 							<div class="col-md-2">
 								<label class="control-label">To</label>
-								<input type="text" name="qty_end" class="form-control price" value="{{old('qty_end')}}"> 
+								<input type="text" name="qty_end" class="form-control price" value="{{old('qty_end')}}">
 							</div>
 						</div>
 
@@ -113,11 +113,11 @@
 							<label class="col-md-3 control-label"> Price </label>
 							<div class="col-md-3">
 								<label class="control-label">From</label>
-								<input type="text" name="price_start" class="form-control price" value="{{old('price_start')}}"> 
+								<input type="text" name="price_start" class="form-control price" value="{{old('price_start')}}">
 							</div>
 							<div class="col-md-3">
 								<label class="control-label">To</label>
-								<input type="text" name="price_end" class="form-control price" value="{{old('price_end')}}"> 
+								<input type="text" name="price_end" class="form-control price" value="{{old('price_end')}}">
 							</div>
 						</div>
 
@@ -125,7 +125,7 @@
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    User
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    </label>
 							</div>
 							<div class="col-md-6">

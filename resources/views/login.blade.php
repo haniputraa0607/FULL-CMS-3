@@ -13,12 +13,12 @@
 		<meta property="og:description" content="Technopartner Indonesia CRM System" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="{{env('TITLE', 'Behave')}}" />
-		<meta property="og:image" content="{{env('AWS_ASSET_URL') }}{{ ('images/logo.png')}}" />
+		<meta property="og:image" content="{{env('S3_URL_VIEW') }}{{ ('images/logo.png')}}" />
 		<meta property="og:image:width" content="200" />
 		<meta property="og:image:height" content="200" />
-		<link href="{{env('AWS_ASSET_URL') }}{{ ('images/logo.png')}}" rel="image_src" />
+		<link href="{{env('S3_URL_VIEW') }}{{ ('images/logo.png')}}" rel="image_src" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<link rel="shortcut icon" sizes="200x200" href="{{env('AWS_ASSET_URL') }}{{ ('images/icon.png')}}">
+		<link rel="shortcut icon" sizes="200x200" href="{{env('S3_URL_VIEW') }}{{ ('images/icon.png')}}">
 
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -40,7 +40,7 @@
         <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
-		<link rel="shortcut icon" href="{{env('AWS_ASSET_URL') }}{{ ('images/icon.png')}}" />
+		<link rel="shortcut icon" href="{{env('S3_URL_VIEW') }}{{ ('images/icon.png')}}" />
 
         <style type="text/css">
             .captcha_div > div{

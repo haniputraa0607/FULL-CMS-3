@@ -2,50 +2,50 @@
 
 @section('page-style')
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
 
-    <!-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>    
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>    
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    
-    
-    <script>  
+    <!-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+
+
+    <script>
 
     $(".form_datetime").datetimepicker({
         format: "d-M-yyyy hh:ii",
         autoclose: true,
         todayBtn: true
     });
-        
+
     </script>
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -114,7 +114,7 @@
                 else {
                     $('.dealsPromoTypeValuePrice').show();
                     $('.dealsPromoTypeValuePrice').prop('required', true);
-                    
+
                     $('.dealsPromoTypeValuePromo').val('');
                     $('.dealsPromoTypeValuePromo').hide();
                     $('.dealsPromoTypeValuePromo').removeAttr('required', true);
@@ -142,7 +142,7 @@
                 placeholder: 'Deals Content Long',
                 tabsize: 2,
                 height: 120,
-                toolbar: [         
+                toolbar: [
                     ['style', ['style']],
                     ['style', ['bold', 'underline', 'clear']],
                     ['color', ['color']],
@@ -184,7 +184,7 @@
                     contentType: false,
                     success: function(url) {
                         if (url['status'] == "success") {
-                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                         }
                         // document.getElementById('loadingDiv').style.display = "none";
                     },
@@ -207,10 +207,10 @@
                         mentah.attr('src', "")
                         $('#fieldPhoto').val("");
                         $('#imagedeals').children('img').attr('src', "{{$deals['url_deals_image']}}");
-                            
+
                         toastr.warning("Please check dimension of your photo.");
                     }
-                };                
+                };
             })
         });
 
@@ -303,7 +303,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -312,7 +312,7 @@
                 <span class="caption-subject font-blue sbold uppercase ">{{ $deals['deals_title'] }}</span>
             </div>
             <ul class="nav nav-tabs">
-                
+
                 <li class="active" id="infoOutlet">
                     <a href="#info" data-toggle="tab" > Info </a>
                 </li>
@@ -330,8 +330,8 @@
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
-                                        Title  
-                                        <span class="required" aria-required="true"> * </span> 
+                                        Title
+                                        <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Judul deals" data-container="body"></i>
                                         </label>
                                     </div>
@@ -345,7 +345,7 @@
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
-                                        Second Title  
+                                        Second Title
                                         <i class="fa fa-question-circle tooltips" data-original-title="Sub Judul deals jika ada" data-container="body"></i>
                                         </label>
                                     </div>
@@ -360,7 +360,7 @@
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
                                         Promo Type
-                                        <span class="required" aria-required="true"> * </span>  
+                                        <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Tipe promosi berdasarkan Promo ID atau nominal promo" data-container="body"></i>
                                         </label>
                                     </div>
@@ -388,9 +388,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>    
+                                        </div>
                                     </div>
-                                    
+
                                 </div>
 
                                 <div class="form-group dealsPromoTypeShow">
@@ -413,7 +413,7 @@
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
                                         Content Short
-                                        <span class="required" aria-required="true"> * </span>  
+                                        <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat tentang deals yang dibuat" data-container="body"></i>
                                         </label>
                                     </div>
@@ -428,7 +428,7 @@
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
                                         Content Long
-                                        <span class="required" aria-required="true"> * </span>  
+                                        <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang deals yang dibuat" data-container="body"></i>
                                         </label>
                                     </div>
@@ -477,7 +477,7 @@
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
                                         Image
-                                        <span class="required" aria-required="true"> * </span> 
+                                        <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                                         <br>
                                         <span class="required" aria-required="true"> (500*500) </span>
@@ -495,7 +495,7 @@
                                                     <span class="fileinput-new"> Select image </span>
                                                     <span class="fileinput-exists"> Change </span>
                                                     <input type="file" accept="image/*" name="deals_image" class="file" id="fieldPhoto">
-                                                    
+
                                                     </span>
 
                                                     <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -504,12 +504,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
                                         Outlet Available
-                                        <span class="required" aria-required="true"> * </span>  
+                                        <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
                                         </label>
                                     </div>
@@ -533,7 +533,7 @@
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
-                                        Voucher Expiry  
+                                        Voucher Expiry
                                         <i class="fa fa-question-circle tooltips" data-original-title="Masa berlaku voucher, bisa diatur berdasarkan durasi deal atau tanggal expirednya" data-container="body"></i>
                                         </label>
                                     </div>
@@ -591,7 +591,7 @@
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
                                         Voucher Type
-                                        <span class="required" aria-required="true"> * </span>  
+                                        <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Tipe pembuatan voucher, di list secara manual, auto generate atau unlimited" data-container="body"></i>
                                         </label>
                                     </div>
@@ -600,7 +600,7 @@
                                             <div class="col-md-3">
                                                 <div class="md-radio-inline">
                                                     <div class="md-radio">
-                                                        <input type="radio" name="deals_voucher_type" id="radio1" value="Auto generated" class="voucherType" @if ($deals['deals_voucher_type'] == "Auto generated") checked @endif> 
+                                                        <input type="radio" name="deals_voucher_type" id="radio1" value="Auto generated" class="voucherType" @if ($deals['deals_voucher_type'] == "Auto generated") checked @endif>
                                                         <label for="radio1">
                                                             <span></span>
                                                             <span class="check"></span>
@@ -611,7 +611,7 @@
                                             <div class="col-md-3">
                                                 <div class="md-radio-inline">
                                                     <div class="md-radio">
-                                                        <input type="radio" name="deals_voucher_type" id="radio2" value="List Vouchers" class="voucherType" @if ($deals['deals_voucher_type'] == "List Vouchers") checked @endif required> 
+                                                        <input type="radio" name="deals_voucher_type" id="radio2" value="List Vouchers" class="voucherType" @if ($deals['deals_voucher_type'] == "List Vouchers") checked @endif required>
                                                         <label for="radio2">
                                                             <span></span>
                                                             <span class="check"></span>
@@ -622,7 +622,7 @@
                                             <div class="col-md-3">
                                                 <div class="md-radio-inline">
                                                     <div class="md-radio">
-                                                        <input type="radio" name="deals_voucher_type" id="radio3" value="Unlimited" class="voucherType" @if ($deals['deals_voucher_type']== "Unlimited") checked @endif required> 
+                                                        <input type="radio" name="deals_voucher_type" id="radio3" value="Unlimited" class="voucherType" @if ($deals['deals_voucher_type']== "Unlimited") checked @endif required>
                                                         <label for="radio3">
                                                             <span></span>
                                                             <span class="check"></span>
@@ -630,7 +630,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -639,8 +639,8 @@
                                     <label class="col-md-3 control-label"></label>
                                     <div class="col-md-9">
                                         <div class="col-md-3">
-                                            <label class="control-label">Input Voucher 
-                                                <span class="required" aria-required="true"> * </span> 
+                                            <label class="control-label">Input Voucher
+                                                <span class="required" aria-required="true"> * </span>
                                                 <br> <small> Separated by new line </small>
                                             </label>
                                         </div>
@@ -685,7 +685,7 @@
                             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                                 <thead>
                                     <tr>
-                                        
+
                                         <th> No </th>
                                         <th> Promotion Name </th>
                                         <th> Type </th>
@@ -694,7 +694,7 @@
                                 </thead>
                                 <tbody>
                                     @if (!empty($promotion))
-                                        @php 
+                                        @php
                                             $no = 1;
                                         @endphp
                                         @foreach($promotion as $value)
@@ -702,11 +702,11 @@
                                                 <td>{{$no}}</td>
                                                 <td>{{ $value['promotion_name'] }}</td>
                                                 <td>{{ $value['promotion_type'] }}</td>
-                                                <td style="width: 80px;"> 
-                                                    <a href="{{ url('promotion/') }}/step3/{{ $value['id_promotion'] }}" class="btn btn-sm blue">Summary</i></a> 
+                                                <td style="width: 80px;">
+                                                    <a href="{{ url('promotion/') }}/step3/{{ $value['id_promotion'] }}" class="btn btn-sm blue">Summary</i></a>
                                                 </td>
                                             </tr>
-                                            @php 
+                                            @php
                                                 $no++;
                                             @endphp
                                         @endforeach

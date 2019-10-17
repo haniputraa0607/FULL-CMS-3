@@ -8,20 +8,20 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
-    <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
+    <link href="{{ env('S3_URL_VIEW') }}{{('css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
         @font-face {
                 font-family: "GoogleSans";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env("AWS_ASSET_URL") }}{{ ("/fonts/GoogleSans-Regular.ttf") }}');
+                src: url('{{ env("S3_URL_VIEW") }}{{ ("/fonts/GoogleSans-Regular.ttf") }}');
         }
 
 		@font-face {
                 font-family: "ProductSans-Regular";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env("AWS_ASSET_URL") }}{{ ("fonts/ProductSans-Regular.ttf") }}');
+                src: url('{{ env("S3_URL_VIEW") }}{{ ("fonts/ProductSans-Regular.ttf") }}');
         }
 
 		.ProductSans-Regular{
@@ -31,7 +31,7 @@
         .GoogleSans{
             font-family: "GoogleSans";
         }
-        
+
     	.kotak {
     		margin : 10px;
     		padding: 10px;
@@ -100,7 +100,7 @@
     	.text-grey-green {
     		color: #049a4a;
     	}
-    	
+
     	.text-grey2{
     	    color: #676767;
     	}
@@ -143,7 +143,7 @@
     @php
         $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'Septempber', 'Oktober', 'November', 'Desember'];
         $data['date'] = date('d', strtotime($data['date'])).' '.$month[(int)date('m', strtotime($data['date']))-1].' '.date('Y H:i', strtotime($data['date']));
-        
+
         if (!empty($data['detail']['used_at'])){
             $data['detail']['used_at'] = date('d', strtotime($data['detail']['used_at'])).' '.$month[(int)date('m', strtotime($data['detail']['used_at']))-1].' '.date('Y H:i', strtotime($data['detail']['used_at']));
         }
@@ -180,8 +180,8 @@
 	   		</div>
 	   	</div>
   	</div>
-   
-   	
+
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -189,6 +189,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
-    
+
   </body>
 </html>

@@ -1,9 +1,9 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <style type="text/css">
         .amcharts-export-menu-top-right {
@@ -11,17 +11,17 @@
             right: 0;
         }
     </style>
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -30,14 +30,14 @@
             var trxTotal     = $("#trxTotal").val();
             var voucherPoint = $("#voucherPoint").val();
             var trxPoint     = $("#trxPoint").val();
-                   
+
            $('.voucherTotal').data('value', voucherTotal);
-           $('.voucherTotal').html(voucherTotal);           
-           $('.voucherPoint').html(voucherPoint);           
+           $('.voucherTotal').html(voucherTotal);
+           $('.voucherPoint').html(voucherPoint);
 
            $('.trxTotal').data('value', trxTotal);
            $('.trxTotal').html(trxTotal);
-           $('.trxPoint').html(trxPoint);           
+           $('.trxPoint').html(trxPoint);
 
 
         });
@@ -89,10 +89,10 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
-    
+
     <div class="portlet light bordered col-md-6" style="height: 480px;">
         <div class="portlet-title">
             <div class="caption ">
@@ -102,7 +102,7 @@
         <div class="portlet-body form">
             <table class="table table-hover table-light">
                 <tbody>
-                    
+
                     @php
                         $except = [
                             'photo',
@@ -128,7 +128,7 @@
                     <tr>
                         @if (!in_array($key, $except))
                         <td> <b> {{ ucwords($key) }} </b></td>
-                        <td> 
+                        <td>
                             @if ($key == "is_suspended")
                                 @if ($value == 1)
                                     <span class="label label-sm label-danger"> Suspended </span>
@@ -136,7 +136,7 @@
                                     <span class="label label-sm label-info"> Active </span>
                                 @endif
                             @else
-                                {{ $value }} 
+                                {{ $value }}
                             @endif
                         </td>
                         @endif
@@ -144,13 +144,13 @@
                     @endforeach
                     <tr>
                         <td> <b> City </b></td>
-                        <td> {{ $user[0]['city']['city_name'] }} </td>                        
+                        <td> {{ $user[0]['city']['city_name'] }} </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    
+
     <!-- INI UNTUK DATA RESUME POINT -->
     <div class="portlet light bordered col-md-6" style="height: 480px;">
         <div class="portlet-title">
@@ -210,7 +210,7 @@
                         </div>
                     </div>
                 </div>
-            </div>   
+            </div>
         </div>
     </div>
 
@@ -251,7 +251,7 @@
                                 }
                             @endphp
 
-                            
+
                         @endforeach
                     @endif
 
