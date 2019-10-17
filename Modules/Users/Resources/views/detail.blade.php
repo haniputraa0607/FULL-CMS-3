@@ -316,8 +316,8 @@
 	}
 
 	// function viewLogDetail(url, status, request, response, ip, useragent){
-	function viewLogDetail(id_log){
-		$.get("{{url('user/ajax/log')}}"+'/'+id_log, function(result){
+	function viewLogDetail(id_log, log_type){
+		$.get("{{url('user/ajax/log')}}"+'/'+id_log+'/'+log_type, function(result){
 			if(result){
 				document.getElementById("log-url").value = result.url;
 				document.getElementById("log-status").value = result.response_status;
@@ -505,7 +505,7 @@
 
             																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
             																		 ?>
-            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activities_apps']}}','apps')"> <i class="fa fa-info-circle"></i> Details
 
             																		</span>
             																	</div>
@@ -563,7 +563,7 @@
 
             																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
             																		 ?>
-            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activities_be']}}','be')"> <i class="fa fa-info-circle"></i> Details
 
             																		</span>
             																	</div>

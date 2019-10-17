@@ -28,8 +28,8 @@
 
     <script type="text/javascript">
 
-        function viewLogDetail(id_log){
-            $.get("{{url('user/ajax/log')}}"+'/'+id_log, function(result){
+        function viewLogDetail(id_log, log_type){
+            $.get("{{url('user/ajax/log')}}"+'/'+id_log+'/'+log_type, function(result){
                 if(result){
                     document.getElementById("log-url").value = result.url;
                     document.getElementById("log-status").value = result.response_status;
@@ -183,8 +183,8 @@
                                             @endif
                                         </td>
                                         <td> {{date("d F Y H:i:s", strtotime($datalog['created_at']))}} </td>
-                                        <td>{{$datalog['module']}}</td>
                                         <td>{{$datalog['subject']}}</td>
+                                        <td>{{$datalog['module']}}</td>
                                         <td>
                                             @if($datalog['response_status'] == 'fail')
                                             <span class="label label-danger label-sm"> Failed
@@ -196,7 +196,7 @@
                                         </td>
                                         <td>{{$datalog['ip']}}</td>
                                         <td>
-                                            <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+                                            <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activities_apps']}}','apps')"> <i class="fa fa-info-circle"></i> Details
             							</td>
                                     </tr>
                                 @endforeach
@@ -204,7 +204,7 @@
                         </tbody>
                     </table>
 
-                    @if ($mobile_page)
+                    @if (isset($mobile_page))
                       {{ $mobile_page->links() }}
                     @endif
                 </div>
@@ -234,8 +234,8 @@
                                             @endif
                                         </td>
                                         <td> {{date("d F Y H:i:s", strtotime($datalog['created_at']))}} </td>
-                                        <td>{{$datalog['subject']}}</td>
                                         <td>{{$datalog['module']}}</td>
+                                        <td>{{$datalog['subject']}}</td>
                                         <td>
                                             @if($datalog['response_status'] == 'fail')
                                             <span class="label label-danger label-sm"> Failed
@@ -247,14 +247,14 @@
                                         </td>
                                         <td>{{$datalog['ip']}}</td>
                                         <td>
-                                            <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+                                            <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activities_be']}}', 'be')"> <i class="fa fa-info-circle"></i> Details
             							</td>
                                     </tr>
                                 @endforeach
                             @endif
                         </tbody>
                     </table>
-                    @if ($backend_page)
+                    @if (isset($backend_page))
                       {{ $backend_page->links() }}
                     @endif
                 </div>
