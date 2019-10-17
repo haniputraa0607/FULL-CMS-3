@@ -6,31 +6,31 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
 	<script>
 	function centang(no){
 		alert(no);
@@ -42,7 +42,7 @@
 		   slides[i].checked = true;
 		}
 	}
-	
+
 	function uncheckUsers(){
 		var slides = document.getElementsByClassName("md-check");
 		for(var i = 0; i < slides.length; i++)
@@ -68,7 +68,7 @@
 		<form role="form" action="{{ url('user') }}" method="post">
 			@if(Session::has('form'))
 			<?php
-			
+
 				$search_param = Session::get('form');
 				$search_param = array_filter($search_param);
 				if(isset($search_param['conditions'])){
@@ -83,7 +83,7 @@
 			?>
 			@endif
 			{{ csrf_field() }}
-			@include('filter') 
+			@include('filter')
 		</form>
 	</div>
 	<div class="col-md-12">
@@ -107,15 +107,15 @@
 								@foreach($cond as $row)
 									@if(isset($row['subject']))
 										<p>{{ucwords(str_replace("_"," ",$row['subject']))}}
-										@if($row['subject'] != 'all_user') 
-											@if(isset($row['operator']) && in_array($row['operator'] ,["=","like","<","<=",">",">="]) ) 
+										@if($row['subject'] != 'all_user')
+											@if(isset($row['operator']) && in_array($row['operator'] ,["=","like","<","<=",">",">="]) )
 												{{$row['operator']}}{{$row['parameter']}}
-											
+
 											@else
 												=
 												@if($row['subject'] == 'trx_outlet' || $row['subject'] == 'trx_outlet_not')
 													<?php $name = null; ?>
-													@foreach($outlets as $outlet) 
+													@foreach($outlets as $outlet)
 														@if($outlet['id_outlet'] == $row['operator'])
 															<?php $name = $outlet['outlet_name']; ?>
 														@endif
@@ -123,7 +123,7 @@
 													{{$name}}
 												@elseif($row['subject'] == 'trx_product' || $row['subject'] == 'trx_product_not')
 													<?php $name = null; ?>
-													@foreach($products as $product) 
+													@foreach($products as $product)
 														@if($product['id_product'] == $row['operator'])
 															<?php $name = $product['product_name']; ?>
 														@endif
@@ -131,7 +131,7 @@
 													{{$name}}
 												@elseif($row['subject'] == 'trx_product_tag' || $row['subject'] == 'trx_product_tag_not')
 													<?php $name = null; ?>
-													@foreach($tags as $tag) 
+													@foreach($tags as $tag)
 														@if($tag['id_tag'] == $row['operator'])
 															<?php $name = $tag['tag_name']; ?>
 														@endif
@@ -139,7 +139,7 @@
 													{{$name}}
 												@elseif($row['subject'] == 'membership')
 													<?php $name = null; ?>
-													@foreach($memberships as $membership) 
+													@foreach($memberships as $membership)
 														@if($membership['id_membership'] == $row['operator'])
 															<?php $name = $membership['membership_name']; ?>
 														@endif
@@ -150,13 +150,13 @@
 													{{$row['operator']}}
 													@endif
 												@endif
-											@endif 
-										@endif 
+											@endif
+										@endif
 
 										</p>
 									@endif
 								@endforeach
-								
+
 								@if($key < count($conditions)-1)
 									<p> {{$cond['rule_next']}}
 								@endif
@@ -169,7 +169,7 @@
 						<p>
 							<a href="{{ url('user/search/reset') }}" class="btn yellow">Reset</a>
 						</p>
-						
+
 					</div>
 				@endif
 				<div class="col-md-12" style="padding-left:0px;padding-right:0px;margin-bottom:20px;">
@@ -240,7 +240,7 @@
 								<th scope="col"> Phone Verified </th>
 								<th scope="col"> Email Verified </th>
 								<th scope="col"> Register Date </th>
-								
+
 							</tr>
 						</thead>
 						<tbody>
@@ -248,19 +248,19 @@
 							{{ csrf_field() }}
 							@if(!empty($content))
 								@foreach($content as $no => $data)
-								
+
 								@if($data['phone_verified'] == 0)
 								<tr style="color:red">
 								@else
 								<tr>
 								@endif
-								
+
 								@if($data['level'] == "Admin")
 								<tr style="color:blue">
 								@else
 								<tr>
 								@endif
-								
+
 								@if($data['level'] == "Super Admin")
 								<tr style="color:green">
 								@else
@@ -279,8 +279,8 @@
 									</td>
 									<td> {{str_replace(" ","&nbsp;", $data['name'])}} </td>
 									<td> {{$data['phone']}} </td>
-									<td> 
-										@if($data['android_device'] == "" && $data['ios_device'] == "") None @endif 
+									<td>
+										@if($data['android_device'] == "" && $data['ios_device'] == "") None @endif
 										@if($data['android_device'] != "" && $data['ios_device'] == "") Android @endif
 										@if($data['android_device'] == "" && $data['ios_device'] != "") IOS @endif
 										@if($data['android_device'] != "" && $data['ios_device'] != "") Both @endif
@@ -305,7 +305,7 @@
 								</tr>
 								@endforeach
 							@endif
-							
+
 						</tbody>
 					</table>
 				</div>
@@ -333,7 +333,7 @@
 							@if($page <= 1) <li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
 							@else <li class="page-first"><a href="{{url('user')}}/{{$page-1}}">«</a></li>
 							@endif
-							
+
 							@if($last == $total) <li class="page-last disabled"><a href="javascript:void(0)">»</a></li>
 							@else <li class="page-last"><a href="{{url('user')}}/{{$page+1}}">»</a></li>
 							@endif
@@ -342,7 +342,7 @@
 				</div>
 			</div>
 			</form>
-			
+
 		</div>
 	</div>
 </div>

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .sort-icon{
             margin-right: 5px;
@@ -36,9 +36,9 @@
 
     </style>
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(function() {
             // ordering
@@ -64,7 +64,7 @@
             $("#sortable-category, .sortable-category-sub, .sortable-product").disableSelection();
 
         });
-        
+
         var token = "{{ csrf_token() }}";
 
         // ajax sort category
@@ -198,7 +198,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -272,7 +272,7 @@
                                 </div>
                             @else
                                 <div class="tab-pane {{ ($key==0 ? 'active' : '') }}" id="tab_{{$key}}">
-                                    <ul class="nav sortable-product">                                        
+                                    <ul class="nav sortable-product">
                                         @if(!empty($product))
                                             @foreach($product as $value)
                                                 @if ($value['category']['id_product_category'] == $cat['id_product_category'])
@@ -287,7 +287,7 @@
                                 </div>
                                 @foreach($cat['child'] as $keyC => $child)
                                 <div class="tab-pane" id="tab_{{$key}}_{{$keyC}}">
-                                    <ul class="nav sortable-product">                                        
+                                    <ul class="nav sortable-product">
                                         @if(!empty($product))
                                             @foreach($product as $value)
                                                 @if ($value['category']['id_product_category'] == $child['id_product_category'])

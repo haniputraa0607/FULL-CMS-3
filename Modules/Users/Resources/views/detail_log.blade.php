@@ -5,15 +5,15 @@
  @extends('layouts.main-closed')
 
  @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
@@ -26,7 +26,7 @@
 		document.getElementById("log-ip").value = ip;
 		document.getElementById("log-useragent").value = useragent;
 	}
-	
+
 	$('.feeds').click(function(){
 	    $.ajax({
 			type : "GET",
@@ -54,7 +54,7 @@
     										@endif
     									</div>
     									<div class="cont-col2">
-    										<div class="desc"> {{$logs['subject']}} 
+    										<div class="desc"> {{$logs['subject']}}
     											@if($logs['response_status'] == 'fail')
     											<span class="label label-danger label-sm"> Failed
     											</span>
@@ -63,14 +63,14 @@
     											</span>
     											@endif
     											 from IP {{$logs['ip']}}
-    											 
-    											 <?php 
+
+    											 <?php
     											 $request =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['request']))));
-    											 
+
     											 $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
     											 ?>
     											'<span class="label label-info label-sm" data-toggle="modal" href="#logModal" onClick="viewLogDetail('{{$logs['url']}}','{{$logs['response_status']}}', '{{$request}}','{{$response}}','{{$logs['ip']}}','{{$logs['useragent']}}')"> <i class="fa fa-info-circle"></i> Details
-    											
+
     											'</span>'+
     										'</div>'+
     									'</div>'+
@@ -136,7 +136,7 @@
 																	@endif
 																</div>
 																<div class="cont-col2">
-																	<div class="desc"> {{$logs['subject']}} 
+																	<div class="desc"> {{$logs['subject']}}
 																		@if($logs['response_status'] == 'fail')
 																		<span class="label label-danger label-sm"> Failed
 																		</span>
@@ -145,14 +145,14 @@
 																		</span>
 																		@endif
 																		 from IP {{$logs['ip']}}
-																		 
-																		 <?php 
+
+																		 <?php
 																		 $request =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['request']))));
-																		 
+
 																		 $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
 																		 ?>
 																		<span class="label label-info label-sm" data-toggle="modal" href="#logModal" onClick="viewLogDetail('{{$logs['url']}}','{{$logs['response_status']}}', '{{$request}}','{{$response}}','{{$logs['ip']}}','{{$logs['useragent']}}')"> <i class="fa fa-info-circle"></i> Details
-																		
+
 																		</span>
 																	</div>
 																</div>
@@ -167,18 +167,18 @@
 											</div>
 										</div>
 										@endif
-										
+
 									</div>
 									<div class="col-md-4" style="padding-left:0px;padding-right:0px;">
                     					<div class="pull-right pagination" style="margin-top: 0px;margin-bottom: 0px;">
                     						<ul class="pagination" style="margin-top: 0px;margin-bottom: 0px;">
                     							<li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
                     							<li class="page-first"><a href="">«</a></li>
-                    							
-                    							
+
+
                     							<li class="page-last disabled"><a href="javascript:void(0)">»</a></li>
                     							<li class="page-last"><a href="">»</a></li>
-                    							
+
                     						</ul>
                     					</div>
                     				</div>

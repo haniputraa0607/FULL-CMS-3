@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
     $(document).ready(function() {
         $('.summernote').summernote({
             placeholder: 'Text here...',
             tabsize: 2,
             height: 120,
-            toolbar: [         
+            toolbar: [
                 ['style', ['style']],
                 ['style', ['bold', 'underline', 'clear']],
                 ['color', ['color']],
@@ -1166,7 +1166,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light form-fit bordered">
@@ -1230,7 +1230,7 @@
                                                 </div>
                                             </div>
                                         @endforeach
-                                    @else 
+                                    @else
                                         <div data-repeater-item>
                                             <div class="col-md-12 text-right" style="margin-bottom:15px;padding-left: 0px;padding-right: 0px;">
                                                 <div class="col-md-2">

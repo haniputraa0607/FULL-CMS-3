@@ -15,7 +15,7 @@
                 font-family: "GoogleSans";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('fonts/GoogleSans-Regular.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/GoogleSans-Regular.ttf') }}');
         }
  		.GoogleSans{
             font-family: "GoogleSans";
@@ -196,7 +196,7 @@
   	<div class="kotak1" style="height:100vh">
    		<div class="row" id="row">
    			<div class="space-bottom" style="margin: auto;">
-			   <img class="img-responsive" style="width: 80px;" src="{{ env('AWS_ASSET_URL') }}{{ ('img/webview/gif-empty.gif') }}">
+			   <img class="img-responsive" style="width: 80px;" src="{{ env('S3_URL_VIEW') }}{{ ('img/webview/gif-empty.gif') }}">
 			</div>
 			<div class="col-12 text-23-3px text-red GoogleSans space-sch" style="margin: auto; text-align:center">
 			Oops!

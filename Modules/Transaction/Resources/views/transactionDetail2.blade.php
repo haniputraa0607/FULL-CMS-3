@@ -5,9 +5,9 @@
 @extends('layouts.main')
 
 @section('page-style')
-<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/invoice-2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/invoice-2.min.css') }}" rel="stylesheet" type="text/css" />
 <style type="text/css">
     .invoice-desc {
         font-weight: bold !important;
@@ -24,9 +24,9 @@
 </style>
 
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -111,7 +111,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="invoice-content-2 bordered">
@@ -262,7 +262,7 @@
                     @endif
                 @endforeach
                     <h2 class="invoice-desc">IDR {{ number_format($result['transaction_grandtotal']) }}</h2>
-            </div> 
+            </div>
 
             <div class="col-md-12">
                 <div class="portlet light portlet-fit portlet-datatable bordered">

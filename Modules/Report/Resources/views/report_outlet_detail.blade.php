@@ -1,8 +1,8 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
         #chartdiv {
@@ -38,9 +38,9 @@
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <script src="https://www.amcharts.com/lib/3/themes/none.js"></script>
 
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script>
     var chartData = <?php echo $dataOutlet; ?>;
@@ -103,12 +103,12 @@
 
     chart.addListener("dataUpdated", zoomChart);
     zoomChart();
-    
+
     function zoomChart(){
         chart.zoomToIndexes(chart.dataProvider.length - 20, chart.dataProvider.length - 1);
     }
 
-    </script>    
+    </script>
 
 @endsection
 
@@ -132,9 +132,9 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
-    
+
     <div class="portlet light portlet-fit bordered">
         <div class="portlet-title">
             <div class="caption">
@@ -178,10 +178,10 @@
                 </div>
             </div>
             <div class="portlet-body form">
-                <div id="chartdiv"></div>   
+                <div id="chartdiv"></div>
             </div>
         </div>
       </div>
     </div>
-    
+
 @endsection

@@ -1,22 +1,22 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('css/custom.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/table-datatables-responsive.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/table-datatables-responsive.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').on('click', '.delete', function() {
@@ -29,7 +29,7 @@
                 url : "{{ url('product/category/delete') }}",
                 data : "_token="+token+"&id_product_category="+id,
                 success : function(result) {
-                    
+
                     if (result == "success") {
                         $('#sample_1').DataTable().row(column).remove().draw();
                         toastr.info("Product has been deleted.");
@@ -63,7 +63,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -87,18 +87,18 @@
                             <tr style="background-color: #fbfbfb;font-weight:bold">
                                 <td class="clickable" data-toggle="collapse" data-target=".{{ str_replace(' ', '_', $res['product_category_name']) }}" style="background-color:  #fbfbfb !important"> <i class="glyphicon glyphicon-plus" style="padding-top: 5px">{{ ++$key }}. </td>
                                 <td > {{ $res['product_category_name'] }} </td>
-                                <td style="width: 80px;"> 
-                                    <a href="{{ url('product/category/edit', $res['id_product_category']) }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a> 
-                                    <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $res['id_product_category'] }}"><i class="fa fa-trash-o"></i></a> 
+                                <td style="width: 80px;">
+                                    <a href="{{ url('product/category/edit', $res['id_product_category']) }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
+                                    <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $res['id_product_category'] }}"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
                             @foreach($res['child'] as $row => $child)
                                 <tr class="collapse {{ str_replace(' ', '_', $res['product_category_name']) }}" style="background-color: white !important">
                                     <td style="background-color:  white !important"> {{ $key }}.{{ ++$row }} </td>
                                     <td > {{ $child['product_category_name'] }} </td>
-                                    <td style="width: 80px;"> 
-                                        <a href="{{ url('product/category/edit', $child['id_product_category']) }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a> 
-                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $child['id_product_category'] }}"><i class="fa fa-trash-o"></i></a> 
+                                    <td style="width: 80px;">
+                                        <a href="{{ url('product/category/edit', $child['id_product_category']) }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
+                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $child['id_product_category'] }}"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

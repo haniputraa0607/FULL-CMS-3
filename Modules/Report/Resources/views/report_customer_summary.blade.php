@@ -5,8 +5,8 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <style type="text/css">
         #chartdiv {
             width   : 100%;
@@ -20,29 +20,29 @@
         .amcharts-export-menu-top-right {
           top: 10px;
           right: 0;
-        } 
+        }
 
         #chartdiv2 {
           width: 100%;
           height: 500px;
-        }                                                             
+        }
     </style>
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	  <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	  <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="https://www.amcharts.com/lib/3/serial.js"></script>
     <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -133,7 +133,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -360,7 +360,7 @@
                                 	<option value="">...</option>
                                     <option value="app" @if (isset($post['from']) && $post['from'] == 'app') selected @elseif (old('from') == 'app') selected @endif>Apps</option>
                                     <option value="outlet" @if (isset($post['from']) && $post['from'] == 'outlet') selected @elseif (old('from') == 'outlet') selected @endif>Outlet</option>
-                                </select> 
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -385,7 +385,7 @@
                                 			<option value="{{ $c['id_city'] }}" @if (isset($post['city']) && $post['city'] == $c['id_city']) selected @elseif (old('city') == $c['id_city']) selected @endif>{{ $c['city_name'] }}</option>
                                 		@endforeach
                                 	@endif
-                                </select> 
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -399,7 +399,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Age Range End</label>
-                                <input type="number" class="form-control" name="age_end" @if (isset($post['age_end'])) value="{{ $post['age_end'] }}" @else value="{{ old('age_end') }}" @endif> 
+                                <input type="number" class="form-control" name="age_end" @if (isset($post['age_end'])) value="{{ $post['age_end'] }}" @else value="{{ old('age_end') }}" @endif>
                             </div>
                         </div>
                     </div>
@@ -413,7 +413,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Registration Date End</label>
-                                <input type="date" class="form-control" name="regis_date_end" placeholder="dd/mm/yyyy" @if (isset($post['regis_date_end'])) value="{{ $post['regis_date_end'] }}" @else value="{{ old('regis_date_end') }}"  @endif> 
+                                <input type="date" class="form-control" name="regis_date_end" placeholder="dd/mm/yyyy" @if (isset($post['regis_date_end'])) value="{{ $post['regis_date_end'] }}" @else value="{{ old('regis_date_end') }}"  @endif>
                             </div>
                         </div>
                     </div>
@@ -445,7 +445,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Phone</label>
-                                <input type="text" class="form-control" name="phone" @if (isset($post['phone'])) value="{{ $post['phone'] }}" @else value="{{ old('phone') }}" @endif> 
+                                <input type="text" class="form-control" name="phone" @if (isset($post['phone'])) value="{{ $post['phone'] }}" @else value="{{ old('phone') }}" @endif>
                             </div>
                         </div>
                     </div>
@@ -460,7 +460,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Total Point End</label>
-                                <input type="number" class="form-control" name="point_end" @if (isset($post['point_end'])) value="{{ $post['point_end'] }}" @else value="{{ old('point_end') }}" @endif> 
+                                <input type="number" class="form-control" name="point_end" @if (isset($post['point_end'])) value="{{ $post['point_end'] }}" @else value="{{ old('point_end') }}" @endif>
                             </div>
                         </div>
                     </div>

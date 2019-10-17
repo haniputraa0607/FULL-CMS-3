@@ -8,11 +8,11 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('content')
@@ -35,7 +35,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -62,7 +62,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Sample Data</label>
                                 <div class="col-md-9">
-                                    <a href= "{{url('outlet/sample_data_outlet.xls')}}"> <i class="fa fa-file-excel-o"></i> Sample Import Outlet </a> 
+                                    <a href= "{{url('outlet/sample_data_outlet.xls')}}"> <i class="fa fa-file-excel-o"></i> Sample Import Outlet </a>
                                 </div>
                             </div>
 

@@ -7,22 +7,22 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	
+	<script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+
 	<script type="text/javascript">
         $(document).ready(function() {
 			$.fn.modal.Constructor.prototype.enforceFocus = function() {};
@@ -31,7 +31,7 @@
 				placeholder: 'Email Content',
 				tabsize: 2,
 				height: 120,
-				toolbar: [         
+				toolbar: [
                   ['style', ['style']],
                   ['style', ['bold', 'underline', 'clear']],
                   ['color', ['color']],
@@ -76,7 +76,7 @@
 							$('#'+id).summernote('editor.saveRange');
 							$('#'+id).summernote('editor.restoreRange');
 							$('#'+id).summernote('editor.focus');
-                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                         }
                         // document.getElementById('loadingDiv').style.display = "none";
                     },
@@ -130,7 +130,7 @@
 		var textvaluebaru = textvalue+" "+param;
 		$('#email_subject').val(textvaluebaru);
     }
-	
+
 	function addSmsContent(param){
 		var textvalue = $('#sms_content').val();
 		var textvaluebaru = textvalue+" "+param;
@@ -142,7 +142,7 @@
 		var textvaluebaru = textvalue+" "+param;
 		$('#whatsapp_content').val(textvaluebaru);
     }
-	
+
 	function visibleDiv(apa,nilai){
 		if(apa == 'email'){
 			@if(MyHelper::hasAccess([38], $configs))
@@ -172,7 +172,7 @@
 				}
 			@endif
 		}
-		
+
 		if(apa == 'whatsapp'){
 			@if(MyHelper::hasAccess([74], $configs))
 				@if($api_key_whatsapp)
@@ -189,9 +189,9 @@
 			@endif
 		}
 	}
-		
+
     </script>
-	
+
 @endsection
 
 @section('content')
@@ -254,7 +254,7 @@
 						</div>
 					</div>
 				</div>
-					
+
 				<div class="portlet light bordered">
 					<div class="portlet-title">
 						<div class="caption">
@@ -350,7 +350,7 @@
 											<option value="0" @if(old('sms_toogle') == '0') selected @else @if(isset($result['sms_toogle']) && $result['sms_toogle'] == "0") selected @endif @endif>Disabled</option>
 											<option value="1" @if(old('sms_toogle') == '1') selected @else @if(isset($result['sms_toogle']) && $result['sms_toogle'] == "1") selected @endif @endif>Enabled</option>
 										</select>
-										
+
 									</div>
 								</div>
 								<div class="form-group" id="div_sms_recipient" style="display:none">

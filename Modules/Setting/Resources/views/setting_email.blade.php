@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         function cekRequired() {
             var reply = $('#reply').val();
@@ -108,7 +108,7 @@
                             @include('emails.preview')
                         </div>
                     </div>
-                <br>    
+                <br>
                 <h4 style="text-align:center">Setting Mail Variable</h4>
                 <br>
                 <div class="form-group">
@@ -117,7 +117,7 @@
                         <input type="email" class="form-control" name="email_from" value="@if(isset($setting)) {{ $setting['email_from'] }} @endif" placeholder="Email From" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="col-md-3 control-label">Sender <span class="required" aria-required="true"> * </span></label>
                     <div class="col-md-9">
@@ -177,12 +177,12 @@
                         <div class="fileinput fileinput-new" data-provides="fileinput">
 							<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 								@if(isset($setting) && $setting['email_logo'] != null)
-                                <img src="{{ env('AWS_URL')}}{{$setting['email_logo']}}" id="" />
+                                <img src="{{ env('S3_URL_API')}}{{$setting['email_logo']}}" id="" />
 								@else
 								<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" />
 								@endif
 							</div>
-								
+
 							<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
 							<div>
 								<span class="btn default btn-file">
@@ -205,7 +205,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <br>
                 <h4 style="text-align:center">Setting Footer</h4>
                 <br>
