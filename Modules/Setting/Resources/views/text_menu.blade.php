@@ -140,7 +140,7 @@
 										<div class="portlet light bordered">
 											<div class="portlet-title">
 												<div class="caption">
-													<span class="caption-subject font-dark sbold uppercase">{{$key}}</span>
+													<span class="caption-subject font-dark sbold uppercase">{{$value['text_menu']}}</span>
 												</div>
 											</div>
 											<div class="portlet-body form">
