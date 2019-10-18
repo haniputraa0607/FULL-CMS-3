@@ -240,12 +240,12 @@
 			@if($data['balance'] > 0)
 	   		<div class="row">
 	   			<div class="col-6 text-13-3px text-black product-sans-reguler margin-top5px">Total Pembayaran</div>
-                <div class="col-6 text-right text-13-3px text-dark-grey product-sans-reguler">{{ str_replace(',', '.', number_format($data['grand_total'])) }}</div>
+                <div class="col-6 text-right text-13-3px text-dark-grey product-sans-reguler">Rp {{ str_replace(',', '.', number_format($data['grand_total'])) }}</div>
 	   			<div class="col-12"><hr></div>
 	   		</div>
 	   		<div class="row space-text">
 	   			<div class="col-6 text-13-3px text-black product-sans-reguler margin-top5px">{{env('POINT_NAME', 'Points')}}</div>
-	   			<div class="col-6 text-right text-13-3px text-dark-grey product-sans-reguler">@if($data['balance'] > 0) + @endif {{ str_replace(',', '.', number_format($data['balance'])) }}</div>
+	   			<div class="col-6 text-right text-13-3px text-dark-grey product-sans-reguler">@if($data['balance'] > 0) +{{ str_replace(',', '.', number_format($data['balance'])) }} points @else {{ str_replace(',', '.', number_format($data['balance'])) }} points  @endif</div>
 	   		</div>
 			@else
 	   		<div class="row space-text">
