@@ -333,7 +333,7 @@
 
 				@if(!isset($voucher['redeemed_at']) || $voucher['redeemed_at'] == null)
 					<center style="position: fixed; bottom: 0; width: 100%; background-color: rgb(255, 255, 255);">
-						<button style="font-size:15px; margin-bottom: 15px; margin-top: 15px; background-color: rgb(74, 0, 0); color: rgb(241, 228, 178)" type="button" id="invalidate" class="btn ProductSans">{{$voucher['button_text']}}</button>
+						<button style="outline:none; font-size:15px; margin-bottom: 15px; margin-top: 15px; background-color: rgb(74, 0, 0); color: rgb(241, 228, 178)" type="button" id="invalidate" class="btn ProductSans">{{$voucher['button_text']}}</button>
 					</center>
 				@endif
 				@endif
