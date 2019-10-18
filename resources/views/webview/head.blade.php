@@ -15,85 +15,40 @@
 
     <style type="text/css">
         @font-face {
-                font-family: "ProductSans-Bold";
+                font-family: "Seravek";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Bold.ttf') }}');
-        }
-        @font-face {
-                font-family: "ProductSans-BoldItalic";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-BoldItalic.ttf') }}');
-        }
-        @font-face {
-                font-family: "ProductSans-Italic";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Italic.ttf') }}');
-        }
-        @font-face {
-                font-family: "ProductSans";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/Seravek.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-Bold";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Bold.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Bold.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-BoldItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-BoldItalic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-BoldItalic.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-Italic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Italic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Italic.ttf') }}');
         }
         @font-face {
-                font-family: "ProductSans";
+                font-family: "ProductSans-Regular";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
         }
         .Seravek{
             font-family: "Seravek";
         }
         .ProductSans{
-            font-family: "ProductSans";
-        }
-        .ProductSans-MediumItalic{
-            font-family: "ProductSans-MediumItalic";
-        }
-        .ProductSans-Medium{
-            font-family: "ProductSans-Medium";
-        }
-        .ProductSans-Italic{
-            font-family: "ProductSans-Italic";
-        }
-        .ProductSans-BoldItalic{
-            font-family: "ProductSans-BoldItalic";
-        }
-        .ProductSans-Bold{
-            font-family: "ProductSans-Bold";
-        }
-        .Seravek{
-            font-family: "Seravek";
-        }
-        .ProductSans{
-            font-family: "ProductSans";
-        }
-        .ProductSans-MediumItalic{
-            font-family: "ProductSans-MediumItalic";
-        }
-        .ProductSans-Medium{
-            font-family: "ProductSans-Medium";
+            font-family: "ProductSans-Regular";
         }
         .ProductSans-Italic{
             font-family: "ProductSans-Italic";
@@ -105,6 +60,7 @@
             font-family: "ProductSans-Bold";
         }
         body{
+            cursor: pointer;
             background-color: #fff;
             color: #858585;
             font-family: {{env('FONT_FAMILY', "Seravek")}}, sans-serif !important;

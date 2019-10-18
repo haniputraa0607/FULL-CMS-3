@@ -5,7 +5,6 @@
 @extends('webview.main')
 
 @section('css')
-	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <style type="text/css">
     	p{
     		margin-top: 0px !important;
@@ -126,7 +125,7 @@
 					</div>
 				</div>
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
-					<div class="title">
+					<div class="title ProductSans">
 						{{ $deals['deals_title'] }}
 						@if($deals['deals_second_title'] != null)
 						<br>
@@ -149,7 +148,7 @@
 
 				<hr style="margin-top: 0px; margin-bottom: 15px;">
 
-				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
+				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix">
 					@php $bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
 					<div style="margin-top: -15px; font-size: 13px;" class="fee text-right ProductSans"><i class="far fa-calendar"></i> Masa berlaku : <b>{{date('d', strtotime($deals['deals_start']))}} {{$bulan[date('m', strtotime($deals['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_start'])) }} - {{date('d', strtotime($deals['deals_end']))}} {{$bulan[date('m', strtotime($deals['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_end'])) }}</b></div>
 				</div>
@@ -157,28 +156,28 @@
 				<hr style="margin-top: 0px; margin-bottom: 0px;">
 
                 @if($deals['deals_description'] != "")
-				<div style="padding-top: 0px;" class="description-wrapper">
+				<div style="padding-top: 0px;" class="description-wrapper ProductSans">
 					<div class="description">{!! $deals['deals_description'] !!}</div>
 				</div>
 				@endif
 
 				<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div>
-					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></i></div>
+					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></i></div>
 				</div>
 
                 @if($deals['deals_tos'] != "")
-				<div id="textSK" style="padding-top: 0px;" class="description-wrapper">
+				<div id="textSK" style="padding-top: 0px;" class="description-wrapper ProductSans">
 					<div class="description">{!! $deals['deals_tos'] !!}</div>
 				</div>
 				@endif
 
 				<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
-					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></div>
+					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></div>
 				</div>
 
-				<div id="textTP" class="outlet-wrapper" style="padding-top: 10px; margin-bottom: 20px;">
+				<div id="textTP" class="outlet-wrapper ProductSans" style="padding-top: 10px; margin-bottom: 20px;">
 					<div class="outlet">
 						@foreach($deals['outlet_by_city'] as $key => $outlet_city)
 						<div class="outlet-city" style="color: rgb(0, 0, 0);">{{ $outlet_city['city_name'] }}</div>
@@ -312,19 +311,19 @@
 				$(document).on('click', '#showSK', function() {
 					console.log('log')
 					$('#textSK').slideDown( "slow" );
-					$( "#showSK" ).replaceWith( '<div id="hideSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></i></div></div>' );
+					$( "#showSK" ).replaceWith( '<div id="hideSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></i></div></div>' );
 				});
 				$(document).on('click', '#hideSK', function() {
 					$('#textSK').slideUp( "slow" );
-					$( "#hideSK" ).replaceWith( '<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></i></div></div>' );
+					$( "#hideSK" ).replaceWith( '<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></i></div></div>' );
 				});
 				$(document).on('click', '#showTP', function() {
 					$('#textTP').slideDown( "slow" );
-					$( "#showTP" ).replaceWith( '<div id="hideTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></div></div>' );
+					$( "#showTP" ).replaceWith( '<div id="hideTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></div></div>' );
 				});
 				$(document).on('click', '#hideTP', function() {
 					$('#textTP').slideUp( "slow" );
-					$( "#hideTP" ).replaceWith( '<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></div></div>' );
+					$( "#hideTP" ).replaceWith( '<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></div></div>' );
 					$('#showTP').css('margin-bottom','20px');
 				});
 			});

@@ -21,34 +21,34 @@
                 font-family: "ProductSans-BoldItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-BoldItalic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-BoldItalic.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-Italic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Italic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Italic.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-Medium";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Medium.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Medium.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-MediumItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-MediumItalic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-MediumItalic.ttf') }}');
         }
         @font-face {
-                font-family: "ProductSans";
+                font-family: "ProductSans-Regular";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
         }
         .ProductSans{
-            font-family: "ProductSans";
+            font-family: "ProductSans-Regular";
         }
         .ProductSans-MediumItalic{
             font-family: "ProductSans-MediumItalic";

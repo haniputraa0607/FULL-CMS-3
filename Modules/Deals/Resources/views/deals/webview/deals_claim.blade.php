@@ -6,12 +6,6 @@
 
 @section('css')
 	<style type="text/css">
-		@font-face {
-                font-family: "ProductSans-Regular";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
-        }
     	p{
     		margin-top: 0px !important;
     		margin-bottom: 0px !important;
@@ -19,7 +13,6 @@
     	.deals-detail > div{
     		padding-left: 0px;
     		padding-right: 0px;
-			font-family: 'ProductSans-Regular';
     	}
     	.deals-img{
     		width: 100%;
