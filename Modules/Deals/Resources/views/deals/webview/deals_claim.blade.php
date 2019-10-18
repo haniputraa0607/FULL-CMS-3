@@ -145,10 +145,14 @@
 								<p style="font-size:10px; color:rgba(170, 170, 170)">{{date('d', strtotime($deals['deals_voucher']['deal']['deals_end']))}} {{$bulan[date('m', strtotime($deals['deals_voucher']['deal']['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_voucher']['deal']['deals_end'])) }}</p>
 								<br>
 							</div>
-							<div class="pull-right" style="width: 20%;">
-								<img style="height:100px; width:150px; border-bottom-right-radius: 10px; border-top-right-radius: 10px;" class="pull-right image-4" src="{{ env('API_URL').$deals['deals_voucher']['deal']['deals_image'] }}" alt="">
+							<div class="pull-right" style="width: 40%;">
+							    <svg height="100px" width="150px" class="pull-right" style="border-bottom-right-radius: 10px; border-top-right-radius: 10px;">
+                                    <pattern id="pattern" height="100%" width="100%" patternUnits="userSpaceOnUse" viewBox="0 0 1 1" preserveAspectRatio="xMidYMid slice">
+                                      <image height="1" width="1" xlink:href="{{ env('S3_URL_API').$deals['deals_voucher']['deal']['deals_image'] }}"  preserveAspectRatio="xMidYMid meet"></image>
+                                    </pattern>
+                                  <polygon points="30 0, 200 0, 200 100, 0 100" fill="url(#pattern)"></polygon>
+                                </svg>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -183,10 +187,8 @@
 					<div class="description pull-right">{{$payment}}</div>
 				</div>
 
-				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px; position: fixed; bottom: 0; width: 100%;" class="description-wrapper ProductSans">
-					<a style="width:100%; background-color:rgb(74, 0, 0); color: rgb(241, 228, 178);" class="btn btn-primary ProductSans" href="#yes">Lihat Voucher</a>
-					<br>
-					<br>
+				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 70px; position: fixed; bottom: 10px; width: 100%;" class="description-wrapper ProductSans">
+					<a style="width:100%; background-color:rgb(74, 0, 0); color: rgb(241, 228, 178);" class="btn btn-lg ProductSans" href="#yes">Lihat Voucher</a>
 				</div>
 			</div>
 		@else
@@ -227,7 +229,7 @@
 					if(timer_text.includes('lagi')){
 						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir dalam";
 					}else{
-						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir dalam";
+						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir pada";
 					}
                     document.getElementById("timer").innerHTML += " ";
                     document.getElementById('timer').innerHTML += timer_text;
