@@ -207,12 +207,12 @@
 
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 					<div class="title" style="padding-top: 0px; padding-bottom: 5px;">
-						@if (isset($voucher['voucher_price_point']))
-							{{$voucher['voucher_price_point']}}
-						@elseif (isset($voucher['voucher_price_cash']))
-							{{$voucher['voucher_price_cash']}}
+						@if (isset($voucher['deal_voucher']['deal']['deals_voucher_price_point']))
+							{{number_format($voucher['deal_voucher']['deal']['deals_voucher_price_point'])}} points
+						@elseif (isset($voucher['deal_voucher']['deal']['deals_voucher_price_cash']))
+							Rp {{number_format($voucher['deal_voucher']['deal']['deals_voucher_price_cash'])}}
 						@else
-							Free
+							Gratis
 						@endif
 					</div>
 				</div>
@@ -333,7 +333,7 @@
 
 				@if(!isset($voucher['redeemed_at']) || $voucher['redeemed_at'] == null)
 					<center style="position: fixed; bottom: 0; width: 100%; background-color: rgb(255, 255, 255);">
-						<button style="margin-bottom: 15px; margin-top: 15px; background-color: rgb(128, 0, 0); color: rgb(241, 228, 178)" type="button" id="invalidate" class="btn ProductSans-Bold">{{$voucher['button_text']}}</button>
+						<button style="font-size:15px; margin-bottom: 15px; margin-top: 15px; background-color: rgb(74, 0, 0); color: rgb(241, 228, 178)" type="button" id="invalidate" class="btn ProductSans">{{$voucher['button_text']}}</button>
 					</center>
 				@endif
 				@endif
