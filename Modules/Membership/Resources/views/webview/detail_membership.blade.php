@@ -232,7 +232,7 @@
                     <div class="tab-pane fade show @if($item['membership_name'] == $result['user_membership']['membership_name']) active @endif" id="nav-{{strtolower($item['membership_name'])}}" role="tabpanel" aria-labelledby="nav-home-tab">
                         @if (isset($result['all_membership'][$key+1]))
                             @php
-                                $trx_total = $result['all_membership'][$key+1]['min_total_balance'] - $result['total_trx']
+                                $trx_total = $result['all_membership'][$key+1]['min_total_balance'] - $result['user_membership']['user']['progress_now']
                             @endphp
                             @if ($trx_total <= 0)
                                 <div class="font-regular-gray">Anda telah melewati tingkatan ini</div>
@@ -245,19 +245,19 @@
                                        <div class="current-level-info">
                                            <div style="width:100%"></div>
                                            <img src="{{env('APP_URL')}}images/coin.png"/>
-                                           <div class="font-regular-brown">{{number_format($result['total_trx'])}}</div>
+                                           <div class="font-regular-brown">{{number_format($result['user_membership']['user']['progress_now'])}}</div>
                                        </div>
                                        <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
                                            <div class="level-progress" style="width:100%; height: 6px;"></div>
                                        </div>
                                    @else
                                        <div class="current-level-info">
-                                           <div style="width:{{ ($result['total_trx'] / $result['all_membership'][$key+1]['min_total_balance']) * 100 }}%;"></div>
+                                           <div style="width:{{ ($result['user_membership']['user']['progress_now'] / $result['all_membership'][$key+1]['min_total_balance']) * 100 }}%;"></div>
                                            <img src="{{env('APP_URL')}}images/coin.png"/>
-                                           <div class="font-regular-brown">{{number_format($result['total_trx'])}}</div>
+                                           <div class="font-regular-brown">{{number_format($result['user_membership']['user']['progress_now'])}}</div>
                                        </div>
                                        <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
-                                           <div class="level-progress" style="width:{{ ($result['total_trx'] / $result['all_membership'][$key+1]['min_total_balance']) * 100 }}%; height: 6px;"></div>
+                                           <div class="level-progress" style="width:{{ ($result['user_membership']['user']['progress_now'] / $result['all_membership'][$key+1]['min_total_balance']) * 100 }}%; height: 6px;"></div>
                                        </div>
                                    @endif
                                     <div class="level-info">
@@ -273,7 +273,7 @@
                             </div>
                         @else
                             @php
-                                $trx_total = 15000000 - $result['total_trx']
+                                $trx_total = 15000000 - $result['user_membership']['user']['progress_now']
                             @endphp
                             @if ($trx_total <= 0)
                                 <div class="font-regular-gray">Anda telah melewati tingkatan ini</div>
@@ -283,12 +283,12 @@
                             <div class="level-container">
                                 <div class="level-wrapper">
                                    <div class="current-level-info">
-                                       <div style="width:{{ ($result['total_trx'] / 15000000) * 100 }}%;"></div>
+                                       <div style="width:{{ ($result['user_membership']['user']['progress_now'] / 15000000) * 100 }}%;"></div>
                                        <img src="{{env('APP_URL')}}images/coin.png"/>
-                                       <div class="font-regular-brown">{{number_format($result['total_trx'])}}</div>
+                                       <div class="font-regular-brown">{{number_format($result['user_membership']['user']['progress_now'])}}</div>
                                    </div>
                                    <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
-                                       <div class="level-progress" style="width:{{ ($result['total_trx'] / 15000000) * 100 }}%; height: 6px;"></div>
+                                       <div class="level-progress" style="width:{{ ($result['user_membership']['user']['progress_now'] / 15000000) * 100 }}%; height: 6px;"></div>
                                    </div>
                                     <div class="level-info">
                                         <div class="font-regular-black">{{number_format($result['all_membership'][$key]['min_total_balance'])}}</div>

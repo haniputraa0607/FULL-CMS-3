@@ -230,7 +230,7 @@
 					if(timer_text.includes('lagi')){
 						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir dalam";
 					}else{
-						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir dalam";
+						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir pada";
 					}
                     document.getElementById("timer").innerHTML += " ";
                     document.getElementById('timer').innerHTML += timer_text;
