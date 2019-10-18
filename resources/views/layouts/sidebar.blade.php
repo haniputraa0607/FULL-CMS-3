@@ -331,6 +331,15 @@
 						@endif
 					@endif
 					@if(MyHelper::hasAccess([2], $configs) || MyHelper::hasAccess([3], $configs))
+						@if(MyHelper::hasAccess([27], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'manage-location') ? 'active open' : ''}}">
+							<a href="{{url('outlet/manage-location')}}" class="nav-link ">
+								<span class="title">Manage Location</span>
+							</a>
+						</li>
+						@endif
+					@endif
+					@if(MyHelper::hasAccess([2], $configs) || MyHelper::hasAccess([3], $configs))
 						@if(MyHelper::hasAccess([32, 33], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'outlet-export') ? 'active open' : ''}}">
 							<a href="{{url('outlet/export')}}" class="nav-link ">
