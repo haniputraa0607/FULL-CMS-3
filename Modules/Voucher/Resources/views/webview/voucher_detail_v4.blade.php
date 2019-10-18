@@ -296,7 +296,7 @@
 				</div>
 
 				@if($voucher['deal_voucher']['deal']['deals_tos'] != "")
-				<div id="textSK" style="padding-top: 0px;" class="description-wrapper">
+				<div id="textSK" style="padding-top: 0px;" class="ProductSans description-wrapper">
 					<div class="description">{!! $voucher['deal_voucher']['deal']['deals_tos'] !!}</div>
 				</div>
 				@endif
@@ -306,7 +306,7 @@
 					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></div>
 				</div>
 
-				<div id="textTP" class="outlet-wrapper" style="padding-top: 10px; margin-bottom: 40px;">
+				<div id="textTP" class="outlet-wrapper ProductSans" style="padding-top: 10px; margin-bottom: 40px;">
 					@if ($voucher['deal_voucher']['deal']['label_outlet'] == 'Some' || isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
 						<div class="outlet">
 							@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null)
