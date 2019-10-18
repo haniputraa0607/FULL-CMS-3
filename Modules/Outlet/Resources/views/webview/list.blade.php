@@ -10,11 +10,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
     <style type="text/css">
+        body {
+            cursor: pointer;
+        }
     	.kotak1 {
     		padding-top: 10px;
     		padding-bottom: 0;
-    		padding-left: 20px;
-    		padding-right: 20px;
+    		padding-left: 7px;
+    		padding-right: 7px;
 			background: #fff;
     	}
 
@@ -114,43 +117,6 @@
     		color: rgba(4,154,74,1);
     	}
 
-
-        @font-face {
-                font-family: "GoogleSans-Bold";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
-        }
-        @font-face {
-                font-family: "GoogleSans-BoldItalic";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
-        }
-        @font-face {
-                font-family: "GoogleSans-Italic";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
-        }
-        @font-face {
-                font-family: "GoogleSans-Medium";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
-        }
-        @font-face {
-                font-family: "GoogleSans-MediumItalic";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
-        }
-        @font-face {
-                font-family: "GoogleSans";
-                font-style: normal;
-                font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
-        }
 		@font-face {
                 font-family: "ProductSans-Medium";
                 font-style: normal;
@@ -158,31 +124,13 @@
                 src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Medium.ttf') }}');
         }
         @font-face {
-                font-family: "ProductSans";
+                font-family: "ProductSans-Regular";
                 font-style: normal;
                 font-weight: 400;
                 src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
         }
-		.GoogleSans{
-            font-family: "GoogleSans";
-        }
-        .GoogleSans-MediumItalic{
-            font-family: "GoogleSans-MediumItalic";
-        }
-        .GoogleSans-Medium{
-            font-family: "GoogleSans-Medium";
-        }
-        .GoogleSans-Italic{
-            font-family: "GoogleSans-Italic";
-        }
-        .GoogleSans-BoldItalic{
-            font-family: "GoogleSans-BoldItalic";
-        }
-        .GoogleSans-Bold{
-            font-family: "GoogleSans-Bold";
-        }
 		.ProductSans{
-            font-family: "ProductSans";
+            font-family: "ProductSans-Regular";
         }
         .ProductSans-MediumItalic{
             font-family: "ProductSans-Medium";
@@ -305,7 +253,7 @@
   </head>
   <body>
 
-	<div class="kotak1">
+	<div class="kotak1" style="padding-top: 0px;">
   		<div class="container">
   		    <div class="ProductSans space-text" style="color: rgb(128, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Alamat</div>
 			<hr style="margin: 0;">
@@ -364,8 +312,8 @@
 					@foreach ($data[0]['outlet_schedules'] as $key => $val)
 					@if ($val['day'] == $hari_ini)
 						<div id="today" class="row space-sch">
-							<div style="@if ($val['day'] == $hari_ini) color: rgb(128, 0, 0); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-4 min-left "> @if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif </div>
-							<div style="@if ($val['day'] == $hari_ini) color: rgb(128, 0, 0); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-8">
+							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-4 min-left "> @if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif </div>
+							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-8">
 								@if($val['is_closed'] == '1')
 									TUTUP
 								@else
@@ -398,7 +346,7 @@
   	</div>
 
 	@if($data[0]['big_order'] == 1)
-	<div class="kotak1">
+	<div class="kotak1" style='margin-bottom: 180px'>
   		<div class="container">
   		    <div class="ProductSans text-center space-text" style="color: rgb(0, 0, 0); font-size: 15px; padding-bottom: 5px;">Big Order Delivery Service</div>
 		  <div class="ProductSans space-text" style="color: rgb(102, 102, 102); font-size: 12.7px; padding-bottom: 0;">Khusus pemesanan diatas 50 pax, silahkan menghubungi <a style="color: rgb(128, 0, 0); text-decoration: underline;" href="#delivery_service">Call Center</a> kami untuk mendapatkan penawaran special</div>
@@ -409,38 +357,22 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 	<script>
-	var open = true;
-	$(".icon").click(function() {
-		if(open){
-			this.className = 'fa fa-angle-down open';
-			$("#today").hide()
-			$(".anotherDay").show()
-		} else{
-			this.className = 'fa fa-angle-down';
-			$(".anotherDay").hide()
-			$("#today").show()
-		}
-		open = !open;
+	$(document).ready(function() {
+    	$(".icon").click(function() {
+    		if($("#today").is(':visible')){
+    			this.className = 'fa fa-angle-down open';
+    			$("#today").hide()
+    			$(".anotherDay").show(500)
+    		} else{
+    			this.className = 'fa fa-angle-down';
+    			$("#today").show()
+    			$(".anotherDay").hide(500)
+    		}
+    	});
 	});
-	// (function(document){
-	// 	var div = document.getElementById('container');
-	// 	var icon = document.getElementById('icon');
-	// 	var open = false;
-		
-	// 	div.addEventListener('click', function(){
-	// 		if(open){
-	// 			icon.className = 'fa fa-arrow-down';  
-	// 		} else{
-	// 			icon.className = 'fa fa-arrow-down open';
-	// 		}
-	// 		open = !open;
-	// 	});
-	// })(document);
 	</script>
   </body>
 </html>
