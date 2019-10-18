@@ -32,7 +32,7 @@
             <div class="row">\
                 <div class="col-md-5 form-group">%select0%\
                 </div>\
-                <div class="col-md-1 text-center">AND</div>\
+                <div class="col-md-1 text-center control-label">AND</div>\
                 <div class="col-md-5 form-group">%select1%\
                 </div><div class="col-md-1"><button data-id="%id%" class="btn btn-danger remover_btn" type="button"><i class="fa fa-times"></i></button></div>\
             </div>'
@@ -200,14 +200,22 @@
                             <label class="col-md-3 control-label">Brand<span class="required" aria-required="true"> * </span></label>
                             <div class="col-md-9" id="brand_inner_container"></div>
                             <div class="col-md-offset-3 col-md-9">
-                                <button type="button" id="add_btn" class="btn blue">Add</button>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button type="button" id="add_btn" class="btn blue">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-actions">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-md-offset-3 col-md-9">
-                                    <button type="submit" id="export_btn" class="btn green">Export</button>
+                                    <div class="form-group">
+                                        <button type="submit" id="export_btn" class="btn green">Export</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
