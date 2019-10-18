@@ -9,6 +9,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::any('create', ['middleware' => 'feature_control:26', 'uses' => 'OutletController@create']);
     Route::get('detail/{id}', ['middleware' => 'feature_control:25', 'uses' => 'OutletController@detail']);
     Route::post('detail/{id}', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@detail']);
+    Route::get('manage-location', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@manageLocation']);
+    Route::post('manage-location', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@manageLocationPost']);
     Route::post('update/status', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@updateStatus']);
     Route::post('get/city', 'OutletController@getCity');
     Route::post('delete', ['middleware' => 'feature_control:28', 'uses' => 'OutletController@delete']);
