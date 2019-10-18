@@ -6,23 +6,23 @@
 
 @section('page-style')
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <!-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <!-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 language: {
@@ -116,8 +116,8 @@
             'format' : 'd-M-yyyy',
             'todayHighlight' : true,
             'autoclose' : true
-        }); 
-        
+        });
+
         var number = 1;
         $('#btn_new_date').click(function(){
             $('#new_date').append(
@@ -135,11 +135,11 @@
                 'format' : 'd-M-yyyy',
                 'todayHighlight' : true,
                 'autoclose' : true
-            }); 
+            });
         })
 
         // delete date holiday
-        $(document).on('click', '.btn_delete_date', function(){ 
+        $(document).on('click', '.btn_delete_date', function(){
             id = $(this).attr('data-id')
             $('#date_'+id).remove();
         })
@@ -181,7 +181,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -197,7 +197,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Name
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Judul/ nama hari libur" data-container="body"></i>
                             </label>
                         </div>
@@ -225,7 +225,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Date
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Tanggal libur" data-container="body"></i>
                             </label>
                         </div>
@@ -249,7 +249,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Outlet
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang akan diberlakukan hari libur tersebut" data-container="body"></i>
                             </label>
                         </div>
@@ -267,7 +267,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="multiple" class="control-label col-md-3"></label>
                         <div class="col-md-9">
@@ -322,9 +322,9 @@
                                 <td>
                                     @foreach($value['date_holidays'] as $date)
                                         @if($value['yearly'] == '1')
-                                            {{ date('d F', strtotime($date['date'])) }} 
+                                            {{ date('d F', strtotime($date['date'])) }}
                                         @else
-                                            {{ date('d F Y', strtotime($date['date'])) }} 
+                                            {{ date('d F Y', strtotime($date['date'])) }}
                                         @endif
                                         <br>
                                     @endforeach
@@ -334,12 +334,12 @@
                                         {{$data_outlet['outlet_name']}} <br>
                                     @endforeach
                                 </td>
-                                <td style="width: 85px;"> 
+                                <td style="width: 85px;">
                                     @if(MyHelper::hasAccess([38], $grantedFeature))
-                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_holiday'] }}"><i class="fa fa-trash-o"></i></a> 
+                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_holiday'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
                                     @if(MyHelper::hasAccess([37], $grantedFeature))
-                                        <a href="{{ url('outlet/holiday') }}/{{ $value['id_holiday'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
+                                        <a href="{{ url('outlet/holiday') }}/{{ $value['id_holiday'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -349,5 +349,5 @@
             </table>
         </div>
     </div>
-    
+
 @endsection

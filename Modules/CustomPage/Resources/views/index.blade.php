@@ -5,15 +5,15 @@
  @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -68,7 +68,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light portlet-fit bordered">
@@ -112,10 +112,10 @@
                                 @if(MyHelper::hasAccess([156,157], $grantedFeature))
                                     <td>
                                         @if(MyHelper::hasAccess([156], $grantedFeature))
-                                            <a href="{{ url('custom-page/detail', $res['id_custom_page']) }}" class="btn yellow"><i class="fa fa-list"></i></a> 
+                                            <a href="{{ url('custom-page/detail', $res['id_custom_page']) }}" class="btn yellow"><i class="fa fa-list"></i></a>
                                         @endif
                                         @if(MyHelper::hasAccess([156], $grantedFeature))
-                                            <a href="{{ url('custom-page/edit', $res['id_custom_page']) }}" class="btn blue"><i class="fa fa-edit"></i></a> 
+                                            <a href="{{ url('custom-page/edit', $res['id_custom_page']) }}" class="btn blue"><i class="fa fa-edit"></i></a>
                                         @endif
                                         @if(MyHelper::hasAccess([157], $grantedFeature))
                                             <a data-toggle="confirmation" href="{{ url('custom-page/delete', $res['id_custom_page']) }}" data-popout="true" class="btn red delete" data-id="{{ $res['id_custom_page'] }}"><i class="fa fa-trash-o"></i></a>

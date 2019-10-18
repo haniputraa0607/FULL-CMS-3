@@ -1,8 +1,8 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
         #recurring {
@@ -50,9 +50,9 @@
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <script src="https://www.amcharts.com/lib/3/themes/none.js"></script>
 
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -217,7 +217,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -266,7 +266,7 @@
             </form>
         </div>
     </div>
-    
+
     <div class="row">
       <div class="col-md-12">
         <div class="portlet light bordered">
@@ -278,7 +278,7 @@
             <div class="portlet-body form">
                 <div id="count"></div>
             </div>
-        </div>  
+        </div>
       </div>
     </div>
 
@@ -296,7 +296,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-12">
             <div class="portlet light bordered">
@@ -325,7 +325,7 @@
                                         <td>{{ number_format($value['total_count']) }}</td>
                                         <td>{{ number_format($value['total_value'], 2) }}</td>
                                         <td>
-                                            <a href="{{ url('report/outlet/detail') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
+                                            <a href="{{ url('report/outlet/detail') }}/{{ $value['id_outlet'] }}/{{ $date_start }}/{{ $date_end }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -336,6 +336,6 @@
             </div>
         </div>
     </div>
-    
-   
+
+
 @endsection

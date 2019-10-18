@@ -132,10 +132,10 @@
 						Selamat kamu berhasil mendapatkan voucher
 					</div>
 				</div>
-				
+
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 clearfix ProductSans">
 					<div class="card">
-						
+
 						<div class="container" style="padding-right: 0px;">
 							<div class="pull-left" style="margin-top: 10px;width: 60%;">
 								@php $bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
@@ -148,22 +148,22 @@
 							<div class="pull-right" style="width: 20%;">
 								<img style="height:100px; width:150px; border-bottom-right-radius: 10px; border-top-right-radius: 10px;" class="pull-right image-4" src="{{ env('API_URL').$deals['deals_voucher']['deal']['deals_image'] }}" alt="">
 							</div>
-							
+
 						</div>
 					</div>
 				</div>
-				
+
 				<br>
 
 				<div style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);">Transaksi</div>
 				</div>
-				
+
 				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px;" class="description-wrapper ProductSans">
 					<div class="description pull-left">Tanggal</div>
 					<div class="description pull-right">{{date('d', strtotime($deals['claimed_at']))}} {{$bulan[date('m', strtotime($deals['claimed_at']))-1]}} {{ date('Y', strtotime($deals['claimed_at'])) }} {{date('H:i', strtotime($deals['claimed_at']))}}</div>
 				</div>
-				
+
 				<div style="padding-top: 0px; color: rgb(0, 0, 0); height: 50px;" class="description-wrapper ProductSans">
 					<div class="description pull-left">ID Transaksi</div>
 					<div class="description pull-right">{{strtotime($deals['claimed_at'])}}</div>

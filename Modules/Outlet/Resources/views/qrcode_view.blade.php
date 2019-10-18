@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{ ('assets/pages/css/invoice-2.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/css/invoice-2.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')

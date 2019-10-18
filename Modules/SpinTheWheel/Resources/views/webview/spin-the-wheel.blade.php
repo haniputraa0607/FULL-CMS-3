@@ -5,8 +5,8 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Technopartner Indonesia CRM System" name="description" />
 	<title></title>
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/webview/css/spin-the-wheel.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/webview/css/spin-the-wheel.css') }}" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
@@ -96,10 +96,10 @@
 	  </div>
 	</div>
 
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/webview/scripts/winwheel.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/webview/scripts/TweenMax.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/webview/scripts/winwheel.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/webview/scripts/TweenMax.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
     	var screen = $(window).width();
@@ -165,12 +165,12 @@
 	    {
 	        // Get context to same canvas used by wheel.
 	        var ctx = myWheel.ctx;
-	 
+
 	        // Set some HTML 5 canvas drawing options.
 	        ctx.lineWidth = 1;
 	        ctx.strokeStyle = '#fff';
 	        ctx.font = '14px sans-serif';
-	 
+
 	        // Loop though segments in the wheel and create boxes.
 	        for (idx = 1; idx <= myWheel.numSegments; idx++)
 	        {
@@ -180,14 +180,14 @@
 	            ctx.rect(x, y, 20, 20);
 	            ctx.stroke();
 	            ctx.fill();
-	 
+
 	            // Do the text centred to the right.
 	            ctx.fillStyle = 'black';
 	            ctx.fillText(segment_titles[idx-1], x + 40, y + 15);
-	 
+
 	            // Move down after each one with gap in between.
 	            y += 30;
-	 
+
 	            // Reset the text fillstyle here so only 1 is red.
 	            myWheel.segments[idx].textFillStyle = 'black';
 	        }

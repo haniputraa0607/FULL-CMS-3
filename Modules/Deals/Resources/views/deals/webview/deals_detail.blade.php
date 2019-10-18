@@ -154,24 +154,24 @@
 				</div>
 
 				<hr style="margin-top: 0px; margin-bottom: 0px;">
-				
+
                 @if($deals['deals_description'] != "")
 				<div style="padding-top: 0px;" class="description-wrapper ProductSans">
 					<div class="description">{!! $deals['deals_description'] !!}</div>
 				</div>
 				@endif
-				
+
 				<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div>
 					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></i></div>
 				</div>
-				
+
                 @if($deals['deals_tos'] != "")
 				<div id="textSK" style="padding-top: 0px;" class="description-wrapper ProductSans">
 					<div class="description">{!! $deals['deals_tos'] !!}</div>
 				</div>
 				@endif
-				
+
 				<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
 					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
 					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></div>
@@ -199,7 +199,7 @@
 @stop
 
 @section('page-script')
-	<script type="text/javascript" src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+	<script type="text/javascript" src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
     @if(!empty($deals))
 		<script type="text/javascript">
             @php $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', "Juli", 'Agustus', 'September', 'Oktober', 'November', 'Desember']; @endphp

@@ -5,61 +5,61 @@ $grantedFeature     = session('granted_features');
  @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
-	<script>   
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
+	<script>
     $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
         'todayHighlight' : true,
         'autoclose' : true
 	});
-	$('.timepicker').timepicker();       
+	$('.timepicker').timepicker();
     </script>
-	
+
 	<script>
 	$(document).ready(function() {
 		$('.summernote').summernote({
 			placeholder: 'Content',
 			tabsize: 2,
-			toolbar: [         
+			toolbar: [
               ['style', ['style']],
               ['style', ['bold', 'underline', 'clear']],
               ['color', ['color']],
@@ -70,7 +70,7 @@ $grantedFeature     = session('granted_features');
             ],
 			height: 120
 		});
-	  
+
 		@if(count($result['contents']) > 0)
 			@if($result['promotion_series'] > 0)
 				@for($x = 1;$x <= $result['promotion_series']; $x++)
@@ -91,7 +91,7 @@ $grantedFeature     = session('granted_features');
 				@if(isset($result['contents'][$x-1]['promotion_inbox_id_reference']))
 					var idrefInbox 	 = "{{$result['contents'][$x-1]['promotion_inbox_id_reference']}}";
 				@endif
-			
+
 				if(clickto != null) {
 					if(idref != null){
 						fetchDetail("{{$x}}", "push", clickto, idref);
@@ -142,7 +142,7 @@ $grantedFeature     = session('granted_features');
 				}
 			@endif
 		@endif
-		
+
 		var _URL = window.URL || window.webkitURL;
 
 		$('.price').each(function() {
@@ -155,28 +155,28 @@ $grantedFeature     = session('granted_features');
 			});
 		});
 		token = '<?php echo csrf_token();?>';
-		
+
 		/*$('.summernote').summernote({
 			placeholder: 'Deals Content Long',
 			tabsize: 2,
 			height: 120
 		});*/
 	});
-	
+
 	function dealsPromoType(channel, series){
 		var checkboxStatus = document.getElementById('radio_'+series+'_dealstype_'+channel+'').checked;
 		if(channel == 'promoid') var antichannel = 'nominal'; else var antichannel = 'promoid';
 		document.getElementById('deals_promo_id_'+channel+'_'+series+'').style.display = 'block';
 		document.getElementById('deals_promo_id_'+antichannel+'_'+series+'').style.display = 'none';
 	}
-	
+
 	function dealsVoucherExpiry(channel, series){
 		var checkboxStatus = document.getElementById('voucher_expiry_'+channel+'_'+series+'').checked;
 		if(channel == 'bydate') var antichannel = 'duration'; else var antichannel = 'bydate';
 		document.getElementById('voucher_'+channel+'_'+series+'').style.display = 'block';
 		document.getElementById('voucher_'+antichannel+'_'+series+'').style.display = 'none';
 	}
-	
+
 	function dealsVoucherType(channel, series){
 		var checkboxStatus = document.getElementById('voucher_type_'+channel+'_'+series+'').checked;
 		if(channel == 'unlimited'){
@@ -185,8 +185,8 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('vouchertype_autogenerated_input_'+series+'').value = '';
 			document.getElementById('vouchertype_listvoucher_input_'+series+'').value = '';
 		} else {
-			if(channel == 'autogenerated'){ 
-				var antichannel = 'listvoucher'; 
+			if(channel == 'autogenerated'){
+				var antichannel = 'listvoucher';
 			}else {
 				var antichannel = 'autogenerated';
 			}
@@ -195,7 +195,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('vouchertype_'+antichannel+'_input_'+series+'').value = '';
 		}
 	}
-	
+
 	function campaignChannel(channel, series){
 		var checkboxStatus = document.getElementById('checkbox_'+series+'_'+channel+'').checked;
 		if(checkboxStatus == true){
@@ -204,13 +204,13 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('content_'+channel+'_'+series+'').style.display = 'none';
 		}
 	}
-	
+
 	function addEmailSubject(series,param){
 		var textvalue = $('#promotion_email_subject_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_email_subject_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addEmailContent(series,param){
 		var textvalue = $('#promotion_email_content_'+series+'').val();
 
@@ -221,31 +221,31 @@ $grantedFeature     = session('granted_features');
 		$('#promotion_email_content_'+series+'').summernote('editor.focus');
 		$('#promotion_email_content_'+series+'').summernote('editor.insertText', param);
     }
-	
+
 	function addSmsContent(series,param){
 		var textvalue = $('#promotion_sms_content_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_sms_content_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addPushSubject(series,param){
 		var textvalue = $('#promotion_push_subject_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_push_subject_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addPushContent(series,param){
 		var textvalue = $('#promotion_push_content_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_push_content_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addInboxSubject(series,param){
 		var textvalue = $('#promotion_inbox_subject_'+series+'').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#promotion_inbox_subject_'+series+'').val(textvaluebaru);
     }
-	
+
 	function addInboxContent(series,param){
 		var textvalue = $('#promotion_inbox_content_'+series+'').val();
 
@@ -256,10 +256,10 @@ $grantedFeature     = session('granted_features');
 		$('#promotion_inbox_content_'+series+'').summernote('editor.focus');
 		$('#promotion_inbox_content_'+series+'').summernote('editor.insertText', param);
     }
-	
+
 	function fetchDetail(series, type, det, idref){
 		let token  = "{{ csrf_token() }}";
-		
+
 		if(det == 'Product'){
 			$.ajax({
 				type : "GET",
@@ -277,7 +277,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('link_'+type+'_'+series).style.display = 'none';
 			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
-		
+
 		if(det == 'Outlet'){
 			$.ajax({
 				type : "GET",
@@ -295,7 +295,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('link_'+type+'_'+series).style.display = 'none';
 			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
-		
+
 		if(det == 'News'){
 			$.ajax({
 				type : "GET",
@@ -313,20 +313,20 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('link_'+type+'_'+series).style.display = 'none';
 			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
-		
+
 		if(det == 'Home' || det == 'Inbox' || det == 'Voucher' || det == 'Voucher Detail' || det == 'Contact Us' || det == 'Logout'){
 			document.getElementById('atd_'+type+'_'+series).style.display = 'none';
 			document.getElementById('link_'+type+'_'+series).style.display = 'none';
 			if(type=="inbox") document.getElementById(type+'_content_'+series).style.display = 'none';
 		}
-		
+
 		if(det == 'Link'){
 			document.getElementById('atd_'+type+'_'+series).style.display = 'none';
 			document.getElementById('link_'+type+'_'+series).style.display = 'block';
 			if(type=="inbox"){
 				document.getElementById(type+'_content_'+series).style.display = 'none';
-			} 
-				
+			}
+
 		}
 
 		if(det == 'Content'){
@@ -349,7 +349,7 @@ $grantedFeature     = session('granted_features');
 
 		$('#theadSentList').empty()
 		$('#tbodySentList').empty()
-		
+
 		$.get(link, function(result){
 			if(type == 'email' || type == 'email_read'){
 				$('.modal-title').text('List Email Sent')
@@ -393,12 +393,12 @@ $grantedFeature     = session('granted_features');
 					'<tr><th>No</th><th>Voucher Code</th><<th>User name</th><th>Receipt Number</th><th>Transaction Date</th><th>Outlet</th><th>Grand Total</th></tr>'
 				)
 			}
-			
+
 			if(result.data && result.data.length > 0){
 				var no = result.from
 				$.each(result.data, function(i,data){
 					var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-					
+
 					if(type == 'email' || type == 'email_read'){
 						if(data.email_read == "1"){
 							var status = "Read"
@@ -503,7 +503,7 @@ $grantedFeature     = session('granted_features');
 					}
 					no++;
 				})
-				
+
 				if(result.prev_page_url == null){
 					$('.page-first').addClass('disabled')
 					$('.page-first').attr('onclick', null)
@@ -541,25 +541,25 @@ $grantedFeature     = session('granted_features');
 		$(function() {
 			$('body').on('click', '.pagination-recipient .pagination a', function(e) {
 				e.preventDefault();
-		
-				var url = $(this).attr('href');  
+
+				var url = $(this).attr('href');
 				getArticles(url);
 				window.history.pushState("", "", url);
 			});
-		
+
 			function getArticles(url) {
 				$.ajax({
-					url : url  
+					url : url
 				}).done(function (data) {
-					$('.recipient').html(data);  
+					$('.recipient').html(data);
 				}).fail(function () {
 					alert('recipient could not be loaded.');
 				});
 			}
 		});
-		
+
 		</script>
-	
+
 @endsection
 
 @section('content')
@@ -594,7 +594,7 @@ $grantedFeature     = session('granted_features');
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-md-12">
 		<div class="col-md-8">
 			<div class="portlet box blue-hoki">
@@ -654,7 +654,7 @@ $grantedFeature     = session('granted_features');
 									@if(isset($result['promotion_type']) && $result['promotion_type'] == "Instant Campaign")
 										<div class="col-md-12">
 											@if(isset($users) && count($users) > 0)
-											<p class="form-control-static"><b>On 
+											<p class="form-control-static"><b>On
 													{{date('d F Y', strtotime($result['schedules'][0]['schedule_exact_date']))}} at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
 											@else
 												<p class="form-control-static"><b>NOW (Immidiately)</b></p>
@@ -663,14 +663,14 @@ $grantedFeature     = session('granted_features');
 									@endif
 									@if(isset($result['promotion_type']) && $result['promotion_type'] == "Scheduled Campaign")
 										<div class="col-md-12">
-											<p class="form-control-static"><b>On 
+											<p class="form-control-static"><b>On
 											{{date('d F Y', strtotime($result['schedules'][0]['schedule_exact_date']))}} at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
 										</div>
 									@endif
-									
+
 									@if(isset($result['promotion_type']) && ($result['promotion_type'] == "Recurring Campaign" || $result['promotion_type'] == "Campaign Series"))
 										@if(isset($result['schedules'][0]['schedule_date_month']) && $result['schedules'][0]['schedule_date_month'] != "")
-											<?php 
+											<?php
 												$year = date('Y');
 												$x = explode('-',$result['schedules'][0]['schedule_date_month']);
 											?>
@@ -679,7 +679,7 @@ $grantedFeature     = session('granted_features');
 											</div>
 										@endif
 										@if(isset($result['schedules'][0]['schedule_date_every_month']) && $result['schedules'][0]['schedule_date_every_month'] != "")
-											<?php 
+											<?php
 												$ends = array('th','st','nd','rd','th','th','th','th','th','th');
 												if (($result['schedules'][0]['schedule_date_every_month'] %100) >= 11 && ($result['schedules'][0]['schedule_date_every_month']%100) <= 13)
 												   $abbreviation = $result['schedules'][0]['schedule_date_every_month']. 'th';
@@ -690,9 +690,9 @@ $grantedFeature     = session('granted_features');
 												<p class="form-control-static"><b>Every {{$abbreviation}} each month at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
 											</div>
 										@endif
-										
-										@if(isset($result['schedules'][0]['schedule_day_every_week']) && $result['schedules'][0]['schedule_day_every_week'] != "") 
-											<?php 
+
+										@if(isset($result['schedules'][0]['schedule_day_every_week']) && $result['schedules'][0]['schedule_day_every_week'] != "")
+											<?php
 												$ends = array('th','st','nd','rd','th','th','th','th','th','th');
 												if (($result['schedules'][0]['schedule_week_in_month'] %100) >= 11 && ($result['schedules'][0]['schedule_week_in_month']%100) <= 13)
 												   $abbreviation = $result['schedules'][0]['schedule_week_in_month']. 'th';
@@ -700,16 +700,16 @@ $grantedFeature     = session('granted_features');
 												   $abbreviation = $result['schedules'][0]['schedule_week_in_month']. $ends[$result['schedules'][0]['schedule_week_in_month'] % 10];
 											?>
 											<div class="col-md-12">
-												<p class="form-control-static"><b>Every {{$result['schedules'][0]['schedule_day_every_week']}} 
-												
-												@if($result['schedules'][0]['schedule_week_in_month'] != 0) 
+												<p class="form-control-static"><b>Every {{$result['schedules'][0]['schedule_day_every_week']}}
+
+												@if($result['schedules'][0]['schedule_week_in_month'] != 0)
 													on {{$abbreviation}} week
 												@else
 													every week
 												@endif
 												at {{substr($result['schedules'][0]['schedule_time'],0,-3)}}</b></p>
 											</div>
-										
+
 										@endif
 
 										@if(isset($result['schedules'][0]['schedule_everyday']) && $result['schedules'][0]['schedule_everyday'] == 'Yes')
@@ -764,7 +764,7 @@ $grantedFeature     = session('granted_features');
 													<div class="col-md-12 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if($rule['subject'] != "all_user") @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif @endif
 													@if($rule['subject'] == 'trx_outlet' || $rule['subject'] == 'trx_outlet_not')
 														<?php $name = null; ?>
-														@foreach($outlets as $outlet) 
+														@foreach($outlets as $outlet)
 															@if($outlet['id_outlet'] == $rule['parameter'])
 																<?php $name = $outlet['outlet_name']; ?>
 															@endif
@@ -772,7 +772,7 @@ $grantedFeature     = session('granted_features');
 														{{$name}}
 													@elseif($rule['subject'] == 'trx_product' || $rule['subject'] == 'trx_product_not')
 														<?php $name = null; ?>
-														@foreach($products as $product) 
+														@foreach($products as $product)
 															@if($product['id_product'] == $rule['parameter'])
 																<?php $name = $product['product_name']; ?>
 															@endif
@@ -780,7 +780,7 @@ $grantedFeature     = session('granted_features');
 														{{$name}}
 													@elseif($rule['subject'] == 'trx_product_tag' || $rule['subject'] == 'trx_product_tag_not')
 														<?php $name = null; ?>
-														@foreach($tags as $tag) 
+														@foreach($tags as $tag)
 															@if($tag['id_tag'] == $rule['parameter'])
 																<?php $name = $tag['tag_name']; ?>
 															@endif
@@ -788,7 +788,7 @@ $grantedFeature     = session('granted_features');
 														{{$name}}
 													@elseif($rule['subject'] == 'membership')
 														<?php $name = null; ?>
-														@foreach($memberships as $membership) 
+														@foreach($memberships as $membership)
 															@if($membership['id_membership'] == $rule['parameter'])
 																<?php $name = $membership['membership_name']; ?>
 															@endif
@@ -866,8 +866,8 @@ $grantedFeature     = session('granted_features');
 												</div>
 												<div class="portlet-body">
 													<div class="form-group">
-															Campaign no {{$x}} will be send 
-															{{$result['contents'][$x-1]['promotion_series_days']}} days after previous campaign (campaign no {{$x-1}}) 
+															Campaign no {{$x}} will be send
+															{{$result['contents'][$x-1]['promotion_series_days']}} days after previous campaign (campaign no {{$x-1}})
 													</div>
 												</div>
 											</div>
@@ -940,7 +940,7 @@ $grantedFeature     = session('granted_features');
 												</div>
 											</div>
 										</div>
-										
+
 										@if(isset($result['contents'][$x-1]))
 											@if($result['contents'][$x-1]['promotion_channel_sms'] == '1')
 												<div class="col-md-10" style="display:block;" id="content_sms_{{$x}}">
@@ -996,7 +996,7 @@ $grantedFeature     = session('granted_features');
 												</div>
 											</div>
 										</div>
-										
+
 										@if(isset($result['contents'][$x-1]))
 											@if($result['contents'][$x-1]['promotion_channel_push'] == '1')
 												<div class="col-md-10" style="display:block;" id="content_push_{{$x}}">
@@ -1030,8 +1030,8 @@ $grantedFeature     = session('granted_features');
 															<div class="fileinput fileinput-new" data-provides="fileinput">
 																<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 																	@if(isset($result['contents'][$x-1]['promotion_push_image']) && $result['contents'][$x-1]['promotion_push_image'] != "")
-																		<img src="{{ env('AWS_URL')}}/{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px" />
-																	@else 
+																		<img src="{{ env('S3_URL_API')}}/{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px" />
+																	@else
 																		<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 																	@endif
 																</div>
@@ -1060,7 +1060,7 @@ $grantedFeature     = session('granted_features');
 												</div>
 											</div>
 										</div>
-										
+
 										@if(isset($result['contents'][$x-1]))
 											@if($result['contents'][$x-1]['promotion_channel_push'] == '1')
 												<div class="col-md-2" style="display:block; padding:0" id="result_push_{{$x}}">
@@ -1111,7 +1111,7 @@ $grantedFeature     = session('granted_features');
 
 														<div for="promotion_inbox_clickto" class="col-md-3" style="margin-bottom:30px">Click Action</div>
 														<div class="col-md-9" style="margin-bottom:30px">
-															@if(isset($result['contents'][$x-1]['promotion_inbox_clickto'])) 
+															@if(isset($result['contents'][$x-1]['promotion_inbox_clickto']))
 																{{$result['contents'][$x-1]['promotion_inbox_clickto']}}
 															@endif
 														</div>
@@ -1234,7 +1234,7 @@ $grantedFeature     = session('granted_features');
 												</div>
 											</div>
 										</div>
-										
+
 										@if(isset($result['contents'][$x-1]))
 											@if($result['contents'][$x-1]['id_deals'] != '')
 												<div class="col-md-10" style="display:block;" id="content_deals_{{$x}}">
@@ -1255,7 +1255,7 @@ $grantedFeature     = session('granted_features');
 													<div class="row">
 														<div class="col-md-3 " style="margin-bottom:30px">Promo Type</div>
 														<div class="col-md-9" style="margin-bottom:30px">
-															@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'promoid')Promo ID @else Nominal @endif 
+															@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'promoid')Promo ID @else Nominal @endif
 															@if(isset($result['contents'][$x-1]['deals']['deals_promo_id_type']))
 																	= {{$result['contents'][$x-1]['deals']['deals_promo_id']}}
 															@endif
@@ -1265,7 +1265,7 @@ $grantedFeature     = session('granted_features');
 														<div class="col-md-9" style="margin-bottom:30px">
 															{{number_format($result['contents'][$x-1]['voucher_value'])}}
 														</div>
-														
+
 														<div class="col-md-3 " style="margin-bottom:30px"> Deals Periode </div>
 														<div class="col-md-9" style="margin-bottom:30px">
 															@if(isset($result['contents'][$x-1]['deals']['deals_start']))
@@ -1273,14 +1273,14 @@ $grantedFeature     = session('granted_features');
 																{{date('d M Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_start']))}}
 																@endif
 															@endif
-															
+
 															@if(isset($result['contents'][$x-1]['deals']['deals_end']))
 																@if($result['contents'][$x-1]['deals']['deals_end'] != '')
 																	-  {{date('d M Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_end']))}}
 																@endif
 															@endif
 														</div>
-														
+
 														<div class="col-md-3 "style="margin-bottom:30px"> Outlet Available </div>
 														<div class="col-md-9" style="margin-bottom:30px">
 															@if (!empty($outlets))
@@ -1295,7 +1295,7 @@ $grantedFeature     = session('granted_features');
 																		$jmlOutletSelected = count($ou);
 																	@endphp
 																@endif
-															
+
 																@if ($jmlOutlet == $jmlOutletSelected)
 																	All Outlets
 																@else
@@ -1305,7 +1305,7 @@ $grantedFeature     = session('granted_features');
 																@endif
 															@endif
 														</div>
-														
+
 														<div class="col-md-3 " style="margin-bottom:30px"> Voucher Expiry </div>
 														<div class="col-md-9" style="margin-bottom:30px">
 															@if(isset($result['contents'][$x-1]['deals']['deals_voucher_expired']))
@@ -1313,14 +1313,14 @@ $grantedFeature     = session('granted_features');
 																	By Date: {{date('d M Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_voucher_expired']))}}
 																@endif
 															@endif
-															
+
 															@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration']))
 																@if($result['contents'][$x-1]['deals']['deals_voucher_duration'] != '')
 																	By Duration: {{$result['contents'][$x-1]['deals']['deals_voucher_duration']}} days
 																@endif
 															@endif
 														</div>
-														
+
 														<div class="col-md-3 " style="margin-bottom:30px"> Voucher Type  </div>
 														<div class="col-md-9" style="margin-bottom:30px">
 															@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
@@ -1328,14 +1328,14 @@ $grantedFeature     = session('granted_features');
 																	Auto Generated, total {{$result['contents'][$x-1]['deals']['deals_total_voucher']}} voucher
 																@endif
 															@endif
-															
+
 															@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
 																@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'List Vouchers')
 																	List Vouchers:<br>
 																	@foreach($result['contents'][$x-1]['deals']['deals_vouchers'] as $vouchers){{$vouchers['voucher_code']}}&#13;&#10;@endforeach
 																@endif
 															@endif
-															
+
 															@if(isset($result['contents'][$x-1]['deals']['deals_voucher_type']))
 																@if($result['contents'][$x-1]['deals']['deals_voucher_type'] == 'Unlimited')
 																	Unlimited
@@ -1394,15 +1394,15 @@ $grantedFeature     = session('granted_features');
 											</div>
 										</div>
 									</div>
-									<input type="hidden" 
-									name="id_deals[]" 
-									id="id_deals_{{$x}}" 
+									<input type="hidden"
+									name="id_deals[]"
+									id="id_deals_{{$x}}"
 									@if(isset($result['contents'][$x-1]['deals']['id_deals']))
 										value={{$result['contents'][$x-1]['deals']['id_deals']}}
 									@endif>
-									<input type="hidden" 
-									name="id_promotion_content[]" 
-									id="id_promotion_content_{{$x}}" 
+									<input type="hidden"
+									name="id_promotion_content[]"
+									id="id_promotion_content_{{$x}}"
 									@if(isset($result['contents'][$x-1]['id_promotion_content']))
 										value={{$result['contents'][$x-1]['id_promotion_content']}}
 									@endif>
@@ -1461,7 +1461,7 @@ $grantedFeature     = session('granted_features');
 								</div>
 							</div>
 						</div>
-						
+
 						@if(isset($result['contents'][0]))
 							@if($result['contents'][0]['promotion_channel_email'] == '1')
 								<div class="col-md-2" style="display:block; padding-left:0;" id="result_email_0">
@@ -1521,7 +1521,7 @@ $grantedFeature     = session('granted_features');
 								</div>
 							</div>
 						</div>
-						
+
 						@if(isset($result['contents'][0]))
 							@if($result['contents'][0]['promotion_channel_sms'] == '1')
 								<div class="col-md-2" style="display:block;  padding-left:0;" id="result_sms_0">
@@ -1584,8 +1584,8 @@ $grantedFeature     = session('granted_features');
 											<div class="fileinput fileinput-new" data-provides="fileinput">
 												<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 													@if(isset($result['contents'][0]['promotion_push_image']) && $result['contents'][0]['promotion_push_image'] != "")
-														<img src="{{ env('AWS_URL')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px" />
-													@else 
+														<img src="{{ env('S3_URL_API')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px" />
+													@else
 														<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 													@endif
 												</div>
@@ -1594,7 +1594,7 @@ $grantedFeature     = session('granted_features');
 
 										<div for="promotion_push_clickto" class="col-md-2" style="margin-bottom:30px">Click Action</div>
 										<div class="col-md-10" style="margin-bottom:30px">
-											@if(isset($result['contents'][0]['promotion_push_clickto'])) 
+											@if(isset($result['contents'][0]['promotion_push_clickto']))
 												{{$result['contents'][0]['promotion_push_clickto']}}
 											@endif
 										</div>
@@ -1614,7 +1614,7 @@ $grantedFeature     = session('granted_features');
 								</div>
 							</div>
 						</div>
-						
+
 						@if(isset($result['contents'][0]))
 							@if($result['contents'][0]['promotion_channel_push'] == '1')
 								<div class="col-md-2" style="display:block;  padding-left:0;" id="result_push_0">
@@ -1665,7 +1665,7 @@ $grantedFeature     = session('granted_features');
 
 										<div for="promotion_inbox_clickto" class="col-md-2" style="margin-bottom:30px">Click Action</div>
 										<div class="col-md-10" style="margin-bottom:30px">
-											@if(isset($result['contents'][0]['promotion_inbox_clickto'])) 
+											@if(isset($result['contents'][0]['promotion_inbox_clickto']))
 												{{$result['contents'][0]['promotion_inbox_clickto']}}
 											@endif
 										</div>
@@ -1810,13 +1810,13 @@ $grantedFeature     = session('granted_features');
 										<div class="col-md-3" style="margin-bottom:30px">Promo Type</div>
 										<div class="col-md-9" style="margin-bottom:30px">
 											<div class="input-icon right">
-												@if($result['contents'][0]['deals']['deals_promo_id_type'] == 'promoid')Promo ID @else Nominal @endif 
+												@if($result['contents'][0]['deals']['deals_promo_id_type'] == 'promoid')Promo ID @else Nominal @endif
 												@if(isset($result['contents'][0]['deals']['deals_promo_id_type']))
 														= {{$result['contents'][0]['deals']['deals_promo_id']}}
 												@endif
-											</div>    
+											</div>
 										</div>
-										
+
 										<div class="col-md-3" style="margin-bottom:30px">Nominal Voucher</div>
 										<div class="col-md-9" style="margin-bottom:30px">
 											{{number_format($result['contents'][0]['voucher_value'])}}
@@ -1829,7 +1829,7 @@ $grantedFeature     = session('granted_features');
 												{{date('d M Y H:i',strtotime($result['contents'][0]['deals']['deals_start']))}}
 												@endif
 											@endif
-											
+
 											@if(isset($result['contents'][0]['deals']['deals_end']))
 												@if($result['contents'][0]['deals']['deals_end'] != '')
 													-  {{date('d M Y H:i',strtotime($result['contents'][0]['deals']['deals_end']))}}
@@ -1850,7 +1850,7 @@ $grantedFeature     = session('granted_features');
 														$jmlOutletSelected = count($ou);
 													@endphp
 												@endif
-											
+
 												@if ($jmlOutlet == $jmlOutletSelected)
 													All Outlets
 												@else
@@ -1867,7 +1867,7 @@ $grantedFeature     = session('granted_features');
 													By Date: {{date('d M Y H:i',strtotime($result['contents'][0]['deals']['deals_voucher_expired']))}}
 												@endif
 											@endif
-											
+
 											@if(isset($result['contents'][0]['deals']['deals_voucher_duration']))
 												@if($result['contents'][0]['deals']['deals_voucher_duration'] != '')
 													By Duration: {{$result['contents'][0]['deals']['deals_voucher_duration']}} days
@@ -1881,14 +1881,14 @@ $grantedFeature     = session('granted_features');
 													Auto Generated, total {{$result['contents'][0]['deals']['deals_total_voucher']}} voucher
 												@endif
 											@endif
-											
+
 											@if(isset($result['contents'][0]['deals']['deals_voucher_type']))
 												@if($result['contents'][0]['deals']['deals_voucher_type'] == 'List Vouchers')
 													List Vouchers:<br>
 													@foreach($result['contents'][0]['deals']['deals_vouchers'] as $vouchers){{$vouchers['voucher_code']}}&#13;&#10;@endforeach
 												@endif
 											@endif
-											
+
 											@if(isset($result['contents'][0]['deals']['deals_voucher_type']))
 												@if($result['contents'][0]['deals']['deals_voucher_type'] == 'Unlimited')
 													Unlimited
@@ -1956,7 +1956,7 @@ $grantedFeature     = session('granted_features');
 		<div class="recipient">
 			@include('promotion::recipient')
 		</div>
-		
+
 	</div>
 	<div class="col-md-12" style="padding-left: 30px;padding-right: 30px;">
 			<div class="portlet light bordered">
@@ -1981,10 +1981,10 @@ $grantedFeature     = session('granted_features');
 				<div class="modal-body">
 					<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataComplaint" width="100%">
 						<thead id="theadSentList">
-							
+
 						</thead>
 						<tbody id="tbodySentList">
-							
+
 						</tbody>
 					</table>
 					<div class="col-md-12" style="padding-left:0px;padding-right:0px;">
@@ -1994,7 +1994,7 @@ $grantedFeature     = session('granted_features');
 								<li class="page-last"><a href="javascript:void(0)">»</a></li>
 							</ul>
 						</div>
-					</div>		
+					</div>
 				</div>
 				<div class="modal-footer" style="margin-top:35px">
 					<button type="button" data-dismiss="modal" class="btn default">Close</button>

@@ -45,7 +45,7 @@
         .bg-black{
             background-color: #000c;
         }
-		
+
         .bg-yellow{
             background-color: #d1af28;
         }
@@ -231,7 +231,7 @@
 				<div class="col-md-12">
 					<hr style="margin-top: 2px;">
 				</div>
-				
+
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 					<div style="font-size:10px;padding-bottom: 0px; width: 100%;" class="title">
 						<a style="width: 100%;background-color: rgb(128, 0, 0);text-decoration: none;border-color: transparent;" class="btn btn-primary">Call Us</a>
@@ -244,7 +244,7 @@
 @stop
 
 @section('page-script')
-    <script type="text/javascript" src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		$("select").change(function() {
 			$("a").attr("href", "#call*"+this.value)

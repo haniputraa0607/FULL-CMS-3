@@ -6,26 +6,26 @@
 
 
  @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+
 	<script>
-	
+
 	$('#checkBtn').click(function() {
       checked = $("input[type=checkbox]:checked").length;
 
@@ -39,7 +39,7 @@
     	$('#manualFilter').show();
     });
 	</script>
-	
+
 @endsection
 
 @section('content')
@@ -74,7 +74,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<form role="form" action="" method="POST">
 		<div class="col-md-4">
 			<div class="portlet light bordered">
@@ -88,7 +88,7 @@
 					<div class="form-body">
 						<div class="form-group">
 							<label>Campaign Title</label>
-							<input type="text" class="form-control" placeholder="Campaign Title" name="campaign_title" required @if(isset($result['campaign_title']) && $result['campaign_title'] != "") value="{{$result['campaign_title']}}" @endif> 
+							<input type="text" class="form-control" placeholder="Campaign Title" name="campaign_title" required @if(isset($result['campaign_title']) && $result['campaign_title'] != "") value="{{$result['campaign_title']}}" @endif>
 						</div>
 						<div class="form-group">
 							<label class="control-label">Date Time to Send</label>
@@ -101,7 +101,7 @@
 								</span>
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label>Campaign Media</label>
 							<div class="mt-checkbox-list">
@@ -155,7 +155,7 @@
 					$conditions = $search_param;
 				?>
 			@else
-				
+
 				<?php
 				//@if(isset($result['rules']))
 				// @else
@@ -163,7 +163,7 @@
 				?>
 			@endif
 			<?php $tombolsubmit = 'hidden'; ?>
-			@include('filter') 
+			@include('filter')
 		</div>
 		<div class="col-md-8">
 			<div class="portlet light bordered">

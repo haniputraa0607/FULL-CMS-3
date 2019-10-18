@@ -6,25 +6,25 @@
 
 @section('page-style')
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <!-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/portlet-draggable.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <!-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/portlet-draggable.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
 
     function changeSelect(){
@@ -67,7 +67,7 @@
                     { targets: [2], visible: false}
                 ],
         });
-        
+
         //update order section
         table.on( 'row-reorder', function ( e, diff, edit ) {
             var token = "{{ csrf_token() }}";
@@ -149,7 +149,7 @@
                         $(this).val(old);
                     }
                 }
-            }); 
+            });
         }
     });
 
@@ -176,7 +176,7 @@
                     });
                 }
             });
-            
+
             console.log(order)
 
             var token   = "{{ csrf_token() }}";
@@ -215,7 +215,7 @@
                 card_name : $(this).val()
             }
         }
-       
+
         var token   = "{{ csrf_token() }}";
         var id_dash = $(this).attr('data-id-dash');
 
@@ -238,7 +238,7 @@
                     toastr.warning("Something went wrong. Failed to update card.");
                 }
             }
-        }); 
+        });
     })
 
     //delete card
@@ -276,7 +276,7 @@
                                 toastr.warning("Something went wrong. Failed to delete card.");
                             }
                         }
-                    }); 
+                    });
                 }else{
                     $(this).slideUp(remove);
                 }
@@ -306,7 +306,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -322,7 +322,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                                 Default Date Range
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="default rentang tanggal data yang ditampilkan" data-container="body"></i>
                             </label>
                         </div>
@@ -362,7 +362,7 @@
                         <div class="input-icon right">
                             <label class="col-md-2 control-label">
                             Section Title
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Judul section" data-container="body"></i>
                             </label>
                         </div>
@@ -377,7 +377,7 @@
                         <div class="input-icon right">
                             <label class="col-md-2 control-label">
                             Card
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="data yang akan ditampilkan" data-container="body"></i>
                             </label>
                         </div>
@@ -443,7 +443,7 @@
                                 <a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
                                     <i class="fa fa-plus"></i> Add Card</a>
                                 <br>
-                                <br> 
+                                <br>
                             </div>
                         </div>
                     </div>
@@ -532,7 +532,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-12">
                                                         <div class="repeat">
-                                                            <div data-repeater-list="cards" class="cardopt" data-id="{{ $value['id_dashboard_user'] }}" data-start="{{ $start }}"> 
+                                                            <div data-repeater-list="cards" class="cardopt" data-id="{{ $value['id_dashboard_user'] }}" data-start="{{ $start }}">
                                                                 @foreach($value['dashboard_card'] as $q => $card)
                                                                 <div data-repeater-item="" class="row rowcard" style="margin-bottom: 15px;" data-id="{{ $card['id_dashboard_card'] }}" data-id-dash="{{ $value['id_dashboard_user'] }}">
                                                                     <div class="col-md-10">
@@ -597,17 +597,17 @@
                                                             <a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
                                                                 <i class="fa fa-plus"></i> Add Card</a>
                                                             <br>
-                                                            <br> 
+                                                            <br>
                                                         </div>
                                                     </div>
                                                 </div>
-                            
+
                                             </div>
                                         </form>
                                     </div>
                                 </td>
-                                <td> 
-                                    <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete-section" data-id="{{ $value['id_dashboard_user'] }}"><i class="fa fa-trash-o"></i> Delete</a> 
+                                <td>
+                                    <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete-section" data-id="{{ $value['id_dashboard_user'] }}"><i class="fa fa-trash-o"></i> Delete</a>
                                 </td>
                             </tr>
                             @endif
@@ -617,5 +617,5 @@
             </table>
         </div>
     </div>
-    
+
 @endsection

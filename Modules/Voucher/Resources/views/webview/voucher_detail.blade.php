@@ -5,9 +5,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
-        <link href="{{ env('AWS_ASSET_URL') }}{{('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
-        
+        <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
+        <link href="{{ env('S3_URL_VIEW') }}{{('assets/webview/css/pace-flash.css') }}" rel="stylesheet" type="text/css" />
+
         <!-- Bootstrap CSS (part) -->
         <style type="text/css">
             *, ::after, ::before {
@@ -112,7 +112,7 @@
                 line-height: 1.4;
             }
         </style>
-        
+
         <style type="text/css">
             @font-face {
                 font-family: "Seravek";
@@ -122,14 +122,14 @@
                 font-family: 'Seravek Light';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype'); 
+                src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
             }
 
             @font-face {
                 font-family: 'Seravek Medium';
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype'); 
+                src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype');
             }
 
             .seravek-light-font {
@@ -272,7 +272,7 @@
                     color: #6C5648;
                 }
             }
-           
+
             #qr-code-modal{
                 position: fixed;
                 top: 0;
@@ -390,7 +390,7 @@
                             @endif
                         </div>
                     </div>
-                    
+
                     @if($voucher['redeemed_at'] == null)
                     <!--<div id="invalidate">-->
                     <!--    <div class="btn-wrapper text-center">-->
@@ -410,8 +410,8 @@
         @endif
 
 
-       
-        <script type="text/javascript" src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+
+        <script type="text/javascript" src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(document).ready(function() {
@@ -430,7 +430,7 @@
                         'right': '0',
                     });
                 }*/
-                
+
                 $(document).on('click', '.deals-qr', function(e) {
                     e.preventDefault();
                     $('#qr-code-modal').fadeIn('fast');
@@ -442,7 +442,7 @@
                     var result = url.replace("#true", "");
                     result = result.replace("#false", "");
                     result = result.replace("#", "");
-    
+
                     window.location.href = result + '#true';
                 });
 
