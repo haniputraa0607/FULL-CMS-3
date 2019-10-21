@@ -234,7 +234,7 @@
 
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
 					<div style="font-size:10px;padding-bottom: 0px; width: 100%;" class="title">
-						<a style="width: 100%;background-color: rgb(128, 0, 0);text-decoration: none;border-color: transparent;" class="btn btn-primary">Call Us</a>
+						<a style="width: 100%;background-color: rgb(74, 0, 0);text-decoration: none;border-color: transparent;color: rgb(241, 228, 178);" class="btn btn-lg">Call Us</a>
 					</div>
 				</div>
 			</div>
