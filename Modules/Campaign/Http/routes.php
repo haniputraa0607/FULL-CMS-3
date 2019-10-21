@@ -48,4 +48,5 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'campaign
 	Route::get('step3/{id_campaign}', ['middleware' => 'config_control:50', 'uses' => 'CampaignController@campaignStep3']);
 	Route::post('step3/{id_campaign}', ['middleware' => 'config_control:50', 'uses' => 'CampaignController@campaignStep3Post']);
 
+    Route::get('recipient/{id_campaign}', ['middleware' => 'config_control:50', 'uses' => 'CampaignController@showRecipient']);
 });
