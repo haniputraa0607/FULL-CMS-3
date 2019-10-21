@@ -65,14 +65,14 @@
     });
         var map;
 
-        @if (!empty($news[0]['news_event_latitude']))
-          var lat = "{{$news[0]['news_event_latitude']}}";
+        @if (!empty(old('news_event_latitude')))
+          var lat = "{{old('news_event_latitude')}}";
         @else
           var lat = "-7.7972";
         @endif
 
-        @if (!empty($news[0]['news_event_longitude']))
-          var long = "{{$news[0]['news_event_longitude']}}";
+        @if (!empty(old('news_event_longitude')))
+          var long = "{{old('news_event_longitude')}}";
         @else
           var long = "110.3688";
         @endif
@@ -197,6 +197,31 @@
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     <script type="text/javascript">
+        var video={!!json_encode(old('news_video',[]))!!};
+        var video_template="<div class=\"input-group\" style=\"margin-bottom:5px\">\
+          <input name=\"news_video[]\" type=\"url\" class=\"form-control featureVideoForm video-content\" id=\"newsVideo%id%\" placeholder=\"Example: https://www.youtube.com/watch?v=u9_2wWSOQ\" value=\"%value%\"  data-id=\"%id%\" required>\
+          <span class=\"input-group-btn\">\
+            <button class=\"btn btn-danger remove-video-btn\" type=\"button\" data-id=\"%id%\"><i class=\"fa fa-times\"></i></button>\
+          </span>\
+        </div>";
+
+        function drawVideo(){
+          if(video.length<=0){
+            return addVideo();
+          }
+          var html="";
+          video.forEach(function(vrb,id){
+            console.log(vrb);
+            html+=video_template.replace(/%id%/g,id).replace('%value%',vrb);
+          });
+          $('#video-container').html(html);
+        }
+
+        function addVideo(){
+          video.push('');
+          drawVideo();
+        }
+
         $(document).ready(function() {
             token = '<?php echo csrf_token()?>';
 
@@ -264,7 +289,7 @@
             // $('.featureTime').hide();
 
             /* BUTTON TO TEXT */
-            @if (empty($news[0]['news_button_form_text']))
+            @if (empty(old('news_button_form_text')))
               $('.featureForm').hide();
             @else
               $('.featureForm').show();
@@ -320,7 +345,7 @@
             $( "#sortable" ).disableSelection();
 
 			/* OUTLET */
-            @if (empty($news[0]['news_outlet']))
+            @if (empty(old('news_outlet_text')))
               $('.featureOutlet').hide();
             @else
               $('.featureOutlet').show();
@@ -328,7 +353,7 @@
             @endif
 
             /* PRODUCT */
-            @if (empty($news[0]['news_product']))
+            @if (empty(old('news_product_text')))
               $('.featureProduct').hide();
             @else
               $('.featureProduct').show();
@@ -336,7 +361,7 @@
             @endif
 
             /* VIDEO */
-            @if (empty($news[0]['news_video']))
+            @if (empty(old('news_video')))
               $('.featureVideo').hide();
             @else
               $('.featureVideo').show();
@@ -344,7 +369,7 @@
             @endif
 
             /* LOCATION */
-            @if (empty($news[0]['news_event_location_name']))
+            @if (empty(old('news_event_location_name')))
               $('.featureLocation').hide();
             @else
               $('.featureLocation').show();
@@ -352,7 +377,7 @@
             @endif
 
             /* DATE */
-            @if (empty($news[0]['news_event_date_start']))
+            @if (empty(old('news_event_date_start')))
               $('.featureDate').hide();
             @else
               $('.featureDate').show();
@@ -360,7 +385,7 @@
             @endif
 
             /* TIME */
-            @if (empty($news[0]['news_event_time_start']))
+            @if (empty(old('news_event_time_start')))
               $('.featureTime').hide();
             @else
               $('.featureTime').show();
@@ -370,8 +395,8 @@
 			 /* BUTTON TO FORM */
             $('#featureForm').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureForm', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.png')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}")
             });
 
             /* OUTLET */
@@ -417,6 +442,9 @@
             });
 
             /* PUBLISH DATE */
+            @if(old('news_publish_date'))
+            $('.showPublish').show();
+            @endif
             $('.publishType').click(function() {
               // tampil duluk
               $('.showPublish').show();
@@ -478,6 +506,7 @@
                 }
 
             });
+            drawVideo();
         });
     </script>
     <script type="text/javascript">
@@ -515,7 +544,7 @@
             $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.png')}}")
         })
         $('#field_image_landscape').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape2.png')}}")
             $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape.png')}}")
         })
         $('.field_event').focus(function(){
@@ -550,6 +579,20 @@
             $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
             $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.png')}}")
         })
+        $(document).on('focus', '#selectCategory .select2', function (e) {
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}")
+        })
+        $('#add-video-btn').on('click',addVideo);
+        $('#video-container').on('click','.remove-video-btn',function(){
+          var id=$(this).data('id');
+          video.splice(id,1);
+          drawVideo();
+        });
+        $('#video-container').on('change','.video-content',function(){
+          var id=$(this).data('id');
+          video[id]=$(this).val();
+        });
     </script>
 @endsection
 
@@ -585,8 +628,8 @@
         <div class="portlet-body m-form__group row">
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                     <div class="col-md-4">
-                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news1.png')}}" style="width:100%" alt="tutorial" id="tutorial1">
-                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
+                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news1.png')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
+                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">
                     </div>
                     <div class="col-md-8">
                     <div class="form-body">
@@ -631,14 +674,14 @@
                             <div class="col-md-9">
                                 <div class="md-radio-inline">
                                     <div class="md-radio">
-                                        <input type="radio" id="optionsRadios4" name="publish_type" class="md-radiobtn publishType" value="limit" @if (!empty(old('news_expired_date'))) checked @endif>
+                                        <input type="radio" id="optionsRadios4" name="publish_type" class="md-radiobtn publishType" value="limit" @if(old('publish_type')=='limit') checked @endif>
                                         <label for="optionsRadios4">
                                             <span></span>
                                             <span class="check"></span>
                                             <span class="box"></span> Date Limit </label>
                                     </div>
                                     <div class="md-radio">
-                                        <input type="radio" id="optionsRadios5" name="publish_type" class="md-radiobtn publishType" value="always" @if (!empty(old('news_publish_date')) && !empty('news_expired_date')) checked @endif required>
+                                        <input type="radio" id="optionsRadios5" name="publish_type" class="md-radiobtn publishType" value="always" @if(old('publish_type')=='always') checked @endif required>
                                         <label for="optionsRadios5">
                                             <span></span>
                                             <span class="check"></span>
@@ -672,7 +715,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+<!--                         <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Header Title
@@ -681,9 +724,9 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="" class="form-control" name="news_title" value="{{ old('news_title') }}" placeholder="Header Title" required>
+                                <input type="text" id="" class="form-control field_title" name="news_title" value="{{ old('news_title') }}" placeholder="Header Title" required>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <div class="input-icon right">
@@ -694,7 +737,25 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="field_title" class="form-control" name="news_second_title" value="{{ old('news_second_title') }}" placeholder="News Title" required>
+                                <input type="text" id="field_title" class="form-control field_title" name="news_title" value="{{ old('news_title') }}" placeholder="News Title" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="selectCategory">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                News Category
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Pilih kategori News" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-5">
+                                <select name="id_news_category" class="form-control select2">
+                                  <option></option>
+                                  @foreach($categories as $category)
+                                  <option value="{{$category['id_news_category']}}" @if(old('id_news_category')==$category['id_news_category']) selected @endif>{{$category['category_name']}}</option>
+                                  @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -758,7 +819,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Content Short
@@ -767,9 +828,9 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <textarea name="news_content_short" id="field_content_short" class="form-control" required>{{ old('news_content_short') }}</textarea>
+                                <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News" required>{ { old('news_content_short') } }</textarea>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <div class="input-icon right">
@@ -1016,8 +1077,9 @@
                                 <div class="col-md-3">
                                     <label class="control-label">Link Video <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9">
-                                    <input name="news_video" id="field_video_link" type="url" class="form-control featureVideoForm" value="{{ old('news_video') }}" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ">
+                                <div class="col-md-9" id="video-container"></div>
+                                <div class="col-md-offset-3 col-md-9" style="margin-top: 10px">
+                                  <button class="btn blue" type="button" id="add-video-btn"><i class="fa fa-plus"></i> Add</button>
                                 </div>
                             </div>
                         </div>
@@ -1063,7 +1125,7 @@
                                         <optgroup label="Outlet List">
                                             @if (!empty($outlet))
                                                 @foreach($outlet as $suw)
-                                                    <option value="{{ $suw['id_outlet'] }}">{{ $suw['outlet_name'] }}</option>
+                                                    <option value="{{ $suw['id_outlet'] }}" @if(in_array($suw['id_outlet'],old('id_outlet',[]))) selected @endif>{{ $suw['outlet_name'] }}</option>
                                                 @endforeach
                                             @endif
                                         </optgroup>
@@ -1114,7 +1176,7 @@
                                             <option value="">Select Product</option>
                                             @if (!empty($product))
                                                 @foreach($product as $suw)
-                                                    <option value="{{ $suw['id_product'] }}">{{ $suw['product_name'] }}</option>
+                                                    <option value="{{ $suw['id_product'] }}" @if(in_array($suw['id_product'],old('id_product',[]))) selected @endif>{{ $suw['product_name'] }}</option>
                                                 @endforeach
                                             @endif
                                         </optgroup>
@@ -1123,7 +1185,7 @@
                             </div>
                         </div>
 						<!-- BUTTON TO FORM -->
-						<div class="form-group">
+						<div class="form-group" id="customform">
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Custom Form

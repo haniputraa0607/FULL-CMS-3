@@ -146,7 +146,7 @@
                         <th> No </th>
                         <th> Title </th>
                         <th> Date Publish </th>
-                        <th> Short Description </th>
+                        <th> Category </th>
                         @if(MyHelper::hasAccess([20,22,23], $grantedFeature))
                             <th> Action </th>
                         @endif
@@ -171,7 +171,7 @@
                                         {{ date('d F Y', strtotime($value['news_publish_date'])) }} - {{ date('d F Y', strtotime($value['news_expired_date'])) }}
                                     @endif
                                 </td>
-                                <td>{{ substr($value['news_content_short'], 0, 60) }} ...</td>
+                                <td>{{ $value['news_category']['category_name'] }}</td>
                                 @if(MyHelper::hasAccess([20,22,23], $grantedFeature))
                                     <td style="width: 125px;">
                                         @if(MyHelper::hasAccess([23], $grantedFeature))
