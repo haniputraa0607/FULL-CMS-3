@@ -195,6 +195,29 @@
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     <script type="text/javascript">
+        var video={!!json_encode(explode(';',$news[0]['news_video']))!!};
+        var video_template="<div class=\"input-group\" style=\"margin-bottom:5px\">\
+          <input name=\"news_video[]\" type=\"url\" class=\"form-control featureVideoForm video-content\" id=\"newsVideo%id%\" placeholder=\"Example: https://www.youtube.com/watch?v=u9_2wWSOQ\" value=\"%value%\"  data-id=\"%id%\" required>\
+          <span class=\"input-group-btn\">\
+            <button class=\"btn btn-danger remove-video-btn\" type=\"button\" data-id=\"%id%\"><i class=\"fa fa-times\"></i></button>\
+          </span>\
+        </div>";
+
+        function drawVideo(){
+          if(video.length<=0){
+            return addVideo();
+          }
+          var html="";
+          video.forEach(function(vrb,id){
+            html+=video_template.replace(/%id%/g,id).replace('%value%',vrb);
+          });
+          $('#video-container').html(html);
+        }
+
+        function addVideo(){
+          video.push('');
+          drawVideo();
+        }
         $(document).ready(function() {
 
             $('.summernote').summernote({
@@ -371,8 +394,8 @@
 			 /* BUTTON TO FORM */
             $('#featureForm').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureForm', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.png')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}")
             });
 
             /* OUTLET */
@@ -479,6 +502,7 @@
                 }
 
             });
+            drawVideo();
         });
     </script>
     <script type="text/javascript">
@@ -516,7 +540,7 @@
             $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.png')}}")
         })
         $('#field_image_landscape').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape2.png')}}")
             $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape.png')}}")
         })
         $('.field_event').focus(function(){
@@ -551,6 +575,20 @@
             $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
             $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.png')}}")
         })
+        $(document).on('focus', '#selectCategory .select2', function (e) {
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}")
+        })
+        $('#add-video-btn').on('click',addVideo);
+        $('#video-container').on('click','.remove-video-btn',function(){
+          var id=$(this).data('id');
+          video.splice(id,1);
+          drawVideo();
+        });
+        $('#video-container').on('change','.video-content',function(){
+          var id=$(this).data('id');
+          video[id]=$(this).val();
+        });
     </script>
 @endsection
 
@@ -587,8 +625,8 @@
         <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
         <div class="portlet-body m-form__group row">
                 <div class="col-md-4">
-                    <img src="{{env('S3_URL_VIEW') }}{{('img/news/news1.png')}}" style="width:100%" alt="tutorial" id="tutorial1">
-                    <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
+                    <img src="{{env('S3_URL_VIEW') }}{{('img/news/news1.png')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
+                    <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">                
                 </div>
                 <div class="col-md-8">
                 <div class="form-body">
@@ -674,7 +712,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+<!--                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Header Title
@@ -683,9 +721,9 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" id="" class="form-control" name="news_title" value="{{ $value['news_title'] }}" placeholder="Header" required>
+                            <input type="text" id="" class="form-control" name="news_title" value="{ { $value['news_title'] } }" placeholder="Header" required>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -696,10 +734,27 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" id="field_title" class="form-control" name="news_second_title" value="{{ $value['news_second_title'] }}" placeholder="Title" required>
+                            <input type="text" id="field_title" class="form-control" name="news_title" value="{{ $value['news_title'] }}" placeholder="Title" required>
                         </div>
                     </div>
 
+                    <div class="form-group" id="selectCategory">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            News Category
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih kategori News" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-5">
+                            <select name="id_news_category" id="id_news_category" class="form-control select2">
+                              <option></option>
+                              @foreach($categories as $category)
+                              <option value="{{$category['id_news_category']}}" @if($category['id_news_category']==$value['id_news_category']) selected @endif>{{$category['category_name']}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <!-- <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -759,7 +814,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
@@ -768,9 +823,9 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News" required>{{ $value['news_content_short'] }}</textarea>
+                            <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News" required>{ { $value['news_content_short'] } }</textarea>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -1017,8 +1072,9 @@
                             <div class="col-md-3">
                                 <label class="control-label">Link Video <span class="required" aria-required="true"> * </span> </label>
                             </div>
-                            <div class="col-md-9">
-                                <input name="news_video" type="url" class="form-control featureVideoForm" value="{{ $value['news_video'] }}" placeholder="Link Youtube">
+                            <div class="col-md-9" id="video-container"></div>
+                            <div class="col-md-offset-3 col-md-9" style="margin-top: 10px">
+                              <button class="btn blue" type="button" id="add-video-btn" onclick="addVideo"><i class="fa fa-plus"></i> Add</button>
                             </div>
                         </div>
                     </div>
@@ -1142,7 +1198,7 @@
                     </div>
 
 					<!-- BUTTON TO FORM -->
-                    <div class="form-group">
+                    <div class="form-group" id="customform">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Custom Form
