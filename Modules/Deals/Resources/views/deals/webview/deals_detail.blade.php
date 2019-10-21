@@ -118,7 +118,7 @@
                 }
 			@endphp
 			<div class="col-md-4 col-md-offset-4">
-				<div class="title-wrapper clearfix">
+				<div style="background-color: #f8f8f8; position: relative;" class="clearfix">
 					<img class="deals-img center-block" src="{{ $deals['url_deals_image'] }}" alt="">
 					<div style="font-size: 12px;" class="text-right" id="timer">
 						<span id="timerchild"><i class="fas fa-clock"></i>Berakhir Dalam</span>
