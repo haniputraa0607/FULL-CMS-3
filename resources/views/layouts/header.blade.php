@@ -3,8 +3,8 @@
 	<div class="page-header-inner container">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-			<a href="{{url('/')}}">
-				<img src="{{ env('S3_URL_VIEW') }}{{ ('images/logo.png') }}" alt="logo" class="logo-default"  style="margin: 0; height:45px"/> </a>
+			<a href="{{url('/')}}" style="height:100%">
+				<img src="{{ env('S3_URL_VIEW') }}{{ ('images/logo.png') }}" alt="logo" class="logo-default"  style="margin: 0; height:100%"/> </a>
 			<div class="menu-toggler sidebar-toggler">
 				<span></span>
 			</div>
