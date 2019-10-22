@@ -55,14 +55,6 @@
             if(list.length){
                 html+="<option value=\"all\">All Outlets</option>";
             }
-            // var selected=[];
-            // if(valuee&&valuee[0]=='all'){
-            //     oldOutlet.forEach(function(outlet){
-            //         selected.push(outlet.id_outlet);
-            //     });
-            // }else{
-            //     selected=valuee;
-            // }
             list.forEach(function(outlet){
                 html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet_code+" - "+outlet.outlet_name+"</option>";
             });
