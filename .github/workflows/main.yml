@@ -15,4 +15,4 @@ jobs:
     - name: Check ip
       run: wget -qO- https://ipecho.net/plain ; echo
     - name: Push to staging
-      run: sudo git ftp init --force --user deployer@sbe.champresto.id --passwd ilovedeployer ftp://sbe.champresto.id
+      run: sudo git ftp push --force --user deployer@sbe.champresto.id --passwd ilovedeployer ftp://sbe.champresto.id
