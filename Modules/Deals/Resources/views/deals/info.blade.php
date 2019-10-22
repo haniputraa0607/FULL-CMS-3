@@ -217,27 +217,6 @@
                         }
                     @endphp
 
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Outlet Available
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-9">
-                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple>
-                                <optgroup label="Outlet List">
-                                    @if (!empty($outlets))
-                                        @foreach($outlets as $suw)
-                                            <option value="{{ $suw['id_outlet'] }}" @if (!empty($outletselected)) @if (in_array($suw['id_outlet'], $outletselected)) selected @endif  @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
-                                        @endforeach
-                                    @endif
-                                </optgroup>
-                            </select>
-                        </div>
-                    </div>
-
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -261,6 +240,20 @@
                         </div>
                     </div>
                     
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Outlet Available
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}">
+                            </select>
+                        </div>
+                    </div>
+
                     @if ($val['deals_type'] != "Hidden")
                     <div class="form-group">
                         <div class="input-icon right">
@@ -420,7 +413,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="deals_voucher_start" value="{{ old('deals_voucher_start',$val['deals_voucher_start']) }}" >
+                                    <input type="text" class="form_datetime form-control" name="deals_voucher_start" value="{{ ($start_date=old('deals_voucher_start',$val['deals_voucher_start']))?date('d-M-Y H:i',strtotime($start_date)):'' }}" >
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>

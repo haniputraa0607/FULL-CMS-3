@@ -791,4 +791,10 @@ class OutletController extends Controller
         }
         return view('outlet::qrcode_view', $data);
     }
+
+    public function ajaxHandler(Request $request){
+        $post=$request->except('_token');
+        $outlets=MyHelper::post('outlet/ajax_handler', $post);
+        return $outlets;
+    }
 }
