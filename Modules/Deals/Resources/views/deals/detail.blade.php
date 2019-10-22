@@ -149,6 +149,22 @@
     </script>
 
     <script type="text/javascript">
+        var oldOutlet=[];
+        function redrawOutlets(list,selected,convertAll){
+            var html="";
+            if(list.length){
+                html+="<option value=\"all\">All Outlets</option>";
+            }
+            list.forEach(function(outlet){
+                html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet_code+" - "+outlet.outlet_name+"</option>";
+            });
+            $('select[name="id_outlet[]"]').html(html);
+            $('select[name="id_outlet[]"]').val(selected);
+            if(convertAll&&$('select[name="id_outlet[]"]').val().length==list.length){
+                $('select[name="id_outlet[]"]').val(['all']);
+            }
+            oldOutlet=list;
+        }
         $(document).ready(function() {
             token = '<?php echo csrf_token();?>';
 
@@ -371,6 +387,39 @@
             }
             $('.collapser').on('click',collapser);
             collapser();
+            $('select[name="id_brand"]').on('change',function(){
+                var id_brand=$('select[name="id_brand"]').val();
+                $.ajax({
+                    url:"{{url('outlet/ajax_handler')}}",
+                    method: 'GET',
+                    data: {
+                        select:['id_outlet','outlet_code','outlet_name'],
+                        condition:{
+                            rules:[
+                                {
+                                    subject:'id_brand',
+                                    parameter:id_brand,
+                                    operator:'=',
+                                }
+                            ],
+                            operator:'and'
+                        }
+                    },
+                    success: function(data){
+                        if(data.status=='success'){
+                            var value=$('select[name="id_outlet[]"]').val();
+                            var convertAll=false;
+                            if($('select[name="id_outlet[]"]').data('value')){
+                                value=$('select[name="id_outlet[]"]').data('value');
+                                $('select[name="id_outlet[]"]').data('value',false);
+                                convertAll=true;
+                            }
+                            redrawOutlets(data.result,value,convertAll);
+                        }
+                    }
+                });
+            });
+            $('select[name="id_brand"]').change();
         });
     </script>
 @endsection

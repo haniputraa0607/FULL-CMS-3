@@ -48,7 +48,23 @@
 
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript">        
+        var oldOutlet=[];
+        function redrawOutlets(list,selected,convertAll){
+            var html="";
+            if(list.length){
+                html+="<option value=\"all\">All Outlets</option>";
+            }
+            list.forEach(function(outlet){
+                html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet_code+" - "+outlet.outlet_name+"</option>";
+            });
+            $('select[name="id_outlet[]"]').html(html);
+            $('select[name="id_outlet[]"]').val(selected);
+            if(convertAll&&$('select[name="id_outlet[]"]').val().length==list.length){
+                $('select[name="id_outlet[]"]').val(['all']);
+            }
+            oldOutlet=list;
+        }
         $(document).ready(function() {
 
             var _URL = window.URL || window.webkitURL;
@@ -281,8 +297,40 @@
                         toastr.warning("Please check dimension of your photo.");
                     }
                 };
-            })
-
+            });
+            $('select[name="id_brand"]').on('change',function(){
+                var id_brand=$('select[name="id_brand"]').val();
+                $.ajax({
+                    url:"{{url('outlet/ajax_handler')}}",
+                    method: 'GET',
+                    data: {
+                        select:['id_outlet','outlet_code','outlet_name'],
+                        condition:{
+                            rules:[
+                                {
+                                    subject:'id_brand',
+                                    parameter:id_brand,
+                                    operator:'=',
+                                }
+                            ],
+                            operator:'and'
+                        }
+                    },
+                    success: function(data){
+                        if(data.status=='success'){
+                            var value=$('select[name="id_outlet[]"]').val();
+                            var convertAll=false;
+                            if($('select[name="id_outlet[]"]').data('value')){
+                                value=$('select[name="id_outlet[]"]').data('value');
+                                $('select[name="id_outlet[]"]').data('value',false);
+                                convertAll=true;
+                            }
+                            redrawOutlets(data.result,value,convertAll);
+                        }
+                    }
+                });
+            });
+            $('select[name="id_brand"]').change();
         });
     </script>
 @endsection
@@ -608,30 +656,6 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Outlet Available
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple required>
-                                <optgroup label="Outlet List">
-                                    @if (!empty($outlet))
-                                        <option value="all" @if (old('id_outlet')) @if(in_array('all', old('id_outlet'))) selected @endif @endif>All Outlets</option>
-                                        @foreach($outlet as $suw)
-                                            <option value="{{ $suw['id_outlet'] }}" @if (old('id_outlet')) @if(in_array($suw['id_outlet'], old('id_outlet'))) selected @endif @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
-                                        @endforeach
-                                    @endif
-                                </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
                             Brand
                             <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
@@ -648,6 +672,20 @@
                                 @endif
                                 </select>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Outlet Available
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet',[]))}}">
+                            </select>
                         </div>
                     </div>
 
