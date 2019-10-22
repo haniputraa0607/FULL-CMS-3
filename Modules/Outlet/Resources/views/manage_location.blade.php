@@ -69,6 +69,7 @@
           <div class="col-md-3" style="padding-left:0px;padding-right:0px;">
             <select name="order_field" class="form-control select2">
               <option value="id_outlet" @if($order_field == 'id_outlet') selected @endif>Order by ID</option>
+              <option value="outlet_code" @if($order_field == 'outlet_code') selected @endif>Order by Outlet Code</option>
               <option value="outlet_name" @if($order_field == 'outlet_name') selected @endif>Order by Name</option>
               <option value="updated_at" @if($order_field == 'updated_at') selected @endif>Order by Updated At</option>
             </select>
@@ -94,7 +95,7 @@
             </div><br>
             @foreach($outlets as $outlet)
             <div class="row">
-              <div class="col-sm-3">{{$outlet['outlet_name']}}</div>
+              <div class="col-sm-3">{{$outlet['outlet_code']}} - {{$outlet['outlet_name']}}</div>
               <div class="col-sm-3">
                 <div class="form-group">
                   <select id="city{{$outlet['id_outlet']}}" class="form-control select2" name="outlets[{{$outlet['id_outlet']}}][id_city]" data-placeholder="City">

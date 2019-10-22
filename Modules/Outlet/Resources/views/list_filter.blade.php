@@ -19,6 +19,14 @@
 			['outlet_latitude','Latitude'],
 			['outlet_longitude','Longitude'],
 			]
+		},
+		outlet_code:{
+			display:'Outlet Code',
+			operator:[
+				['=','='],
+				['like','Like']
+			],
+			opsi:[]
 		}
 	};
 	database={
