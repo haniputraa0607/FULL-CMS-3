@@ -1227,7 +1227,7 @@
 
 		@if($level == "Super Admin")
 		<li class="nav-item {{($menu_active == 'setting-version') ? 'active' : ''}}">
-			<a href="{{url('setting/version')}}" class="nav-link">
+			<a href="{{url('version')}}" class="nav-link">
 				<i class="fa fa-info-circle"></i>
 				<span class="title">Version Control</span>
 			</a>

@@ -21,8 +21,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::any('level/delete/{id}', 'SettingController@levelDelete');
 
     Route::any('whatsapp', ['middleware' => 'config_control:74,75', 'uses' => 'SettingController@whatsApp']);
-
-    Route::any('version', 'SettingController@versionSetting');
 	
     /* complete profile */
     Route::any('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
@@ -72,6 +70,11 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
 {
     Route::any('setting_email', 'SettingController@settingEmail');
+});
+
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'version', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
+{
+    Route::any('/', 'VersionController@index');
 });
 
 Route::group(['prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
