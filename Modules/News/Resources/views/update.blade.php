@@ -196,12 +196,12 @@
     </script>
     <script type="text/javascript">
         var video={!!json_encode(explode(';',$news[0]['news_video']))!!};
-        var video_template="<div class=\"input-group\" style=\"margin-bottom:5px\">\
-          <input name=\"news_video[]\" type=\"url\" class=\"form-control featureVideoForm video-content\" id=\"newsVideo%id%\" placeholder=\"Example: https://www.youtube.com/watch?v=u9_2wWSOQ\" value=\"%value%\"  data-id=\"%id%\" required>\
-          <span class=\"input-group-btn\">\
-            <button class=\"btn btn-danger remove-video-btn\" type=\"button\" data-id=\"%id%\"><i class=\"fa fa-times\"></i></button>\
-          </span>\
-        </div>";
+        var video_template='<div class="input-group" style="margin-bottom:5px">'+
+          '<input name="news_video[]" type="url" class="form-control featureVideoForm video-content" id="newsVideo%id%" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ" value="%value%"  data-id="%id%">'+
+          '<span class="input-group-btn">'+
+            '<button class="btn btn-danger remove-video-btn" type="button" data-id="%id%"><i class="fa fa-times"></i></button>'+
+          '</span>'+
+        '</div>';
 
         function drawVideo(){
           if(video.length<=0){
