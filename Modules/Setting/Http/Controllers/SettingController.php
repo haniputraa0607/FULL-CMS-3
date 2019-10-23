@@ -1042,42 +1042,6 @@ class SettingController extends Controller
         return parent::redirect($result, 'User Profile Success Page has been updated.', 'setting/home#user-profile');
     }
 
-    function versionSetting(Request $request)
-    {
-        $post = $request->except('_token');
-        $data = [
-            'title'             => 'Version Control Setting',
-            'menu_active'       => 'setting-version',
-            'submenu_active'    => 'setting-version'
-        ];
-        if (!empty($post)) {
-            if (isset($post['Display']['version_image_mobile'])) {
-                $post['Display']['version_image_mobile'] = MyHelper::encodeImage($post['Display']['version_image_mobile']);
-            } elseif (isset($post['Display']['version_image_outlet'])) {
-                $post['Display']['version_image_outlet'] = MyHelper::encodeImage($post['Display']['version_image_outlet']);
-            }
-            $save = MyHelper::post('setting/version/update', $post);
-            if (isset($save['status']) && $save['status'] == "success") {
-                return redirect('setting/version')->withSuccess(['Version Setting has been updated.']);
-            } else {
-                if (isset($save['errors'])) {
-                    return back()->withErrors($save['errors'])->withInput();
-                }
-                if (isset($save['status']) && $save['status'] == "fail") {
-                    return back()->withErrors($save['messages'])->withInput();
-                }
-                return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
-            }
-        }
-        $version = MyHelper::get('setting/version/list');
-        if (isset($version['status']) && $version['status'] == "success") {
-            $data['version'] = $version['result'];
-        } else {
-            $data['version'] = ['Android' => [], 'IOS' => [], 'OutletApp' => []];
-        }
-        return view('setting::version.setting-version', $data);
-    }
-
     public function textMenu(Request $request) {
         //text menu setting
         $data = [
