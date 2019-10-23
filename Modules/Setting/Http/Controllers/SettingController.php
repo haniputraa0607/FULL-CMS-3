@@ -726,6 +726,7 @@ class SettingController extends Controller
 		if(isset($post['default_home_splash_screen'])){
             $post['default_home_splash_screen'] = MyHelper::encodeImage($post['default_home_splash_screen']);
         }
+
 		// print_r($post);exit;
         $result = MyHelper::post('setting/default_home', $post);
         return parent::redirect($result, 'Default Home Background has been updated.');
