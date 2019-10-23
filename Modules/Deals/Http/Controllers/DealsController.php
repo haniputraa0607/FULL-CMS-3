@@ -95,8 +95,7 @@ class DealsController extends Controller
             }
             return parent::redirect($save, 'Deals has been created.',"$rpage/detail/{$save['result']['id_deals']}/{$save['result']['deals_promo_id']}");
         }else{
-            return $save;
-            return back()->withError($save['messages']??['Something went wrong'])->withInput();
+            return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
         }
     }
 
