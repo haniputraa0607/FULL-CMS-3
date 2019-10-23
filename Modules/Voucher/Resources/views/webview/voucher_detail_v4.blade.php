@@ -191,7 +191,7 @@
 				<!-- Modal QR Code -->
 				@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null || isset($voucher['used_at']) && $voucher['used_at'] == null)
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
-					@php $bulan = ['Janu', 'Febr', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
+					@php $bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
 					<div style="font-size: 13px; color: rgb(128,0,0);padding-bottom: 0px;" class="text-right ProductSans"></i> Berlaku sampai {{date('d', strtotime($voucher['voucher_expired_at']))}} {{$bulan[date('m', strtotime($voucher['voucher_expired_at']))-1]}} {{ date('Y', strtotime($voucher['voucher_expired_at'])) }} &nbsp; {{ date('H:i', strtotime($voucher['voucher_expired_at'])) }}</div>
 				</div>
 
