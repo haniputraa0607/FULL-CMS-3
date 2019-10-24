@@ -30,43 +30,7 @@
                     search: "Search:",
                     zeroRecords: "No matching records found"
                 },
-                buttons: [{
-                    extend: "print",
-                    className: "btn dark btn-outline",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                  extend: "copy",
-                  className: "btn blue btn-outline",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                },{
-                  extend: "pdf",
-                  className: "btn yellow-gold btn-outline",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                }, {
-                    extend: "excel",
-                    className: "btn green btn-outline",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                    extend: "csv",
-                    className: "btn purple btn-outline ",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                  extend: "colvis",
-                  className: "btn red",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                }],
+                buttons: [],
                 responsive: {
                     details: {
                         type: "column",
@@ -89,18 +53,18 @@
 
             $.ajax({
                 type : "POST",
-                url : "{{ url('brand/delete') }}",
-                data : "_token="+token+"&id_brand="+id,
+                url : "{{ url('brand/delete/deals') }}",
+                data : "_token="+token+"&id_deals="+id,
                 success : function(result) {
                     if (result == "success") {
                         $('#sample_1').DataTable().row(column).remove().draw();
-                        toastr.info("Brand has been deleted.");
+                        toastr.info("Deal Brand has been deleted.");
                     }
                     else if(result == "fail"){
-                        toastr.warning("Failed to delete brand. Brand has been used.");
+                        toastr.warning("Failed to delete deals brand.Deal Brand has been used.");
                     }
                     else {
-                        toastr.warning("Something went wrong. Failed to delete brand.");
+                        toastr.warning("Something went wrong. Failed to delete deals brand.");
                     }
                 }
             });
@@ -135,66 +99,42 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">Brand List</span>
+                <span class="caption-subject font-blue sbold uppercase">Deal Brand {{$result['name_brand']}} List</span>
+            </div>
+            <div class="actions">
+                <a class="btn green btn-md" data-toggle="modal" href="{{ url('deals/create') }}"> <i class="fa fa-plus"></i> Add Deals </a>
             </div>
         </div>
         <div class="portlet-body form">
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
-                        <th style="width:20%;"> Code </th>
-                        <th style="width:20%;"> Name </th>
-                        <th style="width:20%;"> Logo </th>
-                        <th style="width:20%;"> Image </th>
+                        <th style="width:5%;"> No </th>
+                        <th style="width:10%;"> Type </th>
+                        <th style="width:20%;"> Title </th>
+                        <th style="width:20%;"> Total | Used | Claimed </th>
                         @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
-                            <th style="width:20%;"> Action </th>
+                            <th style="width:10%;"> Action </th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
-                    @if (!empty($brand))
-                        @foreach($brand as $value)
+                    @if (!empty($result))
                         @php
-                            $logo = explode('.', $value['logo_brand']);
-                            $image = explode('.', $value['image_brand']);
+                            $n = 1;
                         @endphp
+                        @foreach($result['brand_deal'] as $value)
                             <tr style="height: 45px;">
-                                <td>{{ $value['code_brand'] }}</td>
-                                <td>{{ $value['name_brand'] }}</td>
-                                @if (end($logo) != 'png')
-                                    <td>No Logo</td>
-                                @else
-                                    <td>Logo Available</td>
-                                @endif
-                                @if (end($image) != 'jpg')
-                                    <td>No Image</td>
-                                @else
-                                    <td>Image Available</td>
-                                @endif
+                                <td>{{$n++}}</td>
+                                <td>{{ $value['deals_type'] }}</td>
+                                <td>{{ $value['deals_title'] }}</td>
+                                <td>{{ $value['deals_total_voucher']." | ".$value['deals_total_used']." | ".$value['deals_total_claimed'] }}</td>
                                 @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                     <td style="width: 90px;">
                                         <div class="btn-group btn-group-solid">
                                             @if(MyHelper::hasAccess([28], $grantedFeature))
-                                                <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_brand'] }}"><i class="fa fa-trash-o"></i></a>
+                                                <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
                                             @endif
-                                            @if(MyHelper::hasAccess([25,27], $grantedFeature))
-                                                <a href="{{ url('brand/show') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
-                                            @endif
-                                            <a class="btn btn-sm grey-cascade" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false"><i class="fa fa-link"></i></a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a href="{{ url('brand/outlet') }}/{{ $value['id_brand'] }}">
-                                                        <i class="icon-pointer"></i> Outlet </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ url('brand/product') }}/{{ $value['id_brand'] }}">
-                                                        <i class="icon-wallet"></i> Product </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ url('brand/deals') }}/{{ $value['id_brand'] }}">
-                                                        <i class="fa fa-gift"></i> Deals </a>
-                                                </li>
-                                            </ul>
                                         </div>
                                     </td>
                                 @endif
@@ -205,7 +145,4 @@
             </table>
         </div>
     </div>
-
-
-
 @endsection
