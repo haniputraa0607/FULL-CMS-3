@@ -334,6 +334,8 @@
 	$(".file-splash").change(function(e) {
 		var widthImg  = 1080;
 		var heightImg = 1920;
+		var widthImg2  = 540;
+		var heightImg2 = 960;
 
 		var _URL = window.URL || window.webkitURL;
 		var image, file;
@@ -342,7 +344,7 @@
 			image = new Image();
 
 			image.onload = function() {
-				if (this.width == widthImg && this.height == heightImg) {
+				if ((this.width == widthImg && this.height == heightImg)||(this.width == widthImg2 && this.height == heightImg2)) {
 					// image.src = _URL.createObjectURL(file);
 				}
 				else {
