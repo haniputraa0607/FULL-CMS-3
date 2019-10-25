@@ -285,9 +285,6 @@
 	});
 
 		$(".file").change(function(e) {
-                widthImg  = 750;
-                heightImg = 250;
-
                 var _URL = window.URL || window.webkitURL;
                 var image, file;
 
@@ -295,7 +292,7 @@
                     image = new Image();
 
                     image.onload = function() {
-                        if (this.width == widthImg && this.height == heightImg) {
+                        if (this.width == this.height && $(".file").val().split('.').pop().toLowerCase() == 'png') {
                             // image.src = _URL.createObjectURL(file);
                         }
                         else {
@@ -360,7 +357,7 @@
 					</div>
 				</div>
 				@if(MyHelper::hasAccess([81], $configs))
-				<div class="form-group">
+				{{-- <div class="form-group">
 					<div class="input-icon right">
 						<label class="col-md-3 control-label">
 							Retain Level Evaluation
@@ -375,7 +372,7 @@
 							</span>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 				@endif
 				<div class="form-group">
 					<label class="col-md-3 control-label">
@@ -414,7 +411,7 @@
 									</div>
 									</div>
 
-									<div class="col-md-12" style="margin-top:20px">
+									{{-- <div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Text Color
@@ -426,40 +423,76 @@
 											<input type="text" name="membership_name_color" class="form-control colorpicker" value="{{$membership['membership_name_color']}}" data-format="rgb">
 										</div>
 									</div>
-									</div>
+									</div> --}}
 
 									<div class="col-md-12" style="margin-top:20px">
-									<div class="input-icon right">
-										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-											Level Image
-											<i class="fa fa-question-circle tooltips" data-original-title="Icon membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
-										    <br>
-										    <span class="required" aria-required="true"> (750*250) </span>
-										</div>
-									</div>
-									<div class="col-md-4" >
 										<div class="input-icon right">
-											<div class="fileinput fileinput-new" data-provides="fileinput">
-												<div class="fileinput-new thumbnail" style="max-width: 2500px;">
-													@if($membership['membership_image'] != "")
-														<img src="{{env('S3_URL_API')}}{{$membership['membership_image']}}" alt="" />
-													@else
-														<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
-													@endif
-												</div>
+											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+												Level Image
+												<i class="fa fa-question-circle tooltips" data-original-title="Icon membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
+												<br>
+												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
+											</div>
+										</div>
+										
+										<div class="col-md-4" >
+											<div class="input-icon right">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-new thumbnail" style="max-width: 2500px;">
+														@if($membership['membership_image'] != "")
+															<img src="{{env('S3_URL_API')}}{{$membership['membership_image']}}" alt="" />
+														@else
+															<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+														@endif
+													</div>
 
-												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
-												<div class="aa">
-													<span class="btn default btn-file">
-														<span class="fileinput-new"> Select image </span>
-														<span class="fileinput-exists"> Change </span>
-														<input class="file" type="file" name="membership_image">
-													</span>
-													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
+													<div class="aa">
+														<span class="btn default btn-file">
+															<span class="fileinput-new"> Select image </span>
+															<span class="fileinput-exists"> Change </span>
+															<input class="file" accept="image/png" type="file" name="membership_image">
+														</span>
+														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+
+									<div class="col-md-12" style="margin-top:20px">
+										<div class="input-icon right">
+											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+												Next Level Image
+												<i class="fa fa-question-circle tooltips" data-original-title="Icon next level membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
+												<br>
+												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
+											</div>
+										</div>
+										
+										<div class="col-md-4" >
+											<div class="input-icon right">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-new thumbnail" style="max-width: 2500px;">
+														@if($membership['membership_next_image'] != "")
+															<img src="{{env('S3_URL_API')}}{{$membership['membership_next_image']}}" alt="" />
+														@else
+															<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+														@endif
+													</div>
+
+													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
+													<div class="aa">
+														<span class="btn default btn-file">
+															<span class="fileinput-new"> Select image </span>
+															<span class="fileinput-exists"> Change </span>
+															<input class="file" accept="image/png" type="file" name="membership_next_image">
+														</span>
+														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 
 									<div class="col-md-12" style="margin-top:20px">
@@ -485,7 +518,7 @@
 										</div>
 									</div>
 									@if(MyHelper::hasAccess([81], $configs))
-									<div class="col-md-12" style="margin-top:20px">
+									{{-- <div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 												Retain Requirement
@@ -506,7 +539,7 @@
 												</span>
 											</div>
 										</div>
-									</div>
+									</div> --}}
 									@endif
 									{{-- cek configs point --}}
 									@if(MyHelper::hasAccess([18], $configs))
@@ -741,7 +774,7 @@
 										</div>
 									</div>
 									@if(MyHelper::hasAccess([81], $configs))
-									<div class="col-md-12" style="margin-top:20px">
+									{{-- <div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 												Retain Requirement
@@ -759,7 +792,7 @@
 												</span>
 											</div>
 										</div>
-									</div>
+									</div> --}}
 									@endif
 									{{-- cek configs point --}}
 									@if(MyHelper::hasAccess([18], $configs))

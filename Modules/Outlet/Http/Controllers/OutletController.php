@@ -267,6 +267,72 @@ class OutletController extends Controller
         }
     }
 
+    /*
+    Manage Location
+     */
+    public function manageLocation(Request $request){
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Manage Location',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'manage-location',
+        ];
+        $page=$request->input('page')??1;
+        $data['take']=10;
+        $post=[];
+        if(session('outlet_location_filter')){
+            $post=session('outlet_location_filter');
+            $data['rule']=array_map('array_values', $post['rule']);
+            $data['operator']=$post['operator'];
+        }
+        if(session('outlet_location_take')){
+            $post['take']=session('outlet_location_take')??10;
+            $data['take']=$post['take'];
+        }
+        $post['order_field']=session('outlet_location_order_field')??'outlet_name';
+        $data['order_field']=$post['order_field'];
+        $post['order_method']=session('outlet_location_order_method')??'asc';
+        $data['order_method']=$post['order_method'];
+        $req=MyHelper::post('outlet/list?page='.$page,$post);
+        $data['total']=$req['result']['total']??0;
+        $data['outlets']=$req['result']['data']??[];
+        $data['next_page_url']=($req['result']['next_page_url']??false)?url()->current().'?page='.($page+1):null;
+        $data['prev_page_url']=$page>1?url()->current().'?page='.($page-1):null;
+        $data['outlets']=$req['result']['data']??[];
+        $data['cities']=MyHelper::get('city/list')['result']??[];
+        return view('outlet::manage_location',$data);
+    }
+
+    public function manageLocationPost(Request $request){
+        $post=$request->except('_token');
+        if($post['rule']??false){
+            session(['outlet_location_filter'=>$post]);
+            return redirect('outlet/manage-location?page=1');
+        }
+        if($post['take']??false){
+            session(['outlet_location_take'=>$post['take']]);
+            session(['outlet_location_order_method'=>$post['order_method']??'asc']);
+            session(['outlet_location_order_field'=>$post['order_field']??'outlet_name']);
+            return redirect('outlet/manage-location?page=1');
+        }
+        if($post['clear']??false){
+            session(['outlet_location_take'=>null]);
+            session(['outlet_location_filter'=>null]);
+            return redirect('outlet/manage-location?page=1');
+        }
+        // clear filter
+        session(['outlet_location_filter'=>null]);
+        // set order by last update first
+        session(['outlet_location_order_method'=>$post['order_method']??'desc']);
+        session(['outlet_location_order_field'=>$post['order_field']??'updated_at']);
+        $req=MyHelper::post('outlet/batch-update',$post);
+        if(($req['status']??false)=='success'){
+            return redirect('outlet/manage-location?page='.($post['page']??'1'))->with('success',['Update success']);
+        }else{
+            return back()->withErrors(['Something went wrong. Please try again.']);
+        }
+    }
+
    public function updateStatus(Request $request){
         $post = $request->except('_token');
         $update = MyHelper::post('outlet/update/status', $post);
@@ -724,5 +790,11 @@ class OutletController extends Controller
             $data['outlet'] = [];
         }
         return view('outlet::qrcode_view', $data);
+    }
+
+    public function ajaxHandler(Request $request){
+        $post=$request->except('_token');
+        $outlets=MyHelper::post('outlet/ajax_handler', $post);
+        return $outlets;
     }
 }

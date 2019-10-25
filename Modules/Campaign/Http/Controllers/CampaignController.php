@@ -599,25 +599,57 @@ class CampaignController extends Controller
 		}
     }
 
+    public function showRecipient(Request $request,$id_campaign){
+    	if($request->input('ajax')){
+    		$post=array_merge(['id_campaign' => $id_campaign],$request->input());    		
+    	}else{
+    		$post=['id_campaign' => $id_campaign];
+    	}
+		if($request->input('ajax')){
+			$action = MyHelper::post('campaign/recipient', $post);
+			$return=$post;
+			$i=($post['start']??0);
+			$return['recordsTotal']=$action['recordsTotal'];
+			$return['recordsFiltered']=$action['recordsFiltered'];
+			$return['data']=array_map(function($x) use (&$i){
+				$i++;
+				return [
+					$i,
+					$x['name'],
+					$x['email'],
+					$x['phone'],
+					$x['gender'],
+					$x['city_name'],
+					$x['birthday']
+				];
+			},$action['result']['users']??[]);
+			return $return;
+		}
+		$data = [ 'title'		  => 'Campaign',
+			  'menu_active'       => 'campaign',
+			  'submenu_active'    => ''
+			];
+		return view('campaign::show-recipient', $data);    	
+    }
 
 	public function campaignStep2Post(Request $request, $id_campaign){
 		$post = $request->except(['_token','sample_1_length','files']);
 		$post['id_campaign'] = $id_campaign;
 
-		if(isset($post['campaign_email_receipient']))
-		$post['campaign_email_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_email_receipient']));
+		if(isset($post['campaign_email_more_recipient']))
+		$post['campaign_email_more_recipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_email_more_recipient']));
 
-		if(isset($post['campaign_sms_receipient']))
-		$post['campaign_sms_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_sms_receipient']));
+		if(isset($post['campaign_sms_more_recipient']))
+		$post['campaign_sms_more_recipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_sms_more_recipient']));
 
-		if(isset($post['campaign_push_receipient']))
-		$post['campaign_push_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_push_receipient']));
+		if(isset($post['campaign_push_more_recipient']))
+		$post['campaign_push_more_recipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_push_more_recipient']));
 
-		if(isset($post['campaign_inbox_receipient']))
-		$post['campaign_inbox_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_inbox_receipient']));
+		if(isset($post['campaign_inbox_more_recipient']))
+		$post['campaign_inbox_more_recipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_inbox_more_recipient']));
 
-		if(isset($post['campaign_whatsapp_receipient']))
-		$post['campaign_whatsapp_receipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_whatsapp_receipient']));
+		if(isset($post['campaign_whatsapp_more_recipient']))
+		$post['campaign_whatsapp_more_recipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_whatsapp_more_recipient']));
 
 		if (isset($post['campaign_push_image'])) {
 			$post['campaign_push_image'] = MyHelper::encodeImage($post['campaign_push_image']);
@@ -639,7 +671,6 @@ class CampaignController extends Controller
 			}
 		}
 		$action = MyHelper::post('campaign/update', $post);
-		// print_r($action);exit;
 
 		if($action['status'] == 'success'){
 			return redirect('campaign/step3/'.$id_campaign);
@@ -688,8 +719,9 @@ class CampaignController extends Controller
     }
 
 	public function campaignStep3Post(Request $request, $id_campaign){
-		$action = MyHelper::post('campaign/send', ['id_campaign' => $id_campaign]);
+		$action = MyHelper::post('campaign/send', ['id_campaign' => $id_campaign,'resend'=>$request->post('resend')]);
 		if($action['status'] == 'success'){
+			$id_campaign=$action['result']['id_campaign']??$id_campaign;
 			return redirect('campaign/step3/'.$id_campaign);
 		} else{
 			return back()->withErrors($action['messages']);

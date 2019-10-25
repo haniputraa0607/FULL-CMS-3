@@ -368,8 +368,8 @@
 				</div>
 				<div class="col-md-4 mt-step-col active">
 					<div class="mt-step-number bg-white">2</div>
-					<div class="mt-step-title uppercase font-grey-cascade">Receipient & Content</div>
-					<div class="mt-step-content font-grey-cascade">Review Campaign Receipient</div>
+					<div class="mt-step-title uppercase font-grey-cascade">Recipient & Content</div>
+					<div class="mt-step-content font-grey-cascade">Review Campaign Recipient</div>
 				</div>
 				<div class="col-md-4 mt-step-col last">
 					<div class="mt-step-number bg-white">3</div>
@@ -455,7 +455,7 @@
 							<div class="col-md-8 value">: @if($result['campaign_send_at'] != ''){{date("d F Y", strtotime($result['campaign_send_at']))}}<br>&nbsp;&nbsp;{{date("H:i", strtotime($result['campaign_send_at']))}}@else Now @endif</div>
 						</div>
 						<div class="row static-info">
-							<div class="col-md-4 name">Receipient generate</div>
+							<div class="col-md-4 name">Recipient generate</div>
 							<div class="col-md-8 value">: {{$result['campaign_generate_receipient']}}</div>
 						</div>
 						@if(isset($result['campaign_rule_parents']))
@@ -545,73 +545,19 @@
 					<div class="portlet-title">
 						<div class="caption font-blue ">
 							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">Receipient From Conditions</span>
+							<span class="caption-subject bold uppercase">Recipient</span>
 						</div>
-					</div>
-					<div class="portlet-body">
-						<div class="row">
-							@if(isset($result['users']) && $result['users'] != '')
-							<table class="table table-striped table-bordered table-hover" id="sample_1">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Phone</th>
-										<th>Gender</th>
-										<th>City</th>
-										<th>Birthday</th>
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th>No</th>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Phone</th>
-										<th>Gender</th>
-										<th>City</th>
-										<th>Birthday</th>
-									</tr>
-								</tfoot>
-								<tbody>
-									@foreach($result['users'] as $key => $user)
-									<tr>
-										<td>{{$key+1}}</td>
-										<td>{{$user['name']}}</td>
-										<td>{{$user['phone']}}</td>
-										<td>{{$user['email']}}</td>
-										<td>{{$user['gender']}}</td>
-										<td>{{$user['city_name']}}</td>
-										<td>{{$user['birthday']}}</td>
-									</tr>
-									<?php
-									if(!empty($user['email'])) array_push($emails, $user['email']);
-									if(!empty($user['phone'])) array_push($phones, $user['phone']);
-									?>
-									@endforeach
-								</tbody>
-							</table>
-							@else
-								No User found with such conditions
-							@endif
+						@if($result['campaign_generate_receipient']=='Now')
+						<div class="action-btn pull-right">
+							<a href="{{url('campaign/recipient/'.$result['id_campaign'])}}" target="_blank" class="btn yellow btn-sm btn-flat">See generated recipient</a>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="portlet light bordered">
-					<div class="portlet-title">
-						<div class="caption font-blue ">
-							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">Receipient</span>
-						</div>
+						@endif
 					</div>
 					<div class="portlet-body form">
 						@if($result['campaign_generate_receipient'] != "Now")
-							<span><i>This campaign generate receipient at scheduled sending time. Enter custom receipient you wish to sent here. Those address will be added by the sending time</i><br><br> </span>
+							<span><i>You can add custom recipient (even non member email) by adding email / phone value below (separated by coma ',').</i><br><br> </span>
 						@else
-							<span><i>Email / Phone listed here is the actual receipient list of this campaign. You can add custom receipient (even non member email) by adding email / phone value below (separated by coma ',').</i><br><br> </span>
+							<span><i>You can add custom recipient (even non member email) by adding email / phone value below (separated by coma ',').</i><br><br> </span>
 						@endif
 						<div class="form-group">
 							<?php
@@ -621,14 +567,14 @@
 							@if($result['campaign_media_email'] == "Yes")
 							<div class="form-group">
 								<label>Email</label>
-								<textarea class="form-control" rows="3" name="campaign_email_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$email_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_email_more_recipient">{{old('campaign_email_more_recipient',$result['campaign_email_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple emails</p>
 							</div>
 							@endif
 							@if($result['campaign_media_sms'] == "Yes")
 							<div class="form-group">
 								<label>SMS</label>
-								<textarea class="form-control" rows="3" name="campaign_sms_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$phone_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_sms_more_recipient">{{old('campaign_sms_more_recipient',$result['campaign_sms_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple phone number</p>
 							</div>
 							@endif
@@ -636,7 +582,7 @@
 							@if($result['campaign_media_push'] == "Yes")
 							<div class="form-group">
 								<label>Push Notification</label>
-								<textarea class="form-control" rows="3" name="campaign_push_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$phone_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_push_more_recipient">{{old('campaign_push_more_recipient',$result['campaign_push_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple phone number</p>
 							</div>
 							@endif
@@ -644,7 +590,7 @@
 							@if($result['campaign_media_inbox'] == "Yes")
 							<div class="form-group">
 								<label>Inbox</label>
-								<textarea class="form-control" rows="3" name="campaign_inbox_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$phone_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_inbox_more_recipient">{{old('campaign_inbox_more_recipient',$result['campaign_inbox_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple phone number</p>
 							</div>
 							@endif
@@ -652,7 +598,7 @@
 							@if($result['campaign_media_whatsapp'] == "Yes")
 							<div class="form-group">
 								<label>WhatsApp</label>
-								<textarea class="form-control" rows="3" name="campaign_whatsapp_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$phone_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_whatsapp_more_recipient">{{old('campaign_whatsapp_more_recipient',$result['campaign_whatsapp_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple phone number</p>
 							</div>
 							@endif

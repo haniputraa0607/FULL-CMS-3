@@ -56,7 +56,7 @@ class NewsController extends Controller
 
             // get outlet
             $data['outlet']    = parent::getData(MyHelper::get('outlet/list'));
-            
+            $data['categories']    = parent::getData(MyHelper::get('news/category'));
             // get product
             $data['product']   = parent::getData(MyHelper::get('product/list'));
             
@@ -237,13 +237,14 @@ class NewsController extends Controller
                     'submenu_active' => 'news-list',
             ];
 
-            $news    = parent::getData(MyHelper::post('news/list', ['id_news' => $id_news]));
+            $news    = parent::getData(MyHelper::post('news/list', ['id_news' => $id_news,'admin'=>1]));
 			
             if (empty($news)) {
                 return back()->withErrors(['Data news not found.']);
             }
             else {
                 $data['news'] = $news;
+                $data['categories']    = parent::getData(MyHelper::get('news/category'));
             }
 
             // get outlet
