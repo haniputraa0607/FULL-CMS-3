@@ -118,4 +118,33 @@ class BrandController extends Controller
             return "fail";
         }
     }
+
+    public function inactiveImage(Request $request){
+        $data = [
+            'title'          => 'Inactive Brand Image',
+            'menu_active'    => 'brand',
+            'submenu_active' => 'inactive-brand-image',
+        ];
+
+        $post=$request->except('_token');
+        if($post){
+            if (isset($post['logo_brand']) && $post['logo_brand'] != null) {
+                $post['logo_brand'] = MyHelper::encodeImage($post['logo_brand']);
+            }
+
+            if (isset($post['image_brand']) && $post['image_brand'] != null) {
+                $post['image_brand'] = MyHelper::encodeImage($post['image_brand']);
+            }
+
+            $action = MyHelper::post('brand/inactive-image', $post);
+            if(($action['status']??false)=='success'){
+                return redirect('brand/inactive-image')->with('success',['Upload image success']);
+            }
+            return back()->withErrors($action['messages']??['Upload image fail']);
+        }else{
+            $data['inactive_logo_brand'] = MyHelper::get('setting/get/inactive_logo_brand')['result']['value']??null;
+            $data['inactive_image_brand'] = MyHelper::get('setting/get/inactive_image_brand')['result']['value']??null;
+            return view('brand::inactive-image', $data);
+        }
+    }
 }

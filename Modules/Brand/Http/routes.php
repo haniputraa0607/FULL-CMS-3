@@ -6,4 +6,5 @@ Route::group(['middleware' => 'web', 'prefix' => 'brand', 'namespace' => 'Module
     Route::get('show/{id}', 'BrandController@show');
     Route::post('store', 'BrandController@store');
     Route::any('delete', 'BrandController@destroy');
+    Route::any('inactive-image', 'BrandController@inactiveImage');
 });
