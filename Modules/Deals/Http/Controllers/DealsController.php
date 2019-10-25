@@ -386,7 +386,7 @@ class DealsController extends Controller
         // $data['product'] = parent::getData(MyHelper::get('product/list'));
 
         // DATA OUTLET
-        // $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+        $data['outlets'] = parent::getData(MyHelper::get('outlet/list'));
 
         $getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
