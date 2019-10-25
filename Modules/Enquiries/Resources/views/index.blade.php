@@ -447,7 +447,7 @@ $configs = session('configs');
 				@endif
 				@if(MyHelper::hasAccess([59], $configs))
 					<li>
-					<a href="#development" data-toggle="tab"> Businness Development </a>
+					<a href="#development" data-toggle="tab"> Business Development </a>
 					</li>
 				@endif
 				@if(MyHelper::hasAccess([59], $configs))

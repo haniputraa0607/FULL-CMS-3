@@ -104,7 +104,7 @@
                                                         <div class="input-group">
                                                             <select name="Android[0][rules]" class="form-control" placeholder="Rules For Different Verion" required>
                                                                 <option disabled selected value="">Rules For Different Version</option>
-                                                                <option value="1">Alowed</option>
+                                                                <option value="1">Allowed</option>
                                                                 <option value="0">Not Allowed</option>
                                                             </select>
                                                             <span class="input-group-addon">
