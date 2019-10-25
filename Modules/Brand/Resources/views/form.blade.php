@@ -44,7 +44,7 @@
 
                 image.onload = function() {
                     if (type == "logo_brand") {
-                        if (this.width != 500 || this.height !== 500 || $(".file").val().split('.').pop().toLowerCase() != 'png') {
+                        if ($(".file").val().split('.').pop().toLowerCase() != 'png') {
                             toastr.warning("Please check dimension of your photo.");
                             $("#removeLogo").trigger( "click" );
                         }
@@ -124,7 +124,7 @@
                             Logo
                             <span class="required" aria-required="true"> * </span>
                             <br>
-                            <span class="required" aria-required="true"> (500 * 500 & PNG Only) </span>
+                            <span class="required" aria-required="true"> (PNG Only) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran square digunakan utnuk menjadi logo brand" data-container="body"></i>
                         </label>
                         <div class="col-md-7">
