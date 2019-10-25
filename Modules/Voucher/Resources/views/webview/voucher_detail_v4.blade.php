@@ -191,8 +191,8 @@
 				<!-- Modal QR Code -->
 				@if(isset($voucher['redeemed_at']) && $voucher['redeemed_at'] != null || isset($voucher['used_at']) && $voucher['used_at'] == null)
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
-					@php $bulan = ['Janu', 'Febr', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
-					<div style="font-size: 13px; color: rgb(128,0,0);padding-bottom: 0px;" class="text-right ProductSans"></i> Berlaku sampai {{date('d', strtotime($voucher['voucher_expired_at']))}} {{$bulan[date('m', strtotime($voucher['voucher_expired_at']))-1]}} {{ date('Y', strtotime($voucher['voucher_expired_at'])) }} &nbsp; {{ date('H:i', strtotime($voucher['voucher_expired_at'])) }}</div>
+					@php $bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
+					<div style="font-size: 13px; color: rgb(128,0,0);padding-bottom: 0px;" class="text-right ProductSans"></i> Berlaku hingga {{date('d', strtotime($voucher['voucher_expired_at']))}} {{$bulan[date('m', strtotime($voucher['voucher_expired_at']))-1]}} {{ date('Y', strtotime($voucher['voucher_expired_at'])) }} &nbsp; {{ date('H:i', strtotime($voucher['voucher_expired_at'])) }}</div>
 				</div>
 
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
@@ -225,7 +225,7 @@
                     </div>
                 </a>
 
-                <div class="description-wrapper">
+                <div class="description-wrapper ProductSans">
                     <div class="subtitle2 text-center ProductSans">Pindai QR Code ini untuk validasi voucher</div>
 
                     <div class="deals-qr">
@@ -233,7 +233,7 @@
                     </div>
 
                     <center class="kode-text">Kode Voucher</center>
-                    <center class="voucher-code font-red ProductSans" style="color: rgba(32, 32, 32);">{{ strtoupper($voucher['deal_voucher']['voucher_code']) }}</center>
+                    <center class="voucher-code font-red ProductSans" style="color: rgba(32, 32, 32);">{{ $voucher['deal_voucher']['voucher_code'] }}</center>
                     <div class="line"></div>
 				</div>
 
@@ -261,7 +261,7 @@
 
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
 					@php $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', "Juli", 'Agustus', 'September', 'Oktober', 'November', 'Desember']; @endphp
-					<div style="margin-top: -15px; font-size: 13px;" class="fee text-right ProductSans"><i class="far fa-calendar"></i> Berlaku sampai {{date('d', strtotime($voucher['voucher_expired_at']))}} {{$bulan[date('m', strtotime($voucher['voucher_expired_at']))-1]}} {{ date('Y', strtotime($voucher['voucher_expired_at'])) }}</div>
+					<div style="margin-top: -15px; font-size: 13px;" class="fee text-right ProductSans"><i class="far fa-calendar"></i> Berlaku hingga {{date('d', strtotime($voucher['voucher_expired_at']))}} {{$bulan[date('m', strtotime($voucher['voucher_expired_at']))-1]}} {{ date('Y', strtotime($voucher['voucher_expired_at'])) }}</div>
 				</div>
 
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 clearfix ProductSans">

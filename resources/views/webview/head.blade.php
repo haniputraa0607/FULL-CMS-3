@@ -44,11 +44,20 @@
                 font-weight: 400;
                 src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
         }
+        @font-face {
+                font-family: "ProductSans-Medium";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Medium.ttf') }}');
+        }
         .Seravek{
             font-family: "Seravek";
         }
         .ProductSans{
             font-family: "ProductSans-Regular";
+        }
+        .ProductSans-Medium{
+            font-family: "ProductSans-Medium";
         }
         .ProductSans-Italic{
             font-family: "ProductSans-Italic";
