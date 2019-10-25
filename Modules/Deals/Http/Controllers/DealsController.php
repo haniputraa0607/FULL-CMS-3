@@ -332,6 +332,7 @@ class DealsController extends Controller
             }
         }
         // return MyHelper::post('deals/list', $post);
+        $post['admin']=1;
         $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
         $outlets = parent::getData(MyHelper::get('outlet/list'));
         $brands = parent::getData(MyHelper::get('brand/list'));
