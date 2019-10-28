@@ -182,7 +182,7 @@
 							</div>
 							<div class="col-md-9">
 								<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-									<input type="text" class="form-control form-filter input-sm date-picker" readonly name="birthday" placeholder="Birthday Date" required>
+									<input type="text" class="form-control form-filter input-sm date-picker" name="birthday" placeholder="Birthday Date" required>
 									<span class="input-group-btn">
 										<button class="btn btn-sm default" type="button">
 											<i class="fa fa-calendar"></i>

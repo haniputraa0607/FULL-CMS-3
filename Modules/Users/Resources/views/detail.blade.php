@@ -336,6 +336,16 @@
             return false;
         return true;
     }
+
+	$('[data-toggle=confirmation]').confirmation({ btnOkClass: 'btn btn-sm btn-success submit', btnCancelClass: 'btn btn-sm btn-danger'});
+
+	$(document).on('click', '.submit', function() {
+		if ($('#pinUser').val() == ''){
+			$('#pinUser').focus();
+		}else{
+			$('#formSuspend').submit();
+		}
+	})
 	</script>
 @endsection
 
@@ -1053,6 +1063,10 @@
 										<a data-toggle="tab" href="#tab_3-3">
 											<i class="fa fa-lock"></i> Change PIN </a>
 									</li>
+									<li>
+										<a data-toggle="tab" href="#tab_4-4">
+											<i class="fa fa-ban"></i> Suspend User </a>
+									</li>
 								</ul>
 							</div>
 							<div class="col-md-9">
@@ -1161,6 +1175,34 @@
 												<input type="password" class="form-control" name="password_new_confirmation" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)"/> </div>
 											<div class="margin-top-10">
 												<button class="btn green"> Save Changes </button>
+											</div>
+										</form>
+									</div>
+									<div id="tab_4-4" class="tab-pane">
+										<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" method="POST" id="formSuspend">
+										{{ csrf_field() }}
+											<div class="form-group">
+												<label class="control-label">Suspend</label>
+												<div class="mt-radio-inline">
+													<label class="mt-radio">
+														<input type="radio" name="is_suspended" id="optionsRadios3" value="1" @if($profile['is_suspended'] == '1') checked @endif > Yes
+														<span></span>
+													</label>
+													<label class="mt-radio">
+														<input type="radio" name="is_suspended" id="optionsRadios4" value="0" @if($profile['is_suspended'] == '0') checked @endif> No
+														<span></span>
+													</label>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="control-label col-md-12">Your PIN</label>
+												<div class="col-md-4">
+													<input type="password" id="pinUser" class="form-control" width="30%" name="password_suspend" placeholder="Enter Your current PIN" required style="width: 91.3%;" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
+												</div>
+												<div class="col-md-8"></div>
+											</div>
+											<div class="margin-top-10">
+												<a type="button" data-toggle="confirmation" data-original-title="Are you sure to change the suspend status of this user ?" data-placement="bottom" data-popout="true" class="btn green">Save Changes</a> 
 											</div>
 										</form>
 									</div>
