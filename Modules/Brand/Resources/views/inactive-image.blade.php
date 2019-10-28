@@ -18,24 +18,8 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
     $(document).ready(function() {
-        $('.summernote').summernote({
-            placeholder: 'Brand Description',
-            tabsize: 2,
-            toolbar: [
-                ['style', ['style']],
-                ['style', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['misc', ['fullscreen', 'codeview', 'help']]
-            ],
-            height: 120
-        });
         $(".file").change(function(e) {
             var type      = $(this).data('jenis');
-            var widthImg  = 0;
-            var heightImg = 0;
             var _URL = window.URL || window.webkitURL;
             var image, file;
 
@@ -89,50 +73,15 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase font-blue">New Brand</span>
+                <span class="caption-subject font-dark sbold uppercase font-blue">Inactive Brand Image</span>
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal" role="form" action="{{ url('brand/store') }}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" role="form" action="{{ url('brand/inactive-image') }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Name
-                            <span class="required" aria-required="true"> *
-                            </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Nama Brand" data-container="body"></i>
-                        </label>
-                        <div class="col-md-7">
-                            <div class="input-icon right">
-                                <input type="text" placeholder="Brand Name" class="form-control" name="name_brand" @if (isset($result['name_brand'])) value="{{ $result['name_brand'] }}" @else value="{{ old('name_brand') }}" @endif>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Brand Status
-                            <i class="fa fa-question-circle tooltips" data-original-title="Status brand. Active/inactive" data-container="body"></i>
-                        </label>
-                        <div class="col-md-7">
-                            <div class="input-icon right">
-                                <input type="checkbox" class="make-switch" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" name="brand_active" value="1" @if(old('brand_active',$result['brand_active']??'')) checked @endif>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Code
-                            <span class="required" aria-required="true"> *
-                            </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Kode Brand (Unique)" data-container="body"></i>
-                        </label>
-                        <div class="col-md-7">
-                            <div class="input-icon right">
-                                <input type="text" placeholder="Brand Code" class="form-control" name="code_brand" @if (isset($result['code_brand'])) value="{{ $result['code_brand'] }}" disabled @else value="{{ old('code_brand') }}" @endif>
-                            </div>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">
                             Logo
-                            <span class="required" aria-required="true"> * </span>
                             <br>
                             <span class="required" aria-required="true"> (PNG Only) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran square digunakan utnuk menjadi logo brand" data-container="body"></i>
@@ -140,8 +89,8 @@
                         <div class="col-md-7">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
-                                    @if(isset($result['logo_brand']) && $result['logo_brand'] != "")
-                                        <img src="{{$result['logo_brand']}}" id="preview_logo_brand" />
+                                    @if($inactive_logo_brand)
+                                        <img src="{{ env('S3_URL_API') }}/{{$inactive_logo_brand}}" id="preview_logo_brand" />
                                     @else
                                         <img id="preview_logo_brand" src="https://www.placehold.it/500x500/EFEFEF/AAAAAA"/>
                                     @endif
@@ -161,7 +110,6 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label">
                             Image
-                            <span class="required" aria-required="true"> * </span>
                             <br>
                             <span class="required" aria-required="true"> (750 * 375) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran square digunakan utnuk menjadi logo brand" data-container="body"></i>
@@ -169,8 +117,8 @@
                         <div class="col-md-7">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                    @if(isset($result['image_brand']) && $result['image_brand'] != "")
-                                        <img src="{{$result['image_brand']}}" id="preview_image_brand" />
+                                    @if($inactive_image_brand)
+                                        <img src="{{ env('S3_URL_API') }}/{{$inactive_image_brand}}" id="preview_image_brand" />
                                     @else
                                         <img id="preview_image_brand" src="https://www.placehold.it/750x375/EFEFEF/AAAAAA"/>
                                     @endif

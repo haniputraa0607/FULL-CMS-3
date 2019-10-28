@@ -334,6 +334,8 @@
 	$(".file-splash").change(function(e) {
 		var widthImg  = 1080;
 		var heightImg = 1920;
+		var widthImg2  = 540;
+		var heightImg2 = 960;
 
 		var _URL = window.URL || window.webkitURL;
 		var image, file;
@@ -342,7 +344,7 @@
 			image = new Image();
 
 			image.onload = function() {
-				if (this.width == widthImg && this.height == heightImg) {
+				if ((this.width == widthImg && this.height == heightImg)||(this.width == widthImg2 && this.height == heightImg2)) {
 					// image.src = _URL.createObjectURL(file);
 				}
 				else {
@@ -643,8 +645,7 @@
 						<form role="form" class="form-horizontal" action="{{url('setting/default_home')}}" method="POST" enctype="multipart/form-data">
 							<div class="form-body">
 								<div class="form-group col-md-12">
-									<label class="text-right col-md-3">Splash Screen
-										<br>
+									<label class="text-right col-md-4">Splash Screen Duration
 										<span class="required" aria-required="true"> * </span>
 									</label>
 									<div class="col-md-4">
@@ -652,9 +653,9 @@
 									</div>
 								</div>
 								<div class="form-group col-md-12">
-										<label class="control-label col-md-3">Splash Screen
+										<label class="control-label col-md-4">Splash Screen
 											<br>
-											<span class="required" aria-required="true"> (1080*1920) </span>
+											<span class="required" aria-required="true"> (1080*1920)/(540*960) </span>
 										</label><br>
 										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 											<div class="fileinput-new thumbnail">

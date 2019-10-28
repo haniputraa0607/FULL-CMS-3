@@ -150,6 +150,7 @@
             </div>
         </div>
         <div class="portlet-body form">
+
             <form action="{{url('/brand/reorder')}}" method="POST">
                 <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                     <thead>
@@ -193,6 +194,21 @@
                                             @if(MyHelper::hasAccess([25,27], $grantedFeature))
                                                 <a href="{{ url('brand/show') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                             @endif
+                                            <a class="btn btn-sm grey-cascade" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false"><i class="fa fa-link"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="{{ url('brand/outlet') }}/{{ $value['id_brand'] }}">
+                                                        <i class="icon-pointer"></i> Outlet </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ url('brand/product') }}/{{ $value['id_brand'] }}">
+                                                        <i class="icon-wallet"></i> Product </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ url('brand/deals') }}/{{ $value['id_brand'] }}">
+                                                        <i class="fa fa-gift"></i> Deals </a>
+                                                </li>
+                                            </ul>
                                         </td>
                                     @endif
                                 </tr>
@@ -206,6 +222,7 @@
                     <button class="btn green">Update Order</button>
                 </div>
             </form>
+
         </div>
     </div>
 

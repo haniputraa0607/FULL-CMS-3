@@ -150,7 +150,7 @@
 
 				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix">
 					@php $bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
-					<div style="margin-top: -15px; font-size: 13px;" class="fee text-right ProductSans"><i class="far fa-calendar"></i> Masa berlaku : <b>{{date('d', strtotime($deals['deals_start']))}} {{$bulan[date('m', strtotime($deals['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_start'])) }} - {{date('d', strtotime($deals['deals_end']))}} {{$bulan[date('m', strtotime($deals['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_end'])) }}</b></div>
+					<div style="margin-top: -15px; font-size: 13px;" class="fee text-right ProductSans"><i class="far fa-calendar"></i> &nbsp Masa berlaku : <b>{{date('d', strtotime($deals['deals_start']))}} {{$bulan[date('m', strtotime($deals['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_start'])) }} - {{date('d', strtotime($deals['deals_end']))}} {{$bulan[date('m', strtotime($deals['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_end'])) }}</b></div>
 				</div>
 
 				<hr style="margin-top: 0px; margin-bottom: 0px;">

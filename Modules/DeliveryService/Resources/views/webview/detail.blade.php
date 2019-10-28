@@ -175,7 +175,7 @@
         }
 
 		select {
-			font-family: inherit;
+			font-family: ProductSans;
 			background-color: transparent;
 			width: 100%;
 			padding: $select-padding 0;
@@ -192,43 +192,43 @@
 @stop
 
 @section('content')
-	<div class="deals-detail">
+	<div class="deals-detail" style="margin-bottom: 220px;">
 		<div class="col-md-4 col-md-offset-4">
-			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
-				<div style="font-size:12px" class="title">
+			<div style="background-color: rgb(255, 255, 255); color: rgb(84, 84, 84);" class="title-wrapper col-md-12 clearfix ProductSans">
+				<div style="font-size:12px" class="title ProductSans">
 					{!!$result['head']['description']!!}
 				</div>
 			</div>
 
 			<hr style="width:90%; margin-top: 0px; margin-bottom: 5px;">
 
-			<div style="background-color: rgb(255, 255, 255); justify-content:center;" class="title-wrapper col-md-12 clearfix ProductSans">
-				<div style="font-size:14px;padding-bottom: 0px;" class="title">
+			<div style="background-color: rgb(255, 255, 255); color: rgb(84, 84, 84); justify-content:center;" class="title-wrapper col-md-12 clearfix ProductSans">
+				<div style="font-size:16px;padding-bottom: 0px;" class="title">
 					{!!$result['content']['head_content']!!}
 				</div>
 			</div>
 
-			<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
+			<div style="background-color: rgb(255, 255, 255); color: rgb(84, 84, 84);" class="title-wrapper col-md-12 clearfix ProductSans">
 				<div style="font-size:12px" class="title">
 					{!!$result['content']['description_content']!!}
 				</div>
 			</div>
 
-			<div style="position: fixed;width: 100%;bottom: 20px;">
-				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
-					<div style="font-size:10px;padding-bottom: 5px;" class="title">
+			<div style="position: fixed;width: 100%;bottom: 20px; background-color: rgb(255, 255, 255);">
+				<div style="background-color: rgb(255, 255, 255); color: rgb(84, 84, 84);" class="title-wrapper col-md-12 clearfix ProductSans">
+					<div style="font-size:12px;padding-bottom: 5px;" class="title">
 						Area Order
 					</div>
 				</div>
 
 				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
-					<select class="browser-default" style="font-size:12px; width:100%; color: rgb(128, 0, 0);">
+					<select class="browser-default ProductSans" style="font-size:14px; width:100%; color: rgb(74, 0, 0);">
 						@foreach ($result['area'] as $item)
 						<option value="{{$item['phone_number']}}">{{$item['area_name']}}</option>
 						@endforeach
 					</select>
 				</div>
-				<div class="col-md-12">
+				<div style="background-color: rgb(255, 255, 255);" class="col-md-12">
 					<hr style="margin-top: 2px;">
 				</div>
 
