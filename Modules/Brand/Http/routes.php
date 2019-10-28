@@ -20,6 +20,8 @@ Route::group(['middleware' => 'web', 'prefix' => 'brand', 'namespace' => 'Module
     Route::any('delete', 'BrandController@destroy');
     Route::any('inactive-image', 'BrandController@inactiveImage');
 
+    Route::get('switch_status', 'BrandController@switchStatus');
+
     Route::group(['prefix' => 'delete'], function () {
         Route::post('outlet', 'BrandController@destroy');
         Route::post('product', 'BrandController@destroy');

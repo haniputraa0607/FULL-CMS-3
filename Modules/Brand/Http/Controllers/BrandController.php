@@ -228,4 +228,14 @@ class BrandController extends Controller
             return $action;
         }
     }
+    /**
+     * Switch status active/inactive of brand
+     * @param  {'id_brand':'1','status':'1'}
+     * @return {'status':'error/success','messages':['error']}
+     */
+    public function switchStatus(Request $request){
+        $post=$request->except('_token');
+        $action = MyHelper::post('brand/switch_status',$post);
+        return $action;
+    }
 }
