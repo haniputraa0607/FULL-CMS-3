@@ -18,7 +18,18 @@ class DealsController extends Controller
         date_default_timezone_set('Asia/Jakarta');
     }
 
+    public function indexAjax(Request $request) {
+        $post = $request->except('_token');
 
+        $deals = MyHelper::post('deals/list?log_save=0', $post);
+		if (isset($deals['status']) && $deals['status'] == "success") {
+            $data = $deals['result']['data'];
+        }
+        else {
+            $data = [];
+        }
+		return response()->json($data);
+    }
 
     /* IDENTIFIER */
     function identifier($type="") {
