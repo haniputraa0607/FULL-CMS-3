@@ -308,9 +308,23 @@
 			<hr style="margin: 0;">
 			<div class="row ProductSans">
 				<div class="col-8">
-					@foreach ($data[0]['outlet_schedules'] as $key => $val)
-					@if ($val['day'] == $hari_ini)
-						<div id="today" class="pull-left row space-sch">
+				    @if (!empty($data[0]['outlet_schedules']))
+						@foreach ($data[0]['outlet_schedules'] as $key => $val)
+						@if ($val['day'] == $hari_ini)
+							<div id="today" class="pull-left row space-sch">
+								<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-3 min-left">@if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif</div>
+								<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-9">
+									@if($val['is_closed'] == '1')
+										TUTUP
+									@else
+										{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
+									@endif
+								</div>
+							</div>
+							@endif
+						@endforeach
+						@foreach ($data[0]['outlet_schedules'] as $key => $val)
+						<div style="display: none;" class="pull-left anotherDay row space-sch">
 							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-3 min-left">@if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif</div>
 							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-9">
 								@if($val['is_closed'] == '1')
@@ -319,24 +333,14 @@
 									{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
 								@endif
 							</div>
-						</div>
-						@endif
-					@endforeach
-					@foreach ($data[0]['outlet_schedules'] as $key => $val)
-					<div style="display: none;" class="pull-left anotherDay row space-sch">
-						<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-3 min-left">@if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif</div>
-						<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-9">
-							@if($val['is_closed'] == '1')
-								TUTUP
-							@else
-								{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
+							@if ($val['day'] == "Minggu")
 							@endif
 						</div>
-						@if ($val['day'] == "Minggu")
-						@endif
-					</div>
-					@endforeach
-					<i style="color: rgb(74, 0, 0);" class="min-left icon fa fa-angle-down"></i>
+						@endforeach
+						<i style="color: rgb(74, 0, 0);" class="min-left icon fa fa-angle-down"></i>
+					@else
+						<div class="ProductSans space-text" style="color: rgb(0, 0, 0); font-size: 12.7px; padding-bottom: 0;">Belum Tersedia</div>
+					@endif
 				</div>
 			</div>
 	   	</div>
