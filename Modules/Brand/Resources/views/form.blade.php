@@ -108,6 +108,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Brand Status
+                            <i class="fa fa-question-circle tooltips" data-original-title="Status brand. Active/inactive" data-container="body"></i>
+                        </label>
+                        <div class="col-md-7">
+                            <div class="input-icon right">
+                                <input type="checkbox" class="make-switch" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" name="brand_active" value="1" @if(old('brand_active',$result['brand_active']??'')) checked @endif>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Code
                             <span class="required" aria-required="true"> *
                             </span>

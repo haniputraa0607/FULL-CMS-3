@@ -56,6 +56,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $post = $request->except(['_token']);
+        $post['brand_active'] = $post['brand_active']??0;
 
         $data = [
             'title'          => 'New Brand',
@@ -74,7 +75,7 @@ class BrandController extends Controller
         $action = MyHelper::post('brand/store', $post);
 
         if (isset($action['status']) && $action['status'] == 'success') {
-            return redirect('brand/show/' . $action['result']['id_brand']);
+            return redirect('brand/show/' . $action['result']['id_brand'])->with('success',['Update brand success']);
         } else {
             return redirect('brand/create')->withInput()->withErrors($action['messages']);
         }
@@ -180,6 +181,16 @@ class BrandController extends Controller
         }
     }
 
+    public function reOrder(Request $request){
+        $post=$request->except('_token');
+        $update = MyHelper::post('brand/reorder', $post);
+        if(($update['status']??false)=='success'){
+            return redirect('brand')->with('success',['Update brand order success']);
+        }else{
+            return back()->withErrors($delete['messages']??['Something went wrong']);
+        }
+    }
+  
     public function inactiveImage(Request $request){
         $data = [
             'title'          => 'Inactive Brand Image',
