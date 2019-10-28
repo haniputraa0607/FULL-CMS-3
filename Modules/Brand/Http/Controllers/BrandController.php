@@ -200,10 +200,6 @@ class BrandController extends Controller
 
         $post=$request->except('_token');
         if($post){
-            if (isset($post['logo_brand']) && $post['logo_brand'] != null) {
-                $post['logo_brand'] = MyHelper::encodeImage($post['logo_brand']);
-            }
-
             if (isset($post['image_brand']) && $post['image_brand'] != null) {
                 $post['image_brand'] = MyHelper::encodeImage($post['image_brand']);
             }
@@ -214,7 +210,6 @@ class BrandController extends Controller
             }
             return back()->withErrors($action['messages']??['Upload image fail']);
         }else{
-            $data['inactive_logo_brand'] = MyHelper::get('setting/get/inactive_logo_brand')['result']['value']??null;
             $data['inactive_image_brand'] = MyHelper::get('setting/get/inactive_image_brand')['result']['value']??null;
             return view('brand::inactive-image', $data);
         }

@@ -81,34 +81,6 @@
                 <div class="form-body">
                     <div class="form-group">
                         <label class="col-md-3 control-label">
-                            Logo
-                            <br>
-                            <span class="required" aria-required="true"> (PNG Only) </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran square digunakan utnuk menjadi logo brand" data-container="body"></i>
-                        </label>
-                        <div class="col-md-7">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
-                                    @if($inactive_logo_brand)
-                                        <img src="{{ env('S3_URL_API') }}/{{$inactive_logo_brand}}" id="preview_logo_brand" />
-                                    @else
-                                        <img id="preview_logo_brand" src="https://www.placehold.it/500x500/EFEFEF/AAAAAA"/>
-                                    @endif
-                                </div>
-
-                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-                                <div>
-                                    <span class="btn default btn-file">
-                                        <span class="fileinput-new"> Select image </span>
-                                        <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/png" name="logo_brand" class="file" data-jenis="logo_brand"> </span>
-                                    <a href="javascript:;" id="removeLogo" class="btn red default fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">
                             Image
                             <br>
                             <span class="required" aria-required="true"> (750 * 375) </span>
