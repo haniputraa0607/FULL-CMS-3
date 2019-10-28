@@ -17,9 +17,12 @@ Route::group(['middleware' => 'web', 'prefix' => 'brand', 'namespace' => 'Module
 
     Route::post('store', 'BrandController@store');
     Route::any('delete', 'BrandController@destroy');
+    Route::any('inactive-image', 'BrandController@inactiveImage');
+
     Route::group(['prefix' => 'delete'], function () {
         Route::post('outlet', 'BrandController@destroy');
         Route::post('product', 'BrandController@destroy');
         Route::post('deals', 'BrandController@destroy');
     });
+
 });

@@ -286,6 +286,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([157], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'inactive-brand-image') ? 'active open' : ''}}">
+						<a href="{{url('brand/inactive-image')}}" class="nav-link ">
+							<span class="title">Inactive Brand Image</span>
+						</a>
+					</li>
+					@endif
 				</ul>
 			</li>
 			@endif
