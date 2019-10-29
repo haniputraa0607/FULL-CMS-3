@@ -120,13 +120,13 @@
                 font-family: "ProductSans-Medium";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Medium.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Medium.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-Regular";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/ProductSans-Regular.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
         }
 		.ProductSans{
             font-family: "ProductSans-Regular";
@@ -254,7 +254,7 @@
 
 	<div class="kotak1" style="padding-top: 0px;">
   		<div class="container">
-  		    <div class="ProductSans space-text" style="color: rgb(128, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Alamat</div>
+  		    <div class="ProductSans space-text" style="color: rgb(74, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Alamat</div>
 			<hr style="margin: 0;">
 			<div class="ProductSans space-text" style="color: rgb(0, 0, 0); font-size: 12.7px; padding-bottom: 0;">{{$data[0]['outlet_address']}}</div>
 	   	</div>
@@ -262,15 +262,15 @@
 
 	<div class="kotak1">
   		<div class="container">
-  		    <div class="ProductSans space-text" style="color: rgb(128, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Nomor Telepon</div>
+  		    <div class="ProductSans space-text" style="color: rgb(74, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Nomor Telepon</div>
 			<hr style="margin: 0;">
 			<div class="ProductSans space-text" style="color: rgb(0, 0, 0); font-size: 12.7px; padding-bottom: 0;">{{$data[0]['outlet_phone']}}</div>
 	   	</div>
   	</div>
 
-    <div class="kotak1">
+    <div class="kotak1" @if($data[0]['big_order'] == 0) style='margin-bottom: 220px;' @endif>
   		<div class="container">
-  		    <div class="ProductSans space-text" style="color: rgb(128, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Jam Operasional</div>
+  		    <div class="ProductSans space-text" style="color: rgb(74, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Jam Operasional</div>
   			@php
   				$hari = date ("D");
 
@@ -306,46 +306,48 @@
 
 			@endphp
 			<hr style="margin: 0;">
-			<div class="row">
+			<div class="row ProductSans">
 				<div class="col-8">
-					@foreach ($data[0]['outlet_schedules'] as $key => $val)
-					@if ($val['day'] == $hari_ini)
-						<div id="today" class="row space-sch">
-							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-4 min-left "> @if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif </div>
-							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-8">
+				    @if (!empty($data[0]['outlet_schedules']))
+						@foreach ($data[0]['outlet_schedules'] as $key => $val)
+						@if ($val['day'] == $hari_ini)
+							<div id="today" class="pull-left row space-sch">
+								<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-3 min-left">@if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif</div>
+								<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-9">
+									@if($val['is_closed'] == '1')
+										TUTUP
+									@else
+										{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
+									@endif
+								</div>
+							</div>
+							@endif
+						@endforeach
+						@foreach ($data[0]['outlet_schedules'] as $key => $val)
+						<div style="display: none;" class="pull-left anotherDay row space-sch">
+							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-3 min-left">@if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif</div>
+							<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-9">
 								@if($val['is_closed'] == '1')
 									TUTUP
 								@else
 									{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
 								@endif
 							</div>
-						</div>
-						@endif
-					@endforeach
-					@foreach ($data[0]['outlet_schedules'] as $key => $val)
-					<div style="display: none;" class="anotherDay row space-sch">
-						<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-4 min-left "> @if ($val['day'] == $hari_ini) Today @else {{ $val['day'] }} @endif </div>
-						<div style="@if ($val['day'] == $hari_ini) color: rgb(151, 151, 151); @else color: rgb(0, 0, 0); @endif font-size: 12.7px; padding-bottom: 0;" class="col-8">
-							@if($val['is_closed'] == '1')
-								TUTUP
-							@else
-								{{date('H.i', strtotime($val['open']))}} - {{date('H.i', strtotime($val['close']))}}
+							@if ($val['day'] == "Minggu")
 							@endif
 						</div>
-						@if ($val['day'] == "Minggu")
-						@endif
-					</div>
-					@endforeach
-				</div>
-				<div class="col-4">
-					<i class="icon fa fa-angle-down"></i>
+						@endforeach
+						<i style="color: rgb(74, 0, 0);" class="min-left icon fa fa-angle-down"></i>
+					@else
+						<div class="ProductSans space-text" style="color: rgb(0, 0, 0); font-size: 12.7px; padding-bottom: 0;">Belum Tersedia</div>
+					@endif
 				</div>
 			</div>
 	   	</div>
   	</div>
 
 	@if($data[0]['big_order'] == 1)
-	<div class="kotak1" style='margin-bottom: 180px'>
+	<div class="kotak1" style='margin-bottom: 220px'>
   		<div class="container">
   		    <div class="ProductSans text-center space-text" style="color: rgb(0, 0, 0); font-size: 15px; padding-bottom: 5px;">Big Order Delivery Service</div>
 		  <div class="ProductSans space-text" style="color: rgb(102, 102, 102); font-size: 12.7px; padding-bottom: 0;">Khusus pemesanan diatas 50 pax, silahkan menghubungi <a style="color: rgb(128, 0, 0); text-decoration: underline;" href="#delivery_service">Call Center</a> kami untuk mendapatkan penawaran special</div>
@@ -362,11 +364,11 @@
 	$(document).ready(function() {
     	$(".icon").click(function() {
     		if($("#today").is(':visible')){
-    			this.className = 'fa fa-angle-down open';
+    			this.className = 'min-left fa fa-angle-down open';
     			$("#today").hide()
     			$(".anotherDay").show(500)
     		} else{
-    			this.className = 'fa fa-angle-down';
+    			this.className = 'min-left fa fa-angle-down';
     			$("#today").show()
     			$(".anotherDay").hide(500)
     		}

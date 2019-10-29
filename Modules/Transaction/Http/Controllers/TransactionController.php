@@ -164,6 +164,13 @@ class TransactionController extends Controller
             unset($custom[count($custom) - 1]);
         }
 
+        if(stristr($request->url(), 'deals')||stristr($request->url(), 'voucher')){
+            $data['deals'] = true;
+            $custom[] = '%outlet_name%';
+            $custom[] = '%outlet_code%';
+            $data['type'] = '';
+        }
+        
         $data['custom'] = $custom;
 
         return view('users::response', $data);

@@ -550,6 +550,11 @@ class UsersController extends Controller
 			$post['phone'] = $phone;
 			$update = MyHelper::post('users/update/permission', $post);
 			return parent::redirect($update, 'Account Permission has been changed.');
+		}
+		if (isset($post['is_suspended'])) {
+			$post['phone'] = $phone;
+			$update = MyHelper::post('users/update/suspend', $post);
+			return parent::redirect($update, 'Suspend Status has been changed.');
         }
 		
 		if(empty(Session::get('secure'))){
