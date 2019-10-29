@@ -253,7 +253,8 @@ $configs = session('configs');
 
 	function fetchDetail(det, type, idref=null){
 		let token  = "{{ csrf_token() }}";
-		if(det == 'Product Detail'){
+
+		if(det == 'Product'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('product/ajax') }}",
@@ -276,7 +277,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
-		else if(det == 'Outlet Detail' || det == 'Order'){
+		else if(det == 'Outlet' || det == 'Order'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('outlet/ajax') }}",
@@ -299,30 +300,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
-		else if(det == 'Deals Detail'){
-			$.ajax({
-				type : "POST",
-				url : "{{ url('deals/ajax') }}",
-				data: {_token: token, deals_type : "Deals"},
-				success : function(result) {
-					document.getElementById('atd_'+type).style.display = 'block';
-					var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
-					for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-					operator_value.options[operator_value.options.length] = new Option("", "");
-					for(x=0;x < result.length; x++){
-						if(idref == result[x]['id_deals']){
-							operator_value.options[operator_value.options.length] = new Option(result[x]['deals_title'], result[x]['id_deals'], false, true);
-						}else{
-							operator_value.options[operator_value.options.length] = new Option(result[x]['deals_title'], result[x]['id_deals']);
-						}
-					}
-				}
-			});
-			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
-		}
-
-		else if(det == 'News Detail'){
+		else if(det == 'News'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('news/ajax') }}",
@@ -353,7 +331,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
-		else if(det == 'Inbox Detail'){
+		else if(det == 'Inbox'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -361,7 +339,7 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
-		else if(det == 'Voucher Detail'){
+		else if(det == 'Voucher'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -369,56 +347,10 @@ $configs = session('configs');
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
-		else if(det == 'Contact Us' || det == 'History Transaction'){
+		else if(det == 'Contact Us' || det == 'Transaction'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
-		}
-
-		else if(det == 'History Transaction Detail'){
-			$.ajax({
-				type : "GET",
-				url : "{{ url('transaction/ajax/trx') }}",
-				data : "_token="+token,
-				success : function(result) {
-					document.getElementById('atd_'+type).style.display = 'block';
-					var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
-					for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-					operator_value.options[operator_value.options.length] = new Option("", "");
-					for(x=0;x < result.length; x++){
-						if(idref == result[x]['id_news']){
-							operator_value.options[operator_value.options.length] = new Option(result[x]['news_title'], result[x]['id_news'], false, true);
-						}else{
-							operator_value.options[operator_value.options.length] = new Option(result[x]['news_title'], result[x]['id_news']);
-						}
-					}
-				}
-			});
-			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
-		}
-
-		else if(det == 'History Point Detail'){
-			$.ajax({
-				type : "GET",
-				url : "{{ url('transaction/ajax/point') }}",
-				data : "_token="+token,
-				success : function(result) {
-					document.getElementById('atd_'+type).style.display = 'block';
-					var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
-					for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-					operator_value.options[operator_value.options.length] = new Option("", "");
-					for(x=0;x < result.length; x++){
-						if(idref == result[x]['id']){
-							operator_value.options[operator_value.options.length] = new Option(result[x]['amount']+" : "+result[x]['outlet'], result[x]['id'], false, true);
-						}else{
-							operator_value.options[operator_value.options.length] = new Option(result[x]['amount']+" : "+result[x]['outlet'], result[x]['id']);
-						}
-					}
-				}
-			});
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
@@ -901,21 +833,28 @@ $configs = session('configs');
 							</div>
 							<div class="col-md-9">
 								<select name="autocrm_push_clickto" id="autocrm_push_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'push')">
-									@foreach ($listPushNotif['flexible'] as $item)
-										<option value="{{$item}}" @if($data['autocrm_push_clickto'] == $item) selected @endif>{{$item}}</option>
-									@endforeach
-									@if(isset($type) && $type == 'voucher'
-									)@foreach ($listPushNotif['voucher'] as $item)
-										<option value="{{$item}}" @if($data['autocrm_push_clickto'] == $item) selected @endif>{{$item}}</option>
-									@endforeach
+									<option value="Home" @if($data['autocrm_push_clickto'] == 'Home') selected @endif>Home</option>
+									<option value="News" @if($data['autocrm_push_clickto'] == 'News') selected @endif>News</option>
+									<option value="Order" @if($data['autocrm_push_clickto'] == 'Order') selected @endif>Order</option>
+									<option value="History On Going" @if($data['autocrm_push_clickto'] == 'History On Going') selected @endif>History On Going</option>
+									<option value="History Transaksi" @if($data['autocrm_push_clickto'] == 'History Transaksi') selected @endif>History Transaksi</option>
+									<option value="History Point" @if($data['autocrm_push_clickto'] == 'History Point') selected @endif>History Point</option>
+									<option value="Outlet" @if($data['autocrm_push_clickto'] == 'Outlet') selected @endif>Outlet</option>
+									<option value="Profil" @if($data['autocrm_push_clickto'] == 'Profil') selected @endif>Profil</option>
+									<option value="Inbox" @if($data['autocrm_push_clickto'] == 'Inbox') selected @endif>Inbox</option>
+									<option value="About" @if($data['autocrm_push_clickto'] == 'About') selected @endif>About</option>
+									<option value="FAQ" @if($data['autocrm_push_clickto'] == 'FAQ') selected @endif>FAQ</option>
+									<option value="TOS" @if($data['autocrm_push_clickto'] == 'TOS') selected @endif>TOS</option>
+									<option value="Contact Us" @if($data['autocrm_push_clickto'] == 'Contact Us') selected @endif>Contact Us</option>
+									<option value="Link" @if($data['autocrm_push_clickto'] == 'Link') selected @endif>Link</option>
+									<option value="Logout" @if($data['autocrm_push_clickto'] == 'Logout') selected @endif>Logout</option>
+									@if(isset($deals))
+									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
+									<option value="Voucher Detail" @if($data['autocrm_push_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
 									@endif
 									@if(isset($type) && $type == 'trx')
-									@foreach ($listPushNotif['history_trx'] as $item)
-										<option value="{{$item}}" @if($data['autocrm_push_clickto'] == $item) selected @endif>{{$item}}</option>
-									@endforeach
-									@foreach ($listPushNotif['history_point'] as $item)
-										<option value="{{$item}}" @if($data['autocrm_push_clickto'] == $item) selected @endif>{{$item}}</option>
-									@endforeach
+									<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
+									<option value="Transaction Detail" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
 									@endif
 								</select>
 							</div>
@@ -999,17 +938,29 @@ $configs = session('configs');
 							<label for="autocrm_inbox_clickto" class="control-label col-md-3">Click Action</label>
 							<div class="col-md-9">
 								<select name="autocrm_inbox_clickto" id="autocrm_inbox_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
-									@foreach ($listPushNotif['flexible'] as $item)
-										<option value="{{$item}}" @if($data['autocrm_push_clickto'] == $item) selected @endif>{{$item}}</option>
-									@endforeach
+									<option value="Home" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Home") selected @endif>Home</option>
+									{{-- <option value="Content" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
+									<option value="News" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "News") selected @endif>News</option>
+									<option value="Order" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Order") selected @endif>Order</option>
+									<option value="History On Going" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "History On Going") selected @endif>History On Going</option>
+									<option value="History Transaksi" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
+									<option value="History Point" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "History Point") selected @endif>History Point</option>
+									<option value="Outlet" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
+									<option value="Profil" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Profil") selected @endif>Profil</option>
+									<option value="Inbox" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
+									<option value="About" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "About") selected @endif>About</option>
+									<option value="FAQ" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
+									<option value="TOS" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "TOS") selected @endif>TOS</option>
+									<option value="Contact Us" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
+									<option value="Link" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Link") selected @endif>Link</option>
+									<option value="Logout" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Logout") selected @endif>Logout</option>
 									@if(isset($deals))
 									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
 									<option value="Voucher Detail" @if($data['autocrm_push_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
 									@endif
 									@if(isset($type) && $type == 'trx')
-									@foreach ($listPushNotif['history_trx'] as $item)
-										<option value="{{$item}}" @if($data['autocrm_push_clickto'] == $item) selected @endif>{{$item}}</option>
-									@endforeach
+									<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
+									<option value="Transaction Detail" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
 									@endif
 								</select>
 							</div>
