@@ -5,6 +5,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::get('/setting/rule', 'TransactionController@ruleTransaction');
     Route::post('/setting/rule/update', 'TransactionController@ruleTransactionUpdate');
     Route::get('/internalcourier', 'TransactionController@internalCourier');
+
+    Route::get('ajax/trx', ['uses' => 'TransactionController@indexAjaxTrx']);
+    Route::get('ajax/point', ['uses' => 'TransactionController@indexAjaxPoint']);
     
     Route::post('/manual-payment-save', ['middleware' => 'config_control:17', 'uses' => 'TransactionController@manualPaymentSave']);
     Route::post('/manual-payment-update/{id}', ['middleware' => 'config_control:17', 'uses' => 'TransactionController@manualPaymentUpdate']);

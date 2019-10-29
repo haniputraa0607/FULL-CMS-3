@@ -170,11 +170,41 @@ class TransactionController extends Controller
             $custom[] = '%outlet_code%';
             $data['type'] = '';
         }
-        
-        $data['custom'] = $custom;
 
+        $getListPushNotif = MyHelper::get('autocrm/listPushNotif');
+        $data['listPushNotif']      = $getListPushNotif['result'];
+
+        $data['custom']             = $custom;
+        
         return view('users::response', $data);
-	}
+    }
+    
+    public function indexAjaxTrx(Request $request) {
+        $post = $request->except('_token');
+
+        $historyList = MyHelper::post('transaction/history-trx/list', $post);
+		if (isset($historyList['status']) && $historyList['status'] == "success") {
+            $data = $historyList['result'];
+        }
+        else {
+            $data = [];
+        }
+		return response()->json($data);
+    }
+
+    public function indexAjaxPoint(Request $request) {
+        $post = $request->except('_token');
+
+        $historyList = MyHelper::post('transaction/history-balance/list', $post);
+        
+		if (isset($historyList['status']) && $historyList['status'] == "success") {
+            $data = $historyList['data'];
+        }
+        else {
+            $data = [];
+        }
+		return response()->json($data);
+    }
 	
     public function ruleTransaction() {
         $data = [
