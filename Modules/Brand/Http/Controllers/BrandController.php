@@ -200,10 +200,6 @@ class BrandController extends Controller
 
         $post=$request->except('_token');
         if($post){
-            if (isset($post['logo_brand']) && $post['logo_brand'] != null) {
-                $post['logo_brand'] = MyHelper::encodeImage($post['logo_brand']);
-            }
-
             if (isset($post['image_brand']) && $post['image_brand'] != null) {
                 $post['image_brand'] = MyHelper::encodeImage($post['image_brand']);
             }
@@ -214,7 +210,6 @@ class BrandController extends Controller
             }
             return back()->withErrors($action['messages']??['Upload image fail']);
         }else{
-            $data['inactive_logo_brand'] = MyHelper::get('setting/get/inactive_logo_brand')['result']['value']??null;
             $data['inactive_image_brand'] = MyHelper::get('setting/get/inactive_image_brand')['result']['value']??null;
             return view('brand::inactive-image', $data);
         }
@@ -232,5 +227,15 @@ class BrandController extends Controller
             $action = MyHelper::post('brand/product/list', ['id_brand' => $post['id_brand']]);
             return $action;
         }
+    }
+    /**
+     * Switch status active/inactive of brand
+     * @param  {'id_brand':'1','status':'1'}
+     * @return {'status':'error/success','messages':['error']}
+     */
+    public function switchStatus(Request $request){
+        $post=$request->except('_token');
+        $action = MyHelper::post('brand/switch_status',$post);
+        return $action;
     }
 }

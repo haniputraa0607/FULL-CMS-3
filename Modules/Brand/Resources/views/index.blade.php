@@ -110,11 +110,41 @@
                 }
             });
         });
+        var manual=1;
         $(document).ready(function(){
             $('.form').on( 'click', function () {
                 $('#data_start').val(table.page.info().start);
             });
             $('#sortable').sortable();
+            $('#sortable').on('switchChange.bootstrapSwitch','.brand_status',function(){
+                if(!manual){
+                    manual=1;
+                    return false;
+                }
+                var switcher=$(this);
+                var newState=switcher.bootstrapSwitch('state');
+                $.ajax({
+                    method:'GET',
+                    url:"{{url('brand/switch_status')}}",
+                    data:{
+                        id_brand:switcher.data('id'),
+                        brand_active:newState
+                    },
+                    success:function(data){
+                        if(data.status == 'success'){
+                            toastr.info("Success update brand status");
+                        }else{
+                            manual=0;
+                            toastr.warning("Fail update brand status");
+                            switcher.bootstrapSwitch('state',!newState);
+                        }
+                    }
+                }).fail(function(data){
+                    manual=0;
+                    toastr.warning("Fail update brand status");
+                    switcher.bootstrapSwitch('state',!newState);
+                });
+            });
         });
     </script>
 
@@ -185,30 +215,32 @@
                                     @else
                                         <td>Image Available</td>
                                     @endif
-                                    <td>{{$value['brand_active']?'Active':'Inactive'}}</td>
+                                    <td><input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-id="{{$value['id_brand']}}" data-off-text="Inactive" value="1" @if($value['brand_active']??'') checked @endif></td>
                                     @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                         <td style="width: 90px;">
-                                            @if(MyHelper::hasAccess([28], $grantedFeature))
-                                                <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_brand'] }}"><i class="fa fa-trash-o"></i></a>
-                                            @endif
-                                            @if(MyHelper::hasAccess([25,27], $grantedFeature))
-                                                <a href="{{ url('brand/show') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
-                                            @endif
-                                            <a class="btn btn-sm grey-cascade" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false"><i class="fa fa-link"></i></a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a href="{{ url('brand/outlet') }}/{{ $value['id_brand'] }}">
-                                                        <i class="icon-pointer"></i> Outlet </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ url('brand/product') }}/{{ $value['id_brand'] }}">
-                                                        <i class="icon-wallet"></i> Product </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ url('brand/deals') }}/{{ $value['id_brand'] }}">
-                                                        <i class="fa fa-gift"></i> Deals </a>
-                                                </li>
-                                            </ul>
+                                            <div class="btn-group btn-group-solid">
+                                                @if(MyHelper::hasAccess([28], $grantedFeature))
+                                                    <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_brand'] }}"><i class="fa fa-trash-o"></i></a>
+                                                @endif
+                                                @if(MyHelper::hasAccess([25,27], $grantedFeature))
+                                                    <a href="{{ url('brand/show') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                                @endif
+                                                <a class="btn btn-sm grey-cascade" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false"><i class="fa fa-link"></i></a>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>
+                                                        <a href="{{ url('brand/outlet') }}/{{ $value['id_brand'] }}">
+                                                            <i class="icon-pointer"></i> Outlet </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('brand/product') }}/{{ $value['id_brand'] }}">
+                                                            <i class="icon-wallet"></i> Product </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('brand/deals') }}/{{ $value['id_brand'] }}">
+                                                            <i class="fa fa-gift"></i> Deals </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     @endif
                                 </tr>
