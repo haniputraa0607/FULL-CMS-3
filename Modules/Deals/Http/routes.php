@@ -7,7 +7,6 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:25,26,
     Route::any('update', ['middleware' => ['feature_control:75'], 'uses' => 'DealsController@updateReq']);
     Route::any('delete', ['middleware' => 'feature_control:76', 'uses' => 'DealsController@deleteDeal']);
     Route::any('voucher/delete', 'DealsController@deleteVoucher');
-    Route::post('ajax', ['uses' => 'DealsController@indexAjax']);
 
     /* TRANSACTION */
     Route::any('transaction', 'DealsController@transaction');
