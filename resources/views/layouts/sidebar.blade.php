@@ -208,7 +208,7 @@
 			</ul>
 		</li>
 		@endif
-		
+
 		@if(MyHelper::hasAccess([19], $configs))
 			@if(MyHelper::hasAccess([78], $configs))
 			<li class="nav-item {{($menu_active == 'balance-reset') ? 'active' : ''}}">
@@ -483,6 +483,7 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([12, 13], $configs))
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-success')}}" class="nav-link ">
 							<span class="title">[Response] Transaction Success</span>
@@ -523,11 +524,13 @@
 							<span class="title">[Response] Cron Transaction</span>
 						</a>
 					</li>
+					@endif
 					<li class="nav-item {{($submenu_active == 'transaction-point-achievement') ? 'active' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-point-achievement')}}" class="nav-link nav-toggle">
 							<span class="title">[Response] Transaction Point Achievement</span>
 						</a>
 					</li>
+					@if(MyHelper::hasAccess([12, 13], $configs))
 					<li class="nav-item {{($submenu_active == 'transaction-failed-point-refund') ? 'active' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-failed-point-refund')}}" class="nav-link nav-toggle">
 							<span class="title">[Response] Transaction Failed Point Refund</span>
@@ -538,7 +541,7 @@
 							<span class="title">[Response] Rejected Order Point Refund</span>
 						</a>
 					</li>
-
+					@endif
 
 					<!-- <li class="nav-item {{($submenu_active == 'transaction-autoresponse-topup-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/topup-success')}}" class="nav-link ">
@@ -590,11 +593,11 @@
 				</a>
 				<ul class="sub-menu">
 					@if(MyHelper::hasAccess([58,59,60,62], $grantedFeature))
-					<!-- <li class="nav-item {{($submenu_active == 'transaction-rule') ? 'active open' : ''}}">
+					<li class="nav-item {{($submenu_active == 'transaction-rule') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/rule')}}" class="nav-link ">
 							<span class="title">Calculation Rule</span>
 						</a>
-					</li> -->
+					</li>
 					@endif
 					@if(MyHelper::hasAccess([13], $configs))
 						@if(MyHelper::hasAccess([14], $configs))
@@ -607,12 +610,14 @@
 							@endif
 						@endif
 					@endif
-					@if(MyHelper::hasAccess([58], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'transaction-processing') ? 'active open' : ''}}">
-						<a href="{{url('setting/processing_time')}}" class="nav-link ">
-							<span class="title">Processing Time</span>
-						</a>
-					</li>
+					@if(MyHelper::hasAccess([12], $configs))
+						@if(MyHelper::hasAccess([58], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'transaction-processing') ? 'active open' : ''}}">
+							<a href="{{url('setting/processing_time')}}" class="nav-link ">
+								<span class="title">Processing Time</span>
+							</a>
+						</li>
+						@endif
 					@endif
 					@if(MyHelper::hasAccess([58,59,60,62], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'transaction-setting') ? 'active open' : ''}}">
@@ -830,19 +835,19 @@
 					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-deals-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/claim-deals-success')}}" class="nav-link ">
 							<i class="fa fa-mail-forward"></i>
-							<span class="title">Auto Response Claim Deals Success</span>
+							<span class="title">[Response] Claim Deals Success</span>
 						</a>
 					</li>
 					<li class="nav-item {{($submenu_active == 'deals-autoresponse-redeem-deals-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/redeem-voucher-success')}}" class="nav-link ">
 							<i class="fa fa-mail-forward"></i>
-							<span class="title">Auto Response Redeems Deals</span>
+							<span class="title">[Response] Redeems Deals</span>
 						</a>
 					</li>
 					<li class="nav-item {{($submenu_active == 'deals-autoresponse-receive-hidden-deals') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/receive-hidden-deals')}}" class="nav-link ">
 							<i class="fa fa-mail-forward"></i>
-							<span class="title">Auto Response Receive Hidden Deals</span>
+							<span class="title">[Response] Receive Hidden Deals</span>
 						</a>
 					</li>
 				@endif
