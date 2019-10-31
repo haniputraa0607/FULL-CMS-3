@@ -210,10 +210,10 @@
                                     @else
                                         <td>Logo Available</td>
                                     @endif
-                                    @if (end($image) != 'jpg')
-                                        <td>No Image</td>
-                                    @else
+                                    @if (end($image) == 'jpg' || end($image) == 'png')
                                         <td>Image Available</td>
+                                    @else
+                                        <td>No Image</td>
                                     @endif
                                     <td><input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-id="{{$value['id_brand']}}" data-off-text="Inactive" value="1" @if($value['brand_active']??'') checked @endif></td>
                                     @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
