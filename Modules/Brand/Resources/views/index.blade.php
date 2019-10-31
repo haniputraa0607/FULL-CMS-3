@@ -139,15 +139,70 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
-                <thead>
-                    <tr>
-                        <th style="width:20%;"> Code </th>
-                        <th style="width:20%;"> Name </th>
-                        <th style="width:20%;"> Logo </th>
-                        <th style="width:20%;"> Image </th>
-                        @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
-                            <th style="width:20%;"> Action </th>
+            <form action="{{url('/brand/reorder')}}" method="POST">
+                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th> Code </th>
+                            <th> Name </th>
+                            <th> Logo </th>
+                            <th> Image </th>
+                            <th> Status </th>
+                            @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
+                                <th> Action </th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody id="sortable">
+                        @if (!empty($brand))
+                            @foreach($brand as $value)
+                            @php
+                                $logo = explode('.', $value['logo_brand']);
+                                $image = explode('.', $value['image_brand']);
+                            @endphp
+                                <tr>
+                                    <td>{{ $value['code_brand'] }} <input type="hidden" name="order[]" value="{{$value['id_brand']}}"></td>
+                                    <td>{{ $value['name_brand'] }}</td>
+                                    @if (end($image) == 'jpg' || end($image) == 'png')
+                                        <td>Logo Available</td>
+                                    @else
+                                        <td>No Logo</td>
+                                    @endif
+                                    @if (end($image) == 'jpg' || end($image) == 'png')
+                                        <td>Image Available</td>
+                                    @else
+                                        <td>No Image</td>
+                                    @endif
+                                    <td><input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-id="{{$value['id_brand']}}" data-off-text="Inactive" value="1" @if($value['brand_active']??'') checked @endif></td>
+                                    @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
+                                        <td style="width: 90px;">
+                                            <div class="btn-group btn-group-solid">
+                                                @if(MyHelper::hasAccess([28], $grantedFeature))
+                                                    <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_brand'] }}"><i class="fa fa-trash-o"></i></a>
+                                                @endif
+                                                @if(MyHelper::hasAccess([25,27], $grantedFeature))
+                                                    <a href="{{ url('brand/show') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                                @endif
+                                                <a class="btn btn-sm grey-cascade" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false"><i class="fa fa-link"></i></a>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>
+                                                        <a href="{{ url('brand/outlet') }}/{{ $value['id_brand'] }}">
+                                                            <i class="icon-pointer"></i> Outlet </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('brand/product') }}/{{ $value['id_brand'] }}">
+                                                            <i class="icon-wallet"></i> Product </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('brand/deals') }}/{{ $value['id_brand'] }}">
+                                                            <i class="fa fa-gift"></i> Deals </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    @endif
+                                </tr>
+                            @endforeach
                         @endif
                     </tr>
                 </thead>
