@@ -145,6 +145,35 @@
                     switcher.bootstrapSwitch('state',!newState);
                 });
             });
+            $('#sortable').on('switchChange.bootstrapSwitch','.brand_visibility',function(){
+                if(!manual){
+                    manual=1;
+                    return false;
+                }
+                var switcher=$(this);
+                var newState=switcher.bootstrapSwitch('state');
+                $.ajax({
+                    method:'GET',
+                    url:"{{url('brand/switch_visibility')}}",
+                    data:{
+                        id_brand:switcher.data('id'),
+                        brand_visibility:newState
+                    },
+                    success:function(data){
+                        if(data.status == 'success'){
+                            toastr.info("Success update brand visibility");
+                        }else{
+                            manual=0;
+                            toastr.warning("Fail update brand visibility");
+                            switcher.bootstrapSwitch('state',!newState);
+                        }
+                    }
+                }).fail(function(data){
+                    manual=0;
+                    toastr.warning("Fail update brand visibility");
+                    switcher.bootstrapSwitch('state',!newState);
+                });
+            });
         });
     </script>
 
@@ -189,6 +218,7 @@
                             <th> Name </th>
                             <th> Logo </th>
                             <th> Image </th>
+                            <th> Visibility </th>
                             <th> Status </th>
                             @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                 <th> Action </th>
@@ -215,6 +245,7 @@
                                     @else
                                         <td>Image Available</td>
                                     @endif
+                                    <td><input type="checkbox" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-id="{{$value['id_brand']}}" data-off-text="Hidden" value="1" @if($value['brand_visibility']??'') checked @endif></td>
                                     <td><input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-id="{{$value['id_brand']}}" data-off-text="Inactive" value="1" @if($value['brand_active']??'') checked @endif></td>
                                     @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                         <td style="width: 90px;">
