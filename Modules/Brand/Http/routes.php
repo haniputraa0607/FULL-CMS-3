@@ -21,6 +21,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'brand', 'namespace' => 'Module
     Route::any('inactive-image', 'BrandController@inactiveImage');
 
     Route::get('switch_status', 'BrandController@switchStatus');
+    Route::get('switch_visibility', 'BrandController@switchVisibility');
 
     Route::group(['prefix' => 'delete'], function () {
         Route::post('outlet', 'BrandController@destroy');

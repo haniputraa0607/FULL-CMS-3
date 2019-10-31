@@ -238,4 +238,9 @@ class BrandController extends Controller
         $action = MyHelper::post('brand/switch_status',$post);
         return $action;
     }
+    public function switchVisibility(Request $request){
+        $post=$request->except('_token');
+        $action = MyHelper::post('brand/switch_visibility',$post);
+        return $action;
+    }
 }
