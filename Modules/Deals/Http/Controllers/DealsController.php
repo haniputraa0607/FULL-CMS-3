@@ -332,6 +332,7 @@ class DealsController extends Controller
             }
         }
         // return MyHelper::post('deals/list', $post);
+        $post['admin']=1;
         $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
         $outlets = parent::getData(MyHelper::get('outlet/list'));
         $brands = parent::getData(MyHelper::get('brand/list'));
@@ -386,7 +387,7 @@ class DealsController extends Controller
         // $data['product'] = parent::getData(MyHelper::get('product/list'));
 
         // DATA OUTLET
-        // $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+        $data['outlets'] = parent::getData(MyHelper::get('outlet/list'));
 
         $getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];

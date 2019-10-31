@@ -2,6 +2,7 @@
 
 Route::group(['middleware' => 'web', 'prefix' => 'brand', 'namespace' => 'Modules\Brand\Http\Controllers'], function () {
     Route::get('/', 'BrandController@index');
+    Route::post('/reorder', 'BrandController@reOrder');
     Route::get('create', 'BrandController@create');
 
     Route::get('show/{id}', 'BrandController@show');
@@ -17,9 +18,14 @@ Route::group(['middleware' => 'web', 'prefix' => 'brand', 'namespace' => 'Module
 
     Route::post('store', 'BrandController@store');
     Route::any('delete', 'BrandController@destroy');
+    Route::any('inactive-image', 'BrandController@inactiveImage');
+
+    Route::get('switch_status', 'BrandController@switchStatus');
+
     Route::group(['prefix' => 'delete'], function () {
         Route::post('outlet', 'BrandController@destroy');
         Route::post('product', 'BrandController@destroy');
         Route::post('deals', 'BrandController@destroy');
     });
+
 });

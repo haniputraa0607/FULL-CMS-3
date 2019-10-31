@@ -56,6 +56,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $post = $request->except(['_token']);
+        $post['brand_active'] = $post['brand_active']??0;
 
         $data = [
             'title'          => 'New Brand',
@@ -74,7 +75,7 @@ class BrandController extends Controller
         $action = MyHelper::post('brand/store', $post);
 
         if (isset($action['status']) && $action['status'] == 'success') {
-            return redirect('brand/show/' . $action['result']['id_brand']);
+            return redirect('brand/show/' . $action['result']['id_brand'])->with('success',['Update brand success']);
         } else {
             return redirect('brand/create')->withInput()->withErrors($action['messages']);
         }
@@ -180,6 +181,40 @@ class BrandController extends Controller
         }
     }
 
+    public function reOrder(Request $request){
+        $post=$request->except('_token');
+        $update = MyHelper::post('brand/reorder', $post);
+        if(($update['status']??false)=='success'){
+            return redirect('brand')->with('success',['Update brand order success']);
+        }else{
+            return back()->withErrors($delete['messages']??['Something went wrong']);
+        }
+    }
+  
+    public function inactiveImage(Request $request){
+        $data = [
+            'title'          => 'Inactive Brand Image',
+            'menu_active'    => 'brand',
+            'submenu_active' => 'inactive-brand-image',
+        ];
+
+        $post=$request->except('_token');
+        if($post){
+            if (isset($post['image_brand']) && $post['image_brand'] != null) {
+                $post['image_brand'] = MyHelper::encodeImage($post['image_brand']);
+            }
+
+            $action = MyHelper::post('brand/inactive-image', $post);
+            if(($action['status']??false)=='success'){
+                return redirect('brand/inactive-image')->with('success',['Upload image success']);
+            }
+            return back()->withErrors($action['messages']??['Upload image fail']);
+        }else{
+            $data['inactive_image_brand'] = MyHelper::get('setting/get/inactive_image_brand')['result']['value']??null;
+            return view('brand::inactive-image', $data);
+        }
+    }
+  
     public function list(Request $request)
     {
         $post   = $request->all();
@@ -192,5 +227,15 @@ class BrandController extends Controller
             $action = MyHelper::post('brand/product/list', ['id_brand' => $post['id_brand']]);
             return $action;
         }
+    }
+    /**
+     * Switch status active/inactive of brand
+     * @param  {'id_brand':'1','status':'1'}
+     * @return {'status':'error/success','messages':['error']}
+     */
+    public function switchStatus(Request $request){
+        $post=$request->except('_token');
+        $action = MyHelper::post('brand/switch_status',$post);
+        return $action;
     }
 }

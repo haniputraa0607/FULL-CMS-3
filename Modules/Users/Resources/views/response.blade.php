@@ -850,9 +850,11 @@ $configs = session('configs');
 									<option value="Logout" @if($data['autocrm_push_clickto'] == 'Logout') selected @endif>Logout</option>
 									@if(isset($deals))
 									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
+									<option value="Voucher Detail" @if($data['autocrm_push_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
 									@endif
 									@if(isset($type) && $type == 'trx')
-									<option value="Transaction" @if($data['autocrm_push_clickto'] == 'Transaction') selected @endif>Transaction</option>
+									<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
+									<option value="Transaction Detail" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
 									@endif
 								</select>
 							</div>
@@ -954,9 +956,11 @@ $configs = session('configs');
 									<option value="Logout" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Logout") selected @endif>Logout</option>
 									@if(isset($deals))
 									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
+									<option value="Voucher Detail" @if($data['autocrm_push_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
 									@endif
 									@if(isset($type) && $type == 'trx')
 									<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
+									<option value="Transaction Detail" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
 									@endif
 								</select>
 							</div>

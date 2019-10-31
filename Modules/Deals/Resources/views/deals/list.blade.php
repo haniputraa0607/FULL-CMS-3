@@ -151,6 +151,7 @@ $grantedFeature     = session('granted_features');
                         <th> No</th>
                         <th> Promo ID </th>
                         <th> Title </th>
+                        <th> Brand </th>
                         @if($deals_type != "Hidden")
                         <th> Date Publish </th>
                         @endif
@@ -165,6 +166,7 @@ $grantedFeature     = session('granted_features');
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $value['deals_promo_id'] }}</td>
                                 <td>{{ $value['deals_title'] }}</td>
+                                <td>{{ $value['brand']['name_brand']??'Not Set' }}</td>
                                 @if($deals_type != "Hidden")
                                 <td>
                                     @php
