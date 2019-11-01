@@ -175,6 +175,7 @@
                     <tr>
                         <th> Code </th>
                         <th> Name </th>
+                        <th> Brand </th>
                         <th> City </th>
                         <th> Open Hour </th>
                         <th> Close Hour </th>
@@ -190,6 +191,13 @@
                             <tr>
                                 <td>{{ $value['outlet_code'] }}</td>
                                 <td>{{ $value['outlet_name'] }}</td>
+                                <td>
+                                    <ul style="padding-left: 20px;">
+                                        @foreach ($value['brands'] as $item)
+                                            <li>{{$item['name_brand']}}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
                                 @if (empty($value['city']))
                                     <td> - </td>
                                 @else
