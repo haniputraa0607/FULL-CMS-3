@@ -280,7 +280,7 @@
 								</label>
 							</div>
 							<div class="col-md-10">
-								<input type="text" placeholder="Inbox Subject" class="form-control" name="inbox_global_subject" id="inbox_global_subject" required>
+								<input type="text" placeholder="Inbox Subject" maxlength="125" class="form-control" name="inbox_global_subject" id="inbox_global_subject" required>
 								<br>
 								You can use this variables to display user personalized information:
 								<br><br>
