@@ -817,7 +817,7 @@
 							<div class="form-group" style="margin-bottom:30px">
 								<label class="col-md-2 control-label">Subject</label>
 								<div class="col-md-10">
-									<input type="text" placeholder="Inbox Subject" class="form-control" name="campaign_inbox_subject" id="campaign_inbox_subject" required @if(isset($result['campaign_inbox_subject']) && $result['campaign_inbox_subject'] != "") value="{{$result['campaign_inbox_subject']}}" @endif>
+									<input type="text" placeholder="Inbox Subject" maxlength="125" class="form-control" name="campaign_inbox_subject" id="campaign_inbox_subject" required @if(isset($result['campaign_inbox_subject']) && $result['campaign_inbox_subject'] != "") value="{{$result['campaign_inbox_subject']}}" @endif>
 									<br>
 									You can use this variables to display user personalized information:
 									<br><br>
