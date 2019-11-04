@@ -716,7 +716,7 @@ $configs = session('configs');
 							</label>
 						</div>
 						<div class="col-md-9">
-							<input type="text" placeholder="Inbox Subject" class="form-control" name="autocrm_inbox_subject" id="autocrm_inbox_subject" value="{{$data['autocrm_inbox_subject']}}">
+							<input type="text" placeholder="Inbox Subject" maxlength="125" class="form-control" name="autocrm_inbox_subject" id="autocrm_inbox_subject" value="{{$data['autocrm_inbox_subject']}}">
 							<br>
 							You can use this variables to display user personalized information:
 							<br><br>
