@@ -72,18 +72,6 @@
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
-							    Phone
-							    <span class="required" aria-required="true"> * </span>
-							    <i class="fa fa-question-circle tooltips" data-original-title="Nomor telepon seluler" data-container="body"></i>
-							    </label>
-							</div>
-							<div class="col-md-9">
-								<input type="text" name="phone" placeholder="Phone Number (Required & Unique)" class="form-control" required />
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="input-icon right">
-							    <label class="col-md-3 control-label">
 							    Email
 							    <span class="required" aria-required="true"> * </span>
 							    <i class="fa fa-question-circle tooltips" data-original-title="Email user" data-container="body"></i>
@@ -91,6 +79,18 @@
 							</div>
 							<div class="col-md-9">
 								<input type="text" name="email" placeholder="Email (Required & Unique)" class="form-control" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Phone
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Nomor telepon seluler" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<input type="text" name="phone" placeholder="Phone Number (Required & Unique)" class="form-control" required />
 							</div>
 						</div>
 						<div class="form-group">
@@ -124,20 +124,20 @@
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
-							    City
+							    Birthday
 							    <span class="required" aria-required="true"> * </span>
-							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir user" data-container="body"></i>
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<select name="id_city" class="form-control input-sm select2" placeholder="Search City" data-placeholder="Choose Users City" required>
-									<option value="">Select...</option>
-									@if(isset($city))
-										@foreach($city as $row)
-											<option value="{{$row['id_city']}}">{{$row['city_name']}}</option>
-										@endforeach
-									@endif
-								</select>
+								<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
+									<input type="text" class="form-control form-filter input-sm date-picker" name="birthday" placeholder="Birthday Date" required>
+									<span class="input-group-btn">
+										<button class="btn btn-sm default" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
@@ -159,36 +159,89 @@
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
-							    Relationship
-							    <i class="fa fa-question-circle tooltips" data-original-title="User relationship" data-container="body"></i>
+							    Celebrate
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<select name="relationship" class="form-control input-sm select2" data-placeholder="Relationship">
+								<select name="celebrate" class="form-control input-sm select2" placeholder="Search Celebrate" data-placeholder="Choose Users Celebrate" required>
 									<option value="">Select...</option>
-		                            <option value="In a Relationship">In a Relationship</option>
-		                            <option value="Complicated">Complicated</option>
-		                            <option value="Jomblo">Jomblo</option>
+									@if(isset($celebrate))
+										@foreach($celebrate as $row)
+											<option value="{{$row}}">{{$row}}</option>
+										@endforeach
+									@endif
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
-							    Birthday
+							    Work
 							    <span class="required" aria-required="true"> * </span>
-							    <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir user" data-container="body"></i>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-									<input type="text" class="form-control form-filter input-sm date-picker" name="birthday" placeholder="Birthday Date" required>
-									<span class="input-group-btn">
-										<button class="btn btn-sm default" type="button">
-											<i class="fa fa-calendar"></i>
-										</button>
-									</span>
-								</div>
+								<select name="job" class="form-control input-sm select2" placeholder="Search Work" data-placeholder="Choose Users Work" required>
+									<option value="">Select...</option>
+									@if(isset($job))
+										@foreach($job as $row)
+											<option value="{{$row}}">{{$row}}</option>
+										@endforeach
+									@endif
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Province
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<select name="id_province" class="form-control input-sm select2" placeholder="Search Province" data-placeholder="Choose Users Province" required>
+									<option value="">Select...</option>
+									@if(isset($province))
+										@foreach($province as $row)
+											<option value="{{$row['id_province']}}">{{$row['province_name']}}</option>
+										@endforeach
+									@endif
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    City
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<select name="id_city" class="form-control input-sm select2" placeholder="Search City" data-placeholder="Choose Users City" required>
+									<option value="">Select...</option>
+									@if(isset($city))
+										@foreach($city as $row)
+											<option value="{{$row['id_city']}}">{{$row['city_name']}}</option>
+										@endforeach
+									@endif
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Address
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<textarea type="text" name="address" placeholder="Input your address here..." class="form-control"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
