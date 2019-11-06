@@ -5,20 +5,20 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script> 
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         function hapus(value){
@@ -38,7 +38,7 @@
         $('.summernote').summernote({
             placeholder: 'Payment Note Confirm',
             tabsize: 2,
-            toolbar: [         
+            toolbar: [
               ['style', ['style']],
               ['style', ['bold', 'underline', 'clear']],
               ['color', ['color']],
@@ -73,7 +73,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light portlet-fit bordered">
@@ -100,10 +100,10 @@
 
                                 <label>Deals Voucher Price Cash</label>
                                 <h5 style="font-weight: bold;">Rp {{ number_format($result['deals_user']['voucher_price_cash'], 2) }}</h5>
-                                
+
                                 <label>Payment Status</label>
                                 <h5 style="font-weight: bold;">{{ $result['deals_user']['paid_status'] }}</h5>
-                                
+
                                 <label>Deals Voucher Expired</label>
                                 <h5 style="font-weight: bold;">{{ date('d F Y h:i:s', strtotime($result['deals_user']['voucher_expired_at'])) }}</h5>
                             </div>
@@ -158,10 +158,10 @@
 
                                     <label>Account Number</label>
                                     <h5 style="font-weight: bold;">{{ $result['payment_account_number'] }}</h5>
-                                    
+
                                     <label>Account Name</label>
                                     <h5 style="font-weight: bold;">{{ $result['payment_account_name'] }}</h5>
-                                    
+
                                     <label>Nominal</label>
                                     <h5 style="font-weight: bold;">Rp {{ number_format($result['payment_nominal']) }}</h5>
 
@@ -169,8 +169,8 @@
                                 <div class="col-md-6 col-xs-12">
                                     <label>Receipt</label>
                                     <br>
-                                    <a data-toggle="modal" data-target="#modalReceipt"> 
-                                    <img style="width:200px" src="{{env('AWS_URL')}}{{ $result['payment_receipt_image'] }}">
+                                    <a data-toggle="modal" data-target="#modalReceipt">
+                                    <img style="width:200px" src="{{env('S3_URL_API')}}{{ $result['payment_receipt_image'] }}">
                                     </a>
                                     <br><br>
 
@@ -226,7 +226,7 @@
                                     <strong><?php echo $result['payment_note_confirm'] ?></strong>
                                     @endif
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -235,7 +235,7 @@
             </div>
         </div>
     </div>
-       
+
     <div class="modal fade bs-modal-lg" id="modalAccept" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -259,7 +259,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn green">Accept</button>
                         <button type="button" data-dismiss="modal" class="btn default">Cancel</button>
@@ -267,7 +267,7 @@
                 </form>
             </div>
         </div>
-    </div>  
+    </div>
 
     <div class="modal fade bs-modal-lg" id="modalReceipt" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -277,12 +277,12 @@
                     <h4 class="modal-title">Receipt Transaction Payment Manual</h4>
                 </div>
                 <div class="modal-body" style="text-align:center">
-                    <img style="width:80%" src="{{ env('AWS_URL')}}{{ $result['payment_receipt_image'] }}">
-                </div> 
+                    <img style="width:80%" src="{{ env('S3_URL_API')}}{{ $result['payment_receipt_image'] }}">
+                </div>
             </div>
         </div>
-    </div>  
-    
+    </div>
+
     <form id="DeclineForm" method="post" action="">
         {{csrf_field()}}
         <input type="hidden" name="id_deals_payment_manual" value="{{$result['id_deals_payment_manual']}}">

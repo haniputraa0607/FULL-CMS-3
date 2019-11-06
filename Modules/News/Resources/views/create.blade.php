@@ -7,18 +7,18 @@
 @section('page-style')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet" type="text/css" />
-   <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/typeahead/typeahead.css')}}" rel="stylesheet" type="text/css" />
-	 <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.css')}}" rel="stylesheet" type="text/css" />
+	 <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
 
    <style type="text/css">
      .sort-icon{
@@ -42,20 +42,20 @@
 @endsection
 
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/typeahead/handlebars.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
-     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/handlebars.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
+     <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
     <script>
 
      $('.datepicker').datepicker({
@@ -65,14 +65,14 @@
     });
         var map;
 
-        @if (!empty($news[0]['news_event_latitude']))
-          var lat = "{{$news[0]['news_event_latitude']}}";
+        @if (!empty(old('news_event_latitude')))
+          var lat = "{{old('news_event_latitude')}}";
         @else
           var lat = "-7.7972";
         @endif
 
-        @if (!empty($news[0]['news_event_longitude']))
-          var long = "{{$news[0]['news_event_longitude']}}";
+        @if (!empty(old('news_event_longitude')))
+          var long = "{{old('news_event_longitude')}}";
         @else
           var long = "110.3688";
         @endif
@@ -197,6 +197,31 @@
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     <script type="text/javascript">
+        var video={!!json_encode(old('news_video',[]))!!};
+        var video_template="<div class=\"input-group\" style=\"margin-bottom:5px\">\
+          <input name=\"news_video[]\" type=\"url\" class=\"form-control featureVideoForm video-content\" id=\"newsVideo%id%\" placeholder=\"Example: https://www.youtube.com/watch?v=u9_2wWSOQ\" value=\"%value%\"  data-id=\"%id%\" required>\
+          <span class=\"input-group-btn\">\
+            <button class=\"btn btn-danger remove-video-btn\" type=\"button\" data-id=\"%id%\"><i class=\"fa fa-times\"></i></button>\
+          </span>\
+        </div>";
+
+        function drawVideo(){
+          if(video.length<=0){
+            return addVideo();
+          }
+          var html="";
+          video.forEach(function(vrb,id){
+            console.log(vrb);
+            html+=video_template.replace(/%id%/g,id).replace('%value%',vrb);
+          });
+          $('#video-container').html(html);
+        }
+
+        function addVideo(){
+          video.push('');
+          drawVideo();
+        }
+
         $(document).ready(function() {
             token = '<?php echo csrf_token()?>';
 
@@ -207,8 +232,8 @@
                 fontNames: ['Open Sans'],
                 callbacks: {
                     onFocus: function() {
-                        $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                        $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/content-long.png')}}")
+                        $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/content-long.jpg')}}")
                     },
                     onImageUpload: function(files){
                         sendFile(files[0], $(this).attr('id'));
@@ -264,7 +289,7 @@
             // $('.featureTime').hide();
 
             /* BUTTON TO TEXT */
-            @if (empty($news[0]['news_button_form_text']))
+            @if (empty(old('news_button_form_text')))
               $('.featureForm').hide();
             @else
               $('.featureForm').show();
@@ -320,7 +345,7 @@
             $( "#sortable" ).disableSelection();
 
 			/* OUTLET */
-            @if (empty($news[0]['news_outlet']))
+            @if (empty(old('news_outlet_text')))
               $('.featureOutlet').hide();
             @else
               $('.featureOutlet').show();
@@ -328,7 +353,7 @@
             @endif
 
             /* PRODUCT */
-            @if (empty($news[0]['news_product']))
+            @if (empty(old('news_product_text')))
               $('.featureProduct').hide();
             @else
               $('.featureProduct').show();
@@ -336,7 +361,7 @@
             @endif
 
             /* VIDEO */
-            @if (empty($news[0]['news_video']))
+            @if (empty(old('news_video')))
               $('.featureVideo').hide();
             @else
               $('.featureVideo').show();
@@ -344,7 +369,7 @@
             @endif
 
             /* LOCATION */
-            @if (empty($news[0]['news_event_location_name']))
+            @if (empty(old('news_event_location_name')))
               $('.featureLocation').hide();
             @else
               $('.featureLocation').show();
@@ -352,7 +377,7 @@
             @endif
 
             /* DATE */
-            @if (empty($news[0]['news_event_date_start']))
+            @if (empty(old('news_event_date_start')))
               $('.featureDate').hide();
             @else
               $('.featureDate').show();
@@ -360,7 +385,7 @@
             @endif
 
             /* TIME */
-            @if (empty($news[0]['news_event_time_start']))
+            @if (empty(old('news_event_time_start')))
               $('.featureTime').hide();
             @else
               $('.featureTime').show();
@@ -370,53 +395,56 @@
 			 /* BUTTON TO FORM */
             $('#featureForm').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureForm', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}")
             });
 
             /* OUTLET */
             $('#featureOutlet').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureOutlet', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
             });
 
             /* VIDEO */
             $('#featureVideo').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureVideo', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/video.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/video.jpg')}}")
             });
 
             /* LOCATION */
             $('#featureLocation').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureLocation', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.jpg')}}")
             });
 
             /* PRODUCT */
             $('#featureProduct').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureProduct', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.jpg')}}")
             });
 
             /* DATE */
             $('#featureDate').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureDate', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.jpg')}}")
             });
 
             /* TIME */
             $('#featureTime').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureTime', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.jpg')}}")
             });
 
             /* PUBLISH DATE */
+            @if(old('news_publish_date'))
+            $('.showPublish').show();
+            @endif
             $('.publishType').click(function() {
               // tampil duluk
               $('.showPublish').show();
@@ -463,11 +491,11 @@
 
                             if (type == "square") {
                                 $('#field_image_square').val("");
-                                $('#image_square').children('img').attr('src', 'http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_square').children('img').attr('src', 'https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                             else {
                                 $('#field_image_landscape').val("");
-                                $('#image_landscape').children('img').attr('src', 'http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_landscape').children('img').attr('src', 'https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                             console.log($(this).val())
                             // console.log(document.getElementsByName('news_image_luar'))
@@ -478,6 +506,7 @@
                 }
 
             });
+            drawVideo();
         });
     </script>
     <script type="text/javascript">
@@ -499,57 +528,71 @@
         }
 
         $('#field_title').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/title.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/title2.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/title.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/title2.jpg')}}")
         })
         $('#field_post_date').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/post-date.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/post-date2.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/post-date.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/post-date2.jpg')}}")
         })
         $('#field_content_short').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/content-short.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news4.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/content-short.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.jpg')}}")
         })
         $('#field_image_square').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/image-square.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news4.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-square.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.jpg')}}")
         })
         $('#field_image_landscape').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/image-landscape.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape2.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape.jpg')}}")
         })
         $('.field_event').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.jpg')}}")
         })
         $('.featureVideoForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/video.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/video.jpg')}}")
         })
         $('.featureProductForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.jpg')}}")
         })
         $('.featureOutletForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
         })
         $("input[name='publish_type']").change(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}")
         })
         $(".field_publish_date").focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}")
         })
         $(document).on('focus', '#selectOutlet .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
         })
         $(document).on('focus', '#selectProduct .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.jpg')}}")
         })
+        $(document).on('focus', '#selectCategory .select2', function (e) {
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}")
+        })
+        $('#add-video-btn').on('click',addVideo);
+        $('#video-container').on('click','.remove-video-btn',function(){
+          var id=$(this).data('id');
+          video.splice(id,1);
+          drawVideo();
+        });
+        $('#video-container').on('change','.video-content',function(){
+          var id=$(this).data('id');
+          video[id]=$(this).val();
+        });
     </script>
 @endsection
 
@@ -585,8 +628,8 @@
         <div class="portlet-body m-form__group row">
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                     <div class="col-md-4">
-                        <img src="{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}" style="width:100%" alt="tutorial" id="tutorial1">
-                        <img src="{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
+                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
+                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">
                     </div>
                     <div class="col-md-8">
                     <div class="form-body">
@@ -631,14 +674,14 @@
                             <div class="col-md-9">
                                 <div class="md-radio-inline">
                                     <div class="md-radio">
-                                        <input type="radio" id="optionsRadios4" name="publish_type" class="md-radiobtn publishType" value="limit" @if (!empty(old('news_expired_date'))) checked @endif>
+                                        <input type="radio" id="optionsRadios4" name="publish_type" class="md-radiobtn publishType" value="limit" @if(old('publish_type')=='limit') checked @endif>
                                         <label for="optionsRadios4">
                                             <span></span>
                                             <span class="check"></span>
                                             <span class="box"></span> Date Limit </label>
                                     </div>
                                     <div class="md-radio">
-                                        <input type="radio" id="optionsRadios5" name="publish_type" class="md-radiobtn publishType" value="always" @if (!empty(old('news_publish_date')) && !empty('news_expired_date')) checked @endif required>
+                                        <input type="radio" id="optionsRadios5" name="publish_type" class="md-radiobtn publishType" value="always" @if(old('publish_type')=='always') checked @endif required>
                                         <label for="optionsRadios5">
                                             <span></span>
                                             <span class="check"></span>
@@ -672,7 +715,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+<!--                         <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Header Title
@@ -681,9 +724,9 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="" class="form-control" name="news_title" value="{{ old('news_title') }}" placeholder="Header Title" required>
+                                <input type="text" id="" class="form-control field_title" name="news_title" value="{{ old('news_title') }}" placeholder="Header Title" required>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <div class="input-icon right">
@@ -694,7 +737,25 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" id="field_title" class="form-control" name="news_second_title" value="{{ old('news_second_title') }}" placeholder="News Title" required>
+                                <input type="text" id="field_title" class="form-control field_title" name="news_title" value="{{ old('news_title') }}" placeholder="News Title" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="selectCategory">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                News Category
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Pilih kategori News" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-5">
+                                <select name="id_news_category" class="form-control select2">
+                                  <option></option>
+                                  @foreach($categories as $category)
+                                  <option value="{{$category['id_news_category']}}" @if(old('id_news_category')==$category['id_news_category']) selected @endif>{{$category['category_name']}}</option>
+                                  @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -711,7 +772,7 @@
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                    <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                    <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
@@ -741,7 +802,7 @@
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                    <img src="http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                    <img src="https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
                                     <div>
@@ -758,7 +819,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Content Short
@@ -767,9 +828,9 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <textarea name="news_content_short" id="field_content_short" class="form-control" required>{{ old('news_content_short') }}</textarea>
+                                <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News" required>{ { old('news_content_short') } }</textarea>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <div class="input-icon right">
@@ -1016,8 +1077,9 @@
                                 <div class="col-md-3">
                                     <label class="control-label">Link Video <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9">
-                                    <input name="news_video" id="field_video_link" type="url" class="form-control featureVideoForm" value="{{ old('news_video') }}" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ">
+                                <div class="col-md-9" id="video-container"></div>
+                                <div class="col-md-offset-3 col-md-9" style="margin-top: 10px">
+                                  <button class="btn blue" type="button" id="add-video-btn"><i class="fa fa-plus"></i> Add</button>
                                 </div>
                             </div>
                         </div>
@@ -1063,7 +1125,7 @@
                                         <optgroup label="Outlet List">
                                             @if (!empty($outlet))
                                                 @foreach($outlet as $suw)
-                                                    <option value="{{ $suw['id_outlet'] }}">{{ $suw['outlet_name'] }}</option>
+                                                    <option value="{{ $suw['id_outlet'] }}" @if(in_array($suw['id_outlet'],old('id_outlet',[]))) selected @endif>{{ $suw['outlet_name'] }}</option>
                                                 @endforeach
                                             @endif
                                         </optgroup>
@@ -1114,7 +1176,7 @@
                                             <option value="">Select Product</option>
                                             @if (!empty($product))
                                                 @foreach($product as $suw)
-                                                    <option value="{{ $suw['id_product'] }}">{{ $suw['product_name'] }}</option>
+                                                    <option value="{{ $suw['id_product'] }}" @if(in_array($suw['id_product'],old('id_product',[]))) selected @endif>{{ $suw['product_name'] }}</option>
                                                 @endforeach
                                             @endif
                                         </optgroup>
@@ -1123,7 +1185,7 @@
                             </div>
                         </div>
 						<!-- BUTTON TO FORM -->
-						<div class="form-group">
+						<div class="form-group" id="customform">
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Custom Form

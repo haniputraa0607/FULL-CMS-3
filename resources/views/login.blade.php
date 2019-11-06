@@ -13,34 +13,27 @@
 		<meta property="og:description" content="Technopartner Indonesia CRM System" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="{{env('TITLE', 'Behave')}}" />
-		<meta property="og:image" content="{{env('AWS_ASSET_URL') }}{{ ('images/logo_face_200.png')}}" />
+		<meta property="og:image" content="{{env('S3_URL_VIEW') }}{{ ('images/logo.png')}}" />
 		<meta property="og:image:width" content="200" />
 		<meta property="og:image:height" content="200" />
-		<link href="{{env('AWS_ASSET_URL') }}{{ ('images/logo_face_200.png')}}" rel="image_src" />
+		<link href="{{env('S3_URL_VIEW') }}{{ ('images/logo.png')}}" rel="image_src" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<link rel="shortcut icon" sizes="200x200" href="{{env('AWS_ASSET_URL') }}{{ ('images/icon.png')}}">
+		<link rel="shortcut icon" sizes="200x200" href="{{env('S3_URL_VIEW') }}{{ ('images/icon.png')}}">
 
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <link href="assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
-        <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/css/components.min.css')}}" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/css/plugins.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- END THEME GLOBAL STYLES -->
         <!-- BEGIN PAGE LEVEL STYLES -->
-        <link href="assets/pages/css/login.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/login.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
-		<link rel="shortcut icon" href="{{env('AWS_ASSET_URL') }}{{ ('images/icon.png')}}" />
+		<link rel="shortcut icon" href="{{env('S3_URL_VIEW') }}{{ ('images/icon.png')}}" />
 
         <style type="text/css">
             .captcha_div > div{
@@ -82,7 +75,7 @@
                     {!!  GoogleReCaptchaV3::renderField('captcha_div','login', 'captcha_div') !!}
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn uppercase btn-block" style="background: #990003; color: #fff">Login</button>
+                    <button type="submit" class="btn uppercase btn-block" style="background: {{env('BACKGROUND_LOGIN')}}; color: #fff">Login</button>
                     <!--
 					<label class="rememberme check mt-checkbox mt-checkbox-outline">
                         <input type="checkbox" name="remember" value="1" />Remember
@@ -104,28 +97,22 @@
         </div>
         <div class="copyright" style="color: #fff"> Copyright © 2019 Technopartner Indonesia</div>
         <!--[if lt IE 9]>
-<script src="assets/global/plugins/respond.min.js"></script>
-<script src="assets/global/plugins/excanvas.min.js"></script>
-<script src="assets/global/plugins/ie8.fix.min.js"></script>
+<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/respond.min.js')}}"></script>
+<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/excanvas.min.js')}}"></script>
+<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/ie8.fix.min.js')}}"></script>
 <![endif]-->
         <!-- BEGIN CORE PLUGINS -->
-        <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-        <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-        <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-        <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-        <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
+        <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-        <script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
-        <script src="assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+        <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
-        <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
+        <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/app.min.js')}}" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
-        <script src="assets/pages/scripts/login.min.js" type="text/javascript"></script>
+        <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/login.min.js')}}" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <!-- END THEME LAYOUT SCRIPTS -->

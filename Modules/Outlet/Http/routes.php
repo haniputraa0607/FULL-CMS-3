@@ -3,16 +3,20 @@
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet', 'namespace' => 'Modules\Outlet\Http\Controllers'], function()
 {
     Route::get('list', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@index']);
+    Route::any('ajax_handler', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@ajaxHandler']);
     Route::get('getuser', ['middleware' => 'feature_control:40', 'uses' => 'OutletController@getUser']);
     Route::get('ajax', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@indexAjax']);
     Route::get('ajax/filter/{type}', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@indexAjaxFilter']);
     Route::any('create', ['middleware' => 'feature_control:26', 'uses' => 'OutletController@create']);
     Route::get('detail/{id}', ['middleware' => 'feature_control:25', 'uses' => 'OutletController@detail']);
     Route::post('detail/{id}', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@detail']);
+    Route::get('manage-location', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@manageLocation']);
+    Route::post('manage-location', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@manageLocationPost']);
     Route::post('update/status', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@updateStatus']);
     Route::post('get/city', 'OutletController@getCity');
     Route::post('delete', ['middleware' => 'feature_control:28', 'uses' => 'OutletController@delete']);
-    Route::get('export', ['middleware' => ['feature_control:33', 'config_control:3'], 'uses' => 'OutletController@exportData']);
+    Route::get('export', ['middleware' => ['feature_control:33', 'config_control:3'], 'uses' => 'OutletController@exportForm']);
+    Route::post('export', ['middleware' => ['feature_control:33', 'config_control:3'], 'uses' => 'OutletController@exportData']);
     Route::get('import', ['middleware' => ['feature_control:32,33', 'config_control:2,3,or'], 'uses' => 'OutletController@import']);
     Route::post('import', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@importOutlet']);
     Route::get('qrcode', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@qrcodeView']);

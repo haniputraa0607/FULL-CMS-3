@@ -12,35 +12,35 @@
             font-family: 'Seravek';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype');
+            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Light';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
+            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype');
+            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Seravek Italic';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype');
+            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'Roboto Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype');
+            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype');
         }
 
         .swal-text {

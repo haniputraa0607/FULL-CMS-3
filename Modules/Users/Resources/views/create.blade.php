@@ -1,38 +1,38 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('content')
@@ -61,31 +61,19 @@
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    Name
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama user" data-container="body"></i>
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" name="name" placeholder="User Name (Required)" class="form-control" required /> 
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="input-icon right">
-							    <label class="col-md-3 control-label">
-							    Phone
-							    <span class="required" aria-required="true"> * </span>  
-							    <i class="fa fa-question-circle tooltips" data-original-title="Nomor telepon seluler" data-container="body"></i>
-							    </label>
-							</div>
-							<div class="col-md-9">
-								<input type="text" name="phone" placeholder="Phone Number (Required & Unique)" class="form-control" required />
+								<input type="text" name="name" placeholder="User Name (Required)" class="form-control" required />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    Email
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    <i class="fa fa-question-circle tooltips" data-original-title="Email user" data-container="body"></i>
 							    </label>
 							</div>
@@ -96,8 +84,20 @@
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
+							    Phone
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Nomor telepon seluler" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<input type="text" name="phone" placeholder="Phone Number (Required & Unique)" class="form-control" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
 							    PIN
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    <i class="fa fa-question-circle tooltips" data-original-title="PIN terdiri dari 6 digit angka" data-container="body"></i>
 							    </label>
 							</div>
@@ -109,7 +109,7 @@
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    Sent PIN to User?
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    <i class="fa fa-question-circle tooltips" data-original-title="Pilih apakah akan mengirimkan PIN ke user (Yes/No)" data-container="body"></i>
 							    </label>
 							</div>
@@ -124,8 +124,100 @@
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
+							    Birthday
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir user" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
+									<input type="text" class="form-control form-filter input-sm date-picker" name="birthday" placeholder="Birthday Date" required>
+									<span class="input-group-btn">
+										<button class="btn btn-sm default" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Gender
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Jenis kelamin user (laki-laki/perempuan)" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<select name="gender" class="form-control input-sm select2" data-placeholder="Male / Female" required>
+									<option value="">Select...</option>
+									<option value="Male">Male</option>
+									<option value="Female">Female</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Celebrate
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<select name="celebrate" class="form-control input-sm select2" placeholder="Search Celebrate" data-placeholder="Choose Users Celebrate" required>
+									<option value="">Select...</option>
+									@if(isset($celebrate))
+										@foreach($celebrate as $row)
+											<option value="{{$row}}">{{$row}}</option>
+										@endforeach
+									@endif
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Work
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<select name="job" class="form-control input-sm select2" placeholder="Search Work" data-placeholder="Choose Users Work" required>
+									<option value="">Select...</option>
+									@if(isset($job))
+										@foreach($job as $row)
+											<option value="{{$row}}">{{$row}}</option>
+										@endforeach
+									@endif
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Province
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-9">
+								<select name="id_province" class="form-control input-sm select2" placeholder="Search Province" data-placeholder="Choose Users Province" required>
+									<option value="">Select...</option>
+									@if(isset($province))
+										@foreach($province as $row)
+											<option value="{{$row['id_province']}}">{{$row['province_name']}}</option>
+										@endforeach
+									@endif
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
 							    City
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
 							    </label>
 							</div>
@@ -143,59 +235,20 @@
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
-							    Gender
-							    <span class="required" aria-required="true"> * </span>  
-							    <i class="fa fa-question-circle tooltips" data-original-title="Jenis kelamin user (laki-laki/perempuan)" data-container="body"></i>
+							    Address
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<select name="gender" class="form-control input-sm select2" data-placeholder="Male / Female" required>
-									<option value="">Select...</option>
-									<option value="Male">Male</option>
-									<option value="Female">Female</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="input-icon right">
-							    <label class="col-md-3 control-label">
-							    Relationship
-							    <i class="fa fa-question-circle tooltips" data-original-title="User relationship" data-container="body"></i>
-							    </label>
-							</div>
-							<div class="col-md-9">
-								<select name="relationship" class="form-control input-sm select2" data-placeholder="Relationship">
-									<option value="">Select...</option>
-		                            <option value="In a Relationship">In a Relationship</option>
-		                            <option value="Complicated">Complicated</option>
-		                            <option value="Jomblo">Jomblo</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="input-icon right">
-							    <label class="col-md-3 control-label">
-							    Birthday
-							    <span class="required" aria-required="true"> * </span>  
-							    <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir user" data-container="body"></i>
-							    </label>
-							</div>
-							<div class="col-md-9">
-								<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-									<input type="text" class="form-control form-filter input-sm date-picker" readonly name="birthday" placeholder="Birthday Date" required>
-									<span class="input-group-btn">
-										<button class="btn btn-sm default" type="button">
-											<i class="fa fa-calendar"></i>
-										</button>
-									</span>
-								</div>
+								<textarea type="text" name="address" placeholder="Input your address here..." class="form-control"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    Level
-							    <span class="required" aria-required="true"> * </span>  
+							    <span class="required" aria-required="true"> * </span>
 							    <i class="fa fa-question-circle tooltips" data-original-title="Hak akses yang diberikan ke user (admin/ customer)" data-container="body"></i>
 							    </label>
 							</div>

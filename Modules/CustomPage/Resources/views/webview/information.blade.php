@@ -6,43 +6,43 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
-        <link href="{{ env('AWS_ASSET_URL') }}{{('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
+        <link href="{{ env('S3_URL_VIEW') }}{{('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
         <style type="text/css">
         @font-face {
                 font-family: "GoogleSans-Bold";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-BoldItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-Italic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-Medium";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-MediumItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
         }
         .GoogleSans{
             font-family: "GoogleSans";
@@ -309,17 +309,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
         <div id="box" class="box-shadow"></div>
 
-        @if (isset($result['custom_page_product_text']))
+        @if (isset($result['custom_page_image_header']))
             <div class="kotak">
                 <div class="container">
-                    @if (isset($result['custom_page_product']))
+                    @if (isset($result['custom_page_image_header']))
                         <div class="row space-bottom">
-                            <div class="row container kotak-title">
-                                <div class="col-12 text-bot text-black GoogleSans-Medium" style=" line-height: 21px;padding-bottom: 10px;padding-top: 4px;"> <span> @if($result['custom_page_title'] == null){{ strtoupper($result['custom_page_title']) }} @else {{ strtoupper($result['custom_page_title']) }} @endif</span></div>
-                            </div>
                             <div class="owl-carousel owl-theme">
                                 @foreach ($result['custom_page_image_header'] as $key => $value)
-                                <div class="item"> <img style="height: 60vw !important; object-fit: cover" src="{{env('AWS_URL')}}{{ $value['custom_page_image'] }}"> <div class="questrial-font image-caption-all text-13-3px"></div> </div>
+                                <div class="item"> <img style="height: 60vw !important; object-fit: cover" src="{{env('S3_URL_API')}}{{ $value['custom_page_image'] }}"> <div class="questrial-font image-caption-all text-13-3px"></div> </div>
                                 @endforeach
                             </div>
                         </div>

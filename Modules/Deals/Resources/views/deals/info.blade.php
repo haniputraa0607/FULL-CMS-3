@@ -67,7 +67,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+<!--                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
@@ -78,7 +78,7 @@
                         <div class="col-md-9">
                             <textarea name="deals_short_description" class="form-control" required>{{ $val['deals_short_description'] }}</textarea>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -90,6 +90,21 @@
                         </div>
                         <div class="col-md-9">
                             <textarea name="deals_description" id="field_content_long" class="form-control summernote">{{ $val['deals_description'] }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Terms and Conditions
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Syarat dan ketentuan mengenai deals" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <textarea name="deals_tos" id="field_tos" class="form-control summernote" placeholder="Deals Terms and Conditions">{{ old('deals_tos',$val['deals_tos']) }}</textarea>
+                            </div>
                         </div>
                     </div>
 
@@ -170,15 +185,15 @@
                             <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                             <br>
-                            <span class="required" aria-required="true"> (500*500) </span>
+                            <span class="required" aria-required="true"> (600*450) </span>
                             </label>
                         </div>
                         <div class="col-md-9">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 153px;">
                                   <img src="{{ $val['url_deals_image'] }}" alt="Image Deals">
                                 </div>
-                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 153px;"></div>
                                 <div>
                                     <span class="btn default btn-file">
                                     <span class="fileinput-new"> Select image </span>
@@ -202,6 +217,29 @@
                         }
                     @endphp
 
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Brand
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand" required>
+                                    <option></option>
+                                @if (!empty($brands))
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand['id_brand'] }}" @if (old('id_brand',$val['id_brand'])) @if($brand['id_brand'] == old('id_brand',$val['id_brand'])) selected @endif @endif>{{ $brand['name_brand'] }}</option>
+                                    @endforeach
+                                @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -211,27 +249,7 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple>
-                                <optgroup label="Outlet List">
-                                    @if (!empty($outlets))
-                                        @php
-                                            $jmlOutlet = count($outlets);
-                                            $jmlOutletSelected = count($outletselected);
-                                        @endphp
-
-                                        @if ($jmlOutlet == $jmlOutletSelected)
-                                            <option value="all" selected>All Outlets</option>
-                                            @foreach($outlets as $suw)
-                                                <option value="{{ $suw['id_outlet'] }}" >{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
-                                            @endforeach
-                                        @else
-                                            @foreach($outlets as $suw)
-                                                <option value="{{ $suw['id_outlet'] }}" @if (!empty($outletselected)) @if (in_array($suw['id_outlet'], $outletselected)) selected @endif  @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
-                                            @endforeach
-                                        @endif
-
-                                    @endif
-                                </optgroup>
+                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}">
                             </select>
                         </div>
                     </div>
@@ -267,7 +285,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+<!--                         <div class="col-md-3">
                             <div class="md-radio-inline">
                                 <div class="md-radio">
                                     <input type="radio" name="prices_by" id="radio8" value="money" class="prices md-radiobtn" required @if (!empty($val['deals_voucher_price_cash'])) checked @endif>
@@ -277,7 +295,7 @@
                                         <span class="box"></span> Money </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="form-group" id="prices" @if (empty($val['deals_voucher_price_point']) && empty($val['deals_voucher_price_cash'])) style="display: none;" @endif>
@@ -317,6 +335,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if($val['deals_type']=='Deals')
                                 <div class="col-md-3">
                                     <div class="md-radio-inline">
                                         <div class="md-radio">
@@ -328,6 +347,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="col-md-3">
                                     <div class="md-radio-inline">
                                         <div class="md-radio">
@@ -343,7 +363,7 @@
                             </div>
                         </div>
                     </div>
-
+{{-- 
                     @if ($val['deals_voucher_type'] == "Auto generated" || $val['deals_voucher_type'] == "List Vouchers")
                     <div class="form-group">
                         <label class="col-md-3 control-label">Voucher Total <span class="required" aria-required="true"> * </span></label>
@@ -353,8 +373,60 @@
                         </div>
                     </div>
                     @endif
+ --}}
+                    <div class="form-group" id="listVoucher" @if (old('voucher_code')||old('deals_voucher_type',$val['deals_voucher_type']) == "List Vouchers") style="display: block;" @else style="display: none;" @endif>
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-9">
+                            <div class="col-md-3">
+                                <label class="control-label">Input Voucher 
+                                    <span class="required" aria-required="true"> * </span> 
+                                    <br> <small> Separated by new line </small>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea name="voucher_code" class="form-control listVoucher" rows="10">{{ old('voucher_code') }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="generateVoucher" @if (!(old('voucher_code')||old('deals_voucher_type',$val['deals_voucher_type']) == "List Vouchers")&&old('deals_total_voucher',$val['deals_total_voucher'])) style="display: block;" @else style="display: none;" @endif>
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-9">
+                            <div class="col-md-3">
+                                <label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control generateVoucher" name="deals_total_voucher" value="{{ old('deals_total_voucher',$val['deals_total_voucher']) }}" min="$val['deals_total_voucher']??0" placeholder="Total Voucher">
+                            </div>
+                        </div>
+                    </div>
 
                     <br>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Voucher Start Date
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal voucher mulai dapat digunakan, kosongkan bila voucher tidak memiliki minimal tanggal penggunaan" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input type="text" class="form_datetime form-control" name="deals_voucher_start" value="{{ ($start_date=old('deals_voucher_start',$val['deals_voucher_start']))?date('d-M-Y H:i',strtotime($start_date)):'' }}" >
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                        <button class="btn default" type="button">
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal voucher mulai dapat digunakan" data-container="body"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">

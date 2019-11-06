@@ -6,30 +6,30 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
 
-        function viewLogDetail(id_log){
-            $.get("{{url('user/ajax/log')}}"+'/'+id_log, function(result){
+        function viewLogDetail(id_log, log_type){
+            $.get("{{url('user/ajax/log')}}"+'/'+id_log+'/'+log_type, function(result){
                 if(result){
                     document.getElementById("log-url").value = result.url;
                     document.getElementById("log-status").value = result.response_status;
@@ -183,8 +183,8 @@
                                             @endif
                                         </td>
                                         <td> {{date("d F Y H:i:s", strtotime($datalog['created_at']))}} </td>
-                                        <td>{{$datalog['module']}}</td>
                                         <td>{{$datalog['subject']}}</td>
+                                        <td>{{$datalog['module']}}</td>
                                         <td>
                                             @if($datalog['response_status'] == 'fail')
                                             <span class="label label-danger label-sm"> Failed
@@ -196,7 +196,7 @@
                                         </td>
                                         <td>{{$datalog['ip']}}</td>
                                         <td>
-                                            <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+                                            <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activities_apps']}}','apps')"> <i class="fa fa-info-circle"></i> Details
             							</td>
                                     </tr>
                                 @endforeach
@@ -204,7 +204,7 @@
                         </tbody>
                     </table>
 
-                    @if ($mobile_page)
+                    @if (isset($mobile_page))
                       {{ $mobile_page->links() }}
                     @endif
                 </div>
@@ -234,8 +234,8 @@
                                             @endif
                                         </td>
                                         <td> {{date("d F Y H:i:s", strtotime($datalog['created_at']))}} </td>
-                                        <td>{{$datalog['subject']}}</td>
                                         <td>{{$datalog['module']}}</td>
+                                        <td>{{$datalog['subject']}}</td>
                                         <td>
                                             @if($datalog['response_status'] == 'fail')
                                             <span class="label label-danger label-sm"> Failed
@@ -247,14 +247,14 @@
                                         </td>
                                         <td>{{$datalog['ip']}}</td>
                                         <td>
-                                            <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+                                            <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activities_be']}}', 'be')"> <i class="fa fa-info-circle"></i> Details
             							</td>
                                     </tr>
                                 @endforeach
                             @endif
                         </tbody>
                     </table>
-                    @if ($backend_page)
+                    @if (isset($backend_page))
                       {{ $backend_page->links() }}
                     @endif
                 </div>

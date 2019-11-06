@@ -5,17 +5,17 @@
  @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 
 	<style type="text/css">
 	    #sample_1_filter label, #sample_5_filter label, #sample_4_filter label, .pagination, .dataTables_filter label {
@@ -29,26 +29,26 @@
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
 	<script>
 	function checkAll(var1,var2){
 		for(x=1;x<=var2;x++){
@@ -257,6 +257,36 @@
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
 
+    $('.datatable').dataTable({
+                language: {
+                    aria: {
+                        sortAscending: ": activate to sort column ascending",
+                        sortDescending: ": activate to sort column descending"
+                    },
+                    emptyTable: "No data available in table",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    infoEmpty: "No entries found",
+                    infoFiltered: "(filtered1 from _MAX_ total entries)",
+                    lengthMenu: "_MENU_ entries",
+                    search: "Search:",
+                    zeroRecords: "No matching records found"
+                },
+                buttons: [],
+                responsive: {
+                    details: {
+                        type: "column",
+                        target: "tr"
+                    }
+                },
+                order: [2, "desc"],
+                lengthMenu: [
+                    [5, 10, 15, 20, -1],
+                    [5, 10, 15, 20, "All"]
+                ],
+                pageLength: 10,
+                dom: "<'row' <'col-md-12'B>><'row'<'col-md-7 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+        });
+
 	$(document).ready(function() {
 		$.fn.modal.Constructor.prototype.enforceFocus = function() {};
 	});
@@ -286,8 +316,8 @@
 	}
 
 	// function viewLogDetail(url, status, request, response, ip, useragent){
-	function viewLogDetail(id_log){
-		$.get("{{url('user/ajax/log')}}"+'/'+id_log, function(result){
+	function viewLogDetail(id_log, log_type){
+		$.get("{{url('user/ajax/log')}}"+'/'+id_log+'/'+log_type, function(result){
 			if(result){
 				document.getElementById("log-url").value = result.url;
 				document.getElementById("log-status").value = result.response_status;
@@ -306,6 +336,16 @@
             return false;
         return true;
     }
+
+	$('[data-toggle=confirmation]').confirmation({ btnOkClass: 'btn btn-sm btn-success submit', btnCancelClass: 'btn btn-sm btn-danger'});
+
+	$(document).on('click', '.submit', function() {
+		if ($('#pinUser').val() == ''){
+			$('#pinUser').focus();
+		}else{
+			$('#formSuspend').submit();
+		}
+	})
 	</script>
 @endsection
 
@@ -475,7 +515,7 @@
 
             																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
             																		 ?>
-            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activities_apps']}}','apps')"> <i class="fa fa-info-circle"></i> Details
 
             																		</span>
             																	</div>
@@ -533,7 +573,7 @@
 
             																		//  $response =  str_replace('}','\r\n}',str_replace(',',',\r\n&emsp;',str_replace('{','{\r\n&emsp;',strip_tags($logs['response']))));
             																		 ?>
-            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activity']}}')"> <i class="fa fa-info-circle"></i> Details
+            																		<span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$logs['id_log_activities_be']}}','be')"> <i class="fa fa-info-circle"></i> Details
 
             																		</span>
             																	</div>
@@ -576,6 +616,9 @@
 															<a href="#portlet_comments_4" data-toggle="tab"> Point </a>
 														</li>
 													@endif
+                                                    <li>
+                                                        <a href="#user_inboxes" data-toggle="tab"> Inboxes </a>
+                                                    </li>
 												</ul>
 											</div>
 											<div class="tab-content" style="margin-top:20px">
@@ -757,6 +800,41 @@
 															</div>
 													</div>
 												@endif
+                                                <div class="tab-pane" id="user_inboxes">
+                                                    <table class="table table-hover table-striped datatable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Date</th>
+                                                                <th>Subject</th>
+                                                                <th>Type</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($inboxes as $inbox)
+                                                            @foreach($inbox['list'] as $it)
+                                                            <tr>
+                                                                <td>{{date('d/m/Y H:i',strtotime($it['created_at']))}}</td>
+                                                                <td>{{$it['subject']}}</td>
+                                                                <td>{{$it['type']}}</td>
+                                                                <td>{{$it['status']}}</td>
+                                                                <td>@if($it['type']=='private')<form action="#" method="POST">
+                                                                    {{csrf_field()}}
+                                                                    <input type="hidden" name="action" value="delete_inbox">
+                                                                    <input type="hidden" name="id_inbox" value="{{$it['id_inbox']}}">
+                                                                    <button class="btn btn-sm btn-danger" data-toggle="confirmation"
+                                                                    data-btn-ok-label="Delete" data-btn-ok-class="btn btn-danger"
+                                                                    data-btn-ok-icon-class="material-icons" data-btn-ok-icon-content="check"
+                                                                    data-btn-cancel-label="No" data-btn-cancel-class="btn-info"
+                                                                    data-btn-cancel-icon-class="material-icons" data-btn-cancel-icon-content="close"
+                                                                    data-title="Are you sure want to delete this inbox?"><i class="fa fa-trash"></i> Delete</button></form></td>@endif
+                                                            </tr>
+                                                            @endforeach
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
 											</div>
 										</div>
 
@@ -985,6 +1063,10 @@
 										<a data-toggle="tab" href="#tab_3-3">
 											<i class="fa fa-lock"></i> Change PIN </a>
 									</li>
+									<li>
+										<a data-toggle="tab" href="#tab_4-4">
+											<i class="fa fa-ban"></i> Suspend User </a>
+									</li>
 								</ul>
 							</div>
 							<div class="col-md-9">
@@ -1093,6 +1175,34 @@
 												<input type="password" class="form-control" name="password_new_confirmation" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)"/> </div>
 											<div class="margin-top-10">
 												<button class="btn green"> Save Changes </button>
+											</div>
+										</form>
+									</div>
+									<div id="tab_4-4" class="tab-pane">
+										<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" method="POST" id="formSuspend">
+										{{ csrf_field() }}
+											<div class="form-group">
+												<label class="control-label">Suspend</label>
+												<div class="mt-radio-inline">
+													<label class="mt-radio">
+														<input type="radio" name="is_suspended" id="optionsRadios3" value="1" @if($profile['is_suspended'] == '1') checked @endif > Yes
+														<span></span>
+													</label>
+													<label class="mt-radio">
+														<input type="radio" name="is_suspended" id="optionsRadios4" value="0" @if($profile['is_suspended'] == '0') checked @endif> No
+														<span></span>
+													</label>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="control-label col-md-12">Your PIN</label>
+												<div class="col-md-4">
+													<input type="password" id="pinUser" class="form-control" width="30%" name="password_suspend" placeholder="Enter Your current PIN" required style="width: 91.3%;" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
+												</div>
+												<div class="col-md-8"></div>
+											</div>
+											<div class="margin-top-10">
+												<a type="button" data-toggle="confirmation" data-original-title="Are you sure to change the suspend status of this user ?" data-placement="bottom" data-popout="true" class="btn green">Save Changes</a> 
 											</div>
 										</form>
 									</div>

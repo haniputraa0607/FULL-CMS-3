@@ -1,36 +1,36 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
 	<script>
 	function centang(no){
 		alert(no);
 	}
-	
+
 	function checkUsers(){
 		var slides = document.getElementsByClassName("md-check");
 		for(var i = 0; i < slides.length; i++)
@@ -38,7 +38,7 @@
 		   slides[i].checked = true;
 		}
 	}
-	
+
 	function uncheckUsers(){
 		var slides = document.getElementsByClassName("md-check");
 		for(var i = 0; i < slides.length; i++)
@@ -64,17 +64,12 @@
 		@if(!Session::has('form'))
 		<form role="form" action="{{ url('user/activity') }}" method="post">
 			{{ csrf_field() }}
-			@include('filter-log') 
+			@include('filter-log')
 		</form>
 		@endif
 	</div>
 	<div class="col-md-12">
 		<div class="portlet light portlet-fit bordered" >
-			<div class="portlet-title">
-				<div class="caption">
-					<span class="caption-subject font-red sbold uppercase"><i class="fa fa-list"></i> {{$table_title}} </span>
-				</div>
-			</div>
 			<div class="portlet-body">
 				@if(Session::has('form'))
 					<?php
@@ -86,7 +81,7 @@
 						<h4 class="alert-heading">Displaying search result with parameter(s):</h4>
 						@if(isset($search_param['conditions']))
 						@foreach($search_param['conditions'] as $row)
-							<p>{{ucwords(str_replace("_"," ",$row['subject']))}} 
+							<p>{{ucwords(str_replace("_"," ",$row['subject']))}}
 							@if($row['parameter'] != "") {{str_replace("-"," - ",$row['operator'])}}{{str_replace("-"," - ",$row['parameter'])}}
 							@else : {{str_replace("-"," - ",$row['operator'])}}
 							@endif
@@ -100,10 +95,6 @@
 					</div>
 				@endif
 				<div class="col-md-12" style="padding-left:0px;padding-right:0px;margin-bottom:20px;">
-					<div class="col-md-4" style="padding-left:0px;padding-right:0px;">
-						<a href="#" class="btn btn md yellow" onClick="checkUsers();">Check All</a>
-						<a href="#" class="btn btn md red" onClick="uncheckUsers();">Uncheck All</a>
-					</div>
 					<form action="{{ url('user/activity') }}" method="post">
 					{{ csrf_field() }}
 					<div class="col-md-2" style="padding-left:0px;padding-right:0px;">
@@ -116,15 +107,15 @@
 					</div>
 					<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
 						<select name="order_field" class="form-control select2">
-							<option value="id" @if($order_field == 'id_log_activity') selected @endif>Order by ID</option>
+							<option value="id" @if($order_field == 'id') selected @endif>Order by ID</option>
 							<option value="name" @if($order_field == 'name') selected @endif>Order by Name</option>
 							<option value="phone" @if($order_field == 'phone') selected @endif>Order by Phone</option>
 							<option value="email" @if($order_field == 'email') selected @endif>Order by Email</option>
-							<option value="address" @if($order_field == 'subject') selected @endif>Order by Subject</option>
-							<option value="gender" @if($order_field == 'created_at') selected @endif>Order by Created At</option>
-							<option value="birthday" @if($order_field == 'status') selected @endif>Order by Status</option>
-							<option value="city_name" @if($order_field == 'request') selected @endif>Order by Request</option>
-							<option value="province_name" @if($order_field == 'response') selected @endif>Order by Response</option>
+							<option value="subject" @if($order_field == 'subject') selected @endif>Order by Subject</option>
+							<option value="created_at" @if($order_field == 'created_at') selected @endif>Order by Created At</option>
+							<option value="response_status" @if($order_field == 'status') selected @endif>Order by Status</option>
+							<option value="request" @if($order_field == 'request') selected @endif>Order by Request</option>
+							<option value="response" @if($order_field == 'response') selected @endif>Order by Response</option>
 						</select>
 					</div>
 					<div class="col-md-2" style="padding-left:0px;padding-right:0px">
@@ -138,88 +129,187 @@
 					</div>
 					</form>
 				</div>
-				<div class="col-md-12" style="text-align:right;margin-right:0px;padding-right:0px;margin-bottom:20px;">
-					<a href="{{ url('user/activity/export') }}" class="btn yellow">Export User Data (.xls)</a>
-				</div>
-				<div class="table-scrollable">
-					<table class="table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th scope="col" style="width:450px !important"> No </th>
-								<th scope="col"> Actions </th>
-								<th scope="col"> Date Time </th>
-								<th scope="col"> Name </th>
-								<th scope="col"> Phone </th>
-								<th scope="col"> Status </th>
-								<th scope="col"> Subject </th>
-								<th scope="col"> Email </th>
-								<th scope="col"> Request </th>
-								<th scope="col"> Response </th>
-								<th scope="col"> IP </th>
-								<th scope="col"> User Agent </th>
-								
-							</tr>
-						</thead>
-						<tbody>
-							<form action="{{ url('user') }}" method="post">
-							{{ csrf_field() }}
-							@if(!empty($content))
-								@foreach($content as $no => $data)
-								
-								@if($data['response_status'] == 'fail')
-								<tr style="color:red">
-								@else
-								<tr>
-								@endif
-									<td> {{$no+1}}
-									</td>
-									<td>
-									<a class="btn btn-block green btn-xs" href="{{ url('user/detail', $data['phone']) }}"><i class="icon-pencil"></i> Detail </a>
-									<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
-									</td>
-									<td> {{str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))}} </td>
-									<td> {{str_replace(" ","&nbsp;", $data['name'])}} </td>
-									<td> {{$data['phone']}} </td>
-									<td> {{$data['response_status']}} </td>
-									<td> {{str_replace(" ","&nbsp;", $data['subject'])}} </td>
-									<td> {{str_replace(" ","&nbsp;", $data['email'])}} </td>
-									<td> {{str_replace(" ","&nbsp;", $data['request'])}} </td>
-									<td> {{substr(str_replace(" ","&nbsp;", $data['response']), 0, 350)}} </td>
-									<td> {{$data['ip']}} </td>
-									<td> {{str_replace(" ","&nbsp;", $data['useragent'])}} </td>
-								</tr>
-								@endforeach
-							@else
-								<td colspan="12" style="text-align:center"> Data is empty</td>
-							@endif
-							
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="col-md-12" style="padding-left:0px;padding-right:0px;margin-top:20px">
-				<div class="col-md-5" style="padding-left:0px;padding-right:0px;">
-					
-				</div>
-				<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
-					
-				</div>
-				<div class="col-md-4" style="padding-left:0px;padding-right:0px;">
-					<div class="pull-right pagination" style="margin-top: 0px;margin-bottom: 0px;">
-						<ul class="pagination" style="margin-top: 0px;margin-bottom: 0px;">
-							@if($page <= 1) <li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
-							@else <li class="page-first"><a href="{{url('user')}}/activity/{{$page-1}}">«</a></li>
-							@endif
-							
-							@if($last == $total) <li class="page-last disabled"><a href="javascript:void(0)">»</a></li>
-							@else <li class="page-last"><a href="{{url('user')}}/activity/{{$page+1}}">»</a></li>
-							@endif
-						</ul>
+
+				<div class="portlet light portlet-fit bordered">
+					<div class="portlet-title">
+						<div class="caption">
+							<span class="caption-subject font-red sbold uppercase">Log Activity User</span>
+						</div>
+					</div>
+					<div class="portlet-body">
+						<div class="tabbable-line tabbable-full-width">
+							<ul class="nav nav-tabs">
+								<li class=" @if(!isset($tipe)) active @endif">
+									<a href="#log_mobile" data-toggle="tab"> Mobile </a>
+								</li>
+								<li class=" @if(isset($tipe) && $tipe == 'backend') active @endif">
+									<a href="#log_backend" data-toggle="tab"> Backend </a>
+								</li>
+							</ul>
+						</div>
+						<div class="tab-content" style="margin-top:20px">
+							<div class="tab-pane @if(!isset($tipe)) active @endif" id="log_mobile">
+								<div class="table-scrollable">
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+										<tr>
+											<th scope="col" style="width:450px !important"> No </th>
+											<th scope="col"> Actions </th>
+											<th scope="col"> Date Time </th>
+											<th scope="col"> Name </th>
+											<th scope="col"> Phone </th>
+											<th scope="col"> Status </th>
+											<th scope="col"> Subject </th>
+											<th scope="col"> Email </th>
+											<th scope="col"> Request </th>
+											<th scope="col"> Response </th>
+											<th scope="col"> IP </th>
+											<th scope="col"> User Agent </th>
+
+										</tr>
+										</thead>
+										<tbody>
+										<form action="{{ url('user') }}" method="post">
+											{{ csrf_field() }}
+											@if(!empty($content['mobile']))
+												@foreach($content['mobile'] as $no => $data)
+
+													@if($data['response_status'] == 'fail')
+														<tr style="color:red">
+													@else
+														<tr>
+															@endif
+															<td> {{$no+1}}
+															</td>
+															<td>
+																<a class="btn btn-block green btn-xs" href="{{ url('user/detail', $data['phone']) }}"><i class="icon-pencil"></i> Detail </a>
+																<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
+															</td>
+															<td> {{str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['name'])}} </td>
+															<td> {{$data['phone']}} </td>
+															<td> {{$data['response_status']}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['subject'])}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['email'])}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['request'])}} </td>
+															<td> {{substr(str_replace(" ","&nbsp;", $data['response']), 0, 350)}} </td>
+															<td> {{$data['ip']}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['useragent'])}} </td>
+														</tr>
+													@endforeach
+											@else
+												<td colspan="12" style="text-align:center"> Data is empty</td>
+											@endif
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="padding-left:0px;padding-right:0px;margin-top:25px">
+									<div class="col-md-5" style="padding-left:0px;padding-right:0px;">
+
+									</div>
+									<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
+
+									</div>
+									<div class="col-md-4" style="padding-left:0px;padding-right:0px;">
+										<div class="pull-right pagination" style="margin-top: 0px;margin-bottom: 0px;">
+											<ul class="pagination" style="margin-top: 0px;margin-bottom: 0px;">
+												@if($page <= 1) <li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
+												@else <li class="page-first"><a href="{{url('user')}}/activity/{{$page-1}}">«</a></li>
+												@endif
+
+												@if($last == $total['mobile']) <li class="page-last disabled"><a href="javascript:void(0)">»</a></li>
+												@else <li class="page-last"><a href="{{url('user')}}/activity/{{$page+1}}">»</a></li>
+												@endif
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="tab-pane @if(isset($tipe) && $tipe == 'backend') active @endif" id="log_backend">
+								<div class="table-scrollable">
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+										<tr>
+											<th scope="col" style="width:450px !important"> No </th>
+											<th scope="col"> Actions </th>
+											<th scope="col"> Date Time </th>
+											<th scope="col"> Name </th>
+											<th scope="col"> Phone </th>
+											<th scope="col"> Status </th>
+											<th scope="col"> Subject </th>
+											<th scope="col"> Email </th>
+											<th scope="col"> Request </th>
+											<th scope="col"> Response </th>
+											<th scope="col"> IP </th>
+											<th scope="col"> User Agent </th>
+
+										</tr>
+										</thead>
+										<tbody>
+										<form action="{{ url('user') }}" method="post">
+											{{ csrf_field() }}
+											@if(!empty($content['be']))
+												@foreach($content['be'] as $no => $data)
+
+													@if($data['response_status'] == 'fail')
+														<tr style="color:red">
+													@else
+														<tr>
+															@endif
+															<td> {{$no+1}}
+															</td>
+															<td>
+																<a class="btn btn-block green btn-xs" href="{{ url('user/detail', $data['phone']) }}"><i class="icon-pencil"></i> Detail </a>
+																<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
+															</td>
+															<td> {{str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['name'])}} </td>
+															<td> {{$data['phone']}} </td>
+															<td> {{$data['response_status']}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['subject'])}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['email'])}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['request'])}} </td>
+															<td> {{substr(str_replace(" ","&nbsp;", $data['response']), 0, 350)}} </td>
+															<td> {{$data['ip']}} </td>
+															<td> {{str_replace(" ","&nbsp;", $data['useragent'])}} </td>
+														</tr>
+														@endforeach
+														@else
+															<td colspan="12" style="text-align:center"> Data is empty</td>
+										@endif
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="padding-left:0px;padding-right:0px;margin-top:25px">
+									<div class="col-md-5" style="padding-left:0px;padding-right:0px;">
+
+									</div>
+									<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
+
+									</div>
+									<div class="col-md-4" style="padding-left:0px;padding-right:0px;">
+										<div class="pull-right pagination" style="margin-top: 0px;margin-bottom: 0px;">
+											<ul class="pagination" style="margin-top: 0px;margin-bottom: 0px;">
+												@if($page <= 1) <li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
+												@else <li class="page-first"><a href="{{url('user')}}/activity/{{$page-1}}">«</a></li>
+												@endif
+
+												@if($last == $total['be']) <li class="page-last disabled"><a href="javascript:void(0)">»</a></li>
+												@else <li class="page-last"><a href="{{url('user')}}/activity/{{$page+1}}">»</a></li>
+												@endif
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
 			</form>
-			
+
 		</div>
 	</div>
 </div>

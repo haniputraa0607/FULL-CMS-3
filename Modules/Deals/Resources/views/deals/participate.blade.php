@@ -46,6 +46,7 @@
             
                 <?php $tombolsubmit = 'hidden'; ?>
                 @include('filter') 
+                @include('filter-csv') 
 
                 <div class="form-group">
                     <label class="col-md-3 control-label">Voucher Amount 

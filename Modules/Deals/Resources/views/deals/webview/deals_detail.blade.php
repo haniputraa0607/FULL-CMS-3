@@ -22,7 +22,6 @@
     		background-color: #f8f8f8;
     		position: relative;
     		display: flex;
-    		align-items: center;
     	}
     	.col-left{
     		flex: 70%;
@@ -31,17 +30,18 @@
     		flex: 30%;
     	}
     	.title-wrapper > div{
-    		padding: 10px 15px;
+    		padding: 10px 5px;
     	}
     	.title{
     		font-size: 18px;
-    		color: #666666;
+    		color: rgba(32, 32, 32);
     	}
     	#timer{
     		position: absolute;
-    		top: -25px;
     		right: 0px;
-    		padding: 5px 30px;
+			bottom:0px;
+			width: 100%;
+    		padding: 10px;
     		/*border-bottom-left-radius: 7px !important;*/
     		color: #fff;
             display: none;
@@ -53,7 +53,7 @@
             background-color: #c02f2fcc;
         }
         .bg-black{
-            background-color: #000c;
+            background-color: rgba(0, 0, 0, 0.5);
         }
         .bg-grey{
             background-color: #cccccc;
@@ -64,14 +64,14 @@
 			color: #000;
     	}
     	.description-wrapper{
-    		padding: 15px;
+    		padding: 20px;
     	}
 		.outlet-wrapper{
-		    padding: 0 15px 15px;
+		    padding: 0 20px;
 		}
     	.description{
     	    padding-top: 10px;
-    	    font-size: 15px;
+    	    font-size: 14px;
     	}
     	.subtitle{
     		margin-bottom: 10px;
@@ -79,7 +79,7 @@
     		font-size: 15px;
     	}
     	.outlet{
-    	    font-size: 14.5px;
+    	    font-size: 13.5px;
     	}
     	.outlet-city:not(:first-child){
     		margin-top: 10px;
@@ -118,24 +118,14 @@
                 }
 			@endphp
 			<div class="col-md-4 col-md-offset-4">
-				<img class="deals-img center-block" src="{{ $deals['url_deals_image'] }}" alt="">
-
-				<div class="title-wrapper clearfix">
-					<div class="col-left voucher font-red">
-					    @if($deals['deals_voucher_type'] != 'Unlimited')
-						    {{ $deals['deals_total_voucher'] }}/{{ $deals['deals_total_claimed'] }}
-						@endif
-						kupon tersedia
-					</div>
-					<div class="col-right">
-					    <div id="timer" class="text-center">
-					        <span id="timerchild">Bearkhir Dalam</span>
-					    </div>
-						<div class="fee text-right font-red GoogleSans-Medium">{{ $deals_fee }}</div>
+				<div style="background-color: #f8f8f8; position: relative;" class="clearfix">
+					<img class="deals-img center-block" src="{{ $deals['url_deals_image'] }}" alt="">
+					<div style="font-size: 12px;" class="text-right" id="timer">
+						<span id="timerchild"><i class="fas fa-clock"></i>Berakhir Dalam</span>
 					</div>
 				</div>
-				<div class="title-wrapper clearfix GoogleSans-Medium">
-					<div class="title">
+				<div style="background-color: rgb(255, 255, 255);" class="title-wrapper col-md-12 clearfix ProductSans">
+					<div class="title ProductSans">
 						{{ $deals['deals_title'] }}
 						@if($deals['deals_second_title'] != null)
 						<br>
@@ -143,27 +133,62 @@
 						@endif
 					</div>
 				</div>
+				@if($deals['deals_voucher_type'] != 'Unlimited')
+				<div style="background-color: rgb(255, 255, 255);" class="col-md-12">
+					<div style="padding: 10px 5px;">
+						<div class="progress" style="background-color: rgb(235, 235, 235); height:6px; width: 190px; margin-top: -10px; margin-bottom: 0px;">
+							<div style="background-color: rgb(128,0,0); width: {{ ((($deals['deals_total_voucher'] - $deals['deals_total_claimed']) / $deals['deals_total_voucher']) * 100) }}%;" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				</div>
+				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix ProductSans">
+					<div style="margin-top: -15px; font-size: 13px;" class="fee text-right ProductSans">{{ $deals['deals_total_voucher'] - $deals['deals_total_claimed'] }} kupon tersedia</div>
+				</div>
+				@endif
+
+				<hr style="margin-top: 0px; margin-bottom: 15px;">
+
+				<div style="background-color: rgb(255, 255, 255);" class="col-md-12 title-wrapper clearfix">
+					@php $bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', "Jul", 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; @endphp
+					<div style="margin-top: -15px; font-size: 13px;" class="fee text-right ProductSans"><i class="far fa-calendar"></i> &nbsp Masa berlaku : <b>{{date('d', strtotime($deals['deals_start']))}} {{$bulan[date('m', strtotime($deals['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_start'])) }} - {{date('d', strtotime($deals['deals_end']))}} {{$bulan[date('m', strtotime($deals['deals_end']))-1]}} {{ date('Y', strtotime($deals['deals_end'])) }}</b></div>
+				</div>
+
+				<hr style="margin-top: 0px; margin-bottom: 0px;">
 
                 @if($deals['deals_description'] != "")
-				<div class="description-wrapper">
+				<div style="padding-top: 0px;" class="description-wrapper ProductSans">
 					<div class="description">{!! $deals['deals_description'] !!}</div>
 				</div>
-                @endif
+				@endif
 
-				<div class="outlet-wrapper">
-					<div class="subtitle">Dapat digunakan di outlet:</div>
+				<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
+					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div>
+					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></i></div>
+				</div>
+
+                @if($deals['deals_tos'] != "")
+				<div id="textSK" style="padding-top: 0px;" class="description-wrapper ProductSans">
+					<div class="description">{!! $deals['deals_tos'] !!}</div>
+				</div>
+				@endif
+
+				<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold">
+					<div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div>
+					<div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></div>
+				</div>
+
+				<div id="textTP" class="outlet-wrapper ProductSans" style="padding-top: 10px; margin-bottom: 20px;">
 					<div class="outlet">
 						@foreach($deals['outlet_by_city'] as $key => $outlet_city)
-						<div class="outlet-city">{{ $outlet_city['city_name'] }}</div>
-						<ul class="nav">
+						<div class="outlet-city" style="color: rgb(0, 0, 0);">{{ $outlet_city['city_name'] }}</div>
+						<ul class="nav" style="color: rgb(84, 84, 84);">
 							@foreach($outlet_city['outlet'] as $key => $outlet)
-							<li>- {{ $outlet['outlet_name'] }}</li>
+							<li>- {{ strtoupper($outlet['outlet_name']) }}</li>
 							@endforeach
 						</ul>
 						@endforeach
 					</div>
 				</div>
-
 			</div>
 		@else
 			<div class="col-md-4 col-md-offset-4">
@@ -174,8 +199,9 @@
 @stop
 
 @section('page-script')
+	<script type="text/javascript" src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
     @if(!empty($deals))
-        <script type="text/javascript">
+		<script type="text/javascript">
             @php $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', "Juli", 'Agustus', 'September', 'Oktober', 'November', 'Desember']; @endphp
 
             // timer
@@ -188,7 +214,7 @@
             if (server_time >= deals_start && server_time <= deals_end) {
                 // deals date is valid and count the timer
                 difference = deals_end - server_time;
-                document.getElementById('timer').classList.add("bg-yellow");
+                document.getElementById('timer').classList.add("bg-black");
             }
             else {
                 // deals is not yet start
@@ -202,16 +228,16 @@
                     timer_text = timer(difference);
 					@if($deals['deals_status'] == 'available')
 					if(timer_text.includes('lagi')){
-						document.getElementById("timer").innerHTML = "Berakhir dalam";
+						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir dalam";
 					}else{
-						document.getElementById("timer").innerHTML = "Berakhir pada";
+						document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Berakhir pada";
 					}
-                    document.getElementById("timer").innerHTML += "<br>";
+                    document.getElementById("timer").innerHTML += " ";
                     document.getElementById('timer').innerHTML += timer_text;
                     @elseif($deals['deals_status'] == 'soon')
-                    document.getElementById("timer").innerHTML = "Akan dimulai pada";
-                    document.getElementById("timer").innerHTML += "<br>";
-                    document.getElementById('timer').innerHTML += "{{ date('d', strtotime($deals['deals_start'])) }} {{$month[date('m', strtotime($deals['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_start'])) }} jam {{ date('H:i', strtotime($deals['deals_start'])) }}";
+                    document.getElementById("timer").innerHTML = "<i class='fas fa-clock'></i> &nbsp; Akan dimulai pada";
+                    document.getElementById("timer").innerHTML += " ";
+                    document.getElementById('timer').innerHTML += "{{ date('d', strtotime($deals['deals_start'])) }} {{$month[date('m', strtotime($deals['deals_start']))-1]}} {{ date('Y', strtotime($deals['deals_start'])) }} : {{ date('H:i', strtotime($deals['deals_start'])) }}";
                     @endif
 
                     difference--;
@@ -270,12 +296,37 @@
                     console.log('timer m', minutesDifference);
                     console.log('timer s', secondsDifference);
 
-                    timer = hoursDifference + ": jam " + minutesDifference + " menit lagi";
+                    timer = hoursDifference + " : " + minutesDifference + " : " + secondsDifference;
                     console.log('timer', timer);
                 }
 
                 return timer;
             }
-        </script>
+		</script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#textSK').hide();
+				$('#textTP').css('display','none');
+				$('#showTP').css('margin-bottom','20px');
+				$(document).on('click', '#showSK', function() {
+					console.log('log')
+					$('#textSK').slideDown( "slow" );
+					$( "#showSK" ).replaceWith( '<div id="hideSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></i></div></div>' );
+				});
+				$(document).on('click', '#hideSK', function() {
+					$('#textSK').slideUp( "slow" );
+					$( "#hideSK" ).replaceWith( '<div id="showSK" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Syarat & Ketentuan</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></i></div></div>' );
+				});
+				$(document).on('click', '#showTP', function() {
+					$('#textTP').slideDown( "slow" );
+					$( "#showTP" ).replaceWith( '<div id="hideTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-up"></i></div></div>' );
+				});
+				$(document).on('click', '#hideTP', function() {
+					$('#textTP').slideUp( "slow" );
+					$( "#hideTP" ).replaceWith( '<div id="showTP" style="background-color: rgb(248, 249, 251);" class="title-wrapper col-md-12 clearfix ProductSans-Bold"><div class="title col-left" style="font-size: 15px; color: rgb(102, 102, 102);">Tempat Penukaran</div><div class="title" style="font-size: 15px; color: rgb(102, 102, 102);"><i class="fas fa-chevron-down"></i></div></div>' );
+					$('#showTP').css('margin-bottom','20px');
+				});
+			});
+		</script>
     @endif
 @stop

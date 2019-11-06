@@ -7,18 +7,18 @@
 @section('page-style')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet" type="text/css" />
-   <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/typeahead/typeahead.css')}}" rel="stylesheet" type="text/css" />
-	 <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.css')}}" rel="stylesheet" type="text/css" />
+	 <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
 
    <style type="text/css">
      .sort-icon{
@@ -42,20 +42,20 @@
 @endsection
 
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/typeahead/handlebars.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
-     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/handlebars.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
+     <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
     <script>
 
      $('.datepicker').datepicker({
@@ -211,8 +211,8 @@
                 fontNames: ['Open Sans'],
                 callbacks: {
                     onFocus: function() {
-                        $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                        $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/content-long.png')}}")
+                        $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+                        $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/content-long.png')}}")
                     },
                     onImageUpload: function(files){
                         sendFile(files[0], $(this).attr('id'));
@@ -322,7 +322,7 @@
             });
 
             $('.mt-repeater-add').on('click', function(event) {
-                $('.previewImage').last().attr('src', 'http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
+                $('.previewImage').last().attr('src', 'https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image');
                 $('.btnImage').last().show();
                 $('.featureImageForm').last().prop('type', 'file');
                 $('.featureImageForm').last().val('');
@@ -369,13 +369,19 @@
             /* BUTTON */
             @if (isset($detail) && empty($detail['custom_page_button_form']))
               $('.featureButton').hide();
+              $('#custom_page_button_form').val('');
+              $('#custom_page_button_form_text').val('');
             @elseif (isset($result) && empty($result['custom_page_button_form']))
               $('.featureButton').hide();
+              $('#custom_page_button_form').val('');
+              $('#custom_page_button_form_text').val('');
             @elseif (empty($detail['custom_page_button_form']) && empty($result['custom_page_button_form']))
               $('.featureButton').hide();
+              $('#custom_page_button_form').val('');
+              $('#custom_page_button_form_text').val('');
             @else
               $('.featureButton').show();
-              $('.featureButtonForm').prop('required',true);
+              $('.featureButtonForm').prop('required',false);
             @endif
 
             /* VIDEO */
@@ -429,29 +435,29 @@
             /* OUTLET */
             $('#featureOutlet').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureOutlet', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.png')}}")
             });
 
             /* VIDEO */
             $('#featureVideo').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureVideo', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/video.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/video.png')}}")
             });
 
             /* LOCATION */
             $('#featureLocation').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureLocation', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.png')}}")
             });
 
             /* PRODUCT */
             $('#featureProduct').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureProduct', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.png')}}")
             });
 
             /* BUTTON */
@@ -462,22 +468,22 @@
             /* DATE */
             $('#featureDate').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureDate', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.png')}}")
             });
 
             /* TIME */
             $('#featureTime').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureTime', state);
-                $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.png')}}")
             });
-            
+
 			 /* IMAGE HEADER */
             $('#featureImage').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureImage', state);
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/image-landscape.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape.png')}}")
             });
 
             /* PUBLISH DATE */
@@ -528,7 +534,7 @@
 
                             if (type == "square" || type == "icon") {
                                 $('#field_image_square').val("");
-                                $('#image_square').children('img').attr('src', 'http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_square').children('img').attr('src', 'https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                         }
                     };
@@ -558,56 +564,64 @@
         }
 
         $('#field_title').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/title.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/title2.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/title.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/title2.png')}}")
         })
         $('#field_post_date').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/post-date.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/post-date2.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/post-date.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/post-date2.png')}}")
         })
         $('#field_content_short').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/content-short.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news4.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/content-short.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.png')}}")
         })
         $('#field_image_square').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/image-square.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news4.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-square.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.png')}}")
         })
         $('#field_image_landscape').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/image-landscape.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape.png')}}")
         })
         $('.field_event').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/event.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.png')}}")
         })
         $('.featureVideoForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/video.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/video.png')}}")
         })
         $('.featureProductForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.png')}}")
         })
         $('.featureOutletForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.png')}}")
         })
         $("input[name='publish_type']").change(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}")
         })
         $(".field_publish_date").focus(function(){
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}")
         })
         $(document).on('focus', '#selectOutlet .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/outlet.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.png')}}")
         })
         $(document).on('focus', '#selectProduct .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('AWS_ASSET_URL') }}{{('img/news/product.png')}}")
+            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.png')}}")
+        })
+
+        $(document).on('change', '#custom_page_button_form', function (e) {
+            if (this.value == "Open Page") {
+                $('#inputValue').hide().prop('required',false);
+                $('#selectValue').show().prop('required',true);
+            } else {
+                $('#inputValue').show().prop('required',true);
+                $('#selectValue').hide().prop('required',false);
+            }
         })
     </script>
 @endsection
@@ -638,18 +652,17 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase ">New News</span>
+                <span class="caption-subject font-blue sbold uppercase ">New Custom Page</span>
             </div>
         </div>
         <div class="portlet-body m-form__group row">
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                     <div class="col-md-4">
-                        <img src="{{env('AWS_ASSET_URL') }}{{('img/news/news1.png')}}" style="width:100%" alt="tutorial" id="tutorial1">
-                        <img src="{{env('AWS_ASSET_URL') }}{{('img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
+                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
                     </div>
                     <div class="col-md-8">
                     <div class="form-body">
-                        
+
                         <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
@@ -666,6 +679,19 @@
                         <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
+                                Menu Title
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama untuk menu" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="" class="form-control" name="custom_page_menu" @if (isset($detail['custom_page_menu'])) value="{{ $detail['custom_page_menu'] }}" disabled @elseif (isset($result['custom_page_menu'])) value="{{ $result ['custom_page_menu'] }}" @else value="{{ old('custom_page_menu') }}" @endif placeholder="Menu Title" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
                                 Icon Image
                                 <span class="required" aria-required="true"> * </span>
                                 <br>
@@ -676,7 +702,7 @@
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                                    <img @if (isset($detail['custom_page_icon_image'])) src="{{env('AWS_URL')}}{{$detail['custom_page_icon_image']}}" disabled @elseif (isset($result['custom_page_icon_image'])) src="{{env('AWS_URL')}}{{$result['custom_page_icon_image']}}" @else src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" @endif alt="">
+                                    <img @if (isset($detail['custom_page_icon_image'])) src="{{env('S3_URL_API')}}{{$detail['custom_page_icon_image']}}" disabled @elseif (isset($result['custom_page_icon_image'])) src="{{env('S3_URL_API')}}{{$result['custom_page_icon_image']}}" @else src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" @endif alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_icon" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
@@ -690,6 +716,139 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- IMAGE HEADER -->
+						<div class="form-group">
+							<div class="input-icon right">
+								<label class="col-md-3 control-label">
+								Featured Image Header
+								<i class="fa fa-question-circle tooltips" data-original-title="Image Header 'ON' jika custom page memiliki image header" data-container="body"></i>
+								</label>
+							</div>
+							<div class="col-md-9">
+								<span class="m-switch">
+									<label>
+									<input name="custom_form_checkbox" type="checkbox" class="make-switch" id="featureImage" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (isset($detail['custom_page_image_header'])) checked disabled @elseif (isset($result['custom_page_image_header'])) checked @endif @if (!empty(old('custom_page_image_header'))) checked @endif>
+									<span></span>
+									</label>
+								</span>
+							</div>
+                        </div>
+
+						<div class="form-group featureImage">
+							<label class="col-md-3 control-label"></label>
+							<div class="col-md-9">
+								<div class="col-md-12">
+									<div class="form-group mt-repeater">
+										<div data-repeater-list="customform" id="sortable">
+                                            @php
+                                                if (isset($detail['custom_page_image_header'])) {
+                                                    $custom_page_image_header = $detail['custom_page_image_header'];
+                                                } elseif (isset($result['custom_page_image_header'])) {
+                                                    $custom_page_image_header = $result['custom_page_image_header'];
+                                                } else {
+                                                    $custom_page_image_header = null;
+                                                }
+                                            @endphp
+                                            @if ($custom_page_image_header != null)
+                                            @foreach ($custom_page_image_header as $item)
+                                            <div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
+                                                <div class="mt-repeater-cell" style="position: relative;">
+                                                    <div class="sort-icon">
+                                                        <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-2">
+                                                            <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
+                                                                <i class="fa fa-close"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="input-icon right">
+                                                            <label class="col-md-3 control-label">
+                                                            Image Landscape
+                                                            <span class="required" aria-required="true"> * </span>
+                                                            <br>
+                                                            <span class="required" aria-required="true"> (750*375) </span>
+                                                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
+                                                                <img class='previewImage' src="{{env('S3_URL_API')}}{{$item['custom_page_image']}}" alt="">
+                                                                </div>
+                                                                <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
+                                                                <div class='btnImage' hidden>
+                                                                    <span class="btn default btn-file">
+                                                                    <span class="fileinput-new"> Select image </span>
+                                                                    <span class="fileinput-exists"> Change </span>
+                                                                    <input type="text" accept="image/*" value="{{'id_image_header='.$item['id_custom_page_image']}}" id="field_image_landscape" class="file form-control demo featureImageForm" name="custom_page_image_header" data-jenis="landscape">
+                                                                    </span>
+                                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                            @else
+                                            <div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
+                                                <div class="mt-repeater-cell" style="position: relative;">
+                                                    <div class="sort-icon">
+                                                        <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-2">
+                                                            <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
+                                                                <i class="fa fa-close"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="input-icon right">
+                                                            <label class="col-md-3 control-label">
+                                                            Image Landscape
+                                                            <span class="required" aria-required="true"> * </span>
+                                                            <br>
+                                                            <span class="required" aria-required="true"> (750*375) </span>
+                                                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
+                                                                <img class='previewImage' src="https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                                                </div>
+                                                                <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
+                                                                <div class='btnImage'>
+                                                                    <span class="btn default btn-file">
+                                                                    <span class="fileinput-new"> Select image </span>
+                                                                    <span class="fileinput-exists"> Change </span>
+                                                                    <input type="file" accept="image/*" id="field_image_landscape" class="file form-control demo featureImageForm" name="custom_page_image_header" data-jenis="landscape">
+                                                                    </span>
+                                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        </div>
+                                        @if (!isset($detail))
+										<div class="form-action col-md-12">
+											<div class="col-md-2"></div>
+											<div class="col-md-10">
+												@if(MyHelper::hasAccess([12], $grantedFeature))
+													<a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add">
+													<i class="fa fa-plus"></i> Add New Input</a>
+												@endif
+											</div>
+										</div>
+                                        @endif
+									</div>
+								</div>
+							</div>
+						</div>
 
                         <div class="form-group">
                             <div class="input-icon right">
@@ -1001,7 +1160,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- PRODUCT -->
                         <div class="form-group">
                             <div class="input-icon right">
@@ -1041,7 +1200,6 @@
                                 <div class="col-md-9" id="selectProduct">
                                     <select id="field_product_select" class="form-control select2-multiple featureProductForm" multiple data-placeholder="Select Product" name="id_product[]">
                                         <optgroup label="Product List">
-                                            <option value="">Select Product</option>
                                             @php
                                             if (!empty($result['custom_page_product'])) {
                                                 $selectedProduct = array_pluck($result['custom_page_product'], 'id_product');
@@ -1087,7 +1245,7 @@
                                     <label class="control-label">Button Form <span class="required" aria-required="true"> * </span> </label>
                                 </div>
                                 <div class="col-md-9" id="selectProduct">
-                                    <select class="form-control" name="custom_page_button_form" @if (isset($detail)) disabled @endif>
+                                    <select class="form-control" id="custom_page_button_form" name="custom_page_button_form" @if (isset($detail)) disabled @endif>
                                         <option value="Call" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Call") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Call") selected @else @endif>Call</option>
                                         <option value="Link" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Link") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Link") selected @else @endif>Link</option>
                                         <option value="Open Page" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Open Page") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Open Page") selected @else @endif>Open Page</option>
@@ -1100,146 +1258,26 @@
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
                                 <div class="col-md-3">
-                                    <label class="control-label">Value <span class="required" aria-required="true"> * </span> </label>
+                                    <label class="control-label">Value<span class="required" aria-required=""> * </span> </label>
                                 </div>
-                                <div class="col-md-9">
-                                    <input type="text" id="field_button_value" class="form-control featureButtonForm" name="custom_page_button_form_text" @if (isset($detail['custom_page_button_form_text'])) value="{{$detail['custom_page_button_form_text']}}" disabled @elseif (isset($result['custom_page_button_form_text'])) value="{{$result['custom_page_button_form_text']}}" @else value="{{ old('custom_page_button_form_text') }}" @endif placeholder="Featured Button Value">
+                                <div id="inputValue" class="col-md-9">
+                                    <input type="text" class="form-control" name="custom_page_button_form_text" @if (isset($detail['custom_page_button_form_text'])) value="{{$detail['custom_page_button_form_text']}}" disabled @elseif (isset($result['custom_page_button_form_text'])) value="{{$result['custom_page_button_form_text']}}" @else value="{{ old('custom_page_button_form_text') }}" @endif placeholder="Featured Button Value">
+                                </div>
+                                <div hidden id="selectValue" class="col-md-9">
+                                    <select class="form-control" id="custom_page_button_form_text" name="custom_page_button_form_text" @if (isset($detail)) disabled @endif>
+                                        <option value="Home" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Home") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Home") selected @else @endif>Home</option>
+                                        <option value="News" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "News") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "News") selected @else @endif>News</option>
+                                        <option value="Product" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Product") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Product") selected @else @endif>Product</option>
+                                        <option value="Outlet" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Outlet") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Outlet") selected @else @endif>Outlet</option>
+                                        <option value="Inbox" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Inbox") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Inbox") selected @else @endif>Inbox</option>
+                                        <option value="Deals" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Deals") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Deals") selected @else @endif>Deals</option>
+                                        <option value="Contact Us" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Contact Us") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Contact Us") selected @else @endif>Contact Us</option>
+                                        <option value="Link" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Link") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Link") selected @else @endif>Link</option>
+                                        <option value="Logout" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Logout") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Logout") selected @else @endif>Logout</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-
-						<!-- IMAGE HEADER -->
-						<div class="form-group">
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-								Featured Image Header
-								<i class="fa fa-question-circle tooltips" data-original-title="Image Header 'ON' jika custom page memiliki image header" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<span class="m-switch">
-									<label>
-									<input name="custom_form_checkbox" type="checkbox" class="make-switch" id="featureImage" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (isset($detail['custom_page_image_header'])) checked disabled @elseif (isset($result['custom_page_image_header'])) checked @endif @if (!empty(old('custom_page_image_header'))) checked @endif>
-									<span></span>
-									</label>
-								</span>
-							</div>
-                        </div>
-                        
-						<div class="form-group featureImage">
-							<label class="col-md-3 control-label"></label>
-							<div class="col-md-9">
-								<div class="col-md-12">
-									<div class="form-group mt-repeater">
-										<div data-repeater-list="customform" id="sortable">
-                                            @php
-                                                if (isset($detail['custom_page_image_header'])) {
-                                                    $custom_page_image_header = $detail['custom_page_image_header'];
-                                                } elseif (isset($result['custom_page_image_header'])) {
-                                                    $custom_page_image_header = $result['custom_page_image_header'];
-                                                } else {
-                                                    $custom_page_image_header = null;
-                                                }
-                                            @endphp
-                                            @if ($custom_page_image_header != null)
-                                            @foreach ($custom_page_image_header as $item)
-                                            <div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
-                                                <div class="mt-repeater-cell" style="position: relative;">
-                                                    <div class="sort-icon">
-                                                        <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="col-md-2">
-                                                            <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
-                                                                <i class="fa fa-close"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="input-icon right">
-                                                            <label class="col-md-3 control-label">
-                                                            Image Landscape
-                                                            <span class="required" aria-required="true"> * </span>
-                                                            <br>
-                                                            <span class="required" aria-required="true"> (750*375) </span>
-                                                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                                                <img class='previewImage' src="{{env('AWS_URL')}}{{$item['custom_page_image']}}" alt="">
-                                                                </div>
-                                                                <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
-                                                                <div class='btnImage' hidden>
-                                                                    <span class="btn default btn-file">
-                                                                    <span class="fileinput-new"> Select image </span>
-                                                                    <span class="fileinput-exists"> Change </span>
-                                                                    <input type="text" accept="image/*" value="{{'id_image_header='.$item['id_custom_page_image']}}" id="field_image_landscape" class="file form-control demo featureImageForm" name="custom_page_image_header" data-jenis="landscape">
-                                                                    </span>
-                                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endforeach
-                                            @else
-                                            <div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
-                                                <div class="mt-repeater-cell" style="position: relative;">
-                                                    <div class="sort-icon">
-                                                        <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="col-md-2">
-                                                            <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
-                                                                <i class="fa fa-close"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="input-icon right">
-                                                            <label class="col-md-3 control-label">
-                                                            Image Landscape
-                                                            <span class="required" aria-required="true"> * </span>
-                                                            <br>
-                                                            <span class="required" aria-required="true"> (750*375) </span>
-                                                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                                                <img class='previewImage' src="http://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-                                                                </div>
-                                                                <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
-                                                                <div class='btnImage'>
-                                                                    <span class="btn default btn-file">
-                                                                    <span class="fileinput-new"> Select image </span>
-                                                                    <span class="fileinput-exists"> Change </span>
-                                                                    <input type="file" accept="image/*" id="field_image_landscape" class="file form-control demo featureImageForm" name="custom_page_image_header" data-jenis="landscape">
-                                                                    </span>
-                                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endif
-                                        </div>
-                                        @if (!isset($detail))
-										<div class="form-action col-md-12">
-											<div class="col-md-2"></div>
-											<div class="col-md-10">
-												@if(MyHelper::hasAccess([12], $grantedFeature))
-													<a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add">
-													<i class="fa fa-plus"></i> Add New Input</a>
-												@endif
-											</div>
-										</div>
-                                        @endif
-									</div>
-								</div>
-							</div>
-						</div>
                     </div>
                     </div>
                 </div>

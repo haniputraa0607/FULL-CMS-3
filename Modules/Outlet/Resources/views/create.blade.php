@@ -3,29 +3,29 @@
 @section('page-style')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js')}}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js')}}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js')}}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js')}}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js')}}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js')}}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
         $('.timepicker').timepicker({
             autoclose: true,
@@ -35,7 +35,7 @@
             timepicker: false
         });
     </script>
-    <script>    
+    <script>
         var map;
 
         var markers = [];
@@ -58,8 +58,8 @@
               content: '<p>Marker Location:</p>'
           });
 
-          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
-            
+          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
           var input = /** @type  {HTMLInputElement} */(
           document.getElementById('pac-input'));
 
@@ -125,7 +125,7 @@
             position: location,
             map: map
           });
-          
+
           $('#lat').val(location.lat());
           $('#lng').val(location.lng());
           markers.push(marker);
@@ -160,10 +160,10 @@
     <script type="text/javascript">
         $(document).ready(function() {
             /* BUAT NAVIGATION */
-            navigator.geolocation.getCurrentPosition(function(position){ 
+            navigator.geolocation.getCurrentPosition(function(position){
                 initialize(position.coords.latitude, position.coords.longitude);
             },
-            function (error) { 
+            function (error) {
               if (error.code == error.PERMISSION_DENIED)
                   initialize(-7.7972, 110.3688);
             });
@@ -181,7 +181,7 @@
                     data    : "_token="+token+"&id_province="+old_prov,
                     success : function(result) {
                         if (result['status'] == "success") {
-                            $('#city').prop('disabled', false); 
+                            $('#city').prop('disabled', false);
 
                             var city           = result['result'];
                             var selectCity = '<option value=""></option>';
@@ -197,7 +197,7 @@
                             $('#city').html(selectCity);
                         }
                         else {
-                            $('#city').prop('disabled', true); 
+                            $('#city').prop('disabled', true);
                         }
                     }
                 });
@@ -212,7 +212,7 @@
                     data    : "_token="+token+"&id_province="+isi,
                     success : function(result) {
                         if (result['status'] == "success") {
-                            $('#city').prop('disabled', false); 
+                            $('#city').prop('disabled', false);
 
                             var city           = result['result'];
                             var selectCity = '<option value=""></option>';
@@ -224,7 +224,7 @@
                             $('#city').html(selectCity);
                         }
                         else {
-                            $('#city').prop('disabled', true); 
+                            $('#city').prop('disabled', true);
                         }
                     }
                 });
@@ -255,7 +255,7 @@
         $(this).parent().parent().parent().find('.kelas-close').focus();
         return false;
       }
-      
+
       if ($(this).is(':checked')) {
         var check = $('input[name="ampas[]"]:checked').length;
         var count = $('.same').prop('checked', false);
@@ -264,14 +264,14 @@
         if (check == 1) {
             var all_open = $('.kelas-open');
             var array_open = [];
-            for (i = 0; i < all_open.length; i++) { 
+            for (i = 0; i < all_open.length; i++) {
               array_open.push(all_open[i]['defaultValue']);
             }
             sessionStorage.setItem("item_open", array_open);
 
             var all_close = $('.kelas-close');
             var array_close = [];
-            for (i = 0; i < all_close.length; i++) { 
+            for (i = 0; i < all_close.length; i++) {
               array_close.push(all_close[i]['defaultValue']);
             }
             sessionStorage.setItem("item_close", array_close);
@@ -279,7 +279,7 @@
 
         $('.kelas-open').val(open);
         $('.kelas-close').val(close);
-        
+
       } else {
 
           var item_open = sessionStorage.getItem("item_open");
@@ -331,7 +331,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -360,12 +360,30 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Name
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama outlet" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="outlet_name" value="{{ old('outlet_name') }}" placeholder="Outlet Name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Brand
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="select2 form-control" multiple="multiple" name="outlet_brands[]">
+                                <option value="*">All Brand</option>
+                                @foreach($brands as $brand)
+                                <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],old('brands',[]))) selected @endif>{{$brand['name_brand']}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
@@ -380,7 +398,7 @@
                             <input type="password" class="form-control" name="outlet_pin" placeholder="Outlet PIN">
                         </div>
                     </div>
-            
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -395,7 +413,7 @@
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Status
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Status outlet. Outlet tidak akan ditampilkan di aplikasi ketika status Inactive" data-container="body"></i>
                         </label>
                         <div class="col-md-9">
@@ -422,7 +440,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Province
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih provinsi letak outlet" data-container="body"></i>
                             </label>
                         </div>
@@ -439,12 +457,12 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             City
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih kota letak outlet" data-container="body"></i>
                             </label>
                         </div>
@@ -452,7 +470,7 @@
                             <select id="city" class="form-control select2-multiple" data-placeholder="Select City" disabled required>
                                 <optgroup label="Province List">
                                     <option value="">Select City</option>
-                                    
+
                                 </optgroup>
                             </select>
                         </div>
@@ -540,7 +558,31 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="deep_link" value="{{ old('deep_link') }}" placeholder="Deep link gojek">
+                            <input type="text" class="form-control" name="deep_link_gojek" value="{{ old('deep_link_gojek') }}" placeholder="Deep link gojek">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Deep Link Grab
+                            <i class="fa fa-question-circle tooltips" data-original-title="Deep link grab" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="deep_link_grab" value="{{ old('deep_link_grab') }}" placeholder="Deep link grab">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Delivery Service
+                            <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman outlet akan menampilkan ketersediaan delivery service untuk outlet" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="checkbox" name="big_order" @if(old('big_order') == '1') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="1">
                         </div>
                     </div>
 

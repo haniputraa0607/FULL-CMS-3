@@ -6,53 +6,53 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-color-pickers.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-	 <script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-color-pickers.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	 <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
 	<script>
 	function typeChange(varnya){
 		if(varnya == 'count'){
@@ -285,9 +285,6 @@
 	});
 
 		$(".file").change(function(e) {
-                widthImg  = 750;
-                heightImg = 250;
-
                 var _URL = window.URL || window.webkitURL;
                 var image, file;
 
@@ -295,7 +292,7 @@
                     image = new Image();
 
                     image.onload = function() {
-                        if (this.width == widthImg && this.height == heightImg) {
+                        if (this.width == this.height && $(".file").val().split('.').pop().toLowerCase() == 'png') {
                             // image.src = _URL.createObjectURL(file);
                         }
                         else {
@@ -304,7 +301,7 @@
                             // $('#remove_square').click()
                             // image.src = _URL.createObjectURL();
 							console.log($(this))
-							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'http://www.placehold.it/750x250/EFEFEF/AAAAAA&amp;text=no+image');
+							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'https://www.placehold.it/750x250/EFEFEF/AAAAAA&amp;text=no+image');
                         }
                     };
 
@@ -360,7 +357,7 @@
 					</div>
 				</div>
 				@if(MyHelper::hasAccess([81], $configs))
-				<div class="form-group">
+				{{-- <div class="form-group">
 					<div class="input-icon right">
 						<label class="col-md-3 control-label">
 							Retain Level Evaluation
@@ -375,7 +372,7 @@
 							</span>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 				@endif
 				<div class="form-group">
 					<label class="col-md-3 control-label">
@@ -414,7 +411,7 @@
 									</div>
 									</div>
 
-									<div class="col-md-12" style="margin-top:20px">
+									{{-- <div class="col-md-12" style="margin-top:20px">
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Text Color
@@ -426,40 +423,76 @@
 											<input type="text" name="membership_name_color" class="form-control colorpicker" value="{{$membership['membership_name_color']}}" data-format="rgb">
 										</div>
 									</div>
-									</div>
+									</div> --}}
 
 									<div class="col-md-12" style="margin-top:20px">
-									<div class="input-icon right">
-										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-											Level Image
-											<i class="fa fa-question-circle tooltips" data-original-title="Icon membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
-										    <br>
-										    <span class="required" aria-required="true"> (750*250) </span>
-										</div>
-									</div>
-									<div class="col-md-4" >
 										<div class="input-icon right">
-											<div class="fileinput fileinput-new" data-provides="fileinput">
-												<div class="fileinput-new thumbnail" style="max-width: 2500px;">
-													@if($membership['membership_image'] != "")
-														<img src="{{env('AWS_URL')}}{{$membership['membership_image']}}" alt="" />
-													@else
-														<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
-													@endif
-												</div>
+											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+												Level Image
+												<i class="fa fa-question-circle tooltips" data-original-title="Icon membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
+												<br>
+												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
+											</div>
+										</div>
+										
+										<div class="col-md-4" >
+											<div class="input-icon right">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-new thumbnail" style="max-width: 2500px;">
+														@if($membership['membership_image'] != "")
+															<img src="{{env('S3_URL_API')}}{{$membership['membership_image']}}" alt="" />
+														@else
+															<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+														@endif
+													</div>
 
-												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
-												<div class="aa">
-													<span class="btn default btn-file">
-														<span class="fileinput-new"> Select image </span>
-														<span class="fileinput-exists"> Change </span>
-														<input class="file" type="file" name="membership_image">
-													</span>
-													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
+													<div class="aa">
+														<span class="btn default btn-file">
+															<span class="fileinput-new"> Select image </span>
+															<span class="fileinput-exists"> Change </span>
+															<input class="file" accept="image/png" type="file" name="membership_image">
+														</span>
+														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+
+									<div class="col-md-12" style="margin-top:20px">
+										<div class="input-icon right">
+											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+												Next Level Image
+												<i class="fa fa-question-circle tooltips" data-original-title="Icon next level membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
+												<br>
+												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
+											</div>
+										</div>
+										
+										<div class="col-md-4" >
+											<div class="input-icon right">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-new thumbnail" style="max-width: 2500px;">
+														@if($membership['membership_next_image'] != "")
+															<img src="{{env('S3_URL_API')}}{{$membership['membership_next_image']}}" alt="" />
+														@else
+															<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+														@endif
+													</div>
+
+													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
+													<div class="aa">
+														<span class="btn default btn-file">
+															<span class="fileinput-new"> Select image </span>
+															<span class="fileinput-exists"> Change </span>
+															<input class="file" accept="image/png" type="file" name="membership_next_image">
+														</span>
+														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 
 									<div class="col-md-12" style="margin-top:20px">
@@ -485,7 +518,7 @@
 										</div>
 									</div>
 									@if(MyHelper::hasAccess([81], $configs))
-									<div class="col-md-12" style="margin-top:20px">
+									{{-- <div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 												Retain Requirement
@@ -506,7 +539,7 @@
 												</span>
 											</div>
 										</div>
-									</div>
+									</div> --}}
 									@endif
 									{{-- cek configs point --}}
 									@if(MyHelper::hasAccess([18], $configs))
@@ -705,7 +738,7 @@
 										<div class="input-icon right">
 											<div class="fileinput fileinput-new" data-provides="fileinput">
 												<div class="fileinput-new thumbnail" style="width: 200px;">
-													<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+													<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 												</div>
 
 												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
@@ -741,7 +774,7 @@
 										</div>
 									</div>
 									@if(MyHelper::hasAccess([81], $configs))
-									<div class="col-md-12" style="margin-top:20px">
+									{{-- <div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 												Retain Requirement
@@ -759,7 +792,7 @@
 												</span>
 											</div>
 										</div>
-									</div>
+									</div> --}}
 									@endif
 									{{-- cek configs point --}}
 									@if(MyHelper::hasAccess([18], $configs))

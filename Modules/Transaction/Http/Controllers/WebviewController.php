@@ -22,32 +22,32 @@ class WebviewController extends Controller
         //     return view('error', ['msg' => 'Url method is POST']);
         // }
 
-    	$data = json_decode(base64_decode($request->get('data')), true);
-    	$data['check'] = 1;
-    	$check = MyHelper::postWithBearer('transaction/detail/webview?log_save=0', $data, $bearer);
-    	if (isset($check['status']) && $check['status'] == 'success') {
-    		$data = $check['result'];
-    	} elseif (isset($check['status']) && $check['status'] == 'fail') {
+        $data = json_decode(base64_decode($request->get('data')), true);
+        $data['check'] = 1;
+        $check = MyHelper::postWithBearer('transaction/detail/webview?log_save=0', $data, $bearer);
+        if (isset($check['status']) && $check['status'] == 'success') {
+            $data = $check['result'];
+        } elseif (isset($check['status']) && $check['status'] == 'fail') {
             return view('error', ['msg' => 'Data failed']);
         } else {
             return view('error', ['msg' => 'Something went wrong, try again']);
         }
 
-    	if ($data['kind'] == 'Delivery') {
-    		$view = 'detail_transaction_deliv';
-    	}
+        if ($data['kind'] == 'Delivery') {
+            $view = 'detail_transaction_deliv';
+        }
 
-    	if ($data['kind'] == 'Pickup Order' || $data['kind'] == 'Offline') {
-    		$view = 'detail_transaction_pickup';
-    	}
+        if ($data['kind'] == 'Pickup Order' || $data['kind'] == 'Offline') {
+            $view = 'detail_transaction_pickup';
+        }
 
-    // 	if ($data['kind'] == 'Offline') {
-    // 		$view = 'detail_transaction_off';
-    // 	}
+        // 	if ($data['kind'] == 'Offline') {
+        // 		$view = 'detail_transaction_off';
+        // 	}
 
-    	if ($data['kind'] == 'Voucher') {
-    		$view = 'detail_transaction_voucher';
-    	}
+        if ($data['kind'] == 'Voucher') {
+            $view = 'detail_transaction_voucher';
+        }
 
         if (isset($data['success'])) {
             $view = 'transaction_success';
@@ -72,11 +72,11 @@ class WebviewController extends Controller
             $view = 'transaction_failed';
         }
 
-    	if (isset($data['order_label_v2'])) {
-    		$data['order_label_v2'] = explode(',', $data['order_label_v2']);
-    		$data['order_v2'] = explode(',', $data['order_v2']);
-    	}
-        return view('transaction::webview.'.$view.'')->with(compact('data'));
+        if (isset($data['order_label_v2'])) {
+            $data['order_label_v2'] = explode(',', $data['order_label_v2']);
+            $data['order_v2'] = explode(',', $data['order_v2']);
+        }
+        return view('transaction::webview.' . $view . '')->with(compact('data'));
     }
 
     public function outletSuccess(Request $request)
@@ -139,7 +139,7 @@ class WebviewController extends Controller
             $view = 'detail_point_voucher';
         }
 
-        return view('transaction::webview.'.$view.'')->with(compact('data'));
+        return view('transaction::webview.' . $view . '')->with(compact('data'));
     }
 
     public function detailBalance(Request $request)
@@ -173,7 +173,7 @@ class WebviewController extends Controller
             $view = 'detail_balance_voucher';
         }
 
-        return view('transaction::webview.'.$view.'')->with(compact('data'));
+        return view('transaction::webview.' . $view . '')->with(compact('data'));
     }
 
     public function success()
@@ -193,11 +193,11 @@ class WebviewController extends Controller
         // }
 
         $data = json_decode(base64_decode($request->get('data')), true);
-    	$check = MyHelper::postWithBearer('outletapp/order/detail/view?log_save=0', $data, $bearer);
+        $check = MyHelper::postWithBearer('outletapp/order/detail/view?log_save=0', $data, $bearer);
 
-    	if (isset($check['status']) && $check['status'] == 'success') {
-    		$data = $check['result'];
-    	} elseif (isset($check['status']) && $check['status'] == 'fail') {
+        if (isset($check['status']) && $check['status'] == 'success') {
+            $data = $check['result'];
+        } elseif (isset($check['status']) && $check['status'] == 'fail') {
             return view('error', ['msg' => 'Data failed']);
         } else {
             return view('error', ['msg' => 'Something went wrong, try again']);

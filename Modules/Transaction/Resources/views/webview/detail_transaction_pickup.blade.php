@@ -7,61 +7,61 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
+    <link href="{{ env('S3_URL_VIEW') }}{{('css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
-         @font-face {
-                font-family: "GoogleSans-Bold";
+        @font-face {
+                font-family: "ProductSans-Bold";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
         }
         @font-face {
-                font-family: "GoogleSans-BoldItalic";
+                font-family: "ProductSans-BoldItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-BoldItalic.ttf') }}');
         }
         @font-face {
-                font-family: "GoogleSans-Italic";
+                font-family: "ProductSans-Italic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Italic.ttf') }}');
         }
         @font-face {
-                font-family: "GoogleSans-Medium";
+                font-family: "ProductSans-Medium";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Medium.ttf') }}');
         }
         @font-face {
-                font-family: "GoogleSans-MediumItalic";
+                font-family: "ProductSans-MediumItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-MediumItalic.ttf') }}');
         }
         @font-face {
-                font-family: "GoogleSans";
+                font-family: "ProductSans-Regular";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('AWS_ASSET_URL') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
         }
-        .GoogleSans{
-            font-family: "GoogleSans";
+        .ProductSans{
+            font-family: "ProductSans-Regular";
         }
-        .GoogleSans-MediumItalic{
-            font-family: "GoogleSans-MediumItalic";
+        .ProductSans-MediumItalic{
+            font-family: "ProductSans-MediumItalic";
         }
-        .GoogleSans-Medium{
-            font-family: "GoogleSans-Medium";
+        .ProductSans-Medium{
+            font-family: "ProductSans-Medium";
         }
-        .GoogleSans-Italic{
-            font-family: "GoogleSans-Italic";
+        .ProductSans-Italic{
+            font-family: "ProductSans-Italic";
         }
-        .GoogleSans-BoldItalic{
-            font-family: "GoogleSans-BoldItalic";
+        .ProductSans-BoldItalic{
+            font-family: "ProductSans-BoldItalic";
         }
-        .GoogleSans-Bold{
-            font-family: "GoogleSans-Bold";
+        .ProductSans-Bold{
+            font-family: "ProductSans-Bold";
         }
 
         .kotak {
@@ -73,7 +73,7 @@
             box-shadow: 0px 1px 3.3px 0px rgba(168,168,168,1);
             /* border-radius: 3px; */
             background: #fff;
-            font-family: 'GoogleSans';
+            font-family: 'ProductSans';
         }
 
         .kotak-qr {
@@ -376,7 +376,7 @@
         <div class="kotak-full">
             <div class="container">
                 <div class="row text-center">
-                    <div class="col-12 text-16-7px text-red GoogleSans-Medium">
+                    <div class="col-12 text-16-7px text-red ProductSans-Medium">
                         @if($data['detail']['reject_at'] != null)
                             Pesanan Anda Ditolak
                         @elseif($data['detail']['taken_at'] != null)
@@ -397,17 +397,17 @@
             <div class="kotak-biasa">
                 <div class="container">
                     <div class="row text-center">
-                        <div class="col-12 GoogleSans text-15px space-nice text-grey">Detail Pengiriman</div>
-                        <div class="col-12 text-red text-21-7px space-bottom GoogleSans-Medium">GO-SEND</div>
-                        <div class="col-12 text-16-7px text-black space-bottom GoogleSans">
+                        <div class="col-12 ProductSans text-15px space-nice text-grey">Detail Pengiriman</div>
+                        <div class="col-12 text-red text-21-7px space-bottom ProductSans-Medium">GO-SEND</div>
+                        <div class="col-12 text-16-7px text-black space-bottom ProductSans">
                             {{ $data['detail']['transaction_pickup_go_send']['destination_name'] }}
                             <br>
                             {{ $data['detail']['transaction_pickup_go_send']['destination_phone'] }}
                         </div>
                         <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center GoogleSans">{{ $data['detail']['transaction_pickup_go_send']['destination_address'] }}</div>
+                            <div class="col-12 text-13-3px text-grey-white space-nice text-center ProductSans">{{ $data['detail']['transaction_pickup_go_send']['destination_address'] }}</div>
                         </div>
-                        <div class="col-12 text-15px space-bottom text-black GoogleSans">Map</div>
+                        <div class="col-12 text-15px space-bottom text-black ProductSans">Map</div>
                         <div class="col-12 space-bottom-big">
                             <div class="container">
                                 <div id="map"></div>
@@ -420,33 +420,33 @@
             <div class="kotak-biasa">
                 <div class="container">
                     <div class="row text-center">
-                        <div class="col-12 GoogleSans text-15px space-text text-grey">Kode Pickup Anda</div>
+                        <div class="col-12 ProductSans text-15px space-text text-grey">Kode Pickup Anda</div>
 
                         <div class="kotak-qr" data-toggle="modal" data-target="#exampleModal">
                             <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['qr'] }}"></div>
                         </div>
 
-                        <div class="col-12 text-red text-21-7px space-bottom space-top-all GoogleSans-Medium">{{ $data['detail']['order_id'] }}</div>
+                        <div class="col-12 text-red text-21-7px space-bottom space-top-all ProductSans-Medium">{{ $data['detail']['order_id'] }}</div>
                         @if(isset($data['admin']))
-                        <div class="col-12 text-16-7px text-black space-text GoogleSans">{{ strtoupper($data['user']['name']) }}</div>
-                        <div class="col-12 text-16-7px text-black GoogleSans space-nice">{{ $data['user']['phone'] }}</div>
+                        <div class="col-12 text-16-7px text-black space-text ProductSans">{{ strtoupper($data['user']['name']) }}</div>
+                        <div class="col-12 text-16-7px text-black ProductSans space-nice">{{ $data['user']['phone'] }}</div>
                         @endif
-                        <div class="col-12 text-16-7px text-black space-text GoogleSans">{{ $data['outlet']['outlet_name'] }}</div>
+                        <div class="col-12 text-16-7px text-black space-text ProductSans">{{ $data['outlet']['outlet_name'] }}</div>
                         <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center GoogleSans">{{ $data['outlet']['outlet_address'] }}</div>
+                            <div class="col-12 text-13-3px text-grey-white space-nice text-center ProductSans">{{ $data['outlet']['outlet_address'] }}</div>
                         </div>
                         @if ($data['detail']['pickup_type'] == 'set time')
-                            <div class="col-12 text-16-7px space-nice text-black GoogleSans">Pesanan Anda akan siap pada</div>
+                            <div class="col-12 text-16-7px space-nice text-black ProductSans">Pesanan Anda akan siap pada</div>
                         @else
-                            <div class="col-12 text-16-7px space-nice text-black GoogleSans">Pesanan Anda akan diproses pada</div>
+                            <div class="col-12 text-16-7px space-nice text-black ProductSans">Pesanan Anda akan diproses pada</div>
                         @endif
-                            <div class="col-12 text-16-7px space-text text-red GoogleSans-Medium">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y', strtotime($data['transaction_date'])) }}</div>
+                            <div class="col-12 text-16-7px space-text text-red ProductSans-Medium">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y', strtotime($data['transaction_date'])) }}</div>
                         @if ($data['detail']['pickup_type'] == 'set time')
-                            <div class="col-12 text-21-7px space-nice text-red GoogleSans-Medium">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
+                            <div class="col-12 text-21-7px space-nice text-red ProductSans-Medium">{{ date('H:i', strtotime($data['detail']['pickup_at'])) }}</div>
                         @elseif($data['detail']['pickup_type'] == 'at arrival')
-                            <div class="col-12 text-21-7px space-nice text-red GoogleSans-Medium">Saat Kedatangan</div>
+                            <div class="col-12 text-21-7px space-nice text-red ProductSans-Medium">Saat Kedatangan</div>
                         @else
-                            <div class="col-12 text-21-7px space-nice text-red GoogleSans-Medium">Saat Ini</div>
+                            <div class="col-12 text-21-7px space-nice text-red ProductSans-Medium">Saat Ini</div>
                         @endif
                     </div>
                 </div>
@@ -458,8 +458,8 @@
         <div class="kotak-biasa space-top-all">
             <div class="container">
                 <div class="row text-center">
-                    <div class="col-12 text-16-7px text-black space-text GoogleSans">{{ strtoupper($data['user']['name']) }}</div>
-                    <div class="col-12 text-16-7px text-black GoogleSans space-nice">{{ $data['user']['phone'] }}</div>
+                    <div class="col-12 text-16-7px text-black space-text ProductSans">{{ strtoupper($data['user']['name']) }}</div>
+                    <div class="col-12 text-16-7px text-black ProductSans space-nice">{{ $data['user']['phone'] }}</div>
 
                 </div>
             </div>
@@ -470,186 +470,40 @@
     <div class="kotak">
         <div class="container line-bottom">
             <div class="row space-bottom">
-                <div class="col-6 text-grey-black text-14-3px GoogleSans">{{ $data['outlet']['outlet_name'] }}</div>
-                <div class="col-6 text-right text-medium-grey text-13-3px GoogleSans">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y H:i', strtotime($data['transaction_date'])) }}</div>
+                <div class="col-6 text-grey-black text-14-3px ProductSans">{{ $data['outlet']['outlet_name'] }}</div>
+                <div class="col-6 text-right text-medium-grey text-13-3px ProductSans">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y H:i', strtotime($data['transaction_date'])) }}</div>
             </div>
             <div class="row space-text">
                 <div class="col-4"></div>
-                <div class="col-8 text-right text-medium-grey-black text-13-3px GoogleSans">#{{ $data['transaction_receipt_number'] }}</div>
+                <div class="col-8 text-right text-medium-grey-black text-13-3px ProductSans">#{{ $data['transaction_receipt_number'] }}</div>
             </div>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-12 text-13-3px text-grey-light GoogleSans">
+                <div class="col-12 text-13-3px text-grey-light ProductSans">
                     Transaksi Anda
-                    <hr style="margin:10px 0 20px 0">
                 </div>
-                @php $countQty = 0; @endphp
-                @foreach ($data['product_transaction'] as $key => $val)
-                    <div class="col-7 text-13-3px text-black GoogleSans">{{ $val['product']['product_name'] }}</div>
-                    <div class="col-5 text-right text-13-3px text-black GoogleSans">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal'])) }}</div>
-                    <div class="col-12 text-grey text-12-7px text-black-grey-light GoogleSans">{{ $val['transaction_product_qty'] }} x {{ str_replace(',', '.', number_format($val['transaction_product_price'])) }}</div>
-                    <div class="space-bottom col-8">
-                        <div class="space-bottom text-12-7px text-grey-medium-light GoogleSans-Italic" style="word-break: break-word">
-                            @if (isset($val['transaction_product_note']))
-                                {{ $val['transaction_product_note'] }}
-                            @else
-                                -
-                            @endif
-                        </div>
-                    </div>
-                    @php $countQty += $val['transaction_product_qty']; @endphp
-                @endforeach
-
-                <div class="col-12 text-12-7px text-right"><hr style="margin:0"></div>
-                <div class="col-6 text-13-3px space-bottom space-top-all text-black GoogleSans">SubTotal ({{$countQty}} item)</div>
-                <div class="col-6 text-13-3px space-bottom space-top-all text-black text-right GoogleSans">{{ str_replace(',', '.', number_format($data['transaction_subtotal'])) }}</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="kotak">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-14-3px space-top GoogleSans text-red">Detail Pembayaran <hr> </div>
-                <div class="col-6 text-13-3px space-text GoogleSans text-black">Subtotal ({{$countQty}} item)</div>
-                <div class="col-6 text-13-3px text-right space-text GoogleSans text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_subtotal'])) }}</div>
-
-                @if($data['transaction_tax'] > 0)
-                <div class="col-6 text-13-3px space-text GoogleSans text-black">Tax</div>
-                <div class="col-6 text-13-3px text-right GoogleSans text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_tax'])) }}</div>
-                @endif
-
-                @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
-                <div class="col-6 text-13-3px space-text GoogleSans text-black">Ongkos Kirim</div>
-                    @if($data['transaction_is_free'] == '1')
-                        <div class="col-6 text-13-3px text-right GoogleSans text-white"><div class="label-free">FREE</div></div>
-                    @else
-                        @if($data['transaction_shipment_go_send'] != $data['transaction_shipment'])
-                            <div class="col-6 text-13-3px text-right GoogleSans text-grey-black text-strikethrough">{{ str_replace(',', '.', number_format($data['transaction_shipment_go_send'])) }}</div>
-                            <div class="col-12 space-text text-13-3px text-right GoogleSans text-red">{{ str_replace(',', '.', number_format($data['transaction_shipment'])) }}</div>
-                        @else
-                            <div class="col-6 text-13-3px text-right GoogleSans text-grey-black">{{ str_replace(',', '.', number_format($data['transaction_shipment'])) }}</div>
-                        @endif
-                    @endif
-                @endif
-
-                @if($data['transaction_discount'] > 0)
-                <div class="col-6 text-13-3px space-text GoogleSans">Diskon</div>
-                <div class="col-6 text-13-3px text-right GoogleSans text-red">- {{ str_replace(',', '.', number_format($data['transaction_discount'])) }}</div>
-                @endif
-
-                @if(isset($data['balance']))
-                <div class="col-6 text-13-3px space-text GoogleSans">Kenangan Points</div>
-                <div class="col-6 text-13-3px text-right GoogleSans text-red">- {{ str_replace(',', '.', number_format(abs($data['balance']))) }}</div>
-                @endif
 
                 <div class="col-12 text-12-7px text-right"><hr></div>
-                <div class="col-6 text-13-3px GoogleSans text-black ">Total Pembayaran</div>
+
+                <div class="col-6 text-13-3px ProductSans text-black ">Total Pembayaran</div>
                 @if(isset($data['balance']))
-                <div class="col-6 text-13-3px text-right GoogleSans text-black">{{ str_replace(',', '.', number_format($data['transaction_grandtotal'] - $data['balance'])) }}</div>
+                <div class="col-6 text-13-3px text-right ProductSans text-black">{{ str_replace(',', '.', number_format($data['transaction_grandtotal'] - $data['balance'])) }}</div>
                 @else
-                <div class="col-6 text-13-3px text-right GoogleSans text-black">{{ str_replace(',', '.', number_format($data['transaction_grandtotal'])) }}</div>
+                <div class="col-6 text-13-3px text-right ProductSans text-black">{{ str_replace(',', '.', number_format($data['transaction_grandtotal'])) }}</div>
                 @endif
             </div>
         </div>
     </div>
-
-    @if ($data['transaction_payment_status'] == 'Completed'|| $data['transaction_payment_status'] == 'Paid')
-        <div class="kotak">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-14-3px space-top text-red GoogleSans">Metode Pembayaran <hr> </div>
-                        @if(count($data['data_payment']) > 1)
-                            @foreach($data['data_payment'] as $pay)
-                                @if(isset($pay['type']) && $pay['type'] == 'Midtrans')
-                                    @if(isset($pay['payment_type']))
-                                    <div class="col-6 text-13-3px GoogleSans text-black">
-                                        {{ ucwords(str_replace('_', ' ', $pay['payment_type'])) }}
-                                    </div>
-                                    <div class="col-6 text-13-3px text-black text-right GoogleSans">
-                                        LUNAS
-                                    </div>
-                                    @endif
-
-                                    @if(isset($pay['bank']))
-                                    <div class="col-6 text-black text-12-7px GoogleSans">
-                                        {{ ucwords(str_replace('_', ' ', $pay['bank'])) }}
-                                    </div>
-                                    @endif
-
-                                    @if(!isset($pay['bank']) && !isset($pay['payment_type']))
-                                    <div class="col-6 text-black text-13-3px">
-                                        Online Payment
-                                    </div>
-                                    <div class="col-6 text-13-3px text-black text-right GoogleSans">
-                                        LUNAS
-                                    </div>
-                                    @endif
-                                @elseif(isset($pay['type']) && $pay['type'] == 'Ovo')
-                                    <div class="col-6 text-13-3px GoogleSans text-black">
-                                        Ovo
-                                    </div>
-                                    <div class="col-6 text-13-3px text-black text-right GoogleSans">
-                                        LUNAS
-                                    </div>
-                                @endif
-                            @endforeach
-                        @else
-                        <div class="col-6 text-13-3px GoogleSans text-black">
-                            @if ($data['trasaction_payment_type'] == 'Balance')
-                                Kenangan Points
-                            @elseif ($data['trasaction_payment_type'] == 'Midtrans')
-                                @if(isset($data['data_payment'][0]['payment_type']))
-                                    {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['payment_type'])) }}
-                                @else
-                                    Online Payment
-                                @endif
-                            @elseif ($data['trasaction_payment_type'] == 'Manual')
-                                Transfer Bank
-                            @elseif ($data['trasaction_payment_type'] == 'Offline')
-                                @if(isset($data['data_payment'][0]['payment_bank']))
-                                    {{$data['data_payment'][0]['payment_bank']}}
-                                @else
-                                    TUNAI
-                                @endif
-                            @endif
-                    </div>
-                    <div class="col-6 text-13-3px text-right text-black GoogleSans">
-                        @if ($data['trasaction_payment_type'] == 'Offline')
-                            SELESAI
-                        @else
-                            LUNAS
-                        @endif
-                    </div>
-                @endif
-
-    @if (isset($data['payment']['bank']))
-        <div class="col-6 text-black text-12-7px GoogleSans">{{ $data['payment']['bank'] }}</div>
-    @endif
-
-    @if (isset($data['payment']['payment_method']))
-        <div class="col-6 text-black text-12-7px GoogleSans">{{ $data['payment']['payment_method'] }}</div>
-    @endif
-
-    @if(isset($data['data_payment'][0]['bank']))
-    <div class="col-6 text-black text-12-7px GoogleSans">
-        {{ ucwords(str_replace('_', ' ', $data['data_payment'][0]['bank'])) }}
-    </div>
-    @endif
-                </div>
-            </div>
-        </div>
-    @endif
 
     @if ($data['trasaction_type'] != 'Offline')
     <div class="kotak">
         <div class="container">
             <div class="row">
-                <div class="col-12 text-14-3px space-top text-red GoogleSans">Status Pesanan <hr> </div>
+                <div class="col-12 text-14-3px space-top text-red ProductSans">Status Pesanan <hr> </div>
                 @php $top = 5; $bg = true; @endphp
                 @if($data['detail']['reject_at'] != null)
-                    <div class="col-12 text-13-3px GoogleSans text-black">
+                    <div class="col-12 text-13-3px ProductSans text-black">
                         <div class="round-red bg-red"></div>
                         Pesanan Anda ditolak
                     </div>
@@ -662,7 +516,7 @@
                             <div class="line-vertical text-grey-medium-light">|</div>
                         </div>
                         <div class="inline vertical-top">
-                            <div class="text-11-7px GoogleSans text-black space-bottom">
+                            <div class="text-11-7px ProductSans text-black space-bottom">
                                 {{date('d', strtotime($data['detail']['reject_at']))}} {{$bulan[date('n', strtotime($data['detail']['reject_at']))]}} {{date('Y H:i', strtotime($data['detail']['reject_at']))}}
                             </div>
                         </div>
@@ -670,7 +524,7 @@
                     @php $top += 5; $bg = false; @endphp
                 @endif
                 @if($data['detail']['taken_at'] != null)
-                    <div class="col-12 text-13-3px GoogleSans text-black top-{{$top}}px">
+                    <div class="col-12 text-13-3px ProductSans text-black top-{{$top}}px">
                         <div class="round-red @if($bg) bg-red @endif"></div>
                         Pesanan Anda sudah diambil
                     </div>
@@ -684,7 +538,7 @@
                             <div class="line-vertical text-grey-medium-light">|</div>
                         </div>
                         <div class="inline vertical-top">
-                            <div class="text-11-7px GoogleSans text-black space-bottom">
+                            <div class="text-11-7px ProductSans text-black space-bottom">
                                 {{date('d F Y H:i', strtotime($data['detail']['taken_at']))}}
                             </div>
                         </div>
@@ -692,7 +546,7 @@
                     @php $top += 5; @endphp
                 @endif
                 @if($data['detail']['ready_at'] != null)
-                    <div class="col-12 text-13-3px GoogleSans text-black top-{{$top}}px">
+                    <div class="col-12 text-13-3px ProductSans text-black top-{{$top}}px">
                         <div class="round-red @if($bg) bg-red @endif"></div>
                         Pesanan Anda sudah siap
                     </div>
@@ -706,7 +560,7 @@
                             <div class="line-vertical text-grey-medium-light">|</div>
                         </div>
                         <div class="inline vertical-top">
-                            <div class="text-11-7px GoogleSans text-black space-bottom">
+                            <div class="text-11-7px ProductSans text-black space-bottom">
                                 {{date('d', strtotime($data['detail']['ready_at']))}} {{$bulan[date('n', strtotime($data['detail']['ready_at']))]}} {{date('Y H:i', strtotime($data['detail']['ready_at']))}}
                             </div>
                         </div>
@@ -714,7 +568,7 @@
                     @php $top += 5; @endphp
                 @endif
                 @if($data['detail']['receive_at'] != null)
-                    <div class="col-12 text-13-3px GoogleSans text-black top-{{$top}}px">
+                    <div class="col-12 text-13-3px ProductSans text-black top-{{$top}}px">
                         <div class="round-red @if($bg) bg-red @endif"></div>
                             Pesanan Anda sudah diterima
                     </div>
@@ -728,18 +582,18 @@
                             <div class="line-vertical text-grey-medium-light">|</div>
                         </div>
                         <div class="inline vertical-top">
-                            <div class="text-11-7px GoogleSans text-black space-bottom">
+                            <div class="text-11-7px ProductSans text-black space-bottom">
                                 {{date('d', strtotime($data['detail']['receive_at']))}} {{$bulan[date('n', strtotime($data['detail']['receive_at']))]}} {{date('Y H:i', strtotime($data['detail']['receive_at']))}}
                             </div>
                         </div>
                     </div>
                     @php $top += 5; @endphp
                 @endif
-                <div class="col-12 text-13-3px GoogleSans text-black top-{{$top}}px">
+                <div class="col-12 text-13-3px ProductSans text-black top-{{$top}}px">
                     <div class="round-red @if($bg) bg-red @endif"></div>
                     Pesanan Anda Menunggu Konfirmasi
                 </div>
-                <div class="col-12 text-11-7px GoogleSans text-black space-bottom top-{{$top}}px">
+                <div class="col-12 text-11-7px ProductSans text-black space-bottom top-{{$top}}px">
                     <div class="round-white"></div>
                     {{date('d', strtotime($data['transaction_date']))}} {{$bulan[date('n', strtotime($data['transaction_date']))]}} {{date('Y H:i', strtotime($data['transaction_date']))}}
                 </div>

@@ -6,43 +6,43 @@ $configs    		= session('configs');
  @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js') }}" type="text/javascript"></script>
 	<script>
     $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
@@ -459,7 +459,7 @@ $configs    		= session('configs');
 	$('.repeat').repeater({
         show: function () {
 			$(this).find('.type_image').hide()
-			$(this).find('img').attr('src','http://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
+			$(this).find('img').attr('src','https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
 			$(this).find('.filename').remove()
 			$(this).find('.type_file').hide()
 			$(this).find('.type_text').hide()
@@ -1142,7 +1142,7 @@ $configs    		= session('configs');
 															<div class="fileinput fileinput-new" data-provides="fileinput">
 																<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 																	@if(isset($result['contents'][$x-1]['promotion_push_image']) && $result['contents'][$x-1]['promotion_push_image'] != "")
-																		<img src="{{env('AWS_URL')}}{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
+																		<img src="{{env('S3_URL_API')}}{{$result['contents'][$x-1]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
 																	@else
 																		<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 																	@endif
@@ -1194,7 +1194,7 @@ $configs    		= session('configs');
 													<div class="form-group" id="link_push_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_push_clickto']) && $result['contents'][$x-1]['promotion_push_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 														<label for="promotion_push_link" class="control-label col-md-2">Link</label>
 														<div class="col-md-10">
-															<input type="text" placeholder="http://" class="form-control" name="promotion_push_link" id="promotion_push_link_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_push_link'])) value="{{$result['contents'][$x-1]['promotion_push_link']}}" @endif>
+															<input type="text" placeholder="https://" class="form-control" name="promotion_push_link" id="promotion_push_link_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_push_link'])) value="{{$result['contents'][$x-1]['promotion_push_link']}}" @endif>
 														</div>
 													</div>
 												</div>
@@ -1225,6 +1225,7 @@ $configs    		= session('configs');
 														<div class="col-md-10">
 															<input type="text"
 																placeholder="Inbox Subject"
+																maxlength="125"
 																class="form-control"
 																name="promotion_inbox_subject[]"
 																id="promotion_inbox_subject_{{$x}}"
@@ -1297,7 +1298,7 @@ $configs    		= session('configs');
 													<div class="form-group" id="link_inbox_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_inbox_clickto']) && $result['contents'][$x-1]['promotion_inbox_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 														<label for="promotion_inbox_link" class="control-label col-md-2">Link</label>
 														<div class="col-md-10">
-															<input type="text" placeholder="http://" class="form-control" name="promotion_inbox_link" id="promotion_inbox_link_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_inbox_link'])) value="{{$result['contents'][$x-1]['promotion_inbox_link']}}" @endif>
+															<input type="text" placeholder="https://" class="form-control" name="promotion_inbox_link" id="promotion_inbox_link_{{$x}}" @if(isset($result['contents'][$x-1]['promotion_inbox_link'])) value="{{$result['contents'][$x-1]['promotion_inbox_link']}}" @endif>
 														</div>
 													</div>
 												</div>
@@ -1395,7 +1396,7 @@ $configs    		= session('configs');
 																						@if($content['content_type'] == 'image')
 																							<img src="{{$content['content']}}" alt="">
 																						@else
-																							<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																							<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																						@endif
 																						</div>
 																						<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
@@ -1474,7 +1475,7 @@ $configs    		= session('configs');
 																			<div class="col-md-9">
 																				<div class="fileinput fileinput-new" data-provides="fileinput">
 																					<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-																					<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																					<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																					</div>
 																					<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 																					<div>
@@ -2337,7 +2338,7 @@ $configs    		= session('configs');
 												<div class="fileinput fileinput-new" data-provides="fileinput">
 													<div class="fileinput-new thumbnail" style="width: 200px; height: auto; max-height:150px; padding:0">
 														@if(isset($result['contents'][0]['promotion_push_image']) && $result['contents'][0]['promotion_push_image'] != "")
-															<img src="{{ env('AWS_URL')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
+															<img src="{{ env('S3_URL_API')}}/{{$result['contents'][0]['promotion_push_image']}}" id="autocrm_push_image" style="padding:5px;max-height:150px"/>
 														@else
 															<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" style="height:150px"/>
 														@endif
@@ -2389,7 +2390,7 @@ $configs    		= session('configs');
 										<div class="form-group" id="link_push_0" @if(isset($result['contents'][0]['promotion_push_clickto']) && $result['contents'][0]['promotion_push_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 											<label for="promotion_push_link" class="control-label col-md-2">Link</label>
 											<div class="col-md-10">
-												<input type="text" placeholder="http://" class="form-control" name="promotion_push_link[]" id="promotion_push_link_0" @if(isset($result['contents'][0]['promotion_push_link'])) value="{{$result['contents'][0]['promotion_push_link']}}" @endif>
+												<input type="text" placeholder="https://" class="form-control" name="promotion_push_link[]" id="promotion_push_link_0" @if(isset($result['contents'][0]['promotion_push_link'])) value="{{$result['contents'][0]['promotion_push_link']}}" @endif>
 											</div>
 										</div>
 									</div>
@@ -2420,6 +2421,7 @@ $configs    		= session('configs');
 											<div class="col-md-10">
 												<input type="text"
 												placeholder="Inbox Subject"
+												maxlength="125"
 												class="form-control"
 												name="promotion_inbox_subject[]"
 												id="promotion_inbox_subject_0"
@@ -2493,7 +2495,7 @@ $configs    		= session('configs');
 										<div class="form-group" id="link_inbox_0" @if(isset($result['contents'][0]['promotion_inbox_clickto']) && $result['contents'][0]['promotion_inbox_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 											<label for="promotion_inbox_link" class="control-label col-md-2">Link</label>
 											<div class="col-md-10">
-												<input type="text" placeholder="http://" class="form-control" name="promotion_inbox_link[]" id="promotion_inbox_link_0" @if(isset($result['contents'][0]['promotion_inbox_link'])) value="{{$result['contents'][0]['promotion_inbox_link']}}" @endif>
+												<input type="text" placeholder="https://" class="form-control" name="promotion_inbox_link[]" id="promotion_inbox_link_0" @if(isset($result['contents'][0]['promotion_inbox_link'])) value="{{$result['contents'][0]['promotion_inbox_link']}}" @endif>
 											</div>
 										</div>
 									</div>
@@ -2591,7 +2593,7 @@ $configs    		= session('configs');
 																			@if($content['content_type'] == 'image')
 																				<img src="{{$content['content']}}" alt="">
 																			@else
-																				<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																				<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																			@endif
 																			</div>
 																			<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
@@ -2670,7 +2672,7 @@ $configs    		= session('configs');
 																<div class="col-md-9">
 																	<div class="fileinput fileinput-new" data-provides="fileinput">
 																		<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-																		<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																		<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																		</div>
 																		<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 																		<div>

@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-    
+
     <style type="text/css">
         #recurring {
           width: 100%;
@@ -65,12 +65,12 @@
     <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
     <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-	
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -173,7 +173,7 @@
         "export": {
             "enabled": true
         }
-    
+
     });
     </script>
     <script type="text/javascript">
@@ -371,11 +371,11 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
-        
+
         <div class="portlet light bordered">
             <div class="portlet-title">
                 <div class="caption ">
@@ -415,7 +415,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
 
         <div class="portlet light bordered">
             <div class="portlet-title">
@@ -429,32 +429,32 @@
             <div class="portlet-body">
                 <h4 id="recommendation">{{$recommendation}}</h4>
             </div>
-        </div>  
-    
+        </div>
+
         <div class="portlet light bordered">
             <div class="portlet-title">
                 <div class="caption ">
                     <span class="caption-subject sbold uppercase font-blue">New Top Product in
                         <span>
                             <select id="selectmonth" name="month" class="form-control" style="width:auto; display:inline; color:#3598dc; font-size:16px; padding:0">
-                                <option value="1" @if($month == '1') selected @endif>JANUARY</option>     
-                                <option value="2" @if($month == '2') selected @endif>FEBRUARY</option>     
-                                <option value="3" @if($month == '3') selected @endif>MARCH</option>     
-                                <option value="4" @if($month == '4') selected @endif>APRIL</option>     
-                                <option value="5" @if($month == '5') selected @endif>MAY</option>     
-                                <option value="6" @if($month == '6') selected @endif>JUNE</option>     
-                                <option value="7" @if($month == '7') selected @endif>JULY</option>     
-                                <option value="8" @if($month == '8') selected @endif>AUGUST</option>     
-                                <option value="9" @if($month == '9') selected @endif>SEPTEMBER</option>     
-                                <option value="10" @if($month == '10') selected @endif>OCTOBER</option>     
-                                <option value="11" @if($month == '11') selected @endif>NOVEMBER</option>     
-                                <option value="12" @if($month == '12') selected @endif>DECEMBER</option>     
+                                <option value="1" @if($month == '1') selected @endif>JANUARY</option>
+                                <option value="2" @if($month == '2') selected @endif>FEBRUARY</option>
+                                <option value="3" @if($month == '3') selected @endif>MARCH</option>
+                                <option value="4" @if($month == '4') selected @endif>APRIL</option>
+                                <option value="5" @if($month == '5') selected @endif>MAY</option>
+                                <option value="6" @if($month == '6') selected @endif>JUNE</option>
+                                <option value="7" @if($month == '7') selected @endif>JULY</option>
+                                <option value="8" @if($month == '8') selected @endif>AUGUST</option>
+                                <option value="9" @if($month == '9') selected @endif>SEPTEMBER</option>
+                                <option value="10" @if($month == '10') selected @endif>OCTOBER</option>
+                                <option value="11" @if($month == '11') selected @endif>NOVEMBER</option>
+                                <option value="12" @if($month == '12') selected @endif>DECEMBER</option>
                             </select>
                             <select id="selectyear" name="year" class="form-control" style="width:auto; display:inline; color:#3598dc; font-size:16px; padding:0">
                                 @php $thisYear = date('Y'); @endphp
                                 @for($i = $thisYear; $i>=$minYear; $i--)
-                                    <option value="{{$i}}" @if($year == $i) selected @endif>{{$i}}</option>     
-                                @endfor    
+                                    <option value="{{$i}}" @if($year == $i) selected @endif>{{$i}}</option>
+                                @endfor
                             </select>
                     </span>
                     </span>
@@ -484,7 +484,7 @@
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
 
         <div class="portlet light bordered">
             <div class="portlet-title">
@@ -564,8 +564,8 @@
                     <div class="portlet-body form">
                         <div id="recurringTag"></div>
                     </div>
-                </div> 
-                
+                </div>
+
                 <div class="portlet light bordered">
                     <div class="portlet-title">
                         <div class="caption ">
@@ -586,7 +586,7 @@
                     <div class="portlet-body form">
                         <div id="recurring"></div>
                     </div>
-                </div>  
+                </div>
 
                 <div class="portlet light bordered">
                     <div class="portlet-title">
@@ -598,7 +598,7 @@
                         <div id="quantity"></div>
                     </div>
                 </div>
-                
+
                 <div class="portlet light bordered">
                     <div class="portlet-title">
                         <div class="caption">
@@ -623,12 +623,12 @@
                                             <td>{{ $value['total_rec'] }}</td>
                                             <td>{{ $value['total_qty'] }}</td>
                                             <td>
-                                                @php 
+                                                @php
                                                     if(!isset($id_outlet)){
                                                         $id_outlet = 0;
-                                                    } 
+                                                    }
                                                 @endphp
-                                                <a href="{{ url('report/tag/detail') }}/{{ $value['id_tag'] }}/{{ $date_start }}/{{ $date_end }}/{{ $id_outlet }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a> 
+                                                <a href="{{ url('report/tag/detail') }}/{{ $value['id_tag'] }}/{{ $date_start }}/{{ $date_end }}/{{ $id_outlet }}" data-popout="true" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -2,37 +2,37 @@
 
 @section('page-style')
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
 
-    <!-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>    
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
-    
-    <script>   
+    <!-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+
+    <script>
         $('.datepicker').datepicker({
             'format' : 'd-M-yyyy',
             'todayHighlight' : true,
             'autoclose' : true
-        }); 
+        });
     </script>
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
             var _URL = window.URL || window.webkitURL;
@@ -66,15 +66,15 @@
                     }
                     else {
                         toastr.warning("Please check dimension of your photo.");
-                        $('#imagereward').children('img').attr('src', "http://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image");
+                        $('#imagereward').children('img').attr('src', "https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image");
                         $('#fieldphoto').val("");
 
                     }
                 };
-            
+
                 image.src = _URL.createObjectURL(file);
             }
-        });    
+        });
     </script>
 @endsection
 
@@ -98,7 +98,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -113,8 +113,8 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Name  
-                            <span class="required" aria-required="true"> * </span> 
+                            Name
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama reward" data-container="body"></i>
                             </label>
                         </div>
@@ -129,7 +129,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Description
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi tentang reward yang dibuat" data-container="body"></i>
                             </label>
                         </div>
@@ -143,8 +143,8 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Point Price Coupon 
-                            <span class="required" aria-required="true"> * </span> 
+                            Point Price Coupon
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Jumlah point yang dibutuhkan untuk mendapatkan 1 kupon" data-container="body"></i>
                             </label>
                         </div>
@@ -225,12 +225,12 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Image
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar reward" data-container="body"></i>
                             <br>
                             <span class="required" aria-required="true"> (300*300) </span>
@@ -240,7 +240,7 @@
                             <div class="input-icon right">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                      <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                      <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" id="imagereward" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
@@ -248,7 +248,7 @@
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
                                         <input type="file" accept="image/*" name="reward_image" required class="file" id="fieldphoto">
-                                        
+
                                         </span>
 
                                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -262,7 +262,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Number of Winners
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Jumlah user yang akan mendapatkan reward" data-container="body"></i>
                             </label>
                         </div>
@@ -273,8 +273,8 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Get Winner by  
-                            <span class="required" aria-required="true"> * </span> 
+                            Get Winner by
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama reward" data-container="body"></i>
                             </label>
                         </div>
@@ -304,7 +304,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}

@@ -21,9 +21,17 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::any('level/delete/{id}', 'SettingController@levelDelete');
 
     Route::any('whatsapp', ['middleware' => 'config_control:74,75', 'uses' => 'SettingController@whatsApp']);
-
-    Route::any('version', 'SettingController@versionSetting');
 	
+    /* complete profile */
+    Route::any('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
+
+    /* confirmation messages */
+    Route::any('confirmation-messages','SettingController@confirmationMessages');
+
+    /*Text menu*/
+    Route::any('text_menu', 'SettingController@textMenu');
+    Route::post('text_menu/update/{category}', 'SettingController@updateTextMenu');
+
     Route::any('home', 'SettingController@homeSetting');
 	Route::any('date', 'SettingController@dateSetting');
     Route::get('{key}', 'SettingController@settingList');
@@ -49,9 +57,11 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('banner/reorder', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@reorderBanner']);
     Route::get('banner/delete/{id_banner}', ['middleware' => 'feature_control:147', 'uses' => 'SettingController@deleteBanner']);
 
-    /* complete profile */
-    Route::post('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
-    Route::post('complete-profile-success-page', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfileSuccessPage']);
+    /* featured_deal */
+    Route::post('featured_deal/create', ['middleware' => 'feature_control:145', 'uses' => 'SettingController@createFeaturedDeal']);
+    Route::post('featured_deal/update', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@updateFeaturedDeal']);
+    Route::post('featured_deal/reorder', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@reorderFeaturedDeal']);
+    Route::get('featured_deal/delete/{id_featured_deal}', ['middleware' => 'feature_control:147', 'uses' => 'SettingController@deleteFeaturedDeal']);
 
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');
@@ -60,6 +70,11 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
 {
     Route::any('setting_email', 'SettingController@settingEmail');
+});
+
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'version', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
+{
+    Route::any('/', 'VersionController@index');
 });
 
 Route::group(['prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function()

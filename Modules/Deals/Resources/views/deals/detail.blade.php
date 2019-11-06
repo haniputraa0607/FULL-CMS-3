@@ -1,47 +1,47 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <!-- <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" /> -->
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <!-- <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" /> -->
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
-@section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <!-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>    
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script> 
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>    
-    <script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
 
-<!--     <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+@section('page-script')
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <!-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+
+<!--     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 -->
-    <script>   
+    <script>
     $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
         'todayHighlight' : true,
         'autoclose' : true
-    }); 
-    $('.timepicker').timepicker(); 
+    });
+    $('.timepicker').timepicker();
     $(".form_datetime").datetimepicker({
         format: "d-M-yyyy hh:ii",
         autoclose: true,
@@ -50,12 +50,12 @@
     });
 
     </script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-   
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 language: {
@@ -71,6 +71,7 @@
                     search: "Search:",
                     zeroRecords: "No matching records found"
                 },
+                info:false,
                 buttons: [],
                 responsive: {
                     details: {
@@ -148,6 +149,22 @@
     </script>
 
     <script type="text/javascript">
+        var oldOutlet=[];
+        function redrawOutlets(list,selected,convertAll){
+            var html="";
+            if(list.length){
+                html+="<option value=\"all\">All Outlets</option>";
+            }
+            list.forEach(function(outlet){
+                html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet_code+" - "+outlet.outlet_name+"</option>";
+            });
+            $('select[name="id_outlet[]"]').html(html);
+            $('select[name="id_outlet[]"]').val(selected);
+            if(convertAll&&$('select[name="id_outlet[]"]').val().length==list.length){
+                $('select[name="id_outlet[]"]').val(['all']);
+            }
+            oldOutlet=list;
+        }
         $(document).ready(function() {
             token = '<?php echo csrf_token();?>';
 
@@ -161,18 +178,27 @@
                 if (nilai == "List Vouchers") {
                     $('#listVoucher').show();
                     $('.listVoucher').prop('required', true);
+                    $('.listVoucher').prop('disabled', false);
 
                     $('#generateVoucher').hide();
                     $('.generateVoucher').removeAttr('required');
-                    $('.generateVoucher').val('');
+                    $('.generateVoucher').prop('disabled', true);
                 }
-                else {
+                else if (nilai == "Auto generated"){
                     $('#generateVoucher').show();
                     $('.generateVoucher').prop('required', true);
+                    $('.generateVoucher').prop('disabled', false);
 
                     $('#listVoucher').hide();
                     $('.listVoucher').removeAttr('required');
-                    $('.listVoucher').val('');
+                    $('.listVoucher').prop('disabled', true);
+                }else{
+                    $('#generateVoucher').hide();
+                    $('.generateVoucher').removeAttr('required');
+                    $('.generateVoucher').prop('disabled', true);
+                    $('#listVoucher').hide();
+                    $('.listVoucher').removeAttr('required');
+                    $('.listVoucher').prop('disabled', true);
                 }
             });
 
@@ -228,7 +254,7 @@
                 else {
                     $('.dealsPromoTypeValuePrice').show();
                     $('.dealsPromoTypeValuePrice').prop('required', true);
-                    
+
                     $('.dealsPromoTypeValuePromo').hide();
                     $('.dealsPromoTypeValuePromo').removeAttr('required', true);
                 }
@@ -236,10 +262,10 @@
 
             // upload & delete image on summernote
             $('.summernote').summernote({
-                placeholder: 'Deals Content Long',
+                placeholder: true,
                 tabsize: 2,
                 height: 120,
-                toolbar: [         
+                toolbar: [
                   ['style', ['style']],
                   ['style', ['bold', 'underline', 'clear']],
                   ['color', ['color']],
@@ -249,6 +275,11 @@
                   ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
                 callbacks: {
+                    onInit: function(e) {
+                      this.placeholder
+                        ? e.editingArea.find(".note-placeholder").html(this.placeholder)
+                        : e.editingArea.remove(".note-placeholder");
+                    },
                     onImageUpload: function(files){
                         sendFile(files[0]);
                     },
@@ -281,7 +312,7 @@
                     contentType: false,
                     success: function(url) {
                         if (url['status'] == "success") {
-                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                            $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                         }
                         // document.getElementById('loadingDiv').style.display = "none";
                     },
@@ -290,7 +321,7 @@
                     }
                 })
             }
-            
+
             // $("#file").change(function(e) {
                 // var dim = realImgDimension($('#file'))
 
@@ -301,7 +332,7 @@
                 //     var dim = realImgDimension($('#file'))
 
                 //     console.log(dim)
-                    
+
                 //     if (this.width != 300 && this.height != 300) {
                 //         toastr.warning("Please check dimension of your photo.");
                 //         $('#file').val("");
@@ -324,16 +355,71 @@
                 ko.src        = cariImage
                 // load image
                 ko.onload     = function(){
-                    if (this.naturalHeight === 500 && this.naturalWidth === 500) {
+                    if (this.naturalHeight === 450 && this.naturalWidth === 600) {
                     } else {
                         mentah.attr('src', "")
                         $('#file').val("");
                         toastr.warning("Please check dimension of your photo.");
                     }
-                };                
+                };
             })
-
-           
+            @if(($conditions[0][0]['operator']??false)=="WHERE IN")
+                var collapsed=false;
+            @else
+                var collapsed=true;
+            @endif
+            function collapser(){
+                if(collapsed){
+                    $('#manualFilter input,#manualFilter select').removeAttr('disabled');
+                    $('#manualFilter').collapse('show');
+                    $('#csvFilter').collapse('hide');
+                    $('#campaign-csv-file').attr('disabled','disabled');
+                    $('input[name="csv_content"]').attr('disabled','disabled');
+                    $('#campaign-csv-file').attr('disabled','disabled');
+                }else{
+                    $('input[name="csv_content"]').removeAttr('disabled');
+                    $('#campaign-csv-file').removeAttr('disabled');
+                    $('#manualFilter').collapse('hide');
+                    $('#csvFilter').collapse('show');
+                    $('#manualFilter input,#manualFilter select').attr('disabled','disabled');
+                }
+                collapsed=!collapsed;
+            }
+            $('.collapser').on('click',collapser);
+            collapser();
+            $('select[name="id_brand"]').on('change',function(){
+                var id_brand=$('select[name="id_brand"]').val();
+                $.ajax({
+                    url:"{{url('outlet/ajax_handler')}}",
+                    method: 'GET',
+                    data: {
+                        select:['id_outlet','outlet_code','outlet_name'],
+                        condition:{
+                            rules:[
+                                {
+                                    subject:'id_brand',
+                                    parameter:id_brand,
+                                    operator:'=',
+                                }
+                            ],
+                            operator:'and'
+                        }
+                    },
+                    success: function(data){
+                        if(data.status=='success'){
+                            var value=$('select[name="id_outlet[]"]').val();
+                            var convertAll=false;
+                            if($('select[name="id_outlet[]"]').data('value')){
+                                value=$('select[name="id_outlet[]"]').data('value');
+                                $('select[name="id_outlet[]"]').data('value',false);
+                                convertAll=true;
+                            }
+                            redrawOutlets(data.result,value,convertAll);
+                        }
+                    }
+                });
+            });
+            $('select[name="id_brand"]').change();
         });
     </script>
 @endsection
@@ -358,9 +444,9 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
-    
+
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <a class="dashboard-stat dashboard-stat-v2 blue">
@@ -408,7 +494,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_used'] }}">{{ $deals[0]['deals_total_used'] }}</span> 
+                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_used'] }}">{{ $deals[0]['deals_total_used'] }}</span>
                     </div>
                     <div class="desc"> Total Used </div>
                 </div>
@@ -422,7 +508,7 @@
                 <span class="caption-subject font-blue bold uppercase">{{ $deals[0]['deals_title'] }}</span>
             </div>
             <ul class="nav nav-tabs">
-                
+
                 <li class="active" id="infoOutlet">
                     <a href="#info" data-toggle="tab" > Info </a>
                 </li>
@@ -449,6 +535,6 @@
             </div>
         </div>
     </div>
-        
-    
+
+
 @endsection

@@ -1,9 +1,9 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <style type="text/css">
         .amcharts-export-menu-top-right {
@@ -11,28 +11,28 @@
             right: 0;
         }
     </style>
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
-    
-@section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    
-    @if (isset($post))
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 
-    <script src="http://www.amcharts.com/lib/3/amcharts.js" type="text/javascript"></script>
-    <script src="http://www.amcharts.com/lib/3/serial.js" type="text/javascript"></script>
-    <script src="http://www.amcharts.com/lib/3/radar.js" type="text/javascript"></script>
-    <script src="http://www.amcharts.com/lib/3/pie.js" type="text/javascript"></script>
+@section('page-script')
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+
+    @if (isset($post))
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+
+    <script src="https://www.amcharts.com/lib/3/amcharts.js" type="text/javascript"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js" type="text/javascript"></script>
+    <script src="https://www.amcharts.com/lib/3/radar.js" type="text/javascript"></script>
+    <script src="https://www.amcharts.com/lib/3/pie.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             var point      = <?php echo empty($point['chart']['point']) ? "[]" : $point['chart']['point']; ?>;
             var pointValue = <?php echo empty($point['chart']['pointValue']) ? "[]" : $point['chart']['pointValue']; ?>;
-            
+
             var chart = AmCharts.makeChart("chartdiv", {
               "type": "serial",
               "theme": "light",
@@ -166,7 +166,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -230,7 +230,7 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <div id="chartdiv" style="height: 500px;"></div>   
+            <div id="chartdiv" style="height: 500px;"></div>
         </div>
     </div>
     <div class="portlet light bordered col-md-6">
@@ -240,7 +240,7 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <div id="chartdivpie" style="height: 500px;"></div>   
+            <div id="chartdivpie" style="height: 500px;"></div>
         </div>
     </div>
 
@@ -274,7 +274,7 @@
                             <td>
                                 <a href="{{ url('voucher/point/detail', $res['phone']) }}" class="btn blue"><i class="fa fa-search"></i></a>
                             </td>
-                            
+
                         </tr>
                     @endforeach
                 @endif

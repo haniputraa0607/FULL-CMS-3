@@ -6,26 +6,26 @@ $configs = session('configs');
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 language: {
@@ -147,7 +147,7 @@ $configs = session('configs');
 			$('#autocrm_push_clickto').val(clickto).trigger('change');
 
 			document.getElementById('autocrm_push_link').value = link;
-			document.getElementById('autocrm_push_image').src = "http://crmsys-api.staging.co.id/"+image;
+			document.getElementById('autocrm_push_image').src = "{{ env('S3_URL_API') }}"+image;
 			document.getElementById('id_autocrm_push').value = id;
 			setTimeout(function(){
 				$('#autocrm_push_id_reference').val(idreference).trigger('change');
@@ -481,7 +481,7 @@ $configs = session('configs');
 	$('.repeat').repeater({
         show: function () {
 			$(this).find('.type_image').hide()
-			$(this).find('img').attr('src','http://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
+			$(this).find('img').attr('src','https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
 			$(this).find('.filename').remove()
 			$(this).find('.type_file').hide()
 			$(this).find('.type_text').hide()
@@ -808,7 +808,7 @@ $configs = session('configs');
 										@if($data['autocrm_push_image'] == null)
 										<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" />
 										@else
-										<img src="{{ env('AWS_URL')}}{{$data['autocrm_push_image']}}" id="autocrm_push_image" />
+										<img src="{{ env('S3_URL_API')}}{{$data['autocrm_push_image']}}" id="autocrm_push_image" />
 										@endif
 									</div>
 
@@ -850,9 +850,11 @@ $configs = session('configs');
 									<option value="Logout" @if($data['autocrm_push_clickto'] == 'Logout') selected @endif>Logout</option>
 									@if(isset($deals))
 									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
+									<option value="Voucher Detail" @if($data['autocrm_push_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
 									@endif
 									@if(isset($type) && $type == 'trx')
-									<option value="Transaction" @if($data['autocrm_push_clickto'] == 'Transaction') selected @endif>Transaction</option>
+									<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
+									<option value="Transaction Detail" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
 									@endif
 								</select>
 							</div>
@@ -877,7 +879,7 @@ $configs = session('configs');
 								</label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" placeholder="http://" class="form-control" name="autocrm_push_link" value="{{$data['autocrm_push_link']}}">
+								<input type="text" placeholder="https://" class="form-control" name="autocrm_push_link" value="{{$data['autocrm_push_link']}}">
 							</div>
 						</div>
 					<hr>
@@ -954,9 +956,11 @@ $configs = session('configs');
 									<option value="Logout" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Logout") selected @endif>Logout</option>
 									@if(isset($deals))
 									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
+									<option value="Voucher Detail" @if($data['autocrm_push_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
 									@endif
 									@if(isset($type) && $type == 'trx')
 									<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
+									<option value="Transaction Detail" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
 									@endif
 								</select>
 							</div>
@@ -971,7 +975,7 @@ $configs = session('configs');
 						<div class="form-group" id="link_inbox" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 							<label for="autocrm_inbox_link" class="control-label col-md-3">Link</label>
 							<div class="col-md-9" >
-								<input type="text" placeholder="http://" class="form-control" name="autocrm_inbox_link" id="autocrm_inbox_link" @if(isset($data['autocrm_inbox_link'])) value="{{$data['autocrm_inbox_link']}}" @endif>
+								<input type="text" placeholder="https://" class="form-control" name="autocrm_inbox_link" id="autocrm_inbox_link" @if(isset($data['autocrm_inbox_link'])) value="{{$data['autocrm_inbox_link']}}" @endif>
 							</div>
 						</div>
 						<div class="form-group" id="div_inbox_content" style="margin-bottom:30px; display:none">
@@ -1117,7 +1121,7 @@ $configs = session('configs');
 																@if($content['content_type'] == 'image')
 																	<img src="{{$content['content']}}" alt="Whatsapp content image" style="max-width: 190px; max-height:190px">
 																@else
-																	<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																	<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																@endif
 																</div>
 																<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
@@ -1215,7 +1219,7 @@ $configs = session('configs');
 													<div class="col-md-8" style="padding-left:5px">
 														<div class="fileinput fileinput-new" data-provides="fileinput">
 															<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-															<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+															<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 															<div>

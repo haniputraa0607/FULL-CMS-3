@@ -6,25 +6,25 @@
 
 @section('page-style')
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <!-- <script src="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <!-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 
     <script>
          $('.datepicker').datepicker({
             'format' : 'd-M-yyyy',
             'todayHighlight' : true,
             'autoclose' : true
-        }); 
-        
+        });
+
         var number = 1;
         // display date holidays
         $(document).ready(function(){
@@ -34,7 +34,7 @@
                         '<div class="col-md-12" style="margin-bottom:15px; padding-left:0; padding-right:0" id="date_'+number+'">'+
                             '<input type="text" class="form-control datepicker" name="date_holiday[]" placeholder="Holiday Date" value="{{date("d-M-Y", strtotime($date_holiday["date"]))}}" required>'+
                         '</div>'
-                    )  
+                    )
                 @else
                     $('#new_date').append(
                         '<div class="input-group" style="margin-bottom:15px" id="date_'+number+'">'+
@@ -45,7 +45,7 @@
                                 '</a>'+
                             '</span>'+
                         '</div>'
-                    )  
+                    )
                 @endif
                 number++;
             @endforeach
@@ -53,7 +53,7 @@
                 'format' : 'd-M-yyyy',
                 'todayHighlight' : true,
                 'autoclose' : true
-            }); 
+            });
 
             //outlet
             var selected = [];
@@ -81,11 +81,11 @@
                 'format' : 'd-M-yyyy',
                 'todayHighlight' : true,
                 'autoclose' : true
-            }); 
+            });
         })
 
         // delete date holiday
-        $('#new_date').on('click', '.btn_delete_date', function(){ 
+        $('#new_date').on('click', '.btn_delete_date', function(){
 
             id = $(this).attr('data-id')
             $('#date_'+id).remove();
@@ -127,7 +127,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -143,7 +143,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Name
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Judul/ nama hari libur" data-container="body"></i>
                             </label>
                         </div>
@@ -170,7 +170,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Date
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Tanggal libur" data-container="body"></i>
                             </label>
                         </div>
@@ -187,7 +187,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Outlet
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang akan diberlakukan hari libur tersebut" data-container="body"></i>
                             </label>
                         </div>
@@ -234,5 +234,5 @@
             </form>
         </div>
     </div>
-    
+
 @endsection

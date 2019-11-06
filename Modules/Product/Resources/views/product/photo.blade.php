@@ -11,7 +11,7 @@
 				<div class="col-md-8">
 					<div class="fileinput fileinput-new" data-provides="fileinput">
 						<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-						<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+						<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 						</div>
 						<div class="fileinput-preview fileinput-exists thumbnail" id="imageproduct" style="max-width: 200px; max-height: 200px;"></div>
 						<div>
@@ -42,7 +42,7 @@
 		$show = 0;
 	@endphp
    	<form action="{{ url()->current() }}" method="POST">
- 	<div class="col-md-12" id="sortable"> 
+ 	<div class="col-md-12" id="sortable">
  	 @foreach($product as $value)
  	 	@if (!empty($value['photos']))
  	 		@php
@@ -71,7 +71,7 @@
  			@endforeach
  	   	@endif
  	 @endforeach
- 	</div> 
+ 	</div>
 
  	@if ($show == 1)
  	<div class="row deteksi" data-dis="1">
@@ -82,9 +82,6 @@
  	  	</div>
  	</div>
  	@endif
-   	</form>           
+   	</form>
 @endif
 </div>
-
-
- 

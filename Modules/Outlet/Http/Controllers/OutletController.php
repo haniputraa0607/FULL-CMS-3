@@ -11,6 +11,9 @@ use App\Lib\MyHelper;
 use Excel;
 use Validator;
 
+use \App\Exports\ArrayExport;
+use App\Imports\FirstSheetOnlyImport;
+
 class OutletController extends Controller
 {
     /**
@@ -88,6 +91,7 @@ class OutletController extends Controller
 
             // province
             $data['province'] = $this->getPropinsi();
+            $data['brands'] = MyHelper::get('brand/list')['result']??[];
 
             return view('outlet::create', $data);
         }
@@ -122,7 +126,7 @@ class OutletController extends Controller
             $post = array_filter($post);
 
             $save = MyHelper::post('outlet/create', $post);
-
+            // return $save;
             if (isset($save['status']) && $save['status'] == "success") {
                 if (isset($next)) {
                     return parent::redirect($save, 'Outlet has been created.', 'outlet/detail/'.$save['result']['outlet_code'].'#photo');
@@ -160,7 +164,8 @@ class OutletController extends Controller
                 'submenu_active' => 'outlet-list',
             ];
 
-            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code, 'qrcode' => 1]);
+            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
+            $data['brands'] = MyHelper::get('brand/list')['result']??[];
             // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
@@ -246,7 +251,7 @@ class OutletController extends Controller
 
                 $post = array_filter($post);
                 $save = MyHelper::post('outlet/update', $post);
-                // return $save;
+
                 if (isset($save['status']) && $save['status'] == "success") {
                     return parent::redirect($save, 'Outlet has been updated.', 'outlet/detail/'.$code.'#info');
                 }else {
@@ -262,6 +267,72 @@ class OutletController extends Controller
                 }
 
             }
+        }
+    }
+
+    /*
+    Manage Location
+     */
+    public function manageLocation(Request $request){
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Manage Location',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'manage-location',
+        ];
+        $page=$request->input('page')??1;
+        $data['take']=10;
+        $post=[];
+        if(session('outlet_location_filter')){
+            $post=session('outlet_location_filter');
+            $data['rule']=array_map('array_values', $post['rule']);
+            $data['operator']=$post['operator'];
+        }
+        if(session('outlet_location_take')){
+            $post['take']=session('outlet_location_take')??10;
+            $data['take']=$post['take'];
+        }
+        $post['order_field']=session('outlet_location_order_field')??'outlet_name';
+        $data['order_field']=$post['order_field'];
+        $post['order_method']=session('outlet_location_order_method')??'asc';
+        $data['order_method']=$post['order_method'];
+        $req=MyHelper::post('outlet/list?page='.$page,$post);
+        $data['total']=$req['result']['total']??0;
+        $data['outlets']=$req['result']['data']??[];
+        $data['next_page_url']=($req['result']['next_page_url']??false)?url()->current().'?page='.($page+1):null;
+        $data['prev_page_url']=$page>1?url()->current().'?page='.($page-1):null;
+        $data['outlets']=$req['result']['data']??[];
+        $data['cities']=MyHelper::get('city/list')['result']??[];
+        return view('outlet::manage_location',$data);
+    }
+
+    public function manageLocationPost(Request $request){
+        $post=$request->except('_token');
+        if($post['rule']??false){
+            session(['outlet_location_filter'=>$post]);
+            return redirect('outlet/manage-location?page=1');
+        }
+        if($post['take']??false){
+            session(['outlet_location_take'=>$post['take']]);
+            session(['outlet_location_order_method'=>$post['order_method']??'asc']);
+            session(['outlet_location_order_field'=>$post['order_field']??'outlet_name']);
+            return redirect('outlet/manage-location?page=1');
+        }
+        if($post['clear']??false){
+            session(['outlet_location_take'=>null]);
+            session(['outlet_location_filter'=>null]);
+            return redirect('outlet/manage-location?page=1');
+        }
+        // clear filter
+        session(['outlet_location_filter'=>null]);
+        // set order by last update first
+        session(['outlet_location_order_method'=>$post['order_method']??'desc']);
+        session(['outlet_location_order_field'=>$post['order_field']??'updated_at']);
+        $req=MyHelper::post('outlet/batch-update',$post);
+        if(($req['status']??false)=='success'){
+            return redirect('outlet/manage-location?page='.($post['page']??'1'))->with('success',['Update success']);
+        }else{
+            return back()->withErrors(['Something went wrong. Please try again.']);
         }
     }
 
@@ -494,8 +565,11 @@ class OutletController extends Controller
             if($request->file('import_file')){
 
                 $path = $request->file('import_file')->getRealPath();
-                $save = MyHelper::postFile('outlet/import', 'import_file', $path);
-                // dd($save);
+                $name = $request->file('import_file')->getClientOriginalName();
+                $dataimport = Excel::toArray(new FirstSheetOnlyImport(),$request->file('import_file'));
+                $dataimport = array_map(function($x){return (Object)$x;}, $dataimport[0]??[]);
+                $save = MyHelper::post('outlet/import', ['data_import' => $dataimport]);
+
                 if (isset($save['status']) && $save['status'] == "success") {
                     return parent::redirect($save, $save['message'], 'outlet/list');
                 }else {
@@ -515,16 +589,25 @@ class OutletController extends Controller
         }
     }
 
-    function exportData(Request $request) {
+    function exportForm(Request $request) {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Export Outlet',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-export',
+        ];
 
-        $outlet = MyHelper::get('outlet/export');
+        $data['brands'] = MyHelper::get('brand/list')['result']??[];
+
+        return view('outlet::export', $data);
+    }
+
+    function exportData(Request $request) {
+        $post=$request->except('_token');
+        $outlet = MyHelper::post('outlet/export',$post);
         if (isset($outlet['status']) && $outlet['status'] == "success") {
-            $data = $outlet['result'];
-            $download = Excel::create('Data_Outlets_'.date('Ymdhis'), function($excel) use ($data) {
-                $excel->sheet('Sheet 01', function($sheet) use ($data) {
-                    $sheet->fromArray($data);
-                });
-            })->download('xls');
+            $data = new ArrayExport($outlet['result'],'Outlet List');
+            return Excel::download($data,'Data_Outlets_'.date('Ymdhis').'.xls');
 
         }else {
             return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
@@ -707,5 +790,11 @@ class OutletController extends Controller
             $data['outlet'] = [];
         }
         return view('outlet::qrcode_view', $data);
+    }
+
+    public function ajaxHandler(Request $request){
+        $post=$request->except('_token');
+        $outlets=MyHelper::post('outlet/ajax_handler', $post);
+        return $outlets;
     }
 }

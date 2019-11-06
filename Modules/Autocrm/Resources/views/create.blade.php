@@ -7,32 +7,32 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	
+	<script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+
 	<script>
 	</script>
 	<script type="text/javascript">
@@ -43,7 +43,7 @@
 				placeholder: 'Email Content',
 				tabsize: 2,
 				height: 120,
-				toolbar: [         
+				toolbar: [
                   ['style', ['style']],
                   ['style', ['bold', 'underline', 'clear']],
                   ['color', ['color']],
@@ -88,7 +88,7 @@
 							$('#'+id).summernote('editor.saveRange');
 							$('#'+id).summernote('editor.restoreRange');
 							$('#'+id).summernote('editor.focus');
-                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                            $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                         }
                         // document.getElementById('loadingDiv').style.display = "none";
                     },
@@ -194,7 +194,7 @@
 				'format' : 'd-M-yyyy',
 				'todayHighlight' : true,
 				'autoclose' : true
-			}); 
+			});
 
         });
 
@@ -214,31 +214,31 @@
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_email_subject').val(textvaluebaru);
     }
-	
+
 	function addSmsContent(param){
 		var textvalue = $('#autocrm_sms_content').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_sms_content').val(textvaluebaru);
     }
-	
+
 	function addPushSubject(param){
 		var textvalue = $('#autocrm_push_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_push_subject').val(textvaluebaru);
     }
-	
+
 	function addPushContent(param){
 		var textvalue = $('#autocrm_push_content').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_push_content').val(textvaluebaru);
     }
-	
+
 	function addInboxSubject(param){
 		var textvalue = $('#autocrm_inbox_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_inbox_subject').val(textvaluebaru);
     }
-	
+
 	function addInboxContent(param){
 		var textvalue = $('#autocrm_inbox_content').val();
 
@@ -256,13 +256,13 @@
 		var textvaluebaru = textvalue+" "+param;
 		$(textarea).val(textvaluebaru);
     }
-	
+
 	function addForwardSubject(param){
 		var textvalue = $('#autocrm_forward_email_subject').val();
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_forward_email_subject').val(textvaluebaru);
     }
-	
+
 	function addForwardContent(param){
 		var textvalue = $('#autocrm_forward_email_content').val();
 
@@ -273,7 +273,7 @@
 		$('#autocrm_forward_email_content').summernote('editor.focus');
 		$('#autocrm_forward_email_content').summernote('editor.insertText', param);
     }
-	
+
 	function fetchDetail(det, type, idref=null){
 		let token  = "{{ csrf_token() }}";
 		if(det == 'Product'){
@@ -298,7 +298,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Outlet'){
 			$.ajax({
 				type : "GET",
@@ -321,7 +321,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'News'){
 			$.ajax({
 				type : "GET",
@@ -344,7 +344,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Home'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -352,7 +352,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Inbox'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -360,7 +360,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Voucher'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -368,7 +368,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Contact Us'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -376,7 +376,7 @@
 			document.getElementById('link_'+type).style.display = 'none';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Link'){
 			console.log(idref)
 			document.getElementById('atd_'+type).style.display = 'none';
@@ -385,7 +385,7 @@
 			document.getElementById('link_'+type).style.display = 'block';
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
-		
+
 		if(det == 'Logout'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
@@ -428,7 +428,7 @@
 				}
 			@endif
 		}
-		
+
 		if(apa == 'push'){
 			@if(MyHelper::hasAccess([36], $configs))
 				if(nilai=='1'){
@@ -448,7 +448,7 @@
 				}
 			@endif
 		}
-		
+
 		if(apa == 'inbox'){
 			@if(MyHelper::hasAccess([37], $configs))
 				if(nilai=='1'){
@@ -532,24 +532,24 @@
 			$('#send_at_div').show()
 			$('#send_at').empty()
 			$('#send_at').append(
-				'<div class="md-radio-inline">'+ 
-					'<div class="md-radio" >'+ 
-						'<input type="radio" id="monthly_date_radio" name="radiomonth" class="md-radiobtn" onclick="changeMonthly(this.value)" value="monthly_date">'+ 
-						'<label for="monthly_date_radio">'+ 
-						'<span></span>'+ 
-						'<span class="check"></span>'+ 
-						'<span class="box"></span> Date </label>'+ 
-					'</div>'+ 
-					'<div class="md-radio" >'+ 
-						'<input type="radio" id="monthly_day_radio" name="radiomonth" class="md-radiobtn" onclick="changeMonthly(this.value)" value="monthly_day">'+ 
-						'<label for="monthly_day_radio">'+ 
-						'<span></span>'+ 
-						'<span class="check"></span>'+ 
-						'<span class="box"></span> Day </label>'+ 
-					'</div>'+ 
+				'<div class="md-radio-inline">'+
+					'<div class="md-radio" >'+
+						'<input type="radio" id="monthly_date_radio" name="radiomonth" class="md-radiobtn" onclick="changeMonthly(this.value)" value="monthly_date">'+
+						'<label for="monthly_date_radio">'+
+						'<span></span>'+
+						'<span class="check"></span>'+
+						'<span class="box"></span> Date </label>'+
+					'</div>'+
+					'<div class="md-radio" >'+
+						'<input type="radio" id="monthly_day_radio" name="radiomonth" class="md-radiobtn" onclick="changeMonthly(this.value)" value="monthly_day">'+
+						'<label for="monthly_day_radio">'+
+						'<span></span>'+
+						'<span class="check"></span>'+
+						'<span class="box"></span> Day </label>'+
+					'</div>'+
 				'</div>'
-			)		
-		}			
+			)
+		}
 	}
 
 	function changeMonthly(param){
@@ -558,8 +558,8 @@
 				$('#monthly_day').remove();
 			}
 			$('#send_at').append(
-				'<div class="col-md-3" style="padding:0" id="monthly_date">'+ 
-					'<input type="number" class="form-control" id="monthly_date_value" placeholder="input date" min="1" name="autocrm_cron_reference[]">'+ 
+				'<div class="col-md-3" style="padding:0" id="monthly_date">'+
+					'<input type="number" class="form-control" id="monthly_date_value" placeholder="input date" min="1" name="autocrm_cron_reference[]">'+
 				'</div>'
 			)
 		}else{
@@ -568,28 +568,28 @@
 			}
 			$('#send_at').append(
 				'<div id="monthly_day">'+
-					'<label class="control-label col-md-1" style="padding-left:0; text-align:left;">Day</label>'+ 
-					'<div class="col-md-3" style="padding:0">'+ 
-						'<select name="autocrm_cron_reference[]" id="monthly_day_select" class="form-control select2" placeholder="Search Day" style="width:100%">'+ 
-							'<option value="Sunday">Sunday</option>'+ 
-							'<option value="Monday">Monday</option>'+ 
-							'<option value="Tuesday">Tuesday</option>'+ 
-							'<option value="Wednesday">Wednesday</option>'+ 
-							'<option value="Thursday">Thursday</option>'+ 
-							'<option value="Friday">Friday</option>'+ 
-							'<option value="Saturday">Saturday</option>'+ 
+					'<label class="control-label col-md-1" style="padding-left:0; text-align:left;">Day</label>'+
+					'<div class="col-md-3" style="padding:0">'+
+						'<select name="autocrm_cron_reference[]" id="monthly_day_select" class="form-control select2" placeholder="Search Day" style="width:100%">'+
+							'<option value="Sunday">Sunday</option>'+
+							'<option value="Monday">Monday</option>'+
+							'<option value="Tuesday">Tuesday</option>'+
+							'<option value="Wednesday">Wednesday</option>'+
+							'<option value="Thursday">Thursday</option>'+
+							'<option value="Friday">Friday</option>'+
+							'<option value="Saturday">Saturday</option>'+
 						'</select>'+
 					'</div>'+
-					'<label class="control-label col-md-1" style="width:65px; text-align:left;">Week</label>'+ 
-					'<div class="col-md-2" style="padding:0">'+ 
-						'<select name="autocrm_cron_reference[]" id="monthly_day_value" class="form-control select2" placeholder="Search Week" style="width:100%">'+ 
-							'<option value="1">1</option>'+ 
-							'<option value="2">2</option>'+ 
-							'<option value="3">3</option>'+ 
-							'<option value="4">4</option>'+ 
-							'<option value="5">5</option>'+ 
-						'</select>'+ 
-					'</div>'+ 
+					'<label class="control-label col-md-1" style="width:65px; text-align:left;">Week</label>'+
+					'<div class="col-md-2" style="padding:0">'+
+						'<select name="autocrm_cron_reference[]" id="monthly_day_value" class="form-control select2" placeholder="Search Week" style="width:100%">'+
+							'<option value="1">1</option>'+
+							'<option value="2">2</option>'+
+							'<option value="3">3</option>'+
+							'<option value="4">4</option>'+
+							'<option value="5">5</option>'+
+						'</select>'+
+					'</div>'+
 				'</div>'
 			)
 		}
@@ -647,7 +647,7 @@
 	$('.repeat').repeater({
         show: function () {
 			$(this).find('.type_image').hide()
-			$(this).find('img').attr('src','http://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
+			$(this).find('img').attr('src','https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
 			$(this).find('.filename').remove()
 			$(this).find('.type_file').hide()
 			$(this).find('.type_text').hide()
@@ -663,7 +663,7 @@
 		}
     });
     </script>
-	
+
 @endsection
 
 @section('content')
@@ -706,10 +706,10 @@
 						<div class="form-group">
 							<label class="col-md-3 control-label" >Auto CRM Title</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" placeholder="Auto CRM Title" name="autocrm_title" required @if(!empty(old('autocrm_title'))) value="{{old('autocrm_title')}}" @else @if(isset($result['autocrm_title']) && $result['autocrm_title'] != "") value="{{$result['autocrm_title']}}" @endif @endif> 
+								<input type="text" class="form-control" placeholder="Auto CRM Title" name="autocrm_title" required @if(!empty(old('autocrm_title'))) value="{{old('autocrm_title')}}" @else @if(isset($result['autocrm_title']) && $result['autocrm_title'] != "") value="{{$result['autocrm_title']}}" @endif @endif>
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label class="col-md-3 control-label" >Auto CRM Trigger</label>
 							<div class="col-md-9">
@@ -745,19 +745,19 @@
 								</div>
 							</div>
 						</div>
-								
+
 						<div class="form-group" id="send_at_div" style="display:none">
 							<label class="col-md-3 control-label" >Send At</label>
 							<div class="col-md-9" id="send_at">
 							</div>
 						</div>
-							
+
 					</div>
 				</div>
-				
+
 					<?php $tombolsubmit = 'hidden'; ?>
-					@include('filter') 
-					
+					@include('filter')
+
 				<div class="portlet light bordered">
 					<div class="portlet-title">
 						<div class="caption">
@@ -782,7 +782,7 @@
 										</select>
 									</div>
 								</div>
-								
+
 								<div class="form-group" id="div_email_subject" style="display:none">
 									<div class="input-icon right">
 										<label class="col-md-3 control-label">
@@ -840,7 +840,7 @@
 											<option value="0" @if(old('autocrm_sms_toogle') == '0') selected @else @if(isset($result['autocrm_sms_toogle']) && $result['autocrm_sms_toogle'] == "0") selected @endif @endif>Disabled</option>
 											<option value="1" @if(old('autocrm_sms_toogle') == '1') selected @else @if(isset($result['autocrm_sms_toogle']) && $result['autocrm_sms_toogle'] == "1") selected @endif @endif>Enabled</option>
 										</select>
-										
+
 									</div>
 								</div>
 								<div class="form-group" id="div_sms_content" style="display:none">
@@ -936,18 +936,18 @@
 										<div class="fileinput fileinput-new" data-provides="fileinput">
 											<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 												@if(isset($result['autocrm_push_image']))
-												<img src="{{env('AWS_URL')}}{{$result['autocrm_push_image']}}" id="autocrm_push_image" />
+												<img src="{{env('S3_URL_API')}}{{$result['autocrm_push_image']}}" id="autocrm_push_image" />
 												@else
 												<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" />
 												@endif
 											</div>
-												
+
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
 											<div>
 												<span class="btn default btn-file">
 													<span class="fileinput-new"> Select image </span>
 													<span class="fileinput-exists"> Change </span>
-													<input type="file"  accept="image/*" name="autocrm_push_image"> 
+													<input type="file"  accept="image/*" name="autocrm_push_image">
 												</span>
 												<a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
 											</div>
@@ -996,7 +996,7 @@
 										</label>
 									</div>
 									<div class="col-md-9">
-										<input type="text" placeholder="http://" class="form-control" name="autocrm_push_link" value="@if(isset($result['autocrm_push_link'])){{$result['autocrm_push_link']}}@endif">
+										<input type="text" placeholder="https://" class="form-control" name="autocrm_push_link" value="@if(isset($result['autocrm_push_link'])){{$result['autocrm_push_link']}}@endif">
 									</div>
 								</div>
 								<hr>
@@ -1082,7 +1082,7 @@
 										</label>
 									</div>
 									<div class="col-md-9">
-										<input type="text" placeholder="http://" class="form-control" name="autocrm_inbox_link" value="@if(isset($result['autocrm_inbox_link'])){{$result['autocrm_inbox_link']}}@endif">
+										<input type="text" placeholder="https://" class="form-control" name="autocrm_inbox_link" value="@if(isset($result['autocrm_inbox_link'])){{$result['autocrm_inbox_link']}}@endif">
 									</div>
 								</div>
 								<div class="form-group" id="div_inbox_content" style="display:none">
@@ -1223,7 +1223,7 @@
 																		@if($content['content_type'] == 'image')
 																			<img src="{{$content['content']}}" alt="Whatsapp content image" style="max-width: 190px; max-height:190px">
 																		@else
-																			<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																			<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																		@endif
 																		</div>
 																		<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
@@ -1232,9 +1232,9 @@
 																			<span class="fileinput-new"> Select image </span>
 																			<span class="fileinput-exists"> Change </span>
 																			<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																			
+
 																			</span>
-									
+
 																			<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 																		</div>
 																	</div>
@@ -1322,7 +1322,7 @@
 															<div class="col-md-8" style="padding-left:5px">
 																<div class="fileinput fileinput-new" data-provides="fileinput">
 																	<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-																	<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																	<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 																	</div>
 																	<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 																	<div>
@@ -1330,9 +1330,9 @@
 																		<span class="fileinput-new"> Select image </span>
 																		<span class="fileinput-exists"> Change </span>
 																		<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-																		
+
 																		</span>
-								
+
 																		<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 																	</div>
 																</div>
@@ -1346,7 +1346,7 @@
 											<a href="javascript:;" data-repeater-create="" class="btn btn-success mt-repeater-add">
 												<i class="fa fa-plus"></i> Add Content</a>
 											<br>
-											<br> 
+											<br>
 										</div>
 									</div>
 								@endif
@@ -1356,7 +1356,7 @@
 					</div>
 				</div>
 				@if(($sub_title == 'New Auto CRM' && MyHelper::hasAccess([121], $grantedFeature)) || ($sub_title == 'Detail Auto CRM' && MyHelper::hasAccess([122], $grantedFeature)) )
-					<label class="col-md-3 control-label" style="margin-left:15px"></label>	
+					<label class="col-md-3 control-label" style="margin-left:15px"></label>
 						{{ csrf_field() }}
 						<input hidden name="autocrm_type" value="Cron">
 						<button type="submit" class="btn blue" id="checkBtn">Save</button>

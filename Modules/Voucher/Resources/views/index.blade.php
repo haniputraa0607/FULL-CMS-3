@@ -1,17 +1,17 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -124,7 +124,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light portlet-fit bordered">
@@ -153,16 +153,16 @@
                             <td>{{ $res['voucher_name'] }}</td>
                             <td>{{ number_format($res['voucher_point'], 0) }}</td>
                             <td>{{ $res['voucher_days_valid'] }} Days</td>
-                            <td>@if(!empty($res['product'])) 
-                                    Product 
-                                @elseif (!empty($res['treatment'])) 
+                            <td>@if(!empty($res['product']))
+                                    Product
+                                @elseif (!empty($res['treatment']))
                                     Treatment
-                                @else 
+                                @else
                                     -
-                                @endif</td>                            
+                                @endif</td>
                             <td>
-                                <a href="{{ url('voucher/edit', $res['id_voucher']) }}" class="btn blue"><i class="fa fa-search"></i></a> 
-                                <a data-toggle="confirmation" data-popout="true" class="btn red delete" data-id="{{ $res['id_voucher'] }}"><i class="fa fa-trash-o"></i></a>  
+                                <a href="{{ url('voucher/edit', $res['id_voucher']) }}" class="btn blue"><i class="fa fa-search"></i></a>
+                                <a data-toggle="confirmation" data-popout="true" class="btn red delete" data-id="{{ $res['id_voucher'] }}"><i class="fa fa-trash-o"></i></a>
                             </td>
                         </tr>
                     @endforeach

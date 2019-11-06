@@ -5,7 +5,7 @@
             <div class="col-md-9">
               <div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-new thumbnail" style="width: 300px; height: 100px;">
-                      <img src="http://www.placehold.it/300x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                      <img src="https://www.placehold.it/300x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                     </div>
                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                     <br>
@@ -60,7 +60,7 @@
     <div class="portlet-body">
     	<form action="{{ url()->current() }}" method="POST">
     	  	<div class="form-body">
-                <div class="col-md-12 sortable form-group"> 
+                <div class="col-md-12 sortable form-group">
                     @foreach($advert['img_bottom'] as $knc=>$nilai)
                         <div class="portlet portlet-sortable light bordered col-md-4">
 	    	    	       	<div class="portlet-title">
@@ -80,7 +80,7 @@
 	    	    	       	</div>
 	    	    	    </div>
 	    	    	   @endforeach
-	    	    	</div> 
+	    	    	</div>
     	  	    </div>
 	  		    <div class="form-actions">
     	    	    <div class="col-md-5"></div>
@@ -91,6 +91,6 @@
     	    	      {{ csrf_field() }}
     	    	    </div>
     	    	</div>
-    	</form>  
+    	</form>
     </div>
 @endif

@@ -14,6 +14,7 @@ class WebviewDealsController extends Controller
     public function dealsDetail(Request $request, $id_deals, $deals_type)
     {
         $bearer = $request->header('Authorization');
+
         if ($bearer == "") {
             return abort(404);
         }
@@ -31,8 +32,39 @@ class WebviewDealsController extends Controller
                 'messages' => ['Deals is not found']
             ];
         }
-
+        
+        usort($data['deals'][0]['outlet_by_city'], function($a, $b) {
+            return $a['city_name'] <=> $b['city_name'];
+        });
+        
+        for ($i = 0; $i < count($data['deals'][0]['outlet_by_city']); $i++) {
+            usort($data['deals'][0]['outlet_by_city'][$i]['outlet'] ,function($a, $b) {
+                return $a['outlet_name'] <=> $b['outlet_name'];
+            });
+        }
+        
         return view('deals::deals.webview.deals_detail', $data);
     }
 
+    public function dealsClaim(Request $request, $id_deals_user)
+    {
+        $bearer = $request->header('Authorization');
+
+        if ($bearer == "") {
+            return abort(404);
+        }
+
+        $post['id_deals_user'] = $id_deals_user;
+
+        $data['deals'] = parent::getData(MyHelper::postWithBearer('deals/me', $post, $bearer));
+
+        if (empty($data['deals'])) {
+            return [
+                'status' => 'fail',
+                'messages' => ['Deals is not found']
+            ];
+        }
+
+        return view('deals::deals.webview.deals_claim', $data);
+    }
 }

@@ -11,6 +11,11 @@ use App\Lib\MyHelper;
 use Excel;
 use Session;
 
+use App\Exports\ArrayExport;
+use App\Exports\MultisheetExport;
+use App\Imports\ExcelImport;
+use App\Imports\FirstSheetOnlyImport;
+
 class ProductController extends Controller
 {
     function __construct() {
@@ -120,13 +125,14 @@ class ProductController extends Controller
         return view('product::product.import', $data);
     }
 
-    public function example() {
+    public function example()
+    {
         $listProduct = MyHelper::get('product/list');
-        $listOutlet = MyHelper::post('outlet/list', ['admin' => 1]);
+        $listOutlet = MyHelper::post('outlet/list', ['admin' => 1, 'type' => 'export']);
         $dataPrice = [];
 
         if (isset($listProduct['status']) && $listProduct['status'] == 'fail') {
-             $dataProduct = [];
+            $dataProduct = [];
         } elseif (!isset($listProduct['status'])) {
             return back()->witherrors(['Something went wrong']);
         } else {
@@ -134,7 +140,7 @@ class ProductController extends Controller
         }
 
         if (isset($listOutlet['status']) && $listOutlet['status'] == 'fail') {
-             $dataOutlet = [];
+            $dataOutlet = [];
         } elseif (!isset($listOutlet['status'])) {
             return back()->witherrors(['Something went wrong']);
         } else {
@@ -169,45 +175,43 @@ class ProductController extends Controller
             ];
 
             $dataProduct = json_decode(json_encode($dataProduct, JSON_NUMERIC_CHECK), true);
-            Excel::create('product', function($excel) use ($dataProduct) {
-                $excel->sheet('Product', function($sheet) use ($dataProduct) {
-                    $sheet->fromArray($dataProduct);
-                });
-            })->export('xls');
+            return Excel::download(new ArrayExport($dataProduct),'product');
         }
+        $excelData=[];
+        // $excelData['Product']=$dataProduct;
+        $excelData['Product']=array_map(function($x){
+            // $x['category']=$x['category']['product_category_name'];
+            $x['category']=$x['category']['id_product_category'];
+            // $x['product_purchase_limitations']=$x['product_purchase_limitations']['product_purchase_limitation'];
+            unset($x['product_purchase_limitations']);
+            return $x;
+        }, $dataProduct);
+        //return $dataOutlet;
+        foreach ($dataOutlet as $key => $value) {
+            foreach ($value['product_prices'] as $row => $price) {
+                $data = [
+                    'product_code'       => $price['product']['product_code'],
+                    'outlet_code'        => $value['outlet_code'],
+                    'product_price'      => $price['product_price'],
+                    'product_visibility' => $price['product_visibility']
+                ];
 
-        Excel::create('product', function($excel) use($dataProduct, $dataOutlet, $dataPrice){
-            $excel->sheet('Product', function($sheet) use($dataProduct){
-                $sheet->fromArray($dataProduct);
-            });
-
-            foreach ($dataOutlet as $key => $value) {
-                foreach ($value['product_prices'] as $row => $price) {
-                    $data = [
-                        'product_code'       => $price['product']['product_code'],
-                        'outlet_code'        => $value['outlet_code'],
-                        'product_price'      => $price['product_price'],
-                        'product_visibility' => $price['product_visibility']
-                    ];
-
-                    array_push($dataPrice, $data);
-                }
-
-                $excel->sheet($value['outlet_name'], function($sheet) use($dataPrice){
-                    $sheet->fromArray($dataPrice);
-                });
-                $dataPrice = [];
+                array_push($dataPrice, $data);
             }
-        })->export('xls');
+            $outlet_name = substr($value['outlet_name'],0,31);
+            $excelData[$outlet_name]=$dataPrice;
+            $dataPrice = [];
+        }
+        return Excel::download(new MultisheetExport($excelData),'products.xlsx');
     }
 
-    public function importProductSave(Request $request) {
+    public function importProductSave(Request $request)
+    {
         $post = $request->except('_token');
 
-        if($request->hasFile('import_file')){
+        if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::load($path)->get();
-
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
             if(!empty($data)){
                 $import = MyHelper::post('product/import', ['data' => $data]);
             }
@@ -247,7 +251,7 @@ class ProductController extends Controller
             $data['parent'] = $this->category();
             $tags = MyHelper::get('product/tag/list');
             $data['tags'] = parent::getData($tags);
-
+            $data['brands'] = MyHelper::get('brand/list')['result']??[];
             return view('product::product.create', $data);
         }
         else {
@@ -348,9 +352,12 @@ class ProductController extends Controller
             $tags = MyHelper::get('product/tag/list');
             $data['tags'] = parent::getData($tags);
 			$outlet = MyHelper::post('outlet/list', ['admin' => 1, 'id_product' => $data['product'][0]['id_product']]);
+            // return $outlet;
 			if (isset($outlet['status']) && $outlet['status'] == 'success') {
 				$data['outlet'] = $outlet['result'];
             }
+
+            $data['brands'] = MyHelper::get('brand/list')['result']??[];
 
             $nextId = MyHelper::get('product/next/'.$data['product'][0]['id_product']);
             if (isset($nextId['result']['product_code'])) {
@@ -864,7 +871,7 @@ class ProductController extends Controller
                 'submenu_active' => 'product-photo-default',
             ];
 
-            $data['photo'] = env('AWS_URL').'img/product/item/default.png?';
+            $data['photo'] = env('S3_URL_API').'img/product/item/default.png?';
 
             return view('product::product.photo-default', $data);
         }else{

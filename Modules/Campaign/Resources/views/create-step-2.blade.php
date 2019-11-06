@@ -1,30 +1,30 @@
 @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/table-datatables-buttons.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/table-datatables-buttons.js') }}" type="text/javascript"></script>
 
 	<script type="text/javascript">
 	function addEmailContent(param){
@@ -329,7 +329,7 @@
 	$('.repeat').repeater({
         show: function () {
 			$(this).find('.type_image').hide()
-			$(this).find('img').attr('src','http://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
+			$(this).find('img').attr('src','https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image')
 			$(this).find('.filename').remove()
 			$(this).find('.type_file').hide()
 			$(this).find('.type_text').hide()
@@ -368,8 +368,8 @@
 				</div>
 				<div class="col-md-4 mt-step-col active">
 					<div class="mt-step-number bg-white">2</div>
-					<div class="mt-step-title uppercase font-grey-cascade">Receipient & Content</div>
-					<div class="mt-step-content font-grey-cascade">Review Campaign Receipient</div>
+					<div class="mt-step-title uppercase font-grey-cascade">Recipient & Content</div>
+					<div class="mt-step-content font-grey-cascade">Review Campaign Recipient</div>
 				</div>
 				<div class="col-md-4 mt-step-col last">
 					<div class="mt-step-number bg-white">3</div>
@@ -455,7 +455,7 @@
 							<div class="col-md-8 value">: @if($result['campaign_send_at'] != ''){{date("d F Y", strtotime($result['campaign_send_at']))}}<br>&nbsp;&nbsp;{{date("H:i", strtotime($result['campaign_send_at']))}}@else Now @endif</div>
 						</div>
 						<div class="row static-info">
-							<div class="col-md-4 name">Receipient generate</div>
+							<div class="col-md-4 name">Recipient generate</div>
 							<div class="col-md-8 value">: {{$result['campaign_generate_receipient']}}</div>
 						</div>
 						@if(isset($result['campaign_rule_parents']))
@@ -545,73 +545,19 @@
 					<div class="portlet-title">
 						<div class="caption font-blue ">
 							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">Receipient From Conditions</span>
+							<span class="caption-subject bold uppercase">Recipient</span>
 						</div>
-					</div>
-					<div class="portlet-body">
-						<div class="row">
-							@if(isset($result['users']) && $result['users'] != '')
-							<table class="table table-striped table-bordered table-hover" id="sample_1">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Phone</th>
-										<th>Gender</th>
-										<th>City</th>
-										<th>Birthday</th>
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th>No</th>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Phone</th>
-										<th>Gender</th>
-										<th>City</th>
-										<th>Birthday</th>
-									</tr>
-								</tfoot>
-								<tbody>
-									@foreach($result['users'] as $key => $user)
-									<tr>
-										<td>{{$key+1}}</td>
-										<td>{{$user['name']}}</td>
-										<td>{{$user['phone']}}</td>
-										<td>{{$user['email']}}</td>
-										<td>{{$user['gender']}}</td>
-										<td>{{$user['city_name']}}</td>
-										<td>{{$user['birthday']}}</td>
-									</tr>
-									<?php
-									if(!empty($user['email'])) array_push($emails, $user['email']);
-									if(!empty($user['phone'])) array_push($phones, $user['phone']);
-									?>
-									@endforeach
-								</tbody>
-							</table>
-							@else
-								No User found with such conditions
-							@endif
+						@if($result['campaign_generate_receipient']=='Now')
+						<div class="action-btn pull-right">
+							<a href="{{url('campaign/recipient/'.$result['id_campaign'])}}" target="_blank" class="btn yellow btn-sm btn-flat">See generated recipient</a>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="portlet light bordered">
-					<div class="portlet-title">
-						<div class="caption font-blue ">
-							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">Receipient</span>
-						</div>
+						@endif
 					</div>
 					<div class="portlet-body form">
 						@if($result['campaign_generate_receipient'] != "Now")
-							<span><i>This campaign generate receipient at scheduled sending time. Enter custom receipient you wish to sent here. Those address will be added by the sending time</i><br><br> </span>
+							<span><i>You can add custom recipient (even non member email) by adding email / phone value below (separated by coma ',').</i><br><br> </span>
 						@else
-							<span><i>Email / Phone listed here is the actual receipient list of this campaign. You can add custom receipient (even non member email) by adding email / phone value below (separated by coma ',').</i><br><br> </span>
+							<span><i>You can add custom recipient (even non member email) by adding email / phone value below (separated by coma ',').</i><br><br> </span>
 						@endif
 						<div class="form-group">
 							<?php
@@ -621,14 +567,14 @@
 							@if($result['campaign_media_email'] == "Yes")
 							<div class="form-group">
 								<label>Email</label>
-								<textarea class="form-control" rows="3" name="campaign_email_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$email_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_email_more_recipient">{{old('campaign_email_more_recipient',$result['campaign_email_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple emails</p>
 							</div>
 							@endif
 							@if($result['campaign_media_sms'] == "Yes")
 							<div class="form-group">
 								<label>SMS</label>
-								<textarea class="form-control" rows="3" name="campaign_sms_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$phone_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_sms_more_recipient">{{old('campaign_sms_more_recipient',$result['campaign_sms_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple phone number</p>
 							</div>
 							@endif
@@ -636,7 +582,7 @@
 							@if($result['campaign_media_push'] == "Yes")
 							<div class="form-group">
 								<label>Push Notification</label>
-								<textarea class="form-control" rows="3" name="campaign_push_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$phone_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_push_more_recipient">{{old('campaign_push_more_recipient',$result['campaign_push_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple phone number</p>
 							</div>
 							@endif
@@ -644,7 +590,7 @@
 							@if($result['campaign_media_inbox'] == "Yes")
 							<div class="form-group">
 								<label>Inbox</label>
-								<textarea class="form-control" rows="3" name="campaign_inbox_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$phone_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_inbox_more_recipient">{{old('campaign_inbox_more_recipient',$result['campaign_inbox_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple phone number</p>
 							</div>
 							@endif
@@ -652,7 +598,7 @@
 							@if($result['campaign_media_whatsapp'] == "Yes")
 							<div class="form-group">
 								<label>WhatsApp</label>
-								<textarea class="form-control" rows="3" name="campaign_whatsapp_receipient">@if($result['campaign_generate_receipient'] == "Now"){{$phone_list}}@endif</textarea>
+								<textarea class="form-control" rows="3" name="campaign_whatsapp_more_recipient">{{old('campaign_whatsapp_more_recipient',$result['campaign_whatsapp_more_recipient'])}}</textarea>
 								<p class="help-block">Comma ( , ) separated for multiple phone number</p>
 							</div>
 							@endif
@@ -794,7 +740,7 @@
 									<div class="fileinput fileinput-new" data-provides="fileinput">
 										<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 											@if(isset($result['campaign_push_image']) && $result['campaign_push_image'] != "")
-												<img src="{{env('AWS_URL')}}{{$result['campaign_push_image']}}" id="campaign_push_image" />
+												<img src="{{env('S3_URL_API')}}{{$result['campaign_push_image']}}" id="campaign_push_image" />
 											@else
 												<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="campaign_push_image" />
 											@endif
@@ -818,9 +764,9 @@
 										<option value="Home" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Home") selected @endif>Home</option>
 										<option value="News" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "New") selected @endif>News</option>
 										<!-- <option value="Product" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Product") selected @endif>Product</option> -->
-										<option value="Order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Order") selected @endif>Order</option>
+										{{-- <option value="Order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Order") selected @endif>Order</option> --}}
 										<!-- <option value="Transaction" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Transaction") selected @endif>History</option> -->
-										<option value="History On Going" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History On Going") selected @endif>History On Going</option>
+										{{-- <option value="History On Going" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History On Going") selected @endif>History On Going</option> --}}
 										<option value="History Transaksi" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
 										<option value="History Point" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Point") selected @endif>History Point</option>
 										<option value="Outlet" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Outlet") selected @endif>Outlet</option>
@@ -828,9 +774,9 @@
 										<!-- <option value="Voucher Detail" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option> -->
 										<option value="Profil" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Profil") selected @endif>Profil</option>
 										<option value="Inbox" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-										<option value="About" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "About") selected @endif>About</option>
+										<option value="About" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "About") selected @endif>Delivery Service</option>
 										<option value="FAQ" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "FAQ") selected @endif>FAQ</option>
-										<option value="TOS" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "TOS") selected @endif>TOS</option>
+										<option value="TOS" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "TOS") selected @endif>Ketentuan Layanan</option>
 										<option value="Contact Us" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 										<option value="Link" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Link") selected @endif>Link</option>
 										<option value="Logout" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Logout") selected @endif>Logout</option>
@@ -848,7 +794,7 @@
 							<div class="form-group" id="link_push" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 								<label for="campaign_push_link" class="control-label col-md-2" style="padding-top:30px;">Link</label>
 								<div class="col-md-10" style="padding-top:30px;">
-									<input type="text" placeholder="http://" class="form-control" name="campaign_push_link" id="campaign_push_link" @if(isset($result['campaign_push_link'])) value="{{$result['campaign_push_link']}}" @endif>
+									<input type="text" placeholder="https://" class="form-control" name="campaign_push_link" id="campaign_push_link" @if(isset($result['campaign_push_link'])) value="{{$result['campaign_push_link']}}" @endif>
 								</div>
 							</div>
 						</div>
@@ -871,7 +817,7 @@
 							<div class="form-group" style="margin-bottom:30px">
 								<label class="col-md-2 control-label">Subject</label>
 								<div class="col-md-10">
-									<input type="text" placeholder="Inbox Subject" class="form-control" name="campaign_inbox_subject" id="campaign_inbox_subject" required @if(isset($result['campaign_inbox_subject']) && $result['campaign_inbox_subject'] != "") value="{{$result['campaign_inbox_subject']}}" @endif>
+									<input type="text" placeholder="Inbox Subject" maxlength="125" class="form-control" name="campaign_inbox_subject" id="campaign_inbox_subject" required @if(isset($result['campaign_inbox_subject']) && $result['campaign_inbox_subject'] != "") value="{{$result['campaign_inbox_subject']}}" @endif>
 									<br>
 									You can use this variables to display user personalized information:
 									<br><br>
@@ -892,8 +838,8 @@
 										<option value="Home" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Home") selected @endif>Home</option>
 										<option value="News" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "New") selected @endif>News</option>
 										<!-- <option value="Product" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Product") selected @endif>Product</option> -->
-										<option value="Order" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Order") selected @endif>Order</option>
-										<option value="History On Going" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History On Going") selected @endif>History On Going</option>
+										{{-- <option value="Order" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Order") selected @endif>Order</option> --}}
+										{{-- <option value="History On Going" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History On Going") selected @endif>History On Going</option> --}}
 										<option value="History Transaksi" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
 										<option value="History Point" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Point") selected @endif>History Point</option>
 										<option value="Outlet" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
@@ -901,9 +847,9 @@
 										<!-- <option value="Voucher Detail" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option> -->
 										<option value="Profil" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Profil") selected @endif>Profil</option>
 										<!-- <option value="Inbox" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Inbox") selected @endif>Inbox</option> -->
-										<option value="About" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "About") selected @endif>About</option>
+										<option value="About" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "About") selected @endif>Delivery Service</option>
 										<option value="FAQ" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
-										<option value="TOS" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "TOS") selected @endif>TOS</option>
+										<option value="TOS" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "TOS") selected @endif>Ketentuan Layanan</option>
 										<option value="Contact Us" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 										<option value="Link" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Link") selected @endif>Link</option>
 										<option value="Logout" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Logout") selected @endif>Logout</option>
@@ -921,7 +867,7 @@
 							<div class="form-group" id="link_inbox" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Link") style="display:block;" @else style="display:none;" @endif>
 								<label for="campaign_inbox_link" class="control-label col-md-2" style="padding-top:30px;">Link</label>
 								<div class="col-md-10" style="padding-top:30px;">
-									<input type="text" placeholder="http://" class="form-control" name="campaign_inbox_link" id="campaign_inbox_link" @if(isset($result['campaign_inbox_link'])) value="{{$result['campaign_inbox_link']}}" @endif>
+									<input type="text" placeholder="https://" class="form-control" name="campaign_inbox_link" id="campaign_inbox_link" @if(isset($result['campaign_inbox_link'])) value="{{$result['campaign_inbox_link']}}" @endif>
 								</div>
 							</div>
 							<div class="form-group" id="div_inbox_content" style="margin-bottom:30px; display:none">
@@ -1028,7 +974,7 @@
 															@if($content['content_type'] == 'image')
 																<img src="{{$content['content']}}" alt="">
 															@else
-																<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+																<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 															@endif
 															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
@@ -1107,7 +1053,7 @@
 												<div class="col-md-9">
 													<div class="fileinput fileinput-new" data-provides="fileinput">
 														<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-														<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+														<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 														</div>
 														<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
 														<div>

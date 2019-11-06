@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
         .repeater-btn-remove{
@@ -24,31 +24,31 @@
 @endsection
 
 @section('page-plugin')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>    
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>    
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('js/prices.js')}}"></script>
-    
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+
     <script type="text/javascript">
         $('.datepicker').datepicker({
             'format' : 'd-M-yyyy',
             'todayHighlight' : true,
             'autoclose' : true
-        }); 
+        });
         $('.timepicker').timepicker();
 
-    
+
         $(".form_datetime").datetimepicker({
             format: "d-M-yyyy hh:ii",
             autoclose: true,
@@ -77,9 +77,9 @@
                 }
             },
         });
-        
+
         $( ".mt-repeater" ).on( "keyup", ".price", numberFormat);
-    
+
         $(document).ready(function() {
             var _URL = window.URL || window.webkitURL;
 
@@ -93,7 +93,7 @@
                 });
             });
             token = '<?php echo csrf_token();?>';
-            
+
             /* TYPE VOUCHER */
             $('.voucherType').click(function() {
                 // tampil duluk
@@ -149,9 +149,9 @@
             $(document).on('click', '.dealsPromoType', function() {
                 var nilai = $(this).val();
                 var parent = $(this).parents('.promo-type');
-                
+
                 parent.find('.dealsPromoTypeShow').show();
-                
+
                 if (nilai == "promoid") {
                     parent.find('.dealsPromoTypeValuePromo').show();
                     parent.find('.dealsPromoTypeValuePromo').prop('required', true);
@@ -167,7 +167,7 @@
                 else if (nilai == "nominal") {
                     parent.find('.dealsPromoTypeValuePrice').show();
                     parent.find('.dealsPromoTypeValuePrice').prop('required', true);
-                    
+
                     parent.find('.dealsPromoTypeValuePromo').val('');
                     parent.find('.dealsPromoTypeValuePromo').hide();
                     parent.find('.dealsPromoTypeValuePromo').removeAttr('required', true);
@@ -180,7 +180,7 @@
                     parent.find('.dealsPromoTypeValueItem').show();
                     parent.find('.dealsPromoTypeValueItem').prop('required', true);
                     parent.find('.select2-container').show();
-                    
+
                     parent.find('.dealsPromoTypeValuePrice').val('');
                     parent.find('.dealsPromoTypeValuePrice').hide();
                     parent.find('.dealsPromoTypeValuePrice').removeAttr('required', true);
@@ -240,13 +240,13 @@
             });
         });
 
-    
+
         // upload & delete image on summernote
         $('.summernote').summernote({
             placeholder: 'Deals Content Long',
             tabsize: 2,
             height: 120,
-            toolbar: [         
+            toolbar: [
               ['style', ['style']],
               ['style', ['bold', 'underline', 'clear']],
               ['color', ['color']],
@@ -288,7 +288,7 @@
                 contentType: false,
                 success: function(url) {
                     if (url['status'] == "success") {
-                        $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);  
+                        $('#field_content_long').summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
                     }
                     // document.getElementById('loadingDiv').style.display = "none";
                 },
@@ -321,7 +321,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -336,8 +336,8 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Title  
-                            <span class="required" aria-required="true"> * </span> 
+                            Title
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Judul deals" data-container="body"></i>
                             </label>
                         </div>
@@ -351,7 +351,7 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Second Title  
+                            Second Title
                             <i class="fa fa-question-circle tooltips" data-original-title="Sub judul deals jika ada" data-container="body"></i>
                             </label>
                         </div>
@@ -361,12 +361,12 @@
                             </div>
                         </div>
                     </div>
-                  
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Long
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang deals yang dibuat" data-container="body"></i>
                             </label>
                         </div>
@@ -410,7 +410,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Publish Periode <span class="required" aria-required="true"> * </span> </label>
                         <div class="col-md-4">
@@ -459,7 +459,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     {{-- form repeater --}}
         <div class="mt-repeater repeater-radio" style="margin-top: 30px; margin-bottom: 30px;">
             <div data-repeater-list="voucher_subscriptions">
@@ -474,7 +474,7 @@
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Promo Type
-                                <span class="required" aria-required="true"> * </span>  
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Tipe promosi berdasarkan Promo ID, nominal, atau produk promo" data-container="body"></i>
                                 </label>
                             </div>
@@ -517,7 +517,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
                             </div>
                         </div>
                         <div class="dealsPromoTypeShow" style="display: none;">
@@ -526,7 +526,7 @@
                                     <input type="text" class="form-control dealsPromoTypeValuePromo" name="deals_promo_id_promoid" placeholder="Input Promo ID">
 
                                     <input type="text" class="form-control dealsPromoTypeValuePrice price" name="deals_promo_id_nominal" placeholder="Input nominal">
-                                    
+
                                     <select class="form-control select2 dealsPromoTypeValueItem" name="deals_promo_id_free_item" data-placeholder="Select Item">
                                         @if (!empty($products))
                                             @foreach ($products as $product)
@@ -538,12 +538,12 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="col-md-offset-3 col-md-9">
                             <label class="col-md-3 control-label">
                                 Voucher Qty
-                                <span class="required" aria-required="true"> * </span>  
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Jumlah voucher dalam 1 tipe promo" data-container="body"></i>
                             </label>
                             <div class="col-md-9">
@@ -555,7 +555,7 @@
                         <div class="col-md-offset-3 col-md-9">
                             <label class="col-md-3 control-label">
                                 Voucher Start
-                                <span class="required" aria-required="true"> * </span>  
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Berapa hari voucher akan aktif semenjak deals diklaim" data-container="body"></i>
                             </label>
                             <div class="col-md-4">
@@ -572,7 +572,7 @@
                         <div class="col-md-offset-3 col-md-9">
                             <label class="col-md-3 control-label">
                                 Voucher End
-                                <span class="required" aria-required="true"> * </span>  
+                                <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Berapa hari voucher akan kadaluwarsa semenjak deals diklaim" data-container="body"></i>
                             </label>
                             <div class="col-md-4">
@@ -595,12 +595,12 @@
         </div>
 
                     {{-- end of form repeater --}}
-                    
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Image
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                             <br>
                             <span class="required" aria-required="true"> (300*300) </span>
@@ -610,7 +610,7 @@
                             <div class="input-icon right">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                      <img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                      <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
@@ -618,7 +618,7 @@
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
                                         <input type="file" accept="image/*" name="deals_image" required id="file">
-                                        
+
                                         </span>
 
                                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -632,7 +632,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Outlet Available
-                            <span class="required" aria-required="true"> * </span>  
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
                             </label>
                         </div>
@@ -651,10 +651,10 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- include deals subscription form -->
                     @include('deals::subscription.deals_subscription_form')
-                    
+
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}

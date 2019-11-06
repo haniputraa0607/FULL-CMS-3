@@ -6,20 +6,20 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 
 	<style type="text/css">
 		.click-to{
@@ -36,27 +36,27 @@
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
 	<script>
 	function hapus1(value){
 		swal({
@@ -105,7 +105,7 @@
 	function addGreetingReplace(param){
 		var textvalue = $('#txt_greeting').val();
 		var textvaluebaru = textvalue+" "+param;
-		$('#txt_greeting').val(textvaluebaru);
+		$('#txt_greeting').val(textvaluebaru.substring(0,25));
     }
 
 	function addGreetingReplace2(param){
@@ -139,8 +139,14 @@
     // banner: re-order image
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
+    // featured deals
+    $( "#sortable2" ).sortable();
+    $( "#sortable2" ).disableSelection();
 
     $(document).ready(function() {
+    	$('#txt_greeting').on('keyup',function(){
+    		$(this).val($(this).val().substring(0,25));
+    	});
 		/* on chrome */
     	$('#modalBanner').on('shown.bs.modal', function () {
     		$('#modalBanner .select2').select2({ dropdownParent: $("#modalBanner .modal-body") });
@@ -212,6 +218,8 @@
 		var url     = $(this).data('url');
 		var image   = $(this).data('img');
 		var type    = $(this).data('type');
+		var banner_start	= $(this).data('start');
+		var banner_end		= $(this).data('end');
 
     	$('#modalBannerUpdate').on('shown.bs.modal', function () {
     		// on chrome
@@ -222,6 +230,8 @@
 			$('#modalBannerUpdate .click-to-news').val(id_news).trigger('change');
 			$('#modalBannerUpdate .click-to-url').val(url);
 			$('#edit-banner-img').attr('src', image);
+			$('#banner_start').val(banner_start);
+			$('#banner_end').val(banner_end);
 
 			if (url != "") {
 				if (type == 'general') {
@@ -243,6 +253,38 @@
 			url = "";
     	});
 
+    });
+
+    $('#featured_deals .btn-edit').click(function() {
+		var id         = $(this).data('id');
+		var end_date   = $(this).data('end-date');
+		var start_date = $(this).data('start-date');
+		var id_deals   = $(this).data('id-deals');
+		var deals_title   = $(this).data('deals-title');
+
+		// assign value to form
+		$('#id_featured_deals').val(id);
+		$('#end_date').val(end_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#start_date').val(start_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#id_deals').find('option').first().attr('value',id_deals).text(deals_title);
+		$('#id_deals').select2().trigger('change');
+    });
+
+	$('.datetime').datetimepicker({
+        format: "dd M yyyy hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        minuteStep:1
     });
 
     // clear banner edit form when modal close
@@ -272,9 +314,28 @@
 		});
     });
 
+    // banner: delete
+    $('#featured_deals .btn-delete').click(function() {
+		var id 		= $(this).data('id');
+		var link 	= "{{ url('setting/featured_deal/delete') }}/" + id;
+		swal({
+		  title: "Are you sure want to delete this featured deals ? ",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "Yes, delete it",
+		  closeOnConfirm: false
+		},
+		function(){
+			window.location = link;
+		});
+    });
+
 	$(".file-splash").change(function(e) {
 		var widthImg  = 1080;
 		var heightImg = 1920;
+		var widthImg2  = 540;
+		var heightImg2 = 960;
 
 		var _URL = window.URL || window.webkitURL;
 		var image, file;
@@ -283,7 +344,7 @@
 			image = new Image();
 
 			image.onload = function() {
-				if (this.width == widthImg && this.height == heightImg) {
+				if ((this.width == widthImg && this.height == heightImg)||(this.width == widthImg2 && this.height == heightImg2)) {
 					// image.src = _URL.createObjectURL(file);
 				}
 				else {
@@ -293,7 +354,7 @@
 					// image.src = _URL.createObjectURL();
 
 					$('#field_splash').val("");
-					$('#div_splash').children('img').attr('src', 'http://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
+					$('#div_splash').children('img').attr('src', 'https://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
 
 					console.log($(this).val())
 					// console.log(document.getElementsByName('news_image_luar'))
@@ -303,6 +364,12 @@
 			image.src = _URL.createObjectURL(file);
 		}
 
+	});
+
+
+	$('.nav-tabs a').on('shown.bs.tab', function(){
+		var href=$(this).attr('href');
+	    window.history.pushState(href, href, "{{url()->current()}}"+href);
 	});
 
 	</script>
@@ -334,9 +401,9 @@
 			</a>
 		@endif
 		@if(MyHelper::hasAccess([32], $configs))
-			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background
+<!-- 			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background
 				<i class="fa fa-question-circle tooltips" data-original-title="Background home dapat disesuaikan dengan teks greeting" data-container="body"></i>
-			</a>
+			</a> -->
 		@endif
 	@endif
 @endif
@@ -345,6 +412,9 @@
 		<i class="fa fa-question-circle tooltips" data-original-title="Membuat banner di halaman home aplikasi mobile" data-container="body"></i>
 	</a>
 @endif
+<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalFeaturedDeals"> New Featured Deals
+	<i class="fa fa-question-circle tooltips" data-original-title="Membuat featured deals di halaman home aplikasi mobile" data-container="body"></i>
+</a>
 <br>
 <br>
 <div class="tabbable-line">
@@ -355,9 +425,9 @@
             <a href="#greeting" data-toggle="tab">Greeting</a>
         </li>
 		@endif
-        <li>
+<!--         <li>
             <a href="#home-background" data-toggle="tab">Home Background</a>
-        </li>
+        </li> -->
 	@endif
         <li class="active">
             <a href="#splash-screen" data-toggle="tab">Splash Screen</a>
@@ -367,17 +437,15 @@
             <a href="#banner" data-toggle="tab">Banner</a>
         </li>
 		@endif
+        <li>
+            <a href="#featured_deals" data-toggle="tab">Featured Deals</a>
+        </li>
         <!-- <li>
             <a href="#app-logo" data-toggle="tab">Application Logo</a>
         </li> -->
         <!-- <li>
             <a href="#app-navigation" data-toggle="tab">App Navigation Text</a>
         </li> -->
-		@if(MyHelper::hasAccess([148], $grantedFeature))
-        <li>
-            <a href="#user-profile" data-toggle="tab">User Profile</a>
-        </li>
-		@endif
     </ul>
 </div>
 
@@ -402,7 +470,7 @@
 											<th class="all" width="4%">No</th>
 											<th class="all" width="20%">When to Display</th>
 											<th class="all">Title</th>
-											<th class="all">Subtitle</th>
+<!-- 											<th class="all">Subtitle</th> -->
 											@if(MyHelper::hasAccess([18], $grantedFeature))
 												<th class="noExport" width="10%">Actions</th>
 											@endif
@@ -417,7 +485,7 @@
 											<td> {{ $x }} </td>
 											<td> {{ str_replace('_',' ', $row['when']) }} </td>
 											<td> {{ $row['greeting'] }} </td>
-											<td> {{ $row['greeting2'] }} </td>
+<!-- 											<td> || $row['greeting2'] || </td> -->
 											@if(MyHelper::hasAccess([18], $grantedFeature))
 												<td class="noExport">
 													<a onClick="hapus1('{{$row['id_greetings']}}')" class="btn red uppercase" >Delete</a>
@@ -442,7 +510,7 @@
 		</div>
 
 	{{-- background login/ not login --}}
-        <div class="tab-pane" id="home-background">
+<!--         <div class="tab-pane" id="home-background">
 			@if(MyHelper::hasAccess([32], $configs))
 				<div class="row" style="margin-top:20px">
 					<div class="col-md-12">
@@ -528,9 +596,9 @@
 											<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 												<div class="fileinput-new thumbnail">
 													@if(isset($default_home['default_home_image']))
-														<img src="{{ env('AWS_URL')}}{{$default_home['default_home_image']}}" alt="">
+														<img src="{{ env('S3_URL_API')}}{{$default_home['default_home_image']}}" alt="">
 													@else
-														<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+														<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 													@endif
 												</div>
 												<div class="fileinput-preview fileinput-exists thumbnail" id="div_background_default" style="max-width: 500px; max-height: 250px;"></div>
@@ -559,7 +627,7 @@
 				{{csrf_field()}}
 				<input type="hidden" name="id_home_background" id="txtvalue2">
 			</form>
-		</div>
+		</div> -->
 	@endif
 
 	{{-- splash screen --}}
@@ -577,16 +645,24 @@
 						<form role="form" class="form-horizontal" action="{{url('setting/default_home')}}" method="POST" enctype="multipart/form-data">
 							<div class="form-body">
 								<div class="form-group col-md-12">
-										<label class="control-label col-md-3">Splash Screen
+									<label class="text-right col-md-4">Splash Screen Duration
+										<span class="required" aria-required="true"> * </span>
+									</label>
+									<div class="col-md-4">
+										<input type="number" class="form-control" name="default_home_splash_duration" value="{{$default_home['default_home_splash_duration']??''}}" min="1">
+									</div>
+								</div>
+								<div class="form-group col-md-12">
+										<label class="control-label col-md-4">Splash Screen
 											<br>
-											<span class="required" aria-required="true"> (1080*1920) </span>
+											<span class="required" aria-required="true"> (1080*1920)/(540*960) </span>
 										</label><br>
 										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 											<div class="fileinput-new thumbnail">
 												@if(isset($default_home['default_home_splash_screen']))
-													<img src="{{ env('AWS_URL')}}{{$default_home['default_home_splash_screen']}}?" alt="">
+													<img src="{{ env('S3_URL_API')}}{{$default_home['default_home_splash_screen']}}?" alt="">
 												@else
-													<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+													<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 												@endif
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" id="div_splash" style="max-width: 500px; max-height: 250px;"></div>
@@ -640,7 +716,7 @@
 											</div>
 											<div class="col-md-10 text-right">
 												@if(MyHelper::hasAccess([146], $grantedFeature))
-												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}"><i class="fa fa-pencil"></i> </a>
+												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ date("d F Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))) }}" data-end="{{ date("d F Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]])))}}"><i class="fa fa-pencil"></i> </a>
 												@endif
 												@if(MyHelper::hasAccess([147], $grantedFeature))
 												<a class="btn red-mint btn-circle btn-delete" data-id="{{ $banner['id_banner'] }}"><i class="fa fa-trash-o"></i> </a>
@@ -670,7 +746,11 @@
 					 			 		@endphp
 
 					 			 		<div>Click to:</div>
-					 			 		<div>{{ $click_to }}</div>
+										<div>{{ $click_to }}</div><br>
+										<div>Date Start:</div>
+										<div>{{ date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))) }}</div><br>
+										<div>Date End:</div>
+					 			 		<div>{{ date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))) }}</div>
 					 			 	</div>
 					 			</div>
 					 			@endforeach
@@ -689,6 +769,7 @@
 		</div>
     </div>
 	@endif
+	@include('setting::featured_deals')
 
 	{{-- app logo --}}
     <div class="tab-pane" id="app-logo">
@@ -712,9 +793,9 @@
 									<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 										<div class="fileinput-new thumbnail">
 											@if(isset($app_logo['app_logo_3x']))
-												<img src="{{ env('AWS_URL')}}{{$app_logo['app_logo_3x']}}" alt="">
+												<img src="{{ env('S3_URL_API')}}{{$app_logo['app_logo_3x']}}" alt="">
 											@else
-												<img src="http://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+												<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 											@endif
 										</div>
 										<div class="fileinput-preview fileinput-exists thumbnail" id="div_background_default" style="max-width: 433px; max-height: 318px;"></div>
@@ -804,116 +885,6 @@
 		</div>
 	</div>
 
-
-	{{-- user profile --}}
-	@if(MyHelper::hasAccess([148], $grantedFeature))
-    <div class="tab-pane" id="user-profile">
-		<div class="row" style="margin-top:20px">
-			<div class="col-md-12">
-				<div class="portlet light bordered">
-					<div class="portlet-title">
-						<div class="caption font-blue ">
-							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">User Profile Completion</span>
-						</div>
-					</div>
-					<div class="portlet-body">
-
-						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile')}}" method="POST">
-							<div class="form-body">
-								{{-- <div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Point
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Point yang diperoleh user ketika melengkapi data" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_point" value="{{ $complete_profile['complete_profile_point'] }}" required>
-									</div>
-								</div> --}}
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Popup Text
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan pada popup lengkapi data profil" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-6">
-										<input class="form-control" maxlength="50" type="text" name="complete_profile_popup" value="@if(isset($complete_profile['complete_profile_popup'])){{ $complete_profile['complete_profile_popup'] }}@endif" required>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion {{env('POINT_NAME', 'Points')}}
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="{{env('POINT_NAME', 'Points')}} yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_cashback" value="{{ $complete_profile['complete_profile_cashback'] }}" required>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Count
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Berapa kali aplikasi akan menawarkan user untuk melengkapi data profil" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_count" value="{{ $complete_profile['complete_profile_count'] }}" required>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-4">Completion Interval (Minutes)
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Jarak waktu penawaran hingga penawaran selanjutnya (menit)" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-4">
-										<input class="form-control" type="text" name="complete_profile_interval" value="{{ $complete_profile['complete_profile_interval'] }}" required>
-									</div>
-								</div>
-							</div>
-							<div class="form-actions" style="text-align:center">
-								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		{{-- update user's profile success --}}
-		<div class="row" style="margin-top:20px">
-			<div class="col-md-12">
-				<div class="portlet light bordered">
-					<div class="portlet-title">
-						<div class="caption font-blue ">
-							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">User Profile Success Page</span>
-						</div>
-					</div>
-
-					<div class="portlet-body">
-						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile-success-page')}}" method="POST">
-							<div class="form-body">
-								<div class="form-group col-md-12">
-									<label class="control-label col-md-2">Content
-										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Konten halaman sukses setelah user melengkapi data" data-container="body"></i>
-									</label>
-									<div class="fileinput fileinput-new col-md-9">
-                                		<textarea name="complete_profile_success_page" id="field_content_long" class="form-control summernote">{!! $complete_profile['complete_profile_success_page'] !!}</textarea>
-									</div>
-								</div>
-							</div>
-							<div class="form-actions" style="text-align:center">
-								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
-							</div>
-						</form>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	@endif
-
 </div>
 
 <div class="modal fade" id="modalTimeSetting" tabindex="-1" role="basic" aria-hidden="true">
@@ -979,7 +950,7 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label">Title <span class="required" aria-required="true"> * </span></label>
-							<input type="text" name="greeting" id="txt_greeting" class="form-control">
+							<input type="text" name="greeting" id="txt_greeting" class="form-control" maxlength="25">
 							<div class="row" style="margin-top:30px">
 								@foreach($textreplaces as $key=>$row)
 									<div class="col-md-3" style="margin-bottom:5px;">
@@ -988,17 +959,17 @@
 								@endforeach
 							</div>
 						</div>
-						<div class="form-group">
+<!-- 						<div class="form-group">
 							<label class="control-label">Subtitle <span class="required" aria-required="true"> * </span></label>
 							<input type="text" name="greeting2" id="txt_greeting_2" class="form-control">
 							<div class="row" style="margin-top:30px">
-								@foreach($textreplaces as $key=>$row)
+								@ foreach($textreplaces as $key=>$row)
 									<div class="col-md-3" style="margin-bottom:5px;">
-										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addGreetingReplace2('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{ { $row['keyword'] } }' with user's { { $row['reference'] } }" onClick="addGreetingReplace2('{ { $row['keyword'] } }');">{ { str_replace('_',' ',$row['keyword']) } }</span>
 									</div>
-								@endforeach
+								@ endforeach
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
@@ -1038,7 +1009,7 @@
 							<label class="control-label">Background Image <span class="required" aria-required="true"> * </span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 100px;">
-									<img src="http://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+									<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1075,10 +1046,10 @@
 				<form role="form" action="{{url('setting/banner/create')}}" method="POST" enctype="multipart/form-data">
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (800*600)</span></label><br>
+							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (750*375)</span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=800+x+600" alt="">
+									<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1132,8 +1103,36 @@
 								<input class="form-control click-to-url" type="text" name="url" placeholder="https://www.google.com">
                             </div>
 						</div>
-
 					</div>
+
+					<div class="form-group clearfix">
+						<label class="col-md-3 control-label">Date Start</label>
+						<div class="col-md-6">
+							<div class="input-group date form_datetime form_datetime bs-datetime">
+								<input type="text" autocomplete="off" name="banner_start" size="16" class="form-control">
+								<span class="input-group-addon">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group clearfix">
+						<label class="col-md-3 control-label">Date End</label>
+						<div class="col-md-6">
+							<div class="input-group date form_datetime form_datetime bs-datetime">
+								<input type="text" autocomplete="off" name="banner_end" size="16" class="form-control">
+								<span class="input-group-addon">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
 						<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
@@ -1159,10 +1158,10 @@
 					<input type="hidden" name="id_banner" id="id_banner">
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (800*600)</span></label><br>
+							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (750*375)</span></label><br>
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 200px;">
-									<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=800+x+600" alt="" id="edit-banner-img">
+									<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=750+x+375" alt="" id="edit-banner-img">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 								<div>
@@ -1218,6 +1217,35 @@
 						</div>
 
 					</div>
+
+					<div class="form-group clearfix">
+						<label class="col-md-3 control-label">Date Start</label>
+						<div class="col-md-6">
+							<div class="input-group date form_datetime form_datetime bs-datetime">
+								<input type="text" autocomplete="off" id="banner_start" name="banner_start" size="16" class="form-control">
+								<span class="input-group-addon">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group clearfix">
+						<label class="col-md-3 control-label">Date End</label>
+						<div class="col-md-6">
+							<div class="input-group date form_datetime form_datetime bs-datetime">
+								<input type="text" autocomplete="off" id="banner_end" name="banner_end" size="16" class="form-control">
+								<span class="input-group-addon">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
 						<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>

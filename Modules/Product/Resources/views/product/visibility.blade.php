@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-    
+
 @section('page-script')
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('AWS_ASSET_URL') }}{{('js/global.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('js/global.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
 
         var idVisibility = [];
@@ -38,7 +38,7 @@
 				item.checked = checked
 				checkProduct(item)
             })
-            
+
             // for select all product in 1 outlet
 			if(type == 'allProduct'){
                 $('.btn-submit').prop('disabled', true);
@@ -46,8 +46,8 @@
                 $('#checkboxAll').prop('checked', checked);
                 if(!checked) $('#allOutlet').prop('checked', checked);
 
-                // add all product to session 
-                var token  = "{{ csrf_token() }}"; 
+                // add all product to session
+                var token  = "{{ csrf_token() }}";
                 $.ajax({
                     type : "POST",
                     url : "{{ url('product/id_visibility') }}",
@@ -66,9 +66,9 @@
                 $('input').prop('disabled', true);
                 $('#checkboxAll').prop('checked', checked);
                 $('#allProduct').prop('checked', checked);
-                
-                // add all product to session 
-                var token  = "{{ csrf_token() }}"; 
+
+                // add all product to session
+                var token  = "{{ csrf_token() }}";
                 $.ajax({
                     type : "POST",
                     url : "{{ url('product/id_visibility') }}",
@@ -87,14 +87,14 @@
                 }
             }
 		}
-        
+
         // action for change outlet
 		$("#multiple").change(function() {
         	var id = $(this).val();
             var url = '{{ url("product/".lcfirst($visibility)) }}/'+id;
-            var token  = "{{ csrf_token() }}"; 
-              
-            // add selected product to session 
+            var token  = "{{ csrf_token() }}";
+
+            // add selected product to session
 				$.ajax({
 					type : "POST",
 					url : "{{ url('product/id_visibility') }}",
@@ -109,10 +109,10 @@
         // action for change page
         $('body').on('click', '.pagination a', function(e) {
             e.preventDefault();
-            var url = $(this).attr('href'); 
-            var token  = "{{ csrf_token() }}"; 
-            
-            // add selected product to session 
+            var url = $(this).attr('href');
+            var token  = "{{ csrf_token() }}";
+
+            // add selected product to session
             $.ajax({
                 type : "POST",
                 url : "{{ url('product/id_visibility') }}",
@@ -123,8 +123,8 @@
                 }
             });
         });
-        
-       
+
+
     </script>
 
 @endsection
@@ -149,7 +149,7 @@
             @endif
         </ul>
     </div><br>
-    
+
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -177,7 +177,7 @@
         			<div class="portlet-body form">
 			            <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data" id="form">
                             @if (!empty($product))
-                            
+
 							<input type="hidden" name="page" value="{{$page}}">
                             <input type="hidden" name="visibility" value="{{$visibility}}">
 							<input type="hidden" name="key" value="{{$key}}">
@@ -223,8 +223,8 @@
 										<th> Code </th>
 										<th> Category </th>
 										<th> Name </th>
-										<th> 
-											
+										<th>
+
 										</th>
 									</tr>
 								</thead>
@@ -239,7 +239,7 @@
                                                     <td>{{ $pro['category']['product_category_name'] }}</td>
                                                 @endif
                                                 <td> {{ $pro['product_name'] }} </td>
-                                                <td style="width:10px"> 
+                                                <td style="width:10px">
                                                     <div class="md-checkbox">
                                                         <input type="checkbox" id="checkbox{{$pro['id_product']}}" name="id_visibility[]" onchange="checkProduct(this)" class="md-checkboxbtn check-visibility" value="{{$pro['id_product'].'/'.$key}}" @if(in_array($pro['id_product'].'/'.$key,$id_visibility)) checked @endif>
                                                         <label for="checkbox{{$pro['id_product']}}">

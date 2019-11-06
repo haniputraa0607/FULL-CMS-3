@@ -1,772 +1,391 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link href="{{ env('AWS_ASSET_URL') }}{{('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{ env('AWS_ASSET_URL') }}{{('css/slide.css') }}" rel="stylesheet">
-
-    <!-- SLICK -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
-    <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
-
-    <style type="text/css">
-        @font-face {
-            font-family: 'Seravek';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype');
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <link rel="stylesheet" href="asset/css/App.css" />
+        <title>Champ Membership</title>
+        <style>
 
         @font-face {
-            font-family: 'Seravek Light';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("AWS_ASSET_URL") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
+                font-family: "ProductSans-Bold";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Bold.ttf') }}');
         }
-
-        .kotak {
-            margin : 10px;
-            padding: 10px;
-            /*margin-right: 15px;*/
-            -webkit-box-shadow: 0px 1px 3.3px 0px rgba(168,168,168,1);
-            -moz-box-shadow: 0px 1px 3.3px 0px rgba(168,168,168,1);
-            box-shadow: 0px 1px 3.3px 0px rgba(168,168,168,1);
-            /* border-radius: 3px; */
-            background: #fff;
-            font-family: 'Open Sans', sans-serif;
+        @font-face {
+                font-family: "ProductSans-BoldItalic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-BoldItalic.ttf') }}');
         }
-
-        .slick-current,  .slick-current > div{
-            width: 66.9px !important;
-            height: 66.9px !important;
-            margin-top: 0 !important;
+        @font-face {
+                font-family: "ProductSans-Italic";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Italic.ttf') }}');
         }
-
-        .slick-slide {
-            width: 50.2px;
-            height: 50.2px;
-            margin-top: 12.25px;
-            margin-bottom: 7px;
-            margin-right: 10px;
+        @font-face {
+                font-family: "ProductSans-Regular";
+                font-style: normal;
+                font-weight: 400;
+                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
         }
-
-        .slick-slide > div {
-            height: 100%;
-        }
-
-        .slick-current.kotak-status,
-        .slick-current.kotak-lock {
-            margin-top: 3px;
-            margin-bottom: 7px;
-            padding: 12px;
-            transition: all 0.2s ease 0s;
-        }
-
-        .slick-current > .img-status{
-            width: 42.2px;
-        }
-
-        .kotak-status {
-            -webkit-box-shadow: 0px 0px 5px 0px rgba(214,214,214,1);
-            -moz-box-shadow: 0px 0px 5px 0px rgba(214,214,214,1);
-            box-shadow: 0px 0px 5px 0px rgba(214,214,214,1);
-            background: #fff;
-            height: 100%;
-            margin-right: 10px;
-            border-radius: 10px;
-            padding: 8px;
-            transition: all 0.2s ease 0s;
-
-        }
-
-        .img-status{
-            width: 31.7px;
-        }
-
-        .kotak-lock {
-            border-radius: 10px;
-            margin-right: 10px;
-            padding: 15.95px;
-            transition: all 0.2s ease 0s;
-            opacity: 0.7;
-        }
-
-        .img-lock{
-            width: 18.3px;
-        }
-
-        .slick-current > .img-lock{
-            width: 30px;
-        }
-        .slick-current.kotak-lock {
-            background-size: 42.2px 45.6px, cover !important;
-            padding: 18px;
-        }
-
-        .progress-bar-status{
-            margin: 0 15px;
-            width:100%;
-            background: transparent;
-            display: inline-flex;
-        }
-
-        .img-progress{
-            height: 26.7px;
-            margin-left: -15px;
-            margin-top: -5px;
-        }
-
-        .progress {
-            background-image: linear-gradient(to right, #fff, rgba(108, 86, 72, 0.2));
-            /* width: {{100-$data['progress_active']}}%; */
-            width: calc({{100-$data['progress_active']}}% + 15px);
-            height: 13.3px;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-
-        .progress-active {
-            background: #6c5648;
-            width: {{$data['progress_active']}}%;
-            height: 13.3px;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-        }
-
-        .progress-now {
-            background: #fff;
-            border: 0.7px solid #6c5648;
-            width: 10px;
-            height: 20px;
-            border-radius: 10px;
-            margin-top: -3px;
-        }
-
-        .kotak-full {
-            margin-bottom : 15px;
-            padding: 10px;
-            background: #fff;
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .kotak-inside {
-        	padding-left: 25px;
-        	padding-right: 25px
-        }
-
         body {
-            background: #ffffff;
-        }
-
-        .completed {
-            color: green;
-        }
-
-        .bold {
-            font-weight: bold;
-        }
-
-        .space-bottom {
-            padding-bottom: 15px;
-        }
-
-        .space-top-all {
-            padding-top: 15px;
-        }
-
-        .space-text {
-            padding-bottom: 10px;
-        }
-
-        .space-nice {
-        	padding-bottom: 20px;
-        }
-
-        .space-bottom-big {
-        	padding-bottom: 25px;
-        }
-
-        .space-top {
-        	padding-top: 5px;
-        }
-
-        .line-bottom {
-            border-bottom: 1px solid rgba(0,0,0,.1);
-            margin-bottom: 15px;
-        }
-
-        .text-grey {
-            color: #aaaaaa;
-        }
-
-        .text-much-grey {
-            color: #bfbfbf;
-        }
-
-        .text-black {
-            color: #000000;
-        }
-
-        .text-medium-grey {
-            color: #806e6e6e;
-        }
-
-        .text-grey-white {
-            color: #666;
-        }
-
-        .text-grey-light {
-            color: #b6b6b6;
-        }
-
-        .text-grey-medium-light{
-            color: #a9a9a9;
-        }
-
-        .text-black-grey-light{
-            color: #5f5f5f;
-        }
-
-
-        .text-medium-grey-black{
-            color: #424242;
-        }
-
-        .text-grey-black {
-            color: #4c4c4c;
-        }
-
-        .text-grey-red {
-            color: #9a0404;
-        }
-
-        .text-grey-red-cancel {
-            color: rgba(154,4,4,1);
-        }
-
-        .text-grey-blue {
-            color: rgba(0,140,203,1);
-        }
-
-        .text-grey-yellow {
-            color: rgba(227,159,0,1);
-        }
-
-        .text-grey-green {
-            color: rgba(4,154,74,1);
-        }
-
-        .text-greyish-brown{
-            color: #6c5648;
-        }
-
-        .seravek-font {
-            font-family: 'Seravek';
-        }
-
-        .seravek-light-font {
-            font-family: 'Seravek Light';
-        }
-
-        .text-21-7px {
-            font-size: 21.7px;
-        }
-
-        .text-16-7px {
-            font-size: 16.7px;
-        }
-
-        .text-15px {
-            font-size: 15px;
-        }
-
-        .text-14-3px {
-            font-size: 14.3px;
-        }
-
-        .text-14px {
+            background-color: rgba(0, 0, 0, 0.1);
+            font-family: 'ProductSans-Regular';
             font-size: 14px;
         }
-
-        .text-13-3px {
-            font-size: 13.3px;
+        a:hover{
+            text-decoration: none
         }
-
-        .text-12-7px {
-            font-size: 12.7px;
+        .font-header {
+            font-family: 'ProductSans-Regular';
+            font-size: 20px;
+            color: #202020;
         }
-
-        .text-12px {
+        .font-title {
+            font-family: 'ProductSans-Regular';
+            font-size: 14px;
+            color: #000000;
+        }
+        .font-nav {
+            font-family: 'ProductSans-Regular';
+            font-size: 14px;
+            color: #545454;
+        }
+        .font-regular-gray{
+            font-family: 'ProductSans-Regular';
             font-size: 12px;
+            color: #545454;
+        }
+        .font-regular-black {
+            font-family: 'ProductSans-Regular';
+            font-size: 12px;
+            color: #000000;
+        }
+        .font-regular-brown {
+            font-family: 'ProductSans-Regular';
+            font-size: 12px;
+            color: #837046;
         }
 
-        .text-11-7px {
-            font-size: 11.7px;
+        .container {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            min-height: 100vh;
+            min-height: calc(var(--vh, 1vh) * 100);
+            margin: auto;
+            padding-bottom: 70px;
+            background-color: #ffffff;
+            position: relative;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
 
-        .round-greyish-brown{
-            border: 1px solid #6c5648;
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-            display: inline-block;
-            margin-right:3px;
+        /* header */
+        .header {
+            display: flex;
+            flex-direction: row;
+            height: 70px;
+            padding: 0px 5px;
+            align-items: center;
+            justify-content: center;
         }
-
-        .bg-greyish-brown{
-            background: #6c5648;
-        }
-
-        .round-white{
-            width: 10px;
-            height: 10px;
-            display: inline-block;
-            margin-right:3px;
-        }
-
-        .line-vertical{
-            font-size: 5px;
-            width:10px;
-            margin-right: 3px;
-        }
-
-        .inline{
-            display: inline-block;
-        }
-
-        .vertical-top{
-            vertical-align: top;
-            padding-top: 5px;
-        }
-
-        .top-5px{
-            top: -5px;
-        }
-        .top-10px{
-            top: -10px;
-        }
-        .top-15px{
-            top: -15px;
-        }
-        .top-20px{
-            top: -20px;
-        }
-        .top-25px{
-            top: -25px;
-        }
-        .top-30px{
-            top: -30px;
-        }
-
-        .label-free{
-            background: #6c5648;
-            padding: 3px 15px;
-            border-radius: 6.7px;
-            float: right;
-        }
-
-        .text-strikethrough{
-            text-decoration:line-through
-        }
-
-        .membership-nonaktif{
-            content: "";
-            display: block;
-            padding-top: 100%; 	/* initial ratio of 1:1*/
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .membership-nonaktif-bg{
-            position:  absolute;
-            top: calc((100% - 32px) /2);
+        .header-icon {
+            position: absolute;
             left: 0;
-            bottom: 0;
-            right: 0;
+            margin: 0px 16px;
+        }
+        .header-title {
+            display: flex;
+            flex: 1;
+            justify-content: center
         }
 
-        .display-inline{
-            display: inline-block;
+        /* navtop */
+        .navtop-container {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            background-image: linear-gradient(to bottom, #ffffff, #fafafa 40%, #ededed 82%, #e6e6e6);
+        }
+        .navtop-item {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5px 10px
+        }
+        .navtop-item img{
+            height: 40px;
+            width: 40px;
+            margin-bottom: 5px
+        }
+        .navtop-item.active{
+            background-color: #ffffff;
+            border-bottom-style: solid;
+            border-bottom-width: 2px;
+            border-bottom-color: #800000
         }
 
-        #status_detail_text{
-            max-width:280px
+        /* content */
+        .tab-content {
+            margin: 10px 0px;
+        }
+        .content-list {
+            display: flex;
+            flex-direction: column;
+            padding: 8px 0px;
+            margin-bottom: 16px;
+        }
+        .content-list-item {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            padding: 8px 0px;
+        }
+        .content-list .content-list-item img{
+            margin-right: 8px;
+            height: 15px;
+            width: 15px;
         }
 
-    </style>
-  </head>
-  <body>
+        /* member level */
+        .level-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 10px 0px;
+        }
+        .level-container img{
+            margin-left: 0px 8px 0px;
+            height: 24px;
+            width: 24px;
+        }
+        .level-wrapper {
+            flex: 1;
+        }
+        .level-wrapper img{
+            margin-right: 8px;
+            height: 18px;
+            width: 18px;
+        }
 
-  @php
-    $text = "rupiah";
-    if($data['user_membership']['membership_type'] == 'balance'){
-        $text = "{{env('POINT_NAME', 'Points')}}";
-    }
-  @endphp
+        .current-level-info{
+            position: relative;
+            display: flex;
+            flex-direction: row
+        }
+        .level-info{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
 
-    <div class="kotak-full" id="list-image">
-        <div class="container">
-            <div class="row text-center" id="div-now">
-                <div class="col-12 text-15px text-greyish-brown seravek-font space-top-all" id="status">
-                    @if(isset($data['user_membership']['membership_name']))
-                        Sekarang :
-                    @else
-                        Terkunci :
-                    @endif
+        }
+        .level-progress-container {
+            position: relative;
+            height: 8px;
+            border-radius: 8px;
+            margin: 8px 0px;
+            background-color: #ebebeb;
+        }
+        .level-progress {
+            position: absolute;
+            left:0;
+            top:0;
+            z-index: 9;
+            height: 8px;
+            background-color: #800000;
+            border-radius: 8px
+        }
+        .level-progress-blank {
+            width: 50%;
+        }
+        </style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="content">
+                <div class="nav nav-tabs navtop-container" id="nav-tab" role="tablist">
+                    @foreach ($result['all_membership'] as $item)
+                    <a class="navtop-item @if($item['membership_name'] == $result['user_membership']['membership_name']) active @endif" id="nav-{{strtolower($item['membership_name'])}}-tab" data-toggle="tab" href="#nav-{{strtolower($item['membership_name'])}}" role="tab" aria-controls="nav-home" aria-selected="true">
+                        <img src="{{$item['membership_image']}}"/>
+                        <div class="font-nav">{{$item['membership_name']}}</div>
+                    </a>
+                    @endforeach
                 </div>
-                <div class="col-12 text-16-7px text-greyish-brown seravek-font bold" id="status_name">
-                    @if(isset($data['user_membership']['membership_name']))
-                        {{ucfirst($data['user_membership']['membership_name'])}}
-                    @else
-                        @if(isset($data['all_membership'][0]['membership_name']))
-                            {{ucfirst($data['all_membership'][0]['membership_name'])}}
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="font-title">{{$result['user_membership']['membership_name']}} Level</div>
+                    <div class="font-regular-gray">Tingkatkan transaksimu!</div>
+
+                    @foreach ($result['all_membership'] as $key => $item)
+                    <div class="tab-pane fade show @if($item['membership_name'] == $result['user_membership']['membership_name']) active @endif" id="nav-{{strtolower($item['membership_name'])}}" role="tabpanel" aria-labelledby="nav-home-tab">
+                        @if (isset($result['all_membership'][$key+1]))
+                            @php
+                                $trx_total = $result['all_membership'][$key+1]['min_total_balance'] - $result['user_membership']['user']['progress_now']
+                            @endphp
+                            @if ($trx_total <= 0)
+                                <div class="font-regular-gray">Anda telah melewati tingkatan ini</div>
+                            @else
+                                <div class="font-regular-gray">Rp {{number_format($trx_total)}} menuju {{$result['all_membership'][$key+1]['membership_name']}} Member</div>
+                            @endif
+                            <div class="level-container">
+                                <div class="level-wrapper">
+                                    @if ($trx_total <= 0)
+                                       <div class="current-level-info">
+                                           <div style="width:100%"></div>
+                                           <img src="{{env('APP_URL')}}images/coin.png"/>
+                                           <div class="font-regular-brown">{{number_format($result['user_membership']['user']['progress_now'])}}</div>
+                                       </div>
+                                       <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
+                                           <div class="level-progress" style="width:100%; height: 6px;"></div>
+                                       </div>
+                                   @else
+                                       <div class="current-level-info">
+                                           <div style="width:{{ ($result['user_membership']['user']['progress_now'] / $result['all_membership'][$key+1]['min_total_balance']) * 100 }}%;"></div>
+                                           <img src="{{env('APP_URL')}}images/coin.png"/>
+                                           <div class="font-regular-brown">{{number_format($result['user_membership']['user']['progress_now'])}}</div>
+                                       </div>
+                                       <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
+                                           <div class="level-progress" style="width:{{ ($result['user_membership']['user']['progress_now'] / $result['all_membership'][$key+1]['min_total_balance']) * 100 }}%; height: 6px;"></div>
+                                       </div>
+                                   @endif
+                                    <div class="level-info">
+                                        @if ($result['all_membership'][$key+1]['min_total_balance'] == $result['all_membership'][$key+1]['min_total_balance'] - $result['all_membership'][$key]['min_total_balance'])
+                                            <div class="font-regular-black">{{number_format(0)}}</div>
+                                        @else
+                                            <div class="font-regular-black">{{number_format($result['all_membership'][$key]['min_total_balance'])}}</div>
+                                        @endif
+                                        <div class="font-regular-black">{{number_format($result['all_membership'][$key+1]['min_total_balance'])}}</div>
+                                    </div>
+                                </div>
+                                <img src="{{$result['all_membership'][$key+1]['membership_image']}}"/>
+                            </div>
+                        @else
+                            @php
+                                $trx_total = 15000000 - $result['user_membership']['user']['progress_now']
+                            @endphp
+                            @if ($trx_total <= 0)
+                                <div class="font-regular-gray">Anda telah melewati tingkatan ini</div>
+                            @else
+                                <div class="font-regular-gray">Rp {{number_format($trx_total)}} menyelesaikan semua Member</div>
+                            @endif
+                            <div class="level-container">
+                                <div class="level-wrapper">
+                                   <div class="current-level-info">
+                                       <div style="width:{{ ($result['user_membership']['user']['progress_now'] / 15000000) * 100 }}%;"></div>
+                                       <img src="{{env('APP_URL')}}images/coin.png"/>
+                                       <div class="font-regular-brown">{{number_format($result['user_membership']['user']['progress_now'])}}</div>
+                                   </div>
+                                   <div class="level-progress-container" style="margin-right: 10px; height: 6px;">
+                                       <div class="level-progress" style="width:{{ ($result['user_membership']['user']['progress_now'] / 15000000) * 100 }}%; height: 6px;"></div>
+                                   </div>
+                                    <div class="level-info">
+                                        <div class="font-regular-black">{{number_format($result['all_membership'][$key]['min_total_balance'])}}</div>
+                                        <div class="font-regular-black">{{number_format(15000000)}}</div>
+                                    </div>
+                                </div>
+                                <img src="{{$item['membership_image']}}"/>
+                            </div>
                         @endif
-                    @endif
-                </div>
-            </div>
 
-            <div class="list-status space-top-all space-bottom" style="display:none">
-                @php $now = false; $listStatus = []; $keyStatusNow = 0; @endphp
-
-                @if(!isset($data['user_membership']['id_log_membership']))
-                    @php
-                        $now = true;
-                        $data['all_membership'][0]['type2'] = "Sekarang";
-                    @endphp
-                @endif
-
-                @foreach($data['all_membership'] as $key => $membership)
-                    @if(isset($data['user_membership']['membership_name']) && $membership['membership_name'] == $data['user_membership']['membership_name'])
-                        <div class="kotak-status">
-                            <img class="img-responsive img-status" src="{{ $membership['membership_image'] }}">
+                        <div class="font-title">{{$item['membership_name']}} Benefit : </div>
+                        <div class="content-list">
+                            @if($item['benefit_point_multiplier'] != null && $item['benefit_point_multiplier'] > 0)
+                            <div class="content-list-item">
+                                <img src="{{$item['membership_image']}}"/>
+                                <div class=font-regular-gray>
+                                    Benefit Point {{number_format($item['benefit_point_multiplier'])}}
+                                </div>
+                            </div>
+                            @endif
+                            @if($item['benefit_cashback_multiplier'] != null && $item['benefit_cashback_multiplier'] > 0)
+                            <div class="content-list-item">
+                                <img src="{{$item['membership_image']}}"/>
+                                <div class=font-regular-gray>
+                                    <p style="margin-bottom: 0px;">Benefit Cashback {{number_format($item['benefit_cashback_multiplier'])}}%</p>
+                                    @if($item['cashback_maximum'] != null)
+                                    <p style="margin-bottom: 0px;">Cashback Maksimum {{number_format($item['cashback_maximum'])}}</p>
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
+                            @if($item['benefit_discount'] != null && $item['benefit_discount'] > 0)
+                            <div class="content-list-item">
+                                <img src="{{$item['membership_image']}}"/>
+                                <div class=font-regular-gray>
+                                    Benefit Discount {{number_format($item['benefit_discount'])}}
+                                </div>
+                            </div>
+                            @endif
+                            @if($item['membership_promo_id'] != null && count($item['membership_promo_id']) > 0)
+                            <div class="content-list-item">
+                                <img src="{{$item['membership_image']}}"/>
+                                <div class=font-regular-gray>
+                                    @foreach ($item['membership_promo_id'] as $data)
+                                        <p style="margin-bottom: 0px;">{{$data['promo_name']}}</p>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
                         </div>
-                        @php
-                            $now = true;
-                            $data['all_membership'][$key]['type'] = "Sekarang";
-                            $keyStatusNow = $key;
-                        @endphp
-                    @else
-                        @if($now == false)
-                            <div class="kotak-lock" style="background: url('{{$membership['membership_image']}}');
-                                                            background-color: #c1c0c0;
-                                                            background-repeat: no-repeat;
-                                                            -ms-background-size: 31.7px 34.2px, cover;
-                                                            -o-background-size: 31.7px 34.2px, cover;
-                                                            -moz-background-size: 31.7px 34.2px, cover;
-                                                            -webkit-background-size: 31.7px 34.2px, cover;
-                                                            background-size: 31.7px 34.2px, cover;
-                                                            background-position: center;">
-                            </div>
-                            @php
-                                $data['all_membership'][$key]['type'] = "Terbuka";
-                            @endphp
-                        @else
-                            <div class="kotak-lock" style="background: url('{{$membership['membership_image']}}');
-                                                            background-color: #c1c0c0;
-                                                            background-repeat: no-repeat;
-                                                            -ms-background-size: 31.7px 34.2px, cover;
-                                                            -o-background-size: 31.7px 34.2px, cover;
-                                                            -moz-background-size: 31.7px 34.2px, cover;
-                                                            -webkit-background-size: 31.7px 34.2px, cover;
-                                                            background-size: 31.7px 34.2px, cover;
-                                                            background-position: center;">
-                                <img class="img-responsive img-lock" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/lock.png') }}">
-                            </div>
-                            @php
-                                $data['all_membership'][$key]['type'] = "Terkunci";
-                            @endphp
-                        @endif
-                    @endif
-                    @php  $data['all_membership'][$key]['membership_name'] = ucfirst($data['all_membership'][$key]['membership_name']); @endphp
-                @endforeach
-
+                    </div>
+                    @endforeach
             </div>
         </div>
-    </div>
 
-    <div id="detail-membership">
-    <div class="kotak-full">
-        <div class="container">
-            <div class="row">
-                <div class="" id="progress-nominal">
-                    <div class="text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" style="width:32px;">
-                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/money.png') }}">
-                    </div>
-                    <div class=" text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" id="status_nominal">
-                        {{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}
-                    </div>
-                </div>
-                <div class="col-12" id="progress-nominal-nopad" style="display:none">
-                    <div class="text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" style="width:32px;">
-                        <img class="img-responsive" style="max-width: 26.7px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/money.png') }}">
-                    </div>
-                    <div class=" text-16px space-top space-bottom seravek-font text-black display-inline status_nominal" id="status_nominal">
-                        {{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}
-                    </div>
-                </div>
-                @if($keyStatusNow != count($data['all_membership']) - 1 )
-                <div class="progress-bar-status space-text" id="status_progress">
-                    <div class="text-14-3px progress-active"></div>
-                    <div class="progress-now"></div>
-                    <div class="text-14-3px progress"></div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
-                    <!--<img class="img-responsive img-progress" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/icon-heart2.png') }}" style="width:24.7px">-->
-                    <img class="img-responsive img-progress" src="{{ $data['all_membership'][$keyStatusNow+1]['membership_image'] }}" style="width:32px; height:32px;vertical-align:top">
-                </div>
-                <div class="space-bottom col-12" id="detail-progress">
-                <div class="row">
-                    <div class="text-16px seravek-font text-black col-6" style="">
-                    @if($data['all_membership'][$keyStatusNow]['membership_type'] == "balance")
-                    {{number_format($data['all_membership'][$keyStatusNow]['min_total_balance'],0,',','.')}}
-                    @elseif($data['all_membership'][$keyStatusNow]['membership_type'] == "count")
-                    {{number_format($data['all_membership'][$keyStatusNow]['min_total_count'],0,',','.')}}
-                    @else
-                    {{number_format($data['all_membership'][$keyStatusNow]['min_total_value'],0,',','.')}}
-                    @endif
-                    </div>
-                    <div class="text-16px seravek-font text-black text-right col-6" style="">
-                    @if($data['all_membership'][$keyStatusNow]['membership_type'] == "balance")
-                    {{number_format($data['all_membership'][$keyStatusNow+1]['min_total_balance'],0,',','.')}}
-                    @elseif($data['all_membership'][$keyStatusNow]['membership_type'] == "count")
-                    {{number_format($data['all_membership'][$keyStatusNow+1]['min_total_count'],0,',','.')}}
-                    @else
-                    {{number_format($data['all_membership'][$keyStatusNow+1]['min_total_value'],0,',','.')}}
-                    @endif
-                    </div>
-                </div>
-                </div>
-                @endif
-                <div class="col-12" id="status_detail">
-                    <div class="text-15px space-top space-text seravek-font text-black display-inline" style="width:32px; @if($keyStatusNow == count($data['all_membership']) - 1 ) vertical-align:middle @else vertical-align:top @endif" id="img-cup">
-                        <img class="img-responsive" style="max-width: 16.4px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/cup.png') }}">
-                    </div>
-                    <div class="text-15px space-top space-text seravek-font text-black display-inline" id="status_detail_text">
-                        @if($keyStatusNow == count($data['all_membership']) - 1 )
-                            Anda sudah mencapai level tertinggi <br>
-                        @else
-                        {{str_replace(',', '.', number_format($data['next_trx']))}}{{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="kotak-full">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-16px space-top text-black seravek-font" id="status_benefit_text">
-                    Benefit yang didapat saat ini:
-                </div>
-                <div class="col-12">
-                    <div class="text-14px space-top space-bottom display-inline" style="width:32px; vertical-align:top; margin-left:6px">
-                        <img class="img-responsive" style="width: 23.3px;" src="{{ env('AWS_ASSET_URL') }}{{('img/webview/cash.png') }}">
-                    </div>
-                    <div class="text-16-7px space-top space-bottom seravek-light-font text-black display-inline" id="status_benefit">
-                        Cashback sebanyak {{$data['all_membership'][$keyStatusNow]['benefit_cashback_multiplier']}}%
-                        (maximum {{number_format($data['all_membership'][$keyStatusNow]['cashback_maximum'], 0, ',', '.')}})
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
-
-    <script>
-        $(document).ready(function(){
-
-            var widthCup = $('#img-cup').width() + 30;
-            $('#status_detail_text').css('width', 'calc(100% - '+widthCup+'px)')
-
-            @if($keyStatusNow != count($data['all_membership']) - 1 )
-            $('#progress-nominal').css('padding-left', ' calc({{$data['progress_active']}}% - '+$("#progress-nominal").width()+'px)')
-            @else
-            $('#progress-nominal').css('padding-left', '15px')
-            @endif
-
-            $('.list-status').show();
-            $(".list-status").slick({
-                centerMode: true,
-                slidesToShow: {{count($data['all_membership']) - 1}},
-                slidesToScroll: {{count($data['all_membership']) - 2}},
-                focusOnSelect: true,
-                infinite: false,
-                variableWidth: true,
-                initialSlide: {{$keyStatusNow}},
-                swipeToSlide:true
+        <script>
+            $(function(){
+                $( ".tab-content" ).on( "swiperight", swiperightHandler );
+                function swiperightHandler(){
+                    var active = $(".navtop-item.active")
+                    var length = active.prev(".navtop-item").length
+                    if(length > 0) {
+                        var id = active.attr("href")
+                        var prev_id = active.prev(".navtop-item").attr("href")
+                        active.prev('.navtop-item').addClass("active");
+                        active.removeClass("active")
+                        $(id).removeClass("show")
+                        $(id).removeClass("active")
+                        $(prev_id).addClass("show")
+                        $(prev_id).addClass("active")
+                    }
+                }
             });
 
-            var heightListImage = $('#list-image').height()+60;
-            $('#detail-membership').css('height', 'calc(100vh - '+heightListImage+'px)')
-
-        });
-
-        // On before slide change
-        $('.list-status').on('beforeChange', function(event, slick, currentSlide, nextSlide){
-            slideNow = nextSlide
-            console.log(slideNow)
-            @php $allMembership = json_encode($data['all_membership']); @endphp
-            var list_status = <?php echo $allMembership; ?>;
-
-            $('#status').text(list_status[nextSlide]['type']+ ' :')
-            $('#status_name').text(list_status[nextSlide]['membership_name'])
-
-            var max = list_status[nextSlide]['cashback_maximum'].toString().replace(/[\D\s\._\-]+/g, "");
-            max = max ? parseInt( max, 10 ) : 0;
-            max = max.toLocaleString( "id" );
-
-            $('#status_benefit').text('Cashback sebanyak '+ list_status[nextSlide]['benefit_cashback_multiplier'] +'% (maximum ' + max + ')' )
-
-            @if($data['user_membership']['membership_type'] == 'value')
-                var nominal = list_status[nextSlide]['min_total_value'] - parseInt({{$data['user_membership']['user']['progress_now']}});
-            @elseif($data['user_membership']['membership_type'] == 'count')
-                var nominal = list_status[nextSlide]['min_total_count'] - parseInt({{$data['user_membership']['user']['progress_now']}});
-            @elseif($data['user_membership']['membership_type'] == 'balance')
-                var nominal = list_status[nextSlide]['min_total_balance'] - parseInt({{$data['user_membership']['user']['progress_now']}});
-            @endif
-            var nominal = nominal.toString().replace(/[\D\s\._\-]+/g, "");
-            nominal = nominal ? parseInt( nominal, 10 ) : 0;
-            nominal = nominal.toLocaleString( "id" );
-            $('#status_detail').show()
-            if((list_status.length - 1) == nextSlide ){
-                $('#status_benefit_text').text('Benefit yang didapat saat ini:')
-                if(list_status[nextSlide]['type'] == 'Sekarang'){
-                    $('#status_detail_text').text('Anda sudah mencapai level tertinggi')
-                }else{
-                    $('#status_nominal').text('{{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}')
-                    $('#status_progress').hide()
-                    $('#status_detail').show()
-                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke '+list_status[nextSlide]['membership_name'])
-                }
-                $('#progress-nominal-nopad').show()
-                $('#progress-nominal').hide()
-                $('#detail-progress').hide()
-            }else{
-                if(list_status[nextSlide]['type'] == 'Terkunci' && list_status[nextSlide]['type2'] == undefined){
-                    $('#status_benefit_text').text('Benefit yang akan didapat:')
-                    $('#status_nominal').text('{{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}')
-                    $('#status_progress').hide()
-                    $('#status_detail').show()
-                    $('#status_detail_text').html(nominal+ ' {{$text}} lagi untuk sampai ke '+list_status[nextSlide]['membership_name'])
-                    $('#progress-nominal-nopad').show()
-                    $('#progress-nominal').hide()
-                    $('#detail-progress').hide()
-                }else{
-                    $('#status_nominal').text("{{str_replace(',', '.', number_format($data['user_membership']['user']['progress_now']))}}")
-                    if(list_status[nextSlide]['type'] == 'Terbuka'){
-                        $('#status_benefit_text').text('Benefit yang didapat:')
-                        $('#status_detail_text').text('Anda sudah melewati level ini')
-                        $('#status_progress').hide()
-                        $('#progress-nominal-nopad').show()
-                        $('#progress-nominal').hide()
-                        $('#detail-progress').hide()
-                    }else{
-                        $('#status_benefit_text').text('Benefit yang didapat saat ini:')
-                        $('#status_detail_text').html("{{str_replace(',', '.', number_format($data['next_trx']))}}{{$text}} lagi untuk sampai ke {{ucfirst($data['next_membership_name'])}}")
-                        $('#status_progress').show()
-                        $('#progress-nominal-nopad').hide()
-                        $('#progress-nominal').show()
-                        $('#detail-progress').show()
+            $(function(){
+                $( ".tab-content" ).on( "swipeleft", swipeleftHandler );
+                function swipeleftHandler(){
+                    var active = $(".navtop-item.active")
+                    var length = active.next(".navtop-item").length
+                    if (length > 0) {
+                        var id = active.attr("href")
+                        var next_id = active.next(".navtop-item").attr("href")
+                        active.next('.navtop-item').addClass("active");
+                        active.removeClass("active")
+                        $(id).removeClass("show")
+                        $(id).removeClass("active")
+                        $(next_id).addClass("show")
+                        $(next_id).addClass("active")
                     }
                 }
-            }
-        });
-
-        // credit: http://www.javascriptkit.com/javatutors/touchevents2.shtml
-        function swipedetect(el, callback){
-
-            var touchsurface = el,
-            swipedir,
-            startX,
-            startY,
-            distX,
-            distY,
-            threshold = 1, //required min distance traveled to be considered swipe
-            restraint = 100, // maximum distance allowed at the same time in perpendicular direction
-            allowedTime = 1500, // maximum time allowed to travel that distance
-            elapsedTime,
-            startTime,
-            handleswipe = callback || function(swipedir){}
-
-            touchsurface.addEventListener('touchstart', function(e){
-                var touchobj = e.changedTouches[0]
-                swipedir = 'none'
-                dist = 0
-                startX = touchobj.pageX
-                startY = touchobj.pageY
-                startTime = new Date().getTime() // record time when finger first makes contact with surface
-                //   e.preventDefault()
-            }, false)
-
-            touchsurface.addEventListener('touchmove', function(e){
-                //   e.preventDefault() // prevent scrolling when inside DIV
-            }, false)
-
-            touchsurface.addEventListener('touchend', function(e){
-                var touchobj = e.changedTouches[0]
-                distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
-                distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
-                elapsedTime = new Date().getTime() - startTime // get time elapsed
-                // console.log(restraint)
-                console.log(distY)
-                // console.log(threshold)
-                console.log(distX)
-                if (elapsedTime <= allowedTime){ // first condition for awipe met
-                    if (Math.abs(distX) >= 5 && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
-                        swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
-                    }
-                    else if (Math.abs(distY) >= restraint && Math.abs(distX) <= threshold){ // 2nd condition for vertical swipe met
-                        swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
-                    }
-                }
-                handleswipe(swipedir)
-                e.preventDefault()
-            }, false)
-        }
-
-        //USAGE:
-        var slideNow = parseInt('{{$keyStatusNow}}')
-        var el = document.getElementById('detail-membership');
-        swipedetect(el, function(swipedir){
-        // swipedir contains either "none", "left", "right", "top", or "down"
-        //   el.innerHTML = 'Swiped <span style="color:yellow;margin: 0 5px;">' + swipedir +'</span>';
-
-            console.log(swipedir)
-            if(swipedir == 'left'){
-                if(slideNow < {{count($data['all_membership'])}}){
-                    slideNow++
-                    $(".list-status").slick('slickGoTo',slideNow);
-                }
-            }else if(swipedir == 'right'){
-                if(slideNow > 0){
-                    slideNow--
-                    $(".list-status").slick('slickGoTo',slideNow);
-                }
-            }
-        });
-
-        <?php
-            print str_pad('',4096)."\n";
-            ob_flush();
-            flush();
-            set_time_limit(45);
-        ?>
-
-
-    </script>
-  </body>
+            });
+        </script>
+    </body>
 </html>
