@@ -179,7 +179,7 @@ return [
 		Intervention\Image\ImageServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         TimeHunter\LaravelGoogleReCaptchaV3\Providers\GoogleReCaptchaV3ServiceProvider::class,
-        Vinelab\Cdn\CdnServiceProvider::class,
+        //Vinelab\Cdn\CdnServiceProvider::class,
     ],
 
     /*

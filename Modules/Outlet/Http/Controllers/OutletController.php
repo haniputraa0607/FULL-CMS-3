@@ -11,6 +11,9 @@ use App\Lib\MyHelper;
 use Excel;
 use Validator;
 
+use \App\Exports\ArrayExport;
+use App\Imports\FirstSheetOnlyImport;
+
 class OutletController extends Controller
 {
     /**
@@ -562,8 +565,11 @@ class OutletController extends Controller
             if($request->file('import_file')){
 
                 $path = $request->file('import_file')->getRealPath();
-                $save = MyHelper::postFile('outlet/import', 'import_file', $path);
-                // dd($save);
+                $name = $request->file('import_file')->getClientOriginalName();
+                $dataimport = Excel::toArray(new FirstSheetOnlyImport(),$request->file('import_file'));
+                $dataimport = array_map(function($x){return (Object)$x;}, $dataimport[0]??[]);
+                $save = MyHelper::post('outlet/import', ['data_import' => $dataimport]);
+
                 if (isset($save['status']) && $save['status'] == "success") {
                     return parent::redirect($save, $save['message'], 'outlet/list');
                 }else {
@@ -600,14 +606,8 @@ class OutletController extends Controller
         $post=$request->except('_token');
         $outlet = MyHelper::post('outlet/export',$post);
         if (isset($outlet['status']) && $outlet['status'] == "success") {
-            $data = $outlet['result'];
-            $download = Excel::create('Data_Outlets_'.date('Ymdhis'), function($excel) use ($data) {
-                foreach ($data as $key => $outlets) {
-                    $excel->sheet($key, function($sheet) use ($outlets) {
-                        $sheet->fromArray($outlets);
-                    });
-                }
-            })->download('xlsx');
+            $data = new ArrayExport($outlet['result'],'Outlet List');
+            return Excel::download($data,'Data_Outlets_'.date('Ymdhis').'.xls');
 
         }else {
             return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
