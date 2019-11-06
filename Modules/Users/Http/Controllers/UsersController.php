@@ -146,7 +146,7 @@ class UsersController extends Controller
 				$post['relationship'] = null;
 			}
 			$query = MyHelper::post('users/create', $post);
-			// print_r($query);exit;
+			
 			if(isset($query['status']) && $query['status'] == 'success'){
 				return back()->withSuccess(['User Create Success']);
 			} else{
@@ -168,9 +168,13 @@ class UsersController extends Controller
 			
 			$getOutlet = MyHelper::get('outlet/list');
 			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
+
+			$getCelebrate = MyHelper::get('setting/celebrate_list');
+			if($getCelebrate['status'] == 'success') $data['celebrate'] = $getCelebrate['result']; else $data['celebrate'] = null;
+
+			$getJob = MyHelper::get('setting/jobs_list');
+			if($getJob['status'] == 'success') $data['job'] = $getJob['result']; else $data['job'] = null;
 			
-			
-			// print_r($data);exit;
 			return view('users::create', $data);
 		}
 	}
