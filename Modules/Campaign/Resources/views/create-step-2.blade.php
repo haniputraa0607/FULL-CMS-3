@@ -764,9 +764,9 @@
 										<option value="Home" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Home") selected @endif>Home</option>
 										<option value="News" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "New") selected @endif>News</option>
 										<!-- <option value="Product" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Product") selected @endif>Product</option> -->
-										<option value="Order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Order") selected @endif>Order</option>
+										{{-- <option value="Order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Order") selected @endif>Order</option> --}}
 										<!-- <option value="Transaction" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Transaction") selected @endif>History</option> -->
-										<option value="History On Going" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History On Going") selected @endif>History On Going</option>
+										{{-- <option value="History On Going" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History On Going") selected @endif>History On Going</option> --}}
 										<option value="History Transaksi" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
 										<option value="History Point" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Point") selected @endif>History Point</option>
 										<option value="Outlet" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Outlet") selected @endif>Outlet</option>
@@ -774,9 +774,9 @@
 										<!-- <option value="Voucher Detail" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option> -->
 										<option value="Profil" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Profil") selected @endif>Profil</option>
 										<option value="Inbox" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-										<option value="About" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "About") selected @endif>About</option>
+										<option value="About" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "About") selected @endif>Delivery Service</option>
 										<option value="FAQ" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "FAQ") selected @endif>FAQ</option>
-										<option value="TOS" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "TOS") selected @endif>TOS</option>
+										<option value="TOS" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "TOS") selected @endif>Ketentuan Layanan</option>
 										<option value="Contact Us" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 										<option value="Link" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Link") selected @endif>Link</option>
 										<option value="Logout" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Logout") selected @endif>Logout</option>
@@ -838,8 +838,8 @@
 										<option value="Home" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Home") selected @endif>Home</option>
 										<option value="News" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "New") selected @endif>News</option>
 										<!-- <option value="Product" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Product") selected @endif>Product</option> -->
-										<option value="Order" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Order") selected @endif>Order</option>
-										<option value="History On Going" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History On Going") selected @endif>History On Going</option>
+										{{-- <option value="Order" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Order") selected @endif>Order</option> --}}
+										{{-- <option value="History On Going" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History On Going") selected @endif>History On Going</option> --}}
 										<option value="History Transaksi" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
 										<option value="History Point" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Point") selected @endif>History Point</option>
 										<option value="Outlet" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
@@ -847,9 +847,9 @@
 										<!-- <option value="Voucher Detail" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option> -->
 										<option value="Profil" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Profil") selected @endif>Profil</option>
 										<!-- <option value="Inbox" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Inbox") selected @endif>Inbox</option> -->
-										<option value="About" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "About") selected @endif>About</option>
+										<option value="About" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "About") selected @endif>Delivery Service</option>
 										<option value="FAQ" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
-										<option value="TOS" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "TOS") selected @endif>TOS</option>
+										<option value="TOS" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "TOS") selected @endif>Ketentuan Layanan</option>
 										<option value="Contact Us" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 										<option value="Link" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Link") selected @endif>Link</option>
 										<option value="Logout" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Logout") selected @endif>Logout</option>
