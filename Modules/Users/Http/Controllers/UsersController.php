@@ -591,7 +591,8 @@ class UsersController extends Controller
 		$data['featuresall'] = null;
 		$data['featuresmodule'] = null;
 		$data['voucher'] = null;
-
+		$data['celebrates'] = MyHelper::get('setting/celebrate_list')['result']??[];
+		$data['jobs'] = MyHelper::get('setting/jobs_list')['result']??[];
 		if(isset($getUser['result'])){
 			$data['profile'] = $getUser['result'];
 // 			$data['trx'] = $getUser['trx'];

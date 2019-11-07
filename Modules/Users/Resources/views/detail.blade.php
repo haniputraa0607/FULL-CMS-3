@@ -435,16 +435,22 @@
 											<li class="list-group-item" style="padding: 5px !important;" title="User Gender">
 												@if($profile['gender'] == 'Male')<i class="fa fa-male"></i> {{$profile['gender']}} </li>@else<i class="fa fa-female"></i> {{$profile['gender']}} </li>
 												@endif
+                                            <li class="list-group-item" style="padding: 5px !important;" title="Users Celebrate">
+                                                <i class="fa fa-calendar-check-o"></i> {{$profile['celebrate']}} </li>
+                                            <li class="list-group-item" style="padding: 5px !important;" title="User's Job">
+                                                <i class="fa fa-black-tie"></i> {{$profile['job']}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User City & Province">
 												<i class="fa fa-map"></i> {{$profile['city_name']}}, {{$profile['province_name']}} </li>
+                                            <li class="list-group-item" style="padding: 5px !important;" title="User Address">
+                                                <i class="fa fa-map-pin"></i> {{$profile['address']}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Birthday">
 												<i class="fa fa-birthday-cake"></i> @if($profile['birthday']){{date("d F Y", strtotime($profile['birthday']))}} @endif</li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Register date & time">
 												<i class="fa fa-registered"></i> {{date("d F Y", strtotime($profile['created_at']))}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Membership">
 												<i class="icon-badge"></i> @if(isset($profile['user_membership']['membership_name'])){{$profile['user_membership']['membership_name']}} @endif</li>
-                        					<li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
-												<i class="fa fa-heart"></i> {{$profile['relationship']}} </li>
+                        					<!-- <li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
+												<i class="fa fa-heart"></i> { {$profile['relationship']} } </li> -->
 											<li class="list-group-item" style="padding: 5px !important;" title="Total {{env('POINT_NAME', 'Points')}} Obtained By The User">
 												<i class="fa fa-gift"></i> {{number_format($profile['balance_acquisition'], 0, ',', '.')}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="Remaining User {{env('POINT_NAME', 'Points')}}">
@@ -1097,15 +1103,37 @@
 													@endif
 												</select>
 											</div>
+                                            <div class="form-group">
+                                                <label class="control-label">Address</label>
+                                                <input type="text" name="address" placeholder="User Address" class="form-control" value="{{$profile['address']}}" />
+                                            </div>
 											<div class="form-group">
-												<label class="control-label">Gender</label>
-												<select name="gender" class="form-control input-sm select2">
-													<option value="">Select...</option>
-													<option value="Male" @if(isset($profile['gender'])) @if($profile['gender'] == 'Male') selected @endif @endif>Male</option>
-													<option value="Female" @if(isset($profile['gender'])) @if($profile['gender'] == 'Female') selected @endif @endif>Female</option>
+												<label class="control-label">Celebrate</label>
+												<select name="celebrate" class="form-control input-sm select2" data-placeholder="Select Users Celebrate">
+													<option value=""></option>
+                                                    @php $was=false; @endphp
+                                                    @foreach($celebrates??[] as $celebrate)
+                                                    <option value="{{$celebrate}}" @if($celebrate==$profile['celebrate']) @php $was=true; @endphp selected @endif>{{$celebrate}}</option>
+                                                    @endforeach
+                                                    @if(!$was)
+                                                    <option value="{{$profile['celebrate']}}" selected>{{$profile['celebrate']}}</option>
+                                                    @endif
 												</select>
 											</div>
-											<div class="form-group">
+                                            <div class="form-group">
+                                                <label class="control-label">Job</label>
+                                                <select name="job" class="form-control input-sm select2" data-placeholder="Select User's Job">
+                                                    <option value=""></option>
+                                                    @php $was=false; @endphp
+                                                    @foreach($jobs??[] as $job)
+                                                    <option value="{{$job}}" @if($job==$profile['job']) @php $was=true; @endphp selected @endif>{{$job}}</option>
+                                                    @endforeach
+                                                    @if(!$was)
+                                                    <option value="{{$profile['job']}}" selected>{{$profile['job']}}</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+											<!-- <div class="form-group">
 												<label class="control-label">Relationship</label>
 												<select name="relationship" class="form-control input-sm select2">
 													<option value="">Select...</option>
@@ -1113,7 +1141,7 @@
 						                            <option value="Complicated" {{ ($profile['relationship']=="Complicated" ? "selected" : "") }}>Complicated</option>
 						                            <option value="Jomblo" {{ ($profile['relationship']=="Jomblo" ? "selected" : "") }}>Jomblo</option>
 												</select>
-											</div>
+											</div> -->
 											<div class="form-group">
 												<label class="control-label">Birthday</label>
 												<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
