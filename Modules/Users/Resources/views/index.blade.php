@@ -277,7 +277,7 @@
 										<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a>
 									@endif
 									</td>
-									<td> {{str_replace(" ","&nbsp;", $data['name'])}} </td>
+									<td> {!!str_replace(" ","&nbsp;", $data['name'])!!} </td>
 									<td> {{$data['phone']}} </td>
 									<td>
 										@if($data['android_device'] == "" && $data['ios_device'] == "") None @endif
@@ -286,13 +286,13 @@
 										@if($data['android_device'] != "" && $data['ios_device'] != "") Both @endif
 									</td>
 									<td> {{$data['email']}} </td>
-									<td> {{str_replace(" ","&nbsp;", $data['city_name'])}} </td>
-									<td> {{str_replace(" ","&nbsp;", $data['province_name'])}} </td>
+									<td> {!!str_replace(" ","&nbsp;", $data['city_name'])!!} </td>
+									<td> {!!str_replace(" ","&nbsp;", $data['province_name'])!!} </td>
 									<td> {{$data['city_postal_code']}} </td>
 									<td> {{$data['gender']}} </td>
 									<td> {{$data['provider']}} </td>
-									<td> @if($data['birthday'] != ""){{str_replace(" ","&nbsp;", date('d F Y', strtotime($data['birthday'])))}}@else - @endif </td>
-									<td> {{str_replace(" ","&nbsp;", $data['age'])}} </td>
+									<td> @if($data['birthday'] != ""){!!str_replace(" ","&nbsp;", date('d F Y', strtotime($data['birthday'])))!!}@else - @endif </td>
+									<td> {!!str_replace(" ","&nbsp;", $data['age'])!!} </td>
 									@if(MyHelper::hasAccess([18], $configs))
 										<td> {{$data['points']}} </td>
 									@endif
@@ -301,7 +301,7 @@
 									@endif
 									<td> @if($data['phone_verified'] == 0) Not Verified @else Verified @endif </td>
 									<td> @if($data['email_verified'] == 0) Not Verified @else Verified @endif </td>
-									<td> {{str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))}} </td>
+									<td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))!!} </td>
 								</tr>
 								@endforeach
 							@endif
