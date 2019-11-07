@@ -1444,12 +1444,21 @@ $configs = session('configs');
 														foreach($outlets as $outlet){
 															$id_data .= '<option value="'.$outlet['id_outlet'].'" '.($row['id'] == $outlet['id_outlet'] ? 'selected' : '').'>'.$outlet['outlet_name'].'</option>';
 														}
-														$operator .= '<option value="=" '.($row['operatorSpecialCondition'] == '=' ? 'selected' : '').'>=</option>';
-														$operator .= '<option value=">=" '.($row['operatorSpecialCondition'] == '>=' ? 'selected' : '').'>>=</option>';
-														$operator .= '<option value=">" '.($row['operatorSpecialCondition'] == '>' ? 'selected' : '').'>></option>';
-														$operator .= '<option value="<=" '.($row['operatorSpecialCondition'] == '<=' ? 'selected' : '').'><=</option>';
-														$operator .= '<option value="<" '.($row['operatorSpecialCondition'] == '<' ? 'selected' : '').'><</option>';
-														$parameter .= '<input type="text" placeholder="0" class="form-control" id="parameter'.$q.$indexnya.'" name="conditions['.$q.']['.$indexnya.'][parameterSpecialCondition]" value="'.$row['parameterSpecialCondition'].'" required/>';
+
+														if(isset($row['operatorSpecialCondition'])){
+															$operator_val = $row['operatorSpecialCondition'];
+															$parameter_val = $row['parameterSpecialCondition'];
+														}else{
+															$operator_val = $row['operator'];
+															$parameter_val = $row['parameter'];
+														}
+
+														$operator .= '<option value="=" '.($operator_val == '=' ? 'selected' : '').'>=</option>';
+														$operator .= '<option value=">=" '.($operator_val == '>=' ? 'selected' : '').'>>=</option>';
+														$operator .= '<option value=">" '.($operator_val == '>' ? 'selected' : '').'>></option>';
+														$operator .= '<option value="<=" '.($operator_val == '<=' ? 'selected' : '').'><=</option>';
+														$operator .= '<option value="<" '.($operator_val == '<' ? 'selected' : '').'><</option>';
+														$parameter .= '<input type="text" placeholder="0" class="form-control" id="parameter'.$q.$indexnya.'" name="conditions['.$q.']['.$indexnya.'][parameterSpecialCondition]" value="'.$parameter_val.'" required/>';
 													}elseif($row['subject'] == 'trx_outlet_not'){
 														foreach($outlets as $outlet){
 															$operator .= '<option value="'.$outlet['id_outlet'].'" '.($row['parameter'] == $outlet['id_outlet'] ? 'selected' : '').'>'.$outlet['outlet_name'].'</option>';
@@ -1461,12 +1470,21 @@ $configs = session('configs');
 														foreach($products as $product){
 															$id_data .= '<option value="'.$product['id_product'].'" '.($row['id'] == $product['id_product'] ? 'selected' : '').'>'.$product['product_name'].'</option>';
 														}
-														$operator .= '<option value="=" '.($row['operatorSpecialCondition'] == '=' ? 'selected' : '').'>=</option>';
-														$operator .= '<option value=">=" '.($row['operatorSpecialCondition'] == '>=' ? 'selected' : '').'>>=</option>';
-														$operator .= '<option value=">" '.($row['operatorSpecialCondition'] == '>' ? 'selected' : '').'>></option>';
-														$operator .= '<option value="<=" '.($row['operatorSpecialCondition'] == '<=' ? 'selected' : '').'><=</option>';
-														$operator .= '<option value="<" '.($row['operatorSpecialCondition'] == '<' ? 'selected' : '').'><</option>';
-														$parameter .= '<input type="text" placeholder="0" class="form-control" id="parameter'.$q.$indexnya.'" name="conditions['.$q.']['.$indexnya.'][parameterSpecialCondition]" value="'.$row['parameterSpecialCondition'].'" required/>';
+
+														if(isset($row['operatorSpecialCondition'])){
+															$operator_val = $row['operatorSpecialCondition'];
+															$parameter_val = $row['parameterSpecialCondition'];
+														}else{
+															$operator_val = $row['operator'];
+															$parameter_val = $row['parameter'];
+														}
+
+														$operator .= '<option value="=" '.($operator_val == '=' ? 'selected' : '').'>=</option>';
+														$operator .= '<option value=">=" '.($operator_val == '>=' ? 'selected' : '').'>>=</option>';
+														$operator .= '<option value=">" '.($operator_val == '>' ? 'selected' : '').'>></option>';
+														$operator .= '<option value="<=" '.($operator_val == '<=' ? 'selected' : '').'><=</option>';
+														$operator .= '<option value="<" '.($operator_val == '<' ? 'selected' : '').'><</option>';
+														$parameter .= '<input type="text" placeholder="0" class="form-control" id="parameter'.$q.$indexnya.'" name="conditions['.$q.']['.$indexnya.'][parameterSpecialCondition]" value="'.$parameter_val.'" required/>';
 													}elseif($row['subject'] == 'trx_product_not' ){
 														foreach($products as $product){
 															$operator .= '<option value="'.$product['id_product'].'" '.($row['parameter'] == $product['id_product'] ? 'selected' : '').'>'.$product['product_name'].'</option>';
