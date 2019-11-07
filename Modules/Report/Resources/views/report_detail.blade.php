@@ -354,11 +354,11 @@
 														<td>
 															<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalLog{{$no}}"><i class="fa fa-search"></i> Detail</a>
 														</td>
-														<td> {{str_replace(" ","&nbsp;", date('d F Y', strtotime($data['created_at'])))}} </td>
+														<td> {!!str_replace(" ","&nbsp;", date('d F Y', strtotime($data['created_at'])))!!} </td>
 														<td> {{$data['response_status']}} </td>
-														<td> {{str_replace(" ","&nbsp;", $data['subject'])}} </td>
+														<td> {!!str_replace(" ","&nbsp;", $data['subject'])!!} </td>
 														<td> {{$data['ip']}} </td>
-														<td> {{str_replace(" ","&nbsp;", $data['useragent'])}} </td>
+														<td> {!!str_replace(" ","&nbsp;", $data['useragent'])!!} </td>
 													</tr>
 												@endforeach
 											@else
