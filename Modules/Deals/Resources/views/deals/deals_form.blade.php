@@ -127,7 +127,7 @@ $configs = session('configs');
     </div>
 </div>
 
-<div class="form-group" id="prices" @if (old('prices_by')) style="display: block;" @else style="display: none;" @endif>
+<div class="form-group" id="prices" @if (old('prices_by')!='free') style="display: block;" @else style="display: none;" @endif>
     <label class="col-md-3 control-label"></label>
     <div class="col-md-9">
         <div class="col-md-3">
@@ -212,7 +212,7 @@ $configs = session('configs');
         </div>
         <div class="col-md-9 voucherTime" id="dates" @if (old('duration') == "dates") style="display: block;" @else style="display: none;" @endif>
             <div class="input-group">
-                <input type="text" class="form_datetime form-control dates durationOpp" name="deals_voucher_expired" value="{{ old('deals_voucher_expired') }}" required>
+                <input type="text" class="form_datetime form-control dates durationOpp" name="deals_voucher_expired" value="{{ old('deals_voucher_expired') }}" @if(old('duration') == "dates") required @endif>
                 <span class="input-group-btn">
                     <button class="btn default" type="button">
                         <i class="fa fa-calendar"></i>
@@ -222,7 +222,7 @@ $configs = session('configs');
         </div>
         <div class="col-md-9 voucherTime" id="duration" @if (old('duration') == "duration") style="display: block;" @else style="display: none;" @endif>
             <div class="input-group">
-                <input type="number" class="form-control duration datesOpp" name="deals_voucher_duration" value="{{ old('deals_voucher_duration') }}" required>
+                <input type="number" class="form-control duration datesOpp" name="deals_voucher_duration" value="{{ old('deals_voucher_duration') }}" @if(old('duration') == "duration") required @endif>
                 <span class="input-group-btn">
                     <button class="btn default" type="button">
                         <i class="fa fa-question-circle tooltips" data-original-title="Jumlah hari masa berlaku voucher. Jika voucher start date diisi, maka dihitung berdasarkan voucher start date. Jika tidak, berdasarkan tanggal claim voucher" data-container="body"></i>

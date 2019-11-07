@@ -156,10 +156,11 @@ class SettingController extends Controller
             if (isset($request['status']) && $request['status'] == 'success') {
                 $data['result'] = $request['result'];
                 return view('setting::point-reset', $data);
-            } elseif (isset($request['status']) && $request['messages'][0] == 'empty') {
+            }/* elseif (isset($request['status']) && $request['messages'][0] == 'empty') {
                 return view('setting::point-reset', $data);
-            }else {
-                return view('setting::point-reset', $data)->withErrors($request['messages']);
+            }*/else {
+                return view('setting::point-reset',$data);
+                // return view('setting::point-reset', $data)->withErrors($request['messages']);
             }
 
         }else{

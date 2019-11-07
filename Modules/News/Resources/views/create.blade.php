@@ -409,6 +409,11 @@
             /* VIDEO */
             $('#featureVideo').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureVideo', state);
+                if(state){
+                  drawVideo();
+                }else{
+                  $('#video-container').html('');
+                }
                 $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
                 $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/video.jpg')}}")
             });
@@ -506,7 +511,9 @@
                 }
 
             });
+            @if(old('news_video'))
             drawVideo();
+            @endif
         });
     </script>
     <script type="text/javascript">
