@@ -473,12 +473,12 @@
 
                     </div>
 
-                    <div class="form-group dealsPromoTypeShow" @if (old('dealsPromoType')) style="display: block;" @else style="display: none;" @endif>
+                    <div class="form-group dealsPromoTypeShow" @if (!old('deals_promo_id_type')) style="display: none;" @endif>
                         <label class="col-md-3 control-label"> </label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control dealsPromoTypeValuePromo" name="deals_promo_id_promoid" value="{{ old('deals_promo_id_promoid') }}" placeholder="Input Promo ID"  @if (old('dealsPromoType') == "promoid") style="display: block;" @else style="display: block;" @endif>
+                            <input type="text" class="form-control dealsPromoTypeValuePromo" name="deals_promo_id_promoid" value="{{ old('deals_promo_id_promoid') }}" placeholder="Input Promo ID"  @if (old('deals_promo_id_type') == "promoid") style="display: block;" @else style="display: none;" @endif>
 
-                            <input type="text" class="form-control dealsPromoTypeValuePrice price" name="deals_promo_id_nominal" value="{{ old('deals_promo_id_nominal') }}" placeholder="Input nominal" @if (old('dealsPromoType') == "nominal") style="display: block;" @else style="display: block;" @endif>
+                            <input type="text" class="form-control dealsPromoTypeValuePrice price" name="deals_promo_id_nominal" value="{{ old('deals_promo_id_nominal') }}" placeholder="Input nominal" @if (old('deals_promo_id_type') == "nominal") style="display: block;" @else style="display: none;" @endif>
                         </div>
                     </div>
 
