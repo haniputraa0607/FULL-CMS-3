@@ -28,7 +28,7 @@ class OutletController extends Controller
         ];
 
         // outlet
-        $outlet = MyHelper::get('outlet/list');
+        $outlet = MyHelper::post('outlet/list', ['all_outlet' => 1]);
 
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];

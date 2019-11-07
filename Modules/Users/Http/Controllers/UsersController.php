@@ -371,8 +371,14 @@ class UsersController extends Controller
 		// print_r($post);exit;
 		$getUser = MyHelper::post('users/list', $post);
 		// print_r($getUser);exit;
-		if($getUser['status'] == 'success') $data['content'] = $getUser['result']; else $data['content'] = null;
-		if($getUser['status'] == 'success') $data['total'] = $getUser['total']; else $data['total'] = null;
+        if ($getUser['status'] == 'success') {
+            $data['content'] = $getUser['result'];
+            $data['total'] = $getUser['total'];
+        }
+        else {
+            $data['content'] = null;
+            $data['total'] = null;
+        }
 		
 		$data['begin'] = $post['skip'] + 1;
 		$data['last'] = $post['take'] + $post['skip'];
