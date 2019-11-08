@@ -1278,6 +1278,12 @@
 			</ul>
 		</li>
 		@endif
+		<li class="nav-item {{($menu_active == 'setting-intro') ? 'active' : ''}}">
+			<a href="{{url('setting/intro')}}" class="nav-link">
+				<i class="icon-screen-tablet "></i>
+				<span class="title">Intro Apps</span>
+			</a>
+		</li>
 
 		@if(MyHelper::hasAccess([162,163], $grantedFeature))
 		<li class="nav-item {{($menu_active == 'confirmation-messages') ? 'active' : ''}}">
