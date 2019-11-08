@@ -185,16 +185,16 @@
 																<a class="btn btn-block green btn-xs" href="{{ url('user/detail', $data['phone']) }}"><i class="icon-pencil"></i> Detail </a>
 																<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
 															</td>
-															<td> {{str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['name'])}} </td>
+															<td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['name'])!!} </td>
 															<td> {{$data['phone']}} </td>
 															<td> {{$data['response_status']}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['subject'])}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['email'])}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['request'])}} </td>
-															<td> {{substr(str_replace(" ","&nbsp;", $data['response']), 0, 350)}} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['subject'])!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['email'])!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['request'])!!} </td>
+															<td> {!!substr(str_replace(" ","&nbsp;", $data['response']), 0, 350)!!} </td>
 															<td> {{$data['ip']}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['useragent'])}} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['useragent'])!!} </td>
 														</tr>
 													@endforeach
 											@else
@@ -263,16 +263,16 @@
 																<a class="btn btn-block green btn-xs" href="{{ url('user/detail', $data['phone']) }}"><i class="icon-pencil"></i> Detail </a>
 																<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
 															</td>
-															<td> {{str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['name'])}} </td>
+															<td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['name'])!!} </td>
 															<td> {{$data['phone']}} </td>
 															<td> {{$data['response_status']}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['subject'])}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['email'])}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['request'])}} </td>
-															<td> {{substr(str_replace(" ","&nbsp;", $data['response']), 0, 350)}} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['subject'])!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['email'])!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['request'])!!} </td>
+															<td> {!!substr(str_replace(" ","&nbsp;", $data['response']), 0, 350)!!} </td>
 															<td> {{$data['ip']}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['useragent'])}} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['useragent'])!!} </td>
 														</tr>
 														@endforeach
 														@else

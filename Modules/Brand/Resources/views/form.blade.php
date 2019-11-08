@@ -103,7 +103,7 @@
                         </label>
                         <div class="col-md-7">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Brand Name" class="form-control" name="name_brand" @if (isset($result['name_brand'])) value="{{ $result['name_brand'] }}" @else value="{{ old('name_brand') }}" @endif>
+                                <input type="text" placeholder="Brand Name" class="form-control" name="name_brand" @if (isset($result['name_brand'])) value="{{ $result['name_brand'] }}" @else value="{{ old('name_brand') }}" @endif required>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                         </label>
                         <div class="col-md-7">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Brand Code" class="form-control" name="code_brand" @if (isset($result['code_brand'])) value="{{ $result['code_brand'] }}" disabled @else value="{{ old('code_brand') }}" @endif>
+                                <input type="text" placeholder="Brand Code" class="form-control" name="code_brand" @if (isset($result['code_brand'])) value="{{ $result['code_brand'] }}" disabled @else value="{{ old('code_brand') }}" required @endif>
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                                     <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/png" name="logo_brand" class="file" data-jenis="logo_brand"> </span>
+                                        <input type="file" accept="image/png" name="logo_brand" class="file" data-jenis="logo_brand" @if (!isset($result['name_brand'])) required @endif> </span>
                                     <a href="javascript:;" id="removeLogo" class="btn red default fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                                     <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/*" name="image_brand" class="file" data-jenis="image_brand"> </span>
+                                        <input type="file" accept="image/*" name="image_brand" class="file" data-jenis="image_brand" @if (!isset($result['name_brand'])) required @endif> </span>
                                     <a href="javascript:;" id="removeImage" class="btn red default fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                 </div>
                             </div>
