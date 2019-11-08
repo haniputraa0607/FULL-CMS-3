@@ -78,7 +78,7 @@ class SettingController extends Controller
         $colLabel = 2;
         $colInput = 10;
         $label = '';
-
+        
         if($key == 'about') {
             $sub = 'about-about';
             $active = 'about';
@@ -135,6 +135,10 @@ class SettingController extends Controller
             $sub = 'balance-reset';
             $active = 'balance-reset';
             $subTitle = env('POINT_NAME', 'Points').' Reset';
+        } elseif ($key == 'intro') {
+            $sub = 'intro';
+            $active = 'intro';
+            $subTitle = 'Intro App';
         }
 
         $data = [
@@ -175,10 +179,13 @@ class SettingController extends Controller
                     $data['value'] = $result['value'];
                     $data['key'] = 'value';
                 }
+                if ($key == 'intro') {
+                    $data['value_text'] = json_decode($result['value_text']);
+                    return view('setting::intro', $data);
+                }
             } else {
                 return view('setting::index', $data)->withErrors($request['messages']);
             }
-
             return view('setting::index', $data);
         }
     }
@@ -242,6 +249,25 @@ class SettingController extends Controller
         $insert = MyHelper::post('setting/faq/create', $data);
 
         return parent::redirect($insert, 'FAQ has been created.');
+    }
+
+    public function introStore(Request $request) {
+        $post = $request->except('_token');
+        if (isset($post['value']) && $post['value'] == 'on') {
+            $post['value'] = 1;
+        } else {
+            $post['value'] = 0;
+        }
+        
+        if (isset($post['value_text']) && $post['value_text'] != null) {
+            foreach ($post['value_text'] as $key => $value) {
+                $post['value_text'][$key] = MyHelper::encodeImage($value['value_text']);
+            }
+        }
+        
+        $insert = MyHelper::post('setting/intro/save', $post);
+dd($insert);
+        return parent::redirect($insert, 'FAQ has been updated.');
     }
 
     public function faqEdit($id) {

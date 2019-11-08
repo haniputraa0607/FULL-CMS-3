@@ -538,7 +538,6 @@
                             }
                         }
                     };
-
                     image.src = _URL.createObjectURL(file);
                 }
 
