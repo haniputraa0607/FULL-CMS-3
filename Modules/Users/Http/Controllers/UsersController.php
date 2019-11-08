@@ -10,6 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Lib\MyHelper;
 use Session;
 use Excel;
+use App\Exports\ArrayExport;
 
 class UsersController extends Controller
 {
@@ -145,7 +146,7 @@ class UsersController extends Controller
 				$post['relationship'] = null;
 			}
 			$query = MyHelper::post('users/create', $post);
-			// print_r($query);exit;
+			
 			if(isset($query['status']) && $query['status'] == 'success'){
 				return back()->withSuccess(['User Create Success']);
 			} else{
@@ -167,9 +168,13 @@ class UsersController extends Controller
 			
 			$getOutlet = MyHelper::get('outlet/list');
 			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
+
+			$getCelebrate = MyHelper::get('setting/celebrate_list');
+			if($getCelebrate['status'] == 'success') $data['celebrate'] = $getCelebrate['result']; else $data['celebrate'] = null;
+
+			$getJob = MyHelper::get('setting/jobs_list');
+			if($getJob['status'] == 'success') $data['job'] = $getJob['result']; else $data['job'] = null;
 			
-			
-			// print_r($data);exit;
 			return view('users::create', $data);
 		}
 	}
@@ -366,8 +371,14 @@ class UsersController extends Controller
 		// print_r($post);exit;
 		$getUser = MyHelper::post('users/list', $post);
 		// print_r($getUser);exit;
-		if($getUser['status'] == 'success') $data['content'] = $getUser['result']; else $data['content'] = null;
-		if($getUser['status'] == 'success') $data['total'] = $getUser['total']; else $data['total'] = null;
+        if ($getUser['status'] == 'success') {
+            $data['content'] = $getUser['result'];
+            $data['total'] = $getUser['total'];
+        }
+        else {
+            $data['content'] = null;
+            $data['total'] = null;
+        }
 		
 		$data['begin'] = $post['skip'] + 1;
 		$data['last'] = $post['take'] + $post['skip'];
@@ -414,71 +425,65 @@ class UsersController extends Controller
 		Session::forget('form');
 		return back();
 	}
-	
-	public function getExport(Request $request) {
-		$post = $request->except('_token');
-	
-		if(!empty(Session::get('form'))){
-			$post = Session::get('form');
-		}
-		
-		if(!isset($post['order_field'])) $post['order_field'] = 'id';
-		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
-		if(!isset($post['take'])) $post['take'] = 999999999;
-		$post['skip'] = 0;
-		
-		
-		// print_r($post);exit;
-		$export = MyHelper::post('users/list', $post);
-		// print_r($export);exit;
-		if($export['status'] == 'success'){
-			$data = $export['result'];
-			$x = 1;
-			foreach($data as $key => $row){
-				unset($data[$key]['id']);
-				unset($data[$key]['password_k']);
-				unset($data[$key]['id_city']);
-				unset($data[$key]['id_province']);
-				unset($data[$key]['level_range_start']);
-				unset($data[$key]['level_range_end']);
-				unset($data[$key]['id_level']);
-				unset($data[$key]['level_name']);
-				unset($data[$key]['level_parameters']);
-			}
-			Excel::create('Users List-'.date('Y-m-d'), function($excel) use($data) {
-				$excel->sheet('Sheet1', function($sheet) use($data) {
-					$sheet->fromArray($data);
-				});
-			})->export('xls');
-		}
-	}
-	
-	public function getExportActivities(Request $request) {
-		$post = $request->except('_token');
-		
-		if(!empty(Session::get('form'))){
-			$post = Session::get('form');
-		}
-		
-		if(!isset($post['order_field'])) $post['order_field'] = 'id';
-		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
-		if(!isset($post['take'])) $post['take'] = 999999999;
-		$post['skip'] = 0;
-		
-		
-		// print_r($post);exit;
-		$export = MyHelper::post('users/activity', $post);
-		
-		if($export['status'] == 'success'){
-			$data = $export['result'];
-			$x = 1;
-			Excel::create('Log Activity List-'.date('Y-m-d'), function($excel) use($data) {
-				$excel->sheet('Sheet1', function($sheet) use($data) {
-					$sheet->fromArray($data);
-				});
-			})->export('xls');
-		}
-	}
+
+    public function getExport(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if (!empty(Session::get('form'))) {
+            $post = Session::get('form');
+        }
+
+        if (!isset($post['order_field'])) $post['order_field'] = 'id';
+        if (!isset($post['order_method'])) $post['order_method'] = 'desc';
+        if (!isset($post['take'])) $post['take'] = 999999999;
+        $post['skip'] = 0;
+
+
+        // print_r($post);exit;
+        $export = MyHelper::post('users/list', $post);
+        // print_r($export);exit;
+        if ($export['status'] == 'success') {
+            $data = $export['result'];
+            $x = 1;
+            foreach ($data as $key => $row) {
+                unset($data[$key]['id']);
+                unset($data[$key]['password_k']);
+                unset($data[$key]['id_city']);
+                unset($data[$key]['id_province']);
+                unset($data[$key]['level_range_start']);
+                unset($data[$key]['level_range_end']);
+                unset($data[$key]['id_level']);
+                unset($data[$key]['level_name']);
+                unset($data[$key]['level_parameters']);
+            }
+            return Excel::download(new ArrayExport($data),'Users List-'.date('Y-m-d').'.xls');
+        }
+    }
+
+    public function getExportActivities(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if (!empty(Session::get('form'))) {
+            $post = Session::get('form');
+        }
+
+        if (!isset($post['order_field'])) $post['order_field'] = 'id';
+        if (!isset($post['order_method'])) $post['order_method'] = 'desc';
+        if (!isset($post['take'])) $post['take'] = 999999999;
+        $post['skip'] = 0;
+
+
+        // print_r($post);exit;
+        $export = MyHelper::post('users/activity', $post);
+
+        if ($export['status'] == 'success') {
+            $data = $export['result'];
+            $x = 1;
+            Excel::download(new ArrayExport($data),'Log Activity List-'.date('Y-m-d').'.xls');
+        }
+    }
 	
 
     /**
@@ -592,7 +597,8 @@ class UsersController extends Controller
 		$data['featuresall'] = null;
 		$data['featuresmodule'] = null;
 		$data['voucher'] = null;
-
+		$data['celebrates'] = MyHelper::get('setting/celebrate_list')['result']??[];
+		$data['jobs'] = MyHelper::get('setting/jobs_list')['result']??[];
 		if(isset($getUser['result'])){
 			$data['profile'] = $getUser['result'];
 // 			$data['trx'] = $getUser['trx'];

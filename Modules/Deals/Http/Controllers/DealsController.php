@@ -127,17 +127,16 @@ class DealsController extends Controller
     }
 
     /* IMPORT DATA FROM EXCEL */
-    function importDataExcel($fileExcel, $redirect=null,$return=false) {
+    function importDataExcel($fileExcel, $redirect=null) {
 
         $path = $fileExcel->getRealPath();
-        $data = \Excel::load($path)->get()->toArray();
+        // $data = \Excel::load($path)->get()->toArray();
+        $data = \Excel::toArray(new \App\Imports\FirstSheetOnlyImport(),$path);
+        $data = array_map(function($x){return (Object)$x;}, $data[0]??[]);
 
         if (!empty($data)) {
             $data = array_unique(array_pluck($data, 'phone'));
             $data = implode(",", $data);
-            if($return){
-                return $data;
-            }
 
             // SET SESSION
             Session::flash('deals_recipient', $data);

@@ -576,7 +576,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="{{env('POINT_NAME', 'Points')}} Received">
+														<input class="form-control" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="{{env('POINT_NAME', 'Points')}} Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -829,7 +829,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" value="0" placeholder="{{env('POINT_NAME', 'Points')}} Received">
+														<input class="form-control" type="text" name="benefit_cashback_multiplier" value="0" placeholder="{{env('POINT_NAME', 'Points')}} Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>

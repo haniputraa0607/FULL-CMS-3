@@ -538,7 +538,6 @@
                             }
                         }
                     };
-
                     image.src = _URL.createObjectURL(file);
                 }
 
@@ -1200,7 +1199,6 @@
                                 <div class="col-md-9" id="selectProduct">
                                     <select id="field_product_select" class="form-control select2-multiple featureProductForm" multiple data-placeholder="Select Product" name="id_product[]">
                                         <optgroup label="Product List">
-                                            <option value="">Select Product</option>
                                             @php
                                             if (!empty($result['custom_page_product'])) {
                                                 $selectedProduct = array_pluck($result['custom_page_product'], 'id_product');
