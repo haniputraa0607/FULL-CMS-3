@@ -832,10 +832,16 @@
 
 			@if(MyHelper::hasAccess([49], $configs))
 				@if(MyHelper::hasAccess([95], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-deals-success') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/claim-deals-success')}}" class="nav-link ">
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-free-deals-success') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/claim-free-deals-success')}}" class="nav-link ">
 							<i class="fa fa-mail-forward"></i>
-							<span class="title">[Response] Claim Deals Success</span>
+							<span class="title">[Response] Claim Free Deals Success</span>
+						</a>
+					</li>
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-paid-deals-success') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/claim-paid-deals-success')}}" class="nav-link ">
+							<i class="fa fa-mail-forward"></i>
+							<span class="title">[Response] Claim Paid Deals Success</span>
 						</a>
 					</li>
 					<li class="nav-item {{($submenu_active == 'deals-autoresponse-redeem-deals-success') ? 'active open' : ''}}">
