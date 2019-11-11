@@ -856,6 +856,24 @@ $configs = session('configs');
 					<?php
 					}
 					?>
+
+			var operator_value = document.getElementById('operator'+indx);
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			operator_value.options[operator_value.options.length] = new Option('=', '=');
+			operator_value.options[operator_value.options.length] = new Option('>=', '>=');
+			operator_value.options[operator_value.options.length] = new Option('>', '>');
+			operator_value.options[operator_value.options.length] = new Option('<=', '<=');
+			operator_value.options[operator_value.options.length] = new Option('<', '<');
+
+			var parameter = document.getElementById('parameter'+indx);
+			if(parameter){
+				parameter.style.display = 'block';
+				parameter.required = true;
+			} else if(document.getElementsByName(parameter)[0] != null){
+				parameter.style.display = 'none';
+				parameter.required = false;
+			}
+
 			var parameter = document.getElementById('parameter'+indx);
 			if(parameter){
 				parameter.style.display = 'block';
@@ -914,6 +932,22 @@ $configs = session('configs');
 						}
 						?>
 
+				var operator_value = document.getElementById('operator'+indx);
+				for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+				operator_value.options[operator_value.options.length] = new Option('=', '=');
+				operator_value.options[operator_value.options.length] = new Option('>=', '>=');
+				operator_value.options[operator_value.options.length] = new Option('>', '>');
+				operator_value.options[operator_value.options.length] = new Option('<=', '<=');
+				operator_value.options[operator_value.options.length] = new Option('<', '<');
+
+				var parameter = document.getElementById('parameter'+indx);
+				if(parameter){
+					parameter.style.display = 'block';
+					parameter.required = true;
+				} else if(document.getElementsByName(parameter)[0] != null){
+					parameter.style.display = 'none';
+					parameter.required = false;
+				}
 				var parameter = document.getElementById('parameter'+indx);
 				if(parameter){
 					parameter.style.display = 'block';
