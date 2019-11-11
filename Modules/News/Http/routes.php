@@ -11,11 +11,11 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', '
 
     //category
     Route::group(['prefix'=>'category'],function(){
-        Route::get('/', ['middleware' => 'feature_control:19', 'uses' => 'NewsCategoryController@index']);
-        Route::get('create', ['middleware' => 'feature_control:21', 'uses' => 'NewsCategoryController@create']);
-        Route::post('create', ['middleware' => 'feature_control:21', 'uses' => 'NewsCategoryController@store']);
-        Route::post('delete', ['middleware' => 'feature_control:23', 'uses' => 'NewsCategoryController@delete']);
-        Route::post('update', ['middleware' => 'feature_control:23', 'uses' => 'NewsCategoryController@update']);
+        Route::get('/', ['middleware' => 'feature_control:164', 'uses' => 'NewsCategoryController@index']);
+        Route::get('create', ['middleware' => 'feature_control:165', 'uses' => 'NewsCategoryController@create']);
+        Route::post('create', ['middleware' => 'feature_control:165', 'uses' => 'NewsCategoryController@store']);
+        Route::post('delete', ['middleware' => 'feature_control:167', 'uses' => 'NewsCategoryController@delete']);
+        Route::post('update', ['middleware' => 'feature_control:166', 'uses' => 'NewsCategoryController@update']);
     });
 
     // results of news custom form
