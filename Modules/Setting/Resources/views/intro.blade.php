@@ -1,4 +1,8 @@
-@extends('layouts.main')
+<?php
+    use App\Lib\MyHelper;
+    $grantedFeature     = session('granted_features');
+ ?>
+ @extends('layouts.main')
 
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
@@ -120,11 +124,13 @@
                                                     <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
                                                 </div>
                                                 <div class="col-md-12">
+                                                    @if(MyHelper::hasAccess([171], $grantedFeature))
                                                     <div class="col-md-2">
                                                         <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
                                                             <i class="fa fa-close"></i>
                                                         </a>
                                                     </div>
+                                                    @endif
                                                     <div class="input-icon right">
                                                         <label class="col-md-3 control-label">
                                                         Image Landscape
@@ -161,11 +167,13 @@
                                                     <i class="fa fa-arrows tooltips" data-original-title="Ubah urutan form dengan drag n drop" data-container="body"></i>
                                                 </div>
                                                 <div class="col-md-12">
+                                                    @if(MyHelper::hasAccess([171], $grantedFeature))
                                                     <div class="col-md-2">
                                                         <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
                                                             <i class="fa fa-close"></i>
                                                         </a>
                                                     </div>
+                                                    @endif
                                                     <div class="input-icon right">
                                                         <label class="col-md-3 control-label">
                                                         Image Landscape
@@ -200,8 +208,10 @@
                                     <div class="form-action col-md-12">
                                         <div class="col-md-2"></div>
                                         <div class="col-md-10">
+                                            @if(MyHelper::hasAccess([169], $grantedFeature))
                                             <a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add">
                                             <i class="fa fa-plus"></i> Add New Input</a>
+                                            @endif
                                         </div>
                                     </div>
                                     @endif
@@ -216,8 +226,10 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-offset-3 col-md-9">
+                                    @if(MyHelper::hasAccess([170], $grantedFeature))
                                     <button type="submit" class="btn green">
                                         <i class="fa fa-check"></i> Submit</button>
+                                    @endif
                                     <button type="button" class="btn default">Cancel</button>
                                 </div>
                             </div>

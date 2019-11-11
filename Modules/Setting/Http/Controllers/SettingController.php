@@ -181,8 +181,13 @@ class SettingController extends Controller
                     $data['key'] = 'value';
                 }
                 if ($key == 'intro') {
-                    $data['value_text'] = json_decode($result['value_text']);
-                    return view('setting::intro', $data);
+                    $grantedFeature     = session('granted_features');
+                    if(MyHelper::hasAccess([168,169,170,171], $grantedFeature)){
+                        $data['value_text'] = json_decode($result['value_text']);
+                        return view('setting::intro', $data);
+                    }else{
+                        return redirect('/');
+                    }
                 }
             } else {
                 return view('setting::index', $data)->withErrors($request['messages']);
