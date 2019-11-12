@@ -113,6 +113,13 @@
 									</a>
 								</li>
 							@endif
+							@if(MyHelper::hasAccess([43], $configs))
+								<li class="nav-item {{($submenu_active == 'user-autoresponse-login-first-time') ? 'active open' : ''}}">
+									<a href="{{url('user/autoresponse/login-first-time')}}" class="nav-link ">
+										<span class="title">[Response] Login First Time</span>
+									</a>
+								</li>
+							@endif
 						@endif
 					@endif
 				</ul>
