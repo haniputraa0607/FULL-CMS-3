@@ -290,9 +290,9 @@
                 ko.src        = cariImage
                 // load image
                 ko.onload     = function(){
-                    if (this.naturalHeight === 450 && this.naturalWidth === 600) {
+                    if (this.naturalHeight === 500 && this.naturalWidth === 500) {
                     } else {
-                        mentah.attr('src', "")
+                        mentah.attr('src', "https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image")
                         $('#file').val("");
                         toastr.warning("Please check dimension of your photo.");
                     }
@@ -473,12 +473,12 @@
 
                     </div>
 
-                    <div class="form-group dealsPromoTypeShow" @if (old('dealsPromoType')) style="display: block;" @else style="display: none;" @endif>
+                    <div class="form-group dealsPromoTypeShow" @if (!old('deals_promo_id_type')) style="display: none;" @endif>
                         <label class="col-md-3 control-label"> </label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control dealsPromoTypeValuePromo" name="deals_promo_id_promoid" value="{{ old('deals_promo_id_promoid') }}" placeholder="Input Promo ID"  @if (old('dealsPromoType') == "promoid") style="display: block;" @else style="display: block;" @endif>
+                            <input type="text" class="form-control dealsPromoTypeValuePromo" name="deals_promo_id_promoid" value="{{ old('deals_promo_id_promoid') }}" placeholder="Input Promo ID"  @if (old('deals_promo_id_type') == "promoid") style="display: block;" @else style="display: none;" @endif>
 
-                            <input type="text" class="form-control dealsPromoTypeValuePrice price" name="deals_promo_id_nominal" value="{{ old('deals_promo_id_nominal') }}" placeholder="Input nominal" @if (old('dealsPromoType') == "nominal") style="display: block;" @else style="display: block;" @endif>
+                            <input type="text" class="form-control dealsPromoTypeValuePrice price" name="deals_promo_id_nominal" value="{{ old('deals_promo_id_nominal') }}" placeholder="Input nominal" @if (old('deals_promo_id_type') == "nominal") style="display: block;" @else style="display: none;" @endif>
                         </div>
                     </div>
 
@@ -605,14 +605,14 @@
                             <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
                             <br>
-                            <span class="required" aria-required="true"> (600*450) </span>
+                            <span class="required" aria-required="true"> (500*500) </span>
                             </label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 153px;">
-                                      <img src="https://www.placehold.it/600x450/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                                      <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>

@@ -245,8 +245,20 @@
 							@foreach($ruleParent['rules'] as $rule)
 							<div class="row static-info">
 								<div class="col-md-1 name"></div>
-								<div class="col-md-10 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if($rule['subject'] != "all_user") @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif @endif
+								<div class="col-md-10 value"><li>
+								@if($rule['subject'] != 'trx_outlet' && $rule['subject'] != 'trx_product')
+									{{ucwords(str_replace("_", " ", $rule['subject']))}} @if($rule['subject'] != "all_user") @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif @endif
+								@endif
 								@if($rule['subject'] == 'trx_outlet')
+									{{ucwords(str_replace("_", " ", $rule['subject']))}}
+									<?php $name = null; ?>
+									@foreach($outlets as $outlet)
+										@if($outlet['id_outlet'] == $rule['id'])
+											<?php $name = $outlet['outlet_name']; ?>
+										@endif
+									@endforeach
+									"{{$name}}" with outlet count {{$rule['operator']}} {{$rule['parameter']}}
+								@elseif($rule['subject'] == 'trx_outlet_not')
 									<?php $name = null; ?>
 									@foreach($outlets as $outlet)
 										@if($outlet['id_outlet'] == $rule['parameter'])
@@ -255,6 +267,15 @@
 									@endforeach
 									{{$name}}
 								@elseif($rule['subject'] == 'trx_product')
+									{{ucwords(str_replace("_", " ", $rule['subject']))}}
+									<?php $name = null; ?>
+									@foreach($products as $product)
+										@if($product['id_product'] == $rule['id'])
+											<?php $name = $product['product_name']; ?>
+										@endif
+									@endforeach
+									"{{$name}}" with product count {{$rule['operator']}} {{$rule['parameter']}}
+								@elseif($rule['subject'] == 'trx_product_not')
 									<?php $name = null; ?>
 									@foreach($products as $product)
 										@if($product['id_product'] == $rule['parameter'])
@@ -262,7 +283,7 @@
 										@endif
 									@endforeach
 									{{$name}}
-								@elseif($rule['subject'] == 'trx_product_tag')
+								@elseif($rule['subject'] == 'trx_product_tag' || $rule['subject'] == 'trx_product_tag_not')
 									<?php $name = null; ?>
 									@foreach($tags as $tag)
 										@if($tag['id_tag'] == $rule['parameter'])

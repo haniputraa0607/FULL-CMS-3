@@ -96,9 +96,14 @@ class TransactionController extends Controller
                 $data['submenu_active'] = 'deals-autoresponse-redeem-deals-success';
                 break;
             
-            case 'claim-deals-success':
+            case 'claim-free-deals-success':
                 $data['menu_active'] = 'deals-autoresponse';
-                $data['submenu_active'] = 'deals-autoresponse-claim-deals-success';
+                $data['submenu_active'] = 'deals-autoresponse-claim-free-deals-success';
+                break;
+
+            case 'claim-paid-deals-success':
+                $data['menu_active'] = 'deals-autoresponse';
+                $data['submenu_active'] = 'deals-autoresponse-claim-paid-deals-success';
                 break;
 
             case 'transaction-point-achievement':

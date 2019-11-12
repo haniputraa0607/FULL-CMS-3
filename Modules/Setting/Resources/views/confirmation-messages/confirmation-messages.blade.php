@@ -50,7 +50,12 @@
 										<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan tampil saat konfirmasi pengambilan deals" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-8">
-										<input class="form-control" type="text" name="payment_messages" value="{{ old('payment_messages',$msg['payment_messages']??'') }}" required>
+										<input class="form-control" type="text" id="payment_messages" name="payment_messages" value="{{ old('payment_messages',$msg['payment_messages']??'') }}" required><br/>
+										<div class="row appender" data-target="#payment_messages">
+											<div class="col-md-3" style="margin-bottom:5px;">
+												<span class="btn dark btn-xs btn-block btn-outline var appender-btn" data-toggle="tooltip" title="Text will be replace '%deals_title%' with deals name" data-value="%deals_title%">%deals_title%</span>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="form-group col-md-12">

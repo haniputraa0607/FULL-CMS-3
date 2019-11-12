@@ -350,8 +350,8 @@
 						?>
 
 						<select class="form-control" name="membership_type" onChange="typeChange(this.value)">
-							<!-- <option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
-							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option> -->
+							<option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
+							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option>
 							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By {{env('POINT_NAME', 'Points')}} Received </option>
 						</select>
 					</div>
@@ -434,7 +434,7 @@
 												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
 											</div>
 										</div>
-										
+
 										<div class="col-md-4" >
 											<div class="input-icon right">
 												<div class="fileinput fileinput-new" data-provides="fileinput">
@@ -469,7 +469,7 @@
 												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
 											</div>
 										</div>
-										
+
 										<div class="col-md-4" >
 											<div class="input-icon right">
 												<div class="fileinput fileinput-new" data-provides="fileinput">

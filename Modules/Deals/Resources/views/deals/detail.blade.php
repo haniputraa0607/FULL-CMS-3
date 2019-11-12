@@ -355,9 +355,9 @@
                 ko.src        = cariImage
                 // load image
                 ko.onload     = function(){
-                    if (this.naturalHeight === 450 && this.naturalWidth === 600) {
+                    if (this.naturalHeight === 500 && this.naturalWidth === 500) {
                     } else {
-                        mentah.attr('src', "")
+                        mentah.attr('src', "{{ $deals[0]['url_deals_image']??'https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image' }}")
                         $('#file').val("");
                         toastr.warning("Please check dimension of your photo.");
                     }

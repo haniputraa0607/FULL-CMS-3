@@ -222,12 +222,12 @@
 
 		@endif
 
-		@if(MyHelper::hasAccess([19,21,24,26,32,33,34,43,45,48,50,56,57], $grantedFeature))
+		@if(MyHelper::hasAccess([19,21,24,26,32,33,34,43,45,48,50,56,57,164,165,166,167], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #990003;font-weight: 600;">Browse</h3>
 			</li>
 			@if(MyHelper::hasAccess([34], $configs))
-				@if(MyHelper::hasAccess([19,21], $grantedFeature))
+				@if(MyHelper::hasAccess([19,21,164,165,166,167], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'news') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="icon-feed"></i>
@@ -248,11 +248,15 @@
 								<span class="title">News List</span>
 							</a>
 						</li>
+						@endif
+						@if(MyHelper::hasAccess([164,166,167], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'news-category') ? 'active open' : ''}}">
 							<a href="{{url('news/category')}}" class="nav-link ">
 								<span class="title">News Category</span>
 							</a>
 						</li>
+						@endif
+						@if(MyHelper::hasAccess([165], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'news-category-new') ? 'active open' : ''}}">
 							<a href="{{url('news/category/create')}}" class="nav-link ">
 								<span class="title">New News Category</span>
@@ -832,10 +836,16 @@
 
 			@if(MyHelper::hasAccess([49], $configs))
 				@if(MyHelper::hasAccess([95], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-deals-success') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/claim-deals-success')}}" class="nav-link ">
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-free-deals-success') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/claim-free-deals-success')}}" class="nav-link ">
 							<i class="fa fa-mail-forward"></i>
-							<span class="title">[Response] Claim Deals Success</span>
+							<span class="title">[Response] Claim Free Deals Success</span>
+						</a>
+					</li>
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-paid-deals-success') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/claim-paid-deals-success')}}" class="nav-link ">
+							<i class="fa fa-mail-forward"></i>
+							<span class="title">[Response] Claim Paid Deals Success</span>
 						</a>
 					</li>
 					<li class="nav-item {{($submenu_active == 'deals-autoresponse-redeem-deals-success') ? 'active open' : ''}}">
@@ -1278,12 +1288,14 @@
 			</ul>
 		</li>
 		@endif
+		@if(MyHelper::hasAccess([168,169,170,171], $grantedFeature))
 		<li class="nav-item {{($menu_active == 'setting-intro') ? 'active' : ''}}">
 			<a href="{{url('setting/intro')}}" class="nav-link">
 				<i class="icon-screen-tablet "></i>
 				<span class="title">Intro Apps</span>
 			</a>
 		</li>
+		@endif
 
 		@if(MyHelper::hasAccess([162,163], $grantedFeature))
 		<li class="nav-item {{($menu_active == 'confirmation-messages') ? 'active' : ''}}">
