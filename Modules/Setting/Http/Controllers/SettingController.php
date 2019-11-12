@@ -183,7 +183,9 @@ class SettingController extends Controller
                 if ($key == 'intro') {
                     $grantedFeature     = session('granted_features');
                     if(MyHelper::hasAccess([168,169,170,171], $grantedFeature)){
-                        $data['value_text'] = json_decode($result['value_text']);
+                        foreach (json_decode($result['value_text']) as $key => $value) {
+                            $data['value_text'][$key] = $value;
+                        }
                         return view('setting::intro', $data);
                     }else{
                         return redirect('/');
@@ -260,19 +262,22 @@ class SettingController extends Controller
     public function introStore(Request $request) {
         $post = $request->except('_token');
         if (isset($post['value']) && $post['value'] == 'on') {
-            $post['value'] = 1;
+            $data['value'] = 1;
         } else {
-            $post['value'] = 0;
+            $data['value'] = 0;
         }
-        
         if (isset($post['value_text']) && $post['value_text'] != null) {
-            foreach ($post['value_text'] as $key => $value) {
-                $post['value_text'][$key] = MyHelper::encodeImage($value['value_text']);
+            foreach ($post['value_text'] as $value) {
+                if (is_file($value['value_text'])) {
+                    $data['value_text'][] = MyHelper::encodeImage($value['value_text']);
+                } else {
+                    $data['value_text'][] = $value['value_text'];
+                }
             }
         }
         
-        $insert = MyHelper::post('setting/intro/save', $post);
-dd($insert);
+        $insert = MyHelper::post('setting/intro/save', $data);
+
         return parent::redirect($insert, 'FAQ has been updated.');
     }
 
