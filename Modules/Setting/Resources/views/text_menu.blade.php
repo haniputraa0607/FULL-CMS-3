@@ -97,9 +97,11 @@ $configs     		= session('configs');
 					</div>
 					<div class="portlet-body">
 						<p>Menu ini digunakan untuk mengatur tulisan menu dan tulisan header pada menu aplikasi dibagian bawah.</p>
-						<li>Gambar (a) adalah urutan menu.</li>
-						<li>Gambar (b) adalah contoh tampilan untuk "Text Menu".</li>
-						<li>Gambar (c) adalah contoh tampilan untuk "Text Header".</li>
+						<ul>
+							<li>Gambar (a) adalah urutan menu.</li>
+							<li>Gambar (b) adalah contoh tampilan untuk "Text Menu".</li>
+							<li>Gambar (c) adalah contoh tampilan untuk "Text Header".</li>
+						</ul>
 
 						<div class="row" style="margin-top: 2%;">
 							<div class="col-md-4">
@@ -197,10 +199,12 @@ $configs     		= session('configs');
 					</div>
 					<div class="portlet-body">
 						<p>Menu ini digunakan untuk mengatur tulisan menu, tulisan header, dan icon yang ada didalam daftar menu account.</p>
-						<li>Gambar (a) adalah contoh tampilan untuk "Text Menu".</li>
-						<li>Gambar (b) adalah contoh tampilan untuk "Text Header".</li>
-						<li>Gambar (c) adalah contoh tampilan untuk "Icon".</li>
-                        <li>Gambar (d) adalah urutan menu.</li>
+						<ul>
+							<li>Gambar (a) adalah contoh tampilan untuk "Text Menu".</li>
+							<li>Gambar (b) adalah contoh tampilan untuk "Text Header".</li>
+							<li>Gambar (c) adalah contoh tampilan untuk "Icon".</li>
+                        	<li>Gambar (d) adalah urutan menu.</li>
+						</ul>
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-md-4">
                                 <img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_2.png" height="180px"/>
