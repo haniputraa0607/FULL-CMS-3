@@ -26,7 +26,7 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/portlet-draggable.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
-
+    var manual=1;
     function changeSelect(){
         setTimeout(function(){
             $(".select2").select2({
@@ -98,6 +98,37 @@
             });
 
         } );
+        $('table').on('switchChange.bootstrapSwitch','.section_visibility',function(){
+            if(!manual){
+                manual=1;
+                return false;
+            }
+            var token  = "{{ csrf_token() }}";
+            var switcher=$(this);
+            var newState=switcher.bootstrapSwitch('state');
+            $.ajax({
+                method:'POST',
+                url:"{{url('setting/dashboard/visibility-section')}}",
+                data:{
+                    _token:token,
+                    id_dashboard_user:switcher.data('id'),
+                    section_visible:newState?1:0
+                },
+                success:function(data){
+                    if(data.status == 'success'){
+                        toastr.info("Success update section visibility");
+                    }else{
+                        manual=0;
+                        toastr.warning("Fail update section visibility");
+                        switcher.bootstrapSwitch('state',!newState);
+                    }
+                }
+            }).fail(function(data){
+                manual=0;
+                toastr.warning("Fail update section visibility");
+                switcher.bootstrapSwitch('state',!newState);
+            });
+        });
 
     });
 
@@ -464,12 +495,12 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">Order Section Dashboard</span>
+                <span class="caption-subject font-blue sbold uppercase">Order and Visibility Section Dashboard</span>
             </div>
         </div>
         <div class="portlet-body form">
                 <div class="alert alert-warning deteksi-trigger">
-                    <p> The menu below is used to set the order of section displayed in home page. </p>
+                    <p> The menu below is used to set the order and visibility of section displayed in home page. </p>
                     <p> To arrange the order of section, drag and drop the table row according to the order of the desired section. </p>
                 </div>
             <table class="table table-striped table-bordered dt-responsive" width="100%" id="sample_1">
@@ -478,6 +509,7 @@
                         <th> No </th>
                         <th> Section Title </th>
                         <th> Id </th>
+                        <th> Visibility </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -491,6 +523,9 @@
                                 </td>
                                 <td>
                                     {{ $value['id_dashboard_user'] }}
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="make-switch section_visibility" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-id="{{$value['id_dashboard_user']}}" data-off-text="Hidden" value="1" @if($value['section_visible']??false) checked @endif>
                                 </td>
                             </tr>
                             @endif
