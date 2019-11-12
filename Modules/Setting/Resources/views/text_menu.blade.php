@@ -103,15 +103,15 @@ $configs     		= session('configs');
 
 						<div class="row" style="margin-top: 2%;">
 							<div class="col-md-4">
-								<img src="{{ env('S3_URL_VIEW') }}/images/text_menu/guide_menu_home_1.png" height="260px"/>
+								<img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_home_1.png" height="260px"/>
 								<p style="text-align: center">(a)</p>
 							</div>
 							<div class="col-md-4">
-								<img src="{{ env('S3_URL_VIEW') }}/images/text_menu/guide_menu_home_2.png" height="260px"/>
+								<img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_home_2.png" height="260px"/>
 								<p style="text-align: center">(b)</p>
 							</div>
 							<div class="col-md-4">
-								<img src="{{ env('S3_URL_VIEW') }}/images/text_menu/guide_menu_home_3.png" height="260px"/>
+								<img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_home_3.png" height="260px"/>
 								<p style="text-align: center">(c)</p>
 							</div>
 						</div>
@@ -203,21 +203,21 @@ $configs     		= session('configs');
                         <li>Gambar (d) adalah urutan menu.</li>
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-md-4">
-                                <img src="{{ env('S3_URL_VIEW') }}/images/text_menu/guide_menu_account_2.png" height="180px"/>
+                                <img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_2.png" height="180px"/>
                                 <p style="text-align: center">(a)</p>
                             </div>
                             <div class="col-md-4">
-                                <img src="{{ env('S3_URL_VIEW') }}/images/text_menu/guide_menu_account_3.png" height="180px"/>
+                                <img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_3.png" height="180px"/>
                                 <p style="text-align: center">(b)</p>
                             </div>
                             <div class="col-md-4">
-                                <img src="{{ env('S3_URL_VIEW') }}/images/text_menu/guide_menu_account_4.png" height="180px"/>
+                                <img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_4.png" height="180px"/>
                                 <p style="text-align: center">(c)</p>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-md-3">
-                                <img src="{{ env('S3_URL_VIEW') }}/images/text_menu/guide_menu_account_1.png" height="280px"/>
+                                <img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_1.png" height="280px"/>
                                 <p style="text-align: center">(d)</p>
                             </div>
                         </div>
