@@ -86,9 +86,9 @@ class TransactionController extends Controller
                   'type'              => 'trx'  
 				];
         switch ($subject) {
-            case 'receive-hidden-deals':
+            case 'receive-inject-voucher':
                 $data['menu_active'] = 'deals-autoresponse';
-                $data['submenu_active'] = 'deals-autoresponse-receive-hidden-deals';
+                $data['submenu_active'] = 'deals-autoresponse-receive-inject-voucher';
                 break;
 
             case 'redeem-voucher-success':

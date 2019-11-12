@@ -89,7 +89,7 @@ class DealsController extends Controller
 
         $save = MyHelper::post('deals/create', $post);
         if (isset($save['status']) && $save['status'] == "success") {
-            $rpage = $post['deals_type']=='Deals'?'deals':'hidden-deals';
+            $rpage = $post['deals_type']=='Deals'?'deals':'inject-voucher';
             if ($post['deals_voucher_type'] == "List Vouchers") {
                 return parent::redirect($this->saveVoucherList($save['result']['id_deals'], $post['voucher_code']), "Deals has been created.","$rpage/detail/{$save['result']['id_deals']}/{$save['result']['deals_promo_id']}");
             }
@@ -123,7 +123,7 @@ class DealsController extends Controller
 
         $save = MyHelper::post('hidden-deals/create', $post);
 
-        return parent::redirect($save, 'Hidden Deals has been created.');
+        return parent::redirect($save, 'Inject Voucher has been created.');
     }
 
     /* IMPORT DATA FROM EXCEL */
@@ -180,21 +180,21 @@ class DealsController extends Controller
                 $data['deals_type'] = "Deals";
 
             break;
-            case 'hidden-deals':
+            case 'inject-voucher':
                 if ($type == "") {
                     $data = [
-                        'title'          => 'Hidden Deals',
-                        'sub_title'      => 'Hidden Deals List',
-                        'menu_active'    => 'hidden-deals',
-                        'submenu_active' => 'hidden-deals-list'
+                        'title'          => 'Inject Voucher',
+                        'sub_title'      => 'Inject Voucher List',
+                        'menu_active'    => 'inject-voucher',
+                        'submenu_active' => 'inject-voucher-list'
                     ];
                 }
                 else {
                     $data = [
-                        'title'          => 'Hidden Deals',
-                        'sub_title'      => 'Hidden Deals Create',
-                        'menu_active'    => 'hidden-deals',
-                        'submenu_active' => 'hidden-deals-create'
+                        'title'          => 'Inject Voucher',
+                        'sub_title'      => 'Inject Voucher Create',
+                        'menu_active'    => 'inject-voucher',
+                        'submenu_active' => 'inject-voucher-create'
                     ];
                 }
 
