@@ -798,24 +798,24 @@
 
 				@if(MyHelper::hasAccess([26], $configs))
 					@if(MyHelper::hasAccess([77,78,79,80,81], $grantedFeature))
-					<li class="nav-item {{($menu_active == 'hidden-deals') ? 'active open' : ''}}">
+					<li class="nav-item {{($menu_active == 'inject-voucher') ? 'active open' : ''}}">
 						<a href="javascript:;" class="nav-link nav-toggle">
 							<i class="fa fa-birthday-cake"></i>
-							<span class="title">Hidden Deals</span>
-							<span class="arrow {{($menu_active == 'hidden-deals') ? 'open' : ''}}"></span>
+							<span class="title">Inject Voucher</span>
+							<span class="arrow {{($menu_active == 'inject-voucher') ? 'open' : ''}}"></span>
 						</a>
 						<ul class="sub-menu">
 							@if(MyHelper::hasAccess([79], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'hidden-deals-create') ? 'active open' : ''}}">
-								<a href="{{url('hidden-deals/create')}}" class="nav-link ">
-									<span class="title">New Hidden Deals</span>
+							<li class="nav-item {{($submenu_active == 'inject-voucher-create') ? 'active open' : ''}}">
+								<a href="{{url('inject-voucher/create')}}" class="nav-link ">
+									<span class="title">New Inject Voucher</span>
 								</a>
 							</li>
 							@endif
 							@if(MyHelper::hasAccess([77], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'hidden-deals-list') ? 'active open' : ''}}">
-								<a href="{{url('hidden-deals')}}" class="nav-link ">
-									<span class="title">Hidden Deals List</span>
+							<li class="nav-item {{($submenu_active == 'inject-voucher-list') ? 'active open' : ''}}">
+								<a href="{{url('inject-voucher')}}" class="nav-link ">
+									<span class="title">Inject Voucher List</span>
 								</a>
 							</li>
 							@endif
@@ -854,10 +854,10 @@
 							<span class="title">[Response] Redeems Deals</span>
 						</a>
 					</li>
-					<li class="nav-item {{($submenu_active == 'deals-autoresponse-receive-hidden-deals') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/receive-hidden-deals')}}" class="nav-link ">
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-receive-inject-voucher') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/receive-inject-voucher')}}" class="nav-link ">
 							<i class="fa fa-mail-forward"></i>
-							<span class="title">[Response] Receive Hidden Deals</span>
+							<span class="title">[Response] Receive Inject Voucher</span>
 						</a>
 					</li>
 				@endif

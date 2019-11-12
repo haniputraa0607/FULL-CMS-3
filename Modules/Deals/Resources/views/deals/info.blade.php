@@ -1,5 +1,5 @@
 <div class="portlet-body form">
-    <form id="form" class="form-horizontal" role="form" action=" @if($deals_type == "Deals") {{ url('deals/update') }} @else {{ url('hidden-deals/update') }} @endif" method="post" enctype="multipart/form-data">
+    <form id="form" class="form-horizontal" role="form" action=" @if($deals_type == "Deals") {{ url('deals/update') }} @else {{ url('inject-voucher/update') }} @endif" method="post" enctype="multipart/form-data">
         @foreach ($deals as $key => $val)
 
             @if ($val['deals_type'] != "Point")
