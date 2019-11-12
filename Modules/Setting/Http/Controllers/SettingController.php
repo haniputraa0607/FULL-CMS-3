@@ -1123,8 +1123,12 @@ class SettingController extends Controller
         ];
 
         $result = MyHelper::post('setting/text_menu/update', $post);
-        
-        return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu');
+
+        if($category == 'menu-account') {
+            return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#text_menu_account');
+        }else{
+            return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#text_menu_home');
+        }
     }
 
     public function confirmationMessages(Request $request){
