@@ -282,6 +282,12 @@
 				},
             }]
         });
+        $('.next_level_preview_trigger').on('mouseover',function(){
+        	$('.next_level_preview').css('opacity','1');
+        });
+        $('.next_level_preview_trigger').on('mouseout',function(){
+        	$('.next_level_preview').css('opacity',0);
+        });
 	});
 
 		$(".file").change(function(e) {
@@ -464,7 +470,7 @@
 										<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 												Next Level Image
-												<i class="fa fa-question-circle tooltips" data-original-title="Icon next level membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
+												<i class="fa fa-question-circle tooltips next_level_preview_trigger" data-original-title="Ikon next level membership yang akan ditampilkan di samping progress bar membership" data-container="body"></i>
 												<br>
 												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
 											</div>
@@ -492,6 +498,9 @@
 													</div>
 												</div>
 											</div>
+										</div>
+										<div class="col-md-3 next_level_preview" style="height: 0;overflow-y: all; transition-duration: .5s;opacity: 0">
+											<img src="{{env('S3_URL_VIEW')}}/img/membership/preview_next_level_image.jpg" class="img-responsive"></img>
 										</div>
 									</div>
 
@@ -622,6 +631,54 @@
 									<!--@endif-->
 									{{-- cek configs membership benefit promo id --}}
 									@if(MyHelper::hasAccess([24], $configs))
+										<div class="col-md-12" style="margin-top:20px">
+											<div class="input-icon right">
+												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+													Benefit
+													<i class="fa fa-question-circle tooltips" data-original-title="Daftar teks tambahan yang akan ditampilkan pada halaman membership" data-container="body"></i>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<!-- <div class="input-icon right">
+													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea>
+												</div> -->
+												<div class="inner-repeater">
+          											<div data-repeater-list="benefit_text">
+														@if(count($membership['benefit_text']??[]) > 0)
+															@foreach($membership['benefit_text'] as $benefit_text)
+																<div data-repeater-item="" class="row" style="margin-bottom:15px">
+																	<div class="col-md-10">
+																		<textarea type="text" name="benefit_text[]" class="form-control">{{$benefit_text}}</textarea>
+																	</div>
+																	<div class="col-md-2">
+																		<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																			<i class="fa fa-close"></i>
+																		</a>
+																	</div>
+																</div>
+															@endforeach
+														@else
+															<div data-repeater-item="" class="row" style="margin-bottom:15px">
+																<div class="col-md-10">
+																	<textarea type="text" name="benefit_text[]" class="form-control" placeholder="Benefit text"></textarea>
+																</div>
+																<div class="col-md-2">
+																	<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																		<i class="fa fa-close"></i>
+																	</a>
+																</div>
+															</div>
+														@endif
+													</div>
+													<hr>
+													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+														<i class="fa fa-plus"></i> Add Promo ID</a>
+													<br>
+												</div>
+												<br>
+											</div>
+										</div>
+
 										<div class="col-md-12" style="margin-top:20px">
 											<div class="input-icon right">
 												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
@@ -875,6 +932,38 @@
 									@endif
 									{{-- cek configs membership benefit promo id --}}
 									@if(MyHelper::hasAccess([24], $configs))
+										<div class="col-md-12" style="margin-top:20px">
+											<div class="input-icon right">
+												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+													Benefit
+													<i class="fa fa-question-circle tooltips" data-original-title="Teks benefit yang akan ditampilkan di halaman membership" data-container="body"></i>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<!-- <div class="input-icon right">
+													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea>
+												</div> -->
+												<div class="inner-repeater">
+          											<div data-repeater-list="benefit_text">\
+														<div data-repeater-item="" class="row" style="margin-bottom:15px">
+															<div class="col-md-10">
+																<textarea type="text" name="benefit_text[]" class="form-control" placeholder="Benefit text"></textarea>
+															</div>
+															<div class="col-md-2">
+																<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																	<i class="fa fa-close"></i>
+																</a>
+															</div>
+														</div>
+													</div>
+													<hr>
+													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+														<i class="fa fa-plus"></i> Add Promo ID</a>
+													<br>
+												</div>
+												<br>
+											</div>
+										</div>
 										<div class="col-md-12" style="margin-top:20px">
 											<div class="input-icon right">
 												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
