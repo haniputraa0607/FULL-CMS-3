@@ -12,7 +12,11 @@ $configs     		= session('configs');
 	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-
+	<style>
+		.zoom-in {
+			cursor: zoom-in;
+		}
+	</style>
 @endsection
 
 @section('page-plugin')
@@ -105,15 +109,15 @@ $configs     		= session('configs');
 
 						<div class="row" style="margin-top: 2%;">
 							<div class="col-md-4">
-								<img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_home_1.png" height="260px"/>
+								<img class="zoom-in" src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_home_1.png" height="260px" onclick="window.open(this.src)"/>
 								<p style="text-align: center">(a)</p>
 							</div>
 							<div class="col-md-4">
-								<img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_home_2.png" height="260px"/>
+								<img class="zoom-in" src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_home_2.png" height="260px" onclick="window.open(this.src)"/>
 								<p style="text-align: center">(b)</p>
 							</div>
 							<div class="col-md-4">
-								<img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_home_3.png" height="260px"/>
+								<img class="zoom-in" src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_home_3.png" height="260px" onclick="window.open(this.src)"/>
 								<p style="text-align: center">(c)</p>
 							</div>
 						</div>
@@ -192,7 +196,7 @@ $configs     		= session('configs');
 				<div class="portlet box green">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="fa fa-gear"></i>Setting Text Menu Home</div>
+							<i class="fa fa-gear"></i>Setting Text Menu Account</div>
 						<div class="tools">
 							<a href="javascript:;" class="collapse"> </a>
 						</div>
@@ -207,21 +211,21 @@ $configs     		= session('configs');
 						</ul>
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-md-4">
-                                <img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_2.png" height="180px"/>
+                                <img class="zoom-in" src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_2.png" height="180px" onclick="window.open(this.src)"/>
                                 <p style="text-align: center">(a)</p>
                             </div>
                             <div class="col-md-4">
-                                <img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_3.png" height="180px"/>
+                                <img class="zoom-in" src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_3.png" height="180px" onclick="window.open(this.src)"/>
                                 <p style="text-align: center">(b)</p>
                             </div>
                             <div class="col-md-4">
-                                <img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_4.png" height="180px"/>
+                                <img class="zoom-in" src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_4.png" height="180px" onclick="window.open(this.src)"/>
                                 <p style="text-align: center">(c)</p>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-md-3">
-                                <img src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_1.png" height="280px"/>
+                                <img class="zoom-in" src="{{ env('S3_URL_VIEW') }}images/text_menu/guide_menu_account_1.png" height="280px" onclick="window.open(this.src)"/>
                                 <p style="text-align: center">(d)</p>
                             </div>
                         </div>
@@ -235,6 +239,7 @@ $configs     		= session('configs');
 								//========= start setting column and row =========//
 								$countMenuAccount = count($text_menu_list['text_menu_account']);
 								$totalRow = $countMenuAccount / 2;
+								$countNumberAccount = 1;
 
 								if(is_float($totalRow) === true){
 									$totalRow = (int)$totalRow + 1;
@@ -254,7 +259,7 @@ $configs     		= session('configs');
 												<div class="portlet light bordered">
 													<div class="portlet-title">
 														<div class="caption">
-															<span class="caption-subject font-dark sbold uppercase">{{$value['text_menu']}}</span>
+															<span class="caption-subject font-dark sbold uppercase">Menu {{$countNumberAccount}}</span>
 														</div>
 													</div>
 													<div class="portlet-body form">
@@ -306,6 +311,9 @@ $configs     		= session('configs');
 														</div>
 													</div>
 												</div>
+												<?php
+													$countNumberAccount++
+												?>
 											@endforeach
 										</div>
 									@endforeach
