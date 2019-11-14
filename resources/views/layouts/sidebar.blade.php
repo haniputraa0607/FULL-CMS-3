@@ -1321,6 +1321,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([88], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'faq-sort') ? 'active open' : ''}}">
+							<a href="{{url('setting/faq/sort')}}" class="nav-link ">
+								<span class="title">Sorting FAQ List</span>
+							</a>
+						</li>
+					@endif
 				</ul>
 			</li>
 			@endif

@@ -259,6 +259,42 @@ class SettingController extends Controller
         return parent::redirect($insert, 'FAQ has been created.');
     }
 
+    /*======== This function is used to display the FAQ list that will be sorted ========*/
+    public function faqSort() {
+        $data = [];
+        $data = [
+            'title'   => 'Sorting FAQ List',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-sort'
+        ];
+
+        $faqList = MyHelper::get('setting/faq/sort');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = $faqList['result'];
+        } else {
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::faqList', $data)->withErrors($e);
+            }
+        }
+        return view('setting::faqSort', $data);
+    }
+
+    public function faqSortUpdate(Request $request) {
+        $post = $request->except('_token');
+        $status = 0;
+        $update = MyHelper::post('setting/faq/sort/update', $post);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            $status = 1;
+        }
+
+        return response()->json(['status' => $status]);
+    }
+
     public function introStore(Request $request) {
         $post = $request->except('_token');
         if (isset($post['value']) && $post['value'] == 'on') {
