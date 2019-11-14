@@ -75,7 +75,7 @@ class BrandController extends Controller
         $action = MyHelper::post('brand/store', $post);
 
         if (isset($action['status']) && $action['status'] == 'success') {
-            return redirect('brand/show/' . $action['result']['id_brand'])->with('success', ['Update brand success']);
+            return redirect('brand/detail/' . $action['result']['id_brand'])->with('success', ['Update brand success']);
         } else {
             return redirect('brand/create')->withInput()->withErrors($action['messages']);
         }
@@ -138,8 +138,8 @@ class BrandController extends Controller
 
         if (isset($action['status']) && $action['status'] == 'success') {
             $data['result'] = $action['result'];
-            if (end($urlNow) == 'show') {
-                $data['title']      = 'List Brand ';
+            if (end($urlNow) == 'detail') {
+                $data['title']      = 'Detail Brand ';
                 return view('brand::form', $data);
             } elseif (end($urlNow) == 'outlet') {
                 $data['title']      = 'Brand ';
@@ -157,6 +157,7 @@ class BrandController extends Controller
                 return abort(404);
             }
         } else {
+            $data['title']      = 'New Brand ';
             return redirect('brand/create')->withInput()->withErrors($action['messages']);
         }
     }
