@@ -1053,26 +1053,12 @@
 									</a>
 								</li>
 							@endif
-							@if(MyHelper::hasAccess([103], $grantedFeature))
-								<li class="nav-item {{($submenu_active == 'campaign-email-queue') ? 'active open' : ''}}">
-									<a href="{{url('campaign/email/queue')}}" class="nav-link ">
-										<span class="title">Email Queue</span>
-									</a>
-								</li>
-							@endif
 						@endif
 						@if(MyHelper::hasAccess([52], $configs))
 							@if(MyHelper::hasAccess([106], $grantedFeature))
 								<li class="nav-item {{($submenu_active == 'campaign-sms-outbox') ? 'active open' : ''}}">
 									<a href="{{url('campaign/sms/outbox')}}" class="nav-link ">
 										<span class="title">SMS Outbox</span>
-									</a>
-								</li>
-							@endif
-							@if(MyHelper::hasAccess([105], $grantedFeature))
-								<li class="nav-item {{($submenu_active == 'campaign-sms-queue') ? 'active open' : ''}}">
-									<a href="{{url('campaign/sms/queue')}}" class="nav-link ">
-										<span class="title">SMS Queue</span>
 									</a>
 								</li>
 							@endif
@@ -1085,26 +1071,12 @@
 									</a>
 								</li>
 							@endif
-							@if(MyHelper::hasAccess([107], $grantedFeature))
-								<li class="nav-item {{($submenu_active == 'campaign-push-queue') ? 'active open' : ''}}">
-									<a href="{{url('campaign/push/queue')}}" class="nav-link ">
-										<span class="title">Push Queue</span>
-									</a>
-								</li>
-							@endif
 						@endif
 						@if(MyHelper::hasAccess([75], $configs))
 							@if(MyHelper::hasAccess([108], $grantedFeature))
 								<li class="nav-item {{($submenu_active == 'campaign-whatsapp-outbox') ? 'active open' : ''}}">
 									<a href="{{url('campaign/whatsapp/outbox')}}" class="nav-link ">
 										<span class="title">WhatsApp Outbox</span>
-									</a>
-								</li>
-							@endif
-							@if(MyHelper::hasAccess([107], $grantedFeature))
-								<li class="nav-item {{($submenu_active == 'campaign-whatsapp-queue') ? 'active open' : ''}}">
-									<a href="{{url('campaign/whatsapp/queue')}}" class="nav-link ">
-										<span class="title">WhatsApp Queue</span>
 									</a>
 								</li>
 							@endif
