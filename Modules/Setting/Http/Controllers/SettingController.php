@@ -832,6 +832,12 @@ class SettingController extends Controller
         }
     }
 
+    function visibilityDashboardSection(Request $request){
+        $post = $request->except('_token');
+        $save = MyHelper::post('setting/dashboard/update-visibility', $post);
+        return $save;
+    }
+
     function orderDashboardSection(Request $request){
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/order-section', $post);

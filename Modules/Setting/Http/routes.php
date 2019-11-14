@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('dashboard/delete', 'SettingController@deleteDashboard');
     Route::post('dashboard/ajax', 'SettingController@updateDashboardAjax');
     Route::post('dashboard/default-date', 'SettingController@updateDateRange');
+    Route::post('dashboard/visibility-section', 'SettingController@visibilityDashboardSection');
     Route::post('dashboard/order-section', 'SettingController@orderDashboardSection');
     Route::post('dashboard/order-card', 'SettingController@orderDashboardCard');
 
