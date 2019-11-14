@@ -23,7 +23,7 @@
         "timehunter/laravel-google-recaptcha-v3": "^2.2"
     },
     "replace" :{
-        "php-http/httplug" : "^2.0"
+        "php-http/httplug" : "^1.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
