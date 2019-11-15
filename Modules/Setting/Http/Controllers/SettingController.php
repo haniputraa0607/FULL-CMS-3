@@ -264,6 +264,42 @@ class SettingController extends Controller
         return parent::redirect($insert, 'FAQ has been created.');
     }
 
+    /*======== This function is used to display the FAQ list that will be sorted ========*/
+    public function faqSort() {
+        $data = [];
+        $data = [
+            'title'   => 'Sorting FAQ List',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-sort'
+        ];
+
+        $faqList = MyHelper::get('setting/faq');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = $faqList['result'];
+        } else {
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::faqList', $data)->withErrors($e);
+            }
+        }
+        return view('setting::faqSort', $data);
+    }
+
+    public function faqSortUpdate(Request $request) {
+        $post = $request->except('_token');
+        $status = 0;
+        $update = MyHelper::post('setting/faq/sort/update', $post);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            $status = 1;
+        }
+
+        return response()->json(['status' => $status]);
+    }
+
     public function tutorialStore(Request $request) {
         $post = $request->except('_token');
 
@@ -841,6 +877,12 @@ class SettingController extends Controller
         }
     }
 
+    function visibilityDashboardSection(Request $request){
+        $post = $request->except('_token');
+        $save = MyHelper::post('setting/dashboard/update-visibility', $post);
+        return $save;
+    }
+
     function orderDashboardSection(Request $request){
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/order-section', $post);
@@ -1132,8 +1174,12 @@ class SettingController extends Controller
         ];
 
         $result = MyHelper::post('setting/text_menu/update', $post);
-        
-        return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu');
+
+        if($category == 'menu-account') {
+            return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#text_menu_account');
+        }else{
+            return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#text_menu_home');
+        }
     }
 
     public function confirmationMessages(Request $request){

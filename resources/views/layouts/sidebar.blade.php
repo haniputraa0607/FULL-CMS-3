@@ -113,6 +113,13 @@
 									</a>
 								</li>
 							@endif
+							@if(MyHelper::hasAccess([43], $configs))
+								<li class="nav-item {{($submenu_active == 'user-autoresponse-login-first-time') ? 'active open' : ''}}">
+									<a href="{{url('user/autoresponse/login-first-time')}}" class="nav-link ">
+										<span class="title">[Response] Login First Time</span>
+									</a>
+								</li>
+							@endif
 						@endif
 					@endif
 				</ul>
@@ -798,24 +805,24 @@
 
 				@if(MyHelper::hasAccess([26], $configs))
 					@if(MyHelper::hasAccess([77,78,79,80,81], $grantedFeature))
-					<li class="nav-item {{($menu_active == 'hidden-deals') ? 'active open' : ''}}">
+					<li class="nav-item {{($menu_active == 'inject-voucher') ? 'active open' : ''}}">
 						<a href="javascript:;" class="nav-link nav-toggle">
 							<i class="fa fa-birthday-cake"></i>
-							<span class="title">Hidden Deals</span>
-							<span class="arrow {{($menu_active == 'hidden-deals') ? 'open' : ''}}"></span>
+							<span class="title">Inject Voucher</span>
+							<span class="arrow {{($menu_active == 'inject-voucher') ? 'open' : ''}}"></span>
 						</a>
 						<ul class="sub-menu">
 							@if(MyHelper::hasAccess([79], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'hidden-deals-create') ? 'active open' : ''}}">
-								<a href="{{url('hidden-deals/create')}}" class="nav-link ">
-									<span class="title">New Hidden Deals</span>
+							<li class="nav-item {{($submenu_active == 'inject-voucher-create') ? 'active open' : ''}}">
+								<a href="{{url('inject-voucher/create')}}" class="nav-link ">
+									<span class="title">New Inject Voucher</span>
 								</a>
 							</li>
 							@endif
 							@if(MyHelper::hasAccess([77], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'hidden-deals-list') ? 'active open' : ''}}">
-								<a href="{{url('hidden-deals')}}" class="nav-link ">
-									<span class="title">Hidden Deals List</span>
+							<li class="nav-item {{($submenu_active == 'inject-voucher-list') ? 'active open' : ''}}">
+								<a href="{{url('inject-voucher')}}" class="nav-link ">
+									<span class="title">Inject Voucher List</span>
 								</a>
 							</li>
 							@endif
@@ -854,10 +861,10 @@
 							<span class="title">[Response] Redeems Deals</span>
 						</a>
 					</li>
-					<li class="nav-item {{($submenu_active == 'deals-autoresponse-receive-hidden-deals') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/receive-hidden-deals')}}" class="nav-link ">
+					<li class="nav-item {{($submenu_active == 'deals-autoresponse-receive-inject-voucher') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/receive-inject-voucher')}}" class="nav-link ">
 							<i class="fa fa-mail-forward"></i>
-							<span class="title">[Response] Receive Hidden Deals</span>
+							<span class="title">[Response] Receive Inject Voucher</span>
 						</a>
 					</li>
 				@endif
@@ -1046,26 +1053,12 @@
 									</a>
 								</li>
 							@endif
-							@if(MyHelper::hasAccess([103], $grantedFeature))
-								<li class="nav-item {{($submenu_active == 'campaign-email-queue') ? 'active open' : ''}}">
-									<a href="{{url('campaign/email/queue')}}" class="nav-link ">
-										<span class="title">Email Queue</span>
-									</a>
-								</li>
-							@endif
 						@endif
 						@if(MyHelper::hasAccess([52], $configs))
 							@if(MyHelper::hasAccess([106], $grantedFeature))
 								<li class="nav-item {{($submenu_active == 'campaign-sms-outbox') ? 'active open' : ''}}">
 									<a href="{{url('campaign/sms/outbox')}}" class="nav-link ">
 										<span class="title">SMS Outbox</span>
-									</a>
-								</li>
-							@endif
-							@if(MyHelper::hasAccess([105], $grantedFeature))
-								<li class="nav-item {{($submenu_active == 'campaign-sms-queue') ? 'active open' : ''}}">
-									<a href="{{url('campaign/sms/queue')}}" class="nav-link ">
-										<span class="title">SMS Queue</span>
 									</a>
 								</li>
 							@endif
@@ -1078,26 +1071,12 @@
 									</a>
 								</li>
 							@endif
-							@if(MyHelper::hasAccess([107], $grantedFeature))
-								<li class="nav-item {{($submenu_active == 'campaign-push-queue') ? 'active open' : ''}}">
-									<a href="{{url('campaign/push/queue')}}" class="nav-link ">
-										<span class="title">Push Queue</span>
-									</a>
-								</li>
-							@endif
 						@endif
 						@if(MyHelper::hasAccess([75], $configs))
 							@if(MyHelper::hasAccess([108], $grantedFeature))
 								<li class="nav-item {{($submenu_active == 'campaign-whatsapp-outbox') ? 'active open' : ''}}">
 									<a href="{{url('campaign/whatsapp/outbox')}}" class="nav-link ">
 										<span class="title">WhatsApp Outbox</span>
-									</a>
-								</li>
-							@endif
-							@if(MyHelper::hasAccess([107], $grantedFeature))
-								<li class="nav-item {{($submenu_active == 'campaign-whatsapp-queue') ? 'active open' : ''}}">
-									<a href="{{url('campaign/whatsapp/queue')}}" class="nav-link ">
-										<span class="title">WhatsApp Queue</span>
 									</a>
 								</li>
 							@endif
@@ -1341,6 +1320,13 @@
 							<span class="title">List FAQ</span>
 						</a>
 					</li>
+					@endif
+					@if(MyHelper::hasAccess([88], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'faq-sort') ? 'active open' : ''}}">
+							<a href="{{url('setting/faq/sort')}}" class="nav-link ">
+								<span class="title">Sorting FAQ List</span>
+							</a>
+						</li>
 					@endif
 				</ul>
 			</li>

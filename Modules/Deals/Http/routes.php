@@ -29,7 +29,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:26'], 
 });
 
 /* HIDDEN */
-Route::group(['middleware' => ['web', 'validate_session', 'config_control:26'], 'prefix' => 'hidden-deals', 'namespace' => 'Modules\Deals\Http\Controllers'], function () {
+Route::group(['middleware' => ['web', 'validate_session', 'config_control:26'], 'prefix' => 'inject-voucher', 'namespace' => 'Modules\Deals\Http\Controllers'], function () {
     Route::any('/', ['middleware' => 'feature_control:77', 'uses' => 'DealsController@deals']);
     Route::any('create', ['middleware' => 'feature_control:79', 'uses' => 'DealsController@create']);
     Route::any('detail/{id}/{promo}', ['middleware' => 'feature_control:78', 'uses' => 'DealsController@detail']);

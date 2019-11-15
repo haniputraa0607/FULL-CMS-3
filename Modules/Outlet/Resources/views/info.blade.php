@@ -135,7 +135,7 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <textarea name="outlet_address" class="form-control" placeholder="Outlet Address">{{ $val['outlet_address'] }}</textarea>
+                <textarea name="outlet_address" class="form-control summernote" placeholder="Outlet Address">{{ $val['outlet_address'] }}</textarea>
             </div>
         </div>
 
