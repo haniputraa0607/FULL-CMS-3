@@ -107,7 +107,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase">Intro App</span>
+                <span class="caption-subject font-blue sbold uppercase">Intro App</span>
             </div>
         </div>
         <div class="portlet-body form">
