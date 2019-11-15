@@ -389,34 +389,6 @@
 </div>
 <br>
 @include('layouts.notifications')
-
-@if(MyHelper::hasAccess([30], $configs))
-	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalTimeSetting"> Time Setting
-		<i class="fa fa-question-circle tooltips" data-original-title="Konfigurasi waktu dalam empat kategori, yaitu Morning, Afternoon, Evening, dan Late Night" data-container="body"></i>
-	</a>
-	@if(MyHelper::hasAccess([16], $grantedFeature))
-		@if(MyHelper::hasAccess([31], $configs))
-			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalGreeting"> New Greeting
-				<i class="fa fa-question-circle tooltips" data-original-title="Membuat kalimat greeting baru" data-container="body"></i>
-			</a>
-		@endif
-		@if(MyHelper::hasAccess([32], $configs))
-<!-- 			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background
-				<i class="fa fa-question-circle tooltips" data-original-title="Background home dapat disesuaikan dengan teks greeting" data-container="body"></i>
-			</a> -->
-		@endif
-	@endif
-@endif
-@if(MyHelper::hasAccess([145], $grantedFeature))
-	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBanner"> New Banner
-		<i class="fa fa-question-circle tooltips" data-original-title="Membuat banner di halaman home aplikasi mobile" data-container="body"></i>
-	</a>
-@endif
-<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalFeaturedDeals"> New Featured Deals
-	<i class="fa fa-question-circle tooltips" data-original-title="Membuat featured deals di halaman home aplikasi mobile" data-container="body"></i>
-</a>
-<br>
-<br>
 <div class="tabbable-line">
 	<ul class="nav nav-tabs">
 	@if(MyHelper::hasAccess([30], $configs))
@@ -454,6 +426,27 @@
 	{{-- greeting --}}
         <div class="tab-pane" id="greeting">
 			@if(MyHelper::hasAccess([31], $configs))
+
+                @if(MyHelper::hasAccess([30], $configs))
+			        <div style="margin:20px 0">
+                    	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalTimeSetting"> Time Setting
+                    		<i class="fa fa-question-circle tooltips" data-original-title="Konfigurasi waktu dalam empat kategori, yaitu Morning, Afternoon, Evening, dan Late Night" data-container="body"></i>
+                    	</a>
+                    	@if(MyHelper::hasAccess([16], $grantedFeature))
+                    		@if(MyHelper::hasAccess([31], $configs))
+                    			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalGreeting"> New Greeting
+                    				<i class="fa fa-question-circle tooltips" data-original-title="Membuat kalimat greeting baru" data-container="body"></i>
+                    			</a>
+                    		@endif
+                    		@if(MyHelper::hasAccess([32], $configs))
+                    <!-- 			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background
+                    				<i class="fa fa-question-circle tooltips" data-original-title="Background home dapat disesuaikan dengan teks greeting" data-container="body"></i>
+                    			</a> -->
+                    		@endif
+                    	@endif
+                	</div>
+                @endif
+
 				<div class="row" style="margin-top:20px">
 					<div class="col-md-12">
 						<div class="portlet light bordered">
@@ -691,6 +684,14 @@
 	{{-- banner --}}
 	@if(MyHelper::hasAccess([144], $grantedFeature))
     <div class="tab-pane" id="banner">
+        @if(MyHelper::hasAccess([145], $grantedFeature))
+        <div style="margin:20px 0">
+        	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBanner"> New Banner
+        		<i class="fa fa-question-circle tooltips" data-original-title="Membuat banner di halaman home aplikasi mobile" data-container="body"></i>
+        	</a>
+    	</div>
+        @endif
+
     	<div class="row" style="margin-top:20px">
 			<div class="col-md-12">
 				<div class="portlet light bordered">
