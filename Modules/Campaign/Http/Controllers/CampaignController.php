@@ -26,7 +26,8 @@ class CampaignController extends Controller
      * @return Response
      */
     public function campaignList(Request $request, $page = null){
-		$data = [ 'title'             => 'Campaign List',
+		$data = [ 'title'             => 'Campaign',
+				  'sub_title'          => 'Campaign List',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-list'
 				];
@@ -464,6 +465,7 @@ class CampaignController extends Controller
 
 	public function create(){
 		$data = [ 'title'             => 'Campaign',
+				  'sub_title'         => 'New Campaign',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-create'
 				];
@@ -626,6 +628,7 @@ class CampaignController extends Controller
 			return $return;
 		}
 		$data = [ 'title'		  => 'Campaign',
+			  'sub_title'       => 'Show Recipient',
 			  'menu_active'       => 'campaign',
 			  'submenu_active'    => ''
 			];
