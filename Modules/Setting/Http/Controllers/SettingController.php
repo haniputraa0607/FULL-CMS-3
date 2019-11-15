@@ -135,17 +135,17 @@ class SettingController extends Controller
             $sub = 'balance-reset';
             $active = 'balance-reset';
             $subTitle = env('POINT_NAME', 'Points').' Reset';
-        } elseif ($key == 'intro') {
-            $sub = 'intro';
-            $active = 'intro';
-            $subTitle = 'Intro App';
+        } elseif ($key == 'tutorial') {
+            $sub = 'tutorial';
+            $active = 'tutorial';
+            $subTitle = 'Tutorial';
         }
 
         $data = [
             'title'          => 'Setting',
             'menu_active'    => $active,
             'submenu_active' => $sub,
-            'subTitle'       => $subTitle,
+            'sub_title'       => $subTitle,
             'label'          => $label,
             'colLabel'       => $colLabel,
             'colInput'       => $colInput
@@ -169,9 +169,25 @@ class SettingController extends Controller
 
         }else{
             $request = MyHelper::post('setting', ['key' => $key]);
+
             if (isset($request['status']) && $request['status'] == 'success') {
                 $result = $request['result'];
                 $data['id'] = $result['id_setting'];
+
+                if ($key == 'tutorial') {
+                    $grantedFeature     = session('granted_features');
+                    if(MyHelper::hasAccess([168,169,170,171], $grantedFeature)){
+                        if (isset($result['value_text']) && $result['value_text'] != 'null') {
+                            foreach (json_decode($result['value_text']) as $key => $value) {
+                                $data['value_text'][$key] = $value;
+                            }
+                        }
+                        $data['value'] = json_decode($result['value'], true);
+                        return view('setting::tutorial', $data);
+                    }else{
+                        return redirect('/');
+                    }
+                }
 
                 if (is_null($result['value'])) {
                     $data['value'] = $result['value_text'];
@@ -179,17 +195,6 @@ class SettingController extends Controller
                 } else {
                     $data['value'] = $result['value'];
                     $data['key'] = 'value';
-                }
-                if ($key == 'intro') {
-                    $grantedFeature     = session('granted_features');
-                    if(MyHelper::hasAccess([168,169,170,171], $grantedFeature)){
-                        foreach (json_decode($result['value_text']) as $key => $value) {
-                            $data['value_text'][$key] = $value;
-                        }
-                        return view('setting::intro', $data);
-                    }else{
-                        return redirect('/');
-                    }
                 }
             } else {
                 return view('setting::index', $data)->withErrors($request['messages']);
@@ -259,13 +264,17 @@ class SettingController extends Controller
         return parent::redirect($insert, 'FAQ has been created.');
     }
 
-    public function introStore(Request $request) {
+    public function tutorialStore(Request $request) {
         $post = $request->except('_token');
-        if (isset($post['value']) && $post['value'] == 'on') {
-            $data['value'] = 1;
-        } else {
-            $data['value'] = 0;
-        }
+
+        $data['value'] = json_encode([
+            'active'        => (isset($post['active']) && $post['active'] == 'on') ? 1 : 0,
+            'skippable'     => (isset($post['skippable']) && $post['skippable'] == 'on') ? 1 : 0,
+            'text_next'     => $post['text_next'],
+            'text_skip'     => $post['text_skip'],
+            'text_last'     => $post['text_last']
+        ]);
+
         if (isset($post['value_text']) && $post['value_text'] != null) {
             foreach ($post['value_text'] as $value) {
                 if (is_file($value['value_text'])) {
@@ -276,7 +285,7 @@ class SettingController extends Controller
             }
         }
         
-        $insert = MyHelper::post('setting/intro/save', $data);
+        $insert = MyHelper::post('setting/tutorial/save', $data);
 
         return parent::redirect($insert, 'FAQ has been updated.');
     }

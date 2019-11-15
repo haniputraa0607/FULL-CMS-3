@@ -2,7 +2,7 @@
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
  ?>
- @extends('layouts.main')
+ @extends('layouts.main-closed')
 
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
@@ -70,12 +70,16 @@
             });
 
             $('.mt-repeater-add').on('click', function(event) {
-                $('.previewImage').last().attr('src', 'https://www.placehold.it/1080x1920/EFEFEF/AAAAAA&amp;text=no+image');
-                $('.btnImage').last().show();
-                $('.featureImageForm').last().prop('type', 'file');
-                $('.featureImageForm').last().val('');
-                $('.featureImageForm').last().prop('required',true);
-                console.log(event)
+                if ($(this).parents(".mt-repeater").find("div[data-repeater-item]").length <= $(this).parents(".mt-repeater").attr("data-limit")) {
+                    $('.previewImage').last().attr('src', 'https://www.placehold.it/1080x1920/EFEFEF/AAAAAA&amp;text=no+image');
+                    $('.btnImage').last().show();
+                    $('.featureImageForm').last().prop('type', 'file');
+                    $('.featureImageForm').last().val('');
+                    $('.featureImageForm').last().prop('required',true);
+                } else {
+                    alert("List tutorial maksimal hanya " + $(this).parents(".mt-repeater").attr("data-limit") + ' gambar');
+                    $('.mt-repeater-item').last().remove();
+                }
             });
         });
     </script>
@@ -107,19 +111,69 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase">Create FAQ</span>
+                <span class="caption-subject font-dark sbold uppercase">Detail Setting Tutorial</span>
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal form-bordered" action="{{ url('setting/intro/save') }}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal form-bordered" action="{{ url('setting/tutorial/save') }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
                         <label class="control-label col-md-3">
-                                Active
-                            <i class="fa fa-question-circle tooltips" data-original-title="Status intro aplikasi" data-container="body"></i>
+                                Status Active
+                            <i class="fa fa-question-circle tooltips" data-original-title="Status tutorial aplikasi, jika Active maka gambar tutorial akan tampil di apps dan jika Inactive maka gambar tutorial tidak akan tampil di apps" data-container="body"></i>
                         </label>
                         <div class="col-md-9">
-                            <input type="checkbox" name="value" @if(isset($value) && $value == '1') checked @endif class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive">
+                            <input type="checkbox" name="active" @if(isset($value['active']) && $value['active'] == '1') checked @endif class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                                Status Skippable
+                            <i class="fa fa-question-circle tooltips" data-original-title="Status dilewati tutorial, jika Active maka gambar tutorial dapat dilewati oleh pengguna" data-container="body"></i>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="checkbox" name="skippable" @if(isset($value['skippable']) && $value['skippable'] == '1') checked @endif class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                                Text Button
+                            <i class="fa fa-question-circle tooltips" data-original-title="Teks untuk button yang akan ditampilkan pada halaman tutorial" data-container="body"></i>
+                        </label>
+                        <div class="col-md-9">
+                            <div class="col-md-6">
+                                <div class="form-group" style="border: none;">
+                                    <img class="img-responsive" src="{{env('S3_URL_API').'img/setting/next.png'}}" alt="">
+                                    <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
+                                        <input maxlength="11" type="text" name="text_next" @if(isset($value['text_next'])) value="{{$value['text_next']}}" @endif class="form-control">
+                                        <span class="input-group-addon">
+                                            <i style="color:#333;" class="fa fa-question-circle tooltips" data-original-title="Input ini akan menggantikan text Selanjutnya (Default), di tampilkan di bagian bawah kanan" data-container="body"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="border: none;">
+                                    <img class="img-responsive" src="{{env('S3_URL_API').'img/setting/skip.png'}}" alt="">
+                                    <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
+                                        <input maxlength="11" type="text" name="text_skip" @if(isset($value['text_skip'])) value="{{$value['text_skip']}}" @endif class="form-control">
+                                        <span class="input-group-addon">
+                                            <i style="color:#333;" class="fa fa-question-circle tooltips" data-original-title="Input ini akan menggantikan text Lewati (Default), di tampilkan di bagian bawah kiri" data-container="body"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="border: none;">
+                                    <img class="img-responsive" src="{{env('S3_URL_API').'img/setting/last_button.png'}}" alt="">
+                                    <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
+                                        <input maxlength="11" type="text" name="text_last" @if(isset($value['text_last'])) value="{{$value['text_last']}}" @endif class="form-control">
+                                        <span class="input-group-addon">
+                                            <i style="color:#333;" class="fa fa-question-circle tooltips" data-original-title="Input ini akan menggantikan text Mulai (Default), di tampilkan di bagian bawah kanan, menggantikan text Next (Default) jika sudah di gambar terakhir" data-container="body"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -129,7 +183,7 @@
                         </label>
                         <div class="col-md-9">
                             <div class="col-md-12">
-                                <div class="mt-repeater">
+                                <div class="mt-repeater" data-limit="6">
                                     <div data-repeater-list="value_text" id="sortable">
                                         @if (isset($value_text) && $value_text != null)
                                         @foreach ($value_text as $item)
@@ -147,12 +201,12 @@
                                                     </div>
                                                     @endif
                                                     <div class="input-icon right">
-                                                        <label class="col-md-3 control-label">
-                                                        Image Landscape
+                                                        <label class="col-md-4 control-label">
+                                                        Image Tutorial
                                                         <span class="required" aria-required="true"> * </span>
                                                         <br>
                                                         <span class="required" aria-required="true"> (1080*1920) </span>
-                                                        <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran portrait ditampilkan pada halaman intro awal aplikasi" data-container="body"></i>
+                                                        <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran portrait ditampilkan pada halaman awal aplikasi mobile" data-container="body"></i>
                                                         </label>
                                                     </div>
                                                     <div class="col-md-6">
@@ -190,12 +244,12 @@
                                                     </div>
                                                     @endif
                                                     <div class="input-icon right">
-                                                        <label class="col-md-3 control-label">
-                                                        Image Landscape
+                                                        <label class="col-md-4 control-label">
+                                                        Image Tutorial
                                                         <span class="required" aria-required="true"> * </span>
                                                         <br>
                                                         <span class="required" aria-required="true"> (1080*1920) </span>
-                                                        <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran landscape ditampilkan pada header halaman detail news ukuran persegi ditampilkan pada list news" data-container="body"></i>
+                                                        <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran portrait ditampilkan pada halaman awal aplikasi mobile" data-container="body"></i>
                                                         </label>
                                                     </div>
                                                     <div class="col-md-6">
