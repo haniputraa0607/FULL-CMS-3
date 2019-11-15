@@ -293,22 +293,31 @@
 		$(".file").change(function(e) {
                 var _URL = window.URL || window.webkitURL;
                 var image, file;
-
+                var input = $(this);
+                var cancelBtn = $(this).closest('.btn-file').closest('.aa').find('.btn.red.fileinput-exists');
                 if ((file = this.files[0])) {
                     image = new Image();
 
                     image.onload = function() {
-                        if (this.width == this.height && $(".file").val().split('.').pop().toLowerCase() == 'png') {
-                            // image.src = _URL.createObjectURL(file);
-                        }
-                        else {
+                    	if(this.width != 75 || this.height != 75){
                             toastr.warning("Please check dimension of your photo.");
                             $(this).val("");
                             // $('#remove_square').click()
                             // image.src = _URL.createObjectURL();
-							console.log($(this))
-							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'https://www.placehold.it/750x250/EFEFEF/AAAAAA&amp;text=no+image');
-                        }
+							cancelBtn.click();
+                    	}else if(input.val().split('.').pop().toLowerCase() != 'png'){
+                            toastr.warning("Only PNG image allowed");
+                            $(this).val("");
+                            // $('#remove_square').click()
+                            // image.src = _URL.createObjectURL();
+							cancelBtn.click();
+                    	}else if(file.size > (50 * 1024)){
+                            toastr.warning("Max uploaded file is 50 KB");
+                            $(this).val("");
+                            // $('#remove_square').click()
+                            // image.src = _URL.createObjectURL();
+							cancelBtn.click();
+                    	}
                     };
 
                     image.src = _URL.createObjectURL(file);
@@ -323,9 +332,21 @@
 	<ul class="page-breadcrumb">
 		<li>
 			<a href="{{url('/')}}">Home</a>
-		</li>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>{{ $title }}</span>
+            @if (!empty($sub_title))
+                <i class="fa fa-circle"></i>
+            @endif
+        </li>
+        @if (!empty($sub_title))
+        <li>
+            <span>{{ $sub_title }}</span>
+        </li>
+        @endif
 	</ul>
-</div>
+</div><br>
 @include('layouts.notifications')
 
 <div class="portlet light bordered">
@@ -437,22 +458,22 @@
 												Level Image
 												<i class="fa fa-question-circle tooltips" data-original-title="Icon membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
 												<br>
-												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
+												<span class="required" aria-required="true"> (75 x 75, Max 50 KB, Only PNG) </span>
 											</div>
 										</div>
 
 										<div class="col-md-4" >
 											<div class="input-icon right">
 												<div class="fileinput fileinput-new" data-provides="fileinput">
-													<div class="fileinput-new thumbnail" style="max-width: 2500px;">
+													<div class="fileinput-new thumbnail" style="width: 75px;">
 														@if($membership['membership_image'] != "")
 															<img src="{{env('S3_URL_API')}}{{$membership['membership_image']}}" alt="" />
 														@else
-															<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+															<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 														@endif
 													</div>
 
-													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
+													<div class="fileinput-preview fileinput-exists thumbnail" style="width: 75px;"> </div>
 													<div class="aa">
 														<span class="btn default btn-file">
 															<span class="fileinput-new"> Select image </span>
@@ -472,22 +493,22 @@
 												Next Level Image
 												<i class="fa fa-question-circle tooltips next_level_preview_trigger" data-original-title="Ikon next level membership yang akan ditampilkan di samping progress bar membership" data-container="body"></i>
 												<br>
-												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
+												<span class="required" aria-required="true"> (75 x 75, Max 50 KB, Only PNG) </span>
 											</div>
 										</div>
 
 										<div class="col-md-4" >
 											<div class="input-icon right">
 												<div class="fileinput fileinput-new" data-provides="fileinput">
-													<div class="fileinput-new thumbnail" style="max-width: 2500px;">
+													<div class="fileinput-new thumbnail" style="width: 75px;">
 														@if($membership['membership_next_image'] != "")
 															<img src="{{env('S3_URL_API')}}{{$membership['membership_next_image']}}" alt="" />
 														@else
-															<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+															<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 														@endif
 													</div>
 
-													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
+													<div class="fileinput-preview fileinput-exists thumbnail" style="width: 75px;"> </div>
 													<div class="aa">
 														<span class="btn default btn-file">
 															<span class="fileinput-new"> Select image </span>
@@ -500,7 +521,7 @@
 											</div>
 										</div>
 										<div class="col-md-3 next_level_preview" style="height: 0;overflow-y: all; transition-duration: .5s;opacity: 0">
-											<img src="{{env('S3_URL_VIEW')}}/img/membership/preview_next_level_image.jpg" class="img-responsive"></img>
+											<img src="{{env('S3_URL_VIEW')}}img/membership/preview_next_level_image.jpg" class="img-responsive"></img>
 										</div>
 									</div>
 
@@ -563,7 +584,7 @@
 											</div>
 											<div class="col-md-4">
 												<div class="input-icon input-group">
-													<input class="form-control price" type="text" name="benefit_point_multiplier" @if(empty($membership['benefit_point_multiplier'])) value="0" @else value="{{$membership['benefit_point_multiplier']}}" @endif placeholder="Point Received">
+													<input class="form-control price" type="number" step=".01" min="0" name="benefit_point_multiplier" @if(empty($membership['benefit_point_multiplier'])) value="0" @else value="{{$membership['benefit_point_multiplier']}}" @endif placeholder="Point Received">
 													<span class="input-group-btn">
 														<button class="btn blue" type="button" >%</button>
 													</span>
@@ -585,7 +606,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="{{env('POINT_NAME', 'Points')}} Received">
+														<input class="form-control" type="number" step=".01" min="0" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="{{env('POINT_NAME', 'Points')}} Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -672,7 +693,7 @@
 													</div>
 													<hr>
 													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
-														<i class="fa fa-plus"></i> Add Promo ID</a>
+														<i class="fa fa-plus"></i> Add Benefit</a>
 													<br>
 												</div>
 												<br>
@@ -794,11 +815,11 @@
 									<div class="col-md-4" >
 										<div class="input-icon right">
 											<div class="fileinput fileinput-new" data-provides="fileinput">
-												<div class="fileinput-new thumbnail" style="width: 200px;">
-													<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+												<div class="fileinput-new thumbnail" style="width: 75px;">
+													<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 												</div>
 
-												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+												<div class="fileinput-preview fileinput-exists thumbnail" style="width: 75px; height: 75px;"> </div>
 												<div>
 													<span class="btn default btn-file">
 														<span class="fileinput-new"> Select image </span>
@@ -864,7 +885,7 @@
 											</div>
 											<div class="col-md-4">
 												<div class="input-icon input-group">
-													<input class="form-control price" type="text" name="benefit_point_multiplier" value="0" placeholder="Point Received">
+													<input class="form-control price" type="number" step=".01" min="0" name="benefit_point_multiplier" value="0" placeholder="Point Received">
 													<span class="input-group-btn">
 														<button class="btn blue" type="button" >%</button>
 													</span>
@@ -886,7 +907,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control" type="text" name="benefit_cashback_multiplier" value="0" placeholder="{{env('POINT_NAME', 'Points')}} Received">
+														<input class="form-control" type="number" step=".01" min="0" name="benefit_cashback_multiplier" value="0" placeholder="{{env('POINT_NAME', 'Points')}} Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -922,7 +943,7 @@
 											</div>
 											<div class="col-md-4">
 												<div class="input-icon input-group">
-													<input class="form-control price" type="text" name="benefit_discount"  value="0" placeholder="Discount Received">
+													<input class="form-control price" type="number" step=".01" min="0" name="benefit_discount"  value="0" placeholder="Discount Received">
 													<span class="input-group-btn">
 														<button class="btn blue" type="button" >%</button>
 													</span>

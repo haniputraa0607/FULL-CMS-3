@@ -81,13 +81,13 @@
             </li>
             <li>
                 <span>{{ $title }}</span>
-                @if (!empty($sub_title))
+                @if (!empty($subTitle))
                     <i class="fa fa-circle"></i>
                 @endif
             </li>
-            @if (!empty($sub_title))
+            @if (!empty($subTitle))
             <li>
-                <span>{{ $sub_title }}</span>
+                <span>{{ $subTitle }}</span>
             </li>
             @endif
         </ul>
