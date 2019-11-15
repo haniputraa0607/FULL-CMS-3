@@ -78,7 +78,7 @@ class SettingController extends Controller
         $colLabel = 2;
         $colInput = 10;
         $label = '';
-        
+
         if($key == 'about') {
             $sub = 'about-about';
             $active = 'about';
@@ -87,8 +87,8 @@ class SettingController extends Controller
         } elseif($key == 'tos') {
             $sub = 'about-tos';
             $active = 'tos';
-            $subTitle = 'Terms of Service';
-            $label = 'TOS';
+            $subTitle = 'Ketentuan Layanan';
+            $label = 'Ketentuan Layanan';
         } elseif($key == 'tax') {
             $sub = 'about-tax';
             $active = 'tax';
@@ -939,11 +939,11 @@ class SettingController extends Controller
         if(isset($post['banner_start'])){
             $post['banner_start'] = MyHelper::convertDateTime2($post['banner_start']);
         }
-        
+
         if(isset($post['banner_end'])){
             $post['banner_end'] = MyHelper::convertDateTime2($post['banner_end']);
         }
-        
+
         $result = MyHelper::post('setting/banner/create', $post);
         return parent::redirect($result, 'New banner has been created.', 'setting/home#banner');
     }
@@ -976,11 +976,11 @@ class SettingController extends Controller
         if(isset($post['banner_start'])){
             $post['banner_start'] = MyHelper::convertDateTime2($post['banner_start']);
         }
-        
+
         if(isset($post['banner_end'])){
             $post['banner_end'] = MyHelper::convertDateTime2($post['banner_end']);
         }
-        
+
         $result = MyHelper::post('setting/banner/update', $post);
         return parent::redirect($result, 'Banner has been updated.', 'setting/home#banner');
     }
