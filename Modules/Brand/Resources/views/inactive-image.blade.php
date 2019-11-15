@@ -90,7 +90,7 @@
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
                                     @if($inactive_image_brand)
-                                        <img src="{{ env('S3_URL_API') }}/{{$inactive_image_brand}}" id="preview_image_brand" />
+                                        <img src="{{ env('S3_URL_API') }}{{$inactive_image_brand}}" id="preview_image_brand" />
                                     @else
                                         <img id="preview_image_brand" src="https://www.placehold.it/750x375/EFEFEF/AAAAAA"/>
                                     @endif
