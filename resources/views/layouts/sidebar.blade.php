@@ -1268,7 +1268,7 @@
 		</li>
 		@endif
 		@if(MyHelper::hasAccess([168,169,170,171], $grantedFeature))
-		<li class="nav-item {{($menu_active == 'setting-intro') ? 'active' : ''}}">
+		<li class="nav-item {{($menu_active == 'intro') ? 'active' : ''}}">
 			<a href="{{url('setting/intro')}}" class="nav-link">
 				<i class="icon-screen-tablet "></i>
 				<span class="title">Intro Apps</span>

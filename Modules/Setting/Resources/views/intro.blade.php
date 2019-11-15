@@ -90,13 +90,13 @@
             </li>
             <li>
                 <span>{{ $title }}</span>
-                @if (!empty($sub_title))
+                @if (!empty($subTitle))
                     <i class="fa fa-circle"></i>
                 @endif
             </li>
-            @if (!empty($sub_title))
+            @if (!empty($subTitle))
             <li>
-                <span>{{ $sub_title }}</span>
+                <span>{{ $subTitle }}</span>
             </li>
             @endif
         </ul>
@@ -107,7 +107,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase">Create FAQ</span>
+                <span class="caption-subject font-dark sbold uppercase">Intro App</span>
             </div>
         </div>
         <div class="portlet-body form">
