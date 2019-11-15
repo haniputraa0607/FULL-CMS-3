@@ -1268,11 +1268,28 @@
 		</li>
 		@endif
 		@if(MyHelper::hasAccess([168,169,170,171], $grantedFeature))
-		<li class="nav-item {{($menu_active == 'setting-tutorial') ? 'active' : ''}}">
-			<a href="{{url('setting/tutorial')}}" class="nav-link">
-				<i class="icon-screen-tablet "></i>
-				<span class="title">Tutorial Apps</span>
+		<li class="nav-item {{($menu_active == 'setting-intro') ? 'active open' : ''}}">
+			<a href="javascript:;" class="nav-link nav-toggle">
+				<i class="icon-screen-tablet"></i>
+				<span class="title">Intro Apps</span>
+				<span class="arrow {{($menu_active == 'setting-intro') ? 'open' : ''}}"></span>
 			</a>
+			<ul class="sub-menu">
+				@if(MyHelper::hasAccess([150], $grantedFeature))
+				<li class="nav-item {{($submenu_active == 'setting-intro-first') ? 'active open' : ''}}">
+					<a href="{{url('setting/intro/first')}}" class="nav-link ">
+						<span class="title">Intro First Install</span>
+					</a>
+				</li>
+				@endif
+				@if(MyHelper::hasAccess([149,151,152,153], $grantedFeature))
+				<li class="nav-item {{($submenu_active == 'setting-intro-home') ? 'active open' : ''}}">
+					<a href="{{url('setting/intro/home')}}" class="nav-link ">
+						<span class="title">Tutorial In Home</span>
+					</a>
+				</li>
+				@endif
+			</ul>
 		</li>
 		@endif
 

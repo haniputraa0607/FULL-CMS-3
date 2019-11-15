@@ -135,10 +135,6 @@ class SettingController extends Controller
             $sub = 'balance-reset';
             $active = 'balance-reset';
             $subTitle = env('POINT_NAME', 'Points').' Reset';
-        } elseif ($key == 'tutorial') {
-            $sub = 'tutorial';
-            $active = 'tutorial';
-            $subTitle = 'Tutorial';
         }
 
         $data = [
@@ -173,21 +169,6 @@ class SettingController extends Controller
             if (isset($request['status']) && $request['status'] == 'success') {
                 $result = $request['result'];
                 $data['id'] = $result['id_setting'];
-
-                if ($key == 'tutorial') {
-                    $grantedFeature     = session('granted_features');
-                    if(MyHelper::hasAccess([168,169,170,171], $grantedFeature)){
-                        if (isset($result['value_text']) && $result['value_text'] != 'null') {
-                            foreach (json_decode($result['value_text']) as $key => $value) {
-                                $data['value_text'][$key] = $value;
-                            }
-                        }
-                        $data['value'] = json_decode($result['value'], true);
-                        return view('setting::tutorial', $data);
-                    }else{
-                        return redirect('/');
-                    }
-                }
 
                 if (is_null($result['value'])) {
                     $data['value'] = $result['value_text'];
@@ -298,32 +279,6 @@ class SettingController extends Controller
         }
 
         return response()->json(['status' => $status]);
-    }
-
-    public function tutorialStore(Request $request) {
-        $post = $request->except('_token');
-
-        $data['value'] = json_encode([
-            'active'        => (isset($post['active']) && $post['active'] == 'on') ? 1 : 0,
-            'skippable'     => (isset($post['skippable']) && $post['skippable'] == 'on') ? 1 : 0,
-            'text_next'     => $post['text_next'],
-            'text_skip'     => $post['text_skip'],
-            'text_last'     => $post['text_last']
-        ]);
-
-        if (isset($post['value_text']) && $post['value_text'] != null) {
-            foreach ($post['value_text'] as $value) {
-                if (is_file($value['value_text'])) {
-                    $data['value_text'][] = MyHelper::encodeImage($value['value_text']);
-                } else {
-                    $data['value_text'][] = $value['value_text'];
-                }
-            }
-        }
-        
-        $insert = MyHelper::post('setting/tutorial/save', $data);
-
-        return parent::redirect($insert, 'FAQ has been updated.');
     }
 
     public function faqEdit($id) {
