@@ -111,11 +111,11 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase">Detail Setting Tutorial</span>
+                <span class="caption-subject font-dark sbold uppercase">{{$sub_title}}</span>
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal form-bordered" action="{{ url('setting/tutorial/save') }}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal form-bordered" action="{{ url('setting/intro/save') }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
                         <label class="control-label col-md-3">
@@ -143,7 +143,7 @@
                         <div class="col-md-9">
                             <div class="col-md-6">
                                 <div class="form-group" style="border: none;">
-                                    <img class="img-responsive" src="{{env('S3_URL_API').'img/setting/next.png'}}" alt="">
+                                    <img class="img-responsive" src="{{env('S3_URL_VIEW').'img/setting/next.png'}}" alt="">
                                     <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
                                         <input maxlength="11" type="text" name="text_next" @if(isset($value['text_next'])) value="{{$value['text_next']}}" @endif class="form-control">
                                         <span class="input-group-addon">
@@ -154,7 +154,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" style="border: none;">
-                                    <img class="img-responsive" src="{{env('S3_URL_API').'img/setting/skip.png'}}" alt="">
+                                    <img class="img-responsive" src="{{env('S3_URL_VIEW').'img/setting/skip.png'}}" alt="">
                                     <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
                                         <input maxlength="11" type="text" name="text_skip" @if(isset($value['text_skip'])) value="{{$value['text_skip']}}" @endif class="form-control">
                                         <span class="input-group-addon">
@@ -165,7 +165,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" style="border: none;">
-                                    <img class="img-responsive" src="{{env('S3_URL_API').'img/setting/last_button.png'}}" alt="">
+                                    <img class="img-responsive" src="{{env('S3_URL_VIEW').'img/setting/last_button.png'}}" alt="">
                                     <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
                                         <input maxlength="11" type="text" name="text_last" @if(isset($value['text_last'])) value="{{$value['text_last']}}" @endif class="form-control">
                                         <span class="input-group-addon">
@@ -296,6 +296,7 @@
                             <div class="row">
                                 <div class="col-md-offset-3 col-md-9">
                                     @if(MyHelper::hasAccess([170], $grantedFeature))
+                                    <input hidden type="text" name="key" value="{{$key}}">
                                     <button type="submit" class="btn green">
                                         <i class="fa fa-check"></i> Submit</button>
                                     @endif

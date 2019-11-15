@@ -14,7 +14,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::get('faq/sort', 'SettingController@faqSort');
     Route::post('faq/sort/update', 'SettingController@faqSortUpdate');
     Route::post('update/{id}', 'SettingController@settingUpdate');
-    Route::post('tutorial/save', 'SettingController@tutorialStore');
+
+    
+    Route::get('intro/{key}', 'TutorialController@introList');
+    Route::post('intro/save', 'TutorialController@introStore');
 
     Route::get('level', 'SettingController@levelList');
     Route::get('level/create', 'SettingController@levelCreate');
