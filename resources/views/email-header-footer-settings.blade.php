@@ -48,7 +48,7 @@
 <div class="portlet light bordered">
 	<div class="portlet-title">
 		<div class="caption">
-			<span class="caption-subject font-dark sbold uppercase">Email Settings</span>
+			<span class="caption-subject font-blue sbold uppercase">Email Settings</span>
 		</div>
 	</div>
 	<div class="portlet-body form">
