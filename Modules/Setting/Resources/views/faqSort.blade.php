@@ -92,10 +92,18 @@ $grantedFeature     = session('granted_features');
                 @for($i=0;$i<=$total_column;$i++)
                     @for($j=0;$j<=$totalRow;$j++)
                         @if($index != $total)
-                            <div class="col-md-3" style="cursor: all-scroll;">
-                                <input type="hidden" name="id_faq[]" value="{{ $result[$index]['id_faq'] }}">
-                                <div class="well">{{substr($result[$index]['question'],0,85)}} ...</div>
-                            </div>
+                            @if(strlen($result[$index]['question']) > 85)
+                                <div class="col-md-3" style="cursor: all-scroll;">
+                                    <input type="hidden" name="id_faq[]" value="{{ $result[$index]['id_faq'] }}">
+                                    <div class="well">{{substr($result[$index]['question'],0,85)}} ...</div>
+                                </div>
+                            @else
+                                <div class="col-md-3" style="cursor: all-scroll;">
+                                    <input type="hidden" name="id_faq[]" value="{{ $result[$index]['id_faq'] }}">
+                                    <div class="well">{{$result[$index]['question']}}</div>
+                                </div>
+                            @endif
+
                             <?php
                             $index++;
                             ?>
