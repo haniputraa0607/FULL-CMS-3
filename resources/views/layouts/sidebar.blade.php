@@ -1307,14 +1307,14 @@
 				<h3 class="uppercase" style="color: #990003;font-weight: 600;">About</h3>
 			</li>
 
-			@if(MyHelper::hasAccess([85], $grantedFeature))
-			<li class="nav-item {{($menu_active == 'about') ? 'active' : ''}}">
-				<a href="{{url('setting/about')}}" class="nav-link nav-toggle">
-					<i class="icon-info"></i>
-					<span class="title">About Us</span>
-				</a>
-			</li>
-			@endif
+			<!--@if(MyHelper::hasAccess([85], $grantedFeature))-->
+			<!--<li class="nav-item {{($menu_active == 'about') ? 'active' : ''}}">-->
+			<!--	<a href="{{url('setting/about')}}" class="nav-link nav-toggle">-->
+			<!--		<i class="icon-info"></i>-->
+			<!--		<span class="title">About Us</span>-->
+			<!--	</a>-->
+			<!--</li>-->
+			<!--@endif-->
 
 			@if(MyHelper::hasAccess([88,89], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'faq') ? 'active' : ''}}">
@@ -1352,7 +1352,7 @@
 			<li class="nav-item {{($menu_active == 'tos') ? 'active' : ''}}">
 				<a href="{{url('setting/tos')}}" class="nav-link nav-toggle">
 					<i class="icon-note"></i>
-					<span class="title">TOS</span>
+					<span class="title">Ketentuan Layanan</span>
 				</a>
 			</li>
 			@endif
@@ -1374,7 +1374,7 @@
 			@endif -->
 		@endif
 
-		@if(MyHelper::hasAccess([125,126,127,128,129], $grantedFeature))
+		<!-- @if(MyHelper::hasAccess([125,126,127,128,129], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #990003;font-weight: 600;">Report</h3>
 			</li>
@@ -1422,7 +1422,7 @@
 				</a>
 			</li>
 			@endif --}}
-		@endif
+		@endif -->
 
 		{{-- @if(MyHelper::hasAccess([129], $grantedFeature))
 		<li class="nav-item {{($menu_active == 'report-magic') ? 'active' : ''}}">
