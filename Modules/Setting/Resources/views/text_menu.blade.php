@@ -72,7 +72,7 @@ $configs     		= session('configs');
 				<i class="fa fa-circle"></i>
 			</li>
 			<li>
-				Setting Text Menu
+				Text Menu Setting
 			</li>
 		</ul>
 	</div>
@@ -82,10 +82,10 @@ $configs     		= session('configs');
 		<div class="tabbable-line tabbable-full-width">
 			<ul class="nav nav-tabs">
 				<li class=" @if(!isset($tipe)) active @endif">
-					<a href="#text_menu_home" data-toggle="tab"> Text Menu Home </a>
+					<a href="#text_menu_home" data-toggle="tab"> Main Menu Text </a>
 				</li>
 				<li class=" @if(isset($tipe) && $tipe == 'menu_account') active @endif">
-					<a href="#text_menu_account" data-toggle="tab"> Text Menu Account </a>
+					<a href="#text_menu_account" data-toggle="tab"> Account Menu Text </a>
 				</li>
 			</ul>
 		</div>
@@ -94,13 +94,13 @@ $configs     		= session('configs');
 				<div class="portlet box green">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="fa fa-gear"></i>Setting Text Menu Home</div>
+							<i class="fa fa-gear"></i>Main Menu Text Setting</div>
 						<div class="tools">
 							<a href="javascript:;" class="collapse"> </a>
 						</div>
 					</div>
 					<div class="portlet-body">
-						<p>Menu ini digunakan untuk mengatur tulisan menu dan tulisan header pada menu aplikasi dibagian bawah.</p>
+						<p>Menu ini digunakan untuk mengatur tulisan menu dan tulisan header pada menu utama aplikasi.</p>
 						<ul>
 							<li>Gambar (a) adalah urutan menu.</li>
 							<li>Gambar (b) adalah contoh tampilan untuk "Text Menu".</li>
@@ -196,7 +196,7 @@ $configs     		= session('configs');
 				<div class="portlet box green">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="fa fa-gear"></i>Setting Text Menu Account</div>
+							<i class="fa fa-gear"></i>Account Menu Text Setting</div>
 						<div class="tools">
 							<a href="javascript:;" class="collapse"> </a>
 						</div>
