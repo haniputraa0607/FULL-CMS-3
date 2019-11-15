@@ -11,7 +11,7 @@ use App\Lib\MyHelper;
 use Excel;
 use Validator;
 
-use \App\Exports\ArrayExport;
+use App\Exports\MultisheetExport;
 use App\Imports\FirstSheetOnlyImport;
 
 class OutletController extends Controller
@@ -606,7 +606,7 @@ class OutletController extends Controller
         $post=$request->except('_token');
         $outlet = MyHelper::post('outlet/export',$post);
         if (isset($outlet['status']) && $outlet['status'] == "success") {
-            $data = new ArrayExport($outlet['result'],'Outlet List');
+            $data = new MultisheetExport($outlet['result']);
             return Excel::download($data,'Data_Outlets_'.date('Ymdhis').'.xls');
 
         }else {
