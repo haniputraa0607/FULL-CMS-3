@@ -613,7 +613,7 @@
     </div><br>
 
     @include('layouts.notifications')
-
+    <a href="{{url('news')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
