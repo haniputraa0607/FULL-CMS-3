@@ -268,7 +268,7 @@ class SettingController extends Controller
             'submenu_active' => 'faq-sort'
         ];
 
-        $faqList = MyHelper::get('setting/faq/sort');
+        $faqList = MyHelper::get('setting/faq');
 
         if (isset($faqList['status']) && $faqList['status'] == 'success') {
             $data['result'] = $faqList['result'];
