@@ -112,7 +112,7 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             @if(isset($result['id_brand']) && $result['id_brand'] != "") <input hidden name="id_brand" value="{{$result['id_brand']}}" src="{{$result['id_brand']}}"> @endif
-                            <button type="submit" class="btn blue">Submit</button>
+                            <button type="submit" class="btn green"><i class="fa fa-check"></i> Submit</button>
                         </div>
                     </div>
                 </div>
