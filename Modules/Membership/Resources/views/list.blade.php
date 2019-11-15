@@ -509,7 +509,7 @@
 											</div>
 										</div>
 										<div class="col-md-3 next_level_preview" style="height: 0;overflow-y: all; transition-duration: .5s;opacity: 0">
-											<img src="{{env('S3_URL_VIEW')}}/img/membership/preview_next_level_image.jpg" class="img-responsive"></img>
+											<img src="{{env('S3_URL_VIEW')}}img/membership/preview_next_level_image.jpg" class="img-responsive"></img>
 										</div>
 									</div>
 
