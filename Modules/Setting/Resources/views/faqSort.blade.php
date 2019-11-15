@@ -11,6 +11,12 @@ $grantedFeature     = session('granted_features');
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+
+    <style>
+        .well{
+            height: 130px;
+        }
+    </style>
 @endsection
 
 @section('page-script')
@@ -28,6 +34,9 @@ $grantedFeature     = session('granted_features');
                 update: function (event, ui) {
                     $(document).ajaxStart($.blockUI({ css: {border: 'none', backgroundColor: '#000', opacity: .3, color: '#fff'} })).ajaxStop($.unblockUI);
                     $.post("{{url('setting/faq/sort/update')}}", $('#formFaqSort').serialize(), function(result){
+                        if(result['status'] == 0 ){
+                            location.reload();
+                        }
                     });
                 }
             });
@@ -85,7 +94,7 @@ $grantedFeature     = session('granted_features');
                         @if($index != $total)
                             <div class="col-md-3" style="cursor: all-scroll;">
                                 <input type="hidden" name="id_faq[]" value="{{ $result[$index]['id_faq'] }}">
-                                <div class="well">{{$result[$index]['question']}} </div>
+                                <div class="well">{{substr($result[$index]['question'],0,85)}} ...</div>
                             </div>
                             <?php
                             $index++;
