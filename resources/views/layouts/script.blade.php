@@ -31,3 +31,10 @@
 		});
 	})
 </script> -->
+
+<script>
+    $("body").on('click','li > a',function(){
+        var table = $('#sample_1').DataTable();
+        table.state.clear();
+    });
+</script>
