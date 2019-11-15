@@ -42,16 +42,12 @@
                 <i class="fa fa-circle"></i>
             </li>
             <li>
-                <span>{{ $title }}</span>
-                @if (!empty($sub_title))
-                    <i class="fa fa-circle"></i>
-                @endif
+                <span>News</span>
+                <i class="fa fa-circle"></i>
             </li>
-            @if (!empty($sub_title))
             <li>
-                <span>{{ $sub_title }}</span>
+                <span>New News Category</span>
             </li>
-            @endif
         </ul>
     </div><br>
 
