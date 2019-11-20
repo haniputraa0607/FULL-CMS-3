@@ -746,7 +746,7 @@
     @php
         // print_r($product);die();
     @endphp
-
+    <a href="{{url('product')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">
             <div class="caption">

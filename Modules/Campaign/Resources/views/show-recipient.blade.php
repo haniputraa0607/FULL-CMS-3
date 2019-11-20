@@ -92,8 +92,20 @@
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<a href="{{ secure_url('/')}}">Home</a>
+			<a href="{{url('/')}}">Home</a>
+			<i class="fa fa-circle"></i>
 		</li>
+		<li>
+			<span>{{ $title }}</span>
+			@if (!empty($sub_title))
+				<i class="fa fa-circle"></i>
+			@endif
+		</li>
+		@if (!empty($sub_title))
+		<li>
+			<span>{{ $sub_title }}</span>
+		</li>
+		@endif
 	</ul>
 </div>
 @include('layouts.notifications')

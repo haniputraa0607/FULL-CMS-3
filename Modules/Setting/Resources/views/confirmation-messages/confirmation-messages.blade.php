@@ -96,7 +96,7 @@
 							</div>
 							<div class="form-actions" style="text-align:center">
 								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
+								<button type="submit" class="btn green"><i class="fa fa-check"></i> Submit</button>
 							</div>
 						</form>
 					</div>

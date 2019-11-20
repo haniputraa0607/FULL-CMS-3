@@ -2,7 +2,7 @@
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
  ?>
-@extends('layouts.main')
+@extends('layouts.main-closed')
 
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
@@ -221,7 +221,7 @@
                             <th> Visibility </th>
                             <th> Status </th>
                             @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
-                                <th> Action </th>
+                                <th width="100px;"> Action </th>
                             @endif
                         </tr>
                     </thead>
@@ -254,7 +254,7 @@
                                                     <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_brand'] }}"><i class="fa fa-trash-o"></i></a>
                                                 @endif
                                                 @if(MyHelper::hasAccess([25,27], $grantedFeature))
-                                                    <a href="{{ url('brand/show') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                                    <a href="{{ url('brand/detail') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                                 @endif
                                                 <a class="btn btn-sm grey-cascade" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false"><i class="fa fa-link"></i></a>
                                                 <ul class="dropdown-menu" role="menu">

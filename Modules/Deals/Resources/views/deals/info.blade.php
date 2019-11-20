@@ -1,9 +1,31 @@
 <div class="portlet-body form">
-    <form id="form" class="form-horizontal" role="form" action=" @if($deals_type == "Deals") {{ url('deals/update') }} @else {{ url('hidden-deals/update') }} @endif" method="post" enctype="multipart/form-data">
+    <form id="form" class="form-horizontal" role="form" action=" @if($deals_type == "Deals") {{ url('deals/update') }} @else {{ url('inject-voucher/update') }} @endif" method="post" enctype="multipart/form-data">
         @foreach ($deals as $key => $val)
 
             @if ($val['deals_type'] != "Point")
                 <div class="form-body">
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Brand
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand" required>
+                                    <option></option>
+                                @if (!empty($brands))
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand['id_brand'] }}" @if (old('id_brand',$val['id_brand'])) @if($brand['id_brand'] == old('id_brand',$val['id_brand'])) selected @endif @endif>{{ $brand['name_brand'] }}</option>
+                                    @endforeach
+                                @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -218,28 +240,6 @@
                     @endphp
 
 
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Brand
-                            <span class="required" aria-required="true"> * </span>  
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand" required>
-                                    <option></option>
-                                @if (!empty($brands))
-                                    @foreach($brands as $brand)
-                                        <option value="{{ $brand['id_brand'] }}" @if (old('id_brand',$val['id_brand'])) @if($brand['id_brand'] == old('id_brand',$val['id_brand'])) selected @endif @endif>{{ $brand['name_brand'] }}</option>
-                                    @endforeach
-                                @endif
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
