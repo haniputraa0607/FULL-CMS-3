@@ -354,7 +354,15 @@
 	<ul class="page-breadcrumb">
 		<li>
 			<a href="{{url('/')}}">Home</a>
+            <i class="fa fa-circle"></i>
 		</li>
+        <li>
+            <span>{{ $title }}</span>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>{{$profile['phone']}}</span>
+        </li>
 	</ul>
 </div>
 @include('layouts.notifications')

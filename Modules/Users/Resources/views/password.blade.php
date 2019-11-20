@@ -74,6 +74,7 @@
         @endif
     </ul>
 </div><br>
+
 @include('layouts.notifications')
 
 <div class="row" style="margin-top:20px">

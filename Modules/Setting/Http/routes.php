@@ -11,8 +11,13 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::get('faq/edit/{id}', 'SettingController@faqEdit');
     Route::post('faq/update/{id}', 'SettingController@faqUpdate');
     Route::any('faq/delete/{id}', 'SettingController@faqDelete');
+    Route::get('faq/sort', 'SettingController@faqSort');
+    Route::post('faq/sort/update', 'SettingController@faqSortUpdate');
     Route::post('update/{id}', 'SettingController@settingUpdate');
-    Route::post('intro/save', 'SettingController@introStore');
+
+    
+    Route::get('intro/{key}', 'TutorialController@introList');
+    Route::post('intro/save', 'TutorialController@introStore');
 
     Route::get('level', 'SettingController@levelList');
     Route::get('level/create', 'SettingController@levelCreate');
@@ -49,6 +54,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('dashboard/delete', 'SettingController@deleteDashboard');
     Route::post('dashboard/ajax', 'SettingController@updateDashboardAjax');
     Route::post('dashboard/default-date', 'SettingController@updateDateRange');
+    Route::post('dashboard/visibility-section', 'SettingController@visibilityDashboardSection');
     Route::post('dashboard/order-section', 'SettingController@orderDashboardSection');
     Route::post('dashboard/order-card', 'SettingController@orderDashboardCard');
 

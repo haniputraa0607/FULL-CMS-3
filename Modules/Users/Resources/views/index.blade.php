@@ -58,6 +58,10 @@ $configs     		= session('configs');
 		<ul class="page-breadcrumb">
 			<li>
 				<a href="{{url('/')}}">Home</a>
+                <i class="fa fa-circle"></i>
+			</li>
+			<li>
+				<a href="{{url('/user')}}">User</a>
 			</li>
 		</ul>
 	</div>

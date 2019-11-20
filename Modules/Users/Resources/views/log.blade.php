@@ -54,7 +54,13 @@
 	<ul class="page-breadcrumb">
 		<li>
 			<a href="{{url('/')}}">Home</a>
+            <i class="fa fa-circle"></i>
 		</li>
+		<li>
+			<a href="{{url('/user')}}">User</a>
+            <i class="fa fa-circle"></i>
+		</li>
+		<li class="active"><a href="{{url('/user/activity')}}">Log Activity</a></li>
 	</ul>
 </div>
 @include('layouts.notifications')

@@ -78,7 +78,7 @@ class SettingController extends Controller
         $colLabel = 2;
         $colInput = 10;
         $label = '';
-        
+
         if($key == 'about') {
             $sub = 'about-about';
             $active = 'about';
@@ -87,8 +87,8 @@ class SettingController extends Controller
         } elseif($key == 'tos') {
             $sub = 'about-tos';
             $active = 'tos';
-            $subTitle = 'Terms of Service';
-            $label = 'TOS';
+            $subTitle = 'Ketentuan Layanan';
+            $label = 'Ketentuan Layanan';
         } elseif($key == 'tax') {
             $sub = 'about-tax';
             $active = 'tax';
@@ -135,17 +135,13 @@ class SettingController extends Controller
             $sub = 'balance-reset';
             $active = 'balance-reset';
             $subTitle = env('POINT_NAME', 'Points').' Reset';
-        } elseif ($key == 'intro') {
-            $sub = 'intro';
-            $active = 'intro';
-            $subTitle = 'Intro App';
         }
 
         $data = [
             'title'          => 'Setting',
             'menu_active'    => $active,
             'submenu_active' => $sub,
-            'subTitle'       => $subTitle,
+            'sub_title'       => $subTitle,
             'label'          => $label,
             'colLabel'       => $colLabel,
             'colInput'       => $colInput
@@ -169,6 +165,7 @@ class SettingController extends Controller
 
         }else{
             $request = MyHelper::post('setting', ['key' => $key]);
+
             if (isset($request['status']) && $request['status'] == 'success') {
                 $result = $request['result'];
                 $data['id'] = $result['id_setting'];
@@ -179,15 +176,6 @@ class SettingController extends Controller
                 } else {
                     $data['value'] = $result['value'];
                     $data['key'] = 'value';
-                }
-                if ($key == 'intro') {
-                    $grantedFeature     = session('granted_features');
-                    if(MyHelper::hasAccess([168,169,170,171], $grantedFeature)){
-                        $data['value_text'] = json_decode($result['value_text']);
-                        return view('setting::intro', $data);
-                    }else{
-                        return redirect('/');
-                    }
                 }
             } else {
                 return view('setting::index', $data)->withErrors($request['messages']);
@@ -257,23 +245,40 @@ class SettingController extends Controller
         return parent::redirect($insert, 'FAQ has been created.');
     }
 
-    public function introStore(Request $request) {
-        $post = $request->except('_token');
-        if (isset($post['value']) && $post['value'] == 'on') {
-            $post['value'] = 1;
+    /*======== This function is used to display the FAQ list that will be sorted ========*/
+    public function faqSort() {
+        $data = [];
+        $data = [
+            'title'   => 'Sorting FAQ List',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-sort'
+        ];
+
+        $faqList = MyHelper::get('setting/faq');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = $faqList['result'];
         } else {
-            $post['value'] = 0;
-        }
-        
-        if (isset($post['value_text']) && $post['value_text'] != null) {
-            foreach ($post['value_text'] as $key => $value) {
-                $post['value_text'][$key] = MyHelper::encodeImage($value['value_text']);
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::faqList', $data)->withErrors($e);
             }
         }
-        
-        $insert = MyHelper::post('setting/intro/save', $post);
-dd($insert);
-        return parent::redirect($insert, 'FAQ has been updated.');
+        return view('setting::faqSort', $data);
+    }
+
+    public function faqSortUpdate(Request $request) {
+        $post = $request->except('_token');
+        $status = 0;
+        $update = MyHelper::post('setting/faq/sort/update', $post);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            $status = 1;
+        }
+
+        return response()->json(['status' => $status]);
     }
 
     public function faqEdit($id) {
@@ -827,6 +832,12 @@ dd($insert);
         }
     }
 
+    function visibilityDashboardSection(Request $request){
+        $post = $request->except('_token');
+        $save = MyHelper::post('setting/dashboard/update-visibility', $post);
+        return $save;
+    }
+
     function orderDashboardSection(Request $request){
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/order-section', $post);
@@ -928,11 +939,11 @@ dd($insert);
         if(isset($post['banner_start'])){
             $post['banner_start'] = MyHelper::convertDateTime2($post['banner_start']);
         }
-        
+
         if(isset($post['banner_end'])){
             $post['banner_end'] = MyHelper::convertDateTime2($post['banner_end']);
         }
-        
+
         $result = MyHelper::post('setting/banner/create', $post);
         return parent::redirect($result, 'New banner has been created.', 'setting/home#banner');
     }
@@ -965,11 +976,11 @@ dd($insert);
         if(isset($post['banner_start'])){
             $post['banner_start'] = MyHelper::convertDateTime2($post['banner_start']);
         }
-        
+
         if(isset($post['banner_end'])){
             $post['banner_end'] = MyHelper::convertDateTime2($post['banner_end']);
         }
-        
+
         $result = MyHelper::post('setting/banner/update', $post);
         return parent::redirect($result, 'Banner has been updated.', 'setting/home#banner');
     }
@@ -1118,8 +1129,12 @@ dd($insert);
         ];
 
         $result = MyHelper::post('setting/text_menu/update', $post);
-        
-        return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu');
+
+        if($category == 'menu-account') {
+            return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#text_menu_account');
+        }else{
+            return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#text_menu_home');
+        }
     }
 
     public function confirmationMessages(Request $request){

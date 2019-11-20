@@ -45,7 +45,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase">Create FAQ</span>
+                <span class="caption-subject font-blue sbold uppercase">Create FAQ</span>
             </div>
         </div>
         <div class="portlet-body form">

@@ -54,7 +54,10 @@ class MembershipController extends Controller
 		} else {
 			$action = MyHelper::post('membership/list', []);
 			if (isset($action['status']) && $action['status'] == 'success') {
-				$data['result'] = $action['result'];
+				$data['result'] = array_map(function($var){
+					$var['benefit_text']=json_decode($var['benefit_text']);
+					return $var;
+				},$action['result']);
 				$data['post'] = $post;
 				// print_r($data);exit;
 				return view('membership::list', $data);

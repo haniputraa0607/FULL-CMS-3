@@ -5,7 +5,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'brand', 'namespace' => 'Module
     Route::post('/reorder', 'BrandController@reOrder');
     Route::get('create', 'BrandController@create');
 
-    Route::get('show/{id}', 'BrandController@show');
+    Route::get('detail/{id}', 'BrandController@show');
     Route::get('outlet/{id}', 'BrandController@show');
     Route::get('product/{id}', 'BrandController@show');
     Route::get('deals/{id}', 'BrandController@show');
@@ -28,5 +28,4 @@ Route::group(['middleware' => 'web', 'prefix' => 'brand', 'namespace' => 'Module
         Route::post('product', 'BrandController@destroy');
         Route::post('deals', 'BrandController@destroy');
     });
-
 });

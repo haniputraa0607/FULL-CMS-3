@@ -580,7 +580,7 @@
                             Transfer Bank
                         @elseif ($data['trasaction_payment_type'] == 'Offline')
                             @if(isset($data['data_payment'][0]['payment_bank']))
-                                $data['data_payment'][0]['payment_bank']
+                                {{$data['data_payment'][0]['payment_bank']}}
                             @else
                                 TUNAI
                             @endif
