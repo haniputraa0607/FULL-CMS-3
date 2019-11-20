@@ -26,6 +26,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', '
     Route::any('search/reset', ['middleware' => 'feature_control:2', 'uses' => 'UsersController@searchReset']);
     Route::get('delete/{phone}', ['middleware' => 'feature_control:5', 'uses' => 'UsersController@delete']);
     Route::any('detail/{phone}', ['middleware' => 'feature_control:2', 'uses' => 'UsersController@show']);
+    Route::any('detail/{phone}/favorite', ['middleware' => 'feature_control:2', 'uses' => 'UsersController@favorite']);
     Route::any('detail/log/{phone}', ['middleware' => 'feature_control:2', 'uses' => 'UsersController@showLog']);
     Route::any('log/{phone}', ['middleware' => 'feature_control:2', 'uses' => 'UsersController@showAllLog']);
     Route::any('detail/transaction/{phone}', 'UsersController@showTransaction');

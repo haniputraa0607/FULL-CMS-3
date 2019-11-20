@@ -283,6 +283,7 @@ $configs     		= session('configs');
 												<td>
 													@if(MyHelper::hasAccess([2], $grantedFeature))
 														<a class="btn btn-block yellow btn-xs" href="{{ url('user/detail', $data['phone']) }}"><i class="icon-pencil"></i> Detail </a>
+														<a class="btn btn-block blue btn-xs" href="{{ url('user/detail', $data['phone']) }}/favorite"><i class="icon-pencil"></i> Favorite </a>
 													@endif
 
 													@if(MyHelper::hasAccess([5], $grantedFeature))

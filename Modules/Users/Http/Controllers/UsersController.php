@@ -512,11 +512,10 @@ class UsersController extends Controller
 			}
 		}
 		if(isset($post['password'])){
-			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password']));
-			/* print_r($checkpin);exit;
+			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
 			if($checkpin['status'] != "success")
-				return redirect('login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
-			else */
+				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+			else 
 				Session::put('secure','yes');
 		} 
 		
@@ -830,5 +829,30 @@ class UsersController extends Controller
 		
 		// print_r($data);exit;
 		return view('users::log', $data);
+	}
+	public function favorite(Request $request, $phone){
+		$post = $request->post();
+		$data = [ 'title'             => 'User',
+				  'subtitle'		  => 'Favorite',
+				  'menu_active'       => 'user',
+				  'submenu_active'    => 'user-list'
+				];
+		if(isset($post['password'])){
+			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+			if($checkpin['status'] != "success")
+				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+			else 
+				Session::put('secure','yes');
+		} 
+		if(empty(Session::get('secure'))){
+			$data = [ 'title'             => 'User',
+					  'menu_active'       => 'user',
+					  'submenu_active'    => 'user-list',
+					  'phone'    		  => $phone
+					];
+			return view('users::password', $data);
+		}
+		$data['favorites'] = MyHelper::post('users/favorite',['phone'=>$phone])['result']??[];
+		return view('users::favorite', $data);
 	}
 }
