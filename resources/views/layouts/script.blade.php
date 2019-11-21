@@ -21,6 +21,14 @@
 <script src="{{ env('S3_URL_VIEW') }}{{ ('assets/layouts/layout/scripts/demo.min.js') }}" type="text/javascript"></script>
 <script src="{{ env('S3_URL_VIEW') }}{{ ('assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
 <script src="{{ env('S3_URL_VIEW') }}{{ ('assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
+<script>
+    $("body").on('click','li > a',function(){
+        if($('#sample_1').length){
+            var table = $('#sample_1').DataTable();
+            table.state.clear();
+        }
+    });
+</script>
 <!-- END THEME LAYOUT SCRIPTS -->
 <!-- <script>
 	$(document).ready(function()
@@ -31,10 +39,3 @@
 		});
 	})
 </script> -->
-
-<script>
-    $("body").on('click','li > a',function(){
-        var table = $('#sample_1').DataTable();
-        table.state.clear();
-    });
-</script>
