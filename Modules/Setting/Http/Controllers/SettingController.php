@@ -1099,7 +1099,7 @@ class SettingController extends Controller
             'submenu_active' => 'setting-text-menu-list'
         ];
 
-        $request = MyHelper::get('setting/text_menu_list');
+        $request = MyHelper::post('setting/text_menu_list',['webview' => 1]);
         if(isset($request['result']) && !empty($request['result'])) {
             $data['menu_list'] = $request['result'];
         }else {

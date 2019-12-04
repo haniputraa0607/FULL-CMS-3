@@ -49,11 +49,11 @@ $configs     		= session('configs');
 						toastr.warning("Please check dimension of your photo. Recommended dimensions are 1:1");
 						$("#removeImage_"+type).trigger( "click" );
 					}
-					if (this.width !== 800 ||  this.height !== 800) {
-						toastr.warning("Please check dimension of your photo. Recommended dimensions are 800 x 800");
+					if (this.width > 100 ||  this.height > 100) {
+						toastr.warning("Please check dimension of your photo. The maximum height and width 100px.");
 						$("#removeImage_"+type).trigger( "click" );
 					}
-					if (size > 10) {
+					if (size > 5) {
 						toastr.warning("The maximum size is 10 KB");
 						$("#removeImage_"+type).trigger( "click" );
 					}
@@ -185,8 +185,8 @@ $configs     		= session('configs');
 																		<p style="margin-top:2%;margin-bottom:1%;"> Icon <span class="required" aria-required="true"> * </span></p>
 																		<div style="color: #e02222;font-size: 12px;margin-top: 4%;">
 																			- Only PNG <br>
-																			- 800 x 800 <br>
-																			- max size 10 KB <br>
+																			- 100 x 100 <br>
+																			- max size 5 KB <br>
 																		</div>
 																	</div>
 																	<div class="col-md-4">
@@ -327,7 +327,7 @@ $configs     		= session('configs');
 																	<p style="margin-top:2%;margin-bottom:1%;"> Text Menu <span class="required" aria-required="true"> * </span></p>
 																</div>
 																<div class="col-md-8">
-																	<input class="form-control" type="text" name="{{$key}}_text_menu" value="{{$value['text_menu']}}" maxlength="10" required>
+																	<input class="form-control" type="text" name="{{$key}}_text_menu" value="{{$value['text_menu']}}" maxlength="20" required>
 																</div>
 															</div>
 															<div class="row">
