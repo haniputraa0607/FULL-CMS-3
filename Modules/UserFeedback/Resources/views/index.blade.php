@@ -71,7 +71,7 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="feedback_table">
                 <thead>
                     <tr>
-                        <th> Date </th>
+                        <th> Create Feedback Date </th>
                         <th> Receipt Number </th>
                         <th> User </th>
                         <th> Grand Total </th>

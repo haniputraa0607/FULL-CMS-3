@@ -723,6 +723,14 @@
 					</ul>
 				</li>
 				@endif
+				@if(MyHelper::hasAccess([90], $configs) && MyHelper::hasAccess([179], $grantedFeature) )
+					<li class="nav-item {{($menu_active == 'user-feedback') ? 'active' : ''}}">
+						<a href="{{url('user-feedback')}}" class="nav-link">
+							<i class="fa fa-thumbs-o-up"></i>
+							<span class="title">User Feedback</span>
+						</a>
+					</li>
+				@endif
 			@endif
 		@endif
 
@@ -1020,15 +1028,6 @@
 					</ul>
 				</li>
 				@endif
-			@endif
-
-			@if(MyHelper::hasAccess([90], $configs) && MyHelper::hasAccess([179], $grantedFeature) )
-				<li class="nav-item {{($menu_active == 'user-feedback') ? 'active' : ''}}">
-					<a href="{{url('user-feedback')}}" class="nav-link">
-						<i class="fa fa-thumbs-o-up"></i>
-						<span class="title">User Feedback</span>
-					</a>
-				</li>
 			@endif
 
 			@if(MyHelper::hasAccess([50], $configs))
