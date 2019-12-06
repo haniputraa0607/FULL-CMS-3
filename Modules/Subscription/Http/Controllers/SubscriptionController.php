@@ -39,7 +39,7 @@ class SubscriptionController extends Controller
 
             $save = MyHelper::post('subscription/step1', $post);
 
-            if ( $save['status']??0 == "success") {
+            if ( ($save['status']??0) == "success") {
                 return redirect('subscription/step2/'.$save['result']['id_subscription'])->with('success', ['Subscription has been created']);
             }else{
                 return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
@@ -67,7 +67,14 @@ class SubscriptionController extends Controller
         $post = $request->except('_token');
 
         if (!empty($post)) {
-            return $post;
+
+            $save = MyHelper::post('subscription/step2', $post);
+            // return $save;
+            if ( ($save['status']??0) == "success") {
+                return redirect('subscription/step2/'.$id_subscription)->with('success', ['Subscription has been updated']);
+            }else{
+                return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
+            }
         }
         else {
 
@@ -84,10 +91,11 @@ class SubscriptionController extends Controller
             if (!empty($outlets['result'])) {
                 $data['outlets'] = $outlets['result'];
             }
-
             if (isset($id_subscription)) {
-                $data['subscription'] = MyHelper::post('subscription/show-step1', ['id_subscription' => $id_subscription])['result']??'';
+                $data['subscription'] = MyHelper::post('subscription/show-step2', ['id_subscription' => $id_subscription])['result']??'';
             }
+            // return $data;
+// return $data;
             return view('subscription::step2', $data);
         }
     }
@@ -95,8 +103,15 @@ class SubscriptionController extends Controller
     public function step3(Request $request, $id_subscription=null)
     {
         $post = $request->except('_token');
-
         if (!empty($post)) {
+
+            $save = MyHelper::post('subscription/step3', $post);
+
+            if ( ($save['status']??0) == "success") {
+                return redirect('subscription/step3/'.$id_subscription)->with('success', ['Subscription has been updated']);
+            }else{
+                return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
+            }
             return $post;
         }
         else {
@@ -116,7 +131,7 @@ class SubscriptionController extends Controller
             }
 
             if (isset($id_subscription)) {
-                $data['subscription'] = MyHelper::post('subscription/show-step1', ['id_subscription' => $id_subscription])['result']??'';
+                $data['subscription'] = MyHelper::post('subscription/show-step3', ['id_subscription' => $id_subscription])['result']??'';
             }
 
             return view('subscription::step3', $data);

@@ -32,7 +32,7 @@ $('.content').click(function() {
             </div>\
             <div class="col-md-12 accordion-body collapse in" id="collapse_'+count+'">\
                 <div class="form-group mt-repeater">\
-                    <div data-repeater-list="group-b">\
+                    <div>\
                         <div id="contentDetail'+count+'" class="sortable-detail-'+count+'">\
                         </div>\
                     </div>\
@@ -66,7 +66,6 @@ function addDetail(no) {
 	var count = $('#contentDetail'+no+' > div').length;
 	var id = count;
 	var result = id+1;
-    console.log(count, id, result);
 
 	var listDetail = '\
     <div class="detail'+result+''+no+'">\
@@ -76,8 +75,9 @@ function addDetail(no) {
                     <a href="javascript:;" class="btn btn-grey "><i class="fa fa-arrows-v"></i></a>\
                 </div>\
                 <div class="col-md-9 p-l-30px">\
-                    <textarea type="text" placeholder="Content Detail" class="form-control" name="content_detail['+no+'][]" required style="resize:vertical;"/></textarea\
-                    <input type="hidden" name="id_content_detail_'+no+'[]" value="0">\
+                    <textarea type="text" placeholder="Content Detail" class="form-control" name="content_detail['+no+'][]" required style="resize:vertical;"/></textarea>\
+                    <input type="hidden" name="content_detail_order['+no+'][]" value="0">\
+                    <input type="hidden" name="id_content_detail['+no+'][]" value="0">\
                 </div>\
                 <div class="col-md-1">\
                     <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteDetail('+result+''+no+')">\
@@ -89,24 +89,6 @@ function addDetail(no) {
     </div>';
 
 	$('#contentDetail'+no).append(listDetail).fadeIn(3000);
-}
-
-function addDetailStatic(title) {
-    console.log('ok');
-    var listDetail = '\
-    <div class="detail'+title+'">\
-        <div data-repeater-item class="mt-overflow content-detail">\
-            <div class="mt-repeater-cell">\
-                <input type="text" placeholder="Content Detail" class="form-control mt-repeater-input-inline" name="content_detail['+title+'][]" required/>\
-                <input type="hidden" name="id_content_detail_'+title+'[]" value="0">\
-                <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteDetail(10)">\
-                    <i class="fa fa-close"></i>\
-                </a>\
-            </div>\
-        </div>\
-    </div>';
-
-    $('#contentDetail'+title).append(listDetail).fadeIn(3000);
 }
 
 function deleteDetail(no) {
