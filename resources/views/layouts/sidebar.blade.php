@@ -978,6 +978,50 @@
 				</li>
 				@endif
 			@endif
+
+			@if(MyHelper::hasAccess([84], $configs))
+				@if(MyHelper::hasAccess([172,173,174,175,176], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'subscription') ? 'active open' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-gift"></i>
+						<span class="title">Subscription</span>
+						<span class="arrow {{($menu_active == 'subscription') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([172], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'subscription-create') ? 'active open' : ''}}">
+							<a href="{{url('subscription/create')}}" class="nav-link ">
+								<span class="title">New Subscription</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([173], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'subscription-list') ? 'active open' : ''}}">
+							<a href="{{url('subscription')}}" class="nav-link ">
+								<span class="title">Subscription List</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([18], $configs))
+							@if(MyHelper::hasAccess([172], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'subscription-point-create') ? 'active open' : ''}}">
+								<a href="{{url('subscription-point/create')}}" class="nav-link ">
+									<span class="title">New Subscription Deals</span>
+								</a>
+							</li>
+							@endif
+							@if(MyHelper::hasAccess([173], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'subscription-point-list') ? 'active open' : ''}}">
+								<a href="{{url('subscription-point')}}" class="nav-link ">
+									<span class="title">Subscription Point List</span>
+								</a>
+							</li>
+							@endif
+						@endif
+					</ul>
+				</li>
+				@endif
+			@endif
 		@endif
 
 		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature))
