@@ -11,9 +11,61 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class SubscriptionController extends Controller
 {
 
-    public function index()
+    function getData($access) {
+        if (isset($access['status']) && $access['status'] == "success") {
+            return $access['result'];
+        }
+        else {
+            return [];
+        }
+    }
+
+    public function index(Request $request)
     {
-        return view('subscription::index');
+        $post=$request->except('_token');
+
+        if($post){
+            if(($post['clear']??false)=='session'){
+                session(['subs_filter'=>[]]);
+            }else{
+                session(['subs_filter'=>$post]);
+            }
+            return back();
+        }
+
+        $data = [
+            'title'          => 'subscription',
+            'sub_title'      => 'subscription List',
+            'menu_active'    => 'subscription',
+            'submenu_active' => 'subscription-list'
+        ];
+
+        $post['newest'] = 1;
+        $post['web'] = 1;
+        $post['admin']=1;
+
+        if(($filter=session('subs_filter'))&&is_array($filter))
+        {
+            $post=array_merge($filter,$post);
+            if($filter['rule']??false)
+            {
+                $data['rule']=array_map('array_values', $filter['rule']);
+            }
+            if($filter['operator']??false)
+            {
+                $data['operator']=$filter['operator'];
+            }
+        }
+
+        $data['subs'] = $this->getData(MyHelper::post('subscription/list', $post));
+
+        $post['select'] = ['id_outlet','outlet_code','outlet_name'];
+        $data['outlets'] = $this->getData(MyHelper::post('outlet/ajax_handler', $post));
+        // return $data;
+
+
+        return view('subscription::list', $data);
+
     }
 
     public function changeDateFormat($date)
@@ -56,6 +108,9 @@ class SubscriptionController extends Controller
             
             if (isset($id_subscription)) {
                 $data['subscription'] = MyHelper::post('subscription/show-step1', ['id_subscription' => $id_subscription])['result']??'';
+                if ($data['subscription'] == '') {
+                    return redirect('subscription')->withErrors('Subscription not found');
+                }
             }
 
             return view('subscription::step1', $data);
@@ -93,6 +148,9 @@ class SubscriptionController extends Controller
             }
             if (isset($id_subscription)) {
                 $data['subscription'] = MyHelper::post('subscription/show-step2', ['id_subscription' => $id_subscription])['result']??'';
+                if ($data['subscription'] == '') {
+                    return redirect('subscription')->withErrors('Subscription not found');
+                }
             }
             // return $data;
 // return $data;
@@ -132,9 +190,58 @@ class SubscriptionController extends Controller
 
             if (isset($id_subscription)) {
                 $data['subscription'] = MyHelper::post('subscription/show-step3', ['id_subscription' => $id_subscription])['result']??'';
+                if ($data['subscription'] == '') {
+                    return redirect('subscription')->withErrors('Subscription not found');
+                }
             }
 
             return view('subscription::step3', $data);
+        }
+    }
+
+    public function detail(Request $request, $id_subscription)
+    {
+        $post = $request->except('_token');
+        if (!empty($post)) {
+
+            return $post;
+            $post['subscription_start']         = $this->changeDateFormat($post['subscription_start']??null);
+            $post['subscription_end']           = $this->changeDateFormat($post['subscription_end']??null);
+            $post['subscription_publish_start'] = $this->changeDateFormat($post['subscription_publish_start']??null);
+            $post['subscription_publish_end']   = $this->changeDateFormat($post['subscription_publish_end']??null);
+            if (isset($post['subscription_image'])) {
+                $post['subscription_image']         = MyHelper::encodeImage($post['subscription_image']);
+            }
+
+            $save = MyHelper::post('subscription/step1', $post);
+
+            if ( ($save['status']??0) == "success") {
+                return redirect('subscription/step2/'.$save['result']['id_subscription'])->with('success', ['Subscription has been created']);
+            }else{
+                return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
+            }
+        }
+        else {
+
+            $data = [
+                'title'          => 'Subscription',
+                'sub_title'      => 'Subscription Detail',
+                'menu_active'    => 'subscription',
+                'submenu_active' => 'subscription-List'
+            ];
+            
+            $post['select'] = ['id_outlet','outlet_code','outlet_name'];
+            $outlets = MyHelper::post('outlet/ajax_handler', $post);
+            
+            if (!empty($outlets['result'])) {
+                $data['outlets'] = $outlets['result'];
+            }
+
+            $data['subscription'] = MyHelper::post('subscription/show-detail', ['id_subscription' => $id_subscription])['result']??'';
+            if ($data['subscription'] == '') {
+                return redirect('subscription')->withErrors('Subscription not found');
+            }
+            return view('subscription::detail', $data);
         }
     }
 }
