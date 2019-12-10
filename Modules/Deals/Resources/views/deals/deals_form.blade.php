@@ -112,7 +112,7 @@ $configs = session('configs');
                     </div>
                 </div>
             @endif
-<!--             <div class="col-md-3">
+            <div class="col-md-3">
                 <div class="md-radio-inline">
                     <div class="md-radio">
                         <input type="radio" name="prices_by" id="radio8" value="money" class="prices md-radiobtn" required @if (old('prices_by') == "money") checked @endif>
@@ -122,7 +122,7 @@ $configs = session('configs');
                             <span class="box"></span> Money </label>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
