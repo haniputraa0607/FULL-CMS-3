@@ -202,14 +202,14 @@ $grantedFeature     = session('granted_features');
                                     @if($deals_type == "Hidden" && MyHelper::hasAccess([81], $grantedFeature) && $value['deals_total_claimed'] == 0)
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
-                                    @if($deals_type == "WelcomeVoucher" && MyHelper::hasAccess([184], $grantedFeature) && $value['deals_total_claimed'] == 0)
+                                    @if($deals_type == "WelcomeVoucher" && MyHelper::hasAccess([191], $grantedFeature) && $value['deals_total_claimed'] == 0)
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
                                     @if ($deals_type == "Deals" && MyHelper::hasAccess([73], $grantedFeature))
                                     <a href="{{ url('deals/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @elseif ($deals_type == "Point" && MyHelper::hasAccess([73], $grantedFeature))
                                     <a href="{{ url('deals-point/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
-                                    @elseif ($deals_type == "WelcomeVoucher" && MyHelper::hasAccess([181], $grantedFeature))
+                                    @elseif ($deals_type == "WelcomeVoucher" && MyHelper::hasAccess([188], $grantedFeature))
                                         <a href="{{ url('welcome-voucher/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @else
                                         @if(MyHelper::hasAccess([78], $grantedFeature))
