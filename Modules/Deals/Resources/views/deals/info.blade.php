@@ -285,7 +285,7 @@
                                 </div>
                             </div>
                         </div>
-<!--                         <div class="col-md-3">
+                        <div class="col-md-3">
                             <div class="md-radio-inline">
                                 <div class="md-radio">
                                     <input type="radio" name="prices_by" id="radio8" value="money" class="prices md-radiobtn" required @if (!empty($val['deals_voucher_price_cash'])) checked @endif>
@@ -295,7 +295,7 @@
                                         <span class="box"></span> Money </label>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
 
                     <div class="form-group" id="prices" @if (empty($val['deals_voucher_price_point']) && empty($val['deals_voucher_price_cash'])) style="display: none;" @endif>
