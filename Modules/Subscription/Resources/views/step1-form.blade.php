@@ -14,7 +14,7 @@ $configs = session('configs');
                         </div>
                         <div class="col-md-5">
                             <div class="input-icon right">
-                                <input type="text" class="form-control" name="subscription_title" value="{{ $subscription['subscription_title']?? old('subscription_title') }}" placeholder="Title" required maxlength="20">
+                                <input type="text" class="form-control" name="subscription_title" value="{{ old('subscription_title')??$subscription['subscription_title']??'' }}" placeholder="Title" required maxlength="20">
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@ $configs = session('configs');
                         </div>
                         <div class="col-md-5">
                             <div class="input-icon right">
-                                <input type="text" class="form-control" name="subscription_sub_title" value="{{ $subscription['subscription_sub_title']??old('subscription_sub_title') }}" placeholder="Sub Title" maxlength="20">
+                                <input type="text" class="form-control" name="subscription_sub_title" value="{{ old('subscription_sub_title')??$subscription['subscription_sub_title']??'' }}" placeholder="Sub Title" maxlength="20">
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@ $configs = session('configs');
                                         <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/*" name="subscription_image" required id="file">
+                                        <input type="file" accept="image/*" name="subscription_image" {{ isset($subscription['url_subscription_image']) ? '' : 'required' }} id="file">
 
                                         </span>
 
@@ -70,7 +70,7 @@ $configs = session('configs');
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control date-top-right" name="subscription_start" value="{{ ($subscription['subscription_start']??0) ? date('d-M-Y H:i', strtotime( $subscription['subscription_start'])) : old('subscription_start') }}" required autocomplete="off">
+                                    <input type="text" class="form_datetime form-control date-top-right" name="subscription_start" value="{{ old('subscription_start') ? old('subscription_start') : ( ($subscription['subscription_start']??false) ? date('d-M-Y H:i', strtotime( $subscription['subscription_start'])) : '' ) }}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -85,7 +85,7 @@ $configs = session('configs');
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control date-top-right" name="subscription_end" value="{{ ($subscription['subscription_end']??0) ? date('d-M-Y H:i', strtotime( $subscription['subscription_end'])) : old('subscription_end') }}" required autocomplete="off">
+                                    <input type="text" class="form_datetime form-control date-top-right" name="subscription_end" value="{{ old('subscription_end') ? old('subscription_end') : ( ($subscription['subscription_end']??false) ? date('d-M-Y H:i', strtotime( $subscription['subscription_end'])) : '' ) }}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -104,7 +104,7 @@ $configs = session('configs');
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="subscription_publish_start" value="{{ ($subscription['subscription_publish_start']??0) ? date('d-M-Y H:i', strtotime( $subscription['subscription_publish_start'])) : old('subscription_publish_start') }}" required autocomplete="off">
+                                    <input type="text" class="form_datetime form-control" name="subscription_publish_start" value="{{ old('subscription_publish_start') ? old('subscription_publish_start') : ( ($subscription['subscription_publish_start']??false) ? date('d-M-Y H:i', strtotime( $subscription['subscription_publish_start'])) : '' ) }}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -120,7 +120,7 @@ $configs = session('configs');
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="subscription_publish_end" value="{{ ($subscription['subscription_publish_end']??0) ? date('d-M-Y H:i', strtotime( $subscription['subscription_publish_end'])) : old('subscription_publish_end') }}" autocomplete="off">
+                                    <input type="text" class="form_datetime form-control" name="subscription_publish_end" value="{{ old('subscription_publish_end') ? old('subscription_publish_end') : ( ($subscription['subscription_publish_end']??false) ? date('d-M-Y H:i', strtotime( $subscription['subscription_publish_end'])) : '' ) }}" autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>

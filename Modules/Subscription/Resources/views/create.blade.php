@@ -33,6 +33,9 @@ $configs = session('configs');
         .p-l-30px {
             padding-left: 30px;
         }
+        .p-l-0px {
+            padding-left: 0px!important;
+        }
         a[aria-expanded=false] .fa-chevron-down {
             display: none;
         }
