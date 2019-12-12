@@ -475,11 +475,14 @@
 								<div class="col-md-4 name">Conditions</div>
 								<div class="col-md-8 value">: </div>
 							</div>
-							@php $i=0; @endphp
+							@php $i=0; $where=false;@endphp
 							@foreach($result['campaign_rule_parents'] as $ruleParent)
 							<div class="portlet light bordered" style="margin-bottom:10px">
 								@foreach($ruleParent['rules'] as $rule)
 								<div class="row static-info">
+									@php if($rule['operator'] == 'WHERE IN'): $where=true; @endphp
+										<div class="col-md-12 text-center">Based on CSV file upload</div>
+									@php else: $where=false; @endphp
 									<div class="col-md-1 name"></div>
 									<div class="col-md-10 value"><li>
 									@if($rule['subject'] != 'trx_outlet' && $rule['subject'] != 'trx_product')
@@ -538,16 +541,20 @@
 									@else
 										{{$rule['parameter']}}
 									@endif
-									</li></div>
+									</li>
+									</div>
+									@php endif; @endphp
 								</div>
 								@endforeach
 								<div class="row static-info">
 									<div class="col-md-11 value">
+									@if(!$where)
 										@if($ruleParent['rule'] == 'and')
 											All conditions must valid
 										@else
 											Atleast one condition is valid
 										@endif
+									@endif
 									</div>
 								</div>
 							</div>
@@ -560,6 +567,17 @@
 							@endif
 							@php $i++; @endphp
 							@endforeach
+							@if($where&&$result['campaign_description'])
+							<div class="row static-info">
+								<div class="col-md-4 name">Description</div>
+								<div class="col-md-8 value">: </div>
+							</div>
+							<div class="portlet light bordered" style="margin-bottom:10px">
+								<div class="row static-info">
+									<div class="col-md-12 text-justify">{{$result['campaign_description']}}</div>
+								</div>
+							</div>
+							@endif
 						@endif
 						<div class="row static-info">
 							<div class="col-md-11 value">
