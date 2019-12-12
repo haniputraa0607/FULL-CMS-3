@@ -598,64 +598,9 @@
 							<i class="icon-settings font-blue "></i>
 							<span class="caption-subject bold uppercase">Recipient</span>
 						</div>
-					</div>
-					<div class="portlet-body">
-						<div class="row">
-							@if(isset($result['users']) && $result['users'] != '')
-							<table class="table table-striped table-bordered table-hover" id="sample_1">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Phone</th>
-										<th>Gender</th>
-										<th>City</th>
-										<th>Birthday</th>
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th>No</th>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Phone</th>
-										<th>Gender</th>
-										<th>City</th>
-										<th>Birthday</th>
-									</tr>
-								</tfoot>
-								<tbody>
-									@foreach($result['users'] as $key => $user)
-									<tr>
-										<td>{{$key+1}}</td>
-										<td>{{$user['name']}}</td>
-										<td>{{$user['phone']}}</td>
-										<td>{{$user['email']}}</td>
-										<td>{{$user['gender']}}</td>
-										<td>{{$user['city_name']}}</td>
-										<td>{{$user['birthday']}}</td>
-									</tr>
-									<?php 
-									if(!empty($user['email'])) array_push($emails, $user['email']);
-									if(!empty($user['phone'])) array_push($phones, $user['phone']);
-									?>
-									@endforeach
-								</tbody>
-							</table>
-							@else
-								No User found with such conditions
-							@endif
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="portlet light bordered">
-					<div class="portlet-title">
-						<div class="caption font-blue ">
-							<i class="icon-settings font-blue "></i>
-							<span class="caption-subject bold uppercase">Recipient</span>
+						@if($result['campaign_generate_receipient']=='Now')
+						<div class="action-btn pull-right">
+							<a href="{{url('campaign/recipient/'.$result['id_campaign'])}}" target="_blank" class="btn yellow btn-sm btn-flat">See generated recipient</a>
 						</div>
 						@endif
 					</div>

@@ -1,6 +1,7 @@
 <?php
 use App\Lib\MyHelper;
 $configs = session('configs');
+$show=$show??false;
 ?>
 <script>
 	document.addEventListener("DOMContentLoaded", function(event) {
@@ -1045,7 +1046,7 @@ $configs = session('configs');
 		@if(!is_array($conditions) || count($conditions) <= 0)
 		<div class="actions">
 			<div class="btn-group">
-				<button class="btn btn-sm green collapser" type="button"> Upload CSV
+				<button class="btn btn-sm green collapser hidden" id="upload-csv-btn" type="button"> Upload CSV
 				</button>
 			</div>
 		</div>

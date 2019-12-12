@@ -1,6 +1,7 @@
 <?php
 use App\Lib\MyHelper;
 $configs = session('configs');
+$show=$show??false;
 ?>
 <script type="text/javascript">document.getElementById('upload-csv-btn').classList.remove('hidden')</script>
 <div id="csvFilter" class="collapse @if($show) show @endif">
