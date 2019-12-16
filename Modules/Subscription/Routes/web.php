@@ -19,4 +19,6 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 
     Route::any('step2/{id_subscription}', 'SubscriptionController@step2');
     Route::any('step3/{id_subscription}', 'SubscriptionController@step3');
     Route::any('detail/{id_subscription}', 'SubscriptionController@detail');
+    Route::any('detail/{id_subscription}/{subs_receipt}', 'SubscriptionController@transaction');
+    Route::any('participate-ajax', 'SubscriptionController@participateAjax');
 });
