@@ -535,6 +535,10 @@ $configs = session('configs');
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
                     <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data" id="form">
+                        <div class="col-md-12">
+                            <div class="row static-info"><span style="font-weight: bold;">Status</span> :&nbsp;&nbsp;{{ $subscription['subscription_status'] }}
+                            </div>
+                        </div>
                         <div class="form-body">
                             <ul class="nav nav-tabs" id="tab-header">
                                 <li class="active" id="infoOutlet">
