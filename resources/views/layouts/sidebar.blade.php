@@ -698,6 +698,22 @@
 					<i class="fa fa-tag"></i>
 					<span class="title">Outlet Product Price</span>
 				</a>
+			</li>
+			@endif
+
+			@if(MyHelper::hasAccess([197,198], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'default-max-order') ? 'active' : ''}}">
+				<a href="{{url('outlet/max-order')}}" class="nav-link nav-toggle">
+					<i class="fa fa-shopping-cart"></i>
+					<span class="title">Default Maximum Order</span>
+				</a>
+			</li>
+			<li class="nav-item {{($menu_active == 'max-order') ? 'active' : ''}}">
+				<a href="{{url('outlet/max-order')}}" class="nav-link nav-toggle">
+					<i class="fa fa-shopping-cart"></i>
+					<span class="title">Outlet Maximum Order</span>
+				</a>
+			</li>
 			@endif
 
 			@if(MyHelper::hasAccess([17], $configs))
