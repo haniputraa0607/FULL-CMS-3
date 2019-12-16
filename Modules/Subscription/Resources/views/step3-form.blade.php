@@ -13,7 +13,7 @@ $configs = session('configs');
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="subscription_description" id="field_content_long" class="form-control summernote" placeholder="Subscription Description">{{ $subscription['subscription_description']??old('subscription_description') }}</textarea>
+                                <textarea name="subscription_description" id="field_content_long" class="form-control summernote" placeholder="Subscription Description">{{ old('subscription_description')??$subscription['subscription_description']??'' }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@ $configs = session('configs');
                                             <div class="col-md-3">
                                                     <input type="checkbox" class="make-switch visibility-switch" {{ isset($subscription['subscription_content'][1]['is_active']) ? 'checked' : '' }} data-on="success" data-on-color="success" data-on-text="Visible" data-off-text="Hidden" data-size="normal" name="visible[2][]">
                                             </div>
-                                            <div class="col-md-12 accordion-body collapse {{ empty($subscription['subscription_content'][0]['subscription_content_details']) ? 'in' : '' }}" id="collapse_2">
+                                            <div class="col-md-12 accordion-body collapse {{ empty($subscription['subscription_content'][1]['subscription_content_details']) ? 'in' : '' }}" id="collapse_2">
                                                 <div class="form-group mt-repeater">
                                                     <div>
                                                         <div id="contentDetail2" class="sortable-detail-2">

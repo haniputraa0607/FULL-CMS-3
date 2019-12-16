@@ -15,24 +15,73 @@ $configs = session('configs');
                             <div class="input-icon right">
                                 <div class="col-md-3">
                                     <select class="form-control" name="prices_by" required>
-                                        <option value="" disabled @if (old('prices_by') == "" || (empty($subscription['is_free']) || empty($subscription['subscription_price_point']) || empty($subscription['subscription_price_cash']) ) ) selected @endif>Select Price</option>
-                                        <option value="free" @if (old('prices_by') == "free" || !empty($subscription['is_free']) ) selected @endif>Free</option>
+                                        <option value="" disabled 
+                                                @if ( old('prices_by')) 
+                                                    @if ( old('prices_by')== "" ) 
+                                                        selected 
+                                                    @endif
+                                                @elseif ( empty($subscription['is_free']) && empty($subscription['subscription_price_point']) && empty($subscription['subscription_price_cash']) ) ) 
+                                                    selected 
+                                                @endif>Select Price</option>
+                                        <option value="free" 
+                                                @if ( old('prices_by')) 
+                                                    @if ( old('prices_by')== "free" ) 
+                                                        selected 
+                                                    @endif
+                                                @elseif ( !empty($subscription['is_free']) ) 
+                                                    selected 
+                                                @endif>Free</option>
                                         @if(MyHelper::hasAccess([19], $configs))
-                                        <option value="point" @if (old('prices_by') == "point" || !empty($subscription['subscription_price_point']) ) selected @endif>Point</option>
+                                        <option value="point" 
+                                                @if ( old('prices_by')) 
+                                                    @if ( old('prices_by')== "point" ) 
+                                                        selected 
+                                                    @endif
+                                                @elseif ( !empty($subscription['subscription_price_point']) ) 
+                                                    selected 
+                                                @endif>Point</option>
                                         @endif
-                                        <option value="money" @if (old('prices_by') == "money" || !empty($subscription['subscription_price_cash']) ) selected @endif>Money</option>
+                                        <option value="money" 
+                                                @if ( old('prices_by')) 
+                                                    @if ( old('prices_by')== "money" ) 
+                                                        selected 
+                                                    @endif
+                                                @elseif ( !empty($subscription['subscription_price_cash']) ) 
+                                                    selected 
+                                                @endif>Money</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="" id="prices" @if (old('prices_by')!='free' || !empty($subscription['subscription_price_cash']) || !empty($subscription['subscription_price_point']) ) style="display: block;" @elseif ((empty($subscription['subscription_price_cash']) && empty($subscription['subscription_price_point'])) ) style="display: none;" @else style="display: none;" @endif>
+                                    <div class="" id="prices" 
+                                    @if ( old('prices_by')) 
+                                        @if ( old('prices_by') == "") 
+                                            style="display: none;" 
+                                        @endif
+                                    @elseif ( !empty($subscription['is_free']) ) 
+                                        style="display: none;" 
+                                    @endif>
                                         <div class="">
-                                            <div class=" payment" id="point"  @if (old('prices_by') != "money" || !empty($subscription['subscription_price_point'])) style="display: block;" @else style="display: none;" @endif>
+                                            <div class=" payment" id="point"
+                                                @if ( old('prices_by')) 
+                                                    @if ( old('prices_by') != "point") 
+                                                        style="display: none;" 
+                                                    @endif
+                                                @elseif ( empty($subscription['subscription_price_point']) ) 
+                                                    style="display: none;" 
+                                                @endif>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control point moneyOpp freeOpp digit_mask" name="subscription_price_point" value="{{ old('subscription_price_point')??$subscription['subscription_price_point']??'' }}" placeholder="Input point nominal" autocomplete="off">
                                                     <div class="input-group-addon">Point</div>
                                                 </div>
                                             </div>
-                                            <div class="payment" id="money" @if (old('prices_by') != "point" && !empty($subscription['subscription_price_cash'])) style="display: block;" @else style="display: none;" @endif>
+                                            <div class="payment" id="money" 
+                                                @if ( old('prices_by')) 
+                                                    @if ( old('prices_by') != "money") 
+                                                        style="display: none;" 
+                                                    @endif
+                                                @elseif ( empty($subscription['subscription_price_cash']) ) 
+                                                    style="display: none;" 
+                                                @endif>
                                                 <div class="input-group">
                                                     <div class="input-group-addon">IDR</div>
                                                     <input type="text" class="form-control money pointOpp freeOpp price" name="subscription_price_cash" value="{{ old('subscription_price_cash')??$subscription['subscription_price_cash']??'' }}" placeholder="Input money nominal" autocomplete="off">
@@ -137,13 +186,41 @@ $configs = session('configs');
                             <div class="input-icon right">
                                 <div class="col-md-3">
                                     <select class="form-control" name="subscription_total_type" required>
-                                        <option value="" disabled @if (old('subscription_total_type') == "" || empty($subscription['subscription_total'])) selected @endif>Select Total</option>
-                                        <option value="limited" @if (old('subscription_total_type') == "limited" || !empty($subscription['subscription_total']) ) selected @endif>Limited</option>
-                                        <option value="unlimited" @if (old('subscription_total_type') == "unlimited" || ( isset($subscription['subscription_total']) && $subscription['subscription_total'] == 0 && old('subscription_total_type') != "limited") ) selected @endif>Unlimited</option>
+                                        <option value="" disabled 
+                                            @if ( old('subscription_total_type')) 
+                                                @if ( old('subscription_total_type')== "" ) 
+                                                    selected 
+                                                @endif
+                                            @elseif ( empty($subscription['subscription_total']) ) 
+                                                selected 
+                                            @endif>Select Total</option>
+                                        <option value="limited" 
+                                            @if ( old('subscription_total_type')) 
+                                                @if ( old('subscription_total_type')== "limited" ) 
+                                                    selected 
+                                                @endif
+                                            @elseif ( !empty($subscription['subscription_total']) ) 
+                                                selected 
+                                            @endif>Limited</option>
+                                        <option value="unlimited" 
+                                            @if ( old('subscription_total_type')) 
+                                                @if ( old('subscription_total_type')== "unlimited" ) 
+                                                    selected 
+                                                @endif
+                                            @elseif ( isset($subscription['subscription_total']) && $subscription['subscription_total'] == 0 ) 
+                                                selected 
+                                            @endif>Unlimited</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="" id="subscription-total-form" @if( old('subscription_total_type') != 'unlimited' && !empty($subscription['subscription_total']) ) style="display: block;" @else style="display: none;" @endif>
+                                    <div class="" id="subscription-total-form"                                         
+                                        @if ( old('subscription_total_type')) 
+                                            @if ( old('subscription_total_type') != "limited") 
+                                                style="display: none;" 
+                                            @endif
+                                        @elseif ( empty($subscription['subscription_total']) )
+                                            style="display: none;" 
+                                        @endif>
                                         <div class="" id="subscription-total-value">
                                             <div class="input-group">
                                                 <input type="text" class="form-control digit_mask" name="subscription_total" value="{{ old('subscription_total')??$subscription['subscription_total']??'' }}" placeholder="Input subscription total" autocomplete="off">
@@ -212,15 +289,50 @@ $configs = session('configs');
                             <div class="input-icon right">
                                 <div class="col-md-3">
                                     <select class="form-control" name="duration" required>
-                                        <option value="" disabled @if (old('duration') == "" || (empty($subscription['subscription_voucher_expired']) && empty($subscription['subscription_voucher_duration']) ) ) selected @endif>Select Expiry</option>
-                                        <option value="dates" @if (old('duration') == "dates" || !empty($subscription['subscription_voucher_expired']) && old('duration') != "duration") selected @endif>By Date</option>
-                                        <option value="duration" @if (old('duration') == "duration" || !empty($subscription['subscription_voucher_duration']) && old('duration') != "dates") selected @endif>Duration</option>
+                                        <option value="" disabled 
+                                            @if ( old('duration')) 
+                                                @if ( old('duration')== "" ) 
+                                                    selected 
+                                                @endif
+                                            @elseif ( empty($subscription['subscription_voucher_expired']) && empty($subscription['subscription_voucher_duration']) ) 
+                                                selected 
+                                            @endif>Select Expiry</option>
+                                        <option value="dates" 
+                                            @if ( old('duration')) 
+                                                @if ( old('duration')== "dates" ) 
+                                                    selected 
+                                                @endif
+                                            @elseif ( !empty($subscription['subscription_voucher_expired']) ) 
+                                                selected 
+                                            @endif>By Date</option>
+                                        <option value="duration" 
+                                            @if ( old('duration')) 
+                                                @if ( old('duration')== "duration" ) 
+                                                    selected 
+                                                @endif
+                                            @elseif ( !empty($subscription['subscription_voucher_duration']) ) 
+                                                selected 
+                                            @endif>Duration</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="" id="times" @if ( empty($subscription['subscription_voucher_expired']) && empty($subscription['subscription_voucher_duration']) && old('duration')!='dates' && old('duration')!='duration') style="display: none;" @endif>
+                                    <div class="" id="times" 
+                                        @if ( old('duration')) 
+                                            @if ( old('duration') == "" ) 
+                                                style="display: none;"
+                                            @endif
+                                        @elseif ( empty($subscription['subscription_voucher_expired']) && empty($subscription['subscription_voucher_duration']) ) 
+                                            style="display: none;"
+                                        @endif>
                                         <div class="">
-                                            <div class="voucherTime" id="dates"  @if (!empty($subscription['subscription_voucher_expired']) && old('duration')=='duration') style="display: block;" @else style="display: none;" @endif>
+                                            <div class="voucherTime" id="dates"
+                                                @if ( old('duration')) 
+                                                    @if ( old('duration') != "dates" ) 
+                                                        style="display: none;"
+                                                    @endif
+                                                @elseif ( empty($subscription['subscription_voucher_expired']) ) 
+                                                    style="display: none;"
+                                                @endif>
                                                 <div class="input-group">
                                                     <input type="text" class="form_datetime form-control dates durationOpp" name="subscription_voucher_expired" value="{{ old('subscription_voucher_expired') ? old('subscription_voucher_expired') : ((!empty($subscription['subscription_voucher_expired'])??false) ? date('d-M-Y H:i', strtotime($subscription['subscription_voucher_expired'])) : '') }}" autocomplete="off">
                                                     <span class="input-group-btn">
@@ -230,14 +342,20 @@ $configs = session('configs');
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="voucherTime" id="duration" @if (!empty($subscription['subscription_voucher_duration']) && old('duration')=='dates' ) style="display: block;" @else style="display: none;" @endif>
+                                            <div class="voucherTime" id="duration" 
+                                                @if ( old('duration')) 
+                                                    @if ( old('duration') != "duration" ) 
+                                                        style="display: none;"
+                                                    @endif
+                                                @elseif ( empty($subscription['subscription_voucher_duration']) ) 
+                                                    style="display: none;"
+                                                @endif>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control duration datesOpp digit_mask_min_1" name="subscription_voucher_duration" value="{{ old('subscription_voucher_duration')??$subscription['subscription_voucher_duration']??'' }}" autocomplete="off">
                                                     <span class="input-group-addon">
                                                         day after claimed
                                                     </span>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -278,21 +396,63 @@ $configs = session('configs');
                             <div class="input-icon right">
                                 <div class="col-md-3">
                                     <select class="form-control" name="voucher_type" required>
-                                        <option value="" disabled @if (old('voucher_type') == "" || (empty($subscription['subscription_voucher_percent']) && empty($subscription['subscription_voucher_nominal']) ) ) selected @endif>Select Type</option>
-                                        <option value="percent" @if (old('voucher_type') == "percent" || !empty($subscription['subscription_voucher_percent']) ) selected @endif>Percent</option>
-                                        <option value="cash" @if (old('voucher_type') == "cash" || !empty($subscription['subscription_voucher_nominal']) ) selected @endif>Nominal</option>
+                                        <option value="" disabled 
+                                            @if ( old('voucher_type')) 
+                                                @if ( old('voucher_type') == "" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( empty($subscription['subscription_voucher_percent']) && empty($subscription['subscription_voucher_nominal']) ) 
+                                                selected
+                                            @endif>Select Type</option>
+                                        <option value="percent" 
+                                            @if ( old('voucher_type')) 
+                                                @if ( old('voucher_type') == "percent" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( !empty($subscription['subscription_voucher_percent']) ) 
+                                                selected
+                                            @endif>Percent</option>
+                                        <option value="cash" 
+                                            @if ( old('voucher_type')) 
+                                                @if ( old('voucher_type') == "cash" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( !empty($subscription['subscription_voucher_nominal']) ) 
+                                                selected
+                                            @endif>Nominal</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="" id="voucher-value" @if( empty($subscription['subscription_voucher_percent']) && empty($subscription['subscription_voucher_nominal']) && old('voucher_type') != 'percent' && old('voucher_type') != 'cash' ) style="display: none;" @endif>
+                                    <div class="" id="voucher-value" 
+                                        @if ( old('voucher_type')) 
+                                            @if ( old('voucher_type') == "" ) 
+                                                style="display: none;"
+                                            @endif
+                                        @elseif ( empty($subscription['subscription_voucher_percent']) && empty($subscription['subscription_voucher_nominal']) ) 
+                                            style="display: none;"
+                                        @endif>
                                         <div class="">
-                                            <div class="col-md-4" id="voucher-percent" @if( !empty($subscription['subscription_voucher_percent']) && old('voucher_type') != 'cash')  style="display: block; padding-left: 0px" @else style="display: none; padding-left: 0px;" @endif style="padding-left: 0px;" >
+                                            <div class="col-md-4" id="voucher-percent" 
+                                                @if ( old('voucher_type')) 
+                                                    @if ( old('voucher_type') != "percent" ) 
+                                                        style="display: none; padding-left: 0px;"
+                                                    @endif
+                                                @elseif ( empty($subscription['subscription_voucher_percent']) ) 
+                                                    style="display: none; padding-left: 0px;"
+                                                @endif style="padding-left: 0px;" >
                                                 <div class="input-group">
                                                     <input type="text" class="form-control percent_mask " name="subscription_voucher_percent" value="{{ old('subscription_voucher_percent')??$subscription['subscription_voucher_percent']??'' }}" placeholder="Input Percent value" autocomplete="off">
                                                     <div class="input-group-addon">%</div>
                                                 </div>
                                             </div>
-                                            <div class="" id="voucher-cash" @if( !empty($subscription['subscription_voucher_nominal']) && old('voucher_type') != 'percent')  style="display: block;" @else style="display: none;" @endif>
+                                            <div class="" id="voucher-cash" 
+                                                @if ( old('voucher_type')) 
+                                                    @if ( old('voucher_type') != "cash" ) 
+                                                        style="display: none;"
+                                                    @endif
+                                                @elseif ( empty($subscription['subscription_voucher_nominal']) ) 
+                                                    style="display: none;"
+                                                @endif>
                                                 <div class="input-group">
                                                     <div class="input-group-addon">IDR</div>
                                                     <input type="text" class="form-control digit_mask" name="subscription_voucher_nominal" value="{{ old('subscription_voucher_nominal')??$subscription['subscription_voucher_nominal']??'' }}" placeholder="Input Cash nominal" autocomplete="off">
@@ -306,7 +466,14 @@ $configs = session('configs');
                     </div>
 
 
-                    <div class="form-group" id="discount-max" @if( !empty($subscription['subscription_voucher_percent']) && old('voucher_type') != 'cash' ) style="display: block;" @else style="display: none;" @endif>
+                    <div class="form-group" id="discount-max" 
+                        @if ( old('voucher_type')) 
+                            @if ( old('voucher_type') != "percent" ) 
+                                style="display: none;"
+                            @endif
+                        @elseif ( empty($subscription['subscription_voucher_percent']) ) 
+                            style="display: none;"
+                        @endif>
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Discount Max
@@ -318,12 +485,33 @@ $configs = session('configs');
                             <div class="input-icon right">
                                 <div class="col-md-3">
                                     <select class="form-control" name="percent_max" required>
-                                        <option value="true" @if (old('percent_max') == "true" || !empty($subscription['subscription_voucher_percent_max']) ) selected @endif>Yes</option>
-                                        <option value="false" @if (old('percent_max') == "false" || empty($subscription['subscription_voucher_percent_max']) ) selected @endif>No</option>
+                                        <option value="true" 
+                                            @if ( old('percent_max')) 
+                                                @if ( old('percent_max') == "true" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( !empty($subscription['subscription_voucher_percent_max']) ) 
+                                                selected
+                                            @endif>Yes</option>
+                                        <option value="false" 
+                                            @if ( old('percent_max')) 
+                                                @if ( old('percent_max') == "false" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( empty($subscription['subscription_voucher_percent_max']) ) 
+                                                selected
+                                            @endif>No</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="" id="discount-max-form" @if( !empty($subscription['subscription_voucher_percent_max']) && old('percent_max') !='true' )  style="display: block;" @else style="display: none;" @endif>
+                                    <div class="" id="discount-max-form" 
+                                        @if ( old('percent_max')) 
+                                            @if ( old('percent_max') != "true" ) 
+                                                style="display: none;"
+                                            @endif
+                                        @elseif ( empty($subscription['subscription_voucher_percent_max']) ) 
+                                            style="display: none;"
+                                        @endif>
                                         <div class="">
                                             <div class="" id="discount-max-value">
                                                 <div class="input-group">
@@ -386,9 +574,30 @@ $configs = session('configs');
                             <div class="input-icon right">
                                 <div class="col-md-3">
                                     <select class="form-control" name="purchase_limit" required>
-                                        <option value="" disabled @if (old('purchase_limit') == "" || empty($subscription['new_purchase_after'])) selected @endif>Select Type</option>
-                                        <option value="limit" @if (old('purchase_limit') == "limit" || (!empty($subscription['new_purchase_after']) && $subscription['new_purchase_after'] != 'No Limit') ) selected @endif>Limit</option>
-                                        <option value="no_limit" @if (old('purchase_limit') == "no_limit" || (!empty($subscription['new_purchase_after']) && $subscription['new_purchase_after'] == 'No Limit') ) selected @endif>No Limit</option>
+                                        <option value="" disabled 
+                                            @if ( old('purchase_limit')) 
+                                                @if ( old('purchase_limit') == "" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( empty($subscription['new_purchase_after']) ) 
+                                                selected
+                                            @endif>Select Type</option>
+                                        <option value="limit" 
+                                            @if ( old('purchase_limit')) 
+                                                @if ( old('purchase_limit') == "limit" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( !empty($subscription['new_purchase_after']) && $subscription['new_purchase_after'] != 'No Limit') ) 
+                                                selected
+                                            @endif>Limit</option>
+                                        <option value="no_limit" 
+                                            @if ( old('purchase_limit')) 
+                                                @if ( old('purchase_limit') == "no_limit" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( !empty($subscription['new_purchase_after']) && $subscription['new_purchase_after'] == 'No Limit') ) 
+                                                selected
+                                            @endif>No Limit</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -397,7 +606,14 @@ $configs = session('configs');
                         </div>
                     </div>
 
-                    <div class="form-group" id="new-purchase-after" @if( !empty($subscription['new_purchase_after']) && $subscription['new_purchase_after'] != 'No Limit' && old('purchase_limit') != 'limit' )  style="display: block;" @else style="display: none;" @endif>
+                    <div class="form-group" id="new-purchase-after" 
+                        @if ( old('purchase_limit')) 
+                            @if ( old('purchase_limit') != "limit" ) 
+                                style="display: none;"
+                            @endif
+                        @elseif ( empty($subscription['new_purchase_after']) || (!empty($subscription['new_purchase_after']) && $subscription['new_purchase_after'] == 'No Limit') )
+                            style="display: none;"
+                        @endif>
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             New Purchase After
@@ -409,10 +625,38 @@ $configs = session('configs');
                             <div class="input-icon right">
                                 <div class="col-md-3">
                                     <select class="form-control" name="new_purchase_after" @if( ($subscription['new_purchase_after']??'No Limit') != 'No Limit') required @endif>
-                                        <option value="" disabled @if (old('new_purchase_after') == "" || empty($subscription['new_purchase_after'])) selected @endif>Select Type</option>
-                                        <option value="Empty" @if (old('new_purchase_after') == "Empty" || (($subscription['new_purchase_after']??'') == 'Empty') ) selected @endif>Empty</option>
-                                        <option value="expired" @if (old('new_purchase_after') == "expired" || (($subscription['new_purchase_after']??'') == 'Expired') ) selected @endif>Expired</option>
-                                        <option value="Empty Expired" @if (old('new_purchase_after') == "Empty Expired" || (($subscription['new_purchase_after']??'') == 'Empty Expired') ) selected @endif>Empty/Expired</option>
+                                        <option value="" disabled 
+                                            @if ( old('new_purchase_after')) 
+                                                @if ( old('new_purchase_after') == "" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( empty($subscription['new_purchase_after']) ) 
+                                                selected
+                                            @endif>Select Type</option>
+                                        <option value="Empty" 
+                                            @if ( old('new_purchase_after')) 
+                                                @if ( old('new_purchase_after') == "Empty" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( ($subscription['new_purchase_after']??'') == 'Empty') ) 
+                                                selected
+                                            @endif>Empty</option>
+                                        <option value="Expired" 
+                                            @if ( old('new_purchase_after')) 
+                                                @if ( old('new_purchase_after') == "Expired" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( ($subscription['new_purchase_after']??'') == 'Expired') ) 
+                                                selected
+                                            @endif>Expired</option>
+                                        <option value="Empty Expired" 
+                                            @if ( old('new_purchase_after')) 
+                                                @if ( old('new_purchase_after') == "Empty Expired" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( ($subscription['new_purchase_after']??'') == 'Empty Expired') ) 
+                                                selected
+                                            @endif>Empty/Expired</option>
                                     </select>
                                 </div>
                             </div>

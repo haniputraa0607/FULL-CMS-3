@@ -180,7 +180,6 @@ class SubscriptionController extends Controller
         $post = $request->except('_token');
 
         if (!empty($post)) {
-return $post;
             $save = MyHelper::post('subscription/step2', $post);
             // return $save;
             if ( ($save['status']??false) == "success") {
@@ -265,7 +264,6 @@ return $post;
         $post = $request->except('_token');
         if (!empty($post)) {
 
-            // return $post;
             $post['subscription_start']         = $this->changeDateFormat($post['subscription_start']??null);
             $post['subscription_end']           = $this->changeDateFormat($post['subscription_end']??null);
             $post['subscription_publish_start'] = $this->changeDateFormat($post['subscription_publish_start']??null);
@@ -273,12 +271,11 @@ return $post;
             if (isset($post['subscription_image'])) {
                 $post['subscription_image']         = MyHelper::encodeImage($post['subscription_image']);
             }
-// return $post;
-return back()->withInput();
+
             $save = MyHelper::post('subscription/updateDetail', $post);
-            // return $save;
+
             if ( ($save['status']??false) == "success") {
-                return redirect('subscription/step2/'.$save['result']['id_subscription'])->with('success', ['Subscription has been created']);
+                return redirect('subscription/detail/'.$id_subscription)->with('success', ['Subscription has been updated']);
             }else{
                 return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
             }

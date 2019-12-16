@@ -368,6 +368,11 @@ $configs = session('configs');
                 connectWith: '.sortable-detail-1',
                 axis: 'y'
             });
+            $('.sortable-detail-2').sortable({
+                handle: '.sortable-detail-handle-2',
+                connectWith: '.sortable-detail-2',
+                axis: 'y'
+            });
 
             $('.digit_mask').inputmask({
                 removeMaskOnSubmit: true, 
@@ -416,6 +421,22 @@ $configs = session('configs');
             });
         });
     </script>
+@if( isset($subscription['subscription_content']) )
+    @foreach($subscription['subscription_content'] as $key => $val)
+        @if($key > 1)
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.sortable-detail-<?php echo $key+1 ?>').sortable({
+                handle: '.sortable-detail-handle-<?php echo $key+1 ?>',
+                connectWith: '.sortable-detail-<?php echo $key+1 ?>',
+                axis: 'y'
+            });
+        });
+    </script>
+        @endif
+    @endforeach
+@endif
+
     @yield('child-script')
 @endsection
 
@@ -527,13 +548,13 @@ $configs = session('configs');
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane " id="step1">
+                                <div class="tab-pane active" id="step1">
                                     @yield('step1')
                                 </div>
-                                <div class="tab-pane active" id="step2">
+                                <div class="tab-pane " id="step2">
                                     @yield('step2')
                                 </div>
-                                <div class="tab-pane" id="step3">
+                                <div class="tab-pane " id="step3">
                                     @yield('step3')
                                 </div>
                             </div>
