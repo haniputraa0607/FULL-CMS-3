@@ -8,13 +8,12 @@ $configs = session('configs');
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Description
-                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang subscription yang dibuat" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="subscription_description" id="field_content_long" class="form-control summernote" placeholder="Subscription Description">{{ $subscription['subscription_description']??old('subscription_description') }}</textarea>
+                                <textarea name="subscription_description" id="field_content_long" class="form-control summernote" placeholder="Subscription Description">{{ old('subscription_description')??$subscription['subscription_description']??'' }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -23,7 +22,6 @@ $configs = session('configs');
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content
-                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Konten yang akan ditampilkan pada halaman detail subscription" data-container="body"></i>
                             </label>
                         </div>
@@ -46,7 +44,7 @@ $configs = session('configs');
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                    <input type="checkbox" class="make-switch visibility-switch" {{ empty($subscription['subscription_content'][0]['is_active']) ? 'checked' : '' }} data-on="success" data-on-color="success" data-on-text="Visible" data-off-text="Hidden" data-size="normal" name="visible[1][]">
+                                                    <input type="checkbox" class="make-switch visibility-switch" {{ isset($subscription['subscription_content'][0]['is_active']) ? 'checked' : '' }} data-on="success" data-on-color="success" data-on-text="Visible" data-off-text="Hidden" data-size="normal" name="visible[1][]">
                                             </div>
                                             <div class="col-md-12 accordion-body collapse {{ empty($subscription['subscription_content'][0]['subscription_content_details']) ? 'in' : '' }}" id="collapse_1">
                                                 <div class="form-group mt-repeater">
@@ -102,9 +100,9 @@ $configs = session('configs');
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                    <input type="checkbox" class="make-switch visibility-switch" {{ empty($subscription['subscription_content'][1]['is_active']) ? 'checked' : '' }} data-on="success" data-on-color="success" data-on-text="Visible" data-off-text="Hidden" data-size="normal" name="visible[2][]">
+                                                    <input type="checkbox" class="make-switch visibility-switch" {{ isset($subscription['subscription_content'][1]['is_active']) ? 'checked' : '' }} data-on="success" data-on-color="success" data-on-text="Visible" data-off-text="Hidden" data-size="normal" name="visible[2][]">
                                             </div>
-                                            <div class="col-md-12 accordion-body collapse {{ empty($subscription['subscription_content'][0]['subscription_content_details']) ? 'in' : '' }}" id="collapse_2">
+                                            <div class="col-md-12 accordion-body collapse {{ empty($subscription['subscription_content'][1]['subscription_content_details']) ? 'in' : '' }}" id="collapse_2">
                                                 <div class="form-group mt-repeater">
                                                     <div>
                                                         <div id="contentDetail2" class="sortable-detail-2">
