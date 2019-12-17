@@ -538,6 +538,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([92], $configs))
+					<li class="nav-item {{($submenu_active == 'transaction-advance order') ? 'active open' : ''}}">
+						<a href="{{url('transaction/advance order/'.date('YmdHis'))}}" class="nav-link ">
+							<span class="title">Advance Order</span>
+						</a>
+					</li>
+					@endif
 					@if(MyHelper::hasAccess([12, 13], $configs))
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-success')}}" class="nav-link ">
