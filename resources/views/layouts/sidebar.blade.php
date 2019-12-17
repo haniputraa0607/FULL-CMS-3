@@ -815,6 +815,28 @@
 								</li>
 								@endif
 							@endif
+							@if(MyHelper::hasAccess([49], $configs))
+								@if(MyHelper::hasAccess([95], $grantedFeature))
+									<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-free-deals-success') ? 'active open' : ''}}">
+										<a href="{{url('transaction/autoresponse/claim-free-deals-success')}}" class="nav-link ">
+											<i class="fa fa-mail-forward"></i>
+											<span class="title">[Response] Claim Free Deals Success</span>
+										</a>
+									</li>
+									<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-paid-deals-success') ? 'active open' : ''}}">
+										<a href="{{url('transaction/autoresponse/claim-paid-deals-success')}}" class="nav-link ">
+											<i class="fa fa-mail-forward"></i>
+											<span class="title">[Response] Claim Paid Deals Success</span>
+										</a>
+									</li>
+									<li class="nav-item {{($submenu_active == 'deals-autoresponse-redeem-deals-success') ? 'active open' : ''}}">
+										<a href="{{url('transaction/autoresponse/redeem-voucher-success')}}" class="nav-link ">
+											<i class="fa fa-mail-forward"></i>
+											<span class="title">[Response] Redeems Deals</span>
+										</a>
+									</li>
+								@endif
+							@endif
 						</ul>
 					</li>
 					@endif
@@ -871,6 +893,16 @@
 								</a>
 							</li>
 							@endif
+							@if(MyHelper::hasAccess([49], $configs))
+								@if(MyHelper::hasAccess([95], $grantedFeature))
+									<li class="nav-item {{($submenu_active == 'deals-autoresponse-receive-inject-voucher') ? 'active open' : ''}}">
+										<a href="{{url('transaction/autoresponse/receive-inject-voucher')}}" class="nav-link ">
+											<i class="fa fa-mail-forward"></i>
+											<span class="title">[Response] Receive Inject Voucher</span>
+										</a>
+									</li>
+								@endif
+							@endif
 						</ul>
 					</li>
 					@endif
@@ -924,32 +956,31 @@
 			</li>
 			@endif
 
-			@if(MyHelper::hasAccess([49], $configs))
-				@if(MyHelper::hasAccess([95], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-free-deals-success') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/claim-free-deals-success')}}" class="nav-link ">
-							<i class="fa fa-mail-forward"></i>
-							<span class="title">[Response] Claim Free Deals Success</span>
-						</a>
-					</li>
-					<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-paid-deals-success') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/claim-paid-deals-success')}}" class="nav-link ">
-							<i class="fa fa-mail-forward"></i>
-							<span class="title">[Response] Claim Paid Deals Success</span>
-						</a>
-					</li>
-					<li class="nav-item {{($submenu_active == 'deals-autoresponse-redeem-deals-success') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/redeem-voucher-success')}}" class="nav-link ">
-							<i class="fa fa-mail-forward"></i>
-							<span class="title">[Response] Redeems Deals</span>
-						</a>
-					</li>
-					<li class="nav-item {{($submenu_active == 'deals-autoresponse-receive-inject-voucher') ? 'active open' : ''}}">
-						<a href="{{url('transaction/autoresponse/receive-inject-voucher')}}" class="nav-link ">
-							<i class="fa fa-mail-forward"></i>
-							<span class="title">[Response] Receive Inject Voucher</span>
-						</a>
-					</li>
+			@if(MyHelper::hasAccess([92], $configs))
+				@if(MyHelper::hasAccess([197,198,199,200,201], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'promo-campaign') ? 'active open' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-tag"></i>
+						<span class="title">Promo Campaign</span>
+						<span class="arrow {{($menu_active == 'promo-campaign') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([199], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'promo-campaign-create') ? 'active open' : ''}}">
+							<a href="{{url('promo-campaign/create')}}" class="nav-link ">
+								<span class="title">New Promo Campaign</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([197], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'promo-campaign-list') ? 'active open' : ''}}">
+							<a href="{{url('promo-campaign')}}" class="nav-link ">
+								<span class="title">Promo Campaign List</span>
+							</a>
+						</li>
+						@endif
+					</ul>
+				</li>
 				@endif
 			@endif
 
