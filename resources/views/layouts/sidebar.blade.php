@@ -703,7 +703,7 @@
 
 			@if(MyHelper::hasAccess([197,198], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'default-max-order') ? 'active' : ''}}">
-				<a href="{{url('outlet/max-order')}}" class="nav-link nav-toggle">
+				<a href="{{url('setting/max_order')}}" class="nav-link nav-toggle">
 					<i class="fa fa-shopping-cart"></i>
 					<span class="title">Default Maximum Order</span>
 				</a>

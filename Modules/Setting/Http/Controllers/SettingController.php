@@ -131,6 +131,13 @@ class SettingController extends Controller
             $sub = 'point-reset';
             $active = 'point-reset';
             $subTitle = 'Point Reset';
+        } elseif ($key == 'max_order') {
+            $span = 'item';
+            $colInput = 3;
+            $colLabel = 3;
+            $sub = 'default-max-order';
+            $active = 'default-max-order';
+            $subTitle = 'Default Max Order';
         } elseif ($key == 'balance_reset') {
             $sub = 'balance-reset';
             $active = 'balance-reset';
@@ -142,6 +149,7 @@ class SettingController extends Controller
             'menu_active'    => $active,
             'submenu_active' => $sub,
             'sub_title'       => $subTitle,
+            'subTitle'       => $subTitle,
             'label'          => $label,
             'colLabel'       => $colLabel,
             'colInput'       => $colInput
