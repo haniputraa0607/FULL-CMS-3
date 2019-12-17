@@ -142,6 +142,12 @@ class SettingController extends Controller
             $sub = 'balance-reset';
             $active = 'balance-reset';
             $subTitle = env('POINT_NAME', 'Points').' Reset';
+        } elseif ($key == 'default_outlet') {
+            $sub = 'default-outlet';
+            $active = 'outlet';
+            $subTitle = 'Default Outlet';
+            $colInput = 4;
+            $colLabel = 3;
         }
 
         $data = [
@@ -171,6 +177,13 @@ class SettingController extends Controller
                 // return view('setting::point-reset', $data)->withErrors($request['messages']);
             }
 
+        } elseif ($key == 'default_outlet') {
+            $data['outlets'] = MyHelper::get('outlet/list')['result']??[];
+            $result = MyHelper::post('setting', ['key' => $key])['result']??false;
+            $data['id'] = $result['id_setting'];
+            $data['value'] = $result['value'];
+            $data['key'] = 'value';
+            return view('setting::default_outlet', $data);
         }else{
             $request = MyHelper::post('setting', ['key' => $key]);
 

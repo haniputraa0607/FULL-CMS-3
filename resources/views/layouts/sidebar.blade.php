@@ -332,6 +332,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([199], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'default-outlet') ? 'active open' : ''}}">
+						<a href="{{url('setting/default_outlet')}}" class="nav-link ">
+							<span class="title">Default Outlet</span>
+						</a>
+					</li>
+					@endif
 					@if(MyHelper::hasAccess([24], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'outlet-qrcode') ? 'active open' : ''}}">
 						<a href="{{url('outlet/qrcode')}}" class="nav-link ">
