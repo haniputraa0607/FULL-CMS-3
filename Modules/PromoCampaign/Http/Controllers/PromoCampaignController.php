@@ -235,4 +235,25 @@ class PromoCampaignController extends Controller
 
         return $action;
     }
+
+    public function delete(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $delete = MyHelper::post('promo-campaign/delete', $post);
+// return $delete;
+        if ( ($delete['status']??'')=='success' ) 
+        {
+            return redirect()->back()->withSuccess([$delete['status']]);
+        } 
+        elseif ( ($delete['status']??'')=='fail' ) 
+        {
+            return redirect()->back()->withErrors([$delete['messages']??$delete['status']]);
+        } 
+        else 
+        {
+            return redirect()->back()->withErrors(['Something went wrong']);
+        }
+    }
+
 }

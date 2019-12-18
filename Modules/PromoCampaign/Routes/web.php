@@ -24,6 +24,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:92'], 
     Route::get('step1/getTag', 'PromoCampaignController@getTag');
     Route::get('step1/check', 'PromoCampaignController@checkCode');
     Route::any('step2/getData', 'PromoCampaignController@getData');
+    Route::post('delete', 'PromoCampaignController@delete');
 
     Route::any('step1/{id_promo_campaign}', 'PromoCampaignController@step1');
     Route::any('step2/{id_promo_campaign}', 'PromoCampaignController@step2');
