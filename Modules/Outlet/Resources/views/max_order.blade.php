@@ -40,6 +40,18 @@
                     ['like','like']
                 ],
                 opsi:[]
+            },
+            max_order :{
+                display:'Maximum Order',
+                operator:[
+                    ['=','='],
+                    ['<','<'],
+                    ['>','>'],
+                    ['<=','<='],
+                    ['>=','>=']
+                ],
+                opsi:[],
+                type: 'number'
             }
         };
         $(document).ready(function() {
@@ -120,19 +132,27 @@
 	        			</tr>
 	        		</thead>
 	        		<tbody>
-	        			@foreach($data['products']['data']??[] as $product)
-	        			<tr>
-	        				<td width="1%">{{$start}}</td>
-	        				<td>{{$product['product_code']}} - {{$product['product_name']}}</td>
-	        				<td width="200px">
-		        				<div class="input-group">
-	        						<input type="number" min="1" name="products[{{$product['id_product']}}]" class="form-control" value="{{$product['max_order']}}">
-									<div class="input-group-addon">Item</div>
-		        				</div>
-		        			</td>
-	        			</tr>
-	        			@php $start++ @endphp
-	        			@endforeach
+                        @if($data['products']['data']??[]){
+    	        			@foreach($data['products']['data']??[] as $product)
+    	        			<tr>
+    	        				<td width="1%">{{$start}}</td>
+    	        				<td>{{$product['product_code']}} - {{$product['product_name']}}</td>
+    	        				<td width="200px">
+    		        				<div class="input-group">
+    	        						<input type="number" min="1" name="products[{{$product['id_product']}}]" class="form-control" value="{{$product['max_order']}}">
+    									<div class="input-group-addon">Item</div>
+    		        				</div>
+    		        			</td>
+    	        			</tr>
+    	        			@php $start++ @endphp
+    	        			@endforeach
+                        @else
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <em class="text-muted">No product found</em>
+                                </td>
+                            </tr>
+                        @endif
 	        		</tbody>
 	        	</table>
 				<div class="form-actions">
