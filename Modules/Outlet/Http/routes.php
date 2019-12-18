@@ -22,6 +22,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::get('qrcode', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@qrcodeView']);
     Route::get('qrcode/print', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@qrcodePrint']);
 
+    Route::get('max-order/{outlet_code?}', ['middleware' => 'feature_control:197', 'uses' => 'OutletController@maxOrder']);
+    Route::post('max-order/{outlet_code}', ['middleware' => 'feature_control:198', 'uses' => 'OutletController@maxOrderUpdate']);
+
     // photo
     Route::post('photo/delete', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@deletePhoto']);
     Route::post('schedule/save', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@scheduleSave']);

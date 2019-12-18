@@ -332,6 +332,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([199], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'default-outlet') ? 'active open' : ''}}">
+						<a href="{{url('setting/default_outlet')}}" class="nav-link ">
+							<span class="title">Default Outlet</span>
+						</a>
+					</li>
+					@endif
 					@if(MyHelper::hasAccess([24], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'outlet-qrcode') ? 'active open' : ''}}">
 						<a href="{{url('outlet/qrcode')}}" class="nav-link ">
@@ -531,6 +538,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([92], $configs))
+					<li class="nav-item {{($submenu_active == 'transaction-advance order') ? 'active open' : ''}}">
+						<a href="{{url('transaction/advance order/'.date('YmdHis'))}}" class="nav-link ">
+							<span class="title">Advance Order</span>
+						</a>
+					</li>
+					@endif
 					@if(MyHelper::hasAccess([12, 13], $configs))
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-success')}}" class="nav-link ">
@@ -698,6 +712,22 @@
 					<i class="fa fa-tag"></i>
 					<span class="title">Outlet Product Price</span>
 				</a>
+			</li>
+			@endif
+
+			@if(MyHelper::hasAccess([197,198], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'default-max-order') ? 'active' : ''}}">
+				<a href="{{url('setting/max_order')}}" class="nav-link nav-toggle">
+					<i class="fa fa-shopping-cart"></i>
+					<span class="title">Default Maximum Order</span>
+				</a>
+			</li>
+			<li class="nav-item {{($menu_active == 'max-order') ? 'active' : ''}}">
+				<a href="{{url('outlet/max-order')}}" class="nav-link nav-toggle">
+					<i class="fa fa-shopping-cart"></i>
+					<span class="title">Outlet Maximum Order</span>
+				</a>
+			</li>
 			@endif
 
 			@if(MyHelper::hasAccess([17], $configs))
