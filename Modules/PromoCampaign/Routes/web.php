@@ -13,7 +13,12 @@
 
 Route::group(['middleware' => ['web', 'validate_session', 'config_control:92'], 'prefix' => 'promo-campaign'], function () {
     Route::any('/', 'PromoCampaignController@index');
+    Route::any('list', 'PromoCampaignController@index');
+    Route::any('list/filter', 'PromoCampaignController@index');
+    Route::get('step1', function(){ return redirect('promo-campaign');});
+    Route::get('step2', function(){ return redirect('promo-campaign');});
     Route::any('create', 'PromoCampaignController@step1');
+    Route::get('detail/{id_promo_campaign}', 'PromoCampaignController@detail');
     Route::get('getTag', 'PromoCampaignController@getTag');
     Route::get('check', 'PromoCampaignController@checkCode');
     Route::get('step1/getTag', 'PromoCampaignController@getTag');

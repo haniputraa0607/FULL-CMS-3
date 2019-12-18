@@ -47,13 +47,13 @@
 		<div class="col-md-3">\
 			<div class="col-md-6">\
 				<div class="form-group">\
-					<input type="text" class="form-control ::classMinQty:: text-center qty_mask" min="1" name="promo_rule[::n::][min_qty_requirement]" value="::min_qty::" required>\
+					<input type="text" class="form-control ::classMinQty:: text-center qty_mask" min="1" name="promo_rule[::n::][min_qty_requirement]" value="::min_qty::" required autocomplete="off">\
 				</div>\
 				<p class="text-danger help-block" style="padding-bottom:10px;margin-top:-10px">::error1::</p>\
 			</div>\
 			<div class="col-md-6">\
 				<div class="form-group">\
-					<input type="text" class="form-control ::classMaxQty:: text-center qty_mask" min="1" name="promo_rule[::n::][max_qty_requirement]" value="::max_qty::" required>\
+					<input type="text" class="form-control ::classMaxQty:: text-center qty_mask" min="1" name="promo_rule[::n::][max_qty_requirement]" value="::max_qty::" required autocomplete="off">\
 				</div>\
 				<p class="text-danger help-block" style="padding-bottom:10px;margin-top:-10px">::error2::</p>\
 			</div>\
@@ -74,19 +74,19 @@
 			<div class="col-md-3">\
 				<div class="form-group ::hide_qty::">\
 					<div class="input-group">\
-						<input type="text" class="form-control benefit_qty text-center digit_mask" min="0" name="promo_rule[::n::][benefit_qty]" value="::benefit_qty::" ::required_qty:: placeholder="Benefit Qty">\
+						<input type="text" class="form-control benefit_qty text-center digit_mask" min="0" name="promo_rule[::n::][benefit_qty]" value="::benefit_qty::" ::required_qty:: placeholder="Benefit Qty" autocomplete="off">\
 						<div class="input-group-addon">qty</div>\
 					</div>\
 				</div>\
 				<div class="form-group ::hide_nominal::">\
 					<div class="input-group">\
 						<div class="input-group-addon">IDR</div>\
-						<input type="text" class="form-control digit_mask text-center" min="0" name="promo_rule[::n::][discount_nominal]" value="::discount_nominal::" ::required_nominal:: placeholder="100000">\
+						<input type="text" class="form-control digit_mask text-center" min="0" name="promo_rule[::n::][discount_nominal]" value="::discount_nominal::" ::required_nominal:: placeholder="100000" autocomplete="off">\
 					</div>\
 				</div>\
 				<div class="form-group ::hide_percent::">\
 					<div class="input-group">\
-						<input type="number" class="form-control discount_value max100 benefit_percent text-center" min="0" max="100" name="promo_rule[::n::][discount_percent]" value="::discount_value::"" ::discount_prop:: ::required_percent:: style="padding-left: 7px;padding-right: 7px;text-align: center;" placeholder="50">\
+						<input type="number" class="form-control discount_value max100 benefit_percent text-center" min="0" max="100" name="promo_rule[::n::][discount_percent]" value="::discount_value::"" ::discount_prop:: ::required_percent:: style="padding-left: 7px;padding-right: 7px;text-align: center;" placeholder="50" autocomplete="off">\
 						<div class="input-group-addon">%</div>\
 					</div>\
 				</div>\

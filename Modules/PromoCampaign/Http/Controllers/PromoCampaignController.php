@@ -12,6 +12,120 @@ use Session;
 
 class PromoCampaignController extends Controller
 {
+    public function session_mixer($request, &$post,$sess='promo_campaign_filter')
+    {
+        $session = session($sess);
+        $session = is_array($session) ? $session : array();
+        $post = array_merge($session, $post);
+        session([$sess => $post]);
+    }
+
+    public function index(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if ($request->post('clear') == 'session') 
+        {
+            session(['promo_campaign_filter' => '']);
+        }
+
+        $this->session_mixer($request, $post);
+
+        $data = [
+            'title'             => 'Promo Campaign List',
+            'menu_active'       => 'promo-campaign',
+            'submenu_active'    => 'promo-campaign-list'
+        ];
+
+        if (empty($post)) 
+        {
+            $get_data = MyHelper::get('promo-campaign?promo_type='.$request->get('promo_type').'&page='.$request->get('page'));
+        }
+        else
+        {
+            if (isset($post['page'])) 
+            {
+                $get_data = MyHelper::post('promo-campaign/filter?page='.$post['page'], $post);
+            } 
+            else 
+            {
+                $get_data = MyHelper::post('promo-campaign/filter?page='.$request->get('page'), $post);
+            }
+        }
+
+        if ($request->get('status') != '') {
+            $url = url()->current().'?status='.$request->get('status');
+        } else {
+            $url = url()->current();
+        }
+
+        if(!empty($get_data) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
+            $data['promo']            = $get_data['result']['data'];
+            $data['promoTotal']       = $get_data['result']['total'];
+            $data['promoPerPage']     = $get_data['result']['from'];
+            $data['promoUpTo']        = $get_data['result']['from'] + count($get_data['result']['data'])-1;
+            $data['promoPaginator']   = new LengthAwarePaginator($get_data['result']['data'], $get_data['result']['total'], $get_data['result']['per_page'], $get_data['result']['current_page'], ['path' => $url]);
+            $data['total']            = $get_data['result']['total'];
+            
+        }else{
+            $data['promo']          = [];
+            $data['promoTotal']     = 0;
+            $data['promoPerPage']   = 0;
+            $data['promoUpTo']      = 0;
+            $data['promoPaginator'] = false;
+            $data['total']          = 0;
+        }
+
+        $getOutlet = MyHelper::get('outlet/list?log_save=0');
+        if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result'];
+        else $data['outlets'] = [];
+
+        $getProduct = MyHelper::get('product/list?log_save=0');
+        if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result'];
+        else $data['products'] = [];
+
+        $data['products'] = array_map(function ($x) {
+            return [$x['id_product'], $x['product_name']];
+        }, $data['products']);
+        array_unshift($data['products'], ['0', 'All Products']);
+        $data['outlets'] = array_map(function ($x) {
+            return [$x['id_outlet'], $x['outlet_name']];
+        }, $data['outlets']);
+        array_unshift($data['outlets'], ['0', 'All Outlets']);
+
+        if (isset($get_data['rule'])) {
+            $filter = array_map(function ($x) {
+                return [$x['subject'], $x['operator'] ?? '', $x['parameter']];
+            }, $get_data['rule']);
+            $data['rule'] = $filter;
+        }
+
+        return view('promocampaign::list', $data);
+    }
+
+    public function detail(Request $request, $id_promo_campaign) {
+        
+        $post = $request->except('_token');
+        $post['id_promo_campaign'] = $id_promo_campaign;
+
+        $result = MyHelper::post('promo-campaign/detail', $post);
+
+        if ( ($result['status']=='success')??false) {
+
+            $data = [
+                'title'             => 'Promo Campaign',
+                'sub_title'         => 'Detail',
+                'menu_active'       => 'promo-campaign',
+                'submenu_active'    => 'promo-campaign-list',
+                'result'            => $result['result']
+            ];
+
+            return view('promocampaign::detail', $data);
+        }else{
+            return redirect('promo-campaign')->withErrors(['Promo Campaign Not Found']);
+        }
+    }
+
     public function step1(Request $request, $id_promo_campaign=null)
     {
         $post = $request->except('_token');
@@ -28,7 +142,7 @@ class PromoCampaignController extends Controller
             if (isset($id_promo_campaign)) 
             {
                 $get_data = MyHelper::post('promo-campaign/show-step1', ['id_promo_campaign' => $id_promo_campaign]);
-// return $get_data;
+
                 $data['result'] = $get_data['result']??'';
             }
             return view('promocampaign::create-promo-campaign-step-1', $data);
@@ -38,7 +152,7 @@ class PromoCampaignController extends Controller
         {
 
             $action = MyHelper::post('promo-campaign/step1', $post);
-return $action;
+
             
             if (isset($action['status']) && $action['status'] == 'success') 
             {
@@ -87,7 +201,7 @@ return $action;
 
             if (isset($action['status']) && $action['status'] == 'success') {
 
-                return redirect('promo-campaign/step2/' . $id_promo_campaign);
+                return redirect('promo-campaign/detail' . $id_promo_campaign);
             } 
             elseif($action['messages']??false) {
                 return back()->withErrors($action['messages'])->withInput();
