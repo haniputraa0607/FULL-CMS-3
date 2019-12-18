@@ -815,17 +815,28 @@ class OutletController extends Controller
             'sub_title'      => '',
             'menu_active'    => 'max-order',
             'submenu_active' => 'max-order',
+            'filter_title'   => 'Filter Product',
         ];
+        if(session('maxx_order_filter')){
+            $post=session('maxx_order_filter');
+            $data['rule']=array_map('array_values', $post['rule']);
+            $data['operator']=$post['operator'];
+        }else{
+            $post = [];
+        }
         $data['outlets'] = $outlets;
         $data['key'] = $outlet_code;
         $page = $request->page;
         if(!$page){
             $page = 1;
         }
-        $result = MyHelper::post('outlet/max-order?page='.$page,['outlet_code'=>$outlet_code])['result']??false;
+        $post['outlet_code'] = $outlet_code;
+        $result = MyHelper::post('outlet/max-order?page='.$page,$post)['result']??false;
         if(!$result){
+            return MyHelper::post('outlet/max-order?page='.$page,$post);
             return back()->withErrors(['Something went wrong']);
         }
+        $data['total'] = $result['products']['total'];
         $data['start'] = $result['products']['from'];
         $data['data'] =$result;
         $data['paginator'] = new LengthAwarePaginator($result['products']['data'], $result['products']['total'], $result['products']['per_page'], $result['products']['current_page'], ['path' => url()->current()]);
@@ -833,6 +844,14 @@ class OutletController extends Controller
     }
     public function maxOrderUpdate(Request $request,$outlet_code) {
         $post = $request->except('_token');
+        if($post['rule']??false){
+            session(['maxx_order_filter'=>$post]);
+            return redirect('outlet/max-order/'.$outlet_code);
+        }
+        if($post['clear']??false){
+            session(['maxx_order_filter'=>null]);
+            return redirect('outlet/max-order/'.$outlet_code);
+        }
         $post['outlet_code'] = $outlet_code;
 
         $update = MyHelper::post('outlet/max-order/update',$post);
