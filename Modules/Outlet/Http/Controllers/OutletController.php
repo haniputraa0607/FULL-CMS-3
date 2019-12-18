@@ -797,4 +797,50 @@ class OutletController extends Controller
         $outlets=MyHelper::post('outlet/ajax_handler', $post);
         return $outlets;
     }
+
+    public function maxOrder(Request $request,$outlet_code=null) {
+        $outlets = MyHelper::get('outlet/list')['result']??[];
+        if(!$outlets){
+            return back()->withErrors(['Something went wrong']);
+        }
+        if(!$outlet_code || !in_array($outlet_code,array_column($outlets, 'outlet_code'))){
+            $outlet = $outlets[0]['outlet_code']??false;
+            if(!$outlet){
+                return back()->withErrors(['Something went wrong']);
+            }
+            return redirect('outlet/max-order/'.$outlet);
+        }
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => '',
+            'menu_active'    => 'max-order',
+            'submenu_active' => 'max-order',
+        ];
+        $data['outlets'] = $outlets;
+        $data['key'] = $outlet_code;
+        $page = $request->page;
+        if(!$page){
+            $page = 1;
+        }
+        $result = MyHelper::post('outlet/max-order?page='.$page,['outlet_code'=>$outlet_code])['result']??false;
+        if(!$result){
+            return back()->withErrors(['Something went wrong']);
+        }
+        $data['start'] = $result['products']['from'];
+        $data['data'] =$result;
+        $data['paginator'] = new LengthAwarePaginator($result['products']['data'], $result['products']['total'], $result['products']['per_page'], $result['products']['current_page'], ['path' => url()->current()]);
+        return view('outlet::max_order',$data);
+    }
+    public function maxOrderUpdate(Request $request,$outlet_code) {
+        $post = $request->except('_token');
+        $post['outlet_code'] = $outlet_code;
+
+        $update = MyHelper::post('outlet/max-order/update',$post);
+
+        if(($update['status']??false) == 'success'){
+            return back()->with('success',['Success update maximum order']);
+        }else{
+            return back()->withErrors($update['messages']??['Something went wrong']);
+        }
+    }
 }
