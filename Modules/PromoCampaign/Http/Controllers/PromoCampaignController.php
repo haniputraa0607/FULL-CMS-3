@@ -28,8 +28,12 @@ class PromoCampaignController extends Controller
         {
             session(['promo_campaign_filter' => '']);
         }
-
+        
         $this->session_mixer($request, $post);
+        if (!$request->get('promo_type')) {
+            unset($post['promo_type']);
+        }
+
 
         $data = [
             'title'             => 'Promo Campaign List',
@@ -59,6 +63,7 @@ class PromoCampaignController extends Controller
             $url = url()->current();
         }
 
+        // pagination data
         if(!empty($get_data) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
             $data['promo']            = $get_data['result']['data'];
             $data['promoTotal']       = $get_data['result']['total'];
@@ -84,6 +89,7 @@ class PromoCampaignController extends Controller
         if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result'];
         else $data['products'] = [];
 
+        // data product & outlet for filter
         $data['products'] = array_map(function ($x) {
             return [$x['id_product'], $x['product_name']];
         }, $data['products']);
@@ -93,6 +99,7 @@ class PromoCampaignController extends Controller
         }, $data['outlets']);
         array_unshift($data['outlets'], ['0', 'All Outlets']);
 
+        // data rule for filter
         if (isset($get_data['rule'])) {
             $filter = array_map(function ($x) {
                 return [$x['subject'], $x['operator'] ?? '', $x['parameter']];
@@ -106,7 +113,25 @@ class PromoCampaignController extends Controller
     public function detail(Request $request, $id_promo_campaign) {
         
         $post = $request->except('_token');
+
+        if ($request->post('clear') == 'session') {
+            session(['report_promo_campaign_'.$id_promo_campaign => '']);
+            session(['coupon_promo_campaign_'.$id_promo_campaign => '']);
+        }
+
+        $this->session_mixer($request, $post,'report_promo_campaign_'.$id_promo_campaign);
+        $this->session_mixer($request, $post,'coupon_promo_campaign_'.$id_promo_campaign);
+
         $post['id_promo_campaign'] = $id_promo_campaign;
+
+        if ($request->input('coupon')=='true') 
+        {
+            return $this->ajaxCoupon($post);
+        }
+        elseif($request->input('ajax')=='true')
+        {
+            return $this->ajaxPromoCampaign($post);
+        }
 
         $result = MyHelper::post('promo-campaign/detail', $post);
 
@@ -120,9 +145,81 @@ class PromoCampaignController extends Controller
                 'result'            => $result['result']
             ];
 
+            $data['rule']=$post['rule']??[];
+            if (isset($data['rule'])) {
+                $filter = array_map(function ($x) {
+                    return [$x['subject'], $x['operator'] ?? '', $x['parameter']];
+                }, $data['rule']);
+                $data['rule'] = $filter;
+            }
+            $outlets = MyHelper::post('outlet/list', $post);
+            $outlets = isset($outlets['status'])&&isset($outlets['status'])=='success'?$outlets['result']:[];
+            $data['outlets'] = array_map(function($x){return [$x['id_outlet'],$x['outlet_name']];},$outlets);
+            $data['operator']=$post['operator']??'and';
+
             return view('promocampaign::detail', $data);
         }else{
             return redirect('promo-campaign')->withErrors(['Promo Campaign Not Found']);
+        }
+    }
+
+    public function ajaxPromoCampaign($input){
+        $return = $input;
+
+        $return['draw']=(int)$input['draw'];
+        $getPromoCampaignReport = MyHelper::post('promo-campaign/report', $input);
+
+        if ($getPromoCampaignReport['status'] == 'success') {
+            $return['recordsTotal'] = $getPromoCampaignReport['total'];
+            $return['recordsFiltered'] = $getPromoCampaignReport['count'];
+            $return['data'] = array_map(function($x){
+                $trxUrl=url('transaction/detail/'.$x['id_transaction'].'/'.strtolower($x['transaction']['trasaction_type']));
+                return [
+                    $x['promo_campaign_promo_code']['promo_code'],
+                    $x['user_name'].' ('.$x['user_phone'].')',
+                    $x['created_at'],
+                    "<a href='$trxUrl' target='_blank'>{$x['transaction']['transaction_receipt_number']}</a>",
+                    $x['outlet']['outlet_name'],
+                    $x['device_type']
+                ];
+            },$getPromoCampaignReport['result']);
+            return $return;
+        } else {
+            $return['recordsTotal'] = 0;
+            $return['recordsFiltered'] = 0;
+            $return['data'] = [];
+            return $return;
+        }
+    }
+
+    public function ajaxCoupon($input){
+        $return = $input;
+        $return['draw']=(int)$input['draw'];
+
+        $getPromoCampaignCoupon = MyHelper::post('promo-campaign/coupon', $input);
+
+        if ($getPromoCampaignCoupon['status'] == 'success') {
+            $return['recordsTotal'] = $getPromoCampaignCoupon['total'];
+            $return['recordsFiltered'] = $getPromoCampaignCoupon['count'];
+            $return['data'] = array_map(function($x){
+                $status = $x['usage'] == 0 ? 'Available' : 'Used';
+                $used = $x['usage'] != 0 ? $x['usage'] : '';
+                $available = $x['limitation_usage'] != 0 ? $x['limitation_usage'] - $x['usage'] : 'Unlimited';
+                $max_usage = $x['limitation_usage'] != 0 ? $x['limitation_usage'] : 'Unlimited';
+                return [
+                    $x['promo_code'],
+                    $status,
+                    $used,
+                    $available,
+                    $max_usage
+                ];
+            },$getPromoCampaignCoupon['result']);
+            return $return;
+        } else {
+            $return['recordsTotal'] = 0;
+            $return['recordsFiltered'] = 0;
+            $return['data'] = [];
+            return $return;
         }
     }
 
@@ -201,7 +298,7 @@ class PromoCampaignController extends Controller
 
             if (isset($action['status']) && $action['status'] == 'success') {
 
-                return redirect('promo-campaign/detail' . $id_promo_campaign);
+                return redirect('promo-campaign/detail/' . $id_promo_campaign);
             } 
             elseif($action['messages']??false) {
                 return back()->withErrors($action['messages'])->withInput();

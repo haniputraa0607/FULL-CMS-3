@@ -82,6 +82,72 @@
                 $("#submit-button").prop('disabled', true);
             }
         });
+
+        $('#sample_1').dataTable({
+                language: {
+                    aria: {
+                        sortAscending: ": activate to sort column ascending",
+                        sortDescending: ": activate to sort column descending"
+                    },
+                    emptyTable: "No data available in table",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    infoEmpty: "No entries found",
+                    infoFiltered: "(filtered1 from _MAX_ total entries)",
+                    lengthMenu: "_MENU_ entries",
+                    search: "Search:",
+                    zeroRecords: "No matching records found"
+                },
+                buttons: [{
+                    extend: "print",
+                    className: "btn dark btn-outline",
+                    exportOptions: {
+                         columns: "thead th:not(.noExport)"
+                    },
+                }, {
+                  extend: "copy",
+                  className: "btn blue btn-outline",
+                  exportOptions: {
+                       columns: "thead th:not(.noExport)"
+                  },
+                },{
+                  extend: "pdf",
+                  className: "btn yellow-gold btn-outline",
+                  exportOptions: {
+                       columns: "thead th:not(.noExport)"
+                  },
+                }, {
+                    extend: "excel",
+                    className: "btn green btn-outline",
+                    exportOptions: {
+                         columns: "thead th:not(.noExport)"
+                    },
+                }, {
+                    extend: "csv",
+                    className: "btn purple btn-outline ",
+                    exportOptions: {
+                         columns: "thead th:not(.noExport)"
+                    },
+                }, {
+                  extend: "colvis",
+                  className: "btn red",
+                  exportOptions: {
+                       columns: "thead th:not(.noExport)"
+                  },
+                }],
+                responsive: {
+                    details: {
+                        type: "column",
+                        target: "tr"
+                    }
+                },
+                order: [0, "asc"],
+                lengthMenu: [
+                    [5, 10, 15, 20, -1],
+                    [5, 10, 15, 20, "All"]
+                ],
+                pageLength: 10,
+                dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'><'col-md-6 col-sm-12'>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+        });
     </script>
 @yield('child-script')
 @endsection
@@ -211,13 +277,12 @@
                             </td>
                             <td>
                                 @if(MyHelper::hasAccess([198], $grantedFeature))
-                                    <a style="margin-bottom: 3px" class="btn btn-block yellow btn-xs" href="{{ url('promo-campaign/detail', $res['id_promo_campaign']) }}"><i class="icon-eye"></i> Detail </a>
-                                    <a style="margin-bottom: 3px" class="btn btn-block green btn-xs" href="{{ url('promo-campaign/report', $res['id_promo_campaign']) }}"><i class="icon-eye"></i> Report </a>
+                                    <a style="margin-bottom: 3px" class="btn btn-sm blue" href="{{ url('promo-campaign/detail', $res['id_promo_campaign']) }}"><i class="fa fa-search"></i></a>
                                 @endif
                                 @if(MyHelper::hasAccess([198], $grantedFeature))
                                     @if( isset($res['date_start']) )
                                         @if ($res['date_start'] > date("Y-m-d H:i:s"))
-                                            <a style="margin-bottom: 3px" class="btn btn-block red btn-xs" href="#" data-id="{{ $res['id_promo_campaign'] }}" id="btn-delete"><i class="icon-eye"></i> Delete </a>
+                                            <a style="margin-bottom: 3px" class="btn btn-sm red" href="#" data-id="{{ $res['id_promo_campaign'] }}" id="btn-delete"><i class="fa fa-trash-o"></i></a>
                                         @endif
                                     @endif
                                 @endif

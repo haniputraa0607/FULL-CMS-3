@@ -512,9 +512,9 @@
                 </div>
                 @php $countQty = 0; @endphp
                 @foreach ($data['product_transaction'] as $key => $val)
-                    <div class="col-7 text-13-3px text-black seravek-light-font">{{ $val['product']['product_name'] }}</div>
-                    <div class="col-5 text-right text-13-3px text-black seravek-light-font">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal'])) }}</div>
-                    <div class="col-12 text-grey text-12-7px text-black-grey-light seravek-light-font">{{ $val['transaction_product_qty'] }} x {{ str_replace(',', '.', number_format($val['transaction_product_price'])) }}</div>
+                    <div class="col-7 text-13-3px text-black seravek-light-font">{{ $val['product']['product_name']??'' }}</div>
+                    <div class="col-5 text-right text-13-3px text-black seravek-light-font">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal']??0)) }}</div>
+                    <div class="col-12 text-grey text-12-7px text-black-grey-light seravek-light-font">{{ $val['transaction_product_qty']??'' }} x {{ str_replace(',', '.', number_format($val['transaction_product_price']??0)) }}</div>
                     <div class="space-bottom col-12">
                         <div class="space-bottom text-12-7px text-grey-medium-light seravek-italic-font" style="word-wrap: break-word;">
                             @if (isset($val['transaction_product_note']))
@@ -524,7 +524,7 @@
                             @endif
                         </div>
                     </div>
-                    @php $countQty += $val['transaction_product_qty']; @endphp
+                    @php $countQty += $val['transaction_product_qty']??0; @endphp
                 @endforeach
 
                 <div class="col-12 text-12-7px text-right"><hr style="margin:0"></div>

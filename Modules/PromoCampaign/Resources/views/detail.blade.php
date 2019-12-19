@@ -4,7 +4,8 @@
     date_default_timezone_set('Asia/Jakarta');
  ?>
 @extends('layouts.main-closed')
-
+@include('promocampaign::report')
+@include('promocampaign::coupon')
 @section('page-style')
 	<link href="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
@@ -17,6 +18,8 @@
 	<link href="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 	
 	<style type="text/css">
 	    #sample_1_filter label, #sample_5_filter label, #sample_4_filter label, .pagination, .dataTables_filter label {
@@ -65,9 +68,10 @@
 	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+
 	<script>
 	
-	$('.sample_1').dataTable({
+	$('.sample_1, .sample_5, .sample_6, .sample_7').dataTable({
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -198,6 +202,7 @@
 	})
 	</script>
     @yield('more_script')
+    @yield('more_script2')
 @endsection
 
 @section('content')
@@ -273,10 +278,12 @@
     <div class="col-md-12">
         <div class="col-md-12">
             <div class="tabbable-line tabbable-full-width">
-                <a href="{{ url('promo-campaign/report/'.$result['id_promo_campaign']) }}" class="btn yellow" style="float: right;">View Report</a>
                 <ul class="nav nav-tabs">
                     <li class="active">
                         <a href="#promocampaign" data-toggle="tab"> Promo Campaign </a>
+                    </li>
+                    <li class="">
+                        <a href="#detail-information" data-toggle="tab"> Detail Information </a>
                     </li>
                 </ul>
             </div>
@@ -287,7 +294,7 @@
                         <div class="col-md-5">
                             <div class="portlet profile-info portlet light bordered">
                                 <div class="portlet-title"> 
-                                <span class="caption font-yellow sbold uppercase">{{$result['campaign_name']}}</span>
+                                <span class="caption font-blue sbold uppercase">{{$result['campaign_name']}}</span>
                                 </div>
                                 <div class="portlet sale-summary">
                                     <div class="portlet-body">
@@ -296,7 +303,7 @@
                                                 <span class="sale-info"> Status 
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
-                                                @if( empty($result['campaign_complete']) )
+                                                @if( empty($result['step_complete']) )
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #F4D03F;padding: 5px 12px;color: #fff;">Not Complete</span>
                                                 @elseif(strtotime($result['date_end']) < strtotime($datenow))
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Ended</span>
@@ -331,13 +338,23 @@
                                                 </span>
                                             </li>
                                             <li>
-                                                <span class="sale-info"> Campaign Type
+                                                <span class="sale-info"> Code Type
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
                                                 <span class="sale-num font-black">
                                                     {{$result['code_type']??''}}
                                                 </span>
                                             </li>
+                                            @if($result['code_type'] == "Single")
+                                            <li>
+                                                <span class="sale-info"> Promo Code
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                                <span class="sale-num font-black">
+                                                    <b>{{ $result['promo_campaign_promo_codes'][0]['promo_code']??'' }}</b>
+                                                </span>
+                                            </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -372,10 +389,6 @@
                                         <div class="col-md-4 name">Created</div>
                                         <div class="col-md-8 value">: {{date("d F Y", strtotime($result['created_at']))}}&nbsp;{{date("H:i", strtotime($result['created_at']))}}</div>
                                     </div>
-                                    <div class="row static-info">
-                                        <div class="col-md-4 name">Code Type</div>
-                                        <div class="col-md-8 value">: {{ $result['code_type']??'' }} </div>
-                                    </div>
                                     @if( ($result['code_type'])=='Multiple' )
                                     <div class="row static-info">
                                         <div class="col-md-4 name">Prefix Code</div>
@@ -384,11 +397,6 @@
                                     <div class="row static-info">
                                         <div class="col-md-4 name">Number Last Code</div>
                                         <div class="col-md-8 value">: {{ $result['number_last_code']??'' }}</div>
-                                    </div>
-                                    @else
-                                    <div class="row static-info">
-                                        <div class="col-md-4 name">Promo Code</div>
-                                        <div class="col-md-8 value">: <b>{{ $result['promo_campaign_promo_codes']['promo_code']??'' }}</b></div>
                                     </div>
                                     @endif
                                     <div class="row static-info">
@@ -428,7 +436,7 @@
                                 @if( strtotime($datenow) < strtotime($result['date_start']) || empty($result['step_complete']))
                                 <div class="row static-info">
                                     <div class="col-md-11 value">
-                                        <a class="btn yellow" href="{{ url('/')}}/promo-campaign/step1/{{$result['id_promo_campaign']}}">Edit Detail</a>
+                                        <a class="btn blue" href="{{ url('/')}}/promo-campaign/step1/{{$result['id_promo_campaign']}}">Edit Detail</a>
                                     </div>
                                 </div>
                                 @endif
@@ -438,9 +446,9 @@
                         <div class="col-md-7 profile-info">
                             <div class="profile-info portlet light bordered">
                                 <div class="portlet-title"> 
-                                <span class="caption font-yellow sbold uppercase">{{ $result['promo_type']??'' }} Rules </span>
+                                <span class="caption font-blue sbold uppercase">{{ $result['promo_type']??'' }} Rules </span>
                                 </div>
-                                @if ( !empty($result['campaign_complete']) )
+                                @if ( !empty($result['step_complete']) )
                                     @if (isset($result['promo_campaign_product_discount_rules']) && $result['promo_campaign_product_discount_rules'] != null)
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Product Requirement</div>
@@ -483,7 +491,7 @@
                                         <div class="mt-comments">
                                             @if ($result['promo_campaign_product_discount_rules'] != null)
                                                 @if(isset($result['promo_campaign_product_discount_rules']['is_all_product']) && $result['promo_campaign_product_discount_rules']['is_all_product'] == '0')
-                                                    <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_3">
+                                                    <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
                                                         <thead>
                                                             <tr>
                                                                 <th>Category</th>
@@ -513,7 +521,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_3">
+                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_6">
                                             <thead>
                                                 <tr>
                                                     <th>Min Qty</th>
@@ -540,7 +548,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_3">
+                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_7">
                                             <thead>
                                                 <tr>
                                                     <th>Min Qty</th>
@@ -578,10 +586,10 @@
                                         </div>
                                         @endif
                                     @endif
-                                    @if( strtotime($datenow) < strtotime($result['date_start']) || empty($result['campaign_complete']))
+                                    @if( strtotime($datenow) < strtotime($result['date_start']) || empty($result['step_complete']))
                                     <div class="row static-info">
                                         <div class="col-md-11 value">
-                                            <a class="btn yellow" href="{{ url('/')}}/promo-campaign/step2/{{$result['id_promo_campaign']}}">Edit Rule</a>
+                                            <a class="btn blue" href="{{ url('/')}}/promo-campaign/step2/{{$result['id_promo_campaign']}}">Edit Rule</a>
                                         </div>
                                     </div>
                                     @endif
@@ -591,7 +599,7 @@
                                 </span>
                                 <div class="row static-info">
                                     <div class="col-md-11 value">
-                                        <a class="btn yellow" href="{{ url('/')}}/promo-campaign/step2/{{$result['id_promo_campaign']}}">Create Rule</a>
+                                        <a class="btn blue" href="{{ url('/')}}/promo-campaign/step2/{{$result['id_promo_campaign']}}">Create Rule</a>
                                     </div>
                                 </div>
                                 @endif
@@ -600,11 +608,115 @@
                         
                     </div>
                 </div>
+                <div class="tab-pane" id="detail-information">
+                    <div class="col-md-12">
+                        <div class="tabbable-line tabbable-full-width">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#report" data-toggle="tab"> Report </a>
+                                </li>
+                                @if ($result['code_type'] == 'Multiple')
+                                <li>
+                                    <a href="#code" data-toggle="tab"> Coupon </a>
+                                </li>
+                                @endif
+                                @if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == '0')
+                                <li>
+                                    <a href="#outlet" data-toggle="tab"> Outlet </a>
+                                </li>
+                                @endif
+                                @if (($result['product_discount_rule']??false) != null)
+                                    @if (isset($result['product_discount_rule']['is_all_product']) && $result['product_discount_rule']['is_all_product'] == '0')
+                                    <li>
+                                        <a href="#product" data-toggle="tab"> Product </a>
+                                    </li>
+                                    @endif
+                                @endif
+                            </ul>
+                        </div>
+                        <div class="tab-content" style="margin-top:20px">
+                            <div class="tab-pane" id="code">
+                                <!-- BEGIN: Comments -->
+                                <div class="mt-comments">
+                                    @yield('coupon')
+                                </div>
+                                <!-- END: Comments -->
+                            </div>
+                            <div class="tab-pane" id="outlet">
+                                <!-- BEGIN: Comments -->
+                                <div class="mt-comments">
+                                    @if(isset($result['is_all_outlet']) && $result['is_all_outlet'] == '0')
+                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
+                                            <thead>
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Name</th>
+                                                    <th>Address</th>
+                                                    <th>Phone</th>
+                                                    <th>Email</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($result['outlets'] as $res)
+                                                    <tr>
+                                                        <td>{{ $res['outlet_code'] }}</td>
+                                                        <td>{{ $res['outlet_name'] }}</td>
+                                                        <td>{{ $res['outlet_address'] }}</td>
+                                                        <td>{{ $res['outlet_phone'] }}</td>
+                                                        <td>{{ $res['outlet_email'] }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        This promo for all outlet
+                                    @endif
+                                </div>
+                                <!-- END: Comments -->
+                            </div>
+                            <div class="tab-pane" id="product">
+                                <!-- BEGIN: Comments -->
+                                <div class="mt-comments">
+                                    @if ($result['product_discount_rule']??'' != null)
+                                        @if(isset($result['product_discount_rule']['is_all_product']) && $result['product_discount_rule']['is_all_product'] == '0')
+                                            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_3">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Category</th>
+                                                        <th>Code</th>
+                                                        <th>Name</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($result['product_discount'] as $res)
+                                                        <tr>
+                                                            <td>{{ $res['product']['product_category']['product_category_name'] }}</td>
+                                                            <td>{{ $res['product']['product_code'] }}</td>
+                                                            <td>{{ $res['product']['product_name'] }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @else
+                                            This promo for all product
+                                        @endif
+                                    @endif
+                                </div>
+                                <!-- END: Comments -->
+                            </div>
+                            <div class="tab-pane active" id="report">
+                                @yield('report')
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
 
-        
+
     </div>
+
     <div class="col-md-12">
     </div>
 
