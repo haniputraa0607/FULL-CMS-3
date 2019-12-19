@@ -132,7 +132,7 @@
 	        			</tr>
 	        		</thead>
 	        		<tbody>
-                        @if($data['products']['data']??[]){
+                        @if($data['products']['data']??[])
     	        			@foreach($data['products']['data']??[] as $product)
     	        			<tr>
     	        				<td width="1%">{{$start}}</td>
