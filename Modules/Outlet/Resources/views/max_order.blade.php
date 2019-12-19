@@ -1,5 +1,6 @@
 @extends('layouts.main')
 
+@include('list_filter')
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
@@ -16,7 +17,43 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
 	<!-- <script src="{{ env('S3_URL_VIEW') }}{{('js/global.js') }}" type="text/javascript"></script> -->
+    @yield('filter_script')
      <script type="text/javascript">
+        rules = {
+            all_product_modifier :{
+                display:'All Product',
+                operator:[],
+                opsi:[]
+            },
+            product_code :{
+                display:'Code',
+                operator:[
+                    ['=','='],
+                    ['like','like']
+                ],
+                opsi:[]
+            },
+            product_name :{
+                display:'Name',
+                operator:[
+                    ['=','='],
+                    ['like','like']
+                ],
+                opsi:[]
+            },
+            max_order :{
+                display:'Maximum Order',
+                operator:[
+                    ['=','='],
+                    ['<','<'],
+                    ['>','>'],
+                    ['<=','<='],
+                    ['>=','>=']
+                ],
+                opsi:[],
+                type: 'number'
+            }
+        };
         $(document).ready(function() {
 	        $('#outlet_selector').on('change',function(){
 	            window.location.href = "{{url('outlet/max-order')}}/"+$(this).val();
@@ -49,6 +86,7 @@
 
     @include('layouts.notifications')
 
+    @yield('filter_view')
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
@@ -80,7 +118,7 @@
         			</label>
         			<div class="col-md-3">
         				<div class="input-group">
-	        				<input type="number" name="max_order" class="form-control" value="{{$data['outlet']['max_order']}}" />
+	        				<input type="number" min="1" name="max_order" class="form-control" value="{{$data['outlet']['max_order']}}" />
 							<div class="input-group-addon">Item</div>
         				</div>
         			</div>
@@ -94,19 +132,27 @@
 	        			</tr>
 	        		</thead>
 	        		<tbody>
-	        			@foreach($data['products']['data']??[] as $product)
-	        			<tr>
-	        				<td width="1%">{{$start}}</td>
-	        				<td>{{$product['product_code']}} - {{$product['product_name']}}</td>
-	        				<td width="200px">
-		        				<div class="input-group">
-	        						<input type="number" min="1" name="products[{{$product['id_product']}}]" class="form-control" value="{{$product['max_order']}}">
-									<div class="input-group-addon">Item</div>
-		        				</div>
-		        			</td>
-	        			</tr>
-	        			@php $start++ @endphp
-	        			@endforeach
+                        @if($data['products']['data']??[]){
+    	        			@foreach($data['products']['data']??[] as $product)
+    	        			<tr>
+    	        				<td width="1%">{{$start}}</td>
+    	        				<td>{{$product['product_code']}} - {{$product['product_name']}}</td>
+    	        				<td width="200px">
+    		        				<div class="input-group">
+    	        						<input type="number" min="1" name="products[{{$product['id_product']}}]" class="form-control" value="{{$product['max_order']}}">
+    									<div class="input-group-addon">Item</div>
+    		        				</div>
+    		        			</td>
+    	        			</tr>
+    	        			@php $start++ @endphp
+    	        			@endforeach
+                        @else
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <em class="text-muted">No product found</em>
+                                </td>
+                            </tr>
+                        @endif
 	        		</tbody>
 	        	</table>
 				<div class="form-actions">
