@@ -28,7 +28,7 @@
 					</div>
 					<div class="portlet-body">
 
-						<form role="form" class="form-horizontal" action="{{url('setting/complete-profile')}}" method="POST">
+						<form role="form" class="form-horizontal" action="{{url('setting/be/complete-profile')}}" method="POST">
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Completion {{env('POINT_NAME', 'Points')}}
 										<span class="required" aria-required="true"> * </span>

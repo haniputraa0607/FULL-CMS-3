@@ -545,7 +545,7 @@
 
     @include('layouts.notifications')
 
-    <a href="{{url('outlet/list')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
+    <a href="{{url('outlet/be/list')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
 
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">
