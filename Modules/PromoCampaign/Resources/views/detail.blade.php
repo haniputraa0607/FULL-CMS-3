@@ -617,7 +617,7 @@
                                 </li>
                                 @if ($result['code_type'] == 'Multiple')
                                 <li>
-                                    <a href="#code" data-toggle="tab"> Coupon </a>
+                                    <a href="#coupon" data-toggle="tab"> Coupon </a>
                                 </li>
                                 @endif
                                 @if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == '0')
@@ -635,11 +635,13 @@
                             </ul>
                         </div>
                         <div class="tab-content" style="margin-top:20px">
-                            <div class="tab-pane" id="code">
+                            <div class="tab-pane" id="coupon">
                                 <!-- BEGIN: Comments -->
+                                @if ($result['code_type'] == 'Multiple')
                                 <div class="mt-comments">
                                     @yield('coupon')
                                 </div>
+                                @endif
                                 <!-- END: Comments -->
                             </div>
                             <div class="tab-pane" id="outlet">

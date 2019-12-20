@@ -114,14 +114,27 @@ class PromoCampaignController extends Controller
         
         $post = $request->except('_token');
 
-        if ($request->post('clear') == 'session') {
+        if ($request->post('clear') == 'session') 
+        {
             session(['report_promo_campaign_'.$id_promo_campaign => '']);
+            unset($post['rule']);
+            $session = session('coupon_promo_campaign_'.$id_promo_campaign);
+            unset($session['rule']);
+            session(['coupon_promo_campaign_'.$id_promo_campaign => $session]);
+
+        }
+        elseif($request->post('clear2') == 'session')
+        {
             session(['coupon_promo_campaign_'.$id_promo_campaign => '']);
+            unset($post['rule2']);
+            $session = session('report_promo_campaign_'.$id_promo_campaign);
+            unset($session['rule2']);
+            session(['report_promo_campaign_'.$id_promo_campaign => $session]);
         }
 
         $this->session_mixer($request, $post,'report_promo_campaign_'.$id_promo_campaign);
         $this->session_mixer($request, $post,'coupon_promo_campaign_'.$id_promo_campaign);
-
+        
         $post['id_promo_campaign'] = $id_promo_campaign;
 
         if ($request->input('coupon')=='true') 
@@ -152,10 +165,18 @@ class PromoCampaignController extends Controller
                 }, $data['rule']);
                 $data['rule'] = $filter;
             }
+            $data['rule2']=$post['rule2']??[];
+            if (isset($data['rule2'])) {
+                $filter = array_map(function ($x) {
+                    return [$x['subject'], $x['operator'] ?? '', $x['parameter']];
+                }, $data['rule2']);
+                $data['rule2'] = $filter;
+            }
             $outlets = MyHelper::post('outlet/list', $post);
             $outlets = isset($outlets['status'])&&isset($outlets['status'])=='success'?$outlets['result']:[];
             $data['outlets'] = array_map(function($x){return [$x['id_outlet'],$x['outlet_name']];},$outlets);
             $data['operator']=$post['operator']??'and';
+            $data['operator2']=$post['operator2']??'and';
 
             return view('promocampaign::detail', $data);
         }else{
@@ -202,7 +223,7 @@ class PromoCampaignController extends Controller
             $return['recordsTotal'] = $getPromoCampaignCoupon['total'];
             $return['recordsFiltered'] = $getPromoCampaignCoupon['count'];
             $return['data'] = array_map(function($x){
-                $status = $x['usage'] == 0 ? 'Available' : 'Used';
+                $status = $x['usage'] == 0 ? 'Not used' : $x['usage'] == $x['limitation_usage'] ? 'Used' : 'Available';
                 $used = $x['usage'] != 0 ? $x['usage'] : '';
                 $available = $x['limitation_usage'] != 0 ? $x['limitation_usage'] - $x['usage'] : 'Unlimited';
                 $max_usage = $x['limitation_usage'] != 0 ? $x['limitation_usage'] : 'Unlimited';

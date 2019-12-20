@@ -1,7 +1,7 @@
 @include('promocampaign::coupon_filter')
 @section('coupon')
 
-{{-- @yield('coupon-filter') --}}
+@yield('coupon-filter')
 <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="couponTable">
     <thead>
         <tr>

@@ -1,6 +1,6 @@
-@section('child-script')
+@section('child-script2')
 <script>
-	rules={
+	$rules={
 		coupon_code:{
 			display:'Coupon code',
 			operator:[
@@ -55,15 +55,15 @@
 			type:'number'
 		},		
 	};
-	database={
+	$database={
 		operator: 'or',
-		value: {!!json_encode(array_values($rule??[]))!!}
+		value: {!!json_encode(array_values($rule2??[]))!!}
 	};
 	function optionWriter(value,show,option=''){
 		return '<option value="'+value+'" '+option+'>'+show+'</option>'
 	}
-	function selectSubjectBuilder(rules,selected='',id='::n::'){
-		var html='<select name="rule['+id+'][subject]" class="form-control input-sm select2 inputSubject" placeholder="Search Subject" style="width:100%" required>';
+	function selectSubjectBuilder2(rules,selected='',id='::n::'){
+		var html='<select name="rule2['+id+'][subject]" class="form-control input-sm select2 inputSubject" placeholder="Search Subject" style="width:100%" required>';
 		ruless=Object.entries(rules);
 		ruless.forEach(function(x){
 			if(selected==x[0]){
@@ -75,8 +75,8 @@
 		html+='</select>';
 		return html;
 	}
-	function selectOperatorBuilder(rules,selected='',id='::n::'){
-		var html='<select name="rule['+id+'][operator]" class="form-control input-sm select2 inputOperator" placeholder="Search Operator" id="test" style="width:100%" required>';
+	function selectOperatorBuilder2(rules,selected='',id='::n::'){
+		var html='<select name="rule2['+id+'][operator]" class="form-control input-sm select2 inputOperator" placeholder="Search Operator" id="test2" style="width:100%" required>';
 		rules.forEach(function(x){
 			if(selected==x[0]){
 				html+=optionWriter(x[0],x[1],'selected');
@@ -87,8 +87,8 @@
 		html+='</select>';
 		return html;
 	}
-	function selectOpsiBuilder(rules,selected='',id='::n::'){
-		var html='<select name="rule['+id+'][parameter]" class="form-control input-sm select2 inputOpsi" placeholder="Search Operator" id="test" style="width:100%" required>';
+	function selectOpsiBuilder2(rules,selected='',id='::n::'){
+		var html='<select name="rule2['+id+'][parameter]" class="form-control input-sm select2 inputOpsi" placeholder="Search Operator" id="test" style="width:100%" required>';
 		rules.forEach(function(x){
 			if(selected==x[0]){
 				html+=optionWriter(x[0],x[1],'selected');
@@ -99,16 +99,16 @@
 		html+='</select>';
 		return html;
 	}
-	function inputBuilder(type,value='',id='::n::'){
+	function inputBuilder2(type,value='',id='::n::'){
 		if(type==undefined){
 			type='text';
 		}if(type=='datetime'){
-			return '<input type="text" placeholder="Keyword" class="form-control datetime" name="rule['+id+'][parameter]" value="'+value+'"  required/>';
+			return '<input type="text" placeholder="Keyword" class="form-control datetime" name="rule2['+id+'][parameter]" value="'+value+'"  required/>';
 		}
-		return '<input type="'+type+'" placeholder="Keyword" class="form-control" name="rule['+id+'][parameter]" value="'+value+'"  required/>';
+		return '<input type="'+type+'" placeholder="Keyword" class="form-control" name="rule2['+id+'][parameter]" value="'+value+'"  required/>';
 
 	}
-	function rowBuilder(val){
+	function rowBuilder2(val){
 		var html='<div class="mt-repeater-cell" style="padding-bottom:10px" data-id="::n::">\
 		<div class="col-md-12">\
 		<div class="col-md-1">\
@@ -127,31 +127,31 @@
 		</div>\
 		</div>\
 		</div>';
-		html=html.replace('::subjectOption::',selectSubjectBuilder(rules,val[0]));
-		if(rules[val[0]].operator.length>0){//is operator exist
-			html=html.replace('::operatorOption::',selectOperatorBuilder(rules[val[0]].operator,val[1]));
-			html=html.replace('::otherVal::',inputBuilder(rules[val[0]].type,val[2]));
+		html=html.replace('::subjectOption::',selectSubjectBuilder2($rules,val[0]));
+		if($rules[val[0]].operator.length>0){//is operator exist
+			html=html.replace('::operatorOption::',selectOperatorBuilder2($rules[val[0]].operator,val[1]));
+			html=html.replace('::otherVal::',inputBuilder2($rules[val[0]].type,val[2]));
 		}else{
-			html=html.replace('::operatorOption::',selectOpsiBuilder(rules[val[0]].opsi,val[2]));
+			html=html.replace('::operatorOption::',selectOpsiBuilder2($rules[val[0]].opsi,val[2]));
 			html=html.replace('::otherVal::','');
 		}
-		var lastId=$('#repeaterContainer .mt-repeater-cell').last().data('id');
+		var lastId=$('#repeaterContainer2 .mt-repeater-cell').last().data('id');
 		if(lastId==undefined){lastId=-1};
 		html=html.replace(/::n::/g,lastId+1);
 		return html;
 	}
-	function updateColumn(data){
+	function updateColumn2(data){
 		data.forEach(function(i){
-			add(i);
+			add2(i);
 		});
 	}
-	function add(newValue){
+	function add2(newValue){
 		if(newValue==undefined){
-			var defaultCol=Object.keys(rules)[0];
-			var defaultOperator=rules[defaultCol].operator[0][0];
+			var defaultCol=Object.keys($rules)[0];
+			var defaultOperator=$rules[defaultCol].operator[0][0];
 			var newValue=[defaultCol,defaultOperator,''];
 		}
-		$('#repeaterContainer').append(rowBuilder(newValue));
+		$('#repeaterContainer2').append(rowBuilder2(newValue));
 		$('.select2').select2();
 		$('.datetime').datetimepicker({
 			format: "dd MM yyyy hh:ii",
@@ -159,28 +159,28 @@
 		});
 	}
 	$(document).ready(function(){
-		if(database.value.length<1){
-			var defaultCol=Object.keys(rules)[0];
-			var defaultOperator=rules[defaultCol].operator[0][0];
+		if($database.value.length<1){
+			var defaultCol=Object.keys($rules)[0];
+			var defaultOperator=$rules[defaultCol].operator[0][0];
 			var newValue=[defaultCol,defaultOperator,''];
-			database.value.push(newValue);
+			$database.value.push(newValue);
 		}
-		updateColumn(database.value);
-		$('#addNewBtn').on('click',function(){add()});
-		$('.form-body').on('click','.btnDelete',function(x){
+		updateColumn2($database.value);
+		$('#addNewBtn2').on('click',function(){add2()});
+		$('.form-body2').on('click','.btnDelete',function(x){
 			$(this).parents('.mt-repeater-cell').first().fadeOut(500,function(){$(this).remove()});
 		});
-		$('.form-body').on('change','.inputSubject',function(){
+		$('.form-body2').on('change','.inputSubject',function(){
 			var value=$(this).val();
 			var parId=$(this).parents('.mt-repeater-cell').first().data('id');
-			if(rules[value].operator.length>0){
-				var oprview=selectOperatorBuilder(rules[value].operator,'',parId);
+			if($rules[value].operator.length>0){
+				var oprview=selectOperatorBuilder2($rules[value].operator,'',parId);
 				$(this).parents('.mt-repeater-cell').first().find('.optionCol').html(oprview);
-				$(this).parents('.mt-repeater-cell').first().find('.valCol').html(inputBuilder(rules[value].type,'',parId));
+				$(this).parents('.mt-repeater-cell').first().find('.valCol').html(inputBuilder2($rules[value].type,'',parId));
 				$(this).parents('.mt-repeater-cell').first().find('.valCol').show();
 				$('.select2').select2();
-			}else if(rules[value].opsi.length>0){
-				var oprview=selectOpsiBuilder(rules[value].opsi,'',parId);
+			}else if($rules[value].opsi.length>0){
+				var oprview=selectOpsiBuilder2($rules[value].opsi,'',parId);
 				$(this).parents('.mt-repeater-cell').first().find('.optionCol').html(oprview);
 				$(this).parents('.mt-repeater-cell').first().find('.valCol').hide();
 				$(this).parents('.mt-repeater-cell').first().find('.valCol').html('');
@@ -191,12 +191,12 @@
 				autoclose: true
 			});
 		});
-		$('input[name="operator"]').val(database.operator);
+		$('input[name="operator2"]').val($database.operator);
 	})
 </script>
 @endsection
 @section('coupon-filter')
-<form action="{{ url()->current().'#detail-information' }}" method="post">
+<form action="{{ url()->current().'#coupon' }}" method="post">
 	<div class="portlet light bordered">
 		<div class="portlet-title">
 			<div class="caption font-blue ">
@@ -205,15 +205,15 @@
 			</div>
 		</div>
 		<div class="portlet-body form">
-			<div class="form-body">
+			<div class="form-body2">
 				<div class="form-group mt-repeater">
 					<div data-repeater-list="conditions">
-						<div data-repeater-item class="mt-repeater-item mt-overflow" id="repeaterContainer">
+						<div data-repeater-item class="mt-repeater-item mt-overflow" id="repeaterContainer2">
 						</div>
 					</div>
 					<div class="form-action col-md-12">
 						<div class="col-md-12">
-							<button class="btn btn-success mt-repeater-add" type="button" id="addNewBtn">
+							<button class="btn btn-success mt-repeater-add" type="button" id="addNewBtn2">
 								<i class="fa fa-plus"></i> Add New Condition
 							</button>
 						</div>
@@ -221,9 +221,9 @@
 
 					<div class="form-action col-md-12" style="margin-top:15px">
 						<div class="col-md-5">
-							<select name="operator" class="form-control input-sm " placeholder="Search Rule" required>
-								<option value="and" @if (isset($operator) && $operator == 'and') selected @endif>Valid when all conditions are met</option>
-								<option value="or" @if (isset($operator) && $operator == 'or') selected @endif>Valid when minimum one condition is met</option>
+							<select name="operator2" class="form-control input-sm " placeholder="Search Rule" required>
+								<option value="and" @if (isset($operator2) && $operator2 == 'and') selected @endif>Valid when all conditions are met</option>
+								<option value="or" @if (isset($operator2) && $operator2 == 'or') selected @endif>Valid when minimum one condition is met</option>
 							</select>
 						</div>
 						<div class="col-md-4">
@@ -236,14 +236,14 @@
 		</div>
 	</div>
 </form>
-@if(isset($rule)&&$rule)
+@if(isset($rule2)&&$rule2)
 <div class="alert alert-block alert-info fade in">
 	<button type="button" class="close" data-dismiss="alert"></button>
 	<h4 class="alert-heading">Displaying search result :</h4>
-	<p>{{$result['total']??0}}</p><br>
-	<form action="{{ url()->current().'#detail-information' }}" method="post">
+	<p>{{$result['total2']??0}}</p><br>
+	<form action="{{ url()->current().'#coupon' }}" method="post">
 		{{csrf_field()}}
-		<button class="btn btn-sm btn-warning" name="clear" value="session">Reset</button>
+		<button class="btn btn-sm btn-warning" name="clear2" value="session">Reset</button>
 	</form>
 	<br>
 </div>
