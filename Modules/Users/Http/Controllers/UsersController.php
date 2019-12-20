@@ -511,13 +511,11 @@ class UsersController extends Controller
 				return back()->withErrors(['Delete Failed']);
 			}
 		}
-		if(isset($post['password'])){
-			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success")
-				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			else 
-				Session::put('secure','yes');
-		} 
+        if(isset($post['password'])){
+            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+            if($checkpin['status'] != "success")
+                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+        }
 		
 		if(isset($post['phone'])){
 			if(isset($post['birthday'])){
@@ -560,15 +558,6 @@ class UsersController extends Controller
 			$update = MyHelper::post('users/update/suspend', $post);
 			return parent::redirect($update, 'Suspend Status has been changed.');
         }
-		
-		if(empty(Session::get('secure'))){
-			$data = [ 'title'             => 'User',
-					  'menu_active'       => 'user',
-					  'submenu_active'    => 'user-list',
-					  'phone'    		  => $phone
-					];
-			return view('users::password', $data);
-		}
 		
 		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
 		// return $getUser;exit;
@@ -619,6 +608,17 @@ class UsersController extends Controller
 		
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
+
+        if(!isset($post['password'])){
+            $data = [ 'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-list',
+                'phone'    		  => $phone
+            ];
+            return view('users::password', $data);
+        } else {
+            return view('users::detail', $data);
+        }
 		// print_r($data);exit;
         return view('users::detail', $data);
     }
@@ -762,7 +762,8 @@ class UsersController extends Controller
     }
 	
 	public function activity(Request $request, $page = 1){
-		$post = $request->except('_token');
+        $input = $request->input();
+        $post = $request->except('_token', 'password');
 
 		if(!empty(Session::get('form'))){
 			if(isset($post['take'])) $takes = $post['take'];
@@ -785,8 +786,14 @@ class UsersController extends Controller
 				  'menu_active'       => 'user',
 				  'submenu_active'    => 'user-log'
 				];
-				
-		if(!isset($post['order_field'])) $post['order_field'] = '';
+
+        if(isset($input['password'])){
+            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $input['password'], 'admin_panel' => 1));
+            if($checkpin['status'] != "success")
+                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+        }
+
+        if(!isset($post['order_field'])) $post['order_field'] = '';
 		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
 		if(!isset($post['take'])) $post['take'] = 10;
 		$post['skip'] = 0 + (($page-1) * $post['take']);
@@ -826,33 +833,44 @@ class UsersController extends Controller
 		}
 		
 		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
-		
-		// print_r($data);exit;
-		return view('users::log', $data);
+
+        if(!isset($input['password'])){
+            $data = [ 	'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-log'
+            ];
+            return view('users::password', $data);
+        } else {
+            return view('users::log', $data);
+        }
 	}
-	public function favorite(Request $request, $phone){
-		$post = $request->post();
-		$data = [ 'title'             => 'User',
-				  'subtitle'		  => 'Favorite',
-				  'menu_active'       => 'user',
-				  'submenu_active'    => 'user-list'
-				];
-		if(isset($post['password'])){
-			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success")
-				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			else 
-				Session::put('secure','yes');
-		} 
-		if(empty(Session::get('secure'))){
-			$data = [ 'title'             => 'User',
-					  'menu_active'       => 'user',
-					  'submenu_active'    => 'user-list',
-					  'phone'    		  => $phone
-					];
-			return view('users::password', $data);
-		}
-		$data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
-		return view('users::favorite', $data);
-	}
+    public function favorite(Request $request, $phone){
+        $post = $request->post();
+        $data = [ 'title'             => 'User',
+            'subtitle'		  => 'Favorite',
+            'menu_active'       => 'user',
+            'submenu_active'    => 'user-list'
+        ];
+        if(isset($post['password'])){
+            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+            if($checkpin['status'] != "success")
+                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+
+
+        }
+        $data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
+        if(!isset($post['password'])){
+            $data = [ 'title'             => 'User',
+                'subtitle'		  => 'Favorite',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-list',
+                'phone'    		  => $phone
+            ];
+            return view('users::password', $data);
+        } else {
+            return view('users::favorite', $data);
+        }
+
+
+    }
 }
