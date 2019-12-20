@@ -276,10 +276,10 @@
                                 @endif
                             </td>
                             <td>
-                                @if(MyHelper::hasAccess([198], $grantedFeature))
+                                @if(MyHelper::hasAccess([201], $grantedFeature))
                                     <a style="margin-bottom: 3px" class="btn btn-sm blue" href="{{ url('promo-campaign/detail', $res['id_promo_campaign']) }}"><i class="fa fa-search"></i></a>
                                 @endif
-                                @if(MyHelper::hasAccess([198], $grantedFeature))
+                                @if(MyHelper::hasAccess([204], $grantedFeature))
                                     @if( isset($res['date_start']) )
                                         @if ($res['date_start'] > date("Y-m-d H:i:s"))
                                             <a style="margin-bottom: 3px" class="btn btn-sm red" href="#" data-id="{{ $res['id_promo_campaign'] }}" id="btn-delete"><i class="fa fa-trash-o"></i></a>

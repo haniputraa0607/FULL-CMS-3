@@ -956,8 +956,8 @@
 			</li>
 			@endif
 
-			@if(MyHelper::hasAccess([92], $configs))
-				@if(MyHelper::hasAccess([197,198,199,200,201], $grantedFeature))
+			@if(MyHelper::hasAccess([93], $configs))
+				@if(MyHelper::hasAccess([200,201,202,203,204], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'promo-campaign') ? 'active open' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="fa fa-tag"></i>
@@ -965,14 +965,14 @@
 						<span class="arrow {{($menu_active == 'promo-campaign') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
-						@if(MyHelper::hasAccess([199], $grantedFeature))
+						@if(MyHelper::hasAccess([202], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'promo-campaign-create') ? 'active open' : ''}}">
 							<a href="{{url('promo-campaign/create')}}" class="nav-link ">
 								<span class="title">New Promo Campaign</span>
 							</a>
 						</li>
 						@endif
-						@if(MyHelper::hasAccess([197], $grantedFeature))
+						@if(MyHelper::hasAccess([200], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'promo-campaign-list') ? 'active open' : ''}}">
 							<a href="{{url('promo-campaign')}}" class="nav-link ">
 								<span class="title">Promo Campaign List</span>
