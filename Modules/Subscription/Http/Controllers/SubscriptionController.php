@@ -57,7 +57,7 @@ class SubscriptionController extends Controller
             }
         }
 
-        $data['subs'] = $this->getData(MyHelper::post('subscription/list', $post));
+        $data['subs'] = $this->getData(MyHelper::post('subscription/be/list', $post));
 
         $post['select'] = ['id_outlet','outlet_code','outlet_name'];
         $data['outlets'] = $this->getData(MyHelper::post('outlet/ajax_handler', $post));

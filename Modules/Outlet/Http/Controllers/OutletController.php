@@ -28,7 +28,7 @@ class OutletController extends Controller
         ];
 
         // outlet
-        $outlet = MyHelper::post('outlet/list', ['all_outlet' => 1]);
+        $outlet = MyHelper::post('outlet/be/list', ['all_outlet' => 1]);
 
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
@@ -46,7 +46,7 @@ class OutletController extends Controller
         if($post){
 
         }
-        $outlet = MyHelper::get('outlet/list?log_save=0');
+        $outlet = MyHelper::get('outlet/be/list?log_save=0');
 
 		if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data = $outlet['result'];
@@ -63,7 +63,7 @@ class OutletController extends Controller
         if($type == 'Order'){
             $post['type'] = 'transaction';
         }
-        $outlet = MyHelper::post('outlet/filter?log_save=0', $post);
+        $outlet = MyHelper::post('outlet/be/filter?log_save=0', $post);
         if (isset($outlet['result'])) {
             $data = $outlet['result'];
         }
@@ -132,7 +132,7 @@ class OutletController extends Controller
                     return parent::redirect($save, 'Outlet has been created.', 'outlet/detail/'.$save['result']['outlet_code'].'#photo');
                 }
                 else {
-                    return parent::redirect($save, 'Outlet has been created.', 'outlet/list');
+                    return parent::redirect($save, 'Outlet has been created.', 'outlet/be/list');
                 }
             }else {
                    if (isset($save['errors'])) {
@@ -164,13 +164,13 @@ class OutletController extends Controller
                 'submenu_active' => 'outlet-list',
             ];
 
-            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
+            $outlet = MyHelper::post('outlet/be/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
             $data['brands'] = MyHelper::get('brand/list')['result']??[];
             // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
-                $product = MyHelper::get('product/list/price/'.$outlet['result'][0]['id_outlet']);
+                $product = MyHelper::get('product/be/list/price/'.$outlet['result'][0]['id_outlet']);
 
                 if (isset($product['status']) && $product['status'] == "success") {
                     $data['product']    = $product['result'];
@@ -296,7 +296,7 @@ class OutletController extends Controller
         $data['order_field']=$post['order_field'];
         $post['order_method']=session('outlet_location_order_method')??'asc';
         $data['order_method']=$post['order_method'];
-        $req=MyHelper::post('outlet/list?page='.$page,$post);
+        $req=MyHelper::post('outlet/be/list?page='.$page,$post);
         $data['total']=$req['result']['total']??0;
         $data['outlets']=$req['result']['data']??[];
         $data['next_page_url']=($req['result']['next_page_url']??false)?url()->current().'?page='.($page+1):null;
@@ -408,7 +408,7 @@ class OutletController extends Controller
             'menu_active'    => 'outlet',
             'submenu_active' => 'outlet-holiday',
         ];
-        $outlet = MyHelper::get('outlet/list');
+        $outlet = MyHelper::get('outlet/be/list');
 
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
@@ -438,7 +438,7 @@ class OutletController extends Controller
                 'submenu_active' => 'outlet-holiday',
             ];
 
-            $outlet = MyHelper::get('outlet/list');
+            $outlet = MyHelper::get('outlet/be/list');
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet'] = $outlet['result'];
@@ -505,14 +505,14 @@ class OutletController extends Controller
                 return back()->witherrors($e);
             }
 
-            $outlet = MyHelper::get('outlet/list');
+            $outlet = MyHelper::get('outlet/be/list');
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet'] = $outlet['result'];
             }
             else {
                 $e = ['e' => 'Data outlet not found.'];
-                return redirect('outlet/list')->witherrors($e);
+                return redirect('outlet/be/list')->witherrors($e);
             }
 
             return view('outlet::outlet_holiday_update', $data);
@@ -571,7 +571,7 @@ class OutletController extends Controller
                 $save = MyHelper::post('outlet/import', ['data_import' => $dataimport]);
 
                 if (isset($save['status']) && $save['status'] == "success") {
-                    return parent::redirect($save, $save['message'], 'outlet/list');
+                    return parent::redirect($save, $save['message'], 'outlet/be/list');
                 }else {
                     if (isset($save['errors'])) {
                         return back()->withErrors($save['errors'])->withInput();
@@ -749,7 +749,7 @@ class OutletController extends Controller
 
     public function qrcodePrint()
     {
-        $outlet = MyHelper::post('outlet/list', ['qrcode'=>true]);
+        $outlet = MyHelper::post('outlet/be/list', ['qrcode'=>true]);
 
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
@@ -771,9 +771,9 @@ class OutletController extends Controller
         ];
 
         if(isset($post['page'])){
-            $outlet = MyHelper::post('outlet/list?page='.$post['page'], ['qrcode'=>true, 'qrcode_paginate'=>true]);
+            $outlet = MyHelper::post('outlet/be/list?page='.$post['page'], ['qrcode'=>true, 'qrcode_paginate'=>true]);
         }else{
-            $outlet = MyHelper::post('outlet/list', ['qrcode'=>true, 'qrcode_paginate'=>true]);
+            $outlet = MyHelper::post('outlet/be/list', ['qrcode'=>true, 'qrcode_paginate'=>true]);
         }
 
         $data['from'] = 0;
@@ -799,7 +799,7 @@ class OutletController extends Controller
     }
 
     public function maxOrder(Request $request,$outlet_code=null) {
-        $outlets = MyHelper::get('outlet/list')['result']??[];
+        $outlets = MyHelper::get('outlet/be/list')['result']??[];
         if(!$outlets){
             return back()->withErrors(['Something went wrong']);
         }

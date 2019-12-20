@@ -301,7 +301,7 @@ class DealsController extends Controller
             $data['brands'] = parent::getData(MyHelper::get('brand/list'));
 
             // DATA PRODUCT
-            $data['product'] = parent::getData(MyHelper::get('product/list?log_save=0'));
+            $data['product'] = parent::getData(MyHelper::get('product/be/list?log_save=0'));
 
             // DATA OUTLET
 
@@ -362,10 +362,10 @@ class DealsController extends Controller
                 $data['operator']=$filter['operator'];
             }
         }
-        // return MyHelper::post('deals/list', $post);
+        // return MyHelper::post('deals/be/list', $post);
         $post['admin']=1;
-        $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
-        $outlets = parent::getData(MyHelper::get('outlet/list'));
+        $data['deals'] = parent::getData(MyHelper::post('deals/be/list', $post));
+        $outlets = parent::getData(MyHelper::get('outlet/be/list'));
         $brands = parent::getData(MyHelper::get('brand/list'));
         $data['outlets']=array_map(function($var){
             return [$var['id_outlet'],$var['outlet_name']];
@@ -391,7 +391,7 @@ class DealsController extends Controller
         $post['web'] = 1;
 
         // DEALS
-        $data['deals']   = parent::getData(MyHelper::post('deals/list', $post));
+        $data['deals']   = parent::getData(MyHelper::post('deals/be/list', $post));
 
         if (empty($data['deals'])) {
             return back()->withErrors(['Data deals not found.']);
@@ -415,10 +415,10 @@ class DealsController extends Controller
         $data['brands'] = parent::getData(MyHelper::get('brand/list'));
 
         // DATA PRODUCT
-        // $data['product'] = parent::getData(MyHelper::get('product/list'));
+        // $data['product'] = parent::getData(MyHelper::get('product/be/list'));
 
         // DATA OUTLET
-        $data['outlets'] = parent::getData(MyHelper::get('outlet/list'));
+        $data['outlets'] = parent::getData(MyHelper::get('outlet/be/list'));
 
         $getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
@@ -429,13 +429,13 @@ class DealsController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 
-		$getProduct = MyHelper::get('product/list?log_save=0');
+		$getProduct = MyHelper::get('product/be/list?log_save=0');
 		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 
 		$getTag = MyHelper::get('product/tag/list?log_save=0');
 		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-		$getMembership = MyHelper::post('membership/list?log_save=0',[]);
+		$getMembership = MyHelper::post('membership/be/list?log_save=0',[]);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
         if(!empty(Session::get('filter_user'))){
@@ -699,9 +699,9 @@ class DealsController extends Controller
             $data[$key] = $value;
         }
 
-        $data['outlet']    = parent::getData(MyHelper::get('outlet/list?log_save=0'));
-        $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => ["Deals", "Hidden"], 'web' => 1]));
-        // $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
+        $data['outlet']    = parent::getData(MyHelper::get('outlet/be/list?log_save=0'));
+        $data['dealsType'] = parent::getData(MyHelper::post('deals/be/list', ['deals_type' => ["Deals", "Hidden"], 'web' => 1]));
+        // $data['dealsType'] = parent::getData(MyHelper::get('deals/be/list'));
 
 
         foreach ($post as $key => $value) {
@@ -749,9 +749,9 @@ class DealsController extends Controller
             $data[$key] = $value;
         }
 
-        $data['outlet']    = parent::getData(MyHelper::get('outlet/list?log_save=0'));
-        $data['dealsType'] = parent::getData(MyHelper::post('deals/list', ['deals_type' => ["Deals", "Hidden"]]));
-        // $data['dealsType'] = parent::getData(MyHelper::get('deals/list'));
+        $data['outlet']    = parent::getData(MyHelper::get('outlet/be/list?log_save=0'));
+        $data['dealsType'] = parent::getData(MyHelper::post('deals/be/list', ['deals_type' => ["Deals", "Hidden"]]));
+        // $data['dealsType'] = parent::getData(MyHelper::get('deals/be/list'));
 
         return view('deals::deals.transaction', $data);
     }
@@ -805,10 +805,10 @@ class DealsController extends Controller
             $data       = $dataDeals['data'];
 
             // DATA PRODUCT
-            $data['products'] = parent::getData(MyHelper::get('product/list?log_save=0'));
+            $data['products'] = parent::getData(MyHelper::get('product/be/list?log_save=0'));
 
             // DATA OUTLET
-            $data['outlet'] = parent::getData(MyHelper::get('outlet/list?log_save=0'));
+            $data['outlet'] = parent::getData(MyHelper::get('outlet/be/list?log_save=0'));
 
             return view('deals::subscription.subscription_create', $data);
         }
@@ -864,7 +864,7 @@ class DealsController extends Controller
         $data       = $dataDeals['data'];
         $post       = $dataDeals['post'];
 
-        $data['deals'] = parent::getData(MyHelper::post('deals/list', $post));
+        $data['deals'] = parent::getData(MyHelper::post('deals/be/list', $post));
         // dd($data, $post);
 
         return view('deals::subscription.subscription_list', $data);
@@ -883,7 +883,7 @@ class DealsController extends Controller
         $post['deals_type']     = "Subscription";
 
         // DEALS
-        $data['deals']   = parent::getData(MyHelper::post('deals/list', $post));
+        $data['deals']   = parent::getData(MyHelper::post('deals/be/list', $post));
         if (empty($data['deals'])) {
             return back()->withErrors(['Data deals not found.']);
         }
@@ -903,10 +903,10 @@ class DealsController extends Controller
         }
 
         // DATA PRODUCT
-        $data['products'] = parent::getData(MyHelper::get('product/list?log_save=0'));
+        $data['products'] = parent::getData(MyHelper::get('product/be/list?log_save=0'));
 
         // DATA OUTLET
-        $data['outlet'] = parent::getData(MyHelper::get('outlet/list?log_save=0'));
+        $data['outlet'] = parent::getData(MyHelper::get('outlet/be/list?log_save=0'));
 
         // dd($data);
         return view('deals::subscription.subscription_detail', $data);
@@ -951,7 +951,7 @@ class DealsController extends Controller
             $data['brands'] = parent::getData(MyHelper::post('brand/list', ['web' => 1]));
 
             // DATA PRODUCT
-            $data['product'] = parent::getData(MyHelper::get('product/list?log_save=0'));
+            $data['product'] = parent::getData(MyHelper::get('product/be/list?log_save=0'));
 
             return view('deals::welcome_voucher.create', $data);
         }

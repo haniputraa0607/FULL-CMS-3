@@ -72,7 +72,8 @@ class MyHelper
               'client_id'     => env('PASSWORD_CREDENTIAL_ID'),
               'client_secret' => env('PASSWORD_CREDENTIAL_SECRET'),
               'username'      => $request->input('username'),
-              'password'      => $request->input('password')
+              'password'      => $request->input('password'),
+              'api-be'        => 1
           ],
       ]);
       return json_decode($response->getBody(), true);
