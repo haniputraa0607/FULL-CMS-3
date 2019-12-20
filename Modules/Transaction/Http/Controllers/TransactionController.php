@@ -87,22 +87,22 @@ class TransactionController extends Controller
 				];
         switch ($subject) {
             case 'receive-inject-voucher':
-                $data['menu_active'] = 'deals-autoresponse';
+                $data['menu_active'] = 'inject-voucher';
                 $data['submenu_active'] = 'deals-autoresponse-receive-inject-voucher';
                 break;
 
             case 'redeem-voucher-success':
-                $data['menu_active'] = 'deals-autoresponse';
+                $data['menu_active'] = 'deals';
                 $data['submenu_active'] = 'deals-autoresponse-redeem-deals-success';
                 break;
             
             case 'claim-free-deals-success':
-                $data['menu_active'] = 'deals-autoresponse';
+                $data['menu_active'] = 'deals';
                 $data['submenu_active'] = 'deals-autoresponse-claim-free-deals-success';
                 break;
 
             case 'claim-paid-deals-success':
-                $data['menu_active'] = 'deals-autoresponse';
+                $data['menu_active'] = 'deals';
                 $data['submenu_active'] = 'deals-autoresponse-claim-paid-deals-success';
                 break;
 
