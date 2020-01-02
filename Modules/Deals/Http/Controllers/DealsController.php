@@ -298,7 +298,7 @@ class DealsController extends Controller
             $data       = $dataDeals['data'];
 
             // DATA BRAND
-            $data['brands'] = parent::getData(MyHelper::get('brand/list'));
+            $data['brands'] = parent::getData(MyHelper::get('brand/be/list'));
 
             // DATA PRODUCT
             $data['product'] = parent::getData(MyHelper::get('product/be/list?log_save=0'));
@@ -366,7 +366,7 @@ class DealsController extends Controller
         $post['admin']=1;
         $data['deals'] = parent::getData(MyHelper::post('deals/be/list', $post));
         $outlets = parent::getData(MyHelper::get('outlet/be/list'));
-        $brands = parent::getData(MyHelper::get('brand/list'));
+        $brands = parent::getData(MyHelper::get('brand/be/list'));
         $data['outlets']=array_map(function($var){
             return [$var['id_outlet'],$var['outlet_name']];
         }, $outlets);
@@ -412,7 +412,7 @@ class DealsController extends Controller
         }
 
         // DATA BRAND
-        $data['brands'] = parent::getData(MyHelper::get('brand/list'));
+        $data['brands'] = parent::getData(MyHelper::get('brand/be/list'));
 
         // DATA PRODUCT
         // $data['product'] = parent::getData(MyHelper::get('product/be/list'));
@@ -948,7 +948,7 @@ class DealsController extends Controller
             $data       = $dataDeals['data'];
 
             // DATA BRAND
-            $data['brands'] = parent::getData(MyHelper::post('brand/list', ['web' => 1]));
+            $data['brands'] = parent::getData(MyHelper::post('brand/be/list', ['web' => 1]));
 
             // DATA PRODUCT
             $data['product'] = parent::getData(MyHelper::get('product/be/list?log_save=0'));

@@ -91,7 +91,7 @@ class OutletController extends Controller
 
             // province
             $data['province'] = $this->getPropinsi();
-            $data['brands'] = MyHelper::get('brand/list')['result']??[];
+            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
 
             return view('outlet::create', $data);
         }
@@ -165,7 +165,7 @@ class OutletController extends Controller
             ];
 
             $outlet = MyHelper::post('outlet/be/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
-            $data['brands'] = MyHelper::get('brand/list')['result']??[];
+            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
             // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
@@ -597,7 +597,7 @@ class OutletController extends Controller
             'submenu_active' => 'outlet-export',
         ];
 
-        $data['brands'] = MyHelper::get('brand/list')['result']??[];
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
 
         return view('outlet::export', $data);
     }
