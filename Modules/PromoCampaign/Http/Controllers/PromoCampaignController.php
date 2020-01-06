@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-use App\lib\MyHelper;
+use App\Lib\MyHelper;
 use Session;
 
 class PromoCampaignController extends Controller
