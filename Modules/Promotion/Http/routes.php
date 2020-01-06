@@ -23,7 +23,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'promotio
 	{
 		Route::get('/', 'PromotionController@listDeals');
 		Route::any('/create', 'PromotionController@createDeals');
-		Route::any('/detail/{id}', 'PromotionController@detailDeals');
+		Route::any('/detail/{slug}', 'PromotionController@detailDeals');
 		
 	});
 });

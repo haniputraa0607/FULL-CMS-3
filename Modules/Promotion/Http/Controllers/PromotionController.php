@@ -425,7 +425,10 @@ class PromotionController extends Controller
         $deals = MyHelper::get('promotion/deals');
         
         if (isset($deals['status']) && $deals['status'] == "success") {
-            $data['deals'] = $deals['result'];
+            $data['deals'] = array_map(function($var){
+            	$var['id_deals_promotion_template'] = MyHelper::createSlug($var['id_deals_promotion_template'],$var['created_at']);
+            	return $var;
+            },$deals['result']);
         }
         else {
             $data['deals'] = [];
@@ -473,7 +476,10 @@ class PromotionController extends Controller
         return view('promotion::deals.create', $data);
 	}
 	
-	public function detailDeals(Request $request, $id){
+	public function detailDeals(Request $request, $slug){
+		$exploded = MyHelper::explodeSlug($slug);
+		$id = $exploded[0];
+		$created_at = $exploded[1];
 		$data = [
             'title'          => 'Promotion',
             'sub_title'      => 'Deals Promotion',
@@ -485,6 +491,7 @@ class PromotionController extends Controller
 		if($post){
 			// dd($post);
 			$post['id_deals_promotion_template'] = $id;
+			$post['created_at'] = $created_at;
 			if (isset($post['deals_image'])) {
 				$post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
 			}
@@ -492,7 +499,7 @@ class PromotionController extends Controller
 			$action = MyHelper::post('promotion/deals/save', $post);
 
 			if (isset($action['status']) && $action['status'] == "success") {
-				return redirect('promotion/deals/detail/'.$id)->withSuccess(['Deals has been updated.']);
+				return redirect('promotion/deals/detail/'.$slug)->withSuccess(['Deals has been updated.']);
             }else {
 				if (isset($action['errors'])) {
 					return back()->withErrors($action['errors'])->withInput();
@@ -509,9 +516,10 @@ class PromotionController extends Controller
 		$getOutlet = MyHelper::get('outlet/be/list?log_save=0');
 		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlet'] = $getOutlet['result']; else $data['outlet'] = null;
 		
-		$deals = MyHelper::post('promotion/deals', ['id_deals_promotion_template' => $id]);
+		$deals = MyHelper::post('promotion/deals', ['id_deals_promotion_template' => $id,'created_at' => $created_at]);
 		if (isset($deals['status']) && $deals['status'] == "success") {
 			$data['deals'] = $deals['result'][0];
+			$data['deals']['id_deals_promotion_template'] = $slug;
 			$data['promotion'] = $deals['result']['promotion'];
 		}else {
 			if (isset($deals['errors'])) {
