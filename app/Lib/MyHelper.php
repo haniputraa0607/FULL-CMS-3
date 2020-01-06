@@ -470,19 +470,20 @@ class MyHelper
     $key = md5("esemestester".$id_user."644", true);
     return $key;
   }
-  public static function  getkey() {
-    $depan = MyHelper::createrandom(1);
-    $belakang = MyHelper::createrandom(1);
-    $skey = $depan . "9gjru84jb86c9l" . $belakang;
-    return $skey;
-  }
   
-  public static function  parsekey($value) {
-    $depan = substr($value, 0, 1);
-    $belakang = substr($value, -1, 1);
-    $skey = $depan . "9gjru84jb86c9l" . $belakang;
-    return $skey;
-  }
+  public static function getkey() {
+		$depan = self::createrandom(env('TECH_DEC_DD'));
+		$belakang = self::createrandom(env('TECH_DEC_DB'));
+		$skey = $depan . env('TECH_DEC_FK') . $belakang;
+		return $skey;
+	}
+
+	public static function parsekey($value) {
+		$depan = substr($value, 0, env('TECH_DEC_DD'));
+		$belakang = substr($value, -env('TECH_DEC_DB'), env('TECH_DEC_DB'));
+		$skey = $depan . env('TECH_DEC_FK') . $belakang;
+		return $skey;
+	}
   
   public static function  createrandom($digit) {
     $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -652,6 +653,33 @@ class MyHelper
       return $string;
     }
   }
+
+  // terbaru, cuma nambah serialize + unserialize sih biar support array
+	public static function encrypt2019($value) {
+		if(!$value){return false;}
+		// biar support array
+		$text = serialize($value);
+		$skey = self::getkey();
+		$depan = substr($skey, 0, env('TECH_DEC_DD'));
+		$belakang = substr($skey, -env('TECH_DEC_DB'), env('TECH_DEC_DB'));
+		$ivlen = openssl_cipher_iv_length(env('TECH_DEC_CM'));
+		$iv = substr(hash('sha256', env('TECH_DEC_SI')), 0, $ivlen);
+		$crypttext = openssl_encrypt($text, env('TECH_DEC_CM'), $skey, 0, $iv);
+		return trim($depan . self::safe_b64encode($crypttext) . $belakang);
+	}
+
+	public static function decrypt2019($value) {
+		if(!$value){return false;}
+		$skey = self::parsekey($value);
+		$jumlah = strlen($value);
+		$value = substr($value, env('TECH_DEC_DD'), $jumlah-env('TECH_DEC_DD')-env('TECH_DEC_DB'));
+		$crypttext = self::safe_b64decode($value);
+		$ivlen = openssl_cipher_iv_length(env('TECH_DEC_CM'));
+		$iv = substr(hash('sha256', env('TECH_DEC_SI')), 0, $ivlen);
+		$decrypttext = openssl_decrypt($crypttext, env('TECH_DEC_CM'), $skey, 0, $iv);
+		// dikembalikan ke format array sewaktu return
+		return unserialize(trim($decrypttext));
+	}
 }
 
 ?>
