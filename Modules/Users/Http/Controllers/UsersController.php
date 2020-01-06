@@ -732,6 +732,10 @@ class UsersController extends Controller
 		$getLog = MyHelper::get('users/log/detail/'.$id.'/'.$log_type);
 		$data = [];
 		
+		$getLog['result']['user']      = MyHelper::decrypt2019($getLog['result']['user']);
+		$getLog['result']['request']   = MyHelper::decrypt2019($getLog['result']['request']);
+		$getLog['result']['response']  = MyHelper::decrypt2019($getLog['result']['response']);
+
 		if(isset($getLog['result'])) $data = $getLog['result'];
 
         return $data;
