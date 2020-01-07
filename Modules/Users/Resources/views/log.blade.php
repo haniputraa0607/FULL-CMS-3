@@ -50,7 +50,6 @@
 	// function viewLogDetail(url, status, request, response, ip, useragent){
 	function viewLogDetail(id_log, log_type){
 		$.get("{{url('user/ajax/log')}}"+'/'+id_log+'/'+log_type, function(result){
-			console.log(result)
 			if(result){
 				document.getElementById("log-url").value = result.url;
 				document.getElementById("log-status").value = result.response_status;
