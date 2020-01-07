@@ -191,6 +191,7 @@
         Dropzone.options.myDropzone = {
             maxFilesize: 12,
             acceptedFiles: "image/*",
+            parallelUploads: 1,
             init: function () {
                 this.on("thumbnail", function(file) {
                     if (file.width == 300 || file.height == 300) {
@@ -211,6 +212,8 @@
             success: function(file, response) 
             {
                 if (response.status == 'success') {
+                    filename = file.name.split('.')
+                    $("#"+filename[0]).attr("src",response.result.url_product_photo);
                     toastr.success("Photo has been updated.")
                 } else {
                     toastr.warning("Make sure name file same as Product Code.")
@@ -293,7 +296,7 @@
                                 @if (empty($value['photos']))
                                     <td>No Image</td>
                                 @else
-                                    <td><img style="width: 75px;" src="{{env('AWS_URL').$value['photos'][0]['product_photo'] }}" alt=""></td>
+                                    <td><img id="{{ $value['product_code'] }}" style="width: 75px;" src="{{env('AWS_URL').$value['photos'][0]['product_photo'] }}" alt=""></td>
                                 @endif
                             </tr>
                         @endforeach
