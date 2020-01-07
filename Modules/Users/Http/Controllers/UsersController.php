@@ -615,6 +615,12 @@ class UsersController extends Controller
                 'submenu_active'    => 'user-list',
                 'phone'    		  => $phone
             ];
+			$getExtraToken = MyHelper::get('users/getExtraToken');
+			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
+				$data['extra_token'] = $getExtraToken['result'];
+			} else {
+				abort(403);
+			}
             return view('users::password', $data);
         } else {
             return view('users::detail', $data);
@@ -731,10 +737,6 @@ class UsersController extends Controller
     {
 		$getLog = MyHelper::get('users/log/detail/'.$id.'/'.$log_type);
 		$data = [];
-		
-		$getLog['result']['user']      = MyHelper::decrypt2019($getLog['result']['user']);
-		$getLog['result']['request']   = MyHelper::decrypt2019($getLog['result']['request']);
-		$getLog['result']['response']  = MyHelper::decrypt2019($getLog['result']['response']);
 
 		if(isset($getLog['result'])) $data = $getLog['result'];
 
@@ -902,6 +904,12 @@ class UsersController extends Controller
                 'submenu_active'    => 'user-list',
                 'phone'    		  => $phone
             ];
+			$getExtraToken = MyHelper::get('users/getExtraToken');
+			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
+				$data['extra_token'] = $getExtraToken['result'];
+			} else {
+				abort(403);
+			}
             return view('users::password', $data);
         } else {
             return view('users::favorite', $data);
