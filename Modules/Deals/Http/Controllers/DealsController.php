@@ -367,6 +367,12 @@ class DealsController extends Controller
         $data['deals'] = parent::getData(MyHelper::post('deals/be/list', $post));
         $outlets = parent::getData(MyHelper::get('outlet/be/list'));
         $brands = parent::getData(MyHelper::get('brand/be/list'));
+        if (!empty($data['deals'])) {
+        	foreach ($data['deals'] as $key => $value) {
+        		$data['deals'][$key]['id_deals'] = MyHelper::createSlug($value['id_deals'], $value['created_at']);
+        	}
+        }
+
         $data['outlets']=array_map(function($var){
             return [$var['id_outlet'],$var['outlet_name']];
         }, $outlets);
@@ -379,6 +385,7 @@ class DealsController extends Controller
     /* DETAIL */
     function detail(Request $request, $id, $promo) {
         $post = $request->except('_token');
+        $id = MyHelper::explodeSlug($id)[0]??'';
 
         $identifier             = $this->identifier();
 
@@ -663,6 +670,7 @@ class DealsController extends Controller
     /* DELETE DEAL */
     function deleteDeal(Request $request) {
         $post    = $request->except('_token');
+        $post['id_deals'] = MyHelper::explodeSlug($post['id_deals'])[0]??'';
         $voucher = MyHelper::post('deals/delete', ['id_deals' => $post['id_deals']]);
 
         if (isset($voucher['status']) && $voucher['status'] == "success") {
