@@ -471,19 +471,19 @@ class MyHelper
     return $key;
   }
   
-  public static function getkey() {
-		$depan = self::createrandom(env('TECH_DEC_DD'));
-		$belakang = self::createrandom(env('TECH_DEC_DB'));
-		$skey = $depan . env('TECH_DEC_FK') . $belakang;
-		return $skey;
-	}
-
-	public static function parsekey($value) {
-		$depan = substr($value, 0, env('TECH_DEC_DD'));
-		$belakang = substr($value, -env('TECH_DEC_DB'), env('TECH_DEC_DB'));
-		$skey = $depan . env('TECH_DEC_FK') . $belakang;
-		return $skey;
-	}
+  public static function  getkey() {
+    $depan = MyHelper::createrandom(1);
+    $belakang = MyHelper::createrandom(1);
+    $skey = $depan . "9gjru84jb86c9l" . $belakang;
+    return $skey;
+  }
+  
+  public static function  parsekey($value) {
+    $depan = substr($value, 0, 1);
+    $belakang = substr($value, -1, 1);
+    $skey = $depan . "9gjru84jb86c9l" . $belakang;
+    return $skey;
+  }
   
   public static function  createrandom($digit) {
     $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
