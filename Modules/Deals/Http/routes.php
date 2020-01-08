@@ -44,19 +44,19 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'deals', 
 });
 
 /* Deals Subscription */
-Route::group(['middleware' => ['web', 'validate_session', 'config_control:25'], 'prefix' => 'deals-subscription', 'namespace' => 'Modules\Deals\Http\Controllers'], function () {
-    Route::get('/', ['middleware' => 'feature_control:139', 'uses' => 'DealsController@subscriptionDeals']);
-    Route::any('create', ['middleware' => 'feature_control:141', 'uses' => 'DealsController@subscriptionCreate']);
-    Route::any('detail/{id_deals}', ['middleware' => 'feature_control:140', 'uses' => 'DealsController@subscriptionDetail']);
-    Route::any('update', ['middleware' => 'feature_control:142', 'uses' => 'DealsController@subscriptionUpdate']);
-    Route::get('delete/{id_deals}', ['middleware' => 'feature_control:143', 'uses' => 'DealsController@deleteSubscriptionDeal']);
-});
+// Route::group(['middleware' => ['web', 'validate_session', 'config_control:25'], 'prefix' => 'deals-subscription', 'namespace' => 'Modules\Deals\Http\Controllers'], function () {
+//     Route::get('/', ['middleware' => 'feature_control:139', 'uses' => 'DealsController@subscriptionDeals']);
+//     Route::any('create', ['middleware' => 'feature_control:141', 'uses' => 'DealsController@subscriptionCreate']);
+//     Route::any('detail/{id_deals}', ['middleware' => 'feature_control:140', 'uses' => 'DealsController@subscriptionDetail']);
+//     Route::any('update', ['middleware' => 'feature_control:142', 'uses' => 'DealsController@subscriptionUpdate']);
+//     Route::get('delete/{id_deals}', ['middleware' => 'feature_control:143', 'uses' => 'DealsController@deleteSubscriptionDeal']);
+// });
 
 /* Webview */
-Route::group(['middleware' => ['web'], 'prefix' => 'webview', 'namespace' => 'Modules\Deals\Http\Controllers'], function () {
-    Route::get('deals/{id_deals}/{deals_type}', 'WebviewDealsController@dealsDetail');
-    Route::get('mydeals/{id_deals_user}', 'WebviewDealsController@dealsClaim');
-});
+// Route::group(['middleware' => ['web'], 'prefix' => 'webview', 'namespace' => 'Modules\Deals\Http\Controllers'], function () {
+//     Route::get('deals/{id_deals}/{deals_type}', 'WebviewDealsController@dealsDetail');
+//     Route::get('mydeals/{id_deals_user}', 'WebviewDealsController@dealsClaim');
+// });
 
 /* Welcome Voucher */
 Route::group(['middleware' => ['web', 'validate_session', 'config_control:26'], 'prefix' => 'welcome-voucher', 'namespace' => 'Modules\Deals\Http\Controllers'], function () {

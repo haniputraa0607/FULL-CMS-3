@@ -25,11 +25,13 @@ class BrandController extends Controller
         $brand = MyHelper::get('brand');
 
         if (isset($brand['status']) && $brand['status'] == "success") {
+        	foreach ($brand['result'] as $key => $value) {
+				$brand['result'][$key]['id_brand'] = MyHelper::createSlug($value['id_brand'], $value['created_at']);
+			}
             $data['brand'] = $brand['result'];
         } else {
             $data['brand'] = [];
         }
-
         return view('brand::index', $data);
     }
 
@@ -75,7 +77,12 @@ class BrandController extends Controller
         $action = MyHelper::post('brand/store', $post);
 
         if (isset($action['status']) && $action['status'] == 'success') {
-            return redirect('brand/detail/' . $action['result']['id_brand'])->with('success', ['Update brand success']);
+        	if (!empty($action['result']['created_at'])) {
+        		$slug = MyHelper::createSlug($action['result']['id_brand'], $action['result']['created_at']);
+        	}else{
+        		$slug = $action['result']['id_brand'];
+        	}
+            return redirect('brand/detail/' . $slug)->with('success', ['Update brand success']);
         } else {
             return redirect('brand/create')->withInput()->withErrors($action['messages']);
         }
@@ -84,16 +91,15 @@ class BrandController extends Controller
     public function createOutlet(Request $request)
     {
         $post   = $request->all();
+		$id_brand_decrypt = MyHelper::explodeSlug($post['id_brand'])[0]??'';
 
         foreach ($post['outlet'] as $key => $value) {
-            $data['outlet'][$key]['id_brand']   = $post['id_brand'];
+            $data['outlet'][$key]['id_brand']   = $id_brand_decrypt;
             $data['outlet'][$key]['id_outlet']  = $value;
             $data['outlet'][$key]['created_at']  = $value;
             $data['outlet'][$key]['updated_at']  = $value;
         }
-
         $action = MyHelper::post('brand/outlet/store', $data['outlet']);
-
         if (isset($action['status']) && $action['status'] == 'success') {
             return redirect('brand/outlet/' . $post['id_brand']);
         } else {
@@ -104,9 +110,10 @@ class BrandController extends Controller
     public function createProduct(Request $request)
     {
         $post   = $request->all();
+		$id_brand_decrypt = MyHelper::explodeSlug($post['id_brand'])[0]??'';
 
         foreach ($post['product'] as $key => $value) {
-            $data['product'][$key]['id_brand']      = $post['id_brand'];
+            $data['product'][$key]['id_brand']      = $id_brand_decrypt;
             $data['product'][$key]['id_product']    = $value;
             $data['product'][$key]['created_at']    = $value;
             $data['product'][$key]['updated_at']    = $value;
@@ -132,9 +139,20 @@ class BrandController extends Controller
             'submenu_active' => 'brand-list',
         ];
 
-        $action = MyHelper::post('brand/show', ['id_brand' => $id_brand]);
-        $urlNow = array_slice(explode('/', $_SERVER['REQUEST_URI']), 0, -1);
+        $id_brand_decrypt = MyHelper::explodeSlug($id_brand)[0]??'';
+
+        $action = MyHelper::post('brand/show', ['id_brand' => $id_brand_decrypt]);
+        if (($action['status'] == 'success')??false) {
+			$action['result']['id_brand'] = $id_brand;
+
+			if (!empty($action['result']['brand_outlet'])) {
+				foreach ($action['result']['brand_outlet'] as $key => $value) {
+					$action['result']['brand_outlet'][$key]['id_brand'] = $action['result']['id_brand'];
+				}
+			}
+        }
         // dd($action);
+        $urlNow = array_slice(explode('/', $_SERVER['REQUEST_URI']), 0, -1);
 
         if (isset($action['status']) && $action['status'] == 'success') {
             $data['result'] = $action['result'];
@@ -178,6 +196,7 @@ class BrandController extends Controller
         } elseif (end($urlNow) == 'deals') {
             $delete = MyHelper::post('brand/delete/deals', ['id_deals' => $post['id_deals']]);
         } else {
+        	$post['id_brand'] = MyHelper::explodeSlug($post['id_brand'])[0]??'';
             $delete = MyHelper::post('brand/delete', ['id_brand' => $post['id_brand']]);
         }
 
@@ -191,6 +210,12 @@ class BrandController extends Controller
     public function reOrder(Request $request)
     {
         $post = $request->except('_token');
+        if (!empty($post['order'])) {
+        	foreach ($post['order'] as $key => $value) {
+        		$post['order'][$key] = MyHelper::explodeSlug($value)[0]??'';
+        	}
+        }
+
         $update = MyHelper::post('brand/reorder', $post);
         if (($update['status'] ?? false) == 'success') {
             return redirect('brand')->with('success', ['Update brand order success']);
@@ -227,6 +252,7 @@ class BrandController extends Controller
     public function list(Request $request)
     {
         $post   = $request->all();
+        $post['id_brand'] = MyHelper::explodeSlug($post['id_brand'])[0]??'';
         $urlNow = array_slice(explode('/', $_SERVER['REQUEST_URI']), 0, -2);
 
         if (end($urlNow) == 'outlet') {
