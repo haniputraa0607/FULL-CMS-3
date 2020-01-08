@@ -50,6 +50,11 @@ class InboxGlobalController extends Controller
 		$action = MyHelper::post('inboxglobal/list', $post);
 		// print_r($action);exit;
 		if(isset($action['status']) && $action['status'] == 'success'){
+			if (!empty($action['result'])) {
+				foreach ($action['result'] as $key => $value) {
+					$action['result'][$key]['id_inbox_global'] = MyHelper::createSlug($value['id_inbox_global'], $value['created_at']);
+				}
+			}
 			$data['result'] = $action['result'];
 			$data['count'] = $action['count'];
 			$data['post'] = $post;
@@ -82,6 +87,7 @@ class InboxGlobalController extends Controller
     }
 	
 	public function delete($id_inbox_global){
+		$id_inbox_global = MyHelper::explodeSlug($id_inbox_global)[0]??'';
 		$delete = MyHelper::post('inboxglobal/delete', ['id_inbox_global' => $id_inbox_global]);
 		// print_r($delete);exit;
 		if($delete['status'] == 'success'){
@@ -92,6 +98,8 @@ class InboxGlobalController extends Controller
     }
 	
 	public function edit(Request $request, $id_inbox_global){
+
+		$id_inbox_global = MyHelper::explodeSlug($id_inbox_global)[0]??'';
 		$data = [ 'title'             => 'Update Inbox Global',
 				  'menu_active'       => 'inboxglobal',
 				  'submenu_active'    => 'inboxglobal-list'

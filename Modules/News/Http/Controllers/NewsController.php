@@ -26,6 +26,11 @@ class NewsController extends Controller
 
         // get outlet
         $data['news']    = parent::getData(MyHelper::post('news/be/list', ['admin'=> 1]));
+        if (!empty($data['news'])) {
+        	foreach ($data['news'] as $key => $value) {
+        		$data['news'][$key]['id_news'] = MyHelper::createSlug($value['id_news'], $value['created_at']);
+        	}
+        }
 
         return view('news::index', $data);
     }
@@ -226,8 +231,9 @@ class NewsController extends Controller
     }
 
     /* DETAIL */
-    function detail(Request $request, $id_news, $slug) {
+    function detail(Request $request, $id_news) {
         $post = $request->except('_token');
+        $id_news_decrypt = MyHelper::explodeSlug($id_news)[0]??'';
 
         if (empty($post)) {
             $data = [
@@ -237,7 +243,7 @@ class NewsController extends Controller
                     'submenu_active' => 'news-list',
             ];
 
-            $news    = parent::getData(MyHelper::post('news/be/list', ['id_news' => $id_news,'admin'=>1]));
+            $news    = parent::getData(MyHelper::post('news/be/list', ['id_news' => $id_news_decrypt,'admin'=>1]));
 			
             if (empty($news)) {
                 return back()->withErrors(['Data news not found.']);
@@ -258,7 +264,6 @@ class NewsController extends Controller
         }
         else {
             // filter data news
-			
             $news = $request->except('_token', 'id_outlet', 'id_product');
             $news = $this->setInputForUpdate($news, $post);
             // dd($news);
@@ -281,7 +286,7 @@ class NewsController extends Controller
             // update data master news
 			// print_r($news);exit;
             $update = MyHelper::post('news/update', $news);
-			// print_r($update);exit;
+
             if (isset($update['status']) && $update['status'] == "success") {
                 // simpan relasi outlet
                 if (isset($post['id_outlet']))  {
@@ -476,7 +481,7 @@ class NewsController extends Controller
     /* DELETE NEWS */
     function delete(Request $request) {
         $post   = $request->all();
-
+		$post['id_news'] = MyHelper::explodeSlug($post['id_news'])[0]??'';
         $delete = MyHelper::post('news/delete', ['id_news' => $post['id_news']]);
         
         if (isset($delete['status']) && $delete['status'] == "success") {
@@ -490,7 +495,9 @@ class NewsController extends Controller
     // preview news custom form from admin
     public function customFormPreview($id_news)
     {
-        $news = parent::getData(MyHelper::post('news/get', ['id_news' => $id_news]));
+    	$id_news_decrypt = MyHelper::explodeSlug($id_news)[0]??'';
+
+        $news = parent::getData(MyHelper::post('news/get', ['id_news' => $id_news_decrypt]));
 
         if (empty($news)) {
             return back()->withErrors(['Data news not found.']);
@@ -505,7 +512,7 @@ class NewsController extends Controller
         }
     }
 
-    public function formData($id, $slug)
+    public function formData($id)
     {
         $data = [
             'title'          => 'News',
@@ -516,7 +523,9 @@ class NewsController extends Controller
             'news_form_data' => [],
         ];
 
-        $result = parent::getData(MyHelper::post('news/form-data', ['id_news' => $id]));
+        $id_decrypt = MyHelper::explodeSlug($id)[0]??'';
+
+        $result = parent::getData(MyHelper::post('news/form-data', ['id_news' => $id_decrypt]));
 
         if (empty($result)) {
             return back()->withErrors(['Form data news not found.']);
