@@ -1107,22 +1107,6 @@
 							</a>
 						</li>
 						@endif
-						@if(MyHelper::hasAccess([18], $configs))
-							@if(MyHelper::hasAccess([172], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'subscription-point-create') ? 'active open' : ''}}">
-								<a href="{{url('subscription-point/create')}}" class="nav-link ">
-									<span class="title">New Subscription Deals</span>
-								</a>
-							</li>
-							@endif
-							@if(MyHelper::hasAccess([173], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'subscription-point-list') ? 'active open' : ''}}">
-								<a href="{{url('subscription-point')}}" class="nav-link ">
-									<span class="title">Subscription Point List</span>
-								</a>
-							</li>
-							@endif
-						@endif
 					</ul>
 				</li>
 				@endif

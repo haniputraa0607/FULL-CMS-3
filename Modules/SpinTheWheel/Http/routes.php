@@ -4,7 +4,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'spinthew
 {
     Route::get('/list', ['middleware' => 'feature_control:130', 'uses' => 'SpinTheWheelController@list']);
     Route::any('/create', ['middleware' => 'feature_control:131', 'uses' => 'SpinTheWheelController@create']);
-    Route::get('/edit/{id_deals}', ['middleware' => 'feature_control:132', 'uses' => 'SpinTheWheelController@edit']);
+    Route::get('/edit/{slug}', ['middleware' => 'feature_control:132', 'uses' => 'SpinTheWheelController@edit']);
     Route::post('/edit', ['middleware' => 'feature_control:132', 'uses' => 'SpinTheWheelController@update']);
     Route::any('/delete', ['middleware' => 'feature_control:133', 'uses' => 'SpinTheWheelController@destroy']);
     Route::any('/setting', ['middleware' => 'feature_control:134', 'uses' => 'SpinTheWheelController@setting']);
