@@ -233,7 +233,10 @@ class SettingController extends Controller
         $faqList = MyHelper::get('setting/be/faq');
 
         if (isset($faqList['status']) && $faqList['status'] == 'success') {
-            $data['result'] = $faqList['result'];
+            $data['result'] = array_map(function($var){
+                $var['id_faq'] = MyHelper::createSlug($var['id_faq'],$var['created_at']);
+                return $var;
+            },$faqList['result']);
         } else {
             if (isset($faqList['status']) && $faqList['status'] == 'fail') {
                 $data['result'] = [];
@@ -302,7 +305,10 @@ class SettingController extends Controller
         return response()->json(['status' => $status]);
     }
 
-    public function faqEdit($id) {
+    public function faqEdit($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $data = [];
         $data = [
             'title'   => 'Setting',
@@ -310,10 +316,13 @@ class SettingController extends Controller
             'submenu_active' => 'faq-list'
         ];
 
-        $edit = MyHelper::post('setting/faq/edit', ['id_faq' => $id]);
+        $edit = MyHelper::post('setting/faq/edit', ['id_faq' => $id,'created_at'=>$created_at]);
 
         if (isset($edit['status']) && $edit['status'] == 'success') {
             $data['faq'] = $edit['result'];
+            if(isset($data['faq']['id_faq'])){
+                $data['faq']['id_faq'] = $slug;
+            }
             return view('setting::faqEdit', $data);
         }
         else {
@@ -323,11 +332,15 @@ class SettingController extends Controller
         }
     }
 
-    public function faqUpdate(Request $request, $id) {
+    public function faqUpdate(Request $request, $slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $post =[
             'id_faq'    => $id,
             'question'  => $request['question'],
-            'answer'    => $request['answer']
+            'answer'    => $request['answer'],
+            'created_at' => $created_at
         ];
 
         $update = MyHelper::post('setting/faq/update', $post);
@@ -335,8 +348,11 @@ class SettingController extends Controller
         return parent::redirect($update, 'FAQ has been updated.');
     }
 
-    public function faqDelete($id) {
-        $delete = MyHelper::post('setting/faq/delete', ['id_faq' => $id]);
+    public function faqDelete($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
+        $delete = MyHelper::post('setting/faq/delete', ['id_faq' => $id,'created_at',$created_at]);
 
         return parent::redirect($delete, 'FAQ has been deleted.');
     }

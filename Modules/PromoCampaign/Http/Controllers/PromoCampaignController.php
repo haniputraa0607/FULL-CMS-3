@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-use App\lib\MyHelper;
+use App\Lib\MyHelper;
 use Session;
 
 class PromoCampaignController extends Controller
@@ -65,6 +65,10 @@ class PromoCampaignController extends Controller
 
         // pagination data
         if(!empty($get_data) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
+            $get_data['result']['data'] = array_map(function($var){
+                $var['id_promo_campaign'] = MyHelper::createSlug($var['id_promo_campaign'],$var['created_at']);
+                return $var;
+            },$get_data['result']['data']);
             $data['promo']            = $get_data['result']['data'];
             $data['promoTotal']       = $get_data['result']['total'];
             $data['promoPerPage']     = $get_data['result']['from'];
@@ -110,8 +114,10 @@ class PromoCampaignController extends Controller
         return view('promocampaign::list', $data);
     }
 
-    public function detail(Request $request, $id_promo_campaign) {
-        
+    public function detail(Request $request, $slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id_promo_campaign = $exploded[0];
+        $created_at = $exploded[1];
         $post = $request->except('_token');
 
         if ($request->post('clear') == 'session') 
@@ -149,7 +155,7 @@ class PromoCampaignController extends Controller
         $result = MyHelper::post('promo-campaign/detail', $post);
 
         if ( ($result['status']=='success')??false) {
-
+            $result['result']['id_promo_campaign'] = MyHelper::createSlug($result['result']['id_promo_campaign'],$result['result']['created_at']);
             $data = [
                 'title'             => 'Promo Campaign',
                 'sub_title'         => 'Detail',
@@ -244,8 +250,16 @@ class PromoCampaignController extends Controller
         }
     }
 
-    public function step1(Request $request, $id_promo_campaign=null)
+    public function step1(Request $request, $slug=null)
     {
+        if($slug){
+            $exploded = MyHelper::explodeSlug($slug);
+            $id_promo_campaign = $exploded[0];
+            $created_at = $exploded[1];
+        }else{
+            $id_promo_campaign = null;
+            $created_at = null;
+        }
         $post = $request->except('_token');
 
         if (empty($post)) 
@@ -262,19 +276,21 @@ class PromoCampaignController extends Controller
                 $get_data = MyHelper::post('promo-campaign/show-step1', ['id_promo_campaign' => $id_promo_campaign]);
 
                 $data['result'] = $get_data['result']??'';
+                $data['result']['id_promo_campaign'] = $slug;
             }
             return view('promocampaign::create-promo-campaign-step-1', $data);
 
         }
         else
         {
-
+            if(isset($post['id_promo_campaign'])){
+                $post['id_promo_campaign'] = MyHelper::explodeSlug($post['id_promo_campaign'])[0];
+            }
             $action = MyHelper::post('promo-campaign/step1', $post);
-
             
             if (isset($action['status']) && $action['status'] == 'success') 
             {
-                return redirect('promo-campaign/step2/' . $action['promo-campaign']['id_promo_campaign']);
+                return redirect('promo-campaign/step2/' . ($slug?:MyHelper::createSlug($action['promo-campaign']['id_promo_campaign'],'')));
             } 
             else 
             {
@@ -285,8 +301,11 @@ class PromoCampaignController extends Controller
         }
     }
 
-    public function step2(Request $request, $id_promo_campaign)
+    public function step2(Request $request, $slug)
     {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id_promo_campaign = $exploded[0];
+        $created_at = $exploded[1];
         $post = $request->except('_token');
 
         if (empty($post)) {
@@ -303,6 +322,7 @@ class PromoCampaignController extends Controller
             if (isset($get_data['status']) && $get_data['status'] == 'success') {
 
                 $data['result'] = $get_data['result'];
+                $data['result']['id_promo_campaign'] = $slug;
 
             } else {
 
@@ -319,7 +339,7 @@ class PromoCampaignController extends Controller
 
             if (isset($action['status']) && $action['status'] == 'success') {
 
-                return redirect('promo-campaign/detail/' . $id_promo_campaign);
+                return redirect('promo-campaign/detail/' . $slug);
             } 
             elseif($action['messages']??false) {
                 return back()->withErrors($action['messages'])->withInput();
@@ -357,6 +377,9 @@ class PromoCampaignController extends Controller
     public function delete(Request $request)
     {
         $post = $request->except('_token');
+        if(isset($post['id_promo_campaign'])){
+            $post['id_promo_campaign'] = MyHelper::explodeSlug($post['id_promo_campaign'])[0];
+        }
 
         $delete = MyHelper::post('promo-campaign/delete', $post);
 // return $delete;

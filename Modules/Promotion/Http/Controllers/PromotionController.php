@@ -49,7 +49,10 @@ class PromotionController extends Controller
 		}
 
 		if(isset($action['status']) && $action['status'] == 'success'){
-			$data['result'] = $action['result']['data'];
+			$data['result'] = array_map(function($var){
+				$var['id_promotion'] = MyHelper::createSlug($var['id_promotion'],$var['created_at']);
+				return $var;
+			},$action['result']['data']);
 			$data['from'] = $action['result']['from'];
 			$data['to'] = $action['result']['to'];
 			$data['total'] = $action['result']['total'];
@@ -109,8 +112,11 @@ class PromotionController extends Controller
 		}
     }
 	
-	public function step1($id_promotion){
-		$action = MyHelper::post('promotion/step2', ['id_promotion' => $id_promotion]);
+	public function step1($slug){
+		$exploded = MyHelper::explodeSlug($slug);
+		$id_promotion = $exploded[0];
+		$created_at = $exploded[1];
+		$action = MyHelper::post('promotion/step2', ['id_promotion' => $id_promotion,'created_at'=>$created_at]);
 		// print_r($action);exit;
 		if($action['status'] == 'success'){
 			$data = [ 'title'		  => 'Promotion',
@@ -119,6 +125,9 @@ class PromotionController extends Controller
 				];
 			
 			$data['result'] = $action['result'];
+			if(isset($data['result']['id_promotion'])){
+				$data['result']['id_promotion'] = $slug;
+			}
 			
 			$getCity = MyHelper::get('city/list?log_save=0');
 			if(isset($getCity['status']) && $getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
@@ -147,22 +156,29 @@ class PromotionController extends Controller
 		}
     }
 	
-	public function step1Post(Request $request, $id_promotion){
+	public function step1Post(Request $request, $slug){
+		$exploded = MyHelper::explodeSlug($slug);
+		$id_promotion = $exploded[0];
+		$created_at = $exploded[1];
 		$post = $request->except(['_token','sample_1_length','files']);
 		$post['id_promotion'] = $id_promotion;
+		$post['created_at'] = $created_at;
 		// print_r($post);exit;
 		$action = MyHelper::post('promotion/create', $post);
 		// print_r($action);exit;
 		if($action['status'] == 'success'){
-			return redirect('promotion/step2/'.$id_promotion);
+			return redirect('promotion/step2/'.$slug);
 		} else{
 			return back()->withErrors($action['messages']);
 		}
 	}
 	
-	public function step2($id_promotion){
+	public function step2($slug){
+		$exploded = MyHelper::explodeSlug($slug);
+		$id_promotion = $exploded[0];
+		$created_at = $exploded[1];
 		// echo $id_promotion;exit;
-		$action = MyHelper::post('promotion/step2', ['id_promotion' => $id_promotion]);
+		$action = MyHelper::post('promotion/step2', ['id_promotion' => $id_promotion,'created_at'=>$created_at]);
 		// dd($action);exit;
 		if($action['status'] == 'success'){
 			$data = [ 'title'		  => 'Promotion',
@@ -172,6 +188,9 @@ class PromotionController extends Controller
 			$test = MyHelper::get('autocrm/textreplace');
 			
 			$data['result'] = $action['result'];
+			if(isset($data['result']['id_promotion'])){
+				$data['result']['id_promotion'] = $slug;
+			}
 			if($test['status'] == 'success'){
 				$data['textreplaces'] = $test['result'];
 			}
@@ -209,9 +228,13 @@ class PromotionController extends Controller
 		}
     }
 	
-	public function step2Post(Request $request, $id_promotion){
+	public function step2Post(Request $request, $slug){
+		$exploded = MyHelper::explodeSlug($slug);
+		$id_promotion = $exploded[0];
+		$created_at = $exploded[1];
 		$post = $request->except(['_token','sample_1_length','promotion_push_image','files']);
 		$post['id_promotion'] = $id_promotion;
+		$post['created_at'] = $created_at;
 		
 		if (isset($request['promotion_push_image'])) {
 			foreach ($request['promotion_push_image'] as $key => $value) {
@@ -249,24 +272,27 @@ class PromotionController extends Controller
 		
 		if(isset($action['status']) && $action['status'] == 'success'){
 			if($post['promotion_type'] == 'Instant Campaign' && isset($post['send'])){
-				$sendCampaign = MyHelper::post('promotion/queue', ['id_promotion' => $id_promotion]);
+				$sendCampaign = MyHelper::post('promotion/queue', ['id_promotion' => $id_promotion,'created_at'=>$created_at]);
 				if(isset($sendCampaign['status']) && $sendCampaign['status'] == 'success'){
-					return redirect('promotion/step3/'.$id_promotion)->withSuccess(['Promotion will be sent to '.$sendCampaign['count_user'].' users.']);
+					return redirect('promotion/step3/'.$slug)->withSuccess(['Promotion will be sent to '.$sendCampaign['count_user'].' users.']);
 				}
 			}
-			return redirect('promotion/step3/'.$id_promotion);
+			return redirect('promotion/step3/'.$slug);
 		} else{
 			return back()->withErrors($action['messages']);
 		}
     }
 	
-	public function step3($id_promotion, Request $request){
+	public function step3($slug, Request $request){
+		$exploded = MyHelper::explodeSlug($slug);
+		$id_promotion = $exploded[0];
+		$created_at = $exploded[1];
 		$post = $request->except('_token');
 		if ($request->ajax()) {
 			if(isset($post['page'])){
-				$recipient = MyHelper::post('promotion/recipient/list?page='.$post['page'], ['id_promotion' => $id_promotion]);
+				$recipient = MyHelper::post('promotion/recipient/list?page='.$post['page'], ['id_promotion' => $id_promotion,'created_at'=>$created_at]);
 			}else{
-				$recipient = MyHelper::post('promotion/recipient/list', ['id_promotion' => $id_promotion]);
+				$recipient = MyHelper::post('promotion/recipient/list', ['id_promotion' => $id_promotion,'created_at'=>$created_at]);
 			}
 			$data['users'] = new LengthAwarePaginator($recipient['result']['data'], $recipient['result']['total'], $recipient['result']['per_page'], $recipient['result']['current_page'], ['path' => url()->current()]);
 			$data['from'] = $recipient['result']['from'];
@@ -277,13 +303,16 @@ class PromotionController extends Controller
 
 			return view('promotion::recipient', $data)->render();  
 		}else{
-			$action = MyHelper::post('promotion/step2', ['id_promotion' => $id_promotion, 'summary' => true]);
+			$action = MyHelper::post('promotion/step2', ['id_promotion' => $id_promotion, 'created_at'=>$created_at, 'summary' => true]);
 			// dd($action);exit;
 			if($action['status'] == 'success'){
 				$data = [ 'title'		  => 'Promotion',
 					  'menu_active'       => 'promotion',
 					  'submenu_active'    => 'promotion-create'
 					];
+				if(isset($action['result']['id_promotion'])){
+					$action['result']['id_promotion'] = $slug;
+				}
 				$data['result'] = $action['result'];
 				Session::put('resultStep3', $action['result']);
 
@@ -315,9 +344,9 @@ class PromotionController extends Controller
 				}
 
 				if(isset($post['page'])){
-					$recipient = MyHelper::post('promotion/recipient/list?page='.$post['page'], ['id_promotion' => $id_promotion]);
+					$recipient = MyHelper::post('promotion/recipient/list?page='.$post['page'], ['id_promotion' => $id_promotion,'created_at' => $created_at]);
 				}else{
-					$recipient = MyHelper::post('promotion/recipient/list', ['id_promotion' => $id_promotion]);
+					$recipient = MyHelper::post('promotion/recipient/list', ['id_promotion' => $id_promotion,'created_at'=>$id_promotion]);
 				}
 	
 				$data['users'] = new LengthAwarePaginator($recipient['result']['data'], $recipient['result']['total'], $recipient['result']['per_page'], $recipient['result']['current_page'], ['path' => url()->current()]);
@@ -425,7 +454,10 @@ class PromotionController extends Controller
         $deals = MyHelper::get('promotion/deals');
         
         if (isset($deals['status']) && $deals['status'] == "success") {
-            $data['deals'] = $deals['result'];
+            $data['deals'] = array_map(function($var){
+            	$var['id_deals_promotion_template'] = MyHelper::createSlug($var['id_deals_promotion_template'],$var['created_at']);
+            	return $var;
+            },$deals['result']);
         }
         else {
             $data['deals'] = [];
@@ -473,7 +505,10 @@ class PromotionController extends Controller
         return view('promotion::deals.create', $data);
 	}
 	
-	public function detailDeals(Request $request, $id){
+	public function detailDeals(Request $request, $slug){
+		$exploded = MyHelper::explodeSlug($slug);
+		$id = $exploded[0];
+		$created_at = $exploded[1];
 		$data = [
             'title'          => 'Promotion',
             'sub_title'      => 'Deals Promotion',
@@ -485,6 +520,7 @@ class PromotionController extends Controller
 		if($post){
 			// dd($post);
 			$post['id_deals_promotion_template'] = $id;
+			$post['created_at'] = $created_at;
 			if (isset($post['deals_image'])) {
 				$post['deals_image']         = MyHelper::encodeImage($post['deals_image']);
 			}
@@ -492,7 +528,7 @@ class PromotionController extends Controller
 			$action = MyHelper::post('promotion/deals/save', $post);
 
 			if (isset($action['status']) && $action['status'] == "success") {
-				return redirect('promotion/deals/detail/'.$id)->withSuccess(['Deals has been updated.']);
+				return redirect('promotion/deals/detail/'.$slug)->withSuccess(['Deals has been updated.']);
             }else {
 				if (isset($action['errors'])) {
 					return back()->withErrors($action['errors'])->withInput();
@@ -509,9 +545,10 @@ class PromotionController extends Controller
 		$getOutlet = MyHelper::get('outlet/be/list?log_save=0');
 		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlet'] = $getOutlet['result']; else $data['outlet'] = null;
 		
-		$deals = MyHelper::post('promotion/deals', ['id_deals_promotion_template' => $id]);
+		$deals = MyHelper::post('promotion/deals', ['id_deals_promotion_template' => $id,'created_at' => $created_at]);
 		if (isset($deals['status']) && $deals['status'] == "success") {
 			$data['deals'] = $deals['result'][0];
+			$data['deals']['id_deals_promotion_template'] = $slug;
 			$data['promotion'] = $deals['result']['promotion'];
 		}else {
 			if (isset($deals['errors'])) {

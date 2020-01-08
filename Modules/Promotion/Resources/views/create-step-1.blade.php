@@ -411,7 +411,6 @@ $grantedFeature     = session('granted_features');
 				@endif
 			@endif
 			<?php $tombolsubmit = 'hidden'; ?>
-			@include('filter')
 		</div>
 		<div class="col-md-8 col-md-offset-2">
 			<div class="portlet light bordered">
