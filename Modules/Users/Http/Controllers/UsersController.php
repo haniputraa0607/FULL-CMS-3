@@ -615,6 +615,12 @@ class UsersController extends Controller
                 'submenu_active'    => 'user-list',
                 'phone'    		  => $phone
             ];
+			$getExtraToken = MyHelper::get('users/getExtraToken');
+			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
+				$data['extra_token'] = $getExtraToken['result'];
+			} else {
+				abort(403);
+			}
             return view('users::password', $data);
         } else {
             return view('users::detail', $data);
@@ -731,7 +737,7 @@ class UsersController extends Controller
     {
 		$getLog = MyHelper::get('users/log/detail/'.$id.'/'.$log_type);
 		$data = [];
-		
+
 		if(isset($getLog['result'])) $data = $getLog['result'];
 
         return $data;
@@ -782,7 +788,7 @@ class UsersController extends Controller
 	
 	public function activity(Request $request, $page = 1){
         $input = $request->input();
-        $post = $request->except('_token', 'password');
+        $post = $request->except('_token', 'password', 'verify_token');
 
 		if(!empty(Session::get('form'))){
 			if(isset($post['take'])) $takes = $post['take'];
@@ -816,10 +822,10 @@ class UsersController extends Controller
 		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
 		if(!isset($post['take'])) $post['take'] = 10;
 		$post['skip'] = 0 + (($page-1) * $post['take']);
+		if (isset($input['verify_token'])) $post['verify_token'] = $input['verify_token'];
 		
-		// print_r($post);exit;
 		$getLog = MyHelper::post('users/activity', $post);
-		// dd($getLog);
+		
 		if(isset($getLog['status']) && $getLog['status'] == 'success') {
             $data['content']['mobile'] = $getLog['result']['mobile']['data'];
             $data['content']['be'] = $getLog['result']['be']['data'];
@@ -854,15 +860,28 @@ class UsersController extends Controller
 		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
 
         if(!isset($input['password'])){
-            $data = [ 	'title'             => 'User',
+            $data = [ 	
+				'title'             => 'User',
                 'menu_active'       => 'user',
                 'submenu_active'    => 'user-log'
-            ];
+			];
+			$getExtraToken = MyHelper::get('users/getExtraToken');
+			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
+				$data['extra_token'] = $getExtraToken['result'];
+			} else {
+				abort(403);
+			}
             return view('users::password', $data);
         } else {
             return view('users::log', $data);
         }
 	}
+
+	public function verifyToken(Request $request){
+		$verifyToken = MyHelper::post('users/getExtraToken', ['token_header' => $_SERVER['HTTP_X_EXTRA_TOKEN_HEADER']]);
+		return $verifyToken;
+	}
+	
     public function favorite(Request $request, $phone){
         $post = $request->post();
         $data = [ 'title'             => 'User',
@@ -885,6 +904,12 @@ class UsersController extends Controller
                 'submenu_active'    => 'user-list',
                 'phone'    		  => $phone
             ];
+			$getExtraToken = MyHelper::get('users/getExtraToken');
+			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
+				$data['extra_token'] = $getExtraToken['result'];
+			} else {
+				abort(403);
+			}
             return view('users::password', $data);
         } else {
             return view('users::favorite', $data);
