@@ -66,6 +66,32 @@ $configs     		= session('configs');
 			e.preventDefault();
 			return false;
 		});
+
+		$('#max_num').keyup(function(){
+
+			var min_num = $('#min_num').val();
+			var max_num = $('#max_num').val();
+
+			if(Number(max_num) < Number(min_num)){
+				document.getElementById('message_max').style.display = 'block';
+			}else{
+				document.getElementById('message_max').style.display = 'none';
+				document.getElementById('message_min').style.display = 'none';
+			}
+		});
+
+		$('#min_num').keyup(function(){
+
+			var min_num = $('#min_num').val();
+			var max_num = $('#max_num').val();
+
+			if(Number(min_num) > Number(max_num)){
+				document.getElementById('message_min').style.display = 'block';
+			}else{
+				document.getElementById('message_max').style.display = 'none';
+				document.getElementById('message_min').style.display = 'none';
+			}
+		});
 	</script>
 @endsection
 
@@ -126,6 +152,7 @@ $configs     		= session('configs');
 				</div>
 				<div class="col-md-4">
 					<input class="form-control" type="text" id="min_num" name="min_length_number" maxlength="11" value="{{$result[0]['min_length_number']}}" required>
+					<span id="message_min" style="display: none;color: red;">Please enter input below the maximum</span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -138,6 +165,7 @@ $configs     		= session('configs');
 				</div>
 				<div class="col-md-4">
 					<input class="form-control" type="text" id="max_num" name="max_length_number" maxlength="11" value="{{$result[0]['max_length_number']}}" required>
+					<span id="message_max" style="display: none;color: red;">Please enter input above the minimum</span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -152,18 +180,19 @@ $configs     		= session('configs');
 					<textarea class="form-control" type="text" name="message_failed" required>{{$result[0]['message_failed']}}</textarea>
 				</div>
 			</div>
-			<div class="form-group">
-				<div class="input-icon right">
-					<label class="col-md-4 control-label" style="text-align: left;">
-						Message Success
-						<span class="required" aria-required="true"> * </span>
-						<i class="fa fa-question-circle tooltips" data-original-title="pesan yang akan muncul ketika user memasukkan format nomor telepon yang benar" data-container="body"></i>
-					</label>
-				</div>
-				<div class="col-md-4">
-					<textarea class="form-control" type="text" name="message_success" required>{{$result[0]['message_success']}}</textarea>
-				</div>
-			</div>
+{{--			<div class="form-group">--}}
+{{--				<div class="input-icon right">--}}
+{{--					<label class="col-md-4 control-label" style="text-align: left;">--}}
+{{--						Message Success--}}
+{{--						<span class="required" aria-required="true"> * </span>--}}
+{{--						<i class="fa fa-question-circle tooltips" data-original-title="pesan yang akan muncul ketika user memasukkan format nomor telepon yang benar" data-container="body"></i>--}}
+{{--					</label>--}}
+{{--				</div>--}}
+{{--				<div class="col-md-4">--}}
+{{--					<textarea class="form-control" type="text" name="message_success" required>{{$result[0]['message_success']}}</textarea>--}}
+{{--				</div>--}}
+{{--			</div>--}}
+			<input type="hidden" name="message_success" value="">
 		</div>
 
 		<div class="form-actions">
