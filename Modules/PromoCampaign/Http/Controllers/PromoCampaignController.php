@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-use App\lib\MyHelper;
+use App\Lib\MyHelper;
 use Session;
 
 class PromoCampaignController extends Controller
@@ -64,7 +64,7 @@ class PromoCampaignController extends Controller
         }
 
         // pagination data
-        if(!empty($get_data) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
+        if(!empty($get_data['result']['data']) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
             $data['promo']            = $get_data['result']['data'];
             $data['promoTotal']       = $get_data['result']['total'];
             $data['promoPerPage']     = $get_data['result']['from'];
@@ -219,7 +219,7 @@ class PromoCampaignController extends Controller
 
         $getPromoCampaignCoupon = MyHelper::post('promo-campaign/coupon', $input);
 
-        if ($getPromoCampaignCoupon['status'] == 'success') {
+        if (($getPromoCampaignCoupon['status']??false) == 'success') {
             $return['recordsTotal'] = $getPromoCampaignCoupon['total'];
             $return['recordsFiltered'] = $getPromoCampaignCoupon['count'];
             $return['data'] = array_map(function($x){
@@ -270,7 +270,6 @@ class PromoCampaignController extends Controller
         {
 
             $action = MyHelper::post('promo-campaign/step1', $post);
-
             
             if (isset($action['status']) && $action['status'] == 'success') 
             {
