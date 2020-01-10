@@ -1244,7 +1244,7 @@ class SettingController extends Controller
         if(($updateSetting['status']??'')=='success'){
             return redirect('setting/phone')->with('success',['Success update phone setting']);
         }else{
-            return redirect('setting/phone')->with('fail',['Failed update phone setting']);
+            return redirect('setting/phone')->with('fail',[$updateSetting['message']]);
         }
     }
 }

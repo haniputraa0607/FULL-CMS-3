@@ -72,7 +72,8 @@ $configs     		= session('configs');
 			var min_num = $('#min_num').val();
 			var max_num = $('#max_num').val();
 
-			if(Number(max_num) < Number(min_num)){
+			if(min_num !== '' && Number(max_num) < Number(min_num)){
+				$('#max_num').val('');
 				document.getElementById('message_max').style.display = 'block';
 			}else{
 				document.getElementById('message_max').style.display = 'none';
@@ -85,7 +86,8 @@ $configs     		= session('configs');
 			var min_num = $('#min_num').val();
 			var max_num = $('#max_num').val();
 
-			if(Number(min_num) > Number(max_num)){
+			if(max_num !== '' && Number(min_num) > Number(max_num)){
+				$('#min_num').val('');
 				document.getElementById('message_min').style.display = 'block';
 			}else{
 				document.getElementById('message_max').style.display = 'none';
@@ -180,18 +182,18 @@ $configs     		= session('configs');
 					<textarea class="form-control" type="text" name="message_failed" required>{{$result[0]['message_failed']}}</textarea>
 				</div>
 			</div>
-{{--			<div class="form-group">--}}
-{{--				<div class="input-icon right">--}}
-{{--					<label class="col-md-4 control-label" style="text-align: left;">--}}
-{{--						Message Success--}}
-{{--						<span class="required" aria-required="true"> * </span>--}}
-{{--						<i class="fa fa-question-circle tooltips" data-original-title="pesan yang akan muncul ketika user memasukkan format nomor telepon yang benar" data-container="body"></i>--}}
-{{--					</label>--}}
-{{--				</div>--}}
-{{--				<div class="col-md-4">--}}
-{{--					<textarea class="form-control" type="text" name="message_success" required>{{$result[0]['message_success']}}</textarea>--}}
-{{--				</div>--}}
-{{--			</div>--}}
+			{{--			<div class="form-group">--}}
+			{{--				<div class="input-icon right">--}}
+			{{--					<label class="col-md-4 control-label" style="text-align: left;">--}}
+			{{--						Message Success--}}
+			{{--						<span class="required" aria-required="true"> * </span>--}}
+			{{--						<i class="fa fa-question-circle tooltips" data-original-title="pesan yang akan muncul ketika user memasukkan format nomor telepon yang benar" data-container="body"></i>--}}
+			{{--					</label>--}}
+			{{--				</div>--}}
+			{{--				<div class="col-md-4">--}}
+			{{--					<textarea class="form-control" type="text" name="message_success" required>{{$result[0]['message_success']}}</textarea>--}}
+			{{--				</div>--}}
+			{{--			</div>--}}
 			<input type="hidden" name="message_success" value="">
 		</div>
 
