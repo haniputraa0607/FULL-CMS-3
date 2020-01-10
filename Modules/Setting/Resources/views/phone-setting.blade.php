@@ -72,8 +72,8 @@ $configs     		= session('configs');
 			var min_num = $('#min_num').val();
 			var max_num = $('#max_num').val();
 
+			if(Number(max_num) < 1)$('#max_num').val('');
 			if(min_num !== '' && Number(max_num) < Number(min_num)){
-				$('#max_num').val('');
 				document.getElementById('message_max').style.display = 'block';
 			}else{
 				document.getElementById('message_max').style.display = 'none';
@@ -86,8 +86,8 @@ $configs     		= session('configs');
 			var min_num = $('#min_num').val();
 			var max_num = $('#max_num').val();
 
+			if(Number(min_num) < 1)$('#min_num').val('');
 			if(max_num !== '' && Number(min_num) > Number(max_num)){
-				$('#min_num').val('');
 				document.getElementById('message_min').style.display = 'block';
 			}else{
 				document.getElementById('message_max').style.display = 'none';
