@@ -417,6 +417,7 @@ class UsersController extends Controller
 		
 		// print_r($data);exit;
 		// print_r(Session::get('form'));exit;
+        $data['show'] = 1;
 		return view('users::index', $data);
     }
 	

@@ -1174,7 +1174,7 @@ class TransactionController extends Controller
 
         $getList = MyHelper::get('transaction/be/'.$key.'?page='.$request->get('page'));
 
-            if (!empty($getList['result']['data'])) {
+            if (isset($getList['result']['data']) && !empty($getList['result']['data'])) {
                 $data['trx']          = $getList['result']['data'];
                 $data['trxTotal']     = $getList['result']['total'];
                 $data['trxPerPage']   = $getList['result']['from'];
@@ -1240,7 +1240,7 @@ class TransactionController extends Controller
         if(!isset($post['rule'])){
             $post['rule'] = 'and';
         }
-        $filter = MyHelper::post('transaction/filter', $post);
+        $filter = MyHelper::post('transaction/be/filter', $post);
 
         if (isset($filter['status']) && $filter['status'] == 'success') {
             if (!empty($filter['data']['data'])) {
