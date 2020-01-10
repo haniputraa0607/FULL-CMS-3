@@ -29,7 +29,7 @@ class UserFeedbackController extends Controller
             $post['outlet_code'] = $key;
         }
         $data['feedbackData'] = MyHelper::post('user-feedback?page='.$page,$post)['result']??[];
-        $data['outlets'] = MyHelper::get('outlet/list')['result']??[];
+        $data['outlets'] = MyHelper::get('outlet/be/list')['result']??[];
         $data['next_page'] = $data['feedbackData']['next_page_url']?url()->current().'?page='.($page+1):'';
         $data['prev_page'] = $data['feedbackData']['prev_page_url']?url()->current().'?page='.($page-1):'';
         return view('userfeedback::index',$data);

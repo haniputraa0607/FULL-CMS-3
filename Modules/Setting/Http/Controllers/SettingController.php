@@ -131,10 +131,23 @@ class SettingController extends Controller
             $sub = 'point-reset';
             $active = 'point-reset';
             $subTitle = 'Point Reset';
+        } elseif ($key == 'max_order') {
+            $span = 'item';
+            $colInput = 3;
+            $colLabel = 3;
+            $sub = 'default-max-order';
+            $active = 'default-max-order';
+            $subTitle = 'Default Max Order';
         } elseif ($key == 'balance_reset') {
             $sub = 'balance-reset';
             $active = 'balance-reset';
             $subTitle = env('POINT_NAME', 'Points').' Reset';
+        } elseif ($key == 'default_outlet') {
+            $sub = 'default-outlet';
+            $active = 'outlet';
+            $subTitle = 'Default Outlet';
+            $colInput = 4;
+            $colLabel = 3;
         }
 
         $data = [
@@ -142,6 +155,7 @@ class SettingController extends Controller
             'menu_active'    => $active,
             'submenu_active' => $sub,
             'sub_title'       => $subTitle,
+            'subTitle'       => $subTitle,
             'label'          => $label,
             'colLabel'       => $colLabel,
             'colInput'       => $colInput
@@ -163,6 +177,13 @@ class SettingController extends Controller
                 // return view('setting::point-reset', $data)->withErrors($request['messages']);
             }
 
+        } elseif ($key == 'default_outlet') {
+            $data['outlets'] = MyHelper::get('outlet/be/list')['result']??[];
+            $result = MyHelper::post('setting', ['key' => $key])['result']??false;
+            $data['id'] = $result['id_setting'];
+            $data['value'] = $result['value'];
+            $data['key'] = 'value';
+            return view('setting::default_outlet', $data);
         }else{
             $request = MyHelper::post('setting', ['key' => $key]);
 
@@ -209,10 +230,13 @@ class SettingController extends Controller
             'submenu_active' => 'faq-list'
         ];
 
-        $faqList = MyHelper::get('setting/faq');
+        $faqList = MyHelper::get('setting/be/faq');
 
         if (isset($faqList['status']) && $faqList['status'] == 'success') {
-            $data['result'] = $faqList['result'];
+            $data['result'] = array_map(function($var){
+                $var['id_faq'] = MyHelper::createSlug($var['id_faq'],$var['created_at']);
+                return $var;
+            },$faqList['result']);
         } else {
             if (isset($faqList['status']) && $faqList['status'] == 'fail') {
                 $data['result'] = [];
@@ -254,7 +278,7 @@ class SettingController extends Controller
             'submenu_active' => 'faq-sort'
         ];
 
-        $faqList = MyHelper::get('setting/faq');
+        $faqList = MyHelper::get('setting/be/faq');
 
         if (isset($faqList['status']) && $faqList['status'] == 'success') {
             $data['result'] = $faqList['result'];
@@ -281,7 +305,10 @@ class SettingController extends Controller
         return response()->json(['status' => $status]);
     }
 
-    public function faqEdit($id) {
+    public function faqEdit($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $data = [];
         $data = [
             'title'   => 'Setting',
@@ -289,10 +316,13 @@ class SettingController extends Controller
             'submenu_active' => 'faq-list'
         ];
 
-        $edit = MyHelper::post('setting/faq/edit', ['id_faq' => $id]);
+        $edit = MyHelper::post('setting/faq/edit', ['id_faq' => $id,'created_at'=>$created_at]);
 
         if (isset($edit['status']) && $edit['status'] == 'success') {
             $data['faq'] = $edit['result'];
+            if(isset($data['faq']['id_faq'])){
+                $data['faq']['id_faq'] = $slug;
+            }
             return view('setting::faqEdit', $data);
         }
         else {
@@ -302,11 +332,15 @@ class SettingController extends Controller
         }
     }
 
-    public function faqUpdate(Request $request, $id) {
+    public function faqUpdate(Request $request, $slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $post =[
             'id_faq'    => $id,
             'question'  => $request['question'],
-            'answer'    => $request['answer']
+            'answer'    => $request['answer'],
+            'created_at' => $created_at
         ];
 
         $update = MyHelper::post('setting/faq/update', $post);
@@ -314,8 +348,11 @@ class SettingController extends Controller
         return parent::redirect($update, 'FAQ has been updated.');
     }
 
-    public function faqDelete($id) {
-        $delete = MyHelper::post('setting/faq/delete', ['id_faq' => $id]);
+    public function faqDelete($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
+        $delete = MyHelper::post('setting/faq/delete', ['id_faq' => $id,'created_at',$created_at]);
 
         return parent::redirect($delete, 'FAQ has been deleted.');
     }
@@ -591,7 +628,7 @@ class SettingController extends Controller
 
         // deals
         $dp=['deals_type'=>'Deals','forSelect2'=>true];
-        $request = MyHelper::post('deals/list',$dp);
+        $request = MyHelper::post('deals/be/list',$dp);
         $data['deals'] = $request['result']??[];
 
         // news for banner
@@ -599,14 +636,14 @@ class SettingController extends Controller
             'published' => 1,
             'admin' => 1
         ];
-        $request = MyHelper::post('news/list', $news_req);
+        $request = MyHelper::post('news/be/list', $news_req);
         if(isset($request['result']))
             $data['news'] = $request['result'];
         else
             $data['news'] = [];
 
         // complete profile
-        $request = MyHelper::get('setting/complete-profile');
+        $request = MyHelper::get('setting/be/complete-profile');
         if(isset($request['result'])) {
             $data['complete_profile'] = $request['result'];
         }
@@ -1058,16 +1095,16 @@ class SettingController extends Controller
             $post['complete_profile_point'] = 0;
 
             // update complete profile
-            $result = MyHelper::post('setting/complete-profile', $post);
+            $result = MyHelper::post('setting/be/complete-profile', $post);
 
-            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/complete-profile');
+            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/be/complete-profile');
         }else{
             $data = [
                 'title'         => 'Complete Profile Setting',
                 'menu_active'    => 'profile-completion',
                 'submenu_active' => 'complete-profile'
             ];
-            $request = MyHelper::get('setting/complete-profile');
+            $request = MyHelper::get('setting/be/complete-profile');
             if(isset($request['result'])) {
                 $data['complete_profile'] = $request['result'];
             }
@@ -1099,7 +1136,7 @@ class SettingController extends Controller
             'submenu_active' => 'setting-text-menu-list'
         ];
 
-        $request = MyHelper::post('setting/text_menu_list',['webview' => 1]);
+        $request = MyHelper::post('setting/be/text_menu_list',['webview' => 1]);
         if(isset($request['result']) && !empty($request['result'])) {
             $data['menu_list'] = $request['result'];
         }else {

@@ -14,9 +14,11 @@
 Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 'prefix' => 'subscription'], function () {
     Route::get('/', 'SubscriptionController@index');
     Route::any('create', 'SubscriptionController@create');
-    Route::any('step1/{id_subscription}', 'SubscriptionController@create');
+    Route::any('step1/{slug}', 'SubscriptionController@create');
     Route::any('step1', 'SubscriptionController@create');
-    Route::any('step2/{id_subscription}', 'SubscriptionController@step2');
-    Route::any('step3/{id_subscription}', 'SubscriptionController@step3');
-    Route::any('detail/{id_subscription}', 'SubscriptionController@detail');
+    Route::any('step2/{slug}', 'SubscriptionController@step2');
+    Route::any('step3/{slug}', 'SubscriptionController@step3');
+    Route::any('detail/{slug}', 'SubscriptionController@detail');
+    Route::any('detail/{slug}/{subs_receipt}', 'SubscriptionController@transaction');
+    Route::any('participate-ajax', 'SubscriptionController@participateAjax');
 });

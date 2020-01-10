@@ -470,7 +470,7 @@
                     <div class="col-12 text-16-7px text-black space-text seravek-font">{{ strtoupper($data['user']['name']) }}</div>
                     <div class="col-12 text-16-7px text-black space-bottom-big seravek-font">{{ $data['user']['phone'] }}</div>
 
-                @if ($data['trasaction_type'] != 'Offline')
+                @if ($data['trasaction_type'] != 'Offline' && $data['trasaction_type'] != 'Advance Order')
                     @if ($data['detail']['pickup_type'] == 'set time')
                         <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan siap pada</div>
                     @else
@@ -633,7 +633,7 @@
                     </div>
                     @php $top += 5; $bg = false; @endphp
                 @endif
-                @if($data['detail']['taken_at'] != null)
+                @if(($data['detail']['taken_at']??false) != null)
                     <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
                         <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
                         Pesanan Anda sudah diambil

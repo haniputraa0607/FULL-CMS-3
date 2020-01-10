@@ -18,8 +18,8 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:92'], 
     Route::get('step1', function(){ return redirect('promo-campaign');});
     Route::get('step2', function(){ return redirect('promo-campaign');});
     Route::any('create', 'PromoCampaignController@step1');
-    Route::any('detail/{id_promo_campaign}', 'PromoCampaignController@detail');
-    Route::any('detail-coupon/{id_promo_campaign}', 'PromoCampaignController@detail');
+    Route::any('detail/{slug}', 'PromoCampaignController@detail');
+    Route::any('detail-coupon/{slug}', 'PromoCampaignController@detail');
     Route::get('getTag', 'PromoCampaignController@getTag');
     Route::get('check', 'PromoCampaignController@checkCode');
     Route::get('step1/getTag', 'PromoCampaignController@getTag');
@@ -27,7 +27,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:92'], 
     Route::any('step2/getData', 'PromoCampaignController@getData');
     Route::post('delete', 'PromoCampaignController@delete');
 
-    Route::any('step1/{id_promo_campaign}', 'PromoCampaignController@step1');
-    Route::any('step2/{id_promo_campaign}', 'PromoCampaignController@step2');
+    Route::any('step1/{slug}', 'PromoCampaignController@step1');
+    Route::any('step2/{slug}', 'PromoCampaignController@step2');
 
 });

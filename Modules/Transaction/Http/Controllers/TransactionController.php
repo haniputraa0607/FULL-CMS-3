@@ -615,7 +615,10 @@ class TransactionController extends Controller
         $list = MyHelper::get('transaction/manualpayment/list');
 
         if (isset($list['status']) && $list['status'] == 'success') {
-            $data['list'] = $list['result'];
+            $data['list'] = array_map(function($var){
+                $var['id_manual_payment'] = MyHelper::createSlug($var['id_manual_payment'],$var['created_at']);
+                return $var;
+            },$list['result']);
         } elseif (isset($list['status']) && $list['status'] == 'fail') {
             return view('transaction::payment.manualPaymentList', $data)->withErrors($list['messages']);
         } else {
@@ -649,7 +652,10 @@ class TransactionController extends Controller
 
     }
 
-    public function manualPaymentEdit($id) {
+    public function manualPaymentEdit($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $data = [
             'title'          => 'Manual Payment',
             'menu_active'    => 'manual-payment',
@@ -661,6 +667,7 @@ class TransactionController extends Controller
 
         if (isset($edit['status']) && $edit['status'] == 'success') {
             $data['list'] = $edit['result'];
+            $data['list']['id_manual_payment'] = $slug; 
         } elseif (isset($edit['status']) && $edit['status'] == 'fail') {
             return view('transaction::payment.manualPaymentList', $data)->withErrors($edit['messages']);
         } else {
@@ -670,7 +677,10 @@ class TransactionController extends Controller
         return view('transaction::payment.manualPaymentEdit', $data);
     }
 
-    public function manualPaymentUpdate(Request $request, $id) {
+    public function manualPaymentUpdate(Request $request, $slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $post = $request->except('_token');
 
         if (isset($post['manual_payment_logo'])) {
@@ -682,7 +692,10 @@ class TransactionController extends Controller
         return parent::redirect($update, 'Manual payment has been updated');
     }
 
-    public function manualPaymentDetail($id) {
+    public function manualPaymentDetail($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $data = [
             'title'          => 'Manual Payment',
             'menu_active'    => 'manual-payment',
@@ -696,6 +709,7 @@ class TransactionController extends Controller
 
         if (isset($detail['status']) && $detail['status'] == 'success') {
             $data['detail'] = $detail['result'];
+            $data['detail']['id_manual_payment'] = $slug;
         } elseif (isset($detail['status']) && $detail['status'] == 'fail') {
             return back()->withErrors($detail['messages']);
         } else {
@@ -705,7 +719,10 @@ class TransactionController extends Controller
         return view('transaction::payment.manualPaymentDetail', $data);
     }
 
-    public function manualPaymentDelete($id) {
+    public function manualPaymentDelete($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $delete = MyHelper::post('transaction/manualpayment/delete', ['id' => $id]);
         return parent::redirect($delete, 'Manual payment has been deleted');
     }
@@ -1123,7 +1140,7 @@ class TransactionController extends Controller
         $post['type'] = 'trx';
         $post['check'] = 1;
 
-        $check = MyHelper::post('transaction/detail/webview?log_save=0', $post);
+        $check = MyHelper::post('transaction/detail/webview/simple?log_save=0', $post);
         // $check = MyHelper::post('outletapp/order/detail/view?log_save=0', $data);
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data['data'] = $check['result'];
@@ -1155,9 +1172,9 @@ class TransactionController extends Controller
             'date_end'       => date('Y-m-d')
         ];
 
-        $getList = MyHelper::get('transaction/'.$key.'?page='.$request->get('page'));
+        $getList = MyHelper::get('transaction/be/'.$key.'?page='.$request->get('page'));
 
-            if (!empty($getList['result']['data'])) {
+            if (isset($getList['result']['data']) && !empty($getList['result']['data'])) {
                 $data['trx']          = $getList['result']['data'];
                 $data['trxTotal']     = $getList['result']['total'];
                 $data['trxPerPage']   = $getList['result']['from'];
@@ -1223,7 +1240,7 @@ class TransactionController extends Controller
         if(!isset($post['rule'])){
             $post['rule'] = 'and';
         }
-        $filter = MyHelper::post('transaction/filter', $post);
+        $filter = MyHelper::post('transaction/be/filter', $post);
 
         if (isset($filter['status']) && $filter['status'] == 'success') {
             if (!empty($filter['data']['data'])) {

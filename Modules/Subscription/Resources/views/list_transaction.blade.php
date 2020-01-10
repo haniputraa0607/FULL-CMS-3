@@ -1,14 +1,16 @@
+@include('subscription::list_filter')
 <?php
-    use App\Lib\MyHelper;
-    $grantedFeature     = session('granted_features');
- ?>
- @extends('layouts.main')
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
+@extends('layouts.main')
 
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
@@ -16,12 +18,12 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
-                stateSave: true,
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -87,28 +89,8 @@
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
 
-        $('#sample_1').on('click', '.delete', function() {
-            var token  = "{{ csrf_token() }}";
-            var column = $(this).parents('tr');
-            var id     = $(this).data('id');
-
-            $.ajax({
-                type : "POST",
-                url : "{{ url('news/delete') }}",
-                data : "_token="+token+"&id_news="+id,
-                success : function(result) {
-                    if (result == "success") {
-                        $('#sample_1').DataTable().row(column).remove().draw();
-                        toastr.info("News has been deleted.");
-                    }
-                    else {
-                        toastr.warning("Something went wrong. Failed to delete news.");
-                    }
-                }
-            });
-        });
     </script>
-
+    @yield('child-script')
 @endsection
 
 @section('content')
@@ -133,59 +115,35 @@
     </div><br>
 
     @include('layouts.notifications')
-
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">News List</span>
+                <span class="caption-subject font-blue sbold uppercase">{{ $sub_title }}</span>
             </div>
         </div>
         <div class="portlet-body form">
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
+
                         <th> No </th>
-                        <th> Title </th>
-                        <th> Date Publish </th>
-                        <th> Category </th>
-                        @if(MyHelper::hasAccess([20,22,23], $grantedFeature))
-                            <th> Action </th>
-                        @endif
+                        <th> Voucher Code </th>
+                        <th> Transaction Receipt </th>
+                        <th> Date Used </th>
+                        <th> Outlet </th>
+                        <th> Item Qty </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (!empty($news))
-                        @foreach($news as $key => $value)
+                    @if (!empty($trx))
+                        @foreach($trx as $key => $value)
                             <tr>
                                 <td>{{ $key+1 }}</td>
-                                <td>{{ $value['news_title'] }}</td>
-                                <td>
-                                    @php
-                                        $bulan   = date('m', strtotime($value['news_publish_date']));
-                                        $bulanEx = date('m', strtotime($value['news_expired_date']));
-                                    @endphp
-                                    @if ($bulan == $bulanEx)
-                                        {{ date('d', strtotime($value['news_publish_date'])) }} - {{ date('d F Y', strtotime($value['news_expired_date'])) }}
-                                    @elseif (empty($value['news_expired_date']))
-                                        From {{ date('d F Y', strtotime($value['news_publish_date'])) }} - Always
-                                    @else
-                                        {{ date('d F Y', strtotime($value['news_publish_date'])) }} - {{ date('d F Y', strtotime($value['news_expired_date'])) }}
-                                    @endif
-                                </td>
-                                <td>{{ $value['news_category']['category_name'] }}</td>
-                                @if(MyHelper::hasAccess([20,22,23], $grantedFeature))
-                                    <td style="width: 125px;">
-                                        @if(MyHelper::hasAccess([23], $grantedFeature))
-                                            <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_news'] }}"><i class="fa fa-trash-o"></i></a>
-                                        @endif
-                                        @if(MyHelper::hasAccess([20,22], $grantedFeature))
-                                            <a href="{{ url('news/detail') }}/{{ $value['id_news'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
-                                        @endif
-                                        @if($value['news_button_form_text']!="" && MyHelper::hasAccess([20], $grantedFeature))
-                                            <a href="{{ url('news/form-data') }}/{{ $value['id_news'] }}" class="btn btn-sm green"><i class="fa fa-file-text-o"></i></a>
-                                        @endif
-                                    </td>
-                                @endif
+                                <td>{{ $value['voucher_code'] }}</td>
+                                <td>{{ $value['transaction']['transaction_receipt_number'] }}</td>
+                                <td>{{ date('d M Y', strtotime($value['used_at'])) }}</td>
+                                <td>{{ $value['transaction']['outlet']['outlet_name'] }}</td>
+                                <td>{{ $value['transaction']['product_transaction'][0]['total_item'] }}</td>
                             </tr>
                         @endforeach
                     @endif

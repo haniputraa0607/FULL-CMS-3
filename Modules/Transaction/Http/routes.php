@@ -25,10 +25,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
         Route::any('/list/{type?}', 'TransactionController@manualPaymentUnpay');
         Route::any('/reset/{type?}', 'TransactionController@manualPaymentUnpay');
         Route::get('/create', ['middleware' => 'feature_control:66', 'uses' => 'TransactionController@manualPaymentCreate']);
-        Route::get('/edit/{id}', ['middleware' => 'feature_control:65', 'uses' => 'TransactionController@manualPaymentEdit']);
-        Route::get('/detail/{id}', ['middleware' => 'feature_control:65', 'uses' => 'TransactionController@manualPaymentDetail']);
-        Route::get('/delete/{id}', ['middleware' => 'feature_control:68', 'uses' => 'TransactionController@manualPaymentDelete']);
-        Route::get('/getData/{id}', 'TransactionController@manualPaymentGetData');
+        Route::get('/edit/{slug}', ['middleware' => 'feature_control:65', 'uses' => 'TransactionController@manualPaymentEdit']);
+        Route::get('/detail/{slug}', ['middleware' => 'feature_control:65', 'uses' => 'TransactionController@manualPaymentDetail']);
+        Route::get('/delete/{slug}', ['middleware' => 'feature_control:68', 'uses' => 'TransactionController@manualPaymentDelete']);
+        Route::get('/getData/{slug}', 'TransactionController@manualPaymentGetData');
         Route::post('/method/save', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@manualPaymentMethod']);
         Route::post('/method/delete', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@manualPaymentMethodDelete']);
         

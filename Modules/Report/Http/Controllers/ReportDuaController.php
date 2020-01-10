@@ -129,6 +129,7 @@ class ReportDuaController extends Controller
             $dataProduct = $report['result'];
 
             foreach ($report['result'] as $key => $value) {
+                $dataProduct[$key]['id_product'] = MyHelper::createSlug($report['result'][$key]['id_product'],'');
                 $tempNominal = [
                     'product' => $value['product_code'].'-'.$value['product_name'],
                     'nominal' => $value['total_nominal'],
@@ -162,7 +163,10 @@ class ReportDuaController extends Controller
     }
 
     /* REPORT PRODUCT DETAIL */
-    function reportProductDetail($id, $date_start, $date_end) {
+    function reportProductDetail($slug, $date_start, $date_end) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $data = [
             'title'          => 'Report',
             'menu_active'    => 'report-product',
@@ -184,7 +188,8 @@ class ReportDuaController extends Controller
 
         $data['date_start'] = $date_start;
         $data['date_end']   = $date_end;        
-        $data['product']    = parent::getData(MyHelper::post('product/list', ['id_product' => $id]));
+        $data['product']    = parent::getData(MyHelper::post('product/be/list', ['id_product' => $id]));
+        $data['product'][0]['category'] = $data['product'][0]['category'][0]??['product_category_name' => 'Uncategories'];
 
         return view('report::report_product_detail', $data);
     }
@@ -279,6 +284,7 @@ class ReportDuaController extends Controller
             }
 
             foreach ($report['result']['value'] as $key => $value) {
+                $dataOutlet[$key]['id_outlet'] = MyHelper::createSlug($value['id_outlet'],'');
                 $tempValue = [
                     'outlet' => $value['outlet_code'].'-'.$value['outlet_name'],
                     'value'     => $value['total_value'],
@@ -302,7 +308,10 @@ class ReportDuaController extends Controller
     }
 
      /* REPORT OUTLET DETAIL */
-     function reportOutletDetail($id, $date_start, $date_end) {
+     function reportOutletDetail($slug, $date_start, $date_end) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $data = [
             'title'          => 'Report',
             'menu_active'    => 'report-outlet',
@@ -324,7 +333,7 @@ class ReportDuaController extends Controller
 
         $data['date_start'] = $date_start;
         $data['date_end']   = $date_end;        
-        $data['outlet']    = parent::getData(MyHelper::post('outlet/list', ['id_outlet' => $id]));
+        $data['outlet']    = parent::getData(MyHelper::post('outlet/be/list', ['id_outlet' => $id]));
 
         return view('report::report_outlet_detail', $data);
     }
@@ -418,7 +427,7 @@ class ReportDuaController extends Controller
         }
 
         /* OUTLET */
-        $data['outlet'] = parent::getData(MyHelper::get('outlet/list'));
+        $data['outlet'] = parent::getData(MyHelper::get('outlet/be/list'));
 
         return view('report::report_global_new', $data);
     }

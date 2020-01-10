@@ -166,13 +166,13 @@ class UsersController extends Controller
 			$getProvince = MyHelper::get('province/list');
 			if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
 			
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/be/list');
 			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
 
-			$getCelebrate = MyHelper::get('setting/celebrate_list');
+			$getCelebrate = MyHelper::get('setting/be/celebrate_list');
 			if($getCelebrate['status'] == 'success') $data['celebrate'] = $getCelebrate['result']; else $data['celebrate'] = null;
 
-			$getJob = MyHelper::get('setting/jobs_list');
+			$getJob = MyHelper::get('setting/be/jobs_list');
 			if($getJob['status'] == 'success') $data['job'] = $getJob['result']; else $data['job'] = null;
 			
 			return view('users::create', $data);
@@ -212,7 +212,7 @@ class UsersController extends Controller
 					  'submenu_active'    => 'admin-outlet-create'
 					];
 					
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/be/list');
 			// print_r($getOutlet);exit;
 			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
 			return view('users::create_admin_outlet', $data);
@@ -401,16 +401,16 @@ class UsersController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 		
-		$getOutlet = MyHelper::get('outlet/list?log_save=0');
+		$getOutlet = MyHelper::get('outlet/be/list?log_save=0');
 		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-		$getProduct = MyHelper::get('product/list?log_save=0');
+		$getProduct = MyHelper::get('product/be/list?log_save=0');
 		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 		
 		$getTag = MyHelper::get('product/tag/list?log_save=0');
 		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-		$getMembership = MyHelper::post('membership/list?log_save=0',[]);
+		$getMembership = MyHelper::post('membership/be/list?log_save=0',[]);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 		
 		$data['table_title'] = "User list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']." data)";
@@ -511,13 +511,11 @@ class UsersController extends Controller
 				return back()->withErrors(['Delete Failed']);
 			}
 		}
-		if(isset($post['password'])){
-			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success")
-				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			else 
-				Session::put('secure','yes');
-		} 
+        if(isset($post['password'])){
+            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+            if($checkpin['status'] != "success")
+                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+        }
 		
 		if(isset($post['phone'])){
 			if(isset($post['birthday'])){
@@ -561,15 +559,6 @@ class UsersController extends Controller
 			return parent::redirect($update, 'Suspend Status has been changed.');
         }
 		
-		if(empty(Session::get('secure'))){
-			$data = [ 'title'             => 'User',
-					  'menu_active'       => 'user',
-					  'submenu_active'    => 'user-list',
-					  'phone'    		  => $phone
-					];
-			return view('users::password', $data);
-		}
-		
 		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
 		// return $getUser;exit;
 		$getLog = MyHelper::post('users/log?log_save=0', ['phone' => $phone, 'skip' => 0, 'take' => 50]);
@@ -583,7 +572,7 @@ class UsersController extends Controller
 		$getVoucher = MyHelper::post('deals/voucher/user?log_save=0', ['phone' => $phone]);
 // 		return $getVoucher;
 		
-		$getInbox = MyHelper::post('inbox/user',['phone'=>$phone]);
+		$getInbox = MyHelper::post('inbox/be/user',['phone'=>$phone]);
 
 		$data = [ 'title'             => 'User',
 				  'menu_active'       => 'user',
@@ -596,8 +585,8 @@ class UsersController extends Controller
 		$data['featuresall'] = null;
 		$data['featuresmodule'] = null;
 		$data['voucher'] = null;
-		$data['celebrates'] = MyHelper::get('setting/celebrate_list')['result']??[];
-		$data['jobs'] = MyHelper::get('setting/jobs_list')['result']??[];
+		$data['celebrates'] = MyHelper::get('setting/be/celebrate_list ')['result']??[];
+		$data['jobs'] = MyHelper::get('setting/be/jobs_list')['result']??[];
 		if(isset($getUser['result'])){
 			$data['profile'] = $getUser['result'];
 // 			$data['trx'] = $getUser['trx'];
@@ -619,6 +608,23 @@ class UsersController extends Controller
 		
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
+
+        if(!isset($post['password'])){
+            $data = [ 'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-list',
+                'phone'    		  => $phone
+            ];
+			$getExtraToken = MyHelper::get('users/getExtraToken');
+			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
+				$data['extra_token'] = $getExtraToken['result'];
+			} else {
+				abort(403);
+			}
+            return view('users::password', $data);
+        } else {
+            return view('users::detail', $data);
+        }
 		// print_r($data);exit;
         return view('users::detail', $data);
     }
@@ -731,7 +737,7 @@ class UsersController extends Controller
     {
 		$getLog = MyHelper::get('users/log/detail/'.$id.'/'.$log_type);
 		$data = [];
-		
+
 		if(isset($getLog['result'])) $data = $getLog['result'];
 
         return $data;
@@ -753,16 +759,36 @@ class UsersController extends Controller
     public function delete($phone)
     {
 		$deleteUser = MyHelper::post('users/delete', ['phone' => $phone]);
-		// print_r($deleteUser);exit;
 		if($deleteUser['status'] == 'success'){
 			return back()->withSuccess($deleteUser['result']);
 		} else{
 			return back()->withErrors($deleteUser['messages']);
 		}
+	}
+
+	public function deleteLogApp($id)
+    {
+		$deleteUserLog = MyHelper::post('users/delete/log', ['id_log_activities_apps' => $id]);
+		if($deleteUserLog['status'] == 'success'){
+			return back()->withSuccess($deleteUserLog['result']);
+		} else{
+			return back()->withErrors($deleteUserLog['messages']);
+		}
+	}
+	
+	public function deleteLogBE($id)
+    {
+		$deleteUserLog = MyHelper::post('users/delete/log', ['id_log_activities_be' => $id]);
+		if($deleteUserLog['status'] == 'success'){
+			return back()->withSuccess($deleteUserLog['result']);
+		} else{
+			return back()->withErrors($deleteUserLog['messages']);
+		}
     }
 	
 	public function activity(Request $request, $page = 1){
-		$post = $request->except('_token');
+        $input = $request->input();
+        $post = $request->except('_token', 'password', 'verify_token');
 
 		if(!empty(Session::get('form'))){
 			if(isset($post['take'])) $takes = $post['take'];
@@ -785,15 +811,21 @@ class UsersController extends Controller
 				  'menu_active'       => 'user',
 				  'submenu_active'    => 'user-log'
 				];
-				
-		if(!isset($post['order_field'])) $post['order_field'] = '';
+
+        if(isset($input['password'])){
+            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $input['password'], 'admin_panel' => 1));
+            if($checkpin['status'] != "success")
+                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+        }
+
+        if(!isset($post['order_field'])) $post['order_field'] = '';
 		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
 		if(!isset($post['take'])) $post['take'] = 10;
 		$post['skip'] = 0 + (($page-1) * $post['take']);
+		if (isset($input['verify_token'])) $post['verify_token'] = $input['verify_token'];
 		
-		// print_r($post);exit;
 		$getLog = MyHelper::post('users/activity', $post);
-
+		
 		if(isset($getLog['status']) && $getLog['status'] == 'success') {
             $data['content']['mobile'] = $getLog['result']['mobile']['data'];
             $data['content']['be'] = $getLog['result']['be']['data'];
@@ -826,33 +858,63 @@ class UsersController extends Controller
 		}
 		
 		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
-		
-		// print_r($data);exit;
-		return view('users::log', $data);
+
+        if(!isset($input['password'])){
+            $data = [ 	
+				'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-log'
+			];
+			$getExtraToken = MyHelper::get('users/getExtraToken');
+			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
+				$data['extra_token'] = $getExtraToken['result'];
+			} else {
+				abort(403);
+			}
+            return view('users::password', $data);
+        } else {
+            return view('users::log', $data);
+        }
 	}
-	public function favorite(Request $request, $phone){
-		$post = $request->post();
-		$data = [ 'title'             => 'User',
-				  'subtitle'		  => 'Favorite',
-				  'menu_active'       => 'user',
-				  'submenu_active'    => 'user-list'
-				];
-		if(isset($post['password'])){
-			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success")
-				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			else 
-				Session::put('secure','yes');
-		} 
-		if(empty(Session::get('secure'))){
-			$data = [ 'title'             => 'User',
-					  'menu_active'       => 'user',
-					  'submenu_active'    => 'user-list',
-					  'phone'    		  => $phone
-					];
-			return view('users::password', $data);
-		}
-		$data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
-		return view('users::favorite', $data);
+
+	public function verifyToken(Request $request){
+		$verifyToken = MyHelper::post('users/getExtraToken', ['token_header' => $_SERVER['HTTP_X_EXTRA_TOKEN_HEADER']]);
+		return $verifyToken;
 	}
+	
+    public function favorite(Request $request, $phone){
+        $post = $request->post();
+        $data = [ 'title'             => 'User',
+            'subtitle'		  => 'Favorite',
+            'menu_active'       => 'user',
+            'submenu_active'    => 'user-list'
+        ];
+        if(isset($post['password'])){
+            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+            if($checkpin['status'] != "success")
+                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+
+
+        }
+        $data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
+        if(!isset($post['password'])){
+            $data = [ 'title'             => 'User',
+                'subtitle'		  => 'Favorite',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-list',
+                'phone'    		  => $phone
+            ];
+			$getExtraToken = MyHelper::get('users/getExtraToken');
+			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
+				$data['extra_token'] = $getExtraToken['result'];
+			} else {
+				abort(403);
+			}
+            return view('users::password', $data);
+        } else {
+            return view('users::favorite', $data);
+        }
+
+
+    }
 }
