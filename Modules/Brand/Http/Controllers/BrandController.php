@@ -59,6 +59,10 @@ class BrandController extends Controller
     {
         $post = $request->except(['_token']);
         $post['brand_active'] = $post['brand_active'] ?? 0;
+        if (isset($post['id_brand'])) {
+	        $id_brand_encrypt = $post['id_brand']??null;
+	        $post['id_brand'] = MyHelper::explodeSlug($post['id_brand'])[0]??'';
+        }
 
         $data = [
             'title'          => 'New Brand',
@@ -80,7 +84,7 @@ class BrandController extends Controller
         	if (!empty($action['result']['created_at'])) {
         		$slug = MyHelper::createSlug($action['result']['id_brand'], $action['result']['created_at']);
         	}else{
-        		$slug = $action['result']['id_brand'];
+        		$slug = $id_brand_encrypt;;
         	}
             return redirect('brand/detail/' . $slug)->with('success', ['Update brand success']);
         } else {

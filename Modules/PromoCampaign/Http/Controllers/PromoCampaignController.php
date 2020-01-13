@@ -64,7 +64,7 @@ class PromoCampaignController extends Controller
         }
 
         // pagination data
-        if(!empty($get_data) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
+        if(!empty($get_data['result']['data']) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
             $get_data['result']['data'] = array_map(function($var){
                 $var['id_promo_campaign'] = MyHelper::createSlug($var['id_promo_campaign'],$var['created_at']);
                 return $var;
@@ -225,7 +225,7 @@ class PromoCampaignController extends Controller
 
         $getPromoCampaignCoupon = MyHelper::post('promo-campaign/coupon', $input);
 
-        if ($getPromoCampaignCoupon['status'] == 'success') {
+        if (($getPromoCampaignCoupon['status']??false) == 'success') {
             $return['recordsTotal'] = $getPromoCampaignCoupon['total'];
             $return['recordsFiltered'] = $getPromoCampaignCoupon['count'];
             $return['data'] = array_map(function($x){
