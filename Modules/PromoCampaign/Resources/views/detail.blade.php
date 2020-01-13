@@ -401,7 +401,7 @@
                                     @endif
                                     <div class="row static-info">
                                         <div class="col-md-4 name">Total Coupon</div>
-                                        <div class="col-md-8 value">: {{ !empty($result['total_coupon']) ? number_format($result['total_coupon']).' Coupons' : isset($result['total_coupon']) ? 'unlimited' : '' }}</div>
+                                        <div class="col-md-8 value">: {{ !empty($result['total_coupon']) ? number_format($result['total_coupon']).' Coupons' : (isset($result['total_coupon']) ? 'unlimited' : '') }}</div>
                                     </div>
                                     <div class="row static-info">
                                         <div class="col-md-4 name">Used Coupon</div>
