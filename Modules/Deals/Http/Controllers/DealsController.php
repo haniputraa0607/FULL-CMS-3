@@ -88,7 +88,10 @@ class DealsController extends Controller
         }
 
         $save = MyHelper::post('deals/create', $post);
+        
         if (isset($save['status']) && $save['status'] == "success") {
+        	$save['result']['id_deals'] = MyHelper::createSlug($save['result']['id_deals'], $save['result']['created_at']);
+        	isset($save['result']['deals_promo_id']) ? $save['result']['deals_promo_id'] = $save['result']['deals_promo_id'] : $save['result']['deals_promo_id'] = null;
             if($post['deals_type'] == 'WelcomeVoucher'){
                 $rpage = 'welcome-voucher';
             }else{
