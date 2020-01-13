@@ -59,8 +59,10 @@ class BrandController extends Controller
     {
         $post = $request->except(['_token']);
         $post['brand_active'] = $post['brand_active'] ?? 0;
-        $id_brand_encrypt = $post['id_brand']??null;
-        $post['id_brand'] = MyHelper::explodeSlug($post['id_brand'])[0]??'';
+        if (isset($post['id_brand'])) {
+	        $id_brand_encrypt = $post['id_brand']??null;
+	        $post['id_brand'] = MyHelper::explodeSlug($post['id_brand'])[0]??'';
+        }
 
         $data = [
             'title'          => 'New Brand',
