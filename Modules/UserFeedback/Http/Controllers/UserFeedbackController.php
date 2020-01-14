@@ -62,4 +62,38 @@ class UserFeedbackController extends Controller
         }
         return view('userfeedback::show',$data);
     }
+    public function setting(Request $request) {
+        $data = [
+            'title'          => 'User Feedback',
+            'sub_title'      => 'User Feedback Setting',
+            'menu_active'    => 'user-feedback',
+            'submenu_active' => 'feedback-setting'
+        ];
+        $ratings = MyHelper::post('setting',['key-like'=>'rating'])['result']??[];
+        $popups = MyHelper::post('setting',['key-like'=>'popup'])['result']??[];
+        $data['rating'] = [];
+        $data['popup'] = [];
+        foreach ($ratings as $rating) {
+            $data['setting'][$rating['key']] = $rating;
+        }
+        foreach ($popups as $popup) {
+            $data['setting'][$popup['key']] = $popup;
+        }
+        return view('userfeedback::setting',$data);
+    }
+
+    public function settingUpdate(Request $request) {
+        $data = [
+            'popup_min_interval' => ['value',$request->post('popup_min_interval')],
+            'popup_max_refuse' => ['value',$request->post('popup_max_refuse')],
+            'rating_question_text' => ['value_text',substr($request->post('rating_question_text'),0,40)]
+        ];
+        $update = MyHelper::post('setting/update2',['update'=>$data]);
+        if(($update['status']??false)=='success'){
+            return back()->with('success',['Success update setting']);
+        }else{
+            dd($update);
+            return back()->withInput()->withErrors(['Failed update setting']);
+        }
+    }
 }
