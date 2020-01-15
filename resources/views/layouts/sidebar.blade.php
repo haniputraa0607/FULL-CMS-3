@@ -423,17 +423,23 @@
 					<!--	@endif-->
 					<!--@endif-->
 					@if(MyHelper::hasAccess([48], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'product-list') ? 'active open' : ''}}">
-						<a href="{{url('product')}}" class="nav-link ">
-							<span class="title">Product List</span>
+					<li class="nav-item {{($submenu_active == 'product-image') ? 'active open' : ''}}">
+						<a href="javascript:;" class="nav-link nav-toggle">
+							<span class="title">Image Product</span>
+							<span class="arrow"></span>
 						</a>
-					</li>
-					@endif
-					@if(MyHelper::hasAccess([48], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'product-list-image') ? 'active open' : ''}}">
-						<a href="{{url('product/image')}}" class="nav-link ">
-							<span class="title">Image Product List</span>
-						</a>
+						<ul class="sub-menu">
+							<li class="nav-item {{(isset($child_active) && $child_active == 'product-image-add') ? 'active open' : ''}}">
+								<a href="{{url('product/image/add')}}" class="nav-link ">
+									<span class="title">Upload Image</span>
+								</a>
+							</li>
+							<li class="nav-item {{(isset($child_active) && $child_active == 'product-image-list') ? 'active open' : ''}}">
+								<a href="{{url('product/image/list')}}" class="nav-link ">
+									<span class="title">Image List</span>
+								</a>
+							</li>
+						</ul>
 					</li>
 					@endif
 					@if(MyHelper::hasAccess([48], $grantedFeature))
