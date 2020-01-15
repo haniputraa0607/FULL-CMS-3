@@ -14,25 +14,44 @@ class UserFeedbackController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index(Request $request,$key = '')
+    public function index(Request $request)
     {                    
         $data = [
             'title'          => 'User Feedback',
             'sub_title'      => 'User Feedback List',
             'menu_active'    => 'user-feedback',
             'submenu_active' => 'user-feedback-list',
-            'key'            => $key
+            'filter_title'   => 'User Feedback Filter'
         ];
         $page = $request->get('page')?:1;
         $post = [];
-        if($key){
-            $post['outlet_code'] = $key;
+
+        if(session('feedback_list_filter')){
+            $post=session('feedback_list_filter');
+            $data['rule']=array_map('array_values', $post['rule']);
+            $data['operator']=$post['operator'];
         }
         $data['feedbackData'] = MyHelper::post('user-feedback?page='.$page,$post)['result']??[];
-        $data['outlets'] = MyHelper::get('outlet/be/list')['result']??[];
+        $data['total'] = $data['feedbackData']['total']??count($data['feedbackData']['data']??[]);
+        $data['outlets'] = array_map(function($var){
+            $var = [$var['id_outlet'],$var['outlet_name']];
+            return $var;
+        },MyHelper::get('outlet/be/list')['result']??[]);
         $data['next_page'] = $data['feedbackData']['next_page_url']?url()->current().'?page='.($page+1):'';
         $data['prev_page'] = $data['feedbackData']['prev_page_url']?url()->current().'?page='.($page-1):'';
         return view('userfeedback::index',$data);
+    }
+
+    public function setFilter(Request $request)
+    {
+        $post = $request->except('_token');
+        if($post['rule']??false){
+            session(['feedback_list_filter'=>$post]);
+        }elseif($post['clear']??false){
+            session(['feedback_list_filter'=>null]);
+            session(['feedback_list_filter'=>null]);
+        }
+        return back();
     }
 
     /**

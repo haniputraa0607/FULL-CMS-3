@@ -33,7 +33,7 @@
 	<div class="row">\
 	<div class="col-md-3">\
 	<div class="btn-group">\
-	<button class="btn red deleteBtn"><i class="fa fa-trash-o"></i></button>\
+	<button class="btn red deleteBtn" data-toggle="confirmation" data-popout="true"><i class="fa fa-trash-o"></i></button>\
 	<button class="btn green handle-sort"><i class="fa fa-sort"></i></button>\
 	</div>\
 	</div>\
