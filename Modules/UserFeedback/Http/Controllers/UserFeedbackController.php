@@ -89,6 +89,20 @@ class UserFeedbackController extends Controller
         if(!$data['feedback']){
             return back()->withErrors(['User feedback not found']);
         }
+        $post['id_transaction'] = $data['feedback']['id_transaction'];
+        $post['type'] = 'trx';
+        $post['check'] = 1;
+
+        $check = MyHelper::post('transaction/be/detail/webview/simple?log_save=0', $post);
+        // $check = MyHelper::post('outletapp/order/detail/view?log_save=0', $data);
+        if (isset($check['status']) && $check['status'] == 'success') {
+            $data['data'] = $check['result'];
+        } elseif (isset($check['status']) && $check['status'] == 'fail') {
+            return view('error', ['msg' => 'Data failed']);
+        } else {
+            return view('error', ['msg' => 'Something went wrong, try again']);
+        }
+
         return view('userfeedback::show',$data);
     }
     public function setting(Request $request) {
