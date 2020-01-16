@@ -814,17 +814,12 @@
 						</li>
 					@endif
 					@if(MyHelper::hasAccess([212], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'rating-item') ? 'active open' : ''}}">
-							<a href="{{url('user-feedback/item')}}" class="nav-link ">
-								<span class="title">Rating Item</span>
+						<li class="nav-item {{($submenu_active == 'feedback-setting') ? 'active open' : ''}}">
+							<a href="{{url('user-feedback/setting')}}" class="nav-link ">
+								<span class="title">User Feedback Setting</span>
 							</a>
 						</li>
 					@endif
-					<li class="nav-item {{($submenu_active == 'feedback-setting') ? 'active open' : ''}}">
-						<a href="{{url('user-feedback/setting')}}" class="nav-link ">
-							<span class="title">User Feedback Setting</span>
-						</a>
-					</li>
 				</ul>
 			</li>
 			@endif

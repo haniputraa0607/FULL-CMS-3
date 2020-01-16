@@ -108,6 +108,12 @@ class UserFeedbackController extends Controller
         foreach ($popups as $popup) {
             $data['setting'][$popup['key']] = $popup;
         }
+        $items = MyHelper::get('user-feedback/rating-item')['result']??[];
+        $newArr = [];
+        foreach ($items as $item) {
+            $newArr[$item['rating_value']]=$item;
+        }
+        $data['items'] = $newArr;
         return view('userfeedback::setting',$data);
     }
 

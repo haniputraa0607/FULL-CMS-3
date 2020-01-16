@@ -55,9 +55,9 @@ class RatingItemController extends Controller
         }
         $result = MyHelper::post('user-feedback/rating-item/update',['rating_item'=>array_values($items)]);
         if(($result['status']??false) == 'success'){
-            return back()->with('success',['Success update rating item']);
+            return redirect('user-feedback/setting#tab_rating_items')->with('success',['Success update rating item']);
         }else{
-            return back()->withInput()->withErrors($result['messages']??['Failed update rating item']);
+            return redirect('user-feedback/setting#tab_rating_items')->withInput()->withErrors($result['messages']??['Failed update rating item']);
         }
     }
 
