@@ -566,9 +566,10 @@
                 });
             },
             accept: function(file, done) {
+                filename = file.name.split('.')
                 file.acceptDimensions = done;
                 file.rejectDimensions = function() { 
-                    toastr.warning("Please check dimension of your photo.")
+                    toastr.warning("Please check dimension of your photo dimension " + filename[0])
                 };
             },
             success: function(file, response) 
@@ -599,19 +600,22 @@
             success : function(result) {
                 if (result.status == "success") {
                     if(result.result == 'true'){
-                        $('#switch-change-override').addClass('active');
-                        $("#switch-change-override").attr("aria-pressed","true");
+                        $('#checkbox1').prop('checked', true);
                     } else {
-                        $('#switch-change-override').removeClass('active');
-                        $("#switch-change-override").attr("aria-pressed","false");
+                        $('#checkbox1').prop('checked', false);
                     }
                 }
             }
         });
     });
     
-    $('.switch').on('click', function(e){
-        var state = $(this).attr('aria-pressed');
+    $('#checkbox1').on('click', function(e){
+        var state = null;
+        if($(this).is(":checked")){
+            state = false
+        } else {
+            state = true
+        }
         $.ajax({
             type : "POST",
             url : "{{ url('product/image/override') }}",
@@ -623,11 +627,9 @@
                 if (result.status == "success") {
                     toastr.info("Override status has been updated.");
                     if(result.result == 1){
-                        $('#switch-change-override').addClass('active');
-                        $("#switch-change-override").attr("aria-pressed","true");
+                        $('#checkbox1').prop('checked', true);
                     } else {
-                        $('#switch-change-override').removeClass('active');
-                        $("#switch-change-override").attr("aria-pressed","false");
+                        $('#checkbox1').prop('checked', false);
                     }
                 }
                 else {
@@ -683,12 +685,17 @@
                         <h4>Override Product Image</h4>
                         <p> Ovveride diaktifkan agar data gambar sebelumnya tidak menjadi sampah di dalam storage </p>
                         <p>
+                            <br>
+                        <div class="md-checkbox">
+                            <input type="checkbox" id="checkbox1" name="yearly" class="md-checkboxbtn" >
+                            <label for="checkbox1">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> Override Image </label>
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4" style="margin-left: 2.5%;margin-top: 7px;">
-                    <button type="button" class="btn btn-lg btn-toggle switch" id="switch-change-override" data-toggle="button" aria-pressed="" autocomplete="off">
-                        <div class="handle"></div>
-                    </button>
+                    
                 </div>
                 <div class="col-md-12">
                     <form action="{{ url()->current() }}" method="POST" class="dropzone dropzone-file-area dz-clickable" id="my-dropzone" style="width: 600px; margin-top: 50px;">
