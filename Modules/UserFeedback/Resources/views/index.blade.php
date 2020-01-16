@@ -84,13 +84,14 @@
             opsi:[],
             type:'email'
         },
-        rating_item_text:{
-            display:'Vote',
-            operator:[
-                ['=','='],
-                ['like','like']
-            ],
-            opsi:[]
+        rating_value:{
+            display:'Rating Value',
+            operator:[],
+            opsi:[
+                ['1',"{{$rating_items['1']??'Good'}}"],
+                ['0',"{{$rating_items['0']??'Netral'}}"],
+                ['-1',"{{$rating_items['-1']??'Bad'}}"],
+            ]
         },
         outlet:{
             display:'Outlet',
@@ -161,7 +162,7 @@
                 		<td><a href="{{url('transaction/detail'.'/'.$feedback['transaction']['id_transaction'].'/'.strtolower($feedback['transaction']['trasaction_type']))}}">{{$feedback['transaction']['transaction_receipt_number']}}</a></td>
                 		<td><a href="{{url('user/detail'.'/'.$feedback['user']['phone'])}}">{{$feedback['user']['name']}}</a></td>
                 		<td>Rp {{number_format($feedback['transaction']['transaction_grandtotal'],0,',','.')}}</td>
-                		<td>{{$feedback['rating_item_text']}}</td>
+                		<td>{{$rating_items[$feedback['rating_value']]}}</td>
                 		<td><a href="{{url('user-feedback/detail/'.base64_encode($feedback['id_user_feedback'].'#'.$feedback['transaction']['id_transaction']))}}" class="btn blue">Detail</a></td>
                 	</tr>
                 	@endforeach

@@ -72,7 +72,7 @@
             <div class="row">
                 <label class="col-md-3  text-right">Vote</label>
                 <div class="col-md-5">
-                    {{$feedback['rating_item_text']}}<br/>
+                    {{$rating_items[$feedback['rating_value']]}}<br/>
                 </div>
             </div>
             <div class="row">

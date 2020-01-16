@@ -22,7 +22,12 @@ class RatingItemController extends Controller
             'menu_active'    => 'user-feedback',
             'submenu_active' => 'rating-item'
         ];
-        $data['items'] = MyHelper::get('user-feedback/rating-item')['result']??[];
+        $items = MyHelper::get('user-feedback/rating-item')['result']??[];
+        $newArr = [];
+        foreach ($items as $item) {
+            $newArr[$item['rating_value']]=$item;
+        }
+        $data['items'] = $newArr;
         return view('userfeedback::rating_item.index',$data);
     }
 
@@ -35,12 +40,12 @@ class RatingItemController extends Controller
     {
         $post = $request->except('_token');
         $items = $post['item']??[];
-        $new_items = $post['new_item']??[];
         if(!$items){
             return back()->withInput()->withErrors('Data could not be empty');
         }
         foreach ($items as $key => &$item) {
-            $item['id_rating_item'] = $key;
+            $item['rating_value'] = $key;
+            $item['order'] = 2-$key;
             if(isset($item['image'])){
                 $item['image'] = MyHelper::encodeImage($item['image']);
             }
@@ -48,17 +53,7 @@ class RatingItemController extends Controller
                 $item['image_selected'] = MyHelper::encodeImage($item['image_selected']);
             }
         }
-
-        foreach ($new_items as &$item) {
-            if(isset($item['image'])){
-                $item['image'] = MyHelper::encodeImage($item['image']);
-            }
-            if(isset($item['image_selected'])){
-                $item['image_selected'] = MyHelper::encodeImage($item['image_selected']);
-            }
-        }
-        $data = array_merge(array_values($items),array_values($new_items));
-        $result = MyHelper::post('user-feedback/rating-item/update',['rating_item'=>$data]);
+        $result = MyHelper::post('user-feedback/rating-item/update',['rating_item'=>array_values($items)]);
         if(($result['status']??false) == 'success'){
             return back()->with('success',['Success update rating item']);
         }else{

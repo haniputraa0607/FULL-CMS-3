@@ -11,14 +11,23 @@
 <style>
 	.item{
 		padding: 10px;
-		border-bottom: 1px solid #eeeeee;
+		border-bottom: 4px solid #eeeeee;
 		background: #fff;
+		margin: 15px;
+		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+		position: relative;
 	}
-	.item:hover{
-		background: #f3f3f3
-	}
-	.handle-sort:hover{
-		cursor: move;
+	.value-bg{
+		text-align: center;
+		border: 3px solid;
+		width: 100px;
+		height: 100px;
+		border-radius: 50% 50% !important;
+		font-size: 60px;
+		position: absolute;
+		right: 10px;
+		bottom: 10px;
+		opacity: .7;
 	}
 </style>
 @endsection
@@ -29,100 +38,17 @@
 <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
 <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 <script>
-	template = '<div class="item">\
-	<div class="row">\
-	<div class="col-md-3">\
-	<div class="btn-group">\
-	<button class="btn red deleteBtn" data-toggle="confirmation" data-popout="true"><i class="fa fa-trash-o"></i></button>\
-	<button class="btn green handle-sort"><i class="fa fa-sort"></i></button>\
-	</div>\
-	</div>\
-	<label class="col-md-2 control-label text-right">Text\
-	<span class="required" aria-required="true"> *\
-	</span>\
-	<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan di popup" data-container="body"></i>\
-	</label>\
-	<div class="col-md-7">\
-	<div class="form-group">\
-	<input type="text" class="form-control" value="" name="new_item[::n::][text]" required maxlength="10"/>\
-	</div>\
-	</div>\
-	</div>\
-	<div class="row">\
-	<label class="col-md-5 control-label text-right">\
-	Image\
-	<span class="required" aria-required="true"> * </span>\
-	<br>\
-	<span class="required" aria-required="true"> (100 * 100) </span>\
-	<i class="fa fa-question-circle tooltips" data-original-title="Gambar yang akan ditampilkan diatas teks" data-container="body"></i>\
-	</label>\
-	<div class="col-md-7">\
-	<div class="fileinput fileinput-new" data-provides="fileinput">\
-	<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">\
-	<img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>\
-	</div>\
-	<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>\
-	<div>\
-	<span class="btn default btn-file">\
-	<span class="fileinput-new"> Select image </span>\
-	<span class="fileinput-exists"> Change </span>\
-	<input type="file" accept="image/png" name="new_item[::n::][image]" class="file" required> \
-	</span>\
-	<a href="javascript:;" class="btn red default fileinput-exists removeImage" data-dismiss="fileinput"> Remove </a>\
-	</div>\
-	</div>\
-	</div>\
-	</div>\
-	<div class="row">\
-	<label class="col-md-5 control-label text-right">\
-	Image Selected\
-	<span class="required" aria-required="true"> * </span>\
-	<br>\
-	<span class="required" aria-required="true"> (100 * 100) </span>\
-	<i class="fa fa-question-circle tooltips" data-original-title="Gambar yang akan ditampilkan diatas teks saat terpilih" data-container="body"></i>\
-	</label>\
-	<div class="col-md-7">\
-	<div class="fileinput fileinput-new" data-provides="fileinput">\
-	<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">\
-	<img id="preview_image_selected" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>\
-	</div>\
-	<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>\
-	<div>\
-	<span class="btn default btn-file">\
-	<span class="fileinput-new"> Select image </span>\
-	<span class="fileinput-exists"> Change </span>\
-	<input type="file" accept="image/png" name="new_item[::n::][image_selected]" class="file" required> \
-	</span>\
-	<a href="javascript:;" class="btn red default fileinput-exists removeImage" data-dismiss="fileinput"> Remove </a>\
-	</div>\
-	</div>\
-	</div>\
-	</div>\
-	</div>';
 	$(document).ready(function(){
 		$('.select2').select2();
-		$('#outlet_selector').on('change',function(){
-			var value = $(this).val();
-			if(value == '0'){
-				value = '';
+		$('#select-total').on('change',function(){
+			if($(this).val()==="2"){
+				$('#rating-item-netral').addClass('hidden');
+				$('#rating-item-netral input').attr('disabled','disabled');
+			}else{
+				$('#rating-item-netral').removeClass('hidden');
+				$('#rating-item-netral input').removeAttr('disabled');
 			}
-			window.location.href = "{{url('user-feedback')}}/"+value;
 		});
-		$('#newItemBtn').on('click',function(){
-			var count = $('#rating-container .item').length;
-			if(count>=3){
-				toastr.warning("Maximum rating item (3) already reached");
-				return false;
-			}
-			$('#rating-container').append(template.replace(/::n::/g,count));
-		});
-		$('#rating-container').on('click','.deleteBtn',function(){
-			$(this).parents('.item').remove();
-			var count = $('#rating-container .item').length;
-			if(count===0){
-				$('#newItemBtn').click();
-			}
-		})
 		$(".file").change(function(e) {
 			var widthImg  = 0;
 			var heightImg = 0;
@@ -145,10 +71,7 @@
 				image.src = _URL.createObjectURL(file);
 			}
 		});
-		$('#rating-container').sortable({
-			'handle':'.handle-sort',
-			'cancel':''
-		}).disableSelection();
+		$('#select-total').change();
 	});
 </script>
 @endsection
@@ -186,30 +109,34 @@
 		<form action="#" method="POST" enctype="multipart/form-data">
 			@csrf
 			<div class="row">
+				<label class="col-md-offset-3 col-md-3 control-label text-right">Total Rating Item <i class="fa fa-question-circle tooltips" data-original-title="Jumlah rating item yang akan tampil di mobile apps" data-container="body"></i></label>
+				<div class="col-md-3">
+					<div class="form-group">
+						<select class="select2 form-control" id="select-total">
+							<option value="2">2 Item</option>
+							<option value="3" @if(count($items)==3) selected @endif>3 Item</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
 				<div id="rating-container" class="col-md-8">
-					@if($items??[])
-					@foreach($items as $item)
-					<div class="item">
+					<div class="item border-blue" id="rating-item-good">
+						<div class="value-bg font-blue border-blue">1</div>
 						<div class="row">
-							<div class="col-md-3">
-								<div class="btn-group">
-									<button class="btn red deleteBtn" data-toggle="confirmation" data-popout="true"><i class="fa fa-trash-o"></i></button>
-									<button class="btn green handle-sort"><i class="fa fa-sort"></i></button>
-								</div>
-							</div>
-							<label class="col-md-2 control-label text-right">Text
+							<label class="col-md-4 control-label text-right">Text
 								<span class="required" aria-required="true"> *
 								</span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan di popup" data-container="body"></i>
 							</label>
 							<div class="col-md-7">
 								<div class="form-group">
-									<input type="text" class="form-control" value="{{$item['text']}}" name="item[{{$item['id_rating_item']}}][text]" required maxlength="10" />
+									<input type="text" class="form-control" value="{{old('item.1.text',$items['1']['text']??'')}}" name="item[1][text]" required maxlength="10" />
 								</div>
 							</div>
 						</div>
 						<div class="row">
-							<label class="col-md-5 control-label text-right">
+							<label class="col-md-4 control-label text-right">
 								Image
 								<span class="required" aria-required="true"> * </span>
 								<br>
@@ -219,10 +146,10 @@
 							<div class="col-md-7">
 								<div class="fileinput fileinput-new" data-provides="fileinput">
 									<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
-										@if(isset($item['image']) && $item['image'] != "")
-										<img src="{{$item['image']}}" id="preview_image" />
+										@if($items['1']['image']??false)
+											<img id="preview_image" src="{{$items['1']['image']}}"/>
 										@else
-										<img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
+											<img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
 										@endif
 									</div>
 
@@ -231,7 +158,7 @@
 										<span class="btn default btn-file">
 											<span class="fileinput-new"> Select image </span>
 											<span class="fileinput-exists"> Change </span>
-											<input type="file" accept="image/png" class="file" name="item[{{$item['id_rating_item']}}][image]" > 
+											<input type="file" accept="image/png" class="file" name="item[1][image]" > 
 										</span>
 										<a href="javascript:;" class="btn red default fileinput-exists removeImage" data-dismiss="fileinput"> Remove </a>
 									</div>
@@ -239,7 +166,7 @@
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px">
-							<label class="col-md-5 control-label text-right">
+							<label class="col-md-4 control-label text-right">
 								Image Selected
 								<span class="required" aria-required="true"> * </span>
 								<br>
@@ -249,10 +176,10 @@
 							<div class="col-md-7">
 								<div class="fileinput fileinput-new" data-provides="fileinput">
 									<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
-										@if(isset($item['image_selected']) && $item['image_selected'] != "")
-										<img src="{{$item['image_selected']}}" id="preview_image_selected" />
+										@if($items['1']['image_selected']??false)
+											<img id="preview_image" src="{{$items['1']['image_selected']}}"/>
 										@else
-										<img id="preview_image_selected" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
+											<img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
 										@endif
 									</div>
 
@@ -261,7 +188,7 @@
 										<span class="btn default btn-file">
 											<span class="fileinput-new"> Select image </span>
 											<span class="fileinput-exists"> Change </span>
-											<input type="file" accept="image/png" class="file" name="item[{{$item['id_rating_item']}}][image_selected]"> 
+											<input type="file" accept="image/png" class="file" name="item[1][image_selected]"> 
 										</span>
 										<a href="javascript:;" class="btn red default fileinput-exists removeImage" data-dismiss="fileinput"> Remove </a>
 									</div>
@@ -269,21 +196,162 @@
 							</div>
 						</div>
 					</div>
-					@endforeach
-					@else
-					<div class="text-center text-muted">No Feedback Found</div>
-					@endif
-				</div>
-				<div class="preview col-md-4 pull-right" style="right: 0;top: 50px; position: sticky">
-					<img src="{{env('S3_URL_VIEW')}}img/setting/rating_preview.png" class="img-responsive">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-8 text-center">
-					<div class="text-center" style="margin-top: 10px">
-						<button class="btn green" id="newItemBtn" type="button"><i class="fa fa-plus"></i> New Rating Item</button>
-						<button class="btn yellow" id="saveItemBtn"><i class="fa fa-check"></i> Save</button>
+					<div class="item border-grey" id="rating-item-netral">
+						<div class="value-bg font-grey border-grey">0</div>
+						<div class="row">
+							<label class="col-md-4 control-label text-right">Text
+								<span class="required" aria-required="true"> *
+								</span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan di popup" data-container="body"></i>
+							</label>
+							<div class="col-md-7">
+								<div class="form-group">
+									<input type="text" class="form-control" value="{{old('item.0.text',$items['0']['text']??'')}}" name="item[0][text]" required maxlength="10" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-md-4 control-label text-right">
+								Image
+								<span class="required" aria-required="true"> * </span>
+								<br>
+								<span class="required" aria-required="true"> (100 * 100) </span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Gambar yang akan ditampilkan diatas teks" data-container="body"></i>
+							</label>
+							<div class="col-md-7">
+								<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
+										@if($items['0']['image']??false)
+											<img id="preview_image" src="{{$items['0']['image']}}"/>
+										@else
+											<img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
+										@endif
+									</div>
+
+									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+									<div>
+										<span class="btn default btn-file">
+											<span class="fileinput-new"> Select image </span>
+											<span class="fileinput-exists"> Change </span>
+											<input type="file" accept="image/png" class="file" name="item[0][image]" > 
+										</span>
+										<a href="javascript:;" class="btn red default fileinput-exists removeImage" data-dismiss="fileinput"> Remove </a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 10px">
+							<label class="col-md-4 control-label text-right">
+								Image Selected
+								<span class="required" aria-required="true"> * </span>
+								<br>
+								<span class="required" aria-required="true"> (100 * 100) </span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Gambar yang akan ditampilkan diatas teks saat terpilih" data-container="body"></i>
+							</label>
+							<div class="col-md-7">
+								<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
+										@if($items['0']['image_selected']??false)
+											<img id="preview_image" src="{{$items['0']['image_selected']}}"/>
+										@else
+											<img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
+										@endif
+									</div>
+
+									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+									<div>
+										<span class="btn default btn-file">
+											<span class="fileinput-new"> Select image </span>
+											<span class="fileinput-exists"> Change </span>
+											<input type="file" accept="image/png" class="file" name="item[0][image_selected]"> 
+										</span>
+										<a href="javascript:;" class="btn red default fileinput-exists removeImage" data-dismiss="fileinput"> Remove </a>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
+					<div class="item border-red" id="rating-item-bad">
+						<div class="value-bg font-red border-red">-1</div>
+						<div class="row">
+							<label class="col-md-4 control-label text-right">Text
+								<span class="required" aria-required="true"> *
+								</span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan di popup" data-container="body"></i>
+							</label>
+							<div class="col-md-7">
+								<div class="form-group">
+									<input type="text" class="form-control" value="{{old('item.-1.text',$items['-1']['text']??'')}}" name="item[-1][text]" required maxlength="10" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-md-4 control-label text-right">
+								Image
+								<span class="required" aria-required="true"> * </span>
+								<br>
+								<span class="required" aria-required="true"> (100 * 100) </span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Gambar yang akan ditampilkan diatas teks" data-container="body"></i>
+							</label>
+							<div class="col-md-7">
+								<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
+										@if($items['-1']['image']??false)
+											<img id="preview_image" src="{{$items['-1']['image']}}"/>
+										@else
+											<img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
+										@endif
+									</div>
+
+									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+									<div>
+										<span class="btn default btn-file">
+											<span class="fileinput-new"> Select image </span>
+											<span class="fileinput-exists"> Change </span>
+											<input type="file" accept="image/png" class="file" name="item[-1][image]" > 
+										</span>
+										<a href="javascript:;" class="btn red default fileinput-exists removeImage" data-dismiss="fileinput"> Remove </a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 10px">
+							<label class="col-md-4 control-label text-right">
+								Image Selected
+								<span class="required" aria-required="true"> * </span>
+								<br>
+								<span class="required" aria-required="true"> (100 * 100) </span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Gambar yang akan ditampilkan diatas teks saat terpilih" data-container="body"></i>
+							</label>
+							<div class="col-md-7">
+								<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
+										@if($items['1']['image_selected']??false)
+											<img id="preview_image" src="{{$items['1']['image_selected']}}"/>
+										@else
+											<img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
+										@endif
+									</div>
+
+									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+									<div>
+										<span class="btn default btn-file">
+											<span class="fileinput-new"> Select image </span>
+											<span class="fileinput-exists"> Change </span>
+											<input type="file" accept="image/png" class="file" name="item[-1][image_selected]"> 
+										</span>
+										<a href="javascript:;" class="btn red default fileinput-exists removeImage" data-dismiss="fileinput"> Remove </a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="text-center" style="margin-top: 10px">
+						<button class="btn blue" id="saveItemBtn"><i class="fa fa-check"></i> Save</button>
+					</div>
+				</div>
+				<div class="preview col-md-4 pull-right" style="right: 0;top: 70px; position: sticky">
+					<img src="{{env('S3_URL_VIEW')}}img/setting/rating_preview.png" class="img-responsive">
 				</div>
 			</div>
 		</form>

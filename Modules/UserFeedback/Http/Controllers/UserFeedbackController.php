@@ -31,6 +31,11 @@ class UserFeedbackController extends Controller
             $data['rule']=array_map('array_values', $post['rule']);
             $data['operator']=$post['operator'];
         }
+        $rating_items = MyHelper::get('user-feedback/rating-item')['result']??[];
+        $data['rating_items'] = [];
+        foreach ($rating_items as $item) {
+            $data['rating_items'][$item['rating_value']] = $item['text'];
+        }
         $data['feedbackData'] = MyHelper::post('user-feedback?page='.$page,$post)['result']??[];
         $data['total'] = $data['feedbackData']['total']??count($data['feedbackData']['data']??[]);
         $data['outlets'] = array_map(function($var){
@@ -65,7 +70,7 @@ class UserFeedbackController extends Controller
             'title'          => 'User Feedback',
             'sub_title'      => 'User Feedback Detail',
             'menu_active'    => 'user-feedback',
-            'submenu_active' => 'user-feedback-detail'
+            'submenu_active' => 'user-feedback-list'
         ];
         $ids = explode('#',base64_decode($id));
         if(!is_numeric($ids[0])||!is_numeric($ids[1])){
@@ -75,6 +80,11 @@ class UserFeedbackController extends Controller
             'id_user_feedback' => $ids[0]??'',
             'id_transaction' => $ids[1]??''
         ];
+        $rating_items = MyHelper::get('user-feedback/rating-item')['result']??[];
+        $data['rating_items'] = [];
+        foreach ($rating_items as $item) {
+            $data['rating_items'][$item['rating_value']] = $item['text'];
+        }
         $data['feedback'] = MyHelper::post('user-feedback/detail',$post)['result']??false;
         if(!$data['feedback']){
             return back()->withErrors(['User feedback not found']);
