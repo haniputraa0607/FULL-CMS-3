@@ -312,7 +312,7 @@ class ProductController extends Controller
 
     }
 
-    function image(Request $request) {
+    function addImage(Request $request) {
         $post = $request->except('_token');
         if (!empty($post)) {
             $name = explode('.',$request->file('file')->getClientOriginalName())[0];
@@ -324,10 +324,11 @@ class ProductController extends Controller
             'title'          => 'Product',
             'sub_title'      => 'List Product',
             'menu_active'    => 'product',
-            'submenu_active' => 'product-list-image',
+            'submenu_active' => 'product-image',
+            'child_active'   => 'product-image-add',
         ];
-        $product = MyHelper::post('product/be/list', ['admin_list' => 1]);
-		// dd($product);
+        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1, 'image' => 'null']);
+        
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
@@ -335,6 +336,53 @@ class ProductController extends Controller
             $data['product'] = [];
         }
         return view('product::product.image', $data);
+    }
+
+    function listImage(Request $request) {
+        $post = $request->except('_token');
+        if (!empty($post)) {
+            $name = explode('.',$request->file('file')->getClientOriginalName())[0];
+            $post = MyHelper::encodeImage($request->file('file'));
+            $save = MyHelper::post('product/photo/createAjax', ['name' => $name, 'photo' => $post]);
+            return $save;
+        }
+        $data = [
+            'title'          => 'Product',
+            'sub_title'      => 'List Product',
+            'menu_active'    => 'product',
+            'submenu_active' => 'product-image',
+            'child_active'   => 'product-image-list',
+        ];
+        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1]);
+        
+        if (isset($product['status']) && $product['status'] == "success") {
+            $data['product'] = $product['result'];
+        }
+        else {
+            $data['product'] = [];
+        }
+        return view('product::product.image', $data);
+    }
+
+    function overrideImage(Request $request) {
+        $post = $request->except('_token');
+        
+        if (isset($post['state'])) {
+            if ($post['state'] == 'true') {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            $setting = MyHelper::post('product/be/imageOverride', ['admin_list' => 1, 'status' => $status]);
+            if ($setting['result'] == 'true') {
+                $setting['result'] = $status;
+                return $setting;
+            }
+        } else {
+            $setting = MyHelper::post('product/be/imageOverride', ['admin_list' => 1]);
+        }
+        
+        return $setting;
     }
 
 	function listProductAjax(Request $request) {
