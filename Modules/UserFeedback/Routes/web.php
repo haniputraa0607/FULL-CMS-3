@@ -12,6 +12,10 @@
 */
 
 Route::prefix('user-feedback')->group(function() {
+    Route::post('item', ['middleware' => 'feature_control:213', 'uses' => 'RatingItemController@update']);
+    Route::get('setting', ['middleware' => 'feature_control:212', 'uses' => 'UserFeedbackController@setting']);
+    Route::post('setting', ['middleware' => 'feature_control:212', 'uses' => 'UserFeedbackController@settingUpdate']);
     Route::get('/detail/{id}', 'UserFeedbackController@show');
-    Route::get('/{key?}', 'UserFeedbackController@index');
+    Route::get('/', 'UserFeedbackController@index');
+    Route::post('/', 'UserFeedbackController@setFilter');
 });
