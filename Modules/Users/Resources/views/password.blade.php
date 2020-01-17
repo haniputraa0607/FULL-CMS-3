@@ -53,24 +53,6 @@
 	}
 	
 	</script>
-	<script id="ExtraToken">
-	$( document ).ready(function() {
-		extra_token = '{{ $extra_token }}'
-		function refreshDiv(){
-			$.ajax({
-				url: "{!! url('user/ajax/verify_token') !!}",
-				type: "GET",
-				headers: { 'X-Extra-Token-Header': extra_token },
-				success: function(data) { 
-					extra_token = data.result
-					$("#tkn").val(data.result)
-					window.setTimeout(refreshDiv, 5000);
-				}
-			});
-		}
-		refreshDiv()
-	});
-	</script>
 @endsection
 
 @section('content')
@@ -127,7 +109,6 @@
                             </div>
                         </div>
 					</div>
-					<input type="text" hidden id="tkn" value="" name="verify_token">
 				</form>
 			</div>
 		</div>
