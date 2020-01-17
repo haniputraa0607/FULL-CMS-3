@@ -803,14 +803,31 @@
 					</ul>
 				</li>
 				@endif
-				@if(MyHelper::hasAccess([90], $configs) && MyHelper::hasAccess([179], $grantedFeature) )
-					<li class="nav-item {{($menu_active == 'user-feedback') ? 'active' : ''}}">
-						<a href="{{url('user-feedback')}}" class="nav-link">
-							<i class="fa fa-thumbs-o-up"></i>
-							<span class="title">User Feedback</span>
-						</a>
-					</li>
-				@endif
+			@endif
+			@if(MyHelper::hasAccess([90], $configs) && MyHelper::hasAccess([179,212], $grantedFeature) )
+			<li class="nav-item {{($menu_active == 'user-feedback') ? 'active' : ''}}">
+				<a href="javascript:;" class="nav-link nav-toggle">
+					<i class="fa fa-thumbs-o-up"></i>
+					<span class="title">User Feedback</span>
+					<span class="arrow {{($menu_active == 'user-feedback') ? 'open' : ''}}"></span>
+				</a>
+				<ul class="sub-menu">
+					@if(MyHelper::hasAccess([179], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'user-feedback-list') ? 'active open' : ''}}">
+							<a href="{{url('user-feedback')}}" class="nav-link ">
+								<span class="title">User Feedback List</span>
+							</a>
+						</li>
+					@endif
+					@if(MyHelper::hasAccess([212], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'feedback-setting') ? 'active open' : ''}}">
+							<a href="{{url('user-feedback/setting')}}" class="nav-link ">
+								<span class="title">User Feedback Setting</span>
+							</a>
+						</li>
+					@endif
+				</ul>
+			</li>
 			@endif
 		@endif
 
