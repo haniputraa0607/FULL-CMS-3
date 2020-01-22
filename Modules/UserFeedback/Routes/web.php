@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('user-feedback')->group(function() {
+Route::prefix('user-feedback')->middleware(['web', 'validate_session'])->group(function() {
     Route::post('item', ['middleware' => 'feature_control:213', 'uses' => 'RatingItemController@update']);
     Route::get('setting', ['middleware' => 'feature_control:212', 'uses' => 'UserFeedbackController@setting']);
     Route::post('setting', ['middleware' => 'feature_control:212', 'uses' => 'UserFeedbackController@settingUpdate']);
