@@ -851,10 +851,12 @@ $configs = session('configs');
 									@if(isset($deals))
 									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
 									<option value="Voucher Detail" @if($data['autocrm_push_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
+									<option value="Deals" @if($data['autocrm_push_clickto'] == 'Deals') selected @endif>Deals</option>
+									<option value="Deals Detail" @if($data['autocrm_push_clickto'] == 'Deals Detail') selected @endif>Deals Detail</option>
 									@endif
 									@if(isset($type) && $type == 'trx')
-									<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
-									<option value="Transaction Detail" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
+									<option value="Transaction" @if(isset($data['autocrm_push_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
+									<option value="Transaction Detail" @if(isset($data['autocrm_push_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
 									@endif
 								</select>
 							</div>
@@ -955,8 +957,10 @@ $configs = session('configs');
 									<option value="Link" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Link") selected @endif>Link</option>
 									<option value="Logout" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Logout") selected @endif>Logout</option>
 									@if(isset($deals))
-									<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
-									<option value="Voucher Detail" @if($data['autocrm_push_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
+									<option value="Voucher" @if($data['autocrm_inbox_clickto'] == 'Voucher') selected @endif>Voucher</option>
+									<option value="Voucher Detail" @if($data['autocrm_inbox_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
+									<option value="Deals" @if($data['autocrm_inbox_clickto'] == 'Deals') selected @endif>Deals</option>
+									<option value="Deals Detail" @if($data['autocrm_inbox_clickto'] == 'Deals Detail') selected @endif>Deals Detail</option>
 									@endif
 									@if(isset($type) && $type == 'trx')
 									<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>

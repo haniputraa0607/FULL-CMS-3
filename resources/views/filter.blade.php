@@ -1,6 +1,7 @@
 <?php
 use App\Lib\MyHelper;
 $configs = session('configs');
+$show=$show??false;
 ?>
 <script>
 	document.addEventListener("DOMContentLoaded", function(event) {
@@ -856,6 +857,24 @@ $configs = session('configs');
 					<?php
 					}
 					?>
+
+			var operator_value = document.getElementById('operator'+indx);
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			operator_value.options[operator_value.options.length] = new Option('=', '=');
+			operator_value.options[operator_value.options.length] = new Option('>=', '>=');
+			operator_value.options[operator_value.options.length] = new Option('>', '>');
+			operator_value.options[operator_value.options.length] = new Option('<=', '<=');
+			operator_value.options[operator_value.options.length] = new Option('<', '<');
+
+			var parameter = document.getElementById('parameter'+indx);
+			if(parameter){
+				parameter.style.display = 'block';
+				parameter.required = true;
+			} else if(document.getElementsByName(parameter)[0] != null){
+				parameter.style.display = 'none';
+				parameter.required = false;
+			}
+
 			var parameter = document.getElementById('parameter'+indx);
 			if(parameter){
 				parameter.style.display = 'block';
@@ -914,6 +933,22 @@ $configs = session('configs');
 						}
 						?>
 
+				var operator_value = document.getElementById('operator'+indx);
+				for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+				operator_value.options[operator_value.options.length] = new Option('=', '=');
+				operator_value.options[operator_value.options.length] = new Option('>=', '>=');
+				operator_value.options[operator_value.options.length] = new Option('>', '>');
+				operator_value.options[operator_value.options.length] = new Option('<=', '<=');
+				operator_value.options[operator_value.options.length] = new Option('<', '<');
+
+				var parameter = document.getElementById('parameter'+indx);
+				if(parameter){
+					parameter.style.display = 'block';
+					parameter.required = true;
+				} else if(document.getElementsByName(parameter)[0] != null){
+					parameter.style.display = 'none';
+					parameter.required = false;
+				}
 				var parameter = document.getElementById('parameter'+indx);
 				if(parameter){
 					parameter.style.display = 'block';
@@ -1001,8 +1036,23 @@ $configs = session('configs');
 	}
 </script>
 
-<div id="manualFilter<?php if(!isset($show) || $show){echo "1";} ?>" class="collapse  @if(!isset($show) || $show) show @endif">
-	<div id="div-rule">
+<div id="manualFilter<?php if($show){echo "1";} ?>" class="collapse  @if($show) show @endif">
+<div class="portlet light bordered">
+	<div class="portlet-title">
+		<div class="caption font-blue ">
+			<i class="icon-settings font-blue "></i>
+			<span class="caption-subject bold uppercase">User Search</span>
+		</div>
+		@if(!is_array($conditions) || count($conditions) <= 0)
+		<div class="actions">
+			<div class="btn-group">
+				<button class="btn btn-sm green collapser hidden" id="upload-csv-btn" type="button"> Upload CSV
+				</button>
+			</div>
+		</div>
+		@endif
+	</div>
+<div id="div-rule">
 		@if(!is_array($conditions) || count($conditions) <= 0)
 			<div id="rule0">
 				<div class="portlet light bordered">
@@ -1231,7 +1281,7 @@ $configs = session('configs');
 										<?php
 										if($row['subject'] != '' && $row['subject'] != 'all_user'){
 											$arrayOp = ['=','like','<','<=','>','>='];
-											if(isset($row['operator']) && !in_array($row['operator'],$arrayOp)){
+											if(!in_array($row['operator'],$arrayOp)){
 												$row['parameter'] = $row['operator'];
 											}
 										}else{
@@ -1255,6 +1305,7 @@ $configs = session('configs');
 																	<option value="all_user" @if($row['subject'] == 'all_user') selected @endif>All User</option>
 																</optgroup>
 																<optgroup label="Profile">
+																	<option value="id" @if($row['subject'] == 'id') selected @endif>User Id</option>
 																	<option value="name" @if($row['subject'] == 'name') selected @endif>Name</option>
 																	<option value="phone" @if($row['subject'] == 'phone') selected @endif>Phone</option>
 																	<option value="email" @if($row['subject'] == 'email') selected @endif>Email</option>
@@ -1630,4 +1681,5 @@ $configs = session('configs');
 			</div>
 		@endif
 	</div>
+</div>
 </div>

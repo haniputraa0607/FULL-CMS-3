@@ -90,7 +90,7 @@
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
                                     @if($inactive_image_brand)
-                                        <img src="{{ env('S3_URL_API') }}/{{$inactive_image_brand}}" id="preview_image_brand" />
+                                        <img src="{{ env('S3_URL_API') }}{{$inactive_image_brand}}" id="preview_image_brand" />
                                     @else
                                         <img id="preview_image_brand" src="https://www.placehold.it/750x375/EFEFEF/AAAAAA"/>
                                     @endif
@@ -112,7 +112,7 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             @if(isset($result['id_brand']) && $result['id_brand'] != "") <input hidden name="id_brand" value="{{$result['id_brand']}}" src="{{$result['id_brand']}}"> @endif
-                            <button type="submit" class="btn blue">Submit</button>
+                            <button type="submit" class="btn green"><i class="fa fa-check"></i> Submit</button>
                         </div>
                     </div>
                 </div>

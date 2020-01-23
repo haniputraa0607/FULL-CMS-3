@@ -364,6 +364,22 @@
                 $('#div-left').show()
             })
 
+            $('.summernote').summernote({
+                placeholder: 'Category Description',
+                tabsize: 2,
+                toolbar: [
+                    ['style', ['style']],
+                    ['style', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']],
+                    ['fontsize', ['fontsize']],
+                    ['height', ['height']]
+                ],
+                height: 120
+            });
         });
     </script>
 
@@ -528,6 +544,8 @@
     </div><br>
 
     @include('layouts.notifications')
+
+    <a href="{{url('outlet/be/list')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
 
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">

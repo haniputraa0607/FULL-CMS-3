@@ -159,16 +159,12 @@
                 <i class="fa fa-circle"></i>
             </li>
             <li>
-                <span>{{ $title }}</span>
-                @if (!empty($sub_title))
-                    <i class="fa fa-circle"></i>
-                @endif
+                <span>News</span>
+                <i class="fa fa-circle"></i>
             </li>
-            @if (!empty($sub_title))
             <li>
-                <span>{{ $sub_title }}</span>
+                <span>News Category</span>
             </li>
-            @endif
         </ul>
     </div><br>
 
@@ -187,7 +183,9 @@
                         <th> Category Name </th>
                         <th> Date Create </th>
                         <th> Last Update </th>
+                        @if(MyHelper::hasAccess([166,167], $grantedFeature))
                         <th> Action </th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -206,8 +204,17 @@
                                 </td>
                                 <td>{{ date('d M Y H:i',strtotime($category['created_at'])) }}</td>
                                 <td>{{ date('d M Y H:i',strtotime($category['updated_at'])) }}</td>
-                                <td><button class="edit btn btn-sm btn-info"><i class="fa fa-edit" data-id="{{$category['id_news_category']}}" type="button"></i> Edit</button> <button  data-id="{{$category['id_news_category']}}" data-toggle="confirmation" data-btn-ok-label="Yes" data-btn-ok-class="btn-success" data-btn-ok-icon-content="check" data-btn-cancel-label="Cancel" data-btn-cancel-class="btn-danger"  data-btn-cancel-icon-content="close"
-                                data-title="Are you sure delete this category?" data-content="This might be dangerous" class="btn btn-sm btn-danger btn-flat delete"><i class="fa fa-trash"></i> Delete</button></td>
+                                @if(MyHelper::hasAccess([166,167], $grantedFeature))
+                                <td>
+                                    @if(MyHelper::hasAccess([166], $grantedFeature))
+                                    <button class="edit btn btn-sm btn-info"><i class="fa fa-edit" data-id="{{$category['id_news_category']}}" type="button"></i> Edit</button> 
+                                    @endif
+                                    @if(MyHelper::hasAccess([167], $grantedFeature))
+                                    <button  data-id="{{$category['id_news_category']}}" data-toggle="confirmation" data-btn-ok-label="Yes" data-btn-ok-class="btn-success" data-btn-ok-icon-content="check" data-btn-cancel-label="Cancel" data-btn-cancel-class="btn-danger"  data-btn-cancel-icon-content="close"
+                                    data-title="Are you sure delete this category?" data-content="This might be dangerous" class="btn btn-sm btn-danger btn-flat delete"><i class="fa fa-trash"></i> Delete</button>
+                                    @endif
+                                </td>
+                                @endif
                             </tr>
                         @endforeach
                     @else

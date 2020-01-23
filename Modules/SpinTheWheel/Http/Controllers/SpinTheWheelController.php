@@ -24,9 +24,12 @@ class SpinTheWheelController extends Controller
         ];
         
         $post['deals_type'] = 'Spin';
-        $spin_item = MyHelper::post('deals/list', $post);
+        $spin_item = MyHelper::post('deals/be/list', $post);
         if (isset($spin_item['status']) && $spin_item['status'] == "success") {
-            $data['items'] = $spin_item['result'];
+            $data['items'] = array_map(function($var){
+                $var['id_deals'] = MyHelper::createSlug($var['id_deals'],($var['created_at']??false));
+                return $var;
+            },$spin_item['result']);
         }
         else {
             $data['items'] = [];
@@ -76,8 +79,11 @@ class SpinTheWheelController extends Controller
      * Show the form for editing the specified resource.
      * @return Response
      */
-    public function edit($id_deals)
+    public function edit($slug)
     {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id_deals = $exploded[0];
+        $created_at = $exploded[1];
         $data = [
             'title'          => 'Spin The Wheel',
             'sub_title'      => 'Edit Item',
@@ -86,11 +92,15 @@ class SpinTheWheelController extends Controller
         ];
         
         $post['id_deals'] = $id_deals;
+        $post['created_at'] = $created_at;
         $post['deals_type'] = "Spin";
-        $spin_item = MyHelper::post('deals/list', $post);
+        $spin_item = MyHelper::post('deals/be/list', $post);
 
         if (isset($spin_item['status']) && $spin_item['status'] == "success") {
             $data['item'] = $spin_item['result'][0];
+            if(isset($data['item']['id_deals'])){
+                $data['item']['id_deals'] = $slug;
+            }
             $data['item']['duration'] = "duration";
             if ($data['item']['deals_voucher_expired']!=null) {
                 $data['item']['duration'] = "dates";
@@ -111,6 +121,11 @@ class SpinTheWheelController extends Controller
     public function update(Request $request)
     {
         $post = $request->except('_token');
+        $slug='';
+        if(isset($post['id_deals'])){
+            $slug=$post['id_deals'];
+            $post['id_deals'] = MyHelper::explodeSlug($post['id_deals'])[0];
+        }
         
         $data = [
             'title'          => 'Spin The Wheel',
@@ -133,7 +148,7 @@ class SpinTheWheelController extends Controller
             return redirect()->back()->withInput()->withErrors(['Something went wrong. Please try again.']);
         }
 
-        return redirect('/spinthewheel/edit/'.$post['id_deals'])->withSuccess(['Spin the wheel item has been updated.']);
+        return redirect('/spinthewheel/edit/'.($slug??MyHelper::createSlug($post['id_deals'],$update['result']['created_at']??'')))->withSuccess(['Spin the wheel item has been updated.']);
     }
 
     /**
@@ -143,6 +158,9 @@ class SpinTheWheelController extends Controller
     public function destroy(Request $request)
     {
         $post = $request->except('_token');
+        if(isset($post['id_deals'])){
+            $post['id_deals'] = MyHelper::explodeSlug($post['id_deals'])[0];
+        }
         $post['deals_type'] = 'Spin';
 
         $item = MyHelper::post('deals/delete', $post);
@@ -162,7 +180,7 @@ class SpinTheWheelController extends Controller
         ];
 
         $post_list['deals_type'] = 'Spin';
-        $spin_item = MyHelper::post('deals/list', $post_list);
+        $spin_item = MyHelper::post('deals/be/list', $post_list);
         if (isset($spin_item['status']) && $spin_item['status'] == "success") {
             $data['items'] = $spin_item['result'];
         }

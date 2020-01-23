@@ -21,6 +21,7 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
+                stateSave: true,
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -177,8 +178,7 @@
                         <th> Name </th>
                         <th> Brand </th>
                         <th> City </th>
-                        <th> Open Hour </th>
-                        <th> Close Hour </th>
+                        <th> Open - Close </th>
                         <th> Status </th>
                         @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                             <th> Action </th>
@@ -205,8 +205,7 @@
                                 @endif
                                 <td>
                                     @if(!empty($value['today']['open'])){{ date('H:i', strtotime($value['today']['open'])) }}@endif
-                                </td>
-                                <td>
+                                    @if(!empty($value['today']['open']) && !empty($value['today']['close']))-@endif
                                     @if(!empty($value['today']['close'])){{ date('H:i', strtotime($value['today']['close'])) }}@endif
                                 </td>
                                 <td>

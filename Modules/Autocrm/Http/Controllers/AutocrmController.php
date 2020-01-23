@@ -66,7 +66,8 @@ class AutocrmController extends Controller
 	
     public function mediaOn($media, $id){
 		$post = [];
-		$post['id_autocrm'] = $id;
+		$post['id_autocrm'] = MyHelper::explodeSlug($id)[0]??'';
+
 		if($media == 'email') $post['autocrm_email_toogle'] = '1';
 		if($media == 'sms') $post['autocrm_sms_toogle'] = '1';
 		if($media == 'push') $post['autocrm_push_toogle'] = '1';
@@ -166,7 +167,16 @@ class AutocrmController extends Controller
 		$query = MyHelper::get('autocrm/cron/list');
 		$test = MyHelper::get('autocrm/textreplace');
 		$data['result'] = parent::getData($query);
+
+		if ($data['result']) {
+			foreach ($data['result'] as $key => $value) {
+				$data['result'][$key]['id_autocrm'] = MyHelper::createSlug($value['id_autocrm'], $value['created_at']);
+			}
+		}
 		if($test['status'] == 'success'){
+			foreach ($test['result'] as $key => $val) {
+				$test['result'][$key]['id_text_replace'] = MyHelper::createSlug($val['id_text_replace'], $val['created_at']);
+			}
 			$data['textreplaces'] = $test['result'];
 		}
 
@@ -175,6 +185,7 @@ class AutocrmController extends Controller
 	
 	public function create(Request $request){
 		$post = $request->except('_token');
+
 		if(empty($post)){
 			$data = [ 'title'             => 'Auto CRM',
 					  'sub_title'         => 'New Auto CRM',
@@ -191,16 +202,16 @@ class AutocrmController extends Controller
 			$getCourier = MyHelper::get('courier/list?log_save=0');
 			if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 			
-			$getOutlet = MyHelper::get('outlet/list?log_save=0');
+			$getOutlet = MyHelper::get('outlet/be/list?log_save=0');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-			$getProduct = MyHelper::get('product/list?log_save=0');
+			$getProduct = MyHelper::get('product/be/list?log_save=0');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 			
 			$getTag = MyHelper::get('product/tag/list?log_save=0');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 			
-			$getMembership = MyHelper::post('membership/list?log_save=0', []);
+			$getMembership = MyHelper::post('membership/be/list?log_save=0', []);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 			
 			$test = MyHelper::get('autocrm/textreplace?log_save=0');
@@ -218,6 +229,7 @@ class AutocrmController extends Controller
 			$data['data'] =[];
 			$data['conditions'] = "";
 			$data['rule'] = "";
+
 			return view('autocrm::create', $data);
 		}else{
 			if (isset($post['autocrm_push_image'])) {
@@ -248,6 +260,8 @@ class AutocrmController extends Controller
 
 	public function detail(Request $request, $id_autocrm){
 		$post = $request->except('_token');
+		$id_autocrm = MyHelper::explodeSlug($id_autocrm)[0]??'';
+
 		if(empty($post)){
 
 			$data = [ 'title'             => 'Auto CRM',
@@ -279,16 +293,16 @@ class AutocrmController extends Controller
 			$getCourier = MyHelper::get('courier/list?log_save=0');
 			if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 			
-			$getOutlet = MyHelper::get('outlet/list?log_save=0');
+			$getOutlet = MyHelper::get('outlet/be/list?log_save=0');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-			$getProduct = MyHelper::get('product/list?log_save=0');
+			$getProduct = MyHelper::get('product/be/list?log_save=0');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 			
 			$getTag = MyHelper::get('product/tag/list?log_save=0');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 			
-			$getMembership = MyHelper::post('membership/list?log_save=0', []);
+			$getMembership = MyHelper::post('membership/be/list?log_save=0', []);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
 			$test = MyHelper::get('autocrm/textreplace?log_save=0');
@@ -338,6 +352,7 @@ class AutocrmController extends Controller
 
 	function deleteAutocrmCron(Request $request) {
         $post   = $request->all();
+		$post['id_autocrm'] =  MyHelper::explodeSlug($post['id_autocrm'])[0]??'';
 
         $delete = MyHelper::post('autocrm/cron/delete', ['id_autocrm' => $post['id_autocrm']]);
         

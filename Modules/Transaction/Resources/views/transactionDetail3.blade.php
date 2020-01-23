@@ -470,7 +470,7 @@
                     <div class="col-12 text-16-7px text-black space-text seravek-font">{{ strtoupper($data['user']['name']) }}</div>
                     <div class="col-12 text-16-7px text-black space-bottom-big seravek-font">{{ $data['user']['phone'] }}</div>
 
-                @if ($data['trasaction_type'] != 'Offline')
+                @if ($data['trasaction_type'] != 'Offline' && $data['trasaction_type'] != 'Advance Order')
                     @if ($data['detail']['pickup_type'] == 'set time')
                         <div class="col-12 text-15px space-bottom text-greyish-brown seravek-medium-font">Pesanan akan siap pada</div>
                     @else
@@ -512,9 +512,9 @@
                 </div>
                 @php $countQty = 0; @endphp
                 @foreach ($data['product_transaction'] as $key => $val)
-                    <div class="col-7 text-13-3px text-black seravek-light-font">{{ $val['product']['product_name'] }}</div>
-                    <div class="col-5 text-right text-13-3px text-black seravek-light-font">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal'])) }}</div>
-                    <div class="col-12 text-grey text-12-7px text-black-grey-light seravek-light-font">{{ $val['transaction_product_qty'] }} x {{ str_replace(',', '.', number_format($val['transaction_product_price'])) }}</div>
+                    <div class="col-7 text-13-3px text-black seravek-light-font">{{ $val['product']['product_name']??'' }}</div>
+                    <div class="col-5 text-right text-13-3px text-black seravek-light-font">{{ str_replace(',', '.', number_format($val['transaction_product_subtotal']??0)) }}</div>
+                    <div class="col-12 text-grey text-12-7px text-black-grey-light seravek-light-font">{{ $val['transaction_product_qty']??'' }} x {{ str_replace(',', '.', number_format($val['transaction_product_price']??0)) }}</div>
                     <div class="space-bottom col-12">
                         <div class="space-bottom text-12-7px text-grey-medium-light seravek-italic-font" style="word-wrap: break-word;">
                             @if (isset($val['transaction_product_note']))
@@ -524,7 +524,7 @@
                             @endif
                         </div>
                     </div>
-                    @php $countQty += $val['transaction_product_qty']; @endphp
+                    @php $countQty += $val['transaction_product_qty']??0; @endphp
                 @endforeach
 
                 <div class="col-12 text-12-7px text-right"><hr style="margin:0"></div>
@@ -580,7 +580,7 @@
                             Transfer Bank
                         @elseif ($data['trasaction_payment_type'] == 'Offline')
                             @if(isset($data['data_payment'][0]['payment_bank']))
-                                $data['data_payment'][0]['payment_bank']
+                                {{$data['data_payment'][0]['payment_bank']}}
                             @else
                                 TUNAI
                             @endif
@@ -633,7 +633,7 @@
                     </div>
                     @php $top += 5; $bg = false; @endphp
                 @endif
-                @if($data['detail']['taken_at'] != null)
+                @if(($data['detail']['taken_at']??false) != null)
                     <div class="col-12 text-13-3px seravek-font text-black top-{{$top}}px">
                         <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
                         Pesanan Anda sudah diambil

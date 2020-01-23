@@ -145,7 +145,7 @@
 <div class="portlet light bordered">
 	<div class="portlet-title">
 		<div class="caption">
-			<span class="caption-subject font-dark sbold uppercase">List Text Replace</span>
+			<span class="caption-subject font-blue sbold uppercase">List Text Replace</span>
 		</div>
 	</div>
 	<div class="portlet-body form" style="overflow-x:scroll">

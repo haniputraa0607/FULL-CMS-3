@@ -7,12 +7,12 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'promotio
 	
 	Route::get('create', ['middleware' => 'feature_control:111', 'uses' => 'PromotionController@create']);
     Route::post('create', ['middleware' => 'feature_control:111', 'uses' => 'PromotionController@store']);
-	Route::get('step1/{id_promotion}', ['middleware' => 'feature_control:110,112', 'uses' => 'PromotionController@step1']);
-    Route::post('step1/{id_promotion}', ['middleware' => 'feature_control:112', 'uses' => 'PromotionController@step1Post']);
-	Route::get('step2/{id_promotion}', ['middleware' => 'feature_control:110,112', 'uses' => 'PromotionController@step2']);
-	Route::post('step2/{id_promotion}', ['middleware' => 'feature_control:112', 'uses' => 'PromotionController@step2Post']);
-	Route::get('step3/{id_promotion}', ['middleware' => 'feature_control:110,112', 'uses' => 'PromotionController@step3']);
-	Route::post('step3/{id_promotion}', ['middleware' => 'feature_control:112', 'uses' => 'PromotionController@step3Post']);
+	Route::get('step1/{slug}', ['middleware' => 'feature_control:110,112', 'uses' => 'PromotionController@step1']);
+    Route::post('step1/{slug}', ['middleware' => 'feature_control:112', 'uses' => 'PromotionController@step1Post']);
+	Route::get('step2/{slug}', ['middleware' => 'feature_control:110,112', 'uses' => 'PromotionController@step2']);
+	Route::post('step2/{slug}', ['middleware' => 'feature_control:112', 'uses' => 'PromotionController@step2Post']);
+	Route::get('step3/{slug}', ['middleware' => 'feature_control:110,112', 'uses' => 'PromotionController@step3']);
+	Route::post('step3/{slug}', ['middleware' => 'feature_control:112', 'uses' => 'PromotionController@step3Post']);
 	Route::get('sent/list/{id_promotion_content}/{page?}/{type?}', ['middleware' => 'feature_control:110', 'uses' => 'PromotionController@sentList']);
 	Route::get('voucher/list/{id_promotion_content}/{page?}/{type?}', ['middleware' => 'feature_control:110', 'uses' => 'PromotionController@voucherList']);
 	Route::get('voucher/trx/{id_promotion_content}/{page?}', ['middleware' => 'feature_control:110', 'uses' => 'PromotionController@voucherTrx']);
@@ -23,7 +23,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'promotio
 	{
 		Route::get('/', 'PromotionController@listDeals');
 		Route::any('/create', 'PromotionController@createDeals');
-		Route::any('/detail/{id}', 'PromotionController@detailDeals');
+		Route::any('/detail/{slug}', 'PromotionController@detailDeals');
 		
 	});
 });

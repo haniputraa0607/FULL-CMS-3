@@ -50,6 +50,11 @@ class InboxGlobalController extends Controller
 		$action = MyHelper::post('inboxglobal/list', $post);
 		// print_r($action);exit;
 		if(isset($action['status']) && $action['status'] == 'success'){
+			if (!empty($action['result'])) {
+				foreach ($action['result'] as $key => $value) {
+					$action['result'][$key]['id_inbox_global'] = MyHelper::createSlug($value['id_inbox_global'], $value['created_at']);
+				}
+			}
 			$data['result'] = $action['result'];
 			$data['count'] = $action['count'];
 			$data['post'] = $post;
@@ -63,16 +68,16 @@ class InboxGlobalController extends Controller
             $getCourier = MyHelper::get('courier/list?log_save=0');
             if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 
-            $getOutlet = MyHelper::get('outlet/list?log_save=0');
+            $getOutlet = MyHelper::get('outlet/be/list?log_save=0');
             if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 
-            $getProduct = MyHelper::get('product/list?log_save=0');
+            $getProduct = MyHelper::get('product/be/list?log_save=0');
             if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 
             $getTag = MyHelper::get('product/tag/list?log_save=0');
             if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-            $getMembership = MyHelper::post('membership/list?log_save=0',[]);
+            $getMembership = MyHelper::post('membership/be/list?log_save=0',[]);
             if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
 			return view('inboxglobal::list', $data);
@@ -82,6 +87,7 @@ class InboxGlobalController extends Controller
     }
 	
 	public function delete($id_inbox_global){
+		$id_inbox_global = MyHelper::explodeSlug($id_inbox_global)[0]??'';
 		$delete = MyHelper::post('inboxglobal/delete', ['id_inbox_global' => $id_inbox_global]);
 		// print_r($delete);exit;
 		if($delete['status'] == 'success'){
@@ -92,6 +98,8 @@ class InboxGlobalController extends Controller
     }
 	
 	public function edit(Request $request, $id_inbox_global){
+
+		$id_inbox_global = MyHelper::explodeSlug($id_inbox_global)[0]??'';
 		$data = [ 'title'             => 'Update Inbox Global',
 				  'menu_active'       => 'inboxglobal',
 				  'submenu_active'    => 'inboxglobal-list'
@@ -127,16 +135,16 @@ class InboxGlobalController extends Controller
 			$getCourier = MyHelper::get('courier/list');
 			if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 			
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/be/list');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-			$getProduct = MyHelper::get('product/list');
+			$getProduct = MyHelper::get('product/be/list');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 			
 			$getTag = MyHelper::get('product/tag/list');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 			
-			$getMembership = MyHelper::post('membership/list', []);
+			$getMembership = MyHelper::post('membership/be/list', []);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 			
 			$test = MyHelper::get('autocrm/textreplace');
@@ -175,16 +183,16 @@ class InboxGlobalController extends Controller
 			$getCourier = MyHelper::get('courier/list');
 			if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 			
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/be/list');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-			$getProduct = MyHelper::get('product/list');
+			$getProduct = MyHelper::get('product/be/list');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 			
 			$getTag = MyHelper::get('product/tag/list');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 			
-			$getMembership = MyHelper::post('membership/list', []);
+			$getMembership = MyHelper::post('membership/be/list', []);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 			
 			$test = MyHelper::get('autocrm/textreplace');

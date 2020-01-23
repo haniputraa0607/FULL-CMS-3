@@ -89,7 +89,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase font-blue">New Brand</span>
+                <span class="caption-subject font-dark sbold uppercase font-blue">{{$title}}</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -118,6 +118,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Brand Visibility
+                            <i class="fa fa-question-circle tooltips" data-original-title="Status brand. Visible/Hidden" data-container="body"></i>
+                        </label>
+                        <div class="col-md-7">
+                            <div class="input-icon right">
+                                <input type="checkbox" class="make-switch" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-off-text="Hidden" name="brand_visibility" value="1" @if(old('brand_visibility',$result['brand_visibility']??'')) checked @endif>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Code
                             <span class="required" aria-required="true"> *
                             </span>
@@ -134,7 +144,7 @@
                             Logo
                             <span class="required" aria-required="true"> * </span>
                             <br>
-                            <span class="required" aria-required="true"> (PNG Only) </span>
+                            <span class="required" aria-required="true"> (Only PNG) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran square digunakan utnuk menjadi logo brand" data-container="body"></i>
                         </label>
                         <div class="col-md-7">

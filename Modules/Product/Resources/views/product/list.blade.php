@@ -27,6 +27,7 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
+                stateSave: true,
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -250,7 +251,7 @@
                                 @if (empty($value['category']))
                                     <td>Uncategorize</td>
                                 @else
-                                    <td>{{ $value['category']['product_category_name'] }}</td>
+                                    <td>{{ $value['category'][0]['product_category_name']??'Uncategories' }}</td>
                                 @endif
                                 <td>{{ $value['product_name'] }}</td>
                                 <td>

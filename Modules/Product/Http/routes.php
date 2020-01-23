@@ -6,6 +6,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 * product
 	 */
 	Route::get('/', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProduct']);
+	Route::any('/image/add', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addImage']);
+	Route::any('/image/list', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listImage']);
+	Route::any('/image/override', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@overrideImage']);
 	Route::any('/visible/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::any('/hidden/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::post('/id_visibility', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addIdVisibility']);
@@ -45,6 +48,22 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
     	Route::post('delete', ['middleware' => 'feature_control:47', 'uses' => 'CategoryController@delete']);
 		/* position/ order */
 		Route::post('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'CategoryController@positionCategoryAssign']);
+	});
+
+	/**
+	 * modifier
+	 */
+	Route::group(['prefix' => 'modifier'], function() {
+		Route::get('price/{id_outlet?}', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@listPrice']);
+		Route::post('price/{id_outlet}', ['middleware' => 'feature_control:186', 'uses' => 'ModifierController@updatePrice']);
+
+		Route::get('/', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@index']);
+		Route::get('/create', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@create']);
+		Route::post('/', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@store']);
+		Route::get('/{id}', ['middleware' => 'feature_control:182', 'uses' => 'ModifierController@show']);
+		Route::put('/{id}', ['middleware' => 'feature_control:183', 'uses' => 'ModifierController@update']);
+		Route::patch('/{id}', ['middleware' => 'feature_control:183', 'uses' => 'ModifierController@update']);
+		Route::delete('/{id}', ['middleware' => 'feature_control:184', 'uses' => 'ModifierController@destroy']);
 	});
 
 	/**

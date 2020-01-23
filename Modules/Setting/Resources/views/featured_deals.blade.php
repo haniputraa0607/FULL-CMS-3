@@ -1,4 +1,10 @@
 <div class="tab-pane" id="featured_deals">
+    <div style="margin:20px 0">
+        <a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalFeaturedDeals"> New Featured Deals
+        	<i class="fa fa-question-circle tooltips" data-original-title="Membuat featured deals di halaman home aplikasi mobile" data-container="body"></i>
+        </a>
+    </div>
+
 	<div class="row" style="margin-top:20px">
 		<div class="col-md-12">
 			<div class="portlet light bordered">

@@ -21,6 +21,7 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
+                stateSave: true,
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -178,10 +179,10 @@
                                             <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_news'] }}"><i class="fa fa-trash-o"></i></a>
                                         @endif
                                         @if(MyHelper::hasAccess([20,22], $grantedFeature))
-                                            <a href="{{ url('news/detail') }}/{{ $value['id_news'] }}/{{ $value['news_slug'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                            <a href="{{ url('news/detail') }}/{{ $value['id_news'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                         @endif
                                         @if($value['news_button_form_text']!="" && MyHelper::hasAccess([20], $grantedFeature))
-                                            <a href="{{ url('news/form-data') }}/{{ $value['id_news'] }}/{{ $value['news_slug'] }}" class="btn btn-sm green"><i class="fa fa-file-text-o"></i></a>
+                                            <a href="{{ url('news/form-data') }}/{{ $value['id_news'] }}" class="btn btn-sm green"><i class="fa fa-file-text-o"></i></a>
                                         @endif
                                     </td>
                                 @endif

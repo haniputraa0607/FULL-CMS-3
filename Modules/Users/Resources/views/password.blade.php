@@ -50,18 +50,32 @@
         if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
         return true;
-    }
+	}
+	
 	</script>
 @endsection
 
 @section('content')
 <div class="page-bar">
-	<ul class="page-breadcrumb">
-		<li>
-			<a href="{{url('/')}}">Home</a>
-		</li>
-	</ul>
-</div>
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/">Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>{{ $title }}</span>
+            @if (!empty($sub_title))
+                <i class="fa fa-circle"></i>
+            @endif
+        </li>
+        @if (!empty($sub_title))
+        <li>
+            <span>{{ $sub_title }}</span>
+        </li>
+        @endif
+    </ul>
+</div><br>
+
 @include('layouts.notifications')
 
 <div class="row" style="margin-top:20px">
@@ -73,7 +87,7 @@
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form class="form-horizontal form-bordered" action="{{ url('user/detail') }}/{{$phone}}" method="post">
+				<form class="form-horizontal form-bordered" action="{{ url()->current() }}" method="post">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-3">Your 6 Digit PIN</label>
@@ -94,7 +108,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+					</div>
 				</form>
 			</div>
 		</div>

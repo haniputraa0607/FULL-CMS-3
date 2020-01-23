@@ -26,7 +26,8 @@ class CampaignController extends Controller
      * @return Response
      */
     public function campaignList(Request $request, $page = null){
-		$data = [ 'title'             => 'Campaign List',
+		$data = [ 'title'             => 'Campaign',
+				  'sub_title'          => 'Campaign List',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-list'
 				];
@@ -52,12 +53,19 @@ class CampaignController extends Controller
 		$action = MyHelper::post('campaign/list', $post);
 		// print_r($action);exit;
 		if(isset($action['status']) && $action['status'] == 'success'){
+			if (!empty($action['result'])) {
+				foreach ($action['result'] as $key => $val) {
+					$action['result'][$key]['id_campaign'] = MyHelper::createSlug($val['id_campaign'], $val['created_at']);
+					$action['result'][$key]['id_user'] = MyHelper::createSlug($val['id_user'], $val['created_at']);
+				}
+			}
 			$data['result'] = $action['result'];
 			$data['count'] = $action['count'];
 		} else{
 			$data['result'] =[];
 		}
 		$data['post'] = $post;
+
 		return view('campaign::list', $data);
     }
 
@@ -68,7 +76,9 @@ class CampaignController extends Controller
 				];
 
 		$post = $request->except(['_token']);
-		$action = MyHelper::post('campaign/email/outbox/detail', ['id_campaign_email_sent' => $id]);
+		$id_decrypt = MyHelper::explodeSlug($id)[0]??'';
+
+		$action = MyHelper::post('campaign/email/outbox/detail', ['id_campaign_email_sent' => $id_decrypt]);
 
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
@@ -87,7 +97,6 @@ class CampaignController extends Controller
 				];
 
 		$post = $request->except(['_token']);
-		// print_r($post);exit;
 		if(!empty($post)){
 			if(!empty($page)){
 				$skip = ($page-1) * 15;
@@ -105,11 +114,19 @@ class CampaignController extends Controller
 		}
 
 		$action = MyHelper::post('campaign/email/outbox/list', $post);
-		// print_r($action);exit;
+
 		if(isset($action['status']) && $action['status'] == 'success'){
+			if (!empty($action['result'])) {
+				foreach ($action['result'] as $key => $value) {
+					$action['result'][$key]['id_campaign_email_sent'] = MyHelper::createSlug($value['id_campaign_email_sent'], $value['created_at']);
+					$action['result'][$key]['id_campaign'] = MyHelper::createSlug($value['id_campaign'], $value['created_at']);
+					$action['result'][$key]['id_user'] = MyHelper::createSlug($value['id_user'], $value['created_at']);
+				}
+			}
 			$data['result'] = $action['result'];
 			$data['count'] = $action['count'];
 			$data['post'] = $post;
+
 			return view('campaign::email-outbox', $data);
 		} else{
 			return redirect('campaign')->withErrors($action['messages']);
@@ -176,9 +193,10 @@ class CampaignController extends Controller
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-sms-outbox'
 				];
+		$id_decrypt = MyHelper::explodeSlug($id)[0]??'';
 
 		$post = $request->except(['_token']);
-		$action = MyHelper::post('campaign/sms/outbox/detail', ['id_campaign_sms_sent' => $id]);
+		$action = MyHelper::post('campaign/sms/outbox/detail', ['id_campaign_sms_sent' => $id_decrypt]);
 
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
@@ -215,11 +233,18 @@ class CampaignController extends Controller
 		}
 
 		$action = MyHelper::post('campaign/sms/outbox/list', $post);
-		// print_r($action);exit;
 		if(isset($action['status']) && $action['status'] == 'success'){
+			if (!empty($action['result'])) {
+				foreach ($action['result'] as $key => $value) {
+					$action['result'][$key]['id_campaign_sms_sent'] = MyHelper::createSlug($value['id_campaign_sms_sent'], $value['created_at']);
+					$action['result'][$key]['id_campaign'] = MyHelper::createSlug($value['id_campaign'], $value['created_at']);
+					$action['result'][$key]['id_user'] = MyHelper::createSlug($value['id_user'], $value['created_at']);
+				}
+			}
 			$data['result'] = $action['result'];
 			$data['count'] = $action['count'];
 			$data['post'] = $post;
+
 			return view('campaign::sms-outbox', $data);
 		} else{
 			return redirect('campaign')->withErrors($action['messages']);
@@ -231,9 +256,10 @@ class CampaignController extends Controller
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-sms-queue'
 				];
+		$id_decrypt = MyHelper::explodeSlug($id)[0]??'';
 
 		$post = $request->except(['_token']);
-		$action = MyHelper::post('campaign/sms/queue/detail', ['id_campaign_sms_queue' => $id]);
+		$action = MyHelper::post('campaign/sms/queue/detail', ['id_campaign_sms_queue' => $id_decrypt]);
 
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
@@ -287,8 +313,10 @@ class CampaignController extends Controller
 				  'submenu_active'    => 'campaign-push-outbox'
 				];
 
+		$id_decrypt = MyHelper::explodeSlug($id)[0]??'';
+
 		$post = $request->except(['_token']);
-		$action = MyHelper::post('campaign/push/outbox/detail', ['id_campaign_push_sent' => $id]);
+		$action = MyHelper::post('campaign/push/outbox/detail', ['id_campaign_push_sent' => $id_decrypt]);
 		// print_r($action);exit;
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
@@ -325,11 +353,19 @@ class CampaignController extends Controller
 		}
 
 		$action = MyHelper::post('campaign/push/outbox/list', $post);
-		// print_r($action);exit;
+		
 		if(isset($action['status']) && $action['status'] == 'success'){
+			if (!empty($action['result'])) {
+				foreach ($action['result'] as $key => $value) {
+					$action['result'][$key]['id_campaign_push_sent'] = MyHelper::createSlug($value['id_campaign_push_sent'], $value['created_at']);
+					$action['result'][$key]['id_campaign'] = MyHelper::createSlug($value['id_campaign'], $value['created_at']);
+					$action['result'][$key]['id_user'] = MyHelper::createSlug($value['id_user'], $value['created_at']);
+				}
+			}
 			$data['result'] = $action['result'];
 			$data['count'] = $action['count'];
 			$data['post'] = $post;
+
 			return view('campaign::push-outbox', $data);
 		} else{
 			return redirect('campaign')->withErrors($action['messages']);
@@ -341,9 +377,10 @@ class CampaignController extends Controller
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-push-queue'
 				];
+		$id_decrypt = MyHelper::explodeSlug($id)[0]??'';
 
 		$post = $request->except(['_token']);
-		$action = MyHelper::post('campaign/push/queue/detail', ['id_campaign_push_queue' => $id]);
+		$action = MyHelper::post('campaign/push/queue/detail', ['id_campaign_push_queue' => $id_decrypt]);
 
 		if(isset($action['status']) && $action['status'] == 'success'){
 			$data['result'] = $action['result'];
@@ -424,11 +461,18 @@ class CampaignController extends Controller
 			$data['submenu_active'] = 'campaign-whatsapp-queue';
 			$data['type'] = 'queue';
 		}
-		// print_r($action);exit;
 		if(isset($action['status']) && $action['status'] == 'success'){
+			if (!empty($action['result'])) {
+				foreach ($action['result'] as $key => $value) {
+					$action['result'][$key]['id_campaign_whatsapp_sent'] = MyHelper::createSlug($value['id_campaign_whatsapp_sent'], $value['created_at']);
+					$action['result'][$key]['id_campaign'] = MyHelper::createSlug($value['id_campaign'], $value['created_at']);
+					$action['result'][$key]['id_user'] = MyHelper::createSlug($value['id_user'], $value['created_at']);
+				}
+			}
 			$data['result'] = $action['result'];
 			$data['count'] = $action['count'];
 			$data['post'] = $post;
+
 			return view('campaign::whatsapp-list', $data);
 		} else{
 			return redirect('campaign')->withErrors($action['messages']);
@@ -440,13 +484,13 @@ class CampaignController extends Controller
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-whatsapp-outbox'
 				];
-
+		$id_decrypt = MyHelper::explodeSlug($id)[0]??'';
 		$post = $request->except(['_token']);
 		if(strpos(url()->current(), 'outbox') !== false){
-			$action = MyHelper::post('campaign/whatsapp/outbox/list', ['id_campaign_whatsapp_sent' => $id]);
+			$action = MyHelper::post('campaign/whatsapp/outbox/list', ['id_campaign_whatsapp_sent' => $id_decrypt]);
 			$data['type'] = 'sent';
 		}else{
-			$action = MyHelper::post('campaign/whatsapp/queue/list', ['id_campaign_whatsapp_queue' => $id]);
+			$action = MyHelper::post('campaign/whatsapp/queue/list', ['id_campaign_whatsapp_queue' => $id_decrypt]);
 			$data['title'] = 'Campaign Whatsapp Queue Detail';
 			$data['submenu_active'] = 'campaign-whatsapp-queue';
 			$data['type'] = 'queue';
@@ -462,8 +506,9 @@ class CampaignController extends Controller
 		}
 	}
 
-	public function create(){
+	public function create(Request $request){
 		$data = [ 'title'             => 'Campaign',
+				  'sub_title'         => 'New Campaign',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-create'
 				];
@@ -477,16 +522,16 @@ class CampaignController extends Controller
 		$getCourier = MyHelper::get('courier/list');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 
-		$getOutlet = MyHelper::get('outlet/list');
+		$getOutlet = MyHelper::get('outlet/be/list');
 		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 
-		$getProduct = MyHelper::get('product/list');
+		$getProduct = MyHelper::get('product/be/list');
 		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 
 		$getTag = MyHelper::get('product/tag/list');
 		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-		$getMembership = MyHelper::post('membership/list', []);
+		$getMembership = MyHelper::post('membership/be/list', []);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
 		if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
@@ -495,30 +540,52 @@ class CampaignController extends Controller
 			$data['api_key_whatsapp'] = null;
 		}
 
+		$data['csv']=$request->get('filter')=='csv'?true:false;
+		$result=&$data['result'];
+		$result['campaign_title']=old('campaign_title',$request->get('campaign_title'));
+		$result['campaign_send_at']=old('campaign_send_at',$request->get('campaign_send_at'));
+		$result['campaign_media']=old('campaign_media',$request->get('campaign_media'));
+		$result['campaign_generate_receipient']=old('campaign_generate_receipient',$request->get('campaign_generate_receipient'));
+		$result['campaign_send_at']=$result['campaign_send_at']?str_replace('-', '', $result['campaign_send_at']):'';
+
 		return view('campaign::create-step-1', $data);
     }
 
 	public function createPost(Request $request){
-		$post = $request->except('_token');
-		// print_r($post);exit;
-		$action = MyHelper::post('campaign/create', $post);
-		// print_r($action);exit;
-		if($action['status'] == 'success'){
+		$post = $request->except(array('_token','import_file'));
+		if(in_array($request->post('csv_content'),array('id','phone'))){
+			if($request->file('import_file')){
+				$path = $request->file('import_file')->getRealPath();
+				$action = MyHelper::postFile('campaign/create', 'import_file',$path,$post);
+			}else{
+				return back()->withInput()->withErrors('File empty');
+			}
+		}else{
+			$action = MyHelper::post('campaign/create', $post);
+		}
+		if(isset($action['status']) && $action['status'] == 'success'){
+			$action['campaign']['id_campaign'] = MyHelper::createSlug($action['campaign']['id_campaign'], $action['campaign']['created_at']);
 			return redirect('campaign/step2/'.$action['campaign']['id_campaign']);
 		} else{
-			return back()->withErrors($action['messages']);
+			return back()->withInput()->withErrors($action['messages']);
 		}
 	}
 
 	public function campaignStep1($id_campaign){
-		$action = MyHelper::post('campaign/step2', ['id_campaign' => $id_campaign]);
-		// dd($action);exit;
+		$id_campaign_decrypt = MyHelper::explodeSlug($id_campaign)[0]??'';
+		$action = MyHelper::post('campaign/step2', ['id_campaign' => $id_campaign_decrypt]);
+
 		if($action['status'] == 'success'){
 			$data = [ 'title'             => 'Campaign',
 				  'menu_active'       => 'campaign',
 				  'submenu_active'    => 'campaign-create'
 				];
 
+			$action['result']['id_campaign'] = $id_campaign;
+			$action['result']['id_user'] = MyHelper::createSlug($action['result']['id_user'], $action['result']['created_at']);
+			if (!empty($action['result']['user'])) {
+				$action['result']['user']['id'] = $action['result']['id_user'];
+			}
 			$data['result'] = $action['result'];
 
 			$getCity = MyHelper::get('city/list');
@@ -530,16 +597,16 @@ class CampaignController extends Controller
 			$getCourier = MyHelper::get('courier/list');
 			if(isset($getCourier['status']) && $getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/be/list');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 
-			$getProduct = MyHelper::get('product/list');
+			$getProduct = MyHelper::get('product/be/list');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 
 			$getTag = MyHelper::get('product/tag/list');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-			$getMembership = MyHelper::post('membership/list',[]);
+			$getMembership = MyHelper::post('membership/be/list',[]);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
 			$getApiKey = MyHelper::get('setting/whatsapp');
@@ -555,10 +622,21 @@ class CampaignController extends Controller
 		}
     }
 	public function campaignStep1Post(Request $request, $id_campaign){
-		$post = $request->except(['_token','sample_1_length','files']);
-		$post['id_campaign'] = $id_campaign;
-		$action = MyHelper::post('campaign/create', $post);
-		// dd($action);exit;
+		$post = $request->except(['_token','sample_1_length','files','import_file']);
+		$id_campaign_decrypt = MyHelper::explodeSlug($id_campaign)[0]??'';
+
+		if(in_array($request->post('csv_content'),array('id','phone'))){
+			if($request->file('import_file')){
+				$path = $request->file('import_file')->getRealPath();
+				$action = MyHelper::postFile('campaign/create', 'import_file',$path,$post);
+			}else{
+				$action = MyHelper::postFile('campaign/create', 'import_file',null,$post);
+			}
+		}else{
+			$action = MyHelper::post('campaign/create', $post);
+		}//		$action = MyHelper::post('campaign/create', $post);
+		//print json_encode($post);die();
+		//dd($action);exit;
 		if(isset($action['status']) && $action['status'] == 'success'){
 			return redirect('campaign/step2/'.$id_campaign);
 		} else{
@@ -567,7 +645,8 @@ class CampaignController extends Controller
 	}
 
     public function campaignStep2($id_campaign){
-		$action = MyHelper::post('campaign/step2', ['id_campaign' => $id_campaign]);
+    	$id_campaign_decrypt = MyHelper::explodeSlug($id_campaign)[0]??'';
+		$action = MyHelper::post('campaign/step2', ['id_campaign' => $id_campaign_decrypt]);
 		// print_r($action);exit;
 		if($action['status'] == 'success'){
 			$data = [ 'title'		  => 'Campaign',
@@ -576,21 +655,27 @@ class CampaignController extends Controller
 				];
 			$test = MyHelper::get('autocrm/textreplace');
 
+			$action['result']['id_campaign'] = $id_campaign;
+			$action['result']['id_user'] = MyHelper::createSlug($action['result']['id_user'], $action['result']['created_at']);
+			if (!empty($action['result']['user'])) {
+				$action['result']['user']['id'] = $action['result']['id_user'];
+			}
 			$data['result'] = $action['result'];
+
 			if($test['status'] == 'success'){
 				$data['textreplaces'] = $test['result'];
 			}
 
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/be/list');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 
-			$getProduct = MyHelper::get('product/list');
+			$getProduct = MyHelper::get('product/be/list');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 
 			$getTag = MyHelper::get('product/tag/list');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-			$getMembership = MyHelper::post('membership/list',[]);
+			$getMembership = MyHelper::post('membership/be/list',[]);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
 			return view('campaign::create-step-2', $data);
@@ -600,13 +685,15 @@ class CampaignController extends Controller
     }
 
     public function showRecipient(Request $request,$id_campaign){
+    	$id_campaign_decrypt = MyHelper::explodeSlug($id_campaign)[0]??'';
     	if($request->input('ajax')){
-    		$post=array_merge(['id_campaign' => $id_campaign],$request->input());    		
+    		$post=array_merge(['id_campaign' => $id_campaign_decrypt],$request->input());    		
     	}else{
-    		$post=['id_campaign' => $id_campaign];
+    		$post=['id_campaign' => $id_campaign_decrypt];
     	}
 		if($request->input('ajax')){
 			$action = MyHelper::post('campaign/recipient', $post);
+
 			$return=$post;
 			$i=($post['start']??0);
 			$return['recordsTotal']=$action['recordsTotal'];
@@ -623,9 +710,11 @@ class CampaignController extends Controller
 					$x['birthday']
 				];
 			},$action['result']['users']??[]);
+			$return['id_campaign'] = $id_campaign;
 			return $return;
 		}
 		$data = [ 'title'		  => 'Campaign',
+			  'sub_title'       => 'Show Recipient',
 			  'menu_active'       => 'campaign',
 			  'submenu_active'    => ''
 			];
@@ -634,8 +723,8 @@ class CampaignController extends Controller
 
 	public function campaignStep2Post(Request $request, $id_campaign){
 		$post = $request->except(['_token','sample_1_length','files']);
-		$post['id_campaign'] = $id_campaign;
-
+		$id_campaign_decrypt = MyHelper::explodeSlug($id_campaign)[0]??'';
+		$post['id_campaign'] = $id_campaign_decrypt;
 		if(isset($post['campaign_email_more_recipient']))
 		$post['campaign_email_more_recipient'] = str_replace(';', ',', str_replace(' ', '', $post['campaign_email_more_recipient']));
 
@@ -680,7 +769,8 @@ class CampaignController extends Controller
     }
 
 	public function campaignStep3($id_campaign){
-		$action = MyHelper::post('campaign/step2', ['id_campaign' => $id_campaign]);
+		$id_campaign_decrypt = MyHelper::explodeSlug($id_campaign)[0]??'';
+		$action = MyHelper::post('campaign/step2', ['id_campaign' => $id_campaign_decrypt]);
 		// print_r($action);exit;
 		if($action['status'] == 'success'){
 			$data = [ 'title'		  => 'Campaign',
@@ -689,6 +779,11 @@ class CampaignController extends Controller
 				];
 			$test = MyHelper::get('autocrm/textreplace');
 
+			$action['result']['id_campaign'] = $id_campaign;
+			$action['result']['id_user'] = MyHelper::createSlug($action['result']['id_user'], $action['result']['created_at']);
+			if (!empty($action['result']['user'])) {
+				$action['result']['user']['id'] = $action['result']['id_user'];
+			}
 			$data['result'] = $action['result'];
 			if($test['status'] == 'success'){
 				$data['textreplaces'] = $test['result'];
@@ -700,16 +795,16 @@ class CampaignController extends Controller
 				$data['setting'] = $setting['result'];
 			}
 
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/be/list');
 			if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 
-			$getProduct = MyHelper::get('product/list');
+			$getProduct = MyHelper::get('product/be/list');
 			if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 
 			$getTag = MyHelper::get('product/tag/list');
 			if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-			$getMembership = MyHelper::post('membership/list',[]);
+			$getMembership = MyHelper::post('membership/be/list',[]);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
 			return view('campaign::create-step-3', $data);
@@ -719,9 +814,16 @@ class CampaignController extends Controller
     }
 
 	public function campaignStep3Post(Request $request, $id_campaign){
-		$action = MyHelper::post('campaign/send', ['id_campaign' => $id_campaign,'resend'=>$request->post('resend')]);
+		$id_campaign_decrypt = MyHelper::explodeSlug($id_campaign)[0]??'';
+		$action = MyHelper::post('campaign/send', ['id_campaign' => $id_campaign_decrypt,'resend'=>$request->post('resend')]);
+		// return $action;
+
 		if($action['status'] == 'success'){
-			$id_campaign=$action['result']['id_campaign']??$id_campaign;
+			if (!empty($action['result']) && $action['result'] !=1 ) {
+				$action['result']['id_campaign'] = MyHelper::createSlug($action['result']['id_campaign'], $action['result']['created_at']);
+				$action['result']['id_user'] = MyHelper::createSlug($action['result']['id_user'], $action['result']['created_at']);
+			}
+			$id_campaign = $action['result']['id_campaign']??$id_campaign;
 			return redirect('campaign/step3/'.$id_campaign);
 		} else{
 			return back()->withErrors($action['messages']);
