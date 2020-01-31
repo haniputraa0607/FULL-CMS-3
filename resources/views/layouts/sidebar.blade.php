@@ -423,6 +423,11 @@
 					<!--	@endif-->
 					<!--@endif-->
 					@if(MyHelper::hasAccess([48], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'product-list') ? 'active open' : ''}}">
+						<a href="{{url('product')}}" class="nav-link ">
+							<span class="title">Product List</span>
+						</a>
+					</li>
 					<li class="nav-item {{($submenu_active == 'product-image') ? 'active open' : ''}}">
 						<a href="javascript:;" class="nav-link nav-toggle">
 							<span class="title">Image Product</span>
