@@ -168,7 +168,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="col-md-3 control-label">
                             Image
                             <span class="required" aria-required="true"> * </span>
@@ -195,7 +195,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}

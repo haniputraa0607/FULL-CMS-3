@@ -297,13 +297,13 @@
 						</a>
 					</li>
 					@endif
-					@if(MyHelper::hasAccess([157], $grantedFeature))
+					{{-- @if(MyHelper::hasAccess([157], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'inactive-brand-image') ? 'active open' : ''}}">
 						<a href="{{url('brand/inactive-image')}}" class="nav-link ">
 							<span class="title">Inactive Brand Image</span>
 						</a>
 					</li>
-					@endif
+					@endif --}}
 				</ul>
 			</li>
 			@endif
@@ -559,7 +559,7 @@
 					@if(MyHelper::hasAccess([92], $configs))
 					<li class="nav-item {{($submenu_active == 'transaction-advance order') ? 'active open' : ''}}">
 						<a href="{{url('transaction/advance order/'.date('YmdHis'))}}" class="nav-link ">
-							<span class="title">Advance Order</span>
+							<span class="title">Catering Order</span>
 						</a>
 					</li>
 					@endif

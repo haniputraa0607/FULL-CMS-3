@@ -106,15 +106,15 @@
         	<form method="POST">
         		<div class="row">
         			<label class="col-md-3 control-label text-right">
-                            Advance Order
-                            <i class="fa fa-question-circle tooltips" data-original-title="Digunakan untuk mengatur apakah outlet menerima Advance Order atau tidak" data-container="body"></i>
+                            Catering Order
+                            <i class="fa fa-question-circle tooltips" data-original-title="Digunakan untuk mengatur apakah outlet menerima Catering Order atau tidak" data-container="body"></i>
         			</label>
         			<div class="col-md-9"><input type="checkbox" value="1" name="advance_order" data-id="{{ $data['outlet']['id_outlet'] }}" class="make-switch switch-change" data-size="small" data-on-text="Support" data-off-text="Not Support" @if($data['outlet']['advance_order']) checked @endif></div>
         		</div><br/>
         		<div class="row">
         			<label class="col-md-3 control-label text-right">
                             Default Maximum Order
-                            <i class="fa fa-question-circle tooltips" data-original-title="Digunakan untuk mengatur default jumlah pemesanan maksimum dalam pemesanan reguler (non Advance Order) untuk outlet {{ $outlet['outlet_name'] }} apabila per produk tidak diatur" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Digunakan untuk mengatur default jumlah pemesanan maksimum dalam pemesanan reguler (non Catering Order) untuk outlet {{ $outlet['outlet_name'] }} apabila per produk tidak diatur" data-container="body"></i>
         			</label>
         			<div class="col-md-3">
         				<div class="input-group">
