@@ -1097,7 +1097,7 @@ class SettingController extends Controller
             // update complete profile
             $result = MyHelper::post('setting/be/complete-profile', $post);
 
-            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/be/complete-profile');
+            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/complete-profile');
         }else{
             $data = [
                 'title'         => 'Complete Profile Setting',
