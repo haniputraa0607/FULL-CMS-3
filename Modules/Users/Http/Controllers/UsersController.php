@@ -518,8 +518,6 @@ class UsersController extends Controller
 			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
 			if($checkpin['status'] != "success") {
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			} else {
-				Cookie::queue('_strictaccess', 'granted access', env('STRICT_COOKIE_LIFETIME', 10));
 			}
 		}
 		
@@ -615,17 +613,13 @@ class UsersController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
 
-		if(!($request->cookie('_strictaccess')) && $request->cookie('_strictaccess') != 'granted access'){
-			if (!isset($post['password'])) {
-				$data = [ 'title'             => 'User',
-					'menu_active'       => 'user',
-					'submenu_active'    => 'user-list',
-					'phone'    		  => $phone
-				];
-				return view('users::password', $data);
-			} else {
-				return view('users::detail', $data);
-			}
+        if (!isset($post['password'])) {
+            $data = [ 'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-list',
+                'phone'    		  => $phone
+            ];
+            return view('users::password', $data);
         } else {
             return view('users::detail', $data);
         }
@@ -813,8 +807,6 @@ class UsersController extends Controller
 			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $input['password'], 'admin_panel' => 1));
 			if($checkpin['status'] != "success") {
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			} else {
-				Cookie::queue('_strictaccess', 'granted access', env('STRICT_COOKIE_LIFETIME', 10));
 			}
 		}
 		
@@ -863,17 +855,13 @@ class UsersController extends Controller
 		
 		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
 
-        if(!($request->cookie('_strictaccess')) && $request->cookie('_strictaccess') != 'granted access'){
-			if (!isset($input['password'])) {
-				$data = [ 	
-					'title'             => 'User',
-					'menu_active'       => 'user',
-					'submenu_active'    => 'user-log'
-				];
-				return view('users::password', $data);
-			} else {
-				return view('users::log', $data);
-			}
+        if (!isset($input['password'])) {
+            $data = [
+                'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-log'
+            ];
+            return view('users::password', $data);
         } else {
             return view('users::log', $data);
         }
@@ -891,25 +879,19 @@ class UsersController extends Controller
 			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
 			if($checkpin['status'] != "success") {
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			} else {
-				Cookie::queue('_strictaccess', 'granted access', env('STRICT_COOKIE_LIFETIME', 10));
 			}
 		}
 		
 		$data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
-		
-		if(!($request->cookie('_strictaccess')) && $request->cookie('_strictaccess') != 'granted access'){
-			if (!isset($post['password'])) {
-				$data = [ 'title'             => 'User',
-					'subtitle'		  => 'Favorite',
-					'menu_active'       => 'user',
-					'submenu_active'    => 'user-list',
-					'phone'    		  => $phone
-				];
-				return view('users::password', $data);
-			} else {
-				return view('users::favorite', $data);
-			}
+
+        if (!isset($post['password'])) {
+            $data = [ 'title'             => 'User',
+                'subtitle'		  => 'Favorite',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-list',
+                'phone'    		  => $phone
+            ];
+            return view('users::password', $data);
         } else {
             return view('users::favorite', $data);
         }
