@@ -92,7 +92,7 @@
                 Showing {{$from}} to {{$to}} of {{$total}} entries
             </div>
             <div class="pagination pull-right" style="margin-top:-28px;margin-bottom: 20px;">
-                @if ($paginator)
+                @if (isset($paginator))
                 {{ $paginator->links() }}
                 @endif
             </div>
