@@ -142,7 +142,6 @@ class PromoCampaignController extends Controller
         $this->session_mixer($request, $post,'coupon_promo_campaign_'.$id_promo_campaign);
         
         $post['id_promo_campaign'] = $id_promo_campaign;
-
         if ($request->input('coupon')=='true') 
         {
             return $this->ajaxCoupon($post);
@@ -153,6 +152,7 @@ class PromoCampaignController extends Controller
         }
 
         $result = MyHelper::post('promo-campaign/detail', $post);
+// return $result;
 
         if ( ($result['status']=='success')??false) {
             $result['result']['id_promo_campaign'] = MyHelper::createSlug($result['result']['id_promo_campaign'],$result['result']['created_at']);
@@ -287,7 +287,7 @@ class PromoCampaignController extends Controller
                 $post['id_promo_campaign'] = MyHelper::explodeSlug($post['id_promo_campaign'])[0];
             }
             $action = MyHelper::post('promo-campaign/step1', $post);
-            
+
             if (isset($action['status']) && $action['status'] == 'success') 
             {
                 return redirect('promo-campaign/step2/' . ($slug?:MyHelper::createSlug($action['promo-campaign']['id_promo_campaign'],'')));
