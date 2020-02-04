@@ -162,7 +162,7 @@
                 		<td><a href="{{url('transaction/detail'.'/'.$feedback['transaction']['id_transaction'].'/'.strtolower($feedback['transaction']['trasaction_type']))}}">{{$feedback['transaction']['transaction_receipt_number']}}</a></td>
                 		<td><a href="{{url('user/detail'.'/'.$feedback['user']['phone'])}}">{{$feedback['user']['name']}}</a></td>
                 		<td>Rp {{number_format($feedback['transaction']['transaction_grandtotal'],0,',','.')}}</td>
-                		<td>{{$rating_items[$feedback['rating_value']]}}</td>
+                		<td>{{$rating_items[$feedback['rating_value']]??$feedback['rating_item_text']}}</td>
                 		<td><a href="{{url('user-feedback/detail/'.base64_encode($feedback['id_user_feedback'].'#'.$feedback['transaction']['id_transaction']))}}" class="btn blue">Detail</a></td>
                 	</tr>
                 	@endforeach
