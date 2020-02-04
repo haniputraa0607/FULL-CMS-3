@@ -376,7 +376,7 @@
                                         <div class="fileinput fileinput-new" data-provides="fileinput">
                                             <div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
                                                 @if($items['1']['image_selected']??false)
-                                                <img id="preview_image" src="{{$items['1']['image_selected']}}"/>
+                                                <img id="preview_image" src="{{$items['-1']['image_selected']}}"/>
                                                 @else
                                                 <img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
                                                 @endif
