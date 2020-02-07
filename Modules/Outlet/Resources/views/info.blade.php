@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
  ?>
 <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
     @foreach ($outlet as $key => $val)
@@ -44,7 +45,7 @@
                 <input type="text" class="form-control" name="outlet_name" value="{{ $val['outlet_name'] }}" required placeholder="Outlet Name" readonly>
             </div>
         </div>
-
+        @if(MyHelper::hasAccess([95], $configs))
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -62,7 +63,7 @@
                 </select>
             </div>
         </div>
-
+        @endif
         <div class="form-group">
             <label class="col-md-3 control-label">Status
                 <span class="required" aria-required="true"> * </span>
