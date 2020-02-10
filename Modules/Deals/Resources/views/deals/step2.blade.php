@@ -593,7 +593,7 @@
 					</div>
 				</div>
 			</div>
-			@if( strtotime($datenow) <= strtotime($date_start) || $date_start == null || empty($result['step_complete']) )
+			@if( strtotime($datenow) <= strtotime($date_start) || $date_start == null || empty($result['step_complete0']) )
 			<div class="col-md-12" style="text-align:center;">
 				<div class="form-actions">
 					{{ csrf_field() }}
@@ -603,7 +603,7 @@
 			@else
 			<div class="col-md-12" style="text-align:center;">
 				<div class="form-actions">
-					<a href="{{ ($result['id_deals'] ?? false) ? url('promo-campaign/detail/'.$result['id_deals']) : '' }}" class="btn blue">Detail</a>
+					<a href="{{ ($result['id_deals'] ?? false) ? url('deals/step2/'.$result['id_deals']) : '' }}" class="btn blue">Detail</a>
 				</div>
 			</div>
 			@endif

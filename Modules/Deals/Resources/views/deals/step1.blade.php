@@ -543,7 +543,24 @@
 
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                    @include('deals::deals.info')
+                	<div class="portlet-body form">
+					    <form id="form" class="form-horizontal" role="form" action=" @if($deals_type == "Deals") {{ url('deals/update') }} @else {{ url('inject-voucher/update') }} @endif" method="post" enctype="multipart/form-data">
+					        @foreach ($deals as $key => $val)
+                    				@include('deals::deals.step1-form')
+					                <div class="form-actions">
+					                {{ csrf_field() }}
+					                <div class="row">
+					                    <div class="col-md-offset-3 col-md-9">
+					                        <button type="submit" class="btn green">Submit</button>
+					                        <!-- <button type="button" class="btn default">Cancel</button> -->
+					                    </div>
+					                </div>
+					            </div>
+					            <input type="hidden" name="id_deals" value="{{ $val['id_deals'] }}">
+					            <input type="hidden" name="deals_type" value="{{ $val['deals_type'] }}">
+					        @endforeach
+					    </form>
+					</div>
                 </div>
             </div>
         </div>

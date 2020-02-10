@@ -534,7 +534,7 @@ class DealsController extends Controller
     /* DETAIL */
     function step2(Request $request, $id) {
         $post = $request->except('_token');
-        
+        $slug = $id;
         $id = MyHelper::explodeSlug($id)[0]??'';
 
         if (empty($post)) {
@@ -573,13 +573,12 @@ class DealsController extends Controller
 	    }else{
 
             $post['id_deals'] = $id;
-            $action = MyHelper::post('promo-campaign/step2', $post);
-// return $post;            
-return $action;
+			$action = MyHelper::post('promo-campaign/step2', $post);
+			// return $post;
 
             if (isset($action['status']) && $action['status'] == 'success') {
 
-                return redirect('promo-campaign/detail/' . $slug);
+                return redirect('deals/step2/' . $slug);
             } 
             elseif($action['messages']??false) {
                 return back()->withErrors($action['messages'])->withInput();
