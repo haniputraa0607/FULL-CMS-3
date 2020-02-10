@@ -275,6 +275,7 @@
 				@endif
 			@endif
 
+			@if(MyHelper::hasAccess([95], $configs))
 			@if(MyHelper::hasAccess([155,156,157,158,159], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'brand') ? 'active' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
@@ -306,6 +307,7 @@
 					@endif --}}
 				</ul>
 			</li>
+			@endif
 			@endif
 
 			@if(MyHelper::hasAccess([24,26,32,33,34], $grantedFeature))
@@ -1049,6 +1051,27 @@
 				@endif
 			@endif
 
+			@if(MyHelper::hasAccess([93], $configs))
+				@if(MyHelper::hasAccess([216], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'referral') ? 'active open' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-user-plus"></i>
+						<span class="title">Referral</span>
+						<span class="arrow {{($menu_active == 'referral') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([216], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'referral-setting') ? 'active open' : ''}}">
+							<a href="{{url('referral/setting')}}" class="nav-link ">
+								<span class="title">Referral Setting</span>
+							</a>
+						</li>
+						@endif
+					</ul>
+				</li>
+				@endif
+			@endif
+
 			@if(MyHelper::hasAccess([73], $configs))
 				@if(MyHelper::hasAccess([130,131,132,133,134], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'reward') ? 'active open' : ''}}">
@@ -1634,6 +1657,7 @@
 				</a>
 			</li>
 			@endif
+			@if(MyHelper::hasAccess([96], $configs))
 			@if(MyHelper::hasAccess([154], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'delivery-service') ? 'active' : ''}}">
 				<a href="{{url('delivery-service')}}" class="nav-link nav-toggle">
@@ -1641,6 +1665,7 @@
 					<span class="title">Delivery Services</span>
 				</a>
 			</li>
+			@endif
 			@endif
 			<!-- @if(MyHelper::hasAccess([87], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'contact') ? 'active' : ''}}">
