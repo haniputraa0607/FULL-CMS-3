@@ -839,7 +839,7 @@
 		@endif
 
 		@if(MyHelper::hasAccess([25], $configs) || MyHelper::hasAccess([26], $configs))
-			@if(MyHelper::hasAccess([72,73,74,75,76,77,78,79,80,81,95], $grantedFeature))
+			@if(MyHelper::hasAccess([72,73,74,75,76,77,78,79,80,81,97], $grantedFeature))
 				<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 					<h3 class="uppercase" style="color: #383b67;font-weight: 600;">Promo</h3>
 				</li>
@@ -883,7 +883,7 @@
 								@endif
 							@endif
 							@if(MyHelper::hasAccess([49], $configs))
-								@if(MyHelper::hasAccess([95], $grantedFeature))
+								@if(MyHelper::hasAccess([97], $grantedFeature))
 									<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-free-deals-success') ? 'active open' : ''}}">
 										<a href="{{url('transaction/autoresponse/claim-free-deals-success')}}" class="nav-link ">
 											<i class="fa fa-mail-forward"></i>
@@ -961,7 +961,7 @@
 							</li>
 							@endif
 							@if(MyHelper::hasAccess([49], $configs))
-								@if(MyHelper::hasAccess([95], $grantedFeature))
+								@if(MyHelper::hasAccess([97], $grantedFeature))
 									<li class="nav-item {{($submenu_active == 'deals-autoresponse-receive-inject-voucher') ? 'active open' : ''}}">
 										<a href="{{url('transaction/autoresponse/receive-inject-voucher')}}" class="nav-link ">
 											<i class="fa fa-mail-forward"></i>
