@@ -3,7 +3,10 @@
 Route::group(['middleware' => ['web', 'validate_session', 'config_control:25,26,or'], 'prefix' => 'deals', 'namespace' => 'Modules\Deals\Http\Controllers'], function () {
     Route::any('/', ['middleware' => 'feature_control:72', 'uses' => 'DealsController@deals']);
     Route::any('create', ['middleware' => 'feature_control:74', 'uses' => 'DealsController@create']);
-    Route::any('detail/{id}/{promo}', ['middleware' => 'feature_control:73', 'uses' => 'DealsController@detail']);
+    Route::any('step1/{id}', ['middleware' => 'feature_control:74', 'uses' => 'DealsController@step1']);
+    Route::any('step2/{id}', ['middleware' => 'feature_control:74', 'uses' => 'DealsController@step2']);
+    // Route::any('detail/{id}/{promo}', ['middleware' => 'feature_control:73', 'uses' => 'DealsController@detail']);
+    Route::any('detail/{id}', ['middleware' => 'feature_control:73', 'uses' => 'DealsController@detail']);
     Route::any('update', ['middleware' => ['feature_control:75'], 'uses' => 'DealsController@updateReq']);
     Route::any('delete', ['middleware' => 'feature_control:76', 'uses' => 'DealsController@deleteDeal']);
     Route::any('voucher/delete', 'DealsController@deleteVoucher');
