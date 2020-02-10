@@ -1052,7 +1052,7 @@
 			@endif
 
 			@if(MyHelper::hasAccess([93], $configs))
-				@if(MyHelper::hasAccess([200,201,202,203,204], $grantedFeature))
+				@if(MyHelper::hasAccess([216], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'referral') ? 'active open' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="fa fa-user-plus"></i>
@@ -1060,7 +1060,7 @@
 						<span class="arrow {{($menu_active == 'referral') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
-						@if(MyHelper::hasAccess([202], $grantedFeature))
+						@if(MyHelper::hasAccess([216], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'referral-setting') ? 'active open' : ''}}">
 							<a href="{{url('referral/setting')}}" class="nav-link ">
 								<span class="title">Referral Setting</span>
