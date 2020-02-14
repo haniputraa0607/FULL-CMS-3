@@ -145,4 +145,126 @@ class UserFeedbackController extends Controller
             return back()->withInput()->withErrors(['Failed update setting']);
         }
     }
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function report(Request $request)
+    {
+        $data = [
+            'title'          => 'User Feedback',
+            'sub_title'      => 'Report User Feedback',
+            'menu_active'    => 'user-feedback',
+            'submenu_active' => 'user-feedback-report',
+            'filter_title'   => 'User Feedback Filter'
+        ];
+        $date_start = date('Y-m-d H:i:s',strtotime(session('date_start',date('Y-m-01 H:i:s'))));
+        $date_end = date('Y-m-d H:i:s',strtotime(session('date_end',date('Y-m-d H:i:s'))));
+        $post['photos_only'] = session('photos_only',0);
+        $post['notes_only'] = session('notes_only',0);
+        $post['date_start'] = $date_start;
+        $post['date_end'] = $date_end;
+        $data['reportData'] = MyHelper::post('user-feedback/report',$post)['result']??[];
+        if(!$data['reportData']){
+            return back()->withErrors(['Feedback data not found']);
+        }
+        $feedbackOk = [];
+        foreach ($data['reportData']['rating_item'] as $value) {
+            $feedbackOk[$value['rating_value']] = $value;
+        }
+        $outletOk = [];
+        $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
+        foreach ($data['reportData']['outlet_data'] as $value) {
+            if(!$colorRand){
+                $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
+            }
+            $randomNumber = array_rand($colorRand);
+            $outletOk[$value['rating_value']][] = [
+                'name' => $value['outlet_code'].' - '.$value['outlet_name'],
+                'total' => $value['total'],
+                'color' => $colorRand[$randomNumber]
+            ];
+            unset($colorRand[$randomNumber]);
+        }
+        $data['date_start'] = date('d F Y',strtotime($date_start));
+        $data['date_end'] = date('d F Y',strtotime($date_end));
+        $data['reportData']['rating_item'] = $feedbackOk;
+        $data['reportData']['outlet_data'] = $outletOk;
+        return view('userfeedback::report',$data+$post);
+    }
+    public function setReportFilter(Request $request)
+    {
+        $new_sess = [];
+        if($request->post('date_start')){
+            $new_sess['date_start'] = str_replace('-','',$request->post('date_start',date('01 M Y')));
+        }
+        if($request->post('date_end')){
+            $new_sess['date_end'] = str_replace('-','',$request->post('date_end',date('d M Y')));
+        }
+        if(!is_null($request->post('photos_only'))){
+            $new_sess['photos_only'] = !!$request->post('photos_only');
+        }
+        if(!is_null($request->post('notes_only'))){
+            $new_sess['notes_only'] = !!$request->post('notes_only');
+        }
+        session($new_sess);
+        return back();
+    }
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function reportOutlet(Request $request)
+    {
+        $data = [
+            'title'          => 'User Feedback',
+            'sub_title'      => 'Report User Feedback',
+            'menu_active'    => 'user-feedback',
+            'submenu_active' => 'user-feedback-report',
+            'filter_title'   => 'User Feedback Filter'
+        ];
+        $post = $request->except('_token');
+        $date_start = date('Y-m-d H:i:s',strtotime(session('date_start',date('Y-m-01 H:i:s'))));
+        $date_end = date('Y-m-d H:i:s',strtotime(session('date_end',date('Y-m-d H:i:s'))));
+        $post['date_start'] = $date_start;
+        $post['date_end'] = $date_end;
+        $data['outlet_data'] = MyHelper::post('user-feedback/report/outlet',$post)['result']??[];
+        $data['date_start'] = date('d F Y',strtotime($date_start));
+        $data['date_end'] = date('d F Y',strtotime($date_end));
+        return view('userfeedback::report_outlet',$data+$post);
+    }
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function reportOutletDetail(Request $request,$outlet_code)
+    {
+        $data = [
+            'title'          => 'User Feedback',
+            'sub_title'      => 'Report User Feedback',
+            'menu_active'    => 'user-feedback',
+            'submenu_active' => 'user-feedback-report',
+            'filter_title'   => 'User Feedback Filter'
+        ];
+        $date_start = date('Y-m-d H:i:s',strtotime(session('date_start',date('Y-m-01 H:i:s'))));
+        $date_end = date('Y-m-d H:i:s',strtotime(session('date_end',date('Y-m-d H:i:s'))));
+        $post['photos_only'] = session('photos_only',0);
+        $post['notes_only'] = session('notes_only',0);
+        $post['date_start'] = $date_start;
+        $post['date_end'] = $date_end;
+        $post['outlet_code'] = $outlet_code;
+        $data['reportData'] = MyHelper::post('user-feedback/report/outlet',$post)['result']??[];
+        if(!$data['reportData']){
+            return back()->withErrors(['Feedback data not found']);
+        }
+        $feedbackOk = [];
+        foreach ($data['reportData']['rating_item'] as $value) {
+            $feedbackOk[$value['rating_value']] = $value;
+        }
+        $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
+        $data['date_start'] = date('d F Y',strtotime($date_start));
+        $data['date_end'] = date('d F Y',strtotime($date_end));
+        $data['reportData']['rating_item'] = $feedbackOk;
+        return view('userfeedback::report_outlet_detail',$data+$post);
+    }
 }

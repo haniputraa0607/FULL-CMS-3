@@ -24,6 +24,7 @@ class IPAddressCheck
         }else{
             $ip = $_SERVER['REMOTE_ADDR'];
         }
+        return $next($request);
         $getLocation = \Location::get($ip);
 
         if($getLocation && isset($getLocation->countryCode)){
