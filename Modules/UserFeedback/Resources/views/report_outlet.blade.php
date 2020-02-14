@@ -107,7 +107,7 @@
 					<tr>
 						<th> Outlet Name </th>
 						<th> Positive </th>
-						<th> Neutral </th>
+						@if(isset($outlet['neutral_feedback']))<th> Neutral </th>@endif
 						<th> Negative </th>
 						<th> Action </th>
 					</tr>
@@ -118,7 +118,7 @@
 					<tr>
 						<td>{{$outlet['outlet_code'].' - '.$outlet['outlet_name']}}</td>
 						<td>{{$outlet['positive_feedback']}}</td>
-						<td>{{$outlet['neutral_feedback']}}</td>
+						@if(isset($outlet['neutral_feedback']))<td>{{$outlet['neutral_feedback']}}</td>@endif
 						<td>{{$outlet['negative_feedback']}}</td>
 						<td><a class="btn green" href="{{url('user-feedback/report/outlet/'.$outlet['outlet_code'])}}">Show Detail</a></td>
 					</tr>
