@@ -18,4 +18,11 @@ Route::prefix('user-feedback')->middleware(['web', 'validate_session'])->group(f
     Route::get('/detail/{id}', 'UserFeedbackController@show');
     Route::get('/', 'UserFeedbackController@index');
     Route::post('/', 'UserFeedbackController@setFilter');
+    Route::group(['prefix'=>'report'],function(){
+	    Route::get('/', 'UserFeedbackController@report');
+	    Route::post('/', 'UserFeedbackController@setReportFilter');
+	    Route::get('outlet', 'UserFeedbackController@reportOutlet');
+	    Route::get('outlet/{outlet_code}', 'UserFeedbackController@reportOutletDetail');
+	});
+    Route::get('get-list', 'UserFeedbackController@list');
 });

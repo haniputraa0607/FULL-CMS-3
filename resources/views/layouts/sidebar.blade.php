@@ -833,6 +833,13 @@
 							</a>
 						</li>
 					@endif
+					@if(MyHelper::hasAccess([179], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'user-feedback-report') ? 'active open' : ''}}">
+							<a href="{{url('user-feedback/report')}}" class="nav-link ">
+								<span class="title">Report User Feedback</span>
+							</a>
+						</li>
+					@endif
 				</ul>
 			</li>
 			@endif
