@@ -115,7 +115,7 @@
 				<div class="col-md-2 control-label">Search</div>
 				<div class="col-md-3">
 					<div class="form-group">
-						<input type="text" name="search" placeholder="Search" class="form-control" value="{{$search}}">
+						<input type="text" name="search" placeholder="Search Outlet" class="form-control" value="{{$search}}">
 					</div>
 				</div>
 			</div>
@@ -139,7 +139,7 @@
 						<td>{{$outlet['positive_feedback']}}</td>
 						@if(isset($outlet['neutral_feedback']))<td>{{$outlet['neutral_feedback']}}</td>@endif
 						<td>{{$outlet['negative_feedback']}}</td>
-						<td><a class="btn green" href="{{url('user-feedback/report/outlet/'.$outlet['outlet_code'])}}">Show Detail</a></td>
+						<td><a class="btn green" href="{{url('user-feedback/report/outlet/'.$outlet['outlet_code'])}}">Detail</a></td>
 					</tr>
 					@endforeach
 					@else
