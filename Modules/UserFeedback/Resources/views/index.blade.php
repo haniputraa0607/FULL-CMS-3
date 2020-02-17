@@ -93,6 +93,24 @@
                 ['-1',"{{$rating_items['-1']??'Bad'}}"],
             ]
         },
+        photos_only:{
+            display:'Photo',
+            operator:[],
+            opsi:[
+                ['1',"With Photos Only"],
+                ['0',"Show All"],
+                ['-1',"Without Photos Only"]
+            ]
+        },
+        notes_only:{
+            display:'Notes',
+            operator:[],
+            opsi:[
+                ['1',"With Notes Only"],
+                ['0',"Show All"],
+                ['-1',"Without Notes Only"]
+            ]
+        },
         outlet:{
             display:'Outlet',
             operator:[],

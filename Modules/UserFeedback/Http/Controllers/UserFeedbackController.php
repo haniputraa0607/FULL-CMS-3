@@ -29,7 +29,7 @@ class UserFeedbackController extends Controller
         if(session('feedback_list_filter')){
             $post=session('feedback_list_filter');
             $data['rule']=array_map('array_values', $post['rule']);
-            $data['operator']=$post['operator'];
+            $data['operator']=$post['operator']??'and';
         }
         $rating_items = MyHelper::get('user-feedback/rating-item')['result']??[];
         $data['rating_items'] = [];
@@ -56,7 +56,7 @@ class UserFeedbackController extends Controller
             session(['feedback_list_filter'=>null]);
             session(['feedback_list_filter'=>null]);
         }
-        return back();
+        return ($post['redirect']??false)?redirect($post['redirect']):back();
     }
 
     /**
@@ -158,10 +158,10 @@ class UserFeedbackController extends Controller
             'submenu_active' => 'user-feedback-report',
             'filter_title'   => 'User Feedback Filter'
         ];
-        $date_start = date('Y-m-d H:i:s',strtotime(session('date_start',date('Y-m-01 H:i:s'))));
-        $date_end = date('Y-m-d H:i:s',strtotime(session('date_end',date('Y-m-d H:i:s'))));
-        $post['photos_only'] = session('photos_only',0);
-        $post['notes_only'] = session('notes_only',0);
+        $date_start = date('Y-m-d H:i:s',strtotime(session('feedback_date_start',date('Y-m-01 H:i:s'))));
+        $date_end = date('Y-m-d H:i:s',strtotime(session('feedback_date_end',date('Y-m-d H:i:s'))));
+        $post['photos_only'] = session('feedback_photos_only',0);
+        $post['notes_only'] = session('feedback_notes_only',0);
         $post['date_start'] = $date_start;
         $post['date_end'] = $date_end;
         $data['reportData'] = MyHelper::post('user-feedback/report',$post)['result']??[];
@@ -186,6 +186,8 @@ class UserFeedbackController extends Controller
             ];
             unset($colorRand[$randomNumber]);
         }
+        $data['date_start_raw'] = $date_start;
+        $data['date_end_raw'] = $date_end;
         $data['date_start'] = date('d F Y',strtotime($date_start));
         $data['date_end'] = date('d F Y',strtotime($date_end));
         $data['reportData']['rating_item'] = $feedbackOk;
@@ -194,18 +196,25 @@ class UserFeedbackController extends Controller
     }
     public function setReportFilter(Request $request)
     {
+        $post = $request->except('_token');
         $new_sess = [];
         if($request->post('date_start')){
-            $new_sess['date_start'] = str_replace('-','',$request->post('date_start',date('01 M Y')));
+            $new_sess['feedback_date_start'] = str_replace('-','',$request->post('date_start',date('01 M Y')));
         }
         if($request->post('date_end')){
-            $new_sess['date_end'] = str_replace('-','',$request->post('date_end',date('d M Y')));
+            $new_sess['feedback_date_end'] = str_replace('-','',$request->post('date_end',date('d M Y')));
         }
         if(!is_null($request->post('photos_only'))){
-            $new_sess['photos_only'] = !!$request->post('photos_only');
+            $new_sess['feedback_photos_only'] = !!$request->post('photos_only');
         }
         if(!is_null($request->post('notes_only'))){
-            $new_sess['notes_only'] = !!$request->post('notes_only');
+            $new_sess['feedback_notes_only'] = !!$request->post('notes_only');
+        }
+        if(!is_null($request->post('order'))){
+            $new_sess['feedback_order'] = $request->post('order');
+        }
+        if($request->exists('search')){
+            $new_sess['feedback_search'] = $request->post('search');
         }
         session($new_sess);
         return back();
@@ -224,11 +233,18 @@ class UserFeedbackController extends Controller
             'filter_title'   => 'User Feedback Filter'
         ];
         $post = $request->except('_token');
-        $date_start = date('Y-m-d H:i:s',strtotime(session('date_start',date('Y-m-01 H:i:s'))));
-        $date_end = date('Y-m-d H:i:s',strtotime(session('date_end',date('Y-m-d H:i:s'))));
+        $date_start = date('Y-m-d H:i:s',strtotime(session('feedback_date_start',date('Y-m-01 H:i:s'))));
+        $date_end = date('Y-m-d H:i:s',strtotime(session('feedback_date_end',date('Y-m-d H:i:s'))));
+        $page = $request->get('page')?:1;
         $post['date_start'] = $date_start;
         $post['date_end'] = $date_end;
+        $post['order'] = session('feedback_order','outlet_name');
+        $post['search'] = session('feedback_search');
+        $post['page'] = $page;
+        // return $post;
         $data['outlet_data'] = MyHelper::post('user-feedback/report/outlet',$post)['result']??[];
+        $data['next_page'] = $data['outlet_data']['next_page_url']?url()->current().'?page='.($page+1):'';
+        $data['prev_page'] = $data['outlet_data']['prev_page_url']?url()->current().'?page='.($page-1):'';
         $data['date_start'] = date('d F Y',strtotime($date_start));
         $data['date_end'] = date('d F Y',strtotime($date_end));
         return view('userfeedback::report_outlet',$data+$post);
@@ -246,10 +262,10 @@ class UserFeedbackController extends Controller
             'submenu_active' => 'user-feedback-report',
             'filter_title'   => 'User Feedback Filter'
         ];
-        $date_start = date('Y-m-d H:i:s',strtotime(session('date_start',date('Y-m-01 H:i:s'))));
-        $date_end = date('Y-m-d H:i:s',strtotime(session('date_end',date('Y-m-d H:i:s'))));
-        $post['photos_only'] = session('photos_only',0);
-        $post['notes_only'] = session('notes_only',0);
+        $date_start = date('Y-m-d H:i:s',strtotime(session('feedback_date_start',date('Y-m-01 H:i:s'))));
+        $date_end = date('Y-m-d H:i:s',strtotime(session('feedback_date_end',date('Y-m-d H:i:s'))));
+        $post['photos_only'] = session('feedback_photos_only',0);
+        $post['notes_only'] = session('feedback_notes_only',0);
         $post['date_start'] = $date_start;
         $post['date_end'] = $date_end;
         $post['outlet_code'] = $outlet_code;

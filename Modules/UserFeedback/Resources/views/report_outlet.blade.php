@@ -100,6 +100,25 @@
 				</div>
 				<div class="col-md-2"><button class="btn green">Apply</button></div>
 			</div>
+			<div class="row">
+				<div class="col-md-2 control-label">Order By</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<select name="order" class="form-control">
+							<option value="outlet_name" @if($order == 'outlet_name') selected @endif>Name</option>
+							<option value="positive_feedback" @if($order == 'positive_feedback') selected @endif>Positive</option>
+							@if(isset($outlet['neutral_feedback']))<option value="neutral_feedback" @if($order == 'neutral_feedback') selected @endif>Neutral</option>@endif
+							<option value="negative_feedback" @if($order == 'negative_feedback') selected @endif>Negative</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-2 control-label">Search</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<input type="text" name="search" placeholder="Search" class="form-control" value="{{$search}}">
+					</div>
+				</div>
+			</div>
 		</form>
 		<div class="tabbable-line tab-custom">
 			<table class="table table-hover table-feedback">
@@ -114,7 +133,7 @@
 				</thead>
 				<tbody>
 					@if($outlet_data)
-					@foreach($outlet_data as $outlet)
+					@foreach($outlet_data['data']??[] as $outlet)
 					<tr>
 						<td>{{$outlet['outlet_code'].' - '.$outlet['outlet_name']}}</td>
 						<td>{{$outlet['positive_feedback']}}</td>
@@ -130,6 +149,17 @@
 					@endif
 				</tbody>
 			</table>
+			<div class="row">
+	            <div class="col-md-offset-8 col-md-4 text-right">
+	                <div class="pagination">
+	                    <ul class="pagination">
+	                         <li class="page-first{{$prev_page?'':' disabled'}}"><a href="{{$prev_page?:'javascript:void(0)'}}">«</a></li>
+	                        
+	                         <li class="page-last{{$next_page?'':' disabled'}}"><a href="{{$next_page?:'javascript:void(0)'}}">»</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+			</div>
 		</div>
 	</div>
 </div>

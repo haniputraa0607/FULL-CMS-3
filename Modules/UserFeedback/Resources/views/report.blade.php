@@ -434,6 +434,28 @@
 								<td colspan="6" class="text-center"><em class="text-muted">No Feedback Found</em></td>
 							</tr>
 							@endif
+							<tr>
+								<td colspan="5" class="text-center">
+									<form action="{{url('user-feedback')}}" method="POST">
+										@csrf
+										<input type="hidden" name="rule[0][subject]" value="rating_value">
+										<input type="hidden" name="rule[0][parameter]" value="1">
+										<input type="hidden" name="rule[1][subject]" value="photos_only">
+										<input type="hidden" name="rule[1][parameter]" value="{{$photos_only?'1':'0'}}">
+										<input type="hidden" name="rule[2][subject]" value="notes_only">
+										<input type="hidden" name="rule[2][parameter]" value="{{$notes_only?'1':'0'}}">
+										<input type="hidden" name="rule[3][subject]" value="review_date">
+										<input type="hidden" name="rule[3][operator]" value=">=">
+										<input type="hidden" name="rule[3][parameter]" value="{{date('Y-m-d',strtotime($date_start))}}">
+										<input type="hidden" name="rule[4][subject]" value="review_date">
+										<input type="hidden" name="rule[4][operator]" value="<=">
+										<input type="hidden" name="rule[4][parameter]" value="{{date('Y-m-d',strtotime($date_end))}}">
+										<input type="hidden" name="operator" value="and">
+										<input type="hidden" name="redirect" value="user-feedback">
+										<button href="{{url('user-feedback')}}" class="btn btn-block"> Show all </button>
+									</form>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -465,6 +487,28 @@
 								<td colspan="6" class="text-center"><em class="text-muted">No Feedback Found</em></td>
 							</tr>
 							@endif
+							<tr>
+								<td colspan="5" class="text-center">
+									<form action="{{url('user-feedback')}}" method="POST">
+										@csrf
+										<input type="hidden" name="rule[0][subject]" value="rating_value">
+										<input type="hidden" name="rule[0][parameter]" value="0">
+										<input type="hidden" name="rule[1][subject]" value="photos_only">
+										<input type="hidden" name="rule[1][parameter]" value="{{$photos_only}}">
+										<input type="hidden" name="rule[2][subject]" value="notes_only">
+										<input type="hidden" name="rule[2][parameter]" value="{{$notes_only}}">
+										<input type="hidden" name="rule[3][subject]" value="review_date">
+										<input type="hidden" name="rule[3][operator]" value=">=">
+										<input type="hidden" name="rule[3][parameter]" value="{{date('Y-m-d',strtotime($date_start))}}">
+										<input type="hidden" name="rule[4][subject]" value="review_date">
+										<input type="hidden" name="rule[4][operator]" value="<=">
+										<input type="hidden" name="rule[4][parameter]" value="{{date('Y-m-d',strtotime($date_end))}}">
+										<input type="hidden" name="operator" value="and">
+										<input type="hidden" name="redirect" value="user-feedback">
+										<button href="{{url('user-feedback')}}" class="btn btn-block"> Show all </button>
+									</form>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -496,6 +540,28 @@
 								<td colspan="6" class="text-center"><em class="text-muted">No Feedback Found</em></td>
 							</tr>
 							@endif
+							<tr>
+								<td colspan="5" class="text-center">
+									<form action="{{url('user-feedback')}}" method="POST">
+										@csrf
+										<input type="hidden" name="rule[0][subject]" value="rating_value">
+										<input type="hidden" name="rule[0][parameter]" value="-1">
+										<input type="hidden" name="rule[1][subject]" value="photos_only">
+										<input type="hidden" name="rule[1][parameter]" value="{{$photos_only}}">
+										<input type="hidden" name="rule[2][subject]" value="notes_only">
+										<input type="hidden" name="rule[2][parameter]" value="{{$notes_only}}">
+										<input type="hidden" name="rule[3][subject]" value="review_date">
+										<input type="hidden" name="rule[3][operator]" value=">=">
+										<input type="hidden" name="rule[3][parameter]" value="{{date('Y-m-d',strtotime($date_start))}}">
+										<input type="hidden" name="rule[4][subject]" value="review_date">
+										<input type="hidden" name="rule[4][operator]" value="<=">
+										<input type="hidden" name="rule[4][parameter]" value="{{date('Y-m-d',strtotime($date_end))}}">
+										<input type="hidden" name="operator" value="and">
+										<input type="hidden" name="redirect" value="user-feedback">
+										<button href="{{url('user-feedback')}}" class="btn btn-block"> Show all </button>
+									</form>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
