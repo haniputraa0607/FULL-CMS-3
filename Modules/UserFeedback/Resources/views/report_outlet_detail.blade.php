@@ -156,7 +156,10 @@
 </div><br>
 
 @include('layouts.notifications')
-
+<div class="form-group">
+	<a href="{{url('user-feedback/report/outlet')}}" class="btn blue"><i class="fa fa-chevron-left"></i> Show All Outlet</a>
+	<a href="{{url('user-feedback/report')}}" class="btn blue"><i class="fa fa-circle-o"></i> Show Summary</a>
+</div>
 <div class="portlet light bordered">
 	<div class="portlet-title">
 		<div class="caption">
@@ -277,10 +280,6 @@
 				<div id="chartdiv3" style="height: 400px"></div>
 			</div>
 		</div>
-		<div class="form-group">
-			<a href="{{url('user-feedback/report/outlet')}}" class="btn blue">Show All Outlet</a>
-			<a href="{{url('user-feedback/report')}}" class="btn blue">Show Summary</a>
-		</div>
 		<div>
 			<div class="hidden">
 				<form action="{{url('user-feedback/report')}}" method="POST">
@@ -370,6 +369,8 @@
 										<input type="hidden" name="rule[4][subject]" value="review_date">
 										<input type="hidden" name="rule[4][operator]" value="<=">
 										<input type="hidden" name="rule[4][parameter]" value="{{date('Y-m-d',strtotime($date_end))}}">
+										<input type="hidden" name="rule[5][subject]" value="outlet">
+										<input type="hidden" name="rule[5][parameter]" value="{{$reportData['outlet_data']['id_outlet']}}">
 										<input type="hidden" name="operator" value="and">
 										<input type="hidden" name="redirect" value="user-feedback">
 										<button href="{{url('user-feedback')}}" class="btn btn-block"> Show all </button>
@@ -423,6 +424,8 @@
 										<input type="hidden" name="rule[4][subject]" value="review_date">
 										<input type="hidden" name="rule[4][operator]" value="<=">
 										<input type="hidden" name="rule[4][parameter]" value="{{date('Y-m-d',strtotime($date_end))}}">
+										<input type="hidden" name="rule[5][subject]" value="outlet">
+										<input type="hidden" name="rule[5][parameter]" value="{{$reportData['outlet_data']['id_outlet']}}">
 										<input type="hidden" name="operator" value="and">
 										<input type="hidden" name="redirect" value="user-feedback">
 										<button href="{{url('user-feedback')}}" class="btn btn-block"> Show all </button>
@@ -476,6 +479,8 @@
 										<input type="hidden" name="rule[4][subject]" value="review_date">
 										<input type="hidden" name="rule[4][operator]" value="<=">
 										<input type="hidden" name="rule[4][parameter]" value="{{date('Y-m-d',strtotime($date_end))}}">
+										<input type="hidden" name="rule[5][subject]" value="outlet">
+										<input type="hidden" name="rule[5][parameter]" value="{{$reportData['outlet_data']['id_outlet']}}">
 										<input type="hidden" name="operator" value="and">
 										<input type="hidden" name="redirect" value="user-feedback">
 										<button href="{{url('user-feedback')}}" class="btn btn-block"> Show all </button>

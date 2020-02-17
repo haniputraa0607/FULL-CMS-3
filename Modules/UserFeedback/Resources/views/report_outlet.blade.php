@@ -60,7 +60,7 @@
 
 @include('layouts.notifications')
 <div class="form-group">	
-	<a href="{{url('user-feedback/report')}}" class="btn blue">Show Summary</a>
+	<a href="{{url('user-feedback/report')}}" class="btn blue"><i class="fa fa-chevron-left"></i> Show Summary</a>
 </div>
 <div class="portlet light bordered">
 	<div class="portlet-title">
