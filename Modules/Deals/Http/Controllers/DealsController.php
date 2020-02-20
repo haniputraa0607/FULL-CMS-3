@@ -380,6 +380,7 @@ class DealsController extends Controller
         // return MyHelper::post('deals/be/list', $post);
         $post['admin']=1;
         $data['deals'] = parent::getData(MyHelper::post('deals/be/list', $post));
+
         $outlets = parent::getData(MyHelper::get('outlet/be/list'));
         $brands = parent::getData(MyHelper::get('brand/be/list'));
         if (!empty($data['deals'])) {
@@ -412,7 +413,9 @@ class DealsController extends Controller
         $post['deals_promo_id'] = $promo;
         $post['web'] = 1;
         // DEALS
-        $data['deals']   = parent::getData(MyHelper::post('deals/be/list', $post));;
+
+        $data['deals']   = parent::getData(MyHelper::post('deals/be/detail', ['id_deals' => $id, 'step' => 'all']));;
+        
         if (empty($data['deals'])) {
             return back()->withErrors(['Data deals not found.']);
         }
@@ -487,8 +490,9 @@ class DealsController extends Controller
         $post                   = $dataDeals['post'];
         $post['id_deals']       = $id;
         $post['web'] = 1;
+        $post['step'] = 1;
         // DEALS
-        $data['deals']   = parent::getData(MyHelper::post('deals/be/list', $post));
+        $data['deals']   = parent::getData(MyHelper::post('deals/be/detail', $post));
         if (empty($data['deals'])) {
             return back()->withErrors(['Data deals not found.']);
         }
@@ -563,7 +567,7 @@ class DealsController extends Controller
 	        
 	        // DEALS
 	        $deals = MyHelper::post('deals/be/detail', $post);
-	// return $deals;
+// return $deals;
 	        if (isset($deals['status']) && $deals['status'] == 'success') {
 
 	            $data['result'] = $deals['result'];
@@ -586,7 +590,64 @@ class DealsController extends Controller
 
             if (isset($action['status']) && $action['status'] == 'success') {
 
-                return redirect('deals/step2/' . $slug);
+                return redirect('deals/step3/' . $slug);
+            } 
+            elseif($action['messages']??false) {
+                return back()->withErrors($action['messages'])->withInput();
+            }
+            else{
+                return back()->withErrors(['Something went wrong'])->withInput();
+            }
+        }
+
+    }
+
+    function step3(Request $request, $id) {
+        $post = $request->except('_token');
+        $slug = $id;
+        $id = MyHelper::explodeSlug($id)[0]??'';
+
+        if (empty($post)) {
+	        $identifier             = $this->identifier();
+	        $dataDeals              = $this->dataDeals($identifier);
+
+	        $data                   = $dataDeals['data'];
+	        $post                   = $dataDeals['post'];
+	        $data = [
+	            'title'          => 'Deals',
+	            'sub_title'      => 'Deals Create',
+	            'menu_active'    => 'deals',
+	            'submenu_active' => 'deals-create',
+	            'deals_type' => 'Deals'
+	        ];
+	        $post['id_deals']       = $id;
+	        $post['step'] = 3;
+	        
+	        // DEALS
+	        $deals = MyHelper::post('deals/be/detail', $post);
+	        if (isset($deals['status']) && $deals['status'] == 'success') {
+
+	            $data['deals'] = $deals['result'];
+
+	        } else {
+
+	            return redirect('deals')->withErrors($deals['messages']);
+	        }
+	        // $data['deals']   = parent::getData(MyHelper::post('deals/be/list', $post));
+// return $data;
+	        return view('deals::deals.step3', $data);
+
+	        if (empty($data['result'])) {
+	            return back()->withErrors(['Data deals not found.']);
+	        }
+	    }else{
+
+            $post['id_deals'] = $id;
+			$action = MyHelper::post('deals/update-content', $post);
+// return $action;
+            if (isset($action['status']) && $action['status'] == 'success') {
+
+                return redirect('deals/step3/' . $slug)->withSuccess(['Deals has been updated']);
             } 
             elseif($action['messages']??false) {
                 return back()->withErrors($action['messages'])->withInput();

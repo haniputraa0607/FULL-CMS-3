@@ -395,7 +395,7 @@ $grantedFeature     = session('granted_features');
     	<div class="col-md-12">
             <div class="mt-element-step">
                 <div class="row step-line">
-                    <div id="step-online" style="display: none">
+                    <div id="step-online">
 	                    <div class="col-md-4 mt-step-col first active">
 	                        <div class="mt-step-number bg-white">1</div>
 	                        <div class="mt-step-title uppercase font-grey-cascade">Info</div>
@@ -412,7 +412,7 @@ $grantedFeature     = session('granted_features');
 		                    <div class="mt-step-content font-grey-cascade">Detail Content Deals</div>
 	                    </div>
                     </div>
-                    <div id="step-offline">
+                    <div id="step-offline" style="display: none">
                     	<div class="col-md-6 mt-step-col first active">
 	                        <div class="mt-step-number bg-white">1</div>
 	                        <div class="mt-step-title uppercase font-grey-cascade">Info</div>
@@ -475,7 +475,8 @@ $grantedFeature     = session('granted_features');
                     --}}
                     @endif
                     @if(MyHelper::hasAccess([95], $configs))
-                    <div class="form-group">
+                    @if(MyHelper::hasAccess([97], $configs) && MyHelper::hasAccess([98], $configs))
+                	<div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Deals Type
@@ -486,16 +487,31 @@ $grantedFeature     = session('granted_features');
                         <div class="col-md-9">
                         	<div class="mt-checkbox-inline">
                                 <label class="mt-checkbox mt-checkbox-outline" style="margin-bottom: 0px">
-                                    <input type="checkbox" id="is_online" name="is_online" value="1" @if (old('is_online') == "1") checked @endif> Online
+                                    <input type="checkbox" id="is_online" name="is_online" value="1" 
+                                    @if ( old('is_online') == "1" )
+                                        checked 
+                                    @elseif ( !empty($deals['is_online']) ) 
+                                        checked 
+                                    @endif> Online
                                     <span></span>
                                 </label>
                                 <label class="mt-checkbox mt-checkbox-outline" style="margin-bottom: 0px">
-                                    <input type="checkbox" id="is_offline" name="is_offline" value="1" @if (old('is_offline') == "1") checked @endif> Offline
+                                    <input type="checkbox" id="is_offline" name="is_offline" value="1" 
+                                    @if ( old('is_offline') == "1" )
+                                        checked 
+                                    @elseif ( !empty($deals['is_offline']) ) 
+                                        checked 
+                                    @endif> Offline
                                     <span></span>
                                 </label>
                             </div>
                         </div>
                     </div>
+                    @elseif(MyHelper::hasAccess([97], $configs))
+                    <input type="hidden" name="is_offline" value="1">
+                    @elseif(MyHelper::hasAccess([98], $configs))
+                    <input type="hidden" name="is_online" value="1">
+                    @endif
 
                     <div class="form-group">
                         <div class="input-icon right">
