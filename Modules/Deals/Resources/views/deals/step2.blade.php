@@ -1,3 +1,7 @@
+<?php
+	use App\Lib\MyHelper;
+    $configs    		= session('configs');
+ ?>
 @extends('layouts.main-closed')
 @include('deals::deals.tier-discount')
 @include('deals::deals.buyxgety-discount')
@@ -375,6 +379,30 @@
 			min: 0,
 			max: '999999999'
 		});
+
+		$('input[name=deals_promo_id_type]').click(function() {
+				nilai = $('input[name=deals_promo_id_type]:checked').val()
+                $('.dealsPromoTypeShow').show();
+
+                $('input[name=deals_promo_id_promoid]').val('');
+                $('input[name=deals_promo_id_nominal]').val('');
+
+                console.log(nilai);
+                if (nilai == "promoid") {
+                	console.log(1);
+                    $('input[name=deals_promo_id_promoid]').show().prop('required', true);
+                    $('#promoid-inputgroup').hide().prop('required', true);
+
+                    $('input[name=deals_promo_id_nominal]').hide().removeAttr('required', true);
+                }
+                else {
+                	console.log(0);
+                    $('input[name=deals_promo_id_nominal]').show().prop('required', true);
+                    $('#promoid-inputgroup').show().prop('required', true);
+
+                    $('input[name=deals_promo_id_promoid]').hide().removeAttr('required', true);
+                }
+            });
 	});
 	</script>
 	@yield('child-script')
@@ -441,7 +469,13 @@
     @include('layouts.notifications')
 
     {{-- PROMO TYPE FORM --}}
+	<form role="form" action="" method="POST" enctype="multipart/form-data">
 	<div class="portlet light bordered" id="promotype-form">
+		<div class="portlet-title">
+			<div class="caption font-blue ">
+				<span class="caption-subject bold uppercase">{{ $result['deals_title'] }}</span>
+			</div>
+		</div>
 		<div class="col-md-12">
             <div class="mt-element-step">
                 <div class="row step-line">
@@ -477,12 +511,11 @@
                 </div>
             </div>
         </div>
-		<div class="portlet-title">
-			<div class="caption font-blue ">
-				<span class="caption-subject bold uppercase">{{ $result['deals_title'] }}</span>
+			<div class="portlet-title">
+				<div class="caption font-blue ">
+					<span class="caption-subject bold uppercase">{{ 'Voucher Online Rules' }}</span>
+				</div>
 			</div>
-		</div>
-		<form role="form" action="" method="POST" enctype="multipart/form-data">
 			<div class="portlet-body" id="tabContainer">
 				<div class="form-group" style="height: 55px;display: inline;">
 					<div class="row">
@@ -593,22 +626,61 @@
 					</div>
 				</div>
 			</div>
-			@if( strtotime($datenow) <= strtotime($date_start) || $date_start == null || empty($result['step_complete0']) )
-			<div class="col-md-12" style="text-align:center;">
-				<div class="form-actions">
-					{{ csrf_field() }}
-					<button type="submit" class="btn blue"> Save </button>
-				</div>
-			</div>
-			@else
-			<div class="col-md-12" style="text-align:center;">
-				<div class="form-actions">
-					<a href="{{ ($result['id_deals'] ?? false) ? url('deals/step2/'.$result['id_deals']) : '' }}" class="btn blue">Detail</a>
-				</div>
-			</div>
-			@endif
-		</form>
 	</div>
+	<div class="portlet light bordered">
+			@if( ($result['is_offline']??false) == 1)
+			<div class="portlet-title">
+				<div class="caption font-blue ">
+					<span class="caption-subject bold uppercase">{{ 'Voucher Offline Rules' }}</span>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="form-group" style="height: 90px;">
+					<label class="control-label">Promo Type</label>
+					<span class="required" aria-required="true"> * </span>
+					<i class="fa fa-question-circle tooltips" data-original-title="Tipe promosi berdasarkan Promo ID atau nominal promo" data-container="body" data-html="true"></i>
+					<div class="mt-radio-list">
+						<label class="mt-radio mt-radio-outline dealsPromoType"> Promo ID
+							<input type="radio" name="deals_promo_id_type" value="promoid" required @if ($result['deals_promo_id_type'] == "promoid") checked @endif>
+							<span></span>
+						</label>
+						<label class="mt-radio mt-radio-outline dealsPromoType"> Nominal
+							<input type="radio" id="radio16" name="deals_promo_id_type" class="md-radiobtn dealsPromoType" value="nominal" required @if ($result['deals_promo_id_type'] == "nominal") checked @endif>
+							<span></span>
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+	                    <div class="col-md-3">
+	                    	<div class="input-group col-md-12" id="offline-input">
+	                    		<div class="input-group-addon" id="promoid-inputgroup">IDR</div>
+		                        <input type="text" class="form-control digit_mask" name="deals_promo_id_promoid" value="{{ $result['deals_promo_id']??'' }}" placeholder="Input Promo ID" @if ($result['deals_promo_id_type'] == "nominal") style="display: none;" @endif>
+
+		                        <input type="text" class="form-control digit_mask" name="deals_promo_id_nominal" value="{{ $result['deals_promo_id']??'' }}" placeholder="Input nominal" @if ($result['deals_promo_id_type'] == "promoid") style="display: none;" @endif>
+	                    	</div>
+						</div>
+					</div>
+				</div>
+            @endif
+	</div>
+	<div class="portlet light bordered" style="height: 60px;">
+		@if( strtotime($datenow) <= strtotime($date_start) || $date_start == null || empty($result['step_complete0']) )
+		<div class="col-md-12" style="text-align:center;">
+			<div class="form-actions">
+				{{ csrf_field() }}
+				<button type="submit" class="btn blue"> Save </button>
+			</div>
+		</div>
+		@else
+		<div class="col-md-12" style="text-align:center;">
+			<div class="form-actions">
+				<a href="{{ ($result['id_deals'] ?? false) ? url('deals/step2/'.$result['id_deals']) : '' }}" class="btn blue">Detail</a>
+			</div>
+		</div>
+		@endif
+	</div>
+	</form>
 
 
 @endsection
