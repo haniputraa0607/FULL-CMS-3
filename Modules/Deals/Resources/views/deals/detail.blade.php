@@ -1,5 +1,6 @@
-@extends('layouts.main')
-
+@extends('layouts.main-closed')
+@include('deals::deals.detail-info')
+@include('deals::deals.detail-info-content')
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
@@ -15,6 +16,51 @@
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <style type="text/css">
+		.d-none {
+			display: none;
+		}
+		.width-60-percent {
+			width: 60%;
+		}
+		.width-100-percent {
+			width: 100%;
+		}
+		.width-voucher-img {
+			max-width: 200px;
+			width: 100%;
+		}
+		.v-align-top {
+			vertical-align: top;
+		}
+		.p-t-10px {
+			padding-top: 10px;
+		}
+		.page-container-bg-solid .page-content {
+			background: #fff!important;
+		}
+		.text-decoration-none {
+			text-decoration: none!important;
+		}
+		.p-l-0{
+			padding-left: 0px;
+		}
+		.p-r-0{
+			padding-right: 0px;
+		}
+		.p-l-r-0{
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+		.font-custom-dark-grey {
+			color: #95A5A6!important;
+		}
+		.font-custom-green {
+			color: #26C281!important;
+		}
+	</style>
+@yield('detail-style')	
 @endsection
 
 @section('page-script')
@@ -31,6 +77,7 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js') }}" type="text/javascript"></script>
 
 <!--     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
@@ -449,6 +496,9 @@
             $('select[name="id_brand"]').change();
         });
     </script>
+	@yield('child-script')
+	@yield('child-script2')
+	@yield('detail-script')
 @endsection
 
 @section('content')
@@ -551,20 +601,53 @@
 
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                	<form id="form" class="form-horizontal" role="form" action=" @if($deals_type == "Deals") {{ url('deals/update') }} @else {{ url('inject-voucher/update') }} @endif" method="post" enctype="multipart/form-data">
-        				@include('deals::deals.step1-form')
-		                <div class="form-actions">
-		                {{ csrf_field() }}
-		                <div class="row">
-		                    <div class="col-md-offset-3 col-md-9">
-		                        <button type="submit" class="btn green">Submit</button>
-		                        <!-- <button type="button" class="btn default">Cancel</button> -->
-		                    </div>
-		                </div>
-		            </div>
-		            <input type="hidden" name="id_deals" value="{{ $deals['id_deals'] }}">
-		            <input type="hidden" name="deals_type" value="{{ $deals['deals_type'] }}">
-			    </form>
+                	<ul class="nav nav-tabs" id="tab-header">
+                        <li class="active" id="infoOutlet">
+                            <a href="#basic" data-toggle="tab" > Basic Info </a>
+                        </li>
+                        <li>
+                            <a href="#content" data-toggle="tab"> Content Info </a>
+                        </li>
+                        <li>
+                            <a href="#outlet" data-toggle="tab"> Outlet Info </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="basic">
+                			@yield('detail-info')
+                        </div>
+                        <div class="tab-pane " id="content">
+                			@yield('detail-info-content')
+                        </div>
+                        <div class="tab-pane" id="outlet">
+                            <!-- BEGIN: Comments -->
+                            <div class="mt-comments">
+                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($deals['outlets'] as $res)
+                                            <tr>
+                                                <td>{{ $res['outlet_code'] }}</td>
+                                                <td>{{ $res['outlet_name'] }}</td>
+                                                <td>{{ $res['outlet_address'] }}</td>
+                                                <td>{{ $res['outlet_phone'] }}</td>
+                                                <td>{{ $res['outlet_email'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END: Comments -->
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane" id="voucher">
                     @include('deals::deals.voucher')

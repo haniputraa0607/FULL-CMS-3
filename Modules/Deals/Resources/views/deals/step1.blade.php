@@ -185,16 +185,6 @@
 		        }
 		    });
 
-		    $('#is_online').change(function() {
-		        if(this.checked) {
-		            $('#step-online').show();
-		            $('#step-offline').hide();
-		        }else{
-		            $('#step-online').hide();
-		            $('#step-offline').show();
-		        }
-		    });
-
             /* TYPE VOUCHER */
             $('input[name=deals_voucher_type]').click(function() {
                 // tampil duluk
@@ -502,7 +492,7 @@
     	<div class="col-md-12">
             <div class="mt-element-step">
                 <div class="row step-line">
-                    <div id="step-online" @if( empty($deals['is_online']) ) style="display: none;" @endif>
+                    <div id="step-online">
 	                    <div class="col-md-4 mt-step-col first active">
 	                        <div class="mt-step-number bg-white">1</div>
 	                        <div class="mt-step-title uppercase font-grey-cascade">Info</div>
@@ -515,18 +505,6 @@
 	                    </div>
 	                    <div class="col-md-4 mt-step-col last">
 		                    <div class="mt-step-number bg-white">3</div>
-		                    <div class="mt-step-title uppercase font-grey-cascade">Content</div>
-		                    <div class="mt-step-content font-grey-cascade">Detail Content Deals</div>
-	                    </div>
-                    </div>
-                    <div id="step-offline" @if( !empty($deals['is_online']) ) style="display: none;" @endif>
-                    	<div class="col-md-6 mt-step-col first active">
-	                        <div class="mt-step-number bg-white">1</div>
-	                        <div class="mt-step-title uppercase font-grey-cascade">Info</div>
-	                        <div class="mt-step-content font-grey-cascade">Title, Image, Periode</div>
-	                    </div>
-	                    <div class="col-md-6 mt-step-col last">
-		                    <div class="mt-step-number bg-white">2</div>
 		                    <div class="mt-step-title uppercase font-grey-cascade">Content</div>
 		                    <div class="mt-step-content font-grey-cascade">Detail Content Deals</div>
 	                    </div>
