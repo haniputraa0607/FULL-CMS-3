@@ -42,7 +42,7 @@ class DealsController extends Controller
     /* SAVE DEAL */
     function saveDefaultDeals($post) {
         // print_r($post);
-        if (isset($post['is_offline'])) {
+        if (isset($post['is_offline']) && isset($post['deals_promo_id_type'])) {
 	        if ($post['deals_promo_id_type'] == "promoid") {
 	            $post['deals_promo_id'] = $post['deals_promo_id_promoid'];
 	        }
@@ -90,7 +90,7 @@ class DealsController extends Controller
         }
 
         $save = MyHelper::post('deals/create', $post);
-
+// return $save;
         if (isset($save['status']) && $save['status'] == "success") {
         	// return $save;
 
@@ -401,6 +401,7 @@ class DealsController extends Controller
     /* DETAIL */
     function detail(Request $request, $id, $promo=null) {
         $post = $request->except('_token');
+        $id_encrypt = $id;
         $id = MyHelper::explodeSlug($id)[0]??'';
 
         $identifier             = $this->identifier();
@@ -420,6 +421,8 @@ class DealsController extends Controller
             return back()->withErrors(['Data deals not found.']);
         }
 
+        $data['deals']['id_deals'] = $id_encrypt;
+
         // DEALS USER VOUCHER
         $user = $this->voucherUserList($id, $request->get('page'));
 
@@ -434,38 +437,38 @@ class DealsController extends Controller
             $data[$key] = $value;
         }
 
-        // DATA BRAND
-        $data['brands'] = parent::getData(MyHelper::get('brand/be/list'));
+  //       // DATA BRAND
+  //       $data['brands'] = parent::getData(MyHelper::get('brand/be/list'));
 
-        // DATA PRODUCT
-        // $data['product'] = parent::getData(MyHelper::get('product/be/list'));
+  //       // DATA PRODUCT
+  //       // $data['product'] = parent::getData(MyHelper::get('product/be/list'));
 
-        // DATA OUTLET
-        $data['outlets'] = parent::getData(MyHelper::get('outlet/be/list'));
+  //       // DATA OUTLET
+  //       $data['outlets'] = parent::getData(MyHelper::get('outlet/be/list'));
 
-        $getCity = MyHelper::get('city/list?log_save=0');
-		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
+  //       $getCity = MyHelper::get('city/list?log_save=0');
+		// if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
 
-		$getProvince = MyHelper::get('province/list?log_save=0');
-		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
+		// $getProvince = MyHelper::get('province/list?log_save=0');
+		// if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
 
-		$getCourier = MyHelper::get('courier/list?log_save=0');
-		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
+		// $getCourier = MyHelper::get('courier/list?log_save=0');
+		// if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 
-		$getProduct = MyHelper::get('product/be/list?log_save=0');
-		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
+		// $getProduct = MyHelper::get('product/be/list?log_save=0');
+		// if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 
-		$getTag = MyHelper::get('product/tag/list?log_save=0');
-		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
+		// $getTag = MyHelper::get('product/tag/list?log_save=0');
+		// if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-		$getMembership = MyHelper::post('membership/be/list?log_save=0',[]);
-		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
+		// $getMembership = MyHelper::post('membership/be/list?log_save=0',[]);
+		// if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
-        if(!empty(Session::get('filter_user'))){
-            $data['conditions'] = Session::get('filter_user');
-        }else{
-            $data['conditions'] = [];
-        }
+  //       if(!empty(Session::get('filter_user'))){
+  //           $data['conditions'] = Session::get('filter_user');
+  //       }else{
+  //           $data['conditions'] = [];
+  //       }
 
 // return $data;
         if($post['deals_type'] == 'WelcomeVoucher'){
@@ -548,7 +551,6 @@ class DealsController extends Controller
         $post = $request->except('_token');
         $slug = $id;
         $id = MyHelper::explodeSlug($id)[0]??'';
-
         if (empty($post)) {
 	        $identifier             = $this->identifier();
 	        $dataDeals              = $this->dataDeals($identifier);
@@ -567,7 +569,7 @@ class DealsController extends Controller
 	        
 	        // DEALS
 	        $deals = MyHelper::post('deals/be/detail', $post);
-// return $deals;
+
 	        if (isset($deals['status']) && $deals['status'] == 'success') {
 
 	            $data['result'] = $deals['result'];
@@ -584,13 +586,25 @@ class DealsController extends Controller
 	        }
 	    }else{
 
+	    	if (isset($post['deals_promo_id_type'])) {
+	            if ($post['deals_promo_id_type'] == "promoid") {
+	                $post['deals_promo_id'] = $post['deals_promo_id_promoid'];
+	            }
+	            else {
+	                $post['deals_promo_id'] = $post['deals_promo_id_nominal'];
+	            }
+	        }
+
+	        unset($post['deals_promo_id_promoid']);
+	        unset($post['deals_promo_id_nominal']);
+
             $post['id_deals'] = $id;
+
 			$action = MyHelper::post('promo-campaign/step2', $post);
-			// return $post;
 
             if (isset($action['status']) && $action['status'] == 'success') {
 
-                return redirect('deals/step3/' . $slug);
+                return redirect('deals/step3/' . $slug)->withSuccess(['Deals has been updated']);
             } 
             elseif($action['messages']??false) {
                 return back()->withErrors($action['messages'])->withInput();
@@ -700,7 +714,6 @@ class DealsController extends Controller
         $post = $this->update($post);
         // SAVE
         $update = MyHelper::post('deals/update', $post);
-return $update;
 
         return parent::redirect($update, $this->identifier('prev').' has been updated.', str_replace(" ", "-", strtolower($this->identifier('prev'))));
     }
