@@ -42,7 +42,7 @@ class DealsController extends Controller
     /* SAVE DEAL */
     function saveDefaultDeals($post) {
         // print_r($post);
-        if (isset($post['is_offline'])) {
+        if (isset($post['is_offline']) && isset($post['deals_promo_id_type'])) {
 	        if ($post['deals_promo_id_type'] == "promoid") {
 	            $post['deals_promo_id'] = $post['deals_promo_id_promoid'];
 	        }
@@ -90,7 +90,7 @@ class DealsController extends Controller
         }
 
         $save = MyHelper::post('deals/create', $post);
-
+// return $save;
         if (isset($save['status']) && $save['status'] == "success") {
         	// return $save;
 
@@ -551,7 +551,6 @@ class DealsController extends Controller
         $post = $request->except('_token');
         $slug = $id;
         $id = MyHelper::explodeSlug($id)[0]??'';
-
         if (empty($post)) {
 	        $identifier             = $this->identifier();
 	        $dataDeals              = $this->dataDeals($identifier);
@@ -715,7 +714,6 @@ class DealsController extends Controller
         $post = $this->update($post);
         // SAVE
         $update = MyHelper::post('deals/update', $post);
-return $update;
 
         return parent::redirect($update, $this->identifier('prev').' has been updated.', str_replace(" ", "-", strtolower($this->identifier('prev'))));
     }

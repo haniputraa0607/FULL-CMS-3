@@ -101,16 +101,6 @@ $grantedFeature     = session('granted_features');
 		        }
 		    });
 
-		    $('#is_online').change(function() {
-		        if(this.checked) {
-		            $('#step-online').show();
-		            $('#step-offline').hide();
-		        }else{
-		            $('#step-online').hide();
-		            $('#step-offline').show();
-		        }
-		    });
-
             /* TYPE VOUCHER */
             $('.voucherType').click(function() {
                 // tampil duluk
@@ -412,18 +402,6 @@ $grantedFeature     = session('granted_features');
 		                    <div class="mt-step-content font-grey-cascade">Detail Content Deals</div>
 	                    </div>
                     </div>
-                    <div id="step-offline" style="display: none">
-                    	<div class="col-md-6 mt-step-col first active">
-	                        <div class="mt-step-number bg-white">1</div>
-	                        <div class="mt-step-title uppercase font-grey-cascade">Info</div>
-	                        <div class="mt-step-content font-grey-cascade">Title, Image, Periode</div>
-	                    </div>
-	                    <div class="col-md-6 mt-step-col last">
-		                    <div class="mt-step-number bg-white">2</div>
-		                    <div class="mt-step-title uppercase font-grey-cascade">Content</div>
-		                    <div class="mt-step-content font-grey-cascade">Detail Content Deals</div>
-	                    </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -562,52 +540,6 @@ $grantedFeature     = session('granted_features');
                             <div class="input-icon right">
                                 <input type="text" class="form-control" name="deals_second_title" value="{{ old('deals_second_title') }}" placeholder="Second Title" maxlength="20">
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group" id="promo-type-form" style="display: none">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Promo Type
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Tipe promosi berdasarkan Promo ID atau nominal promo" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-icon right">
-                                <div class="col-md-3">
-                                    <div class="md-radio-inline">
-                                        <div class="md-radio">
-                                            <input type="radio" id="radio14" name="deals_promo_id_type" class="md-radiobtn dealsPromoType" value="promoid" @if (old('deals_promo_id_type') == "promoid") checked @endif>
-                                            <label for="radio14">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> Promo ID </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="md-radio-inline">
-                                        <div class="md-radio">
-                                            <input type="radio" id="radio16" name="deals_promo_id_type" class="md-radiobtn dealsPromoType" value="nominal" @if (old('deals_promo_id_type') == "nominal") checked @endif>
-                                            <label for="radio16">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> Nominal </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="form-group dealsPromoTypeShow" @if (!old('deals_promo_id_type')) style="display: none;" @endif>
-                        <label class="col-md-3 control-label"> </label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control dealsPromoTypeValuePromo" name="deals_promo_id_promoid" value="{{ old('deals_promo_id_promoid') }}" placeholder="Input Promo ID"  @if (old('deals_promo_id_type') == "promoid") style="display: block;" @else style="display: none;" @endif>
-
-                            <input type="text" class="form-control dealsPromoTypeValuePrice price" name="deals_promo_id_nominal" value="{{ old('deals_promo_id_nominal') }}" placeholder="Input nominal" @if (old('deals_promo_id_type') == "nominal") style="display: block;" @else style="display: none;" @endif>
                         </div>
                     </div>
 

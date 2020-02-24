@@ -110,8 +110,8 @@
                     <div class="col-md-8 value">: {{ $deals['user_limit']??false ? number_format($deals['user_limit']).' Times usage' : 'Unlimited' }}</div>
                 </div>
                 <div class="row static-info">
-                    <div class="col-md-4 name">Voucher Duration</div>
-                    <div class="col-md-8 value">: {{ $deals['deals_voucher_duration']??false ? number_format($deals['deals_voucher_duration']).' Days' : '-' }}</div>
+                    <div class="col-md-4 name">Voucher Expiry</div>
+                    <div class="col-md-8 value">: {{ ($deals['deals_voucher_duration']??false) ? 'By Duration ( '.number_format($deals['deals_voucher_duration']).' Days )' : (($deals['deals_voucher_expired']??false) ? 'By Date ( '.date("d M Y", strtotime($deals['deals_voucher_expired'])).' '.date("H:i", strtotime($deals['deals_voucher_expired'])).' )' : '-') }}</div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Voucher Start</div>

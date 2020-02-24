@@ -89,15 +89,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group dealsPromoTypeShow" @if( ($deals['is_offline']??false) != 1 ) style="display: none;" @endif>
-                        <label class="col-md-3 control-label"> </label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control dealsPromoTypeValuePromo" name="deals_promo_id_promoid" value="{{ $deals['deals_promo_id'] }}" placeholder="Input Promo ID" @if ($deals['deals_promo_id_type'] == "nominal") style="display: none;" @endif>
-
-                            <input type="text" class="form-control dealsPromoTypeValuePrice price" name="deals_promo_id_nominal" value="{{ $deals['deals_promo_id'] }}" placeholder="Input nominal" @if ($deals['deals_promo_id_type'] == "promoid") style="display: none;" @endif>
-                        </div>
-                    </div>
-
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Deals Periode <span class="required" aria-required="true"> * </span> </label>
                         <div class="col-md-4">

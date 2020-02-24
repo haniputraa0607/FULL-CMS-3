@@ -15,7 +15,7 @@
             <div class="col-md-8 value"></div>
         </div>
         <div class="row static-info">
-            <div class="col-md-12 value">{!! $deals['deals_description'] !!}</div>
+            <div class="col-md-6 value">{!! $deals['deals_description'] !!}</div>
         </div>
         <div class="row static-info">
             <div class="col-md-4 name"> Content :</div>
