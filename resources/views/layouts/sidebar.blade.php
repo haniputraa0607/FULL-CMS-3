@@ -1074,6 +1074,13 @@
 							</a>
 						</li>
 						@endif
+						@if(MyHelper::hasAccess([216], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'referral-report') ? 'active open' : ''}}">
+							<a href="{{url('referral/report')}}" class="nav-link ">
+								<span class="title">Referral Report</span>
+							</a>
+						</li>
+						@endif
 					</ul>
 				</li>
 				@endif
