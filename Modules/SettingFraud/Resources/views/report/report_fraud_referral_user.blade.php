@@ -128,7 +128,7 @@
                         <td>{{$value['outlet_name']}}</td>
                         <td>{{date("d F Y", strtotime($value['referral_code_use_date']))}}</td>
                         <td>{{date("H:i", strtotime($value['referral_code_use_date']))}}</td>
-                        <td>{{date("H:i", strtotime($value['referral_code']))}}</td>
+                        <td>{{$value['referral_code']}}</td>
                         <td>
                             <label>Auto Suspend</label>
                             <input class="form-control" disabled value="@if($value['fraud_setting_auto_suspend_status'] == 1) Active @else Inactive @endif">

@@ -49,10 +49,10 @@
         <div class="portlet-title">
             <div class="caption">Filter</div>
             <div class="tools">
-                <a href="javascript:;" class="@if(Session::has('filter-fraud-log-promo-code'))  expand @else collapse @endif"> </a>
+                <a href="javascript:;" class="@if(Session::has('filter-fraud-log-referral'))  expand @else collapse @endif"> </a>
             </div>
         </div>
-        <div class="portlet-body" @if(Session::has('filter-fraud-log-promo-code')) style="display: none;" @endif>
+        <div class="portlet-body" @if(Session::has('filter-fraud-log-referral')) style="display: none;" @endif>
             <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
                 {{ csrf_field() }}
                 @include('filter-report-log-fraud')
@@ -60,9 +60,9 @@
         </div>
     </div>
 
-    @if(Session::has('filter-fraud-log-promo-code'))
+    @if(Session::has('filter-fraud-log-referral'))
         <?php
-        $search_param = Session::get('filter-fraud-log-promo-code');
+        $search_param = Session::get('filter-fraud-log-referral');
         $start = $search_param['date_start'];
         $end = $search_param['date_end'];
         $search_param = array_filter($search_param['conditions']);
@@ -85,14 +85,14 @@
             @endif
             <br>
             <p>
-                <a href="{{ url('fraud-detection/filter/reset') }}/filter-fraud-log-promo-code" class="btn yellow">Reset</a>
+                <a href="{{ url('fraud-detection/filter/reset') }}/filter-fraud-log-trx-point" class="btn yellow">Reset</a>
             </p>
         </div>
     @endif
 
     @if(!empty($result))
     <div style="text-align: right">
-        <a class="btn blue" href="{{url('fraud-detection/report/promo-code')}}?export-excel=1"><i class="fa fa-download"></i> Export to Excel</a>
+        <a class="btn blue" href="{{url('fraud-detection/report/referral-user')}}?export-excel=1"><i class="fa fa-download"></i> Export to Excel</a>
     </div>
     @endif
 
@@ -100,24 +100,45 @@
         <table class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
-                <th width="5%"> Action </th>
                 <th width="5%"> User Name </th>
                 <th width="5%"> User Phone </th>
                 <th width="5%"> User Email </th>
-                <th width="5%"> Date Fraud </th>
-                <th width="8%"> Time Fraud </th>
+                <th width="5%"> Receipt Number </th>
+                <th width="5%"> Outlet </th>
+                <th width="5%"> Transaction Date </th>
+                <th width="8%"> Transaction Time </th>
+                <th width="8%"> Referral Code Used </th>
+                <th width="40%"> Fraud Settings </th>
             </tr>
             </thead>
             <tbody>
             @if(!empty($result))
                 @foreach($result as $value)
                     <tr>
-                        <td><a href="{{ url('fraud-detection/report/detail/promo-code') }}/{{ $value['id_fraud_detection_log_check_promo_code'] }}" target="_blank" class="btn btn-block blue btn-xs"><i class="fa fa-edit"></i> Detail</a></td>
                         <td>{{$value['name']}}</td>
                         <td>{{$value['phone']}}</td>
                         <td>{{$value['email']}}</td>
-                        <td>{{date("d F Y", strtotime($value['created_at']))}}</td>
-                        <td>{{date("H:i", strtotime($value['created_at']))}}</td>
+                        <td>
+                            @if(strtolower($value['trasaction_type']) == 'offline'){
+                                <a target="_blank" href="{{url("transaction/detail/").'/'.$value['id_transaction']."/offline"}}">{{$value['transaction_receipt_number']}}</a>
+                            @else
+                                <a target="_blank" href="{{url("transaction/detail/").'/'.$value['id_transaction']."/pickup order"}}">{{$value['transaction_receipt_number']}}</a>
+                            @endif
+                        </td>
+                        <td>{{$value['outlet_name']}}</td>
+                        <td>{{date("d F Y", strtotime($value['referral_code_use_date']))}}</td>
+                        <td>{{date("H:i", strtotime($value['referral_code_use_date']))}}</td>
+                        <td>{{$value['referral_code']}}</td>
+                        <td>
+                            <label>Parameter</label>
+                            <input class="form-control" disabled value="{{$value['fraud_setting_parameter_detail']}}">
+                            <label>Parameter Time</label>
+                            <input class="form-control" disabled value="{{$value['fraud_setting_parameter_detail_time']}}">
+                            <label>Auto Suspend</label>
+                            <input class="form-control" disabled value="@if($value['fraud_setting_auto_suspend_status'] == 1) Active @else Inactive @endif">
+                            <label>Forward Admin</label>
+                            <input class="form-control" disabled value="@if($value['fraud_setting_forward_admin_status'] == 1) Active @else Inactive @endif">
+                        </td>
                     </tr>
                 @endforeach
             @else

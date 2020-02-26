@@ -371,4 +371,147 @@
             </div>
         </div>
     </div>
+
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <span class="caption-subject font-blue sbold uppercase">Log Fraud Referral User</span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th width="5%"> Receipt Number </th>
+                        <th width="5%"> Transaction Date </th>
+                        <th width="8%"> Transaction Time </th>
+                        <th width="8%"> Referral Code Used </th>
+                        <th width="40%"> Fraud Settings </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(!empty($result['list_referral_user']))
+                        @foreach($result['list_referral_user'] as $value)
+                            <tr>
+                                <td>
+                                    @if(strtolower($value['trasaction_type']) == 'offline'){
+                                    <a target="_blank" href="{{url("transaction/detail/").'/'.$value['id_transaction']."/offline"}}">{{$value['transaction_receipt_number']}}</a>
+                                    @else
+                                        <a target="_blank" href="{{url("transaction/detail/").'/'.$value['id_transaction']."/pickup order"}}">{{$value['transaction_receipt_number']}}</a>
+                                    @endif
+                                </td>
+                                <td>{{date("d F Y", strtotime($value['referral_code_use_date']))}}</td>
+                                <td>{{date("H:i", strtotime($value['referral_code_use_date']))}}</td>
+                                <td>{{$value['referral_code']}}</td>
+                                <td>
+                                    <label>Auto Suspend</label>
+                                    <input class="form-control" disabled value="@if($value['fraud_setting_auto_suspend_status'] == 1) Active @else Inactive @endif">
+                                    <label>Forward Admin</label>
+                                    <input class="form-control" disabled value="@if($value['fraud_setting_forward_admin_status'] == 1) Active @else Inactive @endif">
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <td colspan="11" style="text-align: center">No Data Available</td>
+                    @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <span class="caption-subject font-blue sbold uppercase">Log Fraud Referral</span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th width="5%"> Receipt Number </th>
+                        <th width="5%"> Transaction Date </th>
+                        <th width="8%"> Transaction Time </th>
+                        <th width="8%"> Referral Code Used </th>
+                        <th width="40%"> Fraud Settings </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(!empty($result['list_referral']))
+                        @foreach($result['list_referral'] as $value)
+                            <tr>
+                                <td>
+                                    @if(strtolower($value['trasaction_type']) == 'offline'){
+                                    <a target="_blank" href="{{url("transaction/detail/").'/'.$value['id_transaction']."/offline"}}">{{$value['transaction_receipt_number']}}</a>
+                                    @else
+                                        <a target="_blank" href="{{url("transaction/detail/").'/'.$value['id_transaction']."/pickup order"}}">{{$value['transaction_receipt_number']}}</a>
+                                    @endif
+                                </td>
+                                <td>{{date("d F Y", strtotime($value['referral_code_use_date']))}}</td>
+                                <td>{{date("H:i", strtotime($value['referral_code_use_date']))}}</td>
+                                <td>{{$value['referral_code']}}</td>
+                                <td>
+                                    <label>Auto Suspend</label>
+                                    <input class="form-control" disabled value="@if($value['fraud_setting_auto_suspend_status'] == 1) Active @else Inactive @endif">
+                                    <label>Forward Admin</label>
+                                    <input class="form-control" disabled value="@if($value['fraud_setting_forward_admin_status'] == 1) Active @else Inactive @endif">
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <td colspan="11" style="text-align: center">No Data Available</td>
+                    @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <span class="caption-subject font-blue sbold uppercase">Log Fraud Check Promo Code</span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th width="5%"> Date </th>
+                        <th width="5%"> Time </th>
+                        <th width="20%"> Fraud Settings </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(!empty($result['list_promo_code']))
+                        @foreach($result['list_promo_code'] as $value)
+                            <tr>
+                                <td>{{date("d F Y", strtotime($value['created_at']))}}</td>
+                                <td>{{date("H:i", strtotime($value['created_at']))}}</td>
+                                <td>
+                                    <label>Parameter</label>
+                                    <input class="form-control" disabled value="(maximum) {{$value['fraud_setting_parameter_detail']}} validation">
+                                    <label>Parameter Time</label>
+                                    <input class="form-control" disabled value="(below) {{$value['fraud_parameter_detail_time']}} minutes">
+                                    <label>Hold Time</label>
+                                    <input class="form-control" disabled value="{{$value['fraud_hold_time']}} minutes">
+                                    <label>Auto Suspend</label>
+                                    <input class="form-control" disabled value="@if($value['fraud_setting_auto_suspend_status'] == 1) Active @else Inactive @endif">
+                                    <label>Forward Admin</label>
+                                    <input class="form-control" disabled value="@if($value['fraud_setting_forward_admin_status'] == 1) Active @else Inactive @endif">
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <td colspan="11" style="text-align: center">No Data Available</td>
+                    @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 @endsection

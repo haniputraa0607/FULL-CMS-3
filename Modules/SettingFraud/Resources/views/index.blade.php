@@ -912,6 +912,9 @@ $configs    		= session('configs');
                         <li class=" @if(isset($tipe) && $tipe == 'fraud_check_referral_user') active @endif">
                             <a data-toggle="tab" href="#fraud_check_referral_user"><i class="fa fa-cog"></i> Check Referral User </a>
                         </li>
+                        <li class=" @if(isset($tipe) && $tipe == 'fraud_referral') active @endif">
+                            <a data-toggle="tab" href="#fraud_referral"><i class="fa fa-cog"></i> Check Referral </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-md-9">
@@ -940,6 +943,10 @@ $configs    		= session('configs');
 
                         <div class="tab-pane @if(isset($tipe) && $tipe == 'fraud_check_referral_user') active @endif" id="fraud_check_referral_user">
                             @include('settingfraud::form_fraud_check_referral_user')
+                        </div>
+
+                        <div class="tab-pane @if(isset($tipe) && $tipe == 'fraud_referral') active @endif" id="fraud_referral">
+                            @include('settingfraud::form_fraud_referral')
                         </div>
                     </div>
                 </div>
