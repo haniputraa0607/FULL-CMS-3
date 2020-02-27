@@ -23,7 +23,7 @@ $configs = session('configs');
     <br>
     <div class="form-group">
         <div class="col-md-4" style="margin-left: 2.5%;margin-top: 7px;">
-            <button type="button" class="btn btn-lg btn-toggle switch @if($result[8]['fraud_settings_status'] == 'Active')active @endif" id="switch-change-referral" data-id="{{ $result[8]['id_fraud_setting'] }}" data-toggle="button" aria-pressed="<?=($result[8]['fraud_settings_status'] == 'Active' ? 'true' : 'false')?>" autocomplete="off">
+            <button type="button" class="btn btn-lg btn-toggle switch @if($result[6]['fraud_settings_status'] == 'Active')active @endif" id="switch-change-referral" data-id="{{ $result[6]['id_fraud_setting'] }}" data-toggle="button" aria-pressed="<?=($result[6]['fraud_settings_status'] == 'Active' ? 'true' : 'false')?>" autocomplete="off">
                 <div class="handle"></div>
             </button>
         </div>
@@ -50,7 +50,7 @@ $configs = session('configs');
                             <span class="input-group-addon">
                                 maximum
                             </span>
-                            <input type="number" class="form-control field_referral price" min="1" max="59" name="parameter_detail" value="{{$result[8]['parameter_detail']}}">
+                            <input type="number" class="form-control field_referral price" min="1" name="parameter_detail" value="{{$result[6]['parameter_detail']}}">
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ $configs = session('configs');
                     <label class="col-md-4 control-label" ></label>
                     <div class="col-md-6">
                         <div class="input-group">
-                            <input type="number" class="form-control field_referral price" min="1" max="59" name="parameter_detail_time" value="{{$result[8]['parameter_detail_time']}}">
+                            <input type="number" class="form-control field_referral price" min="1" max="59" name="parameter_detail_time" value="{{$result[6]['parameter_detail_time']}}">
                             <span class="input-group-addon">
                                 day
                             </span>
@@ -79,11 +79,11 @@ $configs = session('configs');
             <div class="portlet-body">
                 <div class="icheck-list">
                     <label>
-                        <input type="checkbox" class="icheck checkbox" name="auto_suspend_status" id="checkbox_auto_suspend-referral" data-checkbox="icheckbox_square-blue" @if(isset($result[8][ 'auto_suspend_status']) && $result[8][ 'auto_suspend_status']=="1" ) checked @endif> Auto Suspend
+                        <input type="checkbox" class="icheck checkbox" name="auto_suspend_status" id="checkbox_auto_suspend-referral" data-checkbox="icheckbox_square-blue" @if(isset($result[6][ 'auto_suspend_status']) && $result[6][ 'auto_suspend_status']=="1" ) checked @endif> Auto Suspend
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" class="icheck checkbox" name="forward_admin_status" id="checkbox_forward_admin-referral" data-checkbox="icheckbox_square-blue" @if(isset($result[8][ 'forward_admin_status']) && $result[8][ 'forward_admin_status']=="1" ) checked @endif> Forward Admin
+                        <input type="checkbox" class="icheck checkbox" name="forward_admin_status" id="checkbox_forward_admin-referral" data-checkbox="icheckbox_square-blue" @if(isset($result[6][ 'forward_admin_status']) && $result[6][ 'forward_admin_status']=="1" ) checked @endif> Forward Admin
                     </label>
                     <div class="portlet light bordered" id="div_forward_admin-referral" style="margin-bottom: 2%;display: none;">
                         <div class="portlet-title tabbable-line">
@@ -105,8 +105,8 @@ $configs = session('configs');
                                         </div>
                                         <div class="col-md-9">
                                             <select name="email_toogle" id="email_toogle_referral" class="form-control select2" onChange="visibleDiv('email',this.value,'check_promo_code')">
-                                                <option value="0" @if(old('email_toogle') == '0') selected @else @if(isset($result[8]['email_toogle']) && $result[8]['email_toogle'] == "0") selected @endif @endif>Disabled</option>
-                                                <option value="1" @if(old('email_toogle') == '1') selected @else @if(isset($result[8]['email_toogle']) && $result[8]['email_toogle'] == "1") selected @endif @endif>Enabled</option>
+                                                <option value="0" @if(old('email_toogle') == '0') selected @else @if(isset($result[6]['email_toogle']) && $result[6]['email_toogle'] == "0") selected @endif @endif>Disabled</option>
+                                                <option value="1" @if(old('email_toogle') == '1') selected @else @if(isset($result[6]['email_toogle']) && $result[6]['email_toogle'] == "1") selected @endif @endif>Enabled</option>
                                             </select>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@ $configs = session('configs');
                                             </label>
                                         </div>
                                         <div class="col-md-9">
-                                            <textarea name="email_recipient" id="email_recipient" class="form-control field_email_referral" placeholder="Email address recipient">@if(isset($result[8]['email_recipient'])){{ $result[8]['email_recipient'] }}@endif</textarea>
+                                            <textarea name="email_recipient" id="email_recipient" class="form-control field_email_referral" placeholder="Email address recipient">@if(isset($result[6]['email_recipient'])){{ $result[6]['email_recipient'] }}@endif</textarea>
                                             <p class="help-block">Comma ( , ) separated for multiple emails</p>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@ $configs = session('configs');
                                             </label>
                                         </div>
                                         <div class="col-md-9">
-                                            <input type="text" placeholder="Email Subject" class="form-control field_email_referral" name="email_subject" id="email_subject_referral" @if(!empty(old('email_subject'))) value="{{old('email_subject')}}" @else @if(isset($result[8]['email_subject']) && $result[8]['email_subject'] != '') value="{{$result[8]['email_subject']}}" @endif @endif>
+                                            <input type="text" placeholder="Email Subject" class="form-control field_email_referral" name="email_subject" id="email_subject_referral" @if(!empty(old('email_subject'))) value="{{old('email_subject')}}" @else @if(isset($result[6]['email_subject']) && $result[6]['email_subject'] != '') value="{{$result[6]['email_subject']}}" @endif @endif>
                                             <br>
                                             You can use this variables to display user personalized information:
                                             <br><br>
@@ -153,7 +153,7 @@ $configs = session('configs');
                                             </label>
                                         </div>
                                         <div class="col-md-9">
-                                            <textarea name="email_content" id="email_content_referral" class="form-control summernote">@if(!empty(old('email_content'))) <?php echo old('email_content'); ?> @else @if(isset($result[8]['email_content']) && $result[8]['email_content'] != '') <?php echo $result[8]['email_content'];?> @endif @endif</textarea>
+                                            <textarea name="email_content" id="email_content_referral" class="form-control summernote">@if(!empty(old('email_content'))) <?php echo old('email_content'); ?> @else @if(isset($result[6]['email_content']) && $result[6]['email_content'] != '') <?php echo $result[6]['email_content'];?> @endif @endif</textarea>
                                             You can use this variables to display user personalized information:
                                             <br><br>
                                             <div class="row" >
@@ -178,8 +178,8 @@ $configs = session('configs');
                                         </div>
                                         <div class="col-md-9">
                                             <select name="sms_toogle" id="sms_toogle" class="form-control select2" onChange="visibleDiv('sms',this.value,'check_promo_code')">
-                                                <option value="0" @if(old('sms_toogle') == '0') selected @else @if(isset($result[8]['sms_toogle']) && $result[8]['sms_toogle'] == "0") selected @endif @endif>Disabled</option>
-                                                <option value="1" @if(old('sms_toogle') == '1') selected @else @if(isset($result[8]['sms_toogle']) && $result[8]['sms_toogle'] == "1") selected @endif @endif>Enabled</option>
+                                                <option value="0" @if(old('sms_toogle') == '0') selected @else @if(isset($result[6]['sms_toogle']) && $result[6]['sms_toogle'] == "0") selected @endif @endif>Disabled</option>
+                                                <option value="1" @if(old('sms_toogle') == '1') selected @else @if(isset($result[6]['sms_toogle']) && $result[6]['sms_toogle'] == "1") selected @endif @endif>Enabled</option>
                                             </select>
 
                                         </div>
@@ -192,7 +192,7 @@ $configs = session('configs');
                                             </label>
                                         </div>
                                         <div class="col-md-9">
-                                            <textarea name="sms_recipient" id="sms_recipient" class="form-control field_sms_referral" placeholder="Phone number recipient">@if(isset($result[8]['sms_recipient'])){{ $result[8]['sms_recipient'] }}@endif</textarea>
+                                            <textarea name="sms_recipient" id="sms_recipient" class="form-control field_sms_referral" placeholder="Phone number recipient">@if(isset($result[6]['sms_recipient'])){{ $result[6]['sms_recipient'] }}@endif</textarea>
                                             <p class="help-block">Comma ( , ) separated for multiple phone number</p>
                                         </div>
                                     </div>
@@ -204,7 +204,7 @@ $configs = session('configs');
                                             </label>
                                         </div>
                                         <div class="col-md-9">
-                                            <textarea name="sms_content" id="sms_content_referral" class="form-control field_sms_referral" placeholder="SMS Content">@if(!empty(old('sms_content'))) {{old('sms_content')}} @else @if(isset($result[8]['sms_content']) && $result[8]['sms_content'] != '') {{$result[8]['sms_content']}} @endif @endif</textarea>
+                                            <textarea name="sms_content" id="sms_content_referral" class="form-control field_sms_referral" placeholder="SMS Content">@if(!empty(old('sms_content'))) {{old('sms_content')}} @else @if(isset($result[6]['sms_content']) && $result[6]['sms_content'] != '') {{$result[6]['sms_content']}} @endif @endif</textarea>
                                             <br>
                                             You can use this variables to display user personalized information:
                                             <br><br>
@@ -236,8 +236,8 @@ $configs = session('configs');
                                         </div>
                                         <div class="col-md-9">
                                             <select name="whatsapp_toogle" id="whatsapp_toogle" class="form-control select2 field_whatsapp_referral" onChange="visibleDiv('whatsapp',this.value,'check_promo_code')" @if(!$api_key_whatsapp) disabled @endif>
-                                                <option value="0" @if(old('whatsapp_toogle') == '0') selected @else @if(isset($result[8]['whatsapp_toogle']) && $result[8]['whatsapp_toogle'] == "0") selected @endif @endif>Disabled</option>
-                                                <option value="1" @if($api_key_whatsapp) @if(old('whatsapp_toogle') == '1') selected @else @if(isset($result[8]['whatsapp_toogle']) && $result[8]['whatsapp_toogle'] == "1") selected @endif @endif @endif>Enabled</option>
+                                                <option value="0" @if(old('whatsapp_toogle') == '0') selected @else @if(isset($result[6]['whatsapp_toogle']) && $result[6]['whatsapp_toogle'] == "0") selected @endif @endif>Disabled</option>
+                                                <option value="1" @if($api_key_whatsapp) @if(old('whatsapp_toogle') == '1') selected @else @if(isset($result[6]['whatsapp_toogle']) && $result[6]['whatsapp_toogle'] == "1") selected @endif @endif @endif>Enabled</option>
                                             </select>
                                         </div>
                                     </div>
@@ -250,7 +250,7 @@ $configs = session('configs');
                                                 </label>
                                             </div>
                                             <div class="col-md-9">
-                                                <textarea name="whatsapp_recipient" id="whatsapp_recipient" class="form-control field_whatsapp_referral" placeholder="WhatsApp number recipient">@if(isset($result[8]['whatsapp_recipient'])){{ $result[8]['whatsapp_recipient'] }}@endif</textarea>
+                                                <textarea name="whatsapp_recipient" id="whatsapp_recipient" class="form-control field_whatsapp_referral" placeholder="WhatsApp number recipient">@if(isset($result[6]['whatsapp_recipient'])){{ $result[6]['whatsapp_recipient'] }}@endif</textarea>
                                                 <p class="help-block">Comma ( , ) separated for multiple whatsApp number</p>
                                             </div>
                                         </div>
@@ -262,7 +262,7 @@ $configs = session('configs');
                                                 </label>
                                             </div>
                                             <div class="col-md-9">
-                                                <textarea id="whatsapp_content_referral" name="whatsapp_content" rows="3" style="white-space: normal" class="form-control whatsapp-content" placeholder="WhatsApp Content">{{$result[8]['whatsapp_content']}}</textarea>
+                                                <textarea id="whatsapp_content_referral" name="whatsapp_content" rows="3" style="white-space: normal" class="form-control whatsapp-content" placeholder="WhatsApp Content">{{$result[6]['whatsapp_content']}}</textarea>
                                                 <br>
                                                 You can use this variables to display user personalized information:
                                                 <br><br>
@@ -287,7 +287,7 @@ $configs = session('configs');
 
         <div class="form-actions">
             {{ csrf_field() }}
-            <input type="hidden" value="{{$result[8]['id_fraud_setting']}}" name="id_fraud_setting">
+            <input type="hidden" value="{{$result[6]['id_fraud_setting']}}" name="id_fraud_setting">
             <input type="hidden" value="fraud_referral" name="type">
             <div class="row" style="text-align: center">
                 <button type="submit" class="btn blue" id="checkBtn">Save</button>
