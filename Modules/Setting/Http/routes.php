@@ -35,6 +35,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::get('phone', 'SettingController@phoneNumberSetting');
     Route::post('phone/update', 'SettingController@updatePhoneNumberSetting');
 
+    /*maintenance mode*/
+    Route::any('maintenance-mode', 'SettingController@maintenanceMode');
+
     Route::any('home', 'SettingController@homeSetting');
 	Route::any('date', 'SettingController@dateSetting');
     Route::get('{key}', 'SettingController@settingList');
