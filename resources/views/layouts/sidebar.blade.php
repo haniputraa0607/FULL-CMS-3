@@ -1176,6 +1176,76 @@
 				</li>
 				@endif
 			@endif
+
+			@if(MyHelper::hasAccess([99], $configs))
+				@if(MyHelper::hasAccess([221,222,223,224,225,226], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'achievement') ? 'active open' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-trophy"></i>
+						<span class="title">Achievement</span>
+						<span class="arrow {{($menu_active == 'achievement') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([223], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'achievement-create') ? 'active open' : ''}}">
+							<a href="{{url('achievement/create')}}" class="nav-link ">
+								<span class="title">New Achievement</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([221], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'achievement-list') ? 'active open' : ''}}">
+							<a href="{{url('achievement')}}" class="nav-link ">
+								<span class="title">Achievement List</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([226], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'achievement-report') ? 'active open' : ''}}">
+							<a href="{{url('achievement/report')}}" class="nav-link ">
+								<span class="title">Report Achievement</span>
+							</a>
+						</li>
+						@endif
+					</ul>
+				</li>
+				@endif
+			@endif
+
+			@if(MyHelper::hasAccess([100], $configs))
+				@if(MyHelper::hasAccess([227,228,229,230,231,232], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'quest') ? 'active open' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-bullseye"></i>
+						<span class="title">Quest</span>
+						<span class="arrow {{($menu_active == 'quest') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([229], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'quest-create') ? 'active open' : ''}}">
+							<a href="{{url('quest/create')}}" class="nav-link ">
+								<span class="title">New Quest</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([227], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'quest-list') ? 'active open' : ''}}">
+							<a href="{{url('quest')}}" class="nav-link ">
+								<span class="title">Quest List</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([232], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'quest-report') ? 'active open' : ''}}">
+							<a href="{{url('quest/report')}}" class="nav-link ">
+								<span class="title">Report Quest</span>
+							</a>
+						</li>
+						@endif
+					</ul>
+				</li>
+				@endif
+			@endif
 		@endif
 
 		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature))
