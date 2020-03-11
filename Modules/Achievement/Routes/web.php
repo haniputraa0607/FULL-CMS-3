@@ -11,6 +11,9 @@
 |
 */
 
-Route::prefix('achievement')->group(function() {
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'achievement'], function () {
     Route::get('/', 'AchievementController@index');
+    Route::any('create', 'AchievementController@create');
+    Route::any('create/{slug}', 'AchievementController@create');
+    Route::any('detail/{slug}', 'AchievementController@detail');
 });
