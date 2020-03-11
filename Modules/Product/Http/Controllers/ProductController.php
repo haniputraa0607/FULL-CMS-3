@@ -11,9 +11,9 @@ use App\Lib\MyHelper;
 use Excel;
 use Session;
 
-use App\Exports\ArrayExport;
+use App\Exports\ProductExport;
 use App\Exports\MultisheetExport;
-use App\Imports\ExcelImport;
+use App\Imports\ProductImport;
 use App\Imports\FirstSheetOnlyImport;
 
 class ProductController extends Controller
@@ -114,20 +114,83 @@ class ProductController extends Controller
 
 	}
 
-    public function importProduct() {
+    public function importProduct($type) {
         $data = [
             'title'          => 'Product',
             'sub_title'      => 'Import Product',
             'menu_active'    => 'product',
             'submenu_active' => 'product-import',
         ];
-
-        return view('product::product.import', $data);
+        switch ($type) {
+            case 'global':
+                $data['submenu_active'] = 'product-import-global';
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                return view('product::product.import.global', $data);
+                break;
+            
+            default:
+                return abort(404);
+                break;
+        }
     }
 
-    public function example()
-    {
-        $listProduct = MyHelper::get('product/be/list');
+    /**
+     * Export product
+     */
+    public function export(Request $request,$type) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('product/export',['type'=>$type]+$post)['result']??[];
+        if(!$data){
+            return back()->withErrors(['Something went wrong']);
+        }
+        return Excel::download(new ProductExport($data['products'],$data['brand']['code_brand']),date('YmdHi-').$data['brand']['name_brand'].'.xlsx');
+    }
+
+    /**
+     * Import product
+     */
+    public function import(Request $request,$type) {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $excel = \Excel::toArray(new ProductImport(),$request->file('import_file'))[0]??[];
+            $data = [];
+            $head = [];
+            foreach ($excel as $key => $value) {
+                if($key === 0 ){
+                    $data['code_brand'] = $value[1];
+                }elseif($key == 1){
+                    $head = $value;
+                }else{
+                    $data['products'][] = array_combine($head, $value);
+                }
+            }
+            if(!empty($data)){
+                $code_brand = '';
+                $import = MyHelper::post('product/import', [
+                    'id_brand' => $post['id_brand'],
+                    'type' => $type,
+                    'data' => $data
+                ]);
+                return $import;
+            }else{
+                return [
+                    'status'=>'fail',
+                    'messages'=>['File empty']
+                ];
+            }
+        }
+
+        return [
+            'status'=>'fail',
+            'messages'=>['Something went wrong']
+        ];
+    }
+
+    public function example(Request $request) {
+        $post = $request->except('_token');
+        $listProduct = MyHelper::get('product/export',['type'=>$type]+$post);
         $listOutlet = MyHelper::post('outlet/be/list', ['admin' => 1, 'type' => 'export']);
         $dataPrice = [];
 
