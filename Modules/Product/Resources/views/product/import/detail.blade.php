@@ -235,7 +235,48 @@ $configs    		= session('configs');
 		</div>
 	</div>
 </div>
-<div class="switcher" data-current-step="1">
+<div class="switcher" data-current-step="-1">
+	<div class="switcher-item" data-step="-1">
+		<div class="portlet light bordered">
+			<div class="portlet-title">
+				<div class="caption">
+					<span class="caption-subject font-dark sbold uppercase font-green">About {{$sub_title}}</span>
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<div class="m-heading-1 border-green m-bordered">
+					<p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data produk. Dapat digunakan untuk mengubah data dibawah ini:</p>
+					<ol>
+						<li>Nama Produk</li>
+						<li>Deskripsi Produk</li>
+						@if($type == 'detail')
+						<li>Kategori Produk</li>
+						<li>Visibilitas Produk</li>
+						<li>Posisi Produk</li>
+						@elseif($type == 'price')
+						<li>Harga Produk global (outlet yang tidak ditandai mempunyai harga produk berbeda)</li>
+						<li>Harga Produk outlet tertentu</li>
+						@endif
+					</ol>
+					<p style="white-space: pre-wrap;">Saat melakukan impor produk, mohon diperhatikan bahwa:</p>
+					<ul>
+						<li>Produk diidentifikasi berdasarkan kolom <b>product_code</b></li>
+						<li>Apabila product_code sudah ada dalam database, maka sistem akan memperbarui produk</li>
+						<li>Apabila product_code belum ada dalam database, maka sistem akan <b>{{$type == 'global'?'membuat produk baru':'mengabaikan data'}}</b></li>
+					</ul>
+					<p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor produk</p>
+				</div>
+				<div class="form-actions" style="padding-bottom: 5px">
+					{{ csrf_field() }}
+					<div class="row">
+						<div class="col-md-offset-4 col-md-4 text-center">
+							<button type="button" data-target-step="1"  class="btn green btn-wizard">Start <i class="fa fa-arrow-right"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="switcher-item" data-step="1">
 		<div class="portlet light bordered">
 			<div class="portlet-title">
@@ -262,6 +303,7 @@ $configs    		= session('configs');
 						{{ csrf_field() }}
 						<div class="row">
 							<div class="col-md-offset-4 col-md-4 text-center">
+								<button type="button" class="btn yellow btn-wizard" data-target-step="-1"><i class="fa fa-arrow-left"></i> Prev</button>
 								<button type="button" data-target-step="2"  class="btn green btn-wizard" data-target-form="#form1">Next <i class="fa fa-arrow-right"></i></button>
 							</div>
 						</div>
@@ -400,7 +442,7 @@ $configs    		= session('configs');
 						<div class="row">
 							<div class="col-md-offset-4 col-md-4 text-center">
 								<button type="button" class="btn yellow btn-wizard" data-target-step="3"><i class="fa fa-arrow-left"></i> Upload Again</button>
-								<button type="button" class="btn green btn-wizard" data-target-step="1"><i class="fa fa-check"></i> Done</button>
+								<button type="button" class="btn green btn-wizard" data-target-step="-1"><i class="fa fa-check"></i> Done</button>
 							</div>
 						</div>
 					</div>
