@@ -124,25 +124,28 @@ class ProductController extends Controller
         ];
         switch ($type) {
             case 'global':
+                $data['sub_title'] = 'Import Product Global';
                 $data['submenu_active'] = 'product-import-global';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 break;
 
             case 'detail':
+                $data['sub_title'] = 'Import Detail Product';
+                $data['submenu_active'] = 'product-import-detail';
                 $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
                 if(!$products){
                     return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
                 }
-                $data['submenu_active'] = 'product-import-detail';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 break;
 
             case 'price':
+                $data['sub_title'] = 'Import Product Price';
+                $data['submenu_active'] = 'product-import-price';
                 $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
                 if(!$products){
                     return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
                 }
-                $data['submenu_active'] = 'product-import-price';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 break;
             
