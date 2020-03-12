@@ -127,6 +127,18 @@ class ProductController extends Controller
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 return view('product::product.import.global', $data);
                 break;
+
+            case 'detail':
+                $data['submenu_active'] = 'product-import-detail';
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                return view('product::product.import.detail', $data);
+                break;
+
+            case 'price':
+                $data['submenu_active'] = 'product-import-price';
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                return view('product::product.import.price', $data);
+                break;
             
             default:
                 return abort(404);
@@ -143,7 +155,7 @@ class ProductController extends Controller
         if(!$data){
             return back()->withErrors(['Something went wrong']);
         }
-        return Excel::download(new ProductExport($data['products'],$data['brand']['code_brand']),date('YmdHi-').$data['brand']['name_brand'].'.xlsx');
+        return Excel::download(new ProductExport($data['products'],$data['brand']['code_brand']),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
     }
 
     /**

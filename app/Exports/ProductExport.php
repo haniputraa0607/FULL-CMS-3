@@ -31,7 +31,7 @@ class ProductExport implements FromArray,WithTitle, ShouldAutoSize, WithEvents
             ['Brand Code',$this->brand],
             array_keys($this->data[0]??[])
         ];
-        return $array+$this->data;
+        return array_merge($array,$this->data);
     }
     /**
      * @return string
@@ -76,7 +76,7 @@ class ProductExport implements FromArray,WithTitle, ShouldAutoSize, WithEvents
                     ],
                 ];
                 $x_coor = MyHelper::getNameFromNumber(count($this->data[0]??[]));
-                $event->sheet->getStyle('A2:'.$x_coor.$last)->applyFromArray($styleArray);
+                $event->sheet->getStyle('A2:'.$x_coor.($last+2))->applyFromArray($styleArray);
                 $headRange = 'A2:'.$x_coor.'2';
                 $event->sheet->getStyle($headRange)->applyFromArray($styleHead);
             },

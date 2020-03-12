@@ -433,7 +433,7 @@
 										<span class="title">Product Detail</span>
 									</a>
 								</li>
-								<li class="nav-item {{(isset($child_active) && $child_active == 'product-import-price') ? 'active open' : ''}}">
+								<li class="nav-item {{($submenu_active == 'product-import-price') ? 'active open' : ''}}">
 									<a href="{{url('product/import/price')}}" class="nav-link ">
 										<span class="title">Product Price</span>
 									</a>
