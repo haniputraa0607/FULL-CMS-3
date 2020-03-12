@@ -129,12 +129,20 @@ class ProductController extends Controller
                 break;
 
             case 'detail':
+                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
+                if(!$products){
+                    return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
+                }
                 $data['submenu_active'] = 'product-import-detail';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 return view('product::product.import.detail', $data);
                 break;
 
             case 'price':
+                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
+                if(!$products){
+                    return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
+                }
                 $data['submenu_active'] = 'product-import-price';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 return view('product::product.import.price', $data);
