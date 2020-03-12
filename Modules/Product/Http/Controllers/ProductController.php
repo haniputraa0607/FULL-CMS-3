@@ -120,12 +120,12 @@ class ProductController extends Controller
             'sub_title'      => 'Import Product',
             'menu_active'    => 'product',
             'submenu_active' => 'product-import',
+            'type'           => $type
         ];
         switch ($type) {
             case 'global':
                 $data['submenu_active'] = 'product-import-global';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-                return view('product::product.import.global', $data);
                 break;
 
             case 'detail':
@@ -135,7 +135,6 @@ class ProductController extends Controller
                 }
                 $data['submenu_active'] = 'product-import-detail';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-                return view('product::product.import.detail', $data);
                 break;
 
             case 'price':
@@ -145,13 +144,13 @@ class ProductController extends Controller
                 }
                 $data['submenu_active'] = 'product-import-price';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-                return view('product::product.import.price', $data);
                 break;
             
             default:
                 return abort(404);
                 break;
         }
+        return view('product::product.import.detail', $data);
     }
 
     /**
