@@ -75,14 +75,16 @@
             <div class=" table-responsive is-container">
                 <div class="row">
                     <div class="col-md-offset-9 col-md-3">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input type="text" class="form-control search-field" name="keyword" placeholder="Search">
-                                <div class="input-group-btn">
-                                    <button class="btn blue search-btn"><i class="fa fa-search"></i></button>
+                        <form class="filter-form">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control search-field" name="keyword" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn blue search-btn" type="submit"><i class="fa fa-search"></i></button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="table-infinite">

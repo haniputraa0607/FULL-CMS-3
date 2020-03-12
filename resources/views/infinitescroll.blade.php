@@ -211,8 +211,8 @@
 				});				
 			}
 		});
-		$('.is-container .search-btn').on('click',function(){
-			console.log($(this).parents('.is-container').find('table'));
+		$('.is-container .filter-form').on('submit',function(e){
+			e.preventDefault();
 			ISReset($(this).parents('.is-container').find('table'));
 		});
 		$('.table-infinite th[data-order]').prepend('<span class="sort-inactive"><i class="fa fa-sort text-muted"></i></span><span class="sort-asc"><i class="fa fa-sort-alpha-asc"></i></span><span class="sort-desc"><i class="fa fa-sort-alpha-desc"></i></span> ');
