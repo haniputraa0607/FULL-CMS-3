@@ -131,9 +131,73 @@
 @endsection
 
 @section('content')
-    <h1>Hello World</h1>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="/">Home</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>{{ $title }}</span>
+                @if (!empty($sub_title))
+                    <i class="fa fa-circle"></i>
+                @endif
+            </li>
+            @if (!empty($sub_title))
+            <li>
+                <span>{{ $sub_title }}</span>
+            </li>
+            @endif
+        </ul>
+    </div><br>
 
-    <p>
-        This view is loaded from module: {!! config('achievement.name') !!}
-    </p>
+    @include('layouts.notifications')
+
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <span class="caption-subject font-blue sbold uppercase">Achievement List</span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class=" table-responsive is-container">
+                <div class="row">
+                    <div class="col-md-offset-9 col-md-3">
+                        <form class="filter-form">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control search-field" name="keyword" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn blue search-btn" type="submit"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="table-infinite">
+                    <table class="table table-striped" id="tableTrx" data-template="differentprice"  data-page="0" data-is-loading="0" data-is-last="0" data-url="{{url()->current()}}" data-callback="updater" data-order="promo_campaign_referral_transactions.created_at" data-sort="asc">
+                        <thead>
+                            <tr>
+                                <th style="width: 1%" class="text-center">No</th>
+                                <th>Category</th>
+                                <th>Name</th>
+                                <th>Achievement Publish Start</th>
+                                <th>Achievement Publish End</th>
+                                <th>Achievement Start</th>
+                                <th>Achievement End</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div><span class="text-muted">Total record: </span><span class="total-record"></span></div>
+            </div>
+        </div>
+    </div>
+
+
+
 @endsection
