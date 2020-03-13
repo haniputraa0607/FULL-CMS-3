@@ -24,26 +24,40 @@ class AchievementController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create(Request $request, $slug = null)
+    public function create(Request $request)
     {
         $post = $request->except('_token');
-
         if (!empty($post)) {
-            dd($post);
-            $post['group']['logo_badge_default'] = MyHelper::encodeImage($post['group']['logo_badge_default']);
+            if (isset($post['id_achievement_group'])) {
+                foreach ($post['detail'] as $key => $value) {
+                    $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
+                }
 
-            $save = MyHelper::post('achievement/create', $post);
+                $save = MyHelper::post('achievement/create', $post);
 
-            if (isset($save['status']) && $save['status'] == "success") {
-                return redirect('achievement')->with('success', $save['message']);
-            } else {
-                if (isset($save['errors'])) {
+                if (isset($save['status']) && $save['status'] == "success") {
+                    return redirect('achievement/detail/' . $save['data']);
+                } else {
                     return back()->with('error', $save['errors'])->withInput();
                 }
-                return back()->with('success', $save['message'])->withInput();
+            } else {
+                $post['group']['logo_badge_default'] = MyHelper::encodeImage($post['group']['logo_badge_default']);
+
+                if (isset($post['detail'])) {
+                    foreach ($post['detail'] as $key => $value) {
+                        $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
+                    }
+                }
+
+                $save = MyHelper::post('achievement/create', $post);
+
+                if (isset($save['status']) && $save['status'] == "success") {
+                    return redirect('achievement/detail/' . $save['data']);
+                } else {
+                    return back()->with('error', $save['errors'])->withInput();
+                }
             }
         } else {
-
             $data = [
                 'title'          => 'Achievement',
                 'sub_title'      => 'Achievement Create',
@@ -51,17 +65,10 @@ class AchievementController extends Controller
                 'submenu_active' => 'achievement-create'
             ];
 
-            $data['category'] = MyHelper::get('achievement/category')['data'];
-
-            if (isset($id_achievement)) {
-                $data['achievement'] = MyHelper::post('achievement/show-step1', ['id_achievement' => $id_achievement])['result'] ?? '';
-                if ($data['achievement'] == '') {
-                    return redirect('achievement')->withErrors('Achievement not found');
-                }
-                if (isset($data['achievement']['id_achievement'])) {
-                    $data['achievement']['id_achievement'] = MyHelper::createSlug($data['achievement']['id_achievement'], $data['achievement']['id_achievement'] ?? '');
-                }
-            }
+            $data['category']   = MyHelper::get('achievement/category')['data'];
+            $data['product']    = MyHelper::get('product/be/list')['result'];
+            $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+            $data['province']   = MyHelper::get('province/list')['result'];
 
             return view('achievement::create', $data);
         }
@@ -84,7 +91,39 @@ class AchievementController extends Controller
      */
     public function show($id)
     {
-        return view('achievement::show');
+        $data = [
+            'title'          => 'Achievement',
+            'sub_title'      => 'Achievement Detail',
+            'menu_active'    => 'achievement',
+            'submenu_active' => 'achievement-list'
+        ];
+
+        $getDetail = MyHelper::post('achievement/detail', ['id_achievement_group' => $id]);
+
+        if (isset($getDetail['status']) && $getDetail['status'] == "success") {
+            $data['data'] = $getDetail['data'];
+
+            $data['category']   = MyHelper::get('achievement/category')['data'];
+            $data['product']    = MyHelper::get('product/be/list')['result'];
+            $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+            $data['province']   = MyHelper::get('province/list')['result'];
+
+            return view('achievement::detail', $data);
+        } else {
+            $data = [
+                'title'          => 'Achievement',
+                'sub_title'      => 'Achievement Create',
+                'menu_active'    => 'achievement',
+                'submenu_active' => 'achievement-create'
+            ];
+
+            $data['category']   = MyHelper::get('achievement/category')['data'];
+            $data['product']    = MyHelper::get('product/be/list')['result'];
+            $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+            $data['province']   = MyHelper::get('province/list')['result'];
+
+            return view('achievement::create', $data);
+        }
     }
 
     /**
@@ -113,8 +152,12 @@ class AchievementController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function remove(Request $request)
     {
-        //
+        $post = $request->except('_token');
+
+        $remove = MyHelper::post('achievement/destroy', $post);
+
+        return $remove;
     }
 }
