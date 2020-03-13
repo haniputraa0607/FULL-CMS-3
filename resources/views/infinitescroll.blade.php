@@ -138,6 +138,7 @@
 						table.find('tbody').append(template[table.data('template')](item));
 						from++;
 					});
+			        table.parents('.is-container').find('.total-record').text(response.total?response.total:0).val(response.total?response.total:0);
 					if(table.data('callback') && typeof(window[table.data('callback')]) == 'function'){
 						window[table.data('callback')](table,response);
 					}
@@ -175,7 +176,7 @@
 			var maxRefresh = c/2;
 			var bottom = d - (s + c);
 		    //var scrollPercent = (s / (d - c)) * 100;
-		    if(bottom <= maxRefresh){
+		    if(bottom <= maxRefresh && (maxRefresh > 0 || table.data('page') < 1)){
 		    	addMore(table);
 		    }
 		})
