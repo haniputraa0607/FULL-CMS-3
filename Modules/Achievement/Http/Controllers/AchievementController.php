@@ -33,13 +33,13 @@ class AchievementController extends Controller
     public function indexAjax(Request $request)
     {
         $post = $request->except('_token');
-        $raw_data = MyHelper::post('achievement',$post)['result']??[];
+        $raw_data = MyHelper::post('achievement', $post)['result'] ?? [];
         $data['data'] = $raw_data['data'];
-        $data['total'] = $raw_data['total']??0;
-        $data['from'] = $raw_data['from']??0;
-        $data['order_by'] = $raw_data['order_by']??0;
-        $data['order_sorting'] = $raw_data['order_sorting']??0;
-        $data['last_page'] = !($raw_data['next_page_url']??false);
+        $data['total'] = $raw_data['total'] ?? 0;
+        $data['from'] = $raw_data['from'] ?? 0;
+        $data['order_by'] = $raw_data['order_by'] ?? 0;
+        $data['order_sorting'] = $raw_data['order_sorting'] ?? 0;
+        $data['last_page'] = !($raw_data['next_page_url'] ?? false);
         return $data;
     }
     /**
