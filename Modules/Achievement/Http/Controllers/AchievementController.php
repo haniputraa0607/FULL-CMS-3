@@ -142,9 +142,17 @@ class AchievementController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $post = $request->except('_token');
+
+        $update = MyHelper::post('achievement/detail/update', $post);
+
+        if (isset($update['status']) && $update['status'] == "success") {
+            return back();
+        } else {
+            return back()->with('error', $update['errors'])->withInput();
+        }
     }
 
     /**
