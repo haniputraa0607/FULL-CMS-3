@@ -415,15 +415,33 @@
 						</li>
 						@endif
 					@endif
-					<!--@if(MyHelper::hasAccess([10], $configs)|| MyHelper::hasAccess([11], $configs))-->
-					<!--	@if(MyHelper::hasAccess([56,57], $grantedFeature))-->
-					<!--	<li class="nav-item {{($submenu_active == 'product-import') ? 'active open' : ''}}">-->
-					<!--		<a href="{{url('product/import')}}" class="nav-link ">-->
-					<!--			<span class="title">Export & Import Product</span>-->
-					<!--		</a>-->
-					<!--	</li>-->
-					<!--	@endif-->
-					<!--@endif-->
+					@if(MyHelper::hasAccess([10], $configs)|| MyHelper::hasAccess([11], $configs))
+						@if(MyHelper::hasAccess([56,57], $grantedFeature))
+						<li class="nav-item {{(strpos($submenu_active , 'product-import') !== false) ? 'active open' : ''}}">
+							<a href="javascript:;" class="nav-link nav-toggle">
+								<span class="title">Export & Import Product</span>
+								<span class="arrow"></span>
+							</a>
+							<ul class="sub-menu">
+								<li class="nav-item {{($submenu_active == 'product-import-global') ? 'active open' : ''}}">
+									<a href="{{url('product/import/global')}}" class="nav-link ">
+										<span class="title">Global</span>
+									</a>
+								</li>
+								<li class="nav-item {{($submenu_active == 'product-import-detail') ? 'active open' : ''}}">
+									<a href="{{url('product/import/detail')}}" class="nav-link ">
+										<span class="title">Product Detail</span>
+									</a>
+								</li>
+								<li class="nav-item {{($submenu_active == 'product-import-price') ? 'active open' : ''}}">
+									<a href="{{url('product/import/price')}}" class="nav-link ">
+										<span class="title">Product Price</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+						@endif
+					@endif
 					@if(MyHelper::hasAccess([48], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'product-list') ? 'active open' : ''}}">
 						<a href="{{url('product')}}" class="nav-link ">
@@ -731,6 +749,12 @@
 				<a href="{{url('product/price')}}" class="nav-link nav-toggle">
 					<i class="fa fa-tag"></i>
 					<span class="title">Outlet Product Price</span>
+				</a>
+			</li>
+			<li class="nav-item {{($menu_active == 'outlet-different-price') ? 'active' : ''}}">
+				<a href="{{url('outlet/different-price')}}" class="nav-link nav-toggle">
+					<i class="fa fa-check"></i>
+					<span class="title">Outlet Different Price</span>
 				</a>
 			</li>
 			@endif
@@ -1863,8 +1887,3 @@
 			</a>
 		</li>
 		@endif --}}
-
-	</ul>
-	<!-- END SIDEBAR MENU -->
-	<!-- END SIDEBAR MENU -->
-<!-- END SIDEBAR -->
