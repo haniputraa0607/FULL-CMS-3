@@ -69,13 +69,43 @@
 	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js')}}" type="text/javascript"></script>
 
 	<script>
-    var index = 1;
-    $('.addBox').click(function() {
-        nomer = index++
-        $('.btn-rmv').before(`<div class="box"> <div class="col-md-2 text-right" style="text-align: -webkit-right;"> <a href="javascript:;" onclick="removeBox(this)" class="remove-btn btn btn-danger"> <i class="fa fa-close"></i> </a> </div><div class="col-md-10"> <div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Name <span class="required" aria-required="true"> * </span> <i class="fa fa-question-circle tooltips" data-original-title="Detail Achievement Name" data-container="body"></i> </label> </div><div class="col-md-8"> <input type="text" class="form-control" name="detail[`+nomer+`][name]" placeholder="Detail Achievement" required maxlength="20"> </div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Image Default Badge <span class="required" aria-required="true"> * </span> <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i> <br><span class="required" aria-required="true"> (500*500) </span> </label> </div><div class="col-md-8"> <div class="input-icon right"> <div class="fileinput fileinput-new" data-provides="fileinput"> <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;"> <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt=""> </div><div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 150px; max-height: 150px;"></div><div> <span class="btn default btn-file"> <span class="fileinput-new"> Select image </span> <span class="fileinput-exists"> Change </span> <input type="file" class="file" accept="image/*" name="detail[`+nomer+`][logo_badge]" required> </span> <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a> </div></div></div></div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Achievement Product Rule <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the achievement is not based on the product" data-container="body"></i> </label> </div><div class="col-md-4"> <div class="input-icon right"> <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[`+nomer+`][id_product]"> <option></option> @foreach ($product as $item) <option value="{{$item['id_product']}}">{{$item['product_name']}}</option> @endforeach </select> </div></div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <input type="text" class="form-control" name="detail[`+nomer+`][product_total]" placeholder="Total Product"> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i> </button> </span> </div></div></div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Achievement Transaction Rule <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the achievement is not based on the transaction" data-container="body"></i> </label> </div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <input type="text" class="form-control" name="detail[`+nomer+`][trx_nominal]" placeholder="Transaction Nominal"> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i> </button> </span> </div></div></div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <input type="text" class="form-control" name="detail[`+nomer+`][trx_total]" placeholder="Transaction Total"> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i> </button> </span> </div></div></div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Achievement Outlet Rule <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the achievement is not based on the product" data-container="body"></i> </label> </div><div class="col-md-4"> <div class="input-icon right"> <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[`+nomer+`][id_outlet]"> <option></option>] @foreach ($outlet as $item) <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option> @endforeach </select> </div></div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[`+nomer+`][different_outlet]"> <option></option> <option value="1">Yes</option> <option value="0">No</option> </select> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Rule for different outlet" data-container="body"></i> </button> </span> </div></div></div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Achievement Province Rule <i class="fa fa-question-circle tooltips" data-original-title="Select a province. leave blank, if the achievement is not based on the province" data-container="body"></i> </label> </div><div class="col-md-4"> <div class="input-icon right"> <select class="form-control select2-multiple" data-placeholder="Select Province" name="detail[`+nomer+`][id_province]"> <option></option> @foreach ($province as $item) <option value="{{$item['id_province']}}">{{$item['province_name']}}</option> @endforeach </select> </div></div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[`+nomer+`][different_province]"> <option></option> <option value="1">Yes</option> <option value="0">No</option> </select> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Rule for different province" data-container="body"></i> </button> </span> </div></div></div></div></div></div>`);
-    });
+    $(document).ready( function () {
+        $('.select2-multiple').select2({
+            placeholder : "Select",
+            allowClear : true,
+            width: '100%'
+        })
+        $('.digit_mask').inputmask({
+            removeMaskOnSubmit: true, 
+            placeholder: "",
+            alias: "currency", 
+            digits: 0, 
+            rightAlign: false,
+            min: 0,
+            max: '999999999'
+        });
+        var index = 1;
+        $('.addBox').click(function() {
+            nomer = index++
+            $('.btn-rmv').before(`<div class="box"> <div class="col-md-2 text-right" style="text-align: -webkit-right;"> <a href="javascript:;" onclick="removeBox(this)" class="remove-btn btn btn-danger"> <i class="fa fa-close"></i> </a> </div><div class="col-md-10"> <div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Name <span class="required" aria-required="true"> * </span> <i class="fa fa-question-circle tooltips" data-original-title="Detail Achievement Name" data-container="body"></i> </label> </div><div class="col-md-8"> <input type="text" class="form-control" name="detail[`+nomer+`][name]" placeholder="Detail Achievement" required maxlength="20"> </div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Image Default Badge <span class="required" aria-required="true"> * </span> <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i> <br><span class="required" aria-required="true"> (500*500) </span> </label> </div><div class="col-md-8"> <div class="input-icon right"> <div class="fileinput fileinput-new" data-provides="fileinput"> <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;"> <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt=""> </div><div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 150px; max-height: 150px;"></div><div> <span class="btn default btn-file"> <span class="fileinput-new"> Select image </span> <span class="fileinput-exists"> Change </span> <input type="file" class="file" accept="image/*" name="detail[`+nomer+`][logo_badge]" required> </span> <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a> </div></div></div></div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Achievement Product Rule <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the achievement is not based on the product" data-container="body"></i> </label> </div><div class="col-md-4"> <div class="input-icon right"> <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[`+nomer+`][id_product]"> <option></option>  @foreach ($product as $item) <option value="{{$item['id_product']}}">{{$item['product_name']}}</option> @endforeach </select> </div></div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <input type="text" class="form-control" name="detail[`+nomer+`][product_total]" placeholder="Total Product"> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i> </button> </span> </div></div></div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Achievement Transaction Rule <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the achievement is not based on the transaction" data-container="body"></i> </label> </div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <input type="text" class="form-control digit_mask" name="detail[`+nomer+`][trx_nominal]" placeholder="Transaction Nominal"> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i> </button> </span> </div></div></div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <input type="text" class="form-control digit_mask" name="detail[`+nomer+`][trx_total]" placeholder="Transaction Total"> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i> </button> </span> </div></div></div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Achievement Outlet Rule <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the achievement is not based on the product" data-container="body"></i> </label> </div><div class="col-md-4"> <div class="input-icon right"> <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[`+nomer+`][id_outlet]"> <option></option> @foreach ($outlet as $item) <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option> @endforeach </select> </div></div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[`+nomer+`][different_outlet]"> <option></option> <option value="1">Yes</option> <option value="0">No</option> </select> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Rule for different outlet" data-container="body"></i> </button> </span> </div></div></div></div><div class="form-group"> <div class="input-icon right"> <label class="col-md-3 control-label"> Achievement Province Rule <i class="fa fa-question-circle tooltips" data-original-title="Select a province. leave blank, if the achievement is not based on the province" data-container="body"></i> </label> </div><div class="col-md-4"> <div class="input-icon right"> <select class="form-control select2-multiple" data-placeholder="Select Province" name="detail[`+nomer+`][id_province]"> <option></option> @foreach ($province as $item) <option value="{{$item['id_province']}}">{{$item['province_name']}}</option> @endforeach </select> </div></div><div class="col-md-4"> <div class="input-icon right"> <div class="input-group"> <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[`+nomer+`][different_province]"> <option></option> <option value="1">Yes</option> <option value="0">No</option> </select> <span class="input-group-btn"> <button class="btn default" type="button"> <i class="fa fa-question-circle tooltips" data-original-title="Rule for different province" data-container="body"></i> </button> </span> </div></div></div></div></div></div>`);
+            $('.digit_mask').inputmask({
+                removeMaskOnSubmit: true, 
+                placeholder: "",
+                alias: "currency", 
+                digits: 0, 
+                rightAlign: false,
+                min: 0,
+                max: '999999999'
+            });
+            $(".select2-multiple").select2({
+                allowClear: true,
+                width: '100%'
+            });
+        });
+    })
     function removeBox(params) {
         $(params).parent().parent().remove()
     }
@@ -83,22 +113,29 @@
         $('#editBadge').find("input[name='name']").val(params.name)
         $('#editBadge').find("img").attr("src", params.logo_badge)
         $('#editBadge').find("select[name='id_product']").val(params.id_product).trigger('change')
-        // $("select[name='id_product']").trigger('change')
-        
-        $('#editBadge').find("select[name='id_product']").val(null)
-        $("select[name='id_product']").trigger('change')
-        // $('#editBadge').find("input[name='product_total']").val(params.product_total)
         $('#editBadge').find("input[name='trx_nominal']").val(params.trx_nominal)
         $('#editBadge').find("input[name='trx_total']").val(params.trx_total)
+        $('#editBadge').find("input[name='product_total']").val(params.product_total)
+        $('#editBadge').find("select[name='id_outlet']").val(params.id_outlet).trigger('change')
+        $('#editBadge').find("select[name='different_outlet']").val(params.different_outlet).trigger('change')
+        $('#editBadge').find("select[name='id_province']").val(params.id_province).trigger('change')
+        $('#editBadge').find("select[name='different_province']").val(params.different_province).trigger('change')
+        $('#editBadge').find("input[name='id_achievement_detail']").val(params.id_achievement_detail)
+        $('.digit_mask').inputmask({
+            removeMaskOnSubmit: true, 
+            placeholder: "",
+            alias: "currency", 
+            digits: 0, 
+            rightAlign: false,
+            min: 0,
+            max: '999999999'
+        });
+        $(".select2-multiple").select2({
+            allowClear: true,
+            width: '100%'
+        });
         console.log(params)
     }
-    $(document).ready( function () {
-        
-    $('.select2-multiple.form-control').select2({
-        placeholder : "Select",
-        allowClear : true
-    })
-    })
     function removeBadge(params, data) {
         var btn = $(params).parent().parent().parent().before().children()
         btn.find('#loadingBtn').show()
@@ -233,7 +270,7 @@
                             <div class="col-md-4">
                                 <div class="input-icon right">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="detail[0][trx_nominal]" placeholder="Transaction Nominal">
+                                        <input type="text" class="form-control digit_mask" name="detail[0][trx_nominal]" placeholder="Transaction Nominal">
                                         <span class="input-group-btn">
                                             <button class="btn default" type="button">
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -245,7 +282,7 @@
                             <div class="col-md-4">
                                 <div class="input-icon right">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="detail[0][trx_total]" placeholder="Transaction Total">
+                                        <input type="text" class="form-control digit_mask" name="detail[0][trx_total]" placeholder="Transaction Total">
                                         <span class="input-group-btn">
                                             <button class="btn default" type="button">
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -384,7 +421,7 @@
                                         <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" class="file" accept="image/*" name="logo_badge" required>
+                                        <input type="file" class="file" accept="image/*" name="logo_badge">
                                         </span>
                                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                     </div>
@@ -432,7 +469,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="trx_nominal" placeholder="Transaction Nominal">
+                                    <input type="text" class="form-control digit_mask" name="trx_nominal" placeholder="Transaction Nominal">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -444,7 +481,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="trx_total" placeholder="Transaction Total">
+                                    <input type="text" class="form-control digit_mask" name="trx_total" placeholder="Transaction Total">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -526,6 +563,8 @@
             </div>
             <div class="modal-footer">
                 <input type="text" hidden name='id_achievement_detail'>
+                {{ csrf_field() }}
+                <input type="text" name="id_achievement_detail" hidden>
                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn green">Save changes</button>
             </div>
@@ -657,7 +696,7 @@
                             <div class="profile-info portlet light bordered">
                                 <div class="portlet-title"> 
                                     <span class="caption font-blue sbold uppercase">{{$data['group']['name']}} Badge </span>
-                                    <a class="btn blue" style="float: right;" onclick="addBadge({{$data['group']['id_achievement_group']}})" data-toggle="modal" href="#addBadge">Add Bagde</a>
+                                    <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Bagde</a>
                                 </div>
                                 <div class="portlet-body row">
                                     @foreach ($data['detail'] as $item)
