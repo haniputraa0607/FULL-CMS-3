@@ -23,7 +23,7 @@ class AchievementController extends Controller
             'menu_active'    => 'achievement',
             'submenu_active' => 'achievement-list'
         ];
-        return view('achievement::index', $data);
+        return view('achievement::index',$data);
     }
 
     /**
