@@ -134,7 +134,6 @@
             allowClear: true,
             width: '100%'
         });
-        console.log(params)
     }
     function removeBadge(params, data) {
         var btn = $(params).parent().parent().parent().before().children()
@@ -710,25 +709,25 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-md-6">
-                                                <div class="btn-group btn-group-solid pull-right">
-                                                    <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <div id="loadingBtn" hidden>
-                                                            <i class="fa fa-spinner fa-spin"></i> Loading
-                                                        </div>
-                                                        <div id="moreBtn">
-                                                            <i class="fa fa-ellipsis-horizontal"></i> More
-                                                            <i class="fa fa-angle-down"></i>
-                                                        </div>
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li style="margin: 0px;">
-                                                            <a href="#editBadge" data-toggle="modal" onclick="editBadge({{json_encode($item)}})"> Edit </a>
-                                                        </li>
-                                                        <li style="margin: 0px;">
-                                                            <a href="javascript:;" onclick="removeBadge(this, {{$item['id_achievement_detail']}})"> Remove </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                    <div class="btn-group btn-group-solid pull-right">
+                                                        <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                            <div id="loadingBtn" hidden>
+                                                                <i class="fa fa-spinner fa-spin"></i> Loading
+                                                            </div>
+                                                            <div id="moreBtn">
+                                                                <i class="fa fa-ellipsis-horizontal"></i> More
+                                                                <i class="fa fa-angle-down"></i>
+                                                            </div>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li style="margin: 0px;">
+                                                                <a href="#editBadge" data-toggle="modal" onclick="editBadge({{json_encode($item)}})"> Edit </a>
+                                                            </li>
+                                                            <li style="margin: 0px;">
+                                                                <a href="javascript:;" onclick="removeBadge(this, {{$item['id_achievement_detail']}})"> Remove </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="portlet-body">
