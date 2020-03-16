@@ -8,9 +8,17 @@
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @yield('is-style')
     <style>
-        .btn-group>.dropdown-menu{
-            left: -100px;
+        .dropleft .dropdown-menu{
+        	top: -100% !important;
+        	left: -180px !important;
+        	right: auto;
         }
+		.btn-group > .dropdown-menu::after, .dropleft > .dropdown-toggle > .dropdown-menu::after, .dropdown > .dropdown-menu::after {
+            opacity: 0;
+		}
+		.btn-group > .dropdown-menu::before, .dropleft > .dropdown-toggle > .dropdown-menu::before, .dropdown > .dropdown-menu::before {
+            opacity: 0;
+		}
     </style>
 @endsection
 
@@ -33,7 +41,7 @@
                 <td>${item.date_start}</td>
                 <td>${item.date_end}</td>
                 <td>
-                    <div class="btn-group btn-group-solid pull-right">
+                    <div class="btn-group btn-group-solid pull-right dropleft">
                         <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <div id="loadingBtn" hidden>
                                 <i class="fa fa-spinner fa-spin"></i> Loading
@@ -43,7 +51,7 @@
                                 <i class="fa fa-angle-down"></i>
                             </div>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown">
                             <li style="margin: 0px;">
                                 <a href="#editBadge" data-toggle="modal" onclick="editBadge(${item})"> Edit </a>
                             </li>
