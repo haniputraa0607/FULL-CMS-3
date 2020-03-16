@@ -1086,7 +1086,7 @@
 							<div class="col-md-9">
 								<div class="tab-content">
 									<div id="tab_1-1" class="tab-pane active">
-										<form role="form" action="{{url('user/detail')}}/{{$profile['phone']}}" method="POST">
+										<form role="form" action="{{url('user/detail')}}/{{$profile['phone']}}" method="POST" enctype="multipart/form-data">
 										{{ csrf_field() }}
 											<div class="form-group">
 												<label class="control-label">Name</label>
@@ -1172,6 +1172,22 @@
 														<input type="radio" name="phone_verified" id="optionsRadios2" value="0" @if($profile['phone_verified'] == '0') checked @endif> Not Verified
 														<span></span>
 													</label>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
+														<img src="{{env('S3_URL_API').$profile['id_card_image']}}">
+													</div>
+													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
+													<div>
+															<span class="btn default btn-file">
+																<span class="fileinput-new"> Select image ID Card </span>
+																<span class="fileinput-exists"> Change </span>
+																<input type="file" accept="image/*" id="field_image" class="file" name="id_card_image">
+															</span>
+														<a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													</div>
 												</div>
 											</div>
 											<!-- <div class="form-group">

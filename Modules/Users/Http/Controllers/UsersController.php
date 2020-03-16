@@ -146,8 +146,13 @@ class UsersController extends Controller
 			if(isset($post['relationship']) && $post['relationship']=="-"){
 				$post['relationship'] = null;
 			}
+
+			if(isset($post['id_card_image']) && !empty($post['id_card_image'])){
+                $post['id_card_image'] = MyHelper::encodeImage($post['id_card_image']);
+            }
+
 			$query = MyHelper::post('users/create', $post);
-			
+
 			if(isset($query['status']) && $query['status'] == 'success'){
 				return back()->withSuccess(['User Create Success']);
 			} else{
@@ -528,6 +533,11 @@ class UsersController extends Controller
 			if(isset($post['relationship']) && $post['relationship']=="-"){
 				$post['relationship'] = null;
 			}
+
+            if(isset($post['id_card_image']) && !empty($post['id_card_image'])){
+                $post['id_card_image'] = MyHelper::encodeImage($post['id_card_image']);
+            }
+
 			$update = MyHelper::post('users/update', ['phone' => $phone, 'update' => $post]);
 			return parent::redirect($update, 'Profile has been updated');
 		}
