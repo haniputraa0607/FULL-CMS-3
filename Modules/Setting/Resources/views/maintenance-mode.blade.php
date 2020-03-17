@@ -121,7 +121,6 @@ $configs     		= session('configs');
 						</div>
 						<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
 						<div>
-						<div>
 							<span class="btn default btn-file">
 								<span class="fileinput-new"> Select image </span>
 								<span class="fileinput-exists"> Change </span>

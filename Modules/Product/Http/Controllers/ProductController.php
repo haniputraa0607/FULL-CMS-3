@@ -165,7 +165,21 @@ class ProductController extends Controller
         if(!$data){
             return back()->withErrors(['Something went wrong']);
         }
-        return Excel::download(new ProductExport($data['products'],$data['brand']['code_brand']),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
+        $tab_title = 'List Products';
+        switch ($type) {
+            case 'detail':
+                $tab_title = 'Product Detail';
+                break;
+
+            case 'price':
+                $tab_title = 'Product Price';
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        return Excel::download(new ProductExport($data['products'],$data['brand']['code_brand'],$tab_title),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
     }
 
     /**
