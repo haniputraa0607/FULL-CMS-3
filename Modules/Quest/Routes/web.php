@@ -11,6 +11,9 @@
 |
 */
 
-Route::prefix('quest')->group(function() {
+Route::prefix('quest')->group(function () {
     Route::get('/', 'QuestController@index');
+    Route::any('create', 'QuestController@create');
+    Route::any('detail/{slug}', 'QuestController@show');
+    Route::any('update/detail', 'QuestController@update');
 });
