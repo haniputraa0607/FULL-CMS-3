@@ -258,7 +258,7 @@ class ProductController extends Controller
                 # code...
                 break;
         }
-        return Excel::download(new ProductExport($data['products'],$data['brand']['code_brand'],$tab_title),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
+        return Excel::download(new ProductExport($data['products'],$data['brand'],$tab_title),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
     }
 
     /**
@@ -275,9 +275,9 @@ class ProductController extends Controller
             foreach ($excel as $key => $value) {
                 if($key === 0 ){
                     $data['code_brand'] = $value[1];
-                }elseif($key == 1){
+                }elseif($key == 2){
                     $head = $value;
-                }else{
+                }elseif($key !== 1){
                     $data['products'][] = array_combine($head, $value);
                 }
             }
