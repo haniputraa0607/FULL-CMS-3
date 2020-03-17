@@ -8,9 +8,17 @@
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @yield('is-style')
     <style>
-        .btn-group>.dropdown-menu{
-            left: -100px;
+        .dropleft .dropdown-menu{
+        	top: -100% !important;
+        	left: -180px !important;
+        	right: auto;
         }
+		.btn-group > .dropdown-menu::after, .dropleft > .dropdown-toggle > .dropdown-menu::after, .dropdown > .dropdown-menu::after {
+            opacity: 0;
+		}
+		.btn-group > .dropdown-menu::before, .dropleft > .dropdown-toggle > .dropdown-menu::before, .dropdown > .dropdown-menu::before {
+            opacity: 0;
+		}
     </style>
 @endsection
 
@@ -23,17 +31,21 @@
 <script>
     template = {
         differentprice: function(item){
+            const publish_start = item.publish_start?(new Date(item.publish_start).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric"})):'Not set';
+            const publish_end = item.publish_end?(new Date(item.publish_end).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric"})):'Not set';
+            const date_start = item.date_start?(new Date(item.date_start).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric"})):'Not set';
+            const date_end = item.date_end?(new Date(item.date_end).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric"})):'Not set';
             return `
             <tr class="page${item.page}">
                 <td class="text-center">${item.increment}</td>
                 <td>${item.category_name}</td>
                 <td>${item.name}</td>
-                <td>${item.publish_start}</td>
-                <td>${item.publish_end}</td>
-                <td>${item.date_start}</td>
-                <td>${item.date_end}</td>
+                <td>${publish_start}</td>
+                <td>${publish_end}</td>
+                <td>${date_start}</td>
+                <td>${date_end}</td>
                 <td>
-                    <div class="btn-group btn-group-solid pull-right">
+                    <div class="btn-group btn-group-solid pull-right dropleft">
                         <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <div id="loadingBtn" hidden>
                                 <i class="fa fa-spinner fa-spin"></i> Loading
@@ -43,7 +55,7 @@
                                 <i class="fa fa-angle-down"></i>
                             </div>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown">
                             <li style="margin: 0px;">
                                 <a href="#editBadge" data-toggle="modal" onclick="editBadge(${item})"> Edit </a>
                             </li>
