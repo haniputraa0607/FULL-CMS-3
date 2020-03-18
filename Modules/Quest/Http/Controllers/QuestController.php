@@ -2,6 +2,7 @@
 
 namespace Modules\Quest\Http\Controllers;
 
+use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -21,9 +22,45 @@ class QuestController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('quest::create');
+        $post = $request->except('_token');
+
+        if (!empty($post)) {
+            if (isset($post['id_quest'])) {
+                $save = MyHelper::post('quest/create', $post);
+
+                if (isset($save['status']) && $save['status'] == "success") {
+                    return redirect('quest/detail/' . $save['data']);
+                } else {
+                    return back()->with('error', $save['errors'])->withInput();
+                }
+            } else {
+                $post['quest']['image'] = MyHelper::encodeImage($post['quest']['image']);
+
+                $save = MyHelper::post('quest/create', $post);
+
+                if (isset($save['status']) && $save['status'] == "success") {
+                    return redirect('quest/detail/' . $save['data']);
+                } else {
+                    return back()->with('error', $save['errors'])->withInput();
+                }
+            }
+        } else {
+            $data = [
+                'title'          => 'Quest',
+                'sub_title'      => 'Quest Create',
+                'menu_active'    => 'quest',
+                'submenu_active' => 'quest-create'
+            ];
+
+            $data['category']   = MyHelper::get('product/category/be/list')['result'];
+            $data['product']    = MyHelper::get('product/be/list')['result'];
+            $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+            $data['province']   = MyHelper::get('province/list')['result'];
+
+            return view('quest::create', $data);
+        }
     }
 
     /**
@@ -43,7 +80,38 @@ class QuestController extends Controller
      */
     public function show($id)
     {
-        return view('quest::show');
+        $data = [
+            'title'          => 'Quest',
+            'sub_title'      => 'Quest Detail',
+            'menu_active'    => 'quest',
+            'submenu_active' => 'quest-list'
+        ];
+
+        $getDetail = MyHelper::post('quest/detail', ['id_quest' => $id]);
+
+        if (isset($getDetail['status']) && $getDetail['status'] == "success") {
+            $data['data']       = $getDetail['data'];
+            $data['category']   = MyHelper::get('product/category/be/list')['result'];
+            $data['product']    = MyHelper::get('product/be/list')['result'];
+            $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+            $data['province']   = MyHelper::get('province/list')['result'];
+
+            return view('quest::detail', $data);
+        } else {
+            $data = [
+                'title'          => 'Quest',
+                'sub_title'      => 'Quest Create',
+                'menu_active'    => 'quest',
+                'submenu_active' => 'quest-create'
+            ];
+
+            $data['category']   = MyHelper::get('product/category/be/list')['result'];
+            $data['product']    = MyHelper::get('product/be/list')['result'];
+            $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+            $data['province']   = MyHelper::get('province/list')['result'];
+
+            return view('quest::create', $data);
+        }
     }
 
     /**
@@ -62,9 +130,17 @@ class QuestController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $post = $request->except('_token');
+
+        $update = MyHelper::post('quest/detail/update', $post);
+
+        if (isset($update['status']) && $update['status'] == "success") {
+            return back();
+        } else {
+            return back()->with('error', $update['errors'])->withInput();
+        }
     }
 
     /**
