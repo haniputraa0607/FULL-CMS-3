@@ -12,13 +12,15 @@ use App\Lib\MyHelper;
 class ProductExport implements FromArray,WithTitle, ShouldAutoSize, WithEvents
 {
 	protected $data;
-    protected $brand;
+    protected $code_brand;
+    protected $name_brand;
     protected $tab_title;
 
-    public function __construct(array $data,$brand='',$tab_title = 'List Products')
+    public function __construct(array $data,$brand=null,$tab_title = 'List Products')
     {
         $this->data = $data;
-        $this->brand = $brand;
+        $this->code_brand = $brand['code_brand']??'';
+        $this->name_brand = $brand['name_brand']??'';
         $this->tab_title = $tab_title;
     }
 
@@ -28,7 +30,8 @@ class ProductExport implements FromArray,WithTitle, ShouldAutoSize, WithEvents
     public function array(): array
     {
     	$array = [
-            ['Brand Code',$this->brand],
+            ['Brand Code',$this->code_brand],
+            ['Brand Name',$this->name_brand],
             array_keys($this->data[0]??[])
         ];
         return array_merge($array,$this->data);
@@ -76,8 +79,8 @@ class ProductExport implements FromArray,WithTitle, ShouldAutoSize, WithEvents
                     ],
                 ];
                 $x_coor = MyHelper::getNameFromNumber(count($this->data[0]??[]));
-                $event->sheet->getStyle('A2:'.$x_coor.($last+2))->applyFromArray($styleArray);
-                $headRange = 'A2:'.$x_coor.'2';
+                $event->sheet->getStyle('A3:'.$x_coor.($last+3))->applyFromArray($styleArray);
+                $headRange = 'A3:'.$x_coor.'3';
                 $event->sheet->getStyle($headRange)->applyFromArray($styleHead);
             },
         ];

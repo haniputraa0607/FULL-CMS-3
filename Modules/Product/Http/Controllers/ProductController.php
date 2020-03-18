@@ -167,19 +167,98 @@ class ProductController extends Controller
         }
         $tab_title = 'List Products';
         switch ($type) {
+            case 'global':
+                $tab_title = 'List Products';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'product_code' => '001',
+                            'product_name' => 'Product 1',
+                            'product_description' => 'Example product 1'
+                        ],
+                        [
+                            'product_code' => '002',
+                            'product_name' => 'Product 2',
+                            'product_description' => 'Example product 2'
+                        ],
+                        [
+                            'product_code' => '003',
+                            'product_name' => 'Product 3',
+                            'product_description' => 'Example product 3'
+                        ],
+                    ];
+                }
+                break;
+
             case 'detail':
                 $tab_title = 'Product Detail';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'product_category_name' => 'Snacks',
+                            'position' => '1',
+                            'product_code' => '001',
+                            'product_name' => 'Product 1',
+                            'product_description' => 'Example product 1',
+                            'product_visibility' => 'Visible'
+                        ],
+                        [
+                            'product_category_name' => 'Snacks',
+                            'position' => '2',
+                            'product_code' => '002',
+                            'product_name' => 'Product 2',
+                            'product_description' => 'Example product 2',
+                            'product_visibility' => 'Hidden'
+                        ],
+                        [
+                            'product_category_name' => 'Drinks',
+                            'position' => '1',
+                            'product_code' => '003',
+                            'product_name' => 'Product 3',
+                            'product_description' => 'Example product 3',
+                            'product_visibility' => 'Visible'
+                        ],
+                    ];
+                }
                 break;
 
             case 'price':
                 $tab_title = 'Product Price';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'product_code' => '001',
+                            'product_name' => 'Product 1',
+                            'product_description' => 'Example product 1',
+                            'global_price' => 10000,
+                            'price_PP001' => 15000,
+                            'price_BL012' =>13500
+                        ],
+                        [
+                            'product_code' => '002',
+                            'product_name' => 'Product 2',
+                            'product_description' => 'Example product 2',
+                            'global_price' => 20000,
+                            'price_PP001' => 30000,
+                            'price_BL012' =>25000
+                        ],
+                        [
+                            'product_code' => '003',
+                            'product_name' => 'Product 3',
+                            'product_description' => 'Example product 3',
+                            'global_price' => 12000,
+                            'price_PP001' => 18000,
+                            'price_BL012' =>15000
+                        ],
+                    ];
+                }
                 break;
             
             default:
                 # code...
                 break;
         }
-        return Excel::download(new ProductExport($data['products'],$data['brand']['code_brand'],$tab_title),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
+        return Excel::download(new ProductExport($data['products'],$data['brand'],$tab_title),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
     }
 
     /**
@@ -196,9 +275,9 @@ class ProductController extends Controller
             foreach ($excel as $key => $value) {
                 if($key === 0 ){
                     $data['code_brand'] = $value[1];
-                }elseif($key == 1){
+                }elseif($key == 2){
                     $head = $value;
-                }else{
+                }elseif($key !== 1){
                     $data['products'][] = array_combine($head, $value);
                 }
             }
