@@ -377,7 +377,7 @@
 					@endif
 					@if(MyHelper::hasAccess([5], $configs) && MyHelper::hasAccess([101], $configs))
 						@if(MyHelper::hasAccess([24], $grantedFeature) && MyHelper::hasAccess([40], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'outlet-export-import') ? 'active open' : ''}}">
+							<li class="nav-item {{($submenu_active == 'outlet-pin-response') ? 'active open' : ''}}">
 								<a href="{{url('outlet/autoresponse/request_pin')}}" class="nav-link ">
 									<span class="title">[Response] Request PIN Outlet Apps</span>
 								</a>

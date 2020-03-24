@@ -581,488 +581,65 @@ $configs = session('configs');
 	<div class="portlet-title">
 		<div class="caption">
 			@if($subject == 'enquiry-partnership') @php $subject = 'enquiry-karir'; @endphp @endif
-			<span class="caption-subject font-dark sbold uppercase font-blue">Auto Response {{ucfirst(str_replace('-',' ',$subject))}}</span>
+			<span class="caption-subject font-dark sbold uppercase font-blue">SETTING MESSAGES OUTLET APP OTP</span>
 		</div>
 	</div>
 	<div class="portlet-body form">
 		<form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
 			<div class="form-body">
-				@if ($subject != 'cron-transaction')
-					@if(MyHelper::hasAccess([38], $configs))
-						<h4>Email</h4>
-						<div class="form-group">
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-								Status
-								<span class="required" aria-required="true"> * </span>
-								<i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit template email auto response ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<select name="autocrm_email_toogle" id="autocrm_email_toogle" class="form-control select2" id="email_toogle" onChange="visibleDiv('email',this.value)">
-									<option value="0" @if($data['autocrm_email_toogle'] == 0) selected @endif>Disabled</option>
-									<option value="1" @if($data['autocrm_email_toogle'] == 1) selected @endif>Enabled</option>
-								</select>
-							</div>
+
+				@if(MyHelper::hasAccess([39], $configs))
+					<h4>SMS</h4>
+					<div class="form-group" >
+						<div class="input-icon right">
+							<label class="col-md-3 control-label">
+							Status
+							<span class="required" aria-required="true"> * </span>
+							<i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit template sms auto response ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
+							</label>
 						</div>
+						<div class="col-md-9">
+							<select name="autocrm_sms_toogle" id="autocrm_sms_toogle" class="form-control select2" id="sms_toogle" onChange="visibleDiv('sms',this.value)">
+								<option value="0" @if($data['autocrm_sms_toogle'] == 0) selected @endif>Disabled</option>
+								<option value="1" @if($data['autocrm_sms_toogle'] == 1) selected @endif>Enabled</option>
+							</select>
 
-						<div class="form-group" id="div_email_subject" @if($data['autocrm_email_toogle'] == 0) style="display:none;" @endif>
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-								Subject
-								<span class="required" aria-required="true"> * </span>
-								<i class="fa fa-question-circle tooltips" data-original-title="Diisi dengan subjek email, tambahkan text replacer bila perlu" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<input type="text" placeholder="Email Subject" class="form-control" name="autocrm_email_subject" id="autocrm_email_subject" value="{{$data['autocrm_email_subject']}}">
-								<br>
-								You can use this variables to display user personalized information:
-								<br><br>
-								<div class="row">
-									@foreach($textreplaces as $key=>$row)
-										<div class="col-md-3" style="margin-bottom:5px;">
-											<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addEmailSubject('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-										</div>
-									@endforeach
-									@if (isset($custom))
-										@foreach($custom as $key=>$row)
-											<div class="col-md-3" style="margin-bottom:5px;">
-												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addEmailSubject('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
-											</div>
-										@endforeach
-									@endif
-								</div>
-							</div>
 						</div>
-						<div class="form-group" id="div_email_content" @if($data['autocrm_email_toogle'] == 0) style="display:none;" @endif>
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-								Content
-								<span class="required" aria-required="true"> * </span>
-								<i class="fa fa-question-circle tooltips" data-original-title="Diisi dengan konten email, tambahkan text replacer bila perlu" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<textarea name="autocrm_email_content" id="autocrm_email_content" class="form-control summernote"><?php echo $data['autocrm_email_content'];?></textarea>
-								You can use this variables to display user personalized information:
-								<br><br>
-								<div class="row" >
-									@foreach($textreplaces as $key=>$row)
-										<div class="col-md-3" style="margin-bottom:5px;">
-											<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addEmailContent('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-										</div>
-									@endforeach
-									@if (isset($custom))
-										@foreach($custom as $key=>$row)
-											<div class="col-md-3" style="margin-bottom:5px;">
-												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addEmailContent('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
-											</div>
-										@endforeach
-									@endif
-								</div>
-							</div>
+					</div>
+					<div class="form-group" id="div_sms_content" @if($data['autocrm_sms_toogle'] == 0) style="display:none;" @endif>
+						<div class="input-icon right">
+							<label class="col-md-3 control-label">
+							Description
+							<span class="required" aria-required="true"> * </span>
+							<i class="fa fa-question-circle tooltips" data-original-title="Isi pesan sms, tambahkan text replacer bila perlu" data-container="body"></i>
+							</label>
 						</div>
-						<hr>
-					@else
-						<input hidden name="autocrm_email_toogle" value="0">
-					@endif
-					@if(MyHelper::hasAccess([39], $configs))
-						<h4>SMS</h4>
-						<div class="form-group" >
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-								Status
-								<span class="required" aria-required="true"> * </span>
-								<i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit template sms auto response ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<select name="autocrm_sms_toogle" id="autocrm_sms_toogle" class="form-control select2" id="sms_toogle" onChange="visibleDiv('sms',this.value)">
-									<option value="0" @if($data['autocrm_sms_toogle'] == 0) selected @endif>Disabled</option>
-									<option value="1" @if($data['autocrm_sms_toogle'] == 1) selected @endif>Enabled</option>
-								</select>
-
-							</div>
-						</div>
-						<div class="form-group" id="div_sms_content" @if($data['autocrm_sms_toogle'] == 0) style="display:none;" @endif>
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-								Description
-								<span class="required" aria-required="true"> * </span>
-								<i class="fa fa-question-circle tooltips" data-original-title="Isi pesan sms, tambahkan text replacer bila perlu" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<textarea name="autocrm_sms_content" id="autocrm_sms_content" class="form-control" placeholder="SMS Content @if($subject == 'pin-sent') maximum 120 character @endif" @if($subject == 'pin-sent') maxlength="120" @endif><?php echo $data['autocrm_sms_content'];?></textarea>
-								<br>
-								You can use this variables to display user personalized information:
-								<br><br>
-								<div class="row">
-									@foreach($textreplaces as $key=>$row)
-										<div class="col-md-3" style="margin-bottom:5px;">
-											<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addSmsContent('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-										</div>
-									@endforeach
-									@if (isset($custom))
-										@foreach($custom as $key=>$row)
-											<div class="col-md-3" style="margin-bottom:5px;">
-												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addSmsContent('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
-											</div>
-										@endforeach
-									@endif
-								</div>
-							</div>
-						</div>
-						<hr>
-					@else
-						<input hidden name="autocrm_sms_toogle" value="0">
-					@endif
-
-					@if(MyHelper::hasAccess([74], $configs))
-
-						@if(!$api_key_whatsapp)
-							<div class="alert alert-warning deteksi-trigger">
-								<p> To use WhatsApp channel you have to set the api key in <a href="{{url('setting/whatsapp')}}">WhatsApp Setting</a>. </p>
-							</div>
-						@endif
-
-						<h4>WhatsApp</h4>
-						<div class="form-group">
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-									Status
-									<i class="fa fa-question-circle tooltips" data-original-title="pilih enabled untuk mengaktifkan whatsApp sebagai media pengiriman auto crm ini" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<select name="autocrm_whatsapp_toogle" id="autocrm_whatsapp_toogle" class="form-control select2 field_whatsapp" onChange="visibleDiv('whatsapp',this.value)" @if(!$api_key_whatsapp) disabled @endif>
-									<option value="0" @if(old('autocrm_whatsapp_toogle') == '0') selected @else @if(isset($dataf['autocrm_whatsapp_toogle']) && $data['autocrm_whatsapp_toogle'] == "0") selected @endif @endif>Disabled</option>
-									<option value="1" @if($api_key_whatsapp) @if(old('autocrm_whatsapp_toogle') == '1') selected @else @if(isset($data['autocrm_whatsapp_toogle']) && $data['autocrm_whatsapp_toogle'] == "1") selected @endif @endif @endif>Enabled</option>
-								</select>
-							</div>
-						</div>
-						@if($api_key_whatsapp)
-							<div class="form-group" id="div_whatsapp_content" @if($data['autocrm_whatsapp_toogle'] == 0) style="display:none" @endif>
-								<div class="repeat">
-									<div data-repeater-list="whatsapp_content">
-										@if(isset($data['whatsapp_content']) && count($data['whatsapp_content']) > 0)
-											@foreach($data['whatsapp_content'] as $content)
-												<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
-													<input type="hidden" name="id_whatsapp_content" value="{{$content['id_whatsapp_content']}}">
-													<div class="form-group row" style="">
-														<div class="input-icon right">
-															<label for="multiple" class="control-label col-md-3" style="padding-right:25px">
-																Content Type
-																<i class="fa fa-question-circle tooltips" data-original-title="Tipe konten pesan untuk media whatsapp" data-container="body"></i>
-															</label>
-														</div>
-														<div class="col-md-4" style="padding-left:5px">
-															<select name="content_type" class="form-control select content-type field_whatsapp" style="width:100%">
-																<option value="" disabled>Select Content Type</option>
-																<option value="text" @if($content['content_type'] == 'text') selected @endif>Text</option>
-																<option value="image" @if($content['content_type'] == 'image') selected @endif>Image</option>
-																<option value="file" @if($content['content_type'] == 'file') selected @endif>File PDF</option>
-															</select>
-														</div>
-														<div class="col-md-1" style="float:right">
-															<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
-																<i class="fa fa-close"></i>
-															</a>
-														</div>
-													</div>
-													<div class="form-group type_text row" @if($content['content_type'] != 'text') style="display:none" @endif>
-														<div class="input-icon right">
-															<label for="multiple" class="control-label col-md-3" style="padding-right:25px">
-																Content
-																<i class="fa fa-question-circle tooltips" data-original-title="diisi dengan konten whatsapp, tambahkan text replacer bila perlu" data-container="body"></i>
-															</label>
-														</div>
-														<div class="col-md-8" style="padding-left:5px">
-															<textarea name="content" rows="3" style="white-space: normal" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if($content['content_type'] == 'text') {{$content['content']}} @endif</textarea>
-															<br>
-															You can use this variables to display user personalized information:
-															<br><br>
-															<div class="row">
-																@foreach($textreplaces as $key=>$row)
-																	<div class="col-md-3" style="margin-bottom:5px;">
-																		<span class="btn dark btn-xs btn-block btn-outline var"  style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addWhatsappContent('{{ $row['keyword'] }}', this);">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																	</div>
-																@endforeach
-															</div>
-														</div>
-													</div>
-													<div class="form-group type_file row" @if($content['content_type'] != 'file') style="display:none" @endif>
-														<div class="input-icon right">
-															<label for="multiple" class="control-label col-md-3" style="padding-right:25px">
-																Content File
-																<i class="fa fa-question-circle tooltips" data-original-title="diisi dengan konten whatsapp berupa gambar" data-container="body"></i>
-															</label>
-														</div>
-														<div class="col-md-8" style="padding-left:5px">
-															@if($content['content_type'] == 'file')
-																<div class="form-group filename">
-																@php $file = explode('/', $content['content']) @endphp
-																<label class="control-label" style="padding-left:15px"><a href= "{{$content['content']}}"> <i class="fa fa-file-pdf-o"></i> {{end($file)}} </a> </label>
-																</div>
-															@endif
-															<div class="fileinput fileinput-new" data-provides="fileinput">
-																<div class="input-group input-large">
-																	<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-																		<i class="fa fa-file fileinput-exists"></i>&nbsp;
-																		<span class="fileinput-filename"> </span>
-																	</div>
-																	<span class="input-group-addon btn default btn-file">
-																		<span class="fileinput-new"> Select file </span>
-																		<span class="fileinput-exists"> Change </span>
-																		<input type="file" class="file whatsapp-content" accept="application/pdf" name="content_file">
-																		</span>
-																	<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="form-group type_image row" @if($content['content_type'] != 'image') style="display:none" @endif>
-														<div class="input-icon right">
-															<label for="multiple" class="control-label col-md-3" style="padding-right:25px">
-																Content Image
-																<i class="fa fa-question-circle tooltips" data-original-title="diisi dengan konten whatsapp berupa gambar" data-container="body"></i>
-															</label>
-														</div>
-														<div class="col-md-8" style="padding-left:5px">
-															<div class="fileinput fileinput-new" data-provides="fileinput">
-																<div class="fileinput-new thumbnail" style="width: auto; height: auto;">
-																@if($content['content_type'] == 'image')
-																	<img src="{{$content['content']}}" alt="Whatsapp content image" style="max-width: 190px; max-height:190px">
-																@else
-																	<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-																@endif
-																</div>
-																<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
-																<div>
-																	<span class="btn default btn-file">
-																	<span class="fileinput-new"> Select image </span>
-																	<span class="fileinput-exists"> Change </span>
-																	<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-
-																	</span>
-
-																	<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											@endforeach
-										@else
-											<div data-repeater-item="" class="item-repeat portlet light bordered" style="margin:15px">
-												<input type="hidden" name="id_whatsapp_content" value="">
-												<div class="form-group row">
-													<div class="input-icon right">
-														<label for="multiple" class="control-label col-md-3" style="padding-right:25px">
-															Content Type
-															<i class="fa fa-question-circle tooltips" data-original-title="Pilih salah satu tipe konten untuk whatsApp" data-container="body"></i>
-														</label>
-													</div>
-													<div class="col-md-4" style="padding-left:5px">
-														<select name="content_type" class="form-control select content-type" style="width:100%">
-															<option value="" disabled selected>Select Content Type</option>
-															<option value="text">Text</option>
-															<option value="image">Image</option>
-															<option value="file">File PDF</option>
-														</select>
-													</div>
-													<div class="col-md-1" style="float:right">
-														<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
-															<i class="fa fa-close"></i>
-														</a>
-													</div>
-												</div>
-												<div class="form-group type_text row" style="display:none">
-													<div class="input-icon right">
-														<label for="multiple" class="control-label col-md-3" style="padding-right:25px">
-															Content
-															<i class="fa fa-question-circle tooltips" data-original-title="diisi dengan konten whatsapp, tambahkan text replacer bila perlu" data-container="body"></i>
-														</label>
-													</div>
-													<div class="col-md-8" style="padding-left:5px">
-														<textarea name="content" rows="3" class="form-control whatsapp-content" placeholder="WhatsApp Content">@if(isset($data['campaign_whatsapp_content']) && $data['campaign_whatsapp_content'] != ""){{$data['campaign_whatsapp_content']}}@endif</textarea>
-														<br>
-														You can use this variables to display user personalized information:
-														<br><br>
-														<div class="row">
-															@foreach($textreplaces as $key=>$row)
-																<div class="col-md-3" style="margin-bottom:5px;">
-																	<span class="btn dark btn-xs btn-block btn-outline var" style="white-space: normal" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addWhatsappContent('{{ $row['keyword'] }}', this);">{{ str_replace('_',' ',$row['keyword']) }}</span>
-																</div>
-															@endforeach
-														</div>
-													</div>
-												</div>
-												<div class="form-group type_file row" style="display:none">
-													<div class="input-icon right">
-														<label for="multiple" class="control-label col-md-3" style="padding-right:25px">
-															Content File
-															<i class="fa fa-question-circle tooltips" data-original-title="diisi dengan konten whatsapp berupa file pdf" data-container="body"></i>
-														</label>
-													</div>
-													<div class="col-md-8" style="padding-left:5px">
-														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="input-group input-large">
-																<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-																	<i class="fa fa-file fileinput-exists"></i>&nbsp;
-																	<span class="fileinput-filename"> </span>
-																</div>
-																<span class="input-group-addon btn default btn-file">
-																	<span class="fileinput-new"> Select file </span>
-																	<span class="fileinput-exists"> Change </span>
-																	<input type="file" class="file whatsapp-content" accept="application/pdf" name="content_file">
-																	</span>
-																<a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="form-group type_image row" style="display:none">
-													<div class="input-icon right">
-														<label for="multiple" class="control-label col-md-3" style="padding-right:25px">
-															Content Image
-															<i class="fa fa-question-circle tooltips" data-original-title="diisi dengan konten whatsapp berupa gambar" data-container="body"></i>
-														</label>
-													</div>
-													<div class="col-md-8" style="padding-left:5px">
-														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-															<img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-															</div>
-															<div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
-															<div>
-																<span class="btn default btn-file">
-																<span class="fileinput-new"> Select image </span>
-																<span class="fileinput-exists"> Change </span>
-																<input type="file" class="file whatsapp-content" accept="image/*" name="content">
-
-																</span>
-
-																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										@endif
+						<div class="col-md-9">
+							<textarea name="autocrm_sms_content" id="autocrm_sms_content" class="form-control" placeholder="SMS Content @if($subject == 'pin-sent') maximum 120 character @endif" @if($subject == 'pin-sent') maxlength="120" @endif><?php echo $data['autocrm_sms_content'];?></textarea>
+							<br>
+							You can use this variables to display user personalized information:
+							<br><br>
+							<div class="row">
+								@foreach($textreplaces as $key=>$row)
+									<div class="col-md-3" style="margin-bottom:5px;">
+										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addSmsContent('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
 									</div>
-									<hr>
-									<label class="col-md-3 control-label" style="margin-left:15px"></label>
-									<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
-										<i class="fa fa-plus"></i> Add Content</a>
-									<br>
-									<br>
-								</div>
+								@endforeach
+								@if (isset($custom))
+									@foreach($custom as $key=>$row)
+										<div class="col-md-3" style="margin-bottom:5px;">
+											<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addSmsContent('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
+										</div>
+									@endforeach
+								@endif
 							</div>
-						@endif
-						<hr>
-					@endif
+						</div>
+					</div>
+					<hr>
+				@else
+					<input hidden name="autocrm_sms_toogle" value="0">
 				@endif
 
-				<h4>Forward</h4>
-				<div class="form-group">
-					<div class="input-icon right">
-					    <label class="col-md-3 control-label">
-					    Status
-					    <span class="required" aria-required="true"> * </span>
-					    <i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit auto response forward ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
-					    </label>
-					</div>
-					<div class="col-md-9">
-						<select name="autocrm_forward_toogle" id="autocrm_forward_toogle" class="form-control select2" class="form-control select2" onChange="visibleDiv('forward',this.value)">
-							<option value="0" @if($data['autocrm_forward_toogle'] == 0) selected @endif>Disabled</option>
-							<option value="1" @if($data['autocrm_forward_toogle'] == 1) selected @endif>Enabled</option>
-						</select>
-
-					</div>
-				</div>
-				<div class="form-group" id="div_forward_address" @if($data['autocrm_forward_toogle'] == 0) style="display:none;" @endif>
-					<div class="input-icon right">
-					    <label class="col-md-3 control-label">
-					    Forward Address
-					    <span class="required" aria-required="true"> * </span>
-					    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan alamat email tujuan forward untuk setiap auto response sistem" data-container="body"></i>
-					    </label>
-					</div>
-					<div class="col-md-9">
-						<textarea name="autocrm_forward_email" id="autocrm_forward_email" class="form-control" placeholder="Forward Email Address, Example:admin1@mail.com;admin2@mail.com"><?php echo $data['autocrm_forward_email']; ?></textarea>
-					</div>
-				</div>
-				<div class="form-group" id="div_forward_subject" @if($data['autocrm_forward_toogle'] == 0) style="display:none;" @endif>
-					<div class="input-icon right">
-					    <label class="col-md-3 control-label">
-					    Subject
-					    <span class="required" aria-required="true"> * </span>
-					    <i class="fa fa-question-circle tooltips" data-original-title="Subjek pesan yang akan diforward, tambahkan text replacer bila perlu" data-container="body"></i>
-					    </label>
-					</div>
-					<div class="col-md-9">
-						<input type="text" placeholder="Forward Subject" class="form-control" name="autocrm_forward_email_subject" id="autocrm_forward_email_subject" value="{{$data['autocrm_forward_email_subject']}}">
-						<br>
-						@if ($subject != 'cron-transaction')
-							You can use this variables to display user personalized information:
-							<br><br>
-							<div class="row">
-								@foreach($textreplaces as $key=>$row)
-									<div class="col-md-3" style="margin-bottom:5px;">
-										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addForwardSubject('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-									</div>
-								@endforeach
-								@if (isset($custom))
-										@foreach($custom as $key=>$row)
-											<div class="col-md-3" style="margin-bottom:5px;">
-												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addForwardSubject('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
-											</div>
-										@endforeach
-									@endif
-							</div>
-						@endif
-					</div>
-				</div>
-				<div class="form-group" id="div_forward_content" @if($data['autocrm_forward_toogle'] == 0) style="display:none;" @endif>
-					<div class="input-icon right">
-					    <label class="col-md-3 control-label">
-					    Content
-					    <span class="required" aria-required="true"> * </span>
-					    <i class="fa fa-question-circle tooltips" data-original-title="Konten pesan, tambahkan text replacer bila perlu" data-container="body"></i>
-					    </label>
-					</div>
-					<div class="col-md-9">
-						<textarea name="autocrm_forward_email_content" id="autocrm_forward_email_content" class="form-control summernote"><?php echo $data['autocrm_forward_email_content']; ?></textarea>
-						@if ($subject != 'cron-transaction')
-							You can use this variables to display user personalized information:
-							<br><br>
-							<div class="row">
-								@foreach($textreplaces as $key=>$row)
-									<div class="col-md-3" style="margin-bottom:5px;">
-										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addForwardContent('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-									</div>
-								@endforeach
-								@if (isset($custom))
-										@foreach($custom as $key=>$row)
-											<div class="col-md-3" style="margin-bottom:5px;">
-												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addForwardContent('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
-											</div>
-										@endforeach
-									@endif
-							</div>
-						@else
-							You can use this variables to display user personalized information:
-							<br><br>
-							<div class="row">
-								<div class="col-md-3" style="margin-bottom:5px;">
-									<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '%table_trx%'" onClick="addForwardContent('%table_trx%');">{{ str_replace('_',' ','%table_trx%') }}</span>
-								</div>
-							</div>
-						@endif
-					</div>
-				</div>
 				<div class="form-actions">
 					{{ csrf_field() }}
 					<div class="row">

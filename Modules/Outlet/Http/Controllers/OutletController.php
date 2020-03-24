@@ -1088,9 +1088,9 @@ class OutletController extends Controller
             return back()->withSuccess(['Response updated']);
         }
         $data = [ 'title'             => 'User Rating Auto Response',
-                  'menu_active'       => 'user-rating',
-                  'submenu_active'    => 'user-rating-response',
-                  'subject'           => 'user-rating'
+                  'menu_active'       => 'outlet',
+                  'submenu_active'    => 'outlet-pin-response',
+                  'subject'           => 'outlet-app-request-pin'
                 ];
         
         $getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
