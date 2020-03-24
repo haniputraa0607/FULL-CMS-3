@@ -46,6 +46,10 @@
                                 <th>Payment</th>
                             @endif
                         @endif
+
+                        @if(MyHelper::hasAccess([101], $configs))
+                            <th>Outlet Apps</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -86,6 +90,10 @@
                                     @if(MyHelper::hasAccess([8], $configs))
                                         <td style="text-align: center;">@if($value['payment'] == 1)<i class="fa fa-check" style="color:green; font-size: x-large;padding-top: 8px;"></i>  @else <i class="fa fa-times" style="color:#e7505a; font-size: x-large;padding-top: 8px;"></i> @endif</td>
                                     @endif
+                                @endif
+
+                                @if(MyHelper::hasAccess([101], $configs))
+                                    <td style="text-align: center;">@if($value['outlet_apps'] == 1)<i class="fa fa-check" style="color:green; font-size: x-large;padding-top: 8px;"></i>  @else <i class="fa fa-times" style="color:#e7505a; font-size: x-large;padding-top: 8px;"></i> @endif</td>
                                 @endif
                             </tr>
                         @endforeach
