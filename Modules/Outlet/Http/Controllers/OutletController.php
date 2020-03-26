@@ -1064,4 +1064,45 @@ class OutletController extends Controller
         $data = MyHelper::post('outlet/different_price/update',$post);
         return $data;
     }
+    public function autoresponse(Request $request, $type='') {
+        $post = $request->except('_token');
+        if(!empty($post)){
+            if (isset($post['whatsapp_content'])) {
+                foreach($post['whatsapp_content'] as $key => $content){
+                    if($content['content'] || isset($content['content_file']) && $content['content_file']){
+                        if($content['content_type'] == 'image'){
+                            $post['whatsapp_content'][$key]['content'] = MyHelper::encodeImage($content['content']);
+                        }
+                        else if($content['content_type'] == 'file'){
+                            $post['whatsapp_content'][$key]['content'] = base64_encode(file_get_contents($content['content_file']));
+                            $post['whatsapp_content'][$key]['content_file_name'] = pathinfo($content['content_file']->getClientOriginalName(), PATHINFO_FILENAME);
+                            $post['whatsapp_content'][$key]['content_file_ext'] = pathinfo($content['content_file']->getClientOriginalName(), PATHINFO_EXTENSION);
+                            unset($post['whatsapp_content'][$key]['content_file']);
+                        }
+                    }
+                }
+            }
+
+            $query = MyHelper::post('autocrm/update', $post);
+            // print_r($query);exit;
+            return back()->withSuccess(['Response updated']);
+        }
+        $data = [ 'title'             => 'User Rating Auto Response',
+                  'menu_active'       => 'outlet',
+                  'submenu_active'    => 'outlet-pin-response',
+                  'subject'           => 'outlet-app-request-pin'
+                ];
+        
+        $getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
+        if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+            $data['api_key_whatsapp'] = $getApiKey['result']['value'];
+        }else{
+            $data['api_key_whatsapp'] = null;
+        }
+
+        $data['textreplaces'] = [];
+        $data['data'] = MyHelper::post('autocrm/list',['autocrm_title'=>'Outlet App Request PIN'])['result']??[];
+        $data['custom'] = explode(';',$data['data']['custom_text_replace']);
+        return view('outlet::response',$data);
+    }
 }
