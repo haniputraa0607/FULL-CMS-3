@@ -214,7 +214,7 @@ class SubscriptionController extends Controller
                 $post['id_subscription'] = MyHelper::explodeSlug($post['id_subscription'])[0];
             }
             $save = MyHelper::post('subscription/step2', $post);
-            // return $save;
+
             if ( ($save['status']??false) == "success") {
                 return redirect('subscription/step3/'.$slug)->with('success', ['Subscription has been updated']);
             }else{
@@ -238,13 +238,17 @@ class SubscriptionController extends Controller
             }
             if (isset($id_subscription)) {
                 $data['subscription'] = MyHelper::post('subscription/show-step2', ['id_subscription' => $id_subscription])['result']??'';
+// return                $data['subscription'] = MyHelper::post('subscription/show-step2', ['id_subscription' => $id_subscription]);
                 if ($data['subscription'] == '') {
                     return redirect('subscription')->withErrors('Subscription not found');
                 }
                 $data['subscription']['id_subscription'] = MyHelper::createSlug($data['subscription']['id_subscription'],$data['subscription']['id_subscription']??'');
             }
-            // return $data;
+
+            // DATA BRAND
+        	$data['brands'] = MyHelper::get('brand/be/list')['result']??[];
 // return $data;
+
             return view('subscription::step2', $data);
         }
     }
@@ -339,9 +343,7 @@ class SubscriptionController extends Controller
                 'submenu_active' => 'subscription-List'
             ];
             
-            $post['select'] = ['id_outlet','outlet_code','outlet_name'];
-            $outlets = MyHelper::post('outlet/ajax_handler', $post);
-            
+
             if (!empty($outlets['result'])) {
                 $data['outlets'] = $outlets['result'];
             }
@@ -351,6 +353,21 @@ class SubscriptionController extends Controller
                 return redirect('subscription')->withErrors('Subscription not found');
             }
             $data['subscription']['id_subscription'] = $slug;
+
+            $post['condition']['rules'] = [
+            	'subject' => 'id_brand',
+            	'parameter' => $data['subscription']['id_brand'],
+            	'operator' => '='
+            ];
+            $post['condition'] = 'and';
+            $post['select'] = ['id_outlet','outlet_code','outlet_name'];
+            $outlets = MyHelper::post('outlet/ajax_handler', $post);
+
+            $post['select'] = ['id_product','product_code','product_name'];
+            $outlets = MyHelper::post('outlet/ajax_handler', $post);
+
+        	$data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+
             return view('subscription::detail', $data);
         }
     }
