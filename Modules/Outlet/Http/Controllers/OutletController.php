@@ -1087,7 +1087,7 @@ class OutletController extends Controller
             // print_r($query);exit;
             return back()->withSuccess(['Response updated']);
         }
-        $data = [ 'title'             => 'User Rating Auto Response',
+        $data = [ 'title'             => 'Setting Messages Outlet App OTP',
                   'menu_active'       => 'outlet',
                   'submenu_active'    => 'outlet-pin-response',
                   'subject'           => 'outlet-app-request-pin'
