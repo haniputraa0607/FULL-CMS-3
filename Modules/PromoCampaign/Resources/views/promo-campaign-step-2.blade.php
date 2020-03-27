@@ -155,38 +155,7 @@
 			});
 		}
 
-		outletLoad = 0;
-		$('input[name=filter_outlet]').change(function() {
-			outlet = $('input[name=filter_outlet]:checked').val()
-			$('#multipleOutlet').prop('required', false)
-			$('#multipleOutlet').prop('disabled', true)
-			if (outlet == 'Selected') {
-				$('#selectOutlet').show()
-				if (outletLoad == 0) {					
-					$.ajax({
-						type: "GET",
-						url: "getData",
-						data : {
-							get : 'Outlet'
-						},
-						dataType: "json",
-						success: function(data){
-							$.each(data, function( key, value ) {
-								$('#multipleOutlet').append("<option id='outlet"+value.id_outlet+"' value='"+value.id_outlet+"'>"+value.outlet+"</option>");
-							});
-							$('#multipleOutlet').prop('required', true)
-							$('#multipleOutlet').prop('disabled', false)
-						}
-					});
-				} else {
-					$('#multipleOutlet').prop('required', true)
-					$('#multipleOutlet').prop('disabled', false)
-				}
-			} else {
-				$('#selectOutlet').hide()
-			}
-		});
-
+		
 		var is_all_product = '{!!$is_all_product!!}'
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
@@ -462,7 +431,7 @@
 	}
 	</style>
 
-	@if( strtotime($datenow) > strtotime($date_start) && isset($result['campaign_complete']))
+	@if( strtotime($datenow) > strtotime($date_start) && isset($result['step_complete']))
 	<script type="text/javascript">
 		$(document).ready(function() {
 			console.log('ok');
@@ -793,7 +762,7 @@
 					</div>
 				</div>
 			</div>
-			@if( strtotime($datenow) <= strtotime($date_start) || $date_start == null || empty($result['campaign_complete']) )
+			@if( strtotime($datenow) <= strtotime($date_start) || $date_start == null || empty($result['step_complete']) )
 			<div class="col-md-12" style="text-align:center;">
 				<div class="form-actions">
 					{{ csrf_field() }}
