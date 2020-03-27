@@ -123,39 +123,6 @@
 		listProduct=[];
 		productLoad = 0;
 
-		if (productLoad == 0) {
-			$.ajax({
-				type: "GET",
-				url: "getData",
-				data : {
-					get : 'Product'
-				},
-				dataType: "json",
-				success: function(data){
-					if (data.status == 'fail') {
-						$.ajax(this)
-						return
-					}
-					productLoad = 1;
-					listProduct=data;
-					$.each(data, function( key, value ) {
-						$('#multipleProduct').append("<option id='product"+value.id_product+"' value='"+value.id_product+"'>"+value.product+"</option>");
-						$('#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_product+"'>"+value.product+"</option>");
-					});
-
-				},
-				complete: function(data){
-					if (data.responseJSON.status != 'fail') {
-						selectedProduct = JSON.parse('{!!json_encode($product)!!}')
-						$.each(selectedProduct, function( key, value ) {
-							$("#product"+value+"").attr('selected', true)
-						});
-					}
-				}
-			});
-		}
-
-		
 		var is_all_product = '{!!$is_all_product!!}'
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
