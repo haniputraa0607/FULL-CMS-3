@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@include('list_filter')
 
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
@@ -6,15 +7,119 @@
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
 <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-<script>
+@yield('filter_script')
+<script>    
+    rules={
+        all_trx:{
+            display:'All Transaction',
+            operator:[],
+            opsi:[]
+        },
+        review_date:{
+            display:'Review Date',
+            operator:[
+                ['=','='],
+                ['>','>'],
+                ['>=','>='],
+                ['<','<'],
+                ['<=','<='],
+            ],
+            opsi:[],
+            type:'date'
+        },
+        transaction_date:{
+            display:'Transaction Date',
+            operator:[
+                ['=','='],
+                ['>','>'],
+                ['>=','>='],
+                ['<','<'],
+                ['<=','<='],
+            ],
+            opsi:[],
+            type:'date'
+        },
+        transaction_type:{
+            display:'Transaction Type',
+            operator:[],
+            opsi:[
+                ['Offline','Offline'],
+                ['Pickup Order','Pickup Order']
+            ]
+        },
+        transaction_receipt_number:{
+            display:'Receipt Number',
+            operator:[
+                ['=','='],
+                ['like','like']
+            ],
+            opsi:[]
+        },
+        user_name:{
+            display:'User Name',
+            operator:[
+                ['=','='],
+                ['like','like']
+            ],
+            opsi:[]
+        },
+        user_phone:{
+            display:'User Phone',
+            operator:[
+                ['=','='],
+                ['like','like']
+            ],
+            opsi:[]
+        },
+        user_email:{
+            display:'User Email',
+            operator:[
+                ['=','='],
+                ['like','like']
+            ],
+            opsi:[],
+            type:'email'
+        },
+        rating_value:{
+            display:'Rating Value',
+            operator:[],
+            opsi:[
+                ['1',"{{$rating_items['1']??'Good'}}"],
+                ['0',"{{$rating_items['0']??'Netral'}}"],
+                ['-1',"{{$rating_items['-1']??'Bad'}}"],
+            ]
+        },
+        photos_only:{
+            display:'Photo',
+            operator:[],
+            opsi:[
+                ['1',"With Photos Only"],
+                ['0',"Show All"],
+                ['-1',"Without Photos Only"]
+            ]
+        },
+        notes_only:{
+            display:'Notes',
+            operator:[],
+            opsi:[
+                ['1',"With Notes Only"],
+                ['0',"Show All"],
+                ['-1',"Without Notes Only"]
+            ]
+        },
+        outlet:{
+            display:'Outlet',
+            operator:[],
+            opsi:{!!json_encode($outlets)!!}
+        },
+    };
+
 	$(document).ready(function(){
-		$('.select2').select2();
-		$('#outlet_selector').on('change',function(){
+ 		$('#outlet_selector').on('change',function(){
 			var value = $(this).val();
             if(value == '0'){
                 value = '';
@@ -47,24 +152,12 @@
     </div><br>
 
     @include('layouts.notifications')
+    @yield('filter_view')
 
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
                 <span class="caption-subject font-dark sbold uppercase font-blue">List Feedback</span>
-            </div>
-            <div class="actions">
-                <div class="btn-group" style="width: 300px">
-                   <select class="form-control select2-multiple select2" name="outlet_code" id="outlet_selector" data-placeholder="Select Outlet">
-                   	<option></option>
-                   	<option value="0" @if(!$key) selected @endif>All Outlet</option>
-		            @if ($outlets??false)
-		                @foreach($outlets as $outlet)
-		                    <option value="{{ $outlet['outlet_code'] }}" @if ($outlet['outlet_code'] == $key) selected @endif>{{ $outlet['outlet_code'] }} - {{ $outlet['outlet_name'] }}</option>
-		                @endforeach
-		            @endif
-				    </select>
-                </div>
             </div>
         </div>
         <div class="portlet-body form">
@@ -87,7 +180,7 @@
                 		<td><a href="{{url('transaction/detail'.'/'.$feedback['transaction']['id_transaction'].'/'.strtolower($feedback['transaction']['trasaction_type']))}}">{{$feedback['transaction']['transaction_receipt_number']}}</a></td>
                 		<td><a href="{{url('user/detail'.'/'.$feedback['user']['phone'])}}">{{$feedback['user']['name']}}</a></td>
                 		<td>Rp {{number_format($feedback['transaction']['transaction_grandtotal'],0,',','.')}}</td>
-                		<td>{{$feedback['rating_item_text']}}</td>
+                		<td>{{$rating_items[$feedback['rating_value']]??$feedback['rating_item_text']}}</td>
                 		<td><a href="{{url('user-feedback/detail/'.base64_encode($feedback['id_user_feedback'].'#'.$feedback['transaction']['id_transaction']))}}" class="btn blue">Detail</a></td>
                 	</tr>
                 	@endforeach

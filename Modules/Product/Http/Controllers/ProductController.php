@@ -11,9 +11,9 @@ use App\Lib\MyHelper;
 use Excel;
 use Session;
 
-use App\Exports\ArrayExport;
+use App\Exports\ProductExport;
 use App\Exports\MultisheetExport;
-use App\Imports\ExcelImport;
+use App\Imports\ProductImport;
 use App\Imports\FirstSheetOnlyImport;
 
 class ProductController extends Controller
@@ -114,20 +114,198 @@ class ProductController extends Controller
 
 	}
 
-    public function importProduct() {
+    public function importProduct($type) {
         $data = [
             'title'          => 'Product',
             'sub_title'      => 'Import Product',
             'menu_active'    => 'product',
             'submenu_active' => 'product-import',
+            'type'           => $type
         ];
+        switch ($type) {
+            case 'global':
+                $data['sub_title'] = 'Import Product Global';
+                $data['submenu_active'] = 'product-import-global';
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
 
-        return view('product::product.import', $data);
+            case 'detail':
+                $data['sub_title'] = 'Import Detail Product';
+                $data['submenu_active'] = 'product-import-detail';
+                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
+                if(!$products){
+                    return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
+                }
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
+
+            case 'price':
+                $data['sub_title'] = 'Import Product Price';
+                $data['submenu_active'] = 'product-import-price';
+                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
+                if(!$products){
+                    return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
+                }
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
+            
+            default:
+                return abort(404);
+                break;
+        }
+        return view('product::product.import.detail', $data);
     }
 
-    public function example()
-    {
-        $listProduct = MyHelper::get('product/be/list');
+    /**
+     * Export product
+     */
+    public function export(Request $request,$type) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('product/export',['type'=>$type]+$post)['result']??[];
+        if(!$data){
+            return back()->withErrors(['Something went wrong']);
+        }
+        $tab_title = 'List Products';
+        switch ($type) {
+            case 'global':
+                $tab_title = 'List Products';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'product_code' => '001',
+                            'product_name' => 'Product 1',
+                            'product_description' => 'Example product 1'
+                        ],
+                        [
+                            'product_code' => '002',
+                            'product_name' => 'Product 2',
+                            'product_description' => 'Example product 2'
+                        ],
+                        [
+                            'product_code' => '003',
+                            'product_name' => 'Product 3',
+                            'product_description' => 'Example product 3'
+                        ],
+                    ];
+                }
+                break;
+
+            case 'detail':
+                $tab_title = 'Product Detail';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'product_category_name' => 'Snacks',
+                            'position' => '1',
+                            'product_code' => '001',
+                            'product_name' => 'Product 1',
+                            'product_description' => 'Example product 1',
+                            'product_visibility' => 'Visible'
+                        ],
+                        [
+                            'product_category_name' => 'Snacks',
+                            'position' => '2',
+                            'product_code' => '002',
+                            'product_name' => 'Product 2',
+                            'product_description' => 'Example product 2',
+                            'product_visibility' => 'Hidden'
+                        ],
+                        [
+                            'product_category_name' => 'Drinks',
+                            'position' => '1',
+                            'product_code' => '003',
+                            'product_name' => 'Product 3',
+                            'product_description' => 'Example product 3',
+                            'product_visibility' => 'Visible'
+                        ],
+                    ];
+                }
+                break;
+
+            case 'price':
+                $tab_title = 'Product Price';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'product_code' => '001',
+                            'product_name' => 'Product 1',
+                            'product_description' => 'Example product 1',
+                            'global_price' => 10000,
+                            'price_PP001' => 15000,
+                            'price_BL012' =>13500
+                        ],
+                        [
+                            'product_code' => '002',
+                            'product_name' => 'Product 2',
+                            'product_description' => 'Example product 2',
+                            'global_price' => 20000,
+                            'price_PP001' => 30000,
+                            'price_BL012' =>25000
+                        ],
+                        [
+                            'product_code' => '003',
+                            'product_name' => 'Product 3',
+                            'product_description' => 'Example product 3',
+                            'global_price' => 12000,
+                            'price_PP001' => 18000,
+                            'price_BL012' =>15000
+                        ],
+                    ];
+                }
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        return Excel::download(new ProductExport($data['products'],$data['brand'],$tab_title),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
+    }
+
+    /**
+     * Import product
+     */
+    public function import(Request $request,$type) {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $excel = \Excel::toArray(new ProductImport(),$request->file('import_file'))[0]??[];
+            $data = [];
+            $head = [];
+            foreach ($excel as $key => $value) {
+                if($key === 0 ){
+                    $data['code_brand'] = $value[1];
+                }elseif($key == 2){
+                    $head = $value;
+                }elseif($key !== 1){
+                    $data['products'][] = array_combine($head, $value);
+                }
+            }
+            if(!empty($data)){
+                $code_brand = '';
+                $import = MyHelper::post('product/import', [
+                    'id_brand' => $post['id_brand'],
+                    'type' => $type,
+                    'data' => $data
+                ]);
+                return $import;
+            }else{
+                return [
+                    'status'=>'fail',
+                    'messages'=>['File empty']
+                ];
+            }
+        }
+
+        return [
+            'status'=>'fail',
+            'messages'=>['Something went wrong']
+        ];
+    }
+
+    public function example(Request $request) {
+        $post = $request->except('_token');
+        $listProduct = MyHelper::get('product/export',['type'=>$type]+$post);
         $listOutlet = MyHelper::post('outlet/be/list', ['admin' => 1, 'type' => 'export']);
         $dataPrice = [];
 
@@ -312,7 +490,7 @@ class ProductController extends Controller
 
     }
 
-    function image(Request $request) {
+    function addImage(Request $request) {
         $post = $request->except('_token');
         if (!empty($post)) {
             $name = explode('.',$request->file('file')->getClientOriginalName())[0];
@@ -324,10 +502,11 @@ class ProductController extends Controller
             'title'          => 'Product',
             'sub_title'      => 'List Product',
             'menu_active'    => 'product',
-            'submenu_active' => 'product-list-image',
+            'submenu_active' => 'product-image',
+            'child_active'   => 'product-image-add',
         ];
-        $product = MyHelper::post('product/be/list', ['admin_list' => 1]);
-		// dd($product);
+        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1, 'image' => 'null']);
+        
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
@@ -335,6 +514,53 @@ class ProductController extends Controller
             $data['product'] = [];
         }
         return view('product::product.image', $data);
+    }
+
+    function listImage(Request $request) {
+        $post = $request->except('_token');
+        if (!empty($post)) {
+            $name = explode('.',$request->file('file')->getClientOriginalName())[0];
+            $post = MyHelper::encodeImage($request->file('file'));
+            $save = MyHelper::post('product/photo/createAjax', ['name' => $name, 'photo' => $post]);
+            return $save;
+        }
+        $data = [
+            'title'          => 'Product',
+            'sub_title'      => 'List Product',
+            'menu_active'    => 'product',
+            'submenu_active' => 'product-image',
+            'child_active'   => 'product-image-list',
+        ];
+        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1]);
+        
+        if (isset($product['status']) && $product['status'] == "success") {
+            $data['product'] = $product['result'];
+        }
+        else {
+            $data['product'] = [];
+        }
+        return view('product::product.image', $data);
+    }
+
+    function overrideImage(Request $request) {
+        $post = $request->except('_token');
+        
+        if (isset($post['state'])) {
+            if ($post['state'] == 'true') {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            $setting = MyHelper::post('product/be/imageOverride', ['admin_list' => 1, 'status' => $status]);
+            if ($setting['result'] == 'true') {
+                $setting['result'] = $status;
+                return $setting;
+            }
+        } else {
+            $setting = MyHelper::post('product/be/imageOverride', ['admin_list' => 1]);
+        }
+        
+        return $setting;
     }
 
 	function listProductAjax(Request $request) {

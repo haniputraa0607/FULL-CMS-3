@@ -11,6 +11,7 @@ use App\Lib\MyHelper;
 use Session;
 use Excel;
 use App\Exports\ArrayExport;
+use Illuminate\Support\Facades\Cookie;
 
 class UsersController extends Controller
 {
@@ -145,8 +146,13 @@ class UsersController extends Controller
 			if(isset($post['relationship']) && $post['relationship']=="-"){
 				$post['relationship'] = null;
 			}
+
+			if(isset($post['id_card_image']) && !empty($post['id_card_image'])){
+                $post['id_card_image'] = MyHelper::encodeImage($post['id_card_image']);
+            }
+
 			$query = MyHelper::post('users/create', $post);
-			
+
 			if(isset($query['status']) && $query['status'] == 'success'){
 				return back()->withSuccess(['User Create Success']);
 			} else{
@@ -417,6 +423,7 @@ class UsersController extends Controller
 		
 		// print_r($data);exit;
 		// print_r(Session::get('form'));exit;
+        $data['show'] = 1;
 		return view('users::index', $data);
     }
 	
@@ -511,11 +518,13 @@ class UsersController extends Controller
 				return back()->withErrors(['Delete Failed']);
 			}
 		}
-        if(isset($post['password'])){
-            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-            if($checkpin['status'] != "success")
-                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-        }
+
+		if(isset($post['password'])){
+			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+			if($checkpin['status'] != "success") {
+				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+			}
+		}
 		
 		if(isset($post['phone'])){
 			if(isset($post['birthday'])){
@@ -524,6 +533,11 @@ class UsersController extends Controller
 			if(isset($post['relationship']) && $post['relationship']=="-"){
 				$post['relationship'] = null;
 			}
+
+            if(isset($post['id_card_image']) && !empty($post['id_card_image'])){
+                $post['id_card_image'] = MyHelper::encodeImage($post['id_card_image']);
+            }
+
 			$update = MyHelper::post('users/update', ['phone' => $phone, 'update' => $post]);
 			return parent::redirect($update, 'Profile has been updated');
 		}
@@ -609,24 +623,16 @@ class UsersController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
 
-        if(!isset($post['password'])){
+        if (!isset($post['password'])) {
             $data = [ 'title'             => 'User',
                 'menu_active'       => 'user',
                 'submenu_active'    => 'user-list',
                 'phone'    		  => $phone
             ];
-			$getExtraToken = MyHelper::get('users/getExtraToken');
-			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
-				$data['extra_token'] = $getExtraToken['result'];
-			} else {
-				abort(403);
-			}
             return view('users::password', $data);
         } else {
             return view('users::detail', $data);
         }
-		// print_r($data);exit;
-        return view('users::detail', $data);
     }
     
     public function showAllLog($phone, Request $request)
@@ -788,8 +794,8 @@ class UsersController extends Controller
 	
 	public function activity(Request $request, $page = 1){
         $input = $request->input();
-        $post = $request->except('_token', 'password', 'verify_token');
-
+		$post = $request->except('_token', 'password');
+		
 		if(!empty(Session::get('form'))){
 			if(isset($post['take'])) $takes = $post['take'];
 			if(isset($post['order_field'])) $order_fields = $post['order_field'];
@@ -807,22 +813,22 @@ class UsersController extends Controller
 			Session::put('form',$post);
 		}
 		
+		if(isset($input['password'])){
+			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $input['password'], 'admin_panel' => 1));
+			if($checkpin['status'] != "success") {
+				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+			}
+		}
+		
 		$data = [ 'title'             => 'User',
 				  'menu_active'       => 'user',
 				  'submenu_active'    => 'user-log'
 				];
 
-        if(isset($input['password'])){
-            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $input['password'], 'admin_panel' => 1));
-            if($checkpin['status'] != "success")
-                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-        }
-
         if(!isset($post['order_field'])) $post['order_field'] = '';
 		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
 		if(!isset($post['take'])) $post['take'] = 10;
 		$post['skip'] = 0 + (($page-1) * $post['take']);
-		if (isset($input['verify_token'])) $post['verify_token'] = $input['verify_token'];
 		
 		$getLog = MyHelper::post('users/activity', $post);
 		
@@ -859,27 +865,16 @@ class UsersController extends Controller
 		
 		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
 
-        if(!isset($input['password'])){
-            $data = [ 	
-				'title'             => 'User',
+        if (!isset($input['password'])) {
+            $data = [
+                'title'             => 'User',
                 'menu_active'       => 'user',
                 'submenu_active'    => 'user-log'
-			];
-			$getExtraToken = MyHelper::get('users/getExtraToken');
-			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
-				$data['extra_token'] = $getExtraToken['result'];
-			} else {
-				abort(403);
-			}
+            ];
             return view('users::password', $data);
         } else {
             return view('users::log', $data);
         }
-	}
-
-	public function verifyToken(Request $request){
-		$verifyToken = MyHelper::post('users/getExtraToken', ['token_header' => $_SERVER['HTTP_X_EXTRA_TOKEN_HEADER']]);
-		return $verifyToken;
 	}
 	
     public function favorite(Request $request, $phone){
@@ -888,33 +883,27 @@ class UsersController extends Controller
             'subtitle'		  => 'Favorite',
             'menu_active'       => 'user',
             'submenu_active'    => 'user-list'
-        ];
+		];
+		
         if(isset($post['password'])){
-            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-            if($checkpin['status'] != "success")
-                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+			if($checkpin['status'] != "success") {
+				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+			}
+		}
+		
+		$data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
 
-
-        }
-        $data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
-        if(!isset($post['password'])){
+        if (!isset($post['password'])) {
             $data = [ 'title'             => 'User',
                 'subtitle'		  => 'Favorite',
                 'menu_active'       => 'user',
                 'submenu_active'    => 'user-list',
                 'phone'    		  => $phone
             ];
-			$getExtraToken = MyHelper::get('users/getExtraToken');
-			if (isset($getExtraToken['status']) && $getExtraToken['status'] == 'success') {
-				$data['extra_token'] = $getExtraToken['result'];
-			} else {
-				abort(403);
-			}
             return view('users::password', $data);
         } else {
             return view('users::favorite', $data);
         }
-
-
     }
 }

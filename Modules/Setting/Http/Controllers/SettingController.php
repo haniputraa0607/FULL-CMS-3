@@ -1097,7 +1097,7 @@ class SettingController extends Controller
             // update complete profile
             $result = MyHelper::post('setting/be/complete-profile', $post);
 
-            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/be/complete-profile');
+            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/complete-profile');
         }else{
             $data = [
                 'title'         => 'Complete Profile Setting',
@@ -1217,5 +1217,70 @@ class SettingController extends Controller
             ];
             return view('setting::confirmation-messages.confirmation-messages',$data);
         }
+    }
+
+    public function phoneNumberSetting(Request $request){
+        $getSetting = MyHelper::get('setting/phone');
+
+        $data = [
+            'title'   		=> 'Phone Setting',
+            'menu_active'    => 'setting-phone',
+            'submenu_active' => 'setting-phone'
+        ];
+
+        if(($getSetting['status']??'')=='success'){
+            $data['result'] = $getSetting['result'];
+            $data['example_phone'] = $getSetting['result']['phone_code'].$getSetting['result']['example_phone'];
+            $data['length_example_phone'] = strlen($data['example_phone']);
+        }else{
+            $data['result'] = [];
+            $data['example_phone'] = '';
+            $data['length_example_phone'] = '';
+        }
+
+        return view('setting::phone-setting', $data);
+    }
+
+    public function updatePhoneNumberSetting(Request $request){
+        $post = $request->except('_token');
+        $updateSetting = MyHelper::post('setting/phone/update', $post);
+
+        if(($updateSetting['status']??'')=='success'){
+            return redirect('setting/phone')->with('success',['Success update phone setting']);
+        }else{
+            return redirect('setting/phone')->withErrors([$updateSetting['message']]);
+        }
+    }
+
+    function maintenanceMode(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'   		=> 'Maintenance Mode Setting',
+            'menu_active'    => 'maintenance-mode',
+            'submenu_active' => 'maintenance-mode'
+        ];
+        if($post){
+            if(isset($post['image']) && $post['image'] !== null){
+                $post['image']= MyHelper::encodeImage($post['image']);
+            }
+            $updateMaintenanceMode = MyHelper::post('setting/maintenance-mode/update', $post);
+            if(($updateMaintenanceMode['status']??'')=='success'){
+                return redirect('setting/maintenance-mode')->with('success',['Success update maintenance']);
+            }else{
+                return redirect('setting/maintenance-mode')->withErrors([$updateMaintenanceMode['message']]);
+            }
+        }else{
+            $maintenanceMode = MyHelper::get('setting/maintenance-mode');
+            if(isset($maintenanceMode['status']) &&  $maintenanceMode['status']=='success'){
+                $data['status'] = $maintenanceMode['result']['status'];
+                $data['message'] = $maintenanceMode['result']['message'];
+                $data['image'] = $maintenanceMode['result']['image'];
+            }else{
+                $data['status'] = 0;
+                $data['message'] = '';
+                $data['image'] = '';
+            }
+        }
+        return view('setting::maintenance-mode', $data);
     }
 }

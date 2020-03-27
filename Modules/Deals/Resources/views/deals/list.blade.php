@@ -1,9 +1,10 @@
 @include('deals::deals.list_filter')
 <?php
 use App\Lib\MyHelper;
+$configs    		= session('configs');
 $grantedFeature     = session('granted_features');
 ?>
-@extends('layouts.main')
+@extends('layouts.main-closed')
 
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -149,9 +150,12 @@ $grantedFeature     = session('granted_features');
                     <tr>
 
                         <th> No</th>
-                        <th> Promo ID </th>
+                        <th> Type </th>
                         <th> Title </th>
+                        @if(MyHelper::hasAccess([95], $configs))
                         <th> Brand </th>
+                        @endif
+                        <th> Price </th>
                         @if($deals_type != "Hidden" && $deals_type !='WelcomeVoucher')
                             <th> Date Publish </th>
                         @endif
@@ -166,9 +170,29 @@ $grantedFeature     = session('granted_features');
                         @foreach($deals as $key => $value)
                             <tr>
                                 <td>{{ $key+1 }}</td>
-                                <td>{{ $value['deals_promo_id'] }}</td>
+                                <td>
+                                	<ul>
+                                		@if (!empty($value['is_online']))
+                                			<li>{{'Online'}}</li>
+                                		@endif
+                                		@if (!empty($value['is_offline']))
+                                			<li>{{'Offline'}}</li>
+                                		@endif
+                                	</ul>
+                            	</td>
                                 <td>{{ $value['deals_title'] }}</td>
+                                @if(MyHelper::hasAccess([95], $configs))
                                 <td>{{ $value['brand']['name_brand']??'Not Set' }}</td>
+                                @endif
+                                <td>
+                                	@if($value['deals_voucher_price_type'] == 'free')
+                                		{{ $value['deals_voucher_price_type'] }}
+                                	@elseif(!empty($value['deals_voucher_price_point']))
+                                		{{ number_format($value['deals_voucher_price_point']).' Points' }}
+                                	@elseif(!empty($value['deals_voucher_price_cash']))
+                                		{{ 'IDR'.number_format($value['deals_voucher_price_cash']) }}
+                                	@endif
+                                </td>
                                 @if($deals_type !='WelcomeVoucher')
                                 @if($deals_type != "Hidden")
                                 <td>
@@ -206,7 +230,7 @@ $grantedFeature     = session('granted_features');
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
                                     @if ($deals_type == "Deals" && MyHelper::hasAccess([73], $grantedFeature))
-                                    <a href="{{ url('deals/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                    <a href="{{ url('deals/detail') }}/{{ $value['id_deals'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @elseif ($deals_type == "Point" && MyHelper::hasAccess([73], $grantedFeature))
                                     <a href="{{ url('deals-point/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @elseif ($deals_type == "WelcomeVoucher" && MyHelper::hasAccess([188], $grantedFeature))

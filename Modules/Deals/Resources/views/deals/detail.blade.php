@@ -1,5 +1,6 @@
-@extends('layouts.main')
-
+@extends('layouts.main-closed')
+@include('deals::deals.detail-info')
+@include('deals::deals.detail-info-content')
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
@@ -15,6 +16,51 @@
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <style type="text/css">
+		.d-none {
+			display: none;
+		}
+		.width-60-percent {
+			width: 60%;
+		}
+		.width-100-percent {
+			width: 100%;
+		}
+		.width-voucher-img {
+			max-width: 200px;
+			width: 100%;
+		}
+		.v-align-top {
+			vertical-align: top;
+		}
+		.p-t-10px {
+			padding-top: 10px;
+		}
+		.page-container-bg-solid .page-content {
+			background: #fff!important;
+		}
+		.text-decoration-none {
+			text-decoration: none!important;
+		}
+		.p-l-0{
+			padding-left: 0px;
+		}
+		.p-r-0{
+			padding-right: 0px;
+		}
+		.p-l-r-0{
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+		.font-custom-dark-grey {
+			color: #95A5A6!important;
+		}
+		.font-custom-green {
+			color: #26C281!important;
+		}
+	</style>
+@yield('detail-style')	
 @endsection
 
 @section('page-script')
@@ -31,6 +77,7 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js') }}" type="text/javascript"></script>
 
 <!--     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
@@ -168,6 +215,33 @@
         $(document).ready(function() {
             token = '<?php echo csrf_token();?>';
 
+            $('#is_offline').change(function() {
+		        if(this.checked) {
+		            $('#promo-type-form').show().find('input').prop('required', true).prop('checked', false);
+		        }else{
+		            $('#promo-type-form').hide().find('input').prop('required', false).prop('checked', false);
+
+                    $('.dealsPromoTypeValuePrice').val('');
+                    $('.dealsPromoTypeValuePrice').hide();
+                    $('.dealsPromoTypeValuePrice').removeAttr('required', true);
+                    $('.dealsPromoTypeValuePromo').val('');
+                    $('.dealsPromoTypeValuePromo').hide();
+                    $('.dealsPromoTypeValuePromo').removeAttr('required', true);
+
+		        	$('.dealsPromoTypeShow').hide();
+		        }
+		    });
+
+		    $('#is_online').change(function() {
+		        if(this.checked) {
+		            $('#step-online').show();
+		            $('#step-offline').hide();
+		        }else{
+		            $('#step-online').hide();
+		            $('#step-offline').show();
+		        }
+		    });
+		    
             /* TYPE VOUCHER */
             $('.voucherType').click(function() {
                 // tampil duluk
@@ -357,7 +431,7 @@
                 ko.onload     = function(){
                     if (this.naturalHeight === 500 && this.naturalWidth === 500) {
                     } else {
-                        mentah.attr('src', "{{ $deals[0]['url_deals_image']??'https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image' }}")
+                        mentah.attr('src', "{{ $deals['url_deals_image']??'https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image' }}")
                         $('#file').val("");
                         toastr.warning("Please check dimension of your photo.");
                     }
@@ -422,6 +496,9 @@
             $('select[name="id_brand"]').change();
         });
     </script>
+	@yield('child-script')
+	@yield('child-script2')
+	@yield('detail-script')
 @endsection
 
 @section('content')
@@ -455,7 +532,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_voucher'] }}">{{ $deals[0]['deals_total_voucher'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_total_voucher'] }}">{{ $deals['deals_total_voucher'] }}</span>
                     </div>
                     <div class="desc"> Total Voucher </div>
                 </div>
@@ -468,7 +545,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_claimed'] }}">{{ $deals[0]['deals_total_claimed'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_total_claimed'] }}">{{ $deals['deals_total_claimed'] }}</span>
                     </div>
                     <div class="desc"> Total Claimed </div>
                 </div>
@@ -481,7 +558,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_redeemed'] }}">{{ $deals[0]['deals_total_redeemed'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_total_redeemed'] }}">{{ $deals['deals_total_redeemed'] }}</span>
                     </div>
                     <div class="desc"> Total Redeem </div>
                 </div>
@@ -494,7 +571,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_used'] }}">{{ $deals[0]['deals_total_used'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_total_used'] }}">{{ $deals['deals_total_used'] }}</span>
                     </div>
                     <div class="desc"> Total Used </div>
                 </div>
@@ -505,7 +582,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">
             <div class="caption">
-                <span class="caption-subject font-blue bold uppercase">{{ $deals[0]['deals_title'] }}</span>
+                <span class="caption-subject font-blue bold uppercase">{{ $deals['deals_title'] }}</span>
             </div>
             <ul class="nav nav-tabs">
 
@@ -524,7 +601,53 @@
 
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                    @include('deals::deals.info')
+                	<ul class="nav nav-tabs" id="tab-header">
+                        <li class="active" id="infoOutlet">
+                            <a href="#basic" data-toggle="tab" > Basic Info </a>
+                        </li>
+                        <li>
+                            <a href="#content" data-toggle="tab"> Content Info </a>
+                        </li>
+                        <li>
+                            <a href="#outlet" data-toggle="tab"> Outlet Info </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="basic">
+                			@yield('detail-info')
+                        </div>
+                        <div class="tab-pane " id="content">
+                			@yield('detail-info-content')
+                        </div>
+                        <div class="tab-pane" id="outlet">
+                            <!-- BEGIN: Comments -->
+                            <div class="mt-comments">
+                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($deals['outlets'] as $res)
+                                            <tr>
+                                                <td>{{ $res['outlet_code'] }}</td>
+                                                <td>{{ $res['outlet_name'] }}</td>
+                                                <td>{{ $res['outlet_address'] }}</td>
+                                                <td>{{ $res['outlet_phone'] }}</td>
+                                                <td>{{ $res['outlet_email'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END: Comments -->
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane" id="voucher">
                     @include('deals::deals.voucher')

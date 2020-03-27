@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
  ?>
 <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
     @foreach ($outlet as $key => $val)
@@ -36,7 +37,7 @@
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Name
-                <span class="required" aria-required="true"> * </span>  
+                <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama outlet" data-container="body"></i>
                 </label>
             </div>
@@ -44,12 +45,12 @@
                 <input type="text" class="form-control" name="outlet_name" value="{{ $val['outlet_name'] }}" required placeholder="Outlet Name" readonly>
             </div>
         </div>
-
+        @if(MyHelper::hasAccess([95], $configs))
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Brand
-                <span class="required" aria-required="true"> * </span>  
+                <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
                 </label>
             </div>
@@ -61,11 +62,11 @@
                     @endforeach
                 </select>
             </div>
-        </div>        
-
+        </div>
+        @endif
         <div class="form-group">
             <label class="col-md-3 control-label">Status
-                <span class="required" aria-required="true"> * </span>  
+                <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Status outlet. Outlet tidak akan ditampilkan di aplikasi ketika status Inactive" data-container="body"></i>
             </label>
             <div class="col-md-9">
@@ -92,7 +93,7 @@
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Province
-                <span class="required" aria-required="true"> * </span>  
+                <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Pilih provinsi letak outlet" data-container="body"></i>
                 </label>
             </div>
@@ -109,12 +110,12 @@
                 </select>
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 City
-                <span class="required" aria-required="true"> * </span>  
+                <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Pilih kota letak outlet" data-container="body"></i>
                 </label>
             </div>
@@ -135,7 +136,7 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <textarea name="outlet_address" class="form-control summernote" placeholder="Outlet Address">{{ $val['outlet_address'] }}</textarea>
+                <textarea name="outlet_address" class="form-control" placeholder="Outlet Address">{{ $val['outlet_address'] }}</textarea>
             </div>
         </div>
 

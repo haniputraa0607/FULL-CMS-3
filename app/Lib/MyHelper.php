@@ -73,7 +73,7 @@ class MyHelper
               'client_secret' => env('PASSWORD_CREDENTIAL_SECRET'),
               'username'      => $request->input('username'),
               'password'      => $request->input('password'),
-              'api-be'        => 1
+              'scope'        => 'be'
           ],
       ]);
       return json_decode($response->getBody(), true);
@@ -104,7 +104,7 @@ class MyHelper
               'grant_type'    => 'client_credentials',
               'client_id'     => env('CLIENT_CREDENTIAL_ID'),
               'client_secret' => env('CLIENT_CREDENTIAL_SECRET'),
-              'scope'      		=> '*'
+              'scope'      		=> 'be'
           ],
       ]);
 
@@ -705,6 +705,21 @@ class MyHelper
       return [];
     }
     return $result;
+  }
+  /**
+   * get Excel coumn name from number
+   * @param Integer number of column (ex. 1)
+   * @return String Excel column name (ex. A)
+   */
+  public static function getNameFromNumber($num) {
+      $numeric = ($num - 1) % 26;
+      $letter = chr(65 + $numeric);
+      $num2 = intval($num / 26);
+      if ($num2 > 0) {
+          return getNameFromNumber($num2 - 1) . $letter;
+      } else {
+          return $letter;
+      }
   }
 }
 

@@ -217,7 +217,7 @@
                             <th> Code </th>
                             <th> Name </th>
                             <th> Logo </th>
-                            <th> Image </th>
+                            {{-- <th> Image </th> --}}
                             <th> Visibility </th>
                             <th> Status </th>
                             @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
@@ -240,11 +240,11 @@
                                     @else
                                         <td>Logo Available</td>
                                     @endif
-                                    @if (end($image) == 'jpg' || end($image) == 'png')
+                                    {{-- @if (end($image) == 'jpg' || end($image) == 'png')
                                         <td>Image Available</td>
                                     @else
                                         <td>No Image</td>
-                                    @endif
+                                    @endif --}}
                                     <td><input type="checkbox" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-id="{{$value['id_brand']}}" data-off-text="Hidden" value="1" @if($value['brand_visibility']??'') checked @endif></td>
                                     <td><input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-id="{{$value['id_brand']}}" data-off-text="Inactive" value="1" @if($value['brand_active']??'') checked @endif></td>
                                     @if(MyHelper::hasAccess([25,27,28], $grantedFeature))

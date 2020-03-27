@@ -1,9 +1,52 @@
+<?php
+use App\Lib\MyHelper;
+$configs    		= session('configs');
+?>
+
 <div class="portlet-body form">
     <form id="form" class="form-horizontal" role="form" action=" @if($deals_type == "Deals") {{ url('deals/update') }} @else {{ url('inject-voucher/update') }} @endif" method="post" enctype="multipart/form-data">
         @foreach ($deals as $key => $val)
 
             @if ($val['deals_type'] != "Point")
                 <div class="form-body">
+                	@if(MyHelper::hasAccess([95,96], $configs))
+                	<div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Deals Type
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe untuk deal ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                        	<div class="mt-checkbox-inline">
+                                <label class="mt-checkbox mt-checkbox-outline" style="margin-bottom: 0px">
+                                    <input type="checkbox" id="is_online" name="is_online" value="1" 
+                                    @if ( old('is_online') == "1" )
+                                        checked 
+                                    @elseif ( !empty($val['is_online']) ) 
+                                        checked 
+                                    @endif> Online
+                                    <span></span>
+                                </label>
+                                <label class="mt-checkbox mt-checkbox-outline" style="margin-bottom: 0px">
+                                    <input type="checkbox" id="is_offline" name="is_offline" value="1" 
+                                    @if ( old('is_offline') == "1" )
+                                        checked 
+                                    @elseif ( !empty($val['is_offline']) ) 
+                                        checked 
+                                    @endif> Offline
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    @elseif(MyHelper::hasAccess([95], $configs))
+                    <input type="hidden" name="is_offline" value="1">
+                    @elseif(MyHelper::hasAccess([96], $configs))
+                    <input type="hidden" name="is_online" value="1">
+                    @endif
+                   
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -25,6 +68,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     
                     <div class="form-group">
                         <div class="input-icon right">
@@ -51,8 +95,8 @@
                         </div>
                     </div>
 
-
-                    <div class="form-group">
+                    @if(MyHelper::hasAccess([95], $configs))
+                    <div class="form-group" id="promo-type-form" @if( ($val['is_offline']??false) != 1 ) style="display: none;" @endif>
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Promo Type
@@ -79,54 +123,14 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
-                    <div class="form-group dealsPromoTypeShow">
+                    <div class="form-group dealsPromoTypeShow" @if( ($val['is_offline']??false) != 1 ) style="display: none;" @endif>
                         <label class="col-md-3 control-label"> </label>
                         <div class="col-md-9">
                             <input type="text" class="form-control dealsPromoTypeValuePromo" name="deals_promo_id_promoid" value="{{ $val['deals_promo_id'] }}" placeholder="Input Promo ID" @if ($val['deals_promo_id_type'] == "nominal") style="display: none;" @endif>
 
                             <input type="text" class="form-control dealsPromoTypeValuePrice price" name="deals_promo_id_nominal" value="{{ $val['deals_promo_id'] }}" placeholder="Input nominal" @if ($val['deals_promo_id_type'] == "promoid") style="display: none;" @endif>
-                        </div>
-                    </div>
-
-<!--                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Content Short
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat tentang deals yang dibuat" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-9">
-                            <textarea name="deals_short_description" class="form-control" required>{{ $val['deals_short_description'] }}</textarea>
-                        </div>
-                    </div> -->
-
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Content Long
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang deals yang dibuat" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-9">
-                            <textarea name="deals_description" id="field_content_long" class="form-control summernote">{{ $val['deals_description'] }}</textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Terms and Conditions
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Syarat dan ketentuan mengenai deals" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-icon right">
-                                <textarea name="deals_tos" id="field_tos" class="form-control summernote" placeholder="Deals Terms and Conditions">{{ old('deals_tos',$val['deals_tos']) }}</textarea>
-                            </div>
                         </div>
                     </div>
 
@@ -240,19 +244,41 @@
                     @endphp
 
 
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Outlet Available
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
-                            </label>
+                    @if(MyHelper::hasAccess([95], $configs))
+                        <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Outlet Available
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}">
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}">
-                            </select>
+                    @else
+                        <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Outlet Available
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}">
+                                    @if(!empty($outlets))
+                                        <option value="all">All Outlets</option>
+                                        @foreach($outlets as $row)
+                                            <option value="{{$row['id_outlet']}}" @if(in_array($row['id_outlet'], $outletselected)) selected @endif)>{{$row['outlet_code']}} - {{$row['outlet_name']}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     @if ($val['deals_type'] != "Hidden")
                     <div class="form-group">
@@ -322,12 +348,12 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Tipe pembuatan voucher, di list secara manual, auto generate atau unlimited" data-container="body"></i>
                             </label>
                         </div>
-                        <div class="col-md-9">
+                        <div class="">
                             <div class="input-icon right">
                                 <div class="col-md-3">
                                     <div class="md-radio-inline">
                                         <div class="md-radio">
-                                            <input type="radio" name="deals_voucher_type" id="radio1" value="Auto generated" class="voucherType" @if ($val['deals_voucher_type'] == "Auto generated") checked @endif>
+                                            <input type="radio" name="deals_voucher_type" id="radio1" value="Auto generated" class="voucherType" @if ($val['deals_voucher_type'] == "Auto generated" || $val['deals_voucher_type'] == "Unlimited") checked @endif>
                                             <label for="radio1">
                                                 <span></span>
                                                 <span class="check"></span>
@@ -348,18 +374,46 @@
                                     </div>
                                 </div>
                                 @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="total-voucher-form" 
+                    @if($val['deals_voucher_type'] != 'Auto generated' && $val['deals_voucher_type'] != 'Unlimited')
+                    	style="display: none;" 
+                    @endif>
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Total Voucher Type
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Total voucher yang dibuat, limited atau unlimited" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="">
+                            <div class="input-icon right">
                                 <div class="col-md-3">
                                     <div class="md-radio-inline">
                                         <div class="md-radio">
-                                            <input type="radio" name="deals_voucher_type" id="radio3" value="Unlimited" class="voucherType" @if ($val['deals_voucher_type'] == "Unlimited") checked @endif required>
-                                            <label for="radio3">
+                                            <input type="radio" name="total_voucher_type" id="radio-total-limited" value="Auto generated" class="voucherType" @if ($val['deals_voucher_type'] == "Auto generated") checked @endif>
+                                            <label for="radio-total-limited">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> Limited </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="md-radio-inline">
+                                        <div class="md-radio">
+                                            <input type="radio" name="total_voucher_type" id="radio-total-unlimited" value="Unlimited" class="voucherType" @if ($val['deals_voucher_type'] == "Unlimited") checked @endif required>
+                                            <label for="radio-total-unlimited">
                                                 <span></span>
                                                 <span class="check"></span>
                                                 <span class="box"></span> Unlimited </label>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -374,7 +428,7 @@
                     </div>
                     @endif
  --}}
-                    <div class="form-group" id="listVoucher" @if (old('voucher_code')||old('deals_voucher_type',$val['deals_voucher_type']) == "List Vouchers") style="display: block;" @else style="display: none;" @endif>
+					<div class="form-group" id="listVoucher" @if (old('voucher_code')||old('deals_voucher_type',$val['deals_voucher_type']) == "List Vouchers") style="display: block;" @else style="display: none;" @endif>
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-9">
                             <div class="col-md-3">
@@ -402,7 +456,6 @@
                     </div>
 
                     <br>
-
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">

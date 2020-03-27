@@ -409,9 +409,9 @@
             <a href="#banner" data-toggle="tab">Banner</a>
         </li>
 		@endif
-        <li>
+        {{-- <li>
             <a href="#featured_deals" data-toggle="tab">Featured Deals</a>
-        </li>
+        </li> --}}
         <!-- <li>
             <a href="#app-logo" data-toggle="tab">Application Logo</a>
         </li> -->
