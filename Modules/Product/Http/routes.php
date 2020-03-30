@@ -31,6 +31,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	// ajax for ordering position
 	Route::post('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'ProductController@positionProductAssign']);
 
+	Route::get('ajax-product-brand', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@ajaxProductBrand']);
 	/**
 	 * photo
 	 */

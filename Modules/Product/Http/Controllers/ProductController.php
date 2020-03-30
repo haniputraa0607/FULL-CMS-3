@@ -1154,4 +1154,11 @@ class ProductController extends Controller
 		return response()->json($data);
     }
 
+    public function ajaxProductBrand(Request $request)
+    {
+    	$post=$request->except('_token');
+        $product=MyHelper::post('product/ajax-product-brand', $post);
+        return $product;
+    }
+
 }

@@ -143,7 +143,7 @@ $grantedFeature     = session('granted_features');
                                 <td>{{ $value['transaction']['transaction_receipt_number'] }}</td>
                                 <td>{{ date('d M Y', strtotime($value['used_at'])) }}</td>
                                 <td>{{ $value['transaction']['outlet']['outlet_name'] }}</td>
-                                <td>{{ $value['transaction']['product_transaction'][0]['total_item'] }}</td>
+                                <td>{{ $value['transaction']['product_transaction'][0]['total_item']??'' }}</td>
                             </tr>
                         @endforeach
                     @endif
