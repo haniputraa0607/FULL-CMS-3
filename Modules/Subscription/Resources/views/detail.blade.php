@@ -115,6 +115,24 @@ $configs = session('configs');
             }
             oldOutlet=list;
         }
+
+        var oldProduct=[];
+        function redrawProducts(list,selected,convertAll){
+            var html="";
+            if(list.length){
+                html+="<option value=\"all\">All Products</option>";
+            }
+            list.forEach(function(product){
+                html+="<option value=\""+product.id_product+"\">"+product.product_code+" - "+product.product_name+"</option>";
+            });
+            $('select[name="id_product[]"]').html(html);
+            $('select[name="id_product[]"]').val(selected);
+            if(convertAll&&$('select[name="id_product[]"]').val().length==list.length){
+                $('select[name="id_product[]"]').val(['all']);
+            }
+            oldProduct=list;
+        }
+
         $(document).ready(function() {
 
             var _URL = window.URL || window.webkitURL;
@@ -405,7 +423,6 @@ $configs = session('configs');
                 allowPlus : false
             });
 
-
             $('#submitButton').click(function () {
                 $('input:invalid, select:invalid').each(function () {
                     // Find the tab-pane that this element is inside, and get the id
@@ -419,6 +436,74 @@ $configs = session('configs');
                     return false;
                 });
             });
+
+            $('select[name="id_brand"]').on('change',function(){
+                var id_brand=$('select[name="id_brand"]').val();
+                $.ajax({
+                    url:"{{url('outlet/ajax_handler')}}",
+                    method: 'GET',
+                    data: {
+                        select:['id_outlet','outlet_code','outlet_name'],
+                        condition:{
+                            rules:[
+                                {
+                                    subject:'id_brand',
+                                    parameter:id_brand,
+                                    operator:'=',
+                                }
+                            ],
+                            operator:'and'
+                        }
+                    },
+                    success: function(data){
+                        if(data.status=='success'){
+                            var value=$('select[name="id_outlet[]"]').val();
+                            var convertAll=false;
+                            if($('select[name="id_outlet[]"]').data('value')){
+                                value=$('select[name="id_outlet[]"]').data('value');
+                                $('select[name="id_outlet[]"]').data('value',false);
+                                convertAll=true;
+                            }
+                            redrawOutlets(data.result,value,convertAll);
+                        }
+                    }
+                });
+
+                $.ajax({
+                    url:"{{url('product/ajax-product-brand')}}",
+                    method: 'GET',
+                    data: {
+                        select:['id_product','product_code','product_name'],
+                        condition:{
+                            rules:[
+                                {
+                                    subject:'id_brand',
+                                    parameter:id_brand,
+                                    operator:'=',
+                                }
+                            ],
+                            operator:'and'
+                        }
+                    },
+                    success: function(data){
+                        if(data.status=='success'){
+                            var value=$('select[name="id_product[]"]').val();
+                            var convertAll=false;
+                            if($('select[name="id_product[]"]').data('value')){
+                                value=$('select[name="id_product[]"]').data('value');
+                                $('select[name="id_product[]"]').data('value',false);
+                                convertAll=true;
+                            }
+                            redrawProducts(data.result,value,convertAll);
+                        }
+                    }
+                });
+            });
+
+            $("a[href='#step2']").on('shown.bs.tab', function (e) {
+			    $('select[name="id_brand"]').change();
+			})
+            $('select[name="id_brand"]').change();
         });
     </script>
 @if( isset($subscription['subscription_content']) )
@@ -542,13 +627,13 @@ $configs = session('configs');
                         <div class="form-body">
                             <ul class="nav nav-tabs" id="tab-header">
                                 <li class="active" id="infoOutlet">
-                                    <a href="#step1" data-toggle="tab" > Step 1 </a>
+                                    <a href="#step1" data-toggle="tab" > Info </a>
                                 </li>
                                 <li>
-                                    <a href="#step2" data-toggle="tab" id="step2-tab-head"> Step 2 </a>
+                                    <a href="#step2" data-toggle="tab" id="step2-tab-head"> Rule </a>
                                 </li>
                                 <li>
-                                    <a href="#step3" data-toggle="tab"> Step 3 </a>
+                                    <a href="#step3" data-toggle="tab"> Content </a>
                                 </li>
                             </ul>
                             <div class="tab-content">

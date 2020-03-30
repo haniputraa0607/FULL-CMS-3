@@ -95,6 +95,39 @@ $configs = session('configs');
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Brand
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk subscription ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand" required>
+                                    <option></option>
+                                @if (!empty($brands))
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand['id_brand'] }}" 
+                                    	@if (old('id_brand',$subscription['id_brand'])) 
+                                    		@if($brand['id_brand'] == old('id_brand',$subscription['id_brand'])) selected @endif 
+                                    	@endif>{{ $brand['name_brand'] }}</option>
+                                    @endforeach
+                                @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    @php
+                        if (!empty($subscription['outlets'])) {
+                            $outletselected = array_pluck($subscription['outlets'],'id_outlet');
+                        }
+                        else {
+                            $outletselected = [];
+                        }
+                    @endphp
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -105,71 +138,30 @@ $configs = session('configs');
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet',[]))}}" required>
-                                <optgroup label="Available Outlet">
-                                    @if (!empty($outlets))
-                                        @if ( old('id_outlet') )
-                                            @if ( in_array('all', old('id_outlet')) )
-                                                <option value="all" selected>All</option>
-                                                @php
-                                                    $gabungan = "";
-                                                @endphp
-                                                @foreach($outlets as $row)
-                                                    @php
-                                                        $gabungan = $gabungan."|".$row['id_outlet'];
-                                                    @endphp
-                                                    <option value="{{ $row['id_outlet'] }}">{{ $row['outlet_code'] }} - {{ $row['outlet_name'] }}</option>
-                                                @endforeach
-                                                <input type="hidden" name="outlet" value="{{ $gabungan }}">
-                                            @else
-                                                <option value="all">All</option>
-                                                @php
-                                                    $outletPilihan = old('id_outlet');
-                                                    $gabungan = "";
-                                                @endphp
-                                                @foreach($outlets as $row)
-                                                    @php
-                                                        $gabungan = $gabungan."|".$row['id_outlet'];
-                                                    @endphp
-                                                    <option value="{{ $row['id_outlet'] }}" @if (in_array($row['id_outlet'], $outletPilihan)) selected  @endif>{{ $row['outlet_code'] }} - {{ $row['outlet_name'] }}</option>
-                                                @endforeach
-                                                <input type="hidden" name="outlet" value="{{ $gabungan }}">
-                                            @endif
-                                        @elseif (isset($subscription['is_all_outlet']) )
-                                            <option value="all" selected>All</option>
-                                            @php
-                                                $gabungan = "";
-                                            @endphp
-                                            @foreach($outlets as $row)
-                                                @php
-                                                    $gabungan = $gabungan."|".$row['id_outlet'];
-                                                @endphp
-                                                <option value="{{ $row['id_outlet'] }}">{{ $row['outlet_code'] }} - {{ $row['outlet_name'] }}</option>
-                                            @endforeach
-                                            <input type="hidden" name="outlet" value="{{ $gabungan }}">
-                                        @else
-                                            <option value="all">All</option>
-                                            @php
-                                                if( old('id_outlet') )
-                                                {
-                                                    $outletPilihan = old('id_outlet');
-                                                }
-                                                else
-                                                {
-                                                    $outletPilihan = array_pluck($subscription['outlets'], 'id_outlet');
-                                                }
-                                                $gabungan = "";
-                                            @endphp
-                                            @foreach($outlets as $row)
-                                                @php
-                                                    $gabungan = $gabungan."|".$row['id_outlet'];
-                                                @endphp
-                                                <option value="{{ $row['id_outlet'] }}" @if (in_array($row['id_outlet'], $outletPilihan)) selected  @endif>{{ $row['outlet_code'] }} - {{ $row['outlet_name'] }}</option>
-                                            @endforeach
-                                            <input type="hidden" name="outlet" value="{{ $gabungan }}">
-                                        @endif
-                                    @endif
-                                </optgroup>
+                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}">
+                            </select>
+                        </div>
+                    </div>
+
+                    @php
+                        if (!empty($subscription['products'])) {
+                            $productselected = array_pluck($subscription['products'],'id_product');
+                        }
+                        else {
+                            $productselected = [];
+                        }
+                    @endphp
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Product
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih product yang akan menjadi syarat untuk menggunakan subscription" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_product[]" multiple data-value="{{json_encode($productselected)}}">
                             </select>
                         </div>
                     </div>
@@ -530,7 +522,7 @@ $configs = session('configs');
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Minimal Transaction
+                            Minimal Transaction (Subtotal)
                             <i class="fa fa-question-circle tooltips" data-original-title="Jumlah transaksi paling sedikit untuk bisa mendapatkan potongan dari subscription. kosongkan jika tidak ada minimal transaksi" data-container="body"></i>
                             </label>
                         </div>
