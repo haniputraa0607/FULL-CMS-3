@@ -359,6 +359,10 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body">
+                                	<div class="row static-info">
+                                        <div class="col-md-4 name">Brand</div>
+                                        <div class="col-md-8 value">: {{ $result['brand']['name_brand']??'' }}</div>
+                                    </div>
                                     <div class="row static-info">
                                         <div class="col-md-4 name">Tag</div>
                                         @if (count($result['promo_campaign_have_tags']) > 1)
@@ -433,7 +437,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                @if( strtotime($datenow) < strtotime($result['date_start']) || empty($result['step_complete']))
+                                @if( empty($result['promo_campaign_reports']) || empty($result['step_complete']))
                                 <div class="row static-info">
                                     <div class="col-md-11 value">
                                         <a class="btn blue" href="{{ url('/')}}/promo-campaign/step1/{{$result['id_promo_campaign']}}">Edit Detail</a>
@@ -598,7 +602,7 @@
                                         </div>
                                         @endif
                                     @endif
-                                    @if( strtotime($datenow) < strtotime($result['date_start']) || empty($result['step_complete']))
+                                    @if( empty($result['promo_campaign_reports']) || empty($result['step_complete']))
                                     <div class="row static-info">
                                         <div class="col-md-11 value">
                                             <a class="btn blue" href="{{ url('/')}}/promo-campaign/step2/{{$result['id_promo_campaign']}}">Edit Rule</a>

@@ -278,14 +278,17 @@ class PromoCampaignController extends Controller
                 $data['result'] = $get_data['result']??'';
                 $data['result']['id_promo_campaign'] = $slug;
             }
+            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+
             return view('promocampaign::create-promo-campaign-step-1', $data);
 
         }
         else
         {
-            if(isset($post['id_promo_campaign'])){
-                $post['id_promo_campaign'] = MyHelper::explodeSlug($post['id_promo_campaign'])[0];
+            if(!empty($id_promo_campaign)){
+                $post['id_promo_campaign'] = $id_promo_campaign;
             }
+
             $action = MyHelper::post('promo-campaign/step1', $post);
 
             if (isset($action['status']) && $action['status'] == 'success') 
@@ -369,7 +372,7 @@ class PromoCampaignController extends Controller
 
     public function getData()
     {
-        $action = MyHelper::post('promo-campaign/getData', ['get' => $_GET['get']]);
+        $action = MyHelper::post('promo-campaign/getData', ['get' => $_GET['get'], 'brand' => $_GET['brand']??'']);
 
         return $action;
     }
@@ -382,7 +385,7 @@ class PromoCampaignController extends Controller
         }
 
         $delete = MyHelper::post('promo-campaign/delete', $post);
-// return $delete;
+
         if ( ($delete['status']??'')=='success' ) 
         {
             return redirect()->back()->withSuccess([$delete['status']]);
