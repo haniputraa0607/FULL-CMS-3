@@ -132,7 +132,8 @@
 					type: "GET",
 					url: "getData",
 					data : {
-						get : 'Product'
+						get : 'Product',
+						brand : {!!$result['id_brand']!!}
 					},
 					dataType: "json",
 					success: function(data){
@@ -168,7 +169,8 @@
 			type: "GET",
 			url: "getData",
 			data : {
-				get : 'Outlet'
+				get : 'Outlet',
+				brand : {!!$result['id_brand']!!}
 			},
 			dataType: "json",
 			success: function(data){
@@ -212,7 +214,8 @@
 					type: "GET",
 					url: "getData",
 					data : {
-						get : 'Product'
+						get : 'Product',
+						brand : {!!$result['id_brand']!!}
 					},
 					dataType: "json",
 					success: function(data){
@@ -272,7 +275,8 @@
 						type: "GET",
 						url: "getData",
 						data : {
-							get : 'Product'
+							get : 'Product',
+							brand : {!!$result['id_brand']!!}
 						},
 						dataType: "json",
 						success: function(data){
@@ -341,7 +345,8 @@
 					type: "GET",
 					url: "getData",
 					data : {
-						get : 'Product'
+						get : 'Product',
+						brand : {!!$result['id_brand']!!}
 					},
 					dataType: "json",
 					success: function(data){
@@ -386,6 +391,17 @@
 			min: 0,
 			max: '999999999'
 		});
+
+		$('input[name=filter_outlet]').on('click', function(){
+			outlet = $(this).val();
+
+			if(outlet == 'Selected') {
+				$('#selectOutlet').show();
+			}
+			else {
+				$('#selectOutlet').hide();
+			}
+		});
 	});
 	</script>
 	@yield('child-script')
@@ -397,8 +413,7 @@
 		margin: 0; 
 	}
 	</style>
-
-	@if( strtotime($datenow) > strtotime($date_start) && isset($result['step_complete']))
+	@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
 	<script type="text/javascript">
 		$(document).ready(function() {
 			console.log('ok');
@@ -491,6 +506,10 @@
 							<div class="col-md-4 name">Campaign Type</div>
 							<div class="col-md-8 value">: {{ !empty($result['vouchers']) ? 'Voucher' : 'Promo code' }}</div>
 						</div>
+						<div class="row static-info">
+                            <div class="col-md-4 name">Brand</div>
+                            <div class="col-md-8 value">: {{ $result['brand']['name_brand']??'' }}</div>
+                        </div>
 						<div class="row static-info">
 							<div class="col-md-4 name">Tag</div>
 							@if(isset($result['promo_campaign_have_tags']))
@@ -593,7 +612,7 @@
 								</label>
 								<label class="mt-radio mt-radio-outline">
 									<i class="fa fa-question-circle tooltips" data-original-title="Promo code hanya berlaku untuk outlet tertentu" data-container="body"></i> Selected Outlet
-									<input type="radio" value="Selected" name="filter_outlet" @if(isset($result['is_all_outlet']) && $result['is_all_outlet'] == "0") checked @endif required/>
+									<input type="radio" value="Selected" name="filter_outlet" @if(empty($result['is_all_outlet']) && !empty($result['outlets'])) checked @endif required/>
 									<span></span>
 								</label>
 							</div>
@@ -729,7 +748,7 @@
 					</div>
 				</div>
 			</div>
-			@if( strtotime($datenow) <= strtotime($date_start) || $date_start == null || empty($result['step_complete']) )
+			@if( empty($result['promo_campaign_reports']) || empty($result['step_complete']) )
 			<div class="col-md-12" style="text-align:center;">
 				<div class="form-actions">
 					{{ csrf_field() }}
