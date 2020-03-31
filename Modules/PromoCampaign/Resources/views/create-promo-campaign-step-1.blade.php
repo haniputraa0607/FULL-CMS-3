@@ -322,6 +322,27 @@
 						<select id="selectTag" name="promo_tag[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true"></select>
 					</div>
 					<div class="form-group">
+                        <div class="input-icon right">
+                            <label class="control-label">
+                            Brand
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="">
+                            <div class="input-icon right">
+                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand" required>
+                                    <option></option>
+                                @if (!empty($brands))
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand['id_brand'] }}" @if (old('id_brand',($result['id_brand']??false))) @if($brand['id_brand'] == old('id_brand',($result['id_brand']??false))) selected @endif @endif>{{ $brand['name_brand'] }}</option>
+                                    @endforeach
+                                @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+					<div class="form-group">
 						<label class="control-label">Start Date</label>
 						<span class="required" aria-required="true"> * </span>
                         <i class="fa fa-question-circle tooltips" data-original-title="Waktu dimulai berlakunya promo" data-container="body"></i>
