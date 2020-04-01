@@ -123,7 +123,8 @@
 		listProduct=[];
 		productLoad = 0;
 
-		var is_all_product = '{!!$is_all_product!!}'
+		var is_all_product = '{!!$is_all_product!!}';
+		var brand = '{!!$result['id_brand']!!}';
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
 			$('#selectProduct').show()
@@ -132,8 +133,8 @@
 					type: "GET",
 					url: "getData",
 					data : {
-						get : 'Product',
-						brand : {!!$result['id_brand']!!}
+						"get" : 'Product',
+						"brand" : brand
 					},
 					dataType: "json",
 					success: function(data){
@@ -169,8 +170,8 @@
 			type: "GET",
 			url: "getData",
 			data : {
-				get : 'Outlet',
-				brand : {!!$result['id_brand']!!}
+				"get" : 'Outlet',
+				"brand" : brand
 			},
 			dataType: "json",
 			success: function(data){
@@ -214,11 +215,15 @@
 					type: "GET",
 					url: "getData",
 					data : {
-						get : 'Product',
-						brand : {!!$result['id_brand']!!}
+						"get" : 'Product',
+						"brand" : brand
 					},
 					dataType: "json",
 					success: function(data){
+						if (data.status == 'fail') {
+							$.ajax(this)
+							return
+						}
 						listProduct=data;
 						productLoad = 1;
 						$.each(data, function( key, value ) {
@@ -275,8 +280,8 @@
 						type: "GET",
 						url: "getData",
 						data : {
-							get : 'Product',
-							brand : {!!$result['id_brand']!!}
+							"get" : 'Product',
+							"brand" : brand
 						},
 						dataType: "json",
 						success: function(data){
@@ -345,8 +350,8 @@
 					type: "GET",
 					url: "getData",
 					data : {
-						get : 'Product',
-						brand : {!!$result['id_brand']!!}
+						"get" : 'Product',
+						"brand" : brand
 					},
 					dataType: "json",
 					success: function(data){
