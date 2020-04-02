@@ -89,3 +89,8 @@ Route::group(['prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Contro
     Route::any('webview/{slug}', 'SettingController@aboutWebview');
     Route::any('faq/webview', 'SettingController@faqWebview');
 });
+
+/* Promo Setting */
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'promo-setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
+    Route::any('cashback', ['middleware' => 'feature_control:233', 'uses' => 'PromoSettingController@promoCashback']);
+});
