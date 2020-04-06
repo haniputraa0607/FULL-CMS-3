@@ -9,6 +9,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', '
 	Route::get('ajax/name', 'UsersController@listNameUser');
 	Route::get('ajax/log/{id}/{log_type}', 'UsersController@showDetailLog');
 	Route::get('ajax/verify_token', 'UsersController@verifyToken');
+	Route::post('ajax/address/{phone}', 'UsersController@listAddressUser');
 
 	Route::any('/', ['middleware' => 'feature_control:1', 'uses' => 'UsersController@index']);
 
