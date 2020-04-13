@@ -84,52 +84,61 @@ $grantedFeature     = session('granted_features');
             });
             token = '<?php echo csrf_token();?>';
 
-            $('#is_offline').change(function() {
-		        if(this.checked) {
-		            $('#promo-type-form').show().find('input').prop('required', true).prop('checked', false);
-		        }else{
-		            $('#promo-type-form').hide().find('input').prop('required', false).prop('checked', false);
-
-                    $('.dealsPromoTypeValuePrice').val('');
-                    $('.dealsPromoTypeValuePrice').hide();
-                    $('.dealsPromoTypeValuePrice').removeAttr('required', true);
-                    $('.dealsPromoTypeValuePromo').val('');
-                    $('.dealsPromoTypeValuePromo').hide();
-                    $('.dealsPromoTypeValuePromo').removeAttr('required', true);
-
-		        	$('.dealsPromoTypeShow').hide();
-		        }
-		    });
-
             /* TYPE VOUCHER */
-            $('.voucherType').click(function() {
+            $('input[name=deals_voucher_type]').click(function() {
                 // tampil duluk
                 var nilai = $(this).val();
 
                 // alert(nilai);
 
                 if (nilai == "List Vouchers") {
+
+                	$('input[name=total_voucher_type]:checked').prop('checked', false);
+                	$('input[name=deals_total_voucher]').val('');
+
                     $('#listVoucher').show();
                     $('.listVoucher').prop('required', true);
+                    $('.listVoucher').prop('disabled', false);
 
+                    $('#total-voucher-form').hide();
                     $('#generateVoucher').hide();
                     $('.generateVoucher').removeAttr('required');
+                    $('.generateVoucher').prop('disabled', true);
                 }
-                else if(nilai == "Unlimited") {
-                    $('.generateVoucher').val('');
-                    $('.listVoucher').val('');
-                    $('.listVoucher').removeAttr('required');
-
+                else if (nilai == "Auto generated"){
+                    $('#total-voucher-form').show();
+                    
                     $('#listVoucher').hide();
-                    $('#generateVoucher').hide();
-                    $('.generateVoucher').removeAttr('required');
+                    $('.listVoucher').removeAttr('required');
+                    $('.listVoucher').prop('disabled', true);
                 }
-                else {
+            });
+
+            /* TOTAL TYPE VOUCHER */
+            $('input[name=total_voucher_type]').click(function() {
+                // tampil duluk
+                var nilai = $(this).val();
+                // alert(nilai);
+
+                if (nilai == "Auto generated") {
+
                     $('#generateVoucher').show();
                     $('.generateVoucher').prop('required', true);
+                    $('.generateVoucher').prop('disabled', false);
 
                     $('#listVoucher').hide();
                     $('.listVoucher').removeAttr('required');
+                    $('.listVoucher').prop('disabled', true);
+                }
+                else if (nilai == "Unlimited"){
+                    $('#listVoucher').hide();
+                    $('.listVoucher').removeAttr('required');
+                    $('.listVoucher').prop('disabled', true);
+
+                    $('#generateVoucher').hide();
+                    $('.generateVoucher').removeAttr('required');
+                    $('.generateVoucher').prop('disabled', true);
+                    $('input[name=deals_total_voucher]').val('');
                 }
             });
 
@@ -138,7 +147,7 @@ $grantedFeature     = session('granted_features');
                 var nilai = $(this).val();
 
                 if (nilai != "free") {
-                    $('#prices').show();
+                    $('#prices, .price-label').show();
 
                     $('.payment').hide();
 
@@ -452,7 +461,7 @@ $grantedFeature     = session('granted_features');
                     </div>
                     --}}
                     @endif
-                    @if(MyHelper::hasAccess([95], $configs))
+                    
                     @if(MyHelper::hasAccess([97], $configs) && MyHelper::hasAccess([98], $configs))
                 	<div class="form-group">
                         <div class="input-icon right">
@@ -491,6 +500,7 @@ $grantedFeature     = session('granted_features');
                     <input type="hidden" name="is_online" value="1">
                     @endif
 
+                    @if(MyHelper::hasAccess([95], $configs))
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">

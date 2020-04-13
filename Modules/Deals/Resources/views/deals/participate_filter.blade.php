@@ -1,297 +1,44 @@
-@section('child-script')
+@section('participate-script')
 <?php
 use App\Lib\MyHelper;
 $configs  = session('configs');
 ?>
 <script>
 	rules={
-		deals_title:{
-			display:'Title',
+		used_by:{
+			display:'Claimed By (Phone)',
 			operator:[
-			['=','='],
-			['like','like']
+				['=','='],
+				['like','like']
 			],
 			opsi:[]
 		},
-		deals_second_title:{
-			display:'Second Title',
-			operator:[
-			['=','='],
-			['like','like']
-			],
-			opsi:[]
-		},
-		deals_promo_id_type:{
-			display:'Promo Type',
+		status:{
+			display:'Status',
 			operator:[],
 			opsi:[
-			['promoid','Promo Id'],
-			['nominal','Nominal']
+				['claimed','claimed'],
+				['redeemed','redeemed'],
+				['used','used'],
+				['expired','expired']
 			]
 		},
-		deals_promo_id:{
-			display:'Promo Id',
+		claim_date:{
+			display:'Claim Date',
 			operator:[
-			['=','='],
-			['like','like']
+				['=','='],
+				['<','<'],
+				['>','>'],
+				['<=','<='],
+				['>=','>=']
 			],
-			opsi:[]
-		},
-		voucher_code:{
-			display:'Voucher Code',
-			operator:[
-			['=','='],
-			['like','like']
-			],
-			opsi:[]
-		},
-		used_by:{
-			display:'Claimed By',
-			operator:[
-			['=','='],
-			['like','like']
-			],
-			opsi:[]
+			opsi:[],
+			type:'date'
 		},
 		id_outlet:{
 			display:'Outlet',
 			operator:[],
-			opsi:{!!json_encode($outlets ?? [])!!}
-		},
-        @if(MyHelper::hasAccess([95], $configs))
-		id_brand:{
-			display:'Brand',
-			operator:[],
-			opsi:{!!json_encode($brands ?? [])!!}
-		},
-        @endif
-		deals_total_voucher:{
-			display:'Deals Total Voucher',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		deals_start:{
-			display:'Deals Start',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		deals_end:{
-			display:'Deals End',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		deals_publish_start:{
-			display:'Deals Publish Start',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		deals_publish_end:{
-			display:'Deals Publish End',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		deals_voucher_start:{
-			display:'Deals Voucher Start',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		deals_voucher_expired:{
-			display:'Deals Voucher Expired',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		deals_voucher_duration:{
-			display:'Deals Voucher Duration',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		voucher_claim_time:{
-			display:'Date & Time Claim Deals',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'datetime'
-		},
-		voucher_redeem_time:{
-			display:'Date & Time Redeem Voucher',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'datetime'
-		},
-		voucher_used_time:{
-			display:'Date & Time Used Voucher',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'datetime'
-		},
-		user_limit:{
-			display:'User Limit',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		total_voucher_subscription:{
-			display:'Total Voucher Subscription',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		deals_total_claimed:{
-			display:'Deals Total Claimed',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		deals_total_redeemed:{
-			display:'Deals Total Redeemed',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		deals_total_used:{
-			display:'Deals Total Used',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		deals_total_available:{
-			display:'Deals Total Available',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		created_at:{
-			display:'Created Date',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		updated_at:{
-			display:'Last Update',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'date'
+			opsi:{!!json_encode($outlets2??[])!!}
 		},
 	};
 	database={
@@ -448,12 +195,12 @@ $configs  = session('configs');
 </script>
 @endsection
 @section('filter')
-<form action="#" method="post">
+<form action="#participate" method="post">
 	<div class="portlet light bordered">
 		<div class="portlet-title">
 			<div class="caption font-blue ">
 				<i class="icon-settings font-blue "></i>
-				<span class="caption-subject bold uppercase">Filter Deals List</span>
+				<span class="caption-subject bold uppercase">Filter Participate List</span>
 			</div>
 		</div>
 		<div class="portlet-body form">
@@ -492,8 +239,8 @@ $configs  = session('configs');
 <div class="alert alert-block alert-info fade in">
 	<button type="button" class="close" data-dismiss="alert"></button>
 	<h4 class="alert-heading">Displaying search result :</h4>
-	<p>{{count($deals)}}</p><br>
-	<form action="{{ url('deals') }}" method="post">
+	<p>{{ $userTotal??'' }}</p><br>
+	<form action="" method="post">
 		{{csrf_field()}}
 		<button class="btn btn-sm btn-warning" name="clear" value="session">Reset</button>
 	</form>
