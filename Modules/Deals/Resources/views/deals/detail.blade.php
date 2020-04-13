@@ -1,6 +1,16 @@
+@php
+	if($deals_type == 'Promotion'){
+        $rpage = 'promotion/deals';
+	}elseif($deals_type == 'WelcomeVoucher'){
+        $rpage = 'welcome-voucher';
+    }else{
+        $rpage = $deals_type=='Deals'?'deals':'inject-voucher';
+    }
+@endphp
 @extends('layouts.main-closed')
 @include('deals::deals.detail-info')
 @include('deals::deals.detail-info-content')
+@include('deals::deals.participate')
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
@@ -192,6 +202,43 @@
                 "searching": false,
                 "paging": false,
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+        });
+        $('#participate_tables').dataTable({
+            language: {
+                aria: {
+                    sortAscending: ": activate to sort column ascending",
+                    sortDescending: ": activate to sort column descending"
+                },
+                emptyTable: "No data available in table",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                infoEmpty: "No entries found",
+                infoFiltered: "(filtered1 from _MAX_ total entries)",
+                lengthMenu: "_MENU_ entries",
+                search: "Search:",
+                zeroRecords: "No matching records found"
+            },
+            buttons: [{
+                extend: "print",
+                className: "btn dark btn-outline"
+            }, {
+                extend: "pdf",
+                className: "btn green btn-outline"
+            }, {
+                extend: "csv",
+                className: "btn purple btn-outline "
+            }],
+            deferRender: !0,
+            scroller: !0,
+            deferRender: !0,
+            scrollX: !0,
+            scrollCollapse: !0,
+            stateSave: !0,
+            lengthMenu: [
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"]
+            ],
+            pageLength: 10,
+            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
     </script>
 
@@ -499,6 +546,7 @@
 	@yield('child-script')
 	@yield('child-script2')
 	@yield('detail-script')
+	@yield('participate-script')
 @endsection
 
 @section('content')
@@ -524,6 +572,7 @@
 
     @include('layouts.notifications')
 
+@if($deals_type != 'Promotion')
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <a class="dashboard-stat dashboard-stat-v2 blue">
@@ -532,7 +581,15 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals['deals_total_voucher'] }}">{{ $deals['deals_total_voucher'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_total_voucher'] }}">
+                        @if (!empty($deals['deals_voucher_type']))
+                        	@if ( $deals['deals_voucher_type'] == "Unlimited")
+                        		{{ 'Unlimited' }}
+                        	@else
+                        		{{ number_format(($deals['deals_total_voucher']??0)-($deals['deals_total_claimed']??0)) }}
+                        	@endif
+                        @endif
+                        </span>
                     </div>
                     <div class="desc"> Total Voucher </div>
                 </div>
@@ -578,7 +635,7 @@
             </a>
         </div>
     </div>
-
+@endif
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">
             <div class="caption">
@@ -601,6 +658,9 @@
 
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
+                	@if ($deals['step_complete'] != 1)
+                    <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Mark as Complete</a>
+                    @endif
                 	<ul class="nav nav-tabs" id="tab-header">
                         <li class="active" id="infoOutlet">
                             <a href="#basic" data-toggle="tab" > Basic Info </a>
@@ -633,7 +693,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($deals['outlets'] as $res)
+                                        @foreach(($promotion_outlets??$deals['outlets']) as $res)
                                             <tr>
                                                 <td>{{ $res['outlet_code'] }}</td>
                                                 <td>{{ $res['outlet_name'] }}</td>
@@ -649,15 +709,39 @@
                         </div>
                     </div>
                 </div>
+                @if($deals_type != 'Promotion')
                 <div class="tab-pane" id="voucher">
                     @include('deals::deals.voucher')
                 </div>
                 <div class="tab-pane" id="participate">
-                    @include('deals::deals.participate')
+                    @yield('detail-participate')
                 </div>
+                @endif
             </div>
         </div>
     </div>
-
+    @if ($deals['step_complete'] != 1)
+    <div class="modal fade bs-modal-sm" id="small" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Mark as complete?</h4>
+                </div>
+                <form action="{{url('deals/update-complete')}}" method="post">
+                	@csrf
+                	<input type="hidden" name="id_deals" value="{{$deals['id_deals']}}">
+                	<input type="hidden" name="deals_type" value="{{$deals['deals_type']??$deals_type}}">
+	                <div class="modal-footer">
+	                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button>
+	                    <button type="submit" class="btn green">Confirm</button>
+	                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    @endif
 
 @endsection
