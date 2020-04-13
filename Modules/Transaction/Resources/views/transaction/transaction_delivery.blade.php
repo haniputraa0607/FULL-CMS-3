@@ -79,6 +79,9 @@
                   <th>Phone</th>
                   <th>Total Price</th>
                   <th>Payment Status</th>
+                  @if(strtolower($key) == 'delivery')
+                  <th>Shipment Status</th>
+                  @endif
                   <th>Actions</th>
               </tr>
             </thead>
@@ -100,6 +103,9 @@
                             @endif
                             <td>Rp {{ number_format($res['transaction_grandtotal'], 2) }}</td>
                             <td>{{ $res['transaction_payment_status'] }}</td>
+                            @if(strtolower($key) == 'delivery')
+                            <td>{{$res['latest_status']??''}}</td>
+                            @endif
                             <td>
                                 <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/{{ $key }}"><i class="icon-pencil"></i> Detail </a>
                                 {{-- <a class="btn btn-block red btn-xs" href="{{ url('transaction/delete', $res['transaction_receipt_number']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a> --}}
