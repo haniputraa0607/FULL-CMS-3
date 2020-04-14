@@ -321,6 +321,39 @@
 						<i class="fa fa-question-circle tooltips" data-original-title="Kode tag digunakan untuk mengkategorikan kode promo" data-container="body"></i>
 						<select id="selectTag" name="promo_tag[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true"></select>
 					</div>
+
+					<div class="form-group">
+						<label class="control-label">Title</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Judul Promo" data-container="body"></i>
+						<div class="input-group col-md-12">
+							<input required type="text" class="form-control" name="promo_title" placeholder="Promo Title" @if(isset($result['promo_title']) && $result['promo_title'] != "") value="{{$result['promo_title']}}" @elseif(old('promo_title') != "") value="{{old('promo_title')}}" @endif autocomplete="off">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label">Charged Central</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak pusat" data-container="body"></i>
+						<div class="input-group col-md-12">
+							<div class="input-group">
+								<input required type="text" class="form-control" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label">Charged Outlet</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak outlet" data-container="body"></i>
+						<div class="input-group col-md-12">
+							<div class="input-group">
+								<input required type="text" class="form-control" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+					</div>
 					<div class="form-group">
                         <div class="input-icon right">
                             <label class="control-label">

@@ -1914,13 +1914,46 @@
 				<h3 class="uppercase" style="color: #383b67;font-weight: 600;">Disburse</h3>
 			</li>
 
+			<li class="nav-item {{($menu_active == 'disburse-dasboard') ? 'active' : ''}}">
+				<a href="{{url('disburse/dashboard')}}" class="nav-link nav-toggle">
+					<i class="fa fa-th"></i>
+					<span class="title">Dashboard</span>
+				</a>
+			</li>
+
+			<li class="nav-item {{($menu_active == 'disburse-list-success') ? 'active' : ''}}">
+				<a href="{{url('disburse/list/success')}}" class="nav-link nav-toggle">
+					<i class="fa fa-list"></i>
+					<span class="title">List Success</span>
+				</a>
+			</li>
+
+			<li class="nav-item {{($menu_active == 'disburse-list-fail') ? 'active' : ''}}">
+				<a href="{{url('disburse/list/fail')}}" class="nav-link nav-toggle">
+					<i class="fa fa-list"></i>
+					<span class="title">List Fail</span>
+				</a>
+			</li>
+
+			<li class="nav-item {{($menu_active == 'disburse-list-trx') ? 'active' : ''}}">
+				<a href="{{url('disburse/list/trx')}}" class="nav-link nav-toggle">
+					<i class="fa fa-list"></i>
+					<span class="title">List Transaction Online</span>
+				</a>
+			</li>
+
 			<li class="nav-item {{($menu_active == 'disburse-settings') ? 'active' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
-					<i class="icon-question"></i>
+					<i class="fa fa-sliders"></i>
 					<span class="title">Settings</span>
 					<span class="arrow {{($menu_active == 'disburse-settings') ? 'open' : ''}}"></span>
 				</a>
 				<ul class="sub-menu">
+					<li class="nav-item {{($submenu_active == 'disburse-setting-list-outlet') ? 'active open' : ''}}">
+						<a href="{{url('disburse/setting/list-outlet')}}" class="nav-link ">
+							<span class="title">List Outlet</span>
+						</a>
+					</li>
 					<li class="nav-item {{($submenu_active == 'disburse-setting-bank-account') ? 'active open' : ''}}">
 						<a href="{{url('disburse/setting/bank-account')}}" class="nav-link ">
 							<span class="title">Bank Account</span>
@@ -1937,25 +1970,4 @@
 						</a>
 					</li>
 				</ul>
-			</li>
-
-			<li class="nav-item {{($menu_active == 'disburse-list-success') ? 'active' : ''}}">
-				<a href="{{url('disburse/list/success')}}" class="nav-link nav-toggle">
-					<i class="icon-question"></i>
-					<span class="title">List Pending</span>
-				</a>
-			</li>
-
-			<li class="nav-item {{($menu_active == 'disburse-list-fail') ? 'active' : ''}}">
-				<a href="{{url('disburse/list/fail')}}" class="nav-link nav-toggle">
-					<i class="icon-question"></i>
-					<span class="title">List Fail</span>
-				</a>
-			</li>
-
-			<li class="nav-item {{($menu_active == 'disburse-list-trx') ? 'active' : ''}}">
-				<a href="{{url('disburse/list/trx')}}" class="nav-link nav-toggle">
-					<i class="icon-question"></i>
-					<span class="title">List Transaction Online</span>
-				</a>
 			</li>

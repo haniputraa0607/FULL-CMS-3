@@ -15,17 +15,20 @@ Route::get('/disburse', function () {
 });
 
 Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
-    Route::get('login', function () {
-        if (!session()->has('username-disburse')) return view('disburse::login'); else return redirect('disburse::home');
-    });
-    Route::post('login', 'DisburseController@login');
-    Route::group(['middleware' => 'validate_session_disburse'], function(){
-        Route::get('dashboard', 'DisburseController@dashboard');
-    });
+//    Route::get('login', function () {
+//        if (!session()->has('username-disburse')) return view('disburse::login'); else return redirect('disburse::home');
+//    });
+//    Route::post('login', 'DisburseController@login');
+//    Route::group(['middleware' => 'validate_session_disburse'], function(){
+//        Route::get('dashboard', 'DisburseController@dashboard');
+//    });
 
+    Route::any('dashboard', 'DisburseController@dashboard');
     Route::post('getOutlets', 'DisburseController@getOutlets');
+    Route::post('getUserFranchise', 'DisburseController@userFranchise');
 
     //Setting Bank Account
+    Route::any('setting/list-outlet', 'DisburseSettingController@listOutlet');
     Route::any('setting/bank-account', 'DisburseSettingController@bankAccount');
     Route::any('setting/mdr', 'DisburseSettingController@mdr');
     Route::any('setting/mdr-global', 'DisburseSettingController@mdrGlobal');
@@ -36,5 +39,6 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
     //Disburse
     Route::any('list/trx', 'DisburseController@listTrx');
     Route::any('list/{status}', 'DisburseController@listDisburse');
+    Route::any('list-datatable/{status}', 'DisburseController@listDisburseDataTable');
     Route::any('detail/{id}', 'DisburseController@detailDisburse');
 });

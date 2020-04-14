@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $idUserFrenchisee = session('id_id_user_franchise');
  ?>
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
@@ -23,13 +24,15 @@
             }else{
                 var token  = "{{ csrf_token() }}";
                 var url = "{{url('disburse/getOutlets')}}";
+                var user = $("#id_user_franchise").val();
                 $("#outlet").empty();
 
                 $.ajax({
                     type : "POST",
                     url : url,
                     data : {
-                        _token : token
+                        _token : token,
+                        id_user_franchise : user
                     },
                     success : function(result) {
                         if(result.status === 'success'){
@@ -50,10 +53,44 @@
                 });
             }
         }
+        
+        function loadUserFranchise(userType) {
+            $("#outlet").empty();
+            document.getElementById('div_outlet').style.display = 'none';
+            var token  = "{{ csrf_token() }}";
+            var url = "{{url('disburse/getUserFranchise')}}";
+            $("#id_user_franchise").empty();
+
+            $.ajax({
+                type : "POST",
+                url : url,
+                data : {
+                    _token : token,
+                    user_type : userType
+                },
+                success : function(result) {
+                    $("#id_user_franchise").append('<option></option>');
+                    if(result.status === 'success'){
+                        var len = result.result.length;
+                        var data = result.result;
+                        for (var i=0; i<len;i++){
+                            $("#id_user_franchise").append('<option value=' + data[i].id_user_franchise + '>' + data[i].phone + '</option>');
+                        }
+                        document.getElementById('div_radio_outlet').style.display = 'block';
+                    }else{
+                        document.getElementById('div_radio_outlet').style.display = 'none';
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    document.getElementById('div_radio_outlet').style.display = 'none';
+                    toastr.warning('Failed get outlet');
+                }
+            });
+        }
     </script>
 @endsection
 
-@extends('layouts.main')
+@extends(($idUserFrenchisee == NULL ? 'layouts.main' : 'disburse::layouts.main'))
 
 @section('content')
     <div class="page-bar">
@@ -98,7 +135,7 @@
                                     <option></option>
                                     @if(!empty($bank))
                                         @foreach($bank as $val)
-                                            <option value="{{$val['id_bank_name']}}">{{$val['bank_code']}} - {{$val['bank_name']}}</option>
+                                            <option value="{{$val['id_bank_name']}}">{{$val['bank_name']}}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -106,32 +143,84 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Account Number
+                        <label class="col-md-3 control-label">Beneficiary Name
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Nomor rekening" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="nama penerima" data-container="body"></i>
                         </label>
                         <div class="col-md-7">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Account Number" class="form-control" name="account_number" value="{{ old('account_number') }}" required>
+                                <input type="text" placeholder="Beneficiary Name" class="form-control" name="beneficiary_name" value="{{ old('beneficiary_name') }}" required>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Recipient Name
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Nama penerima" data-container="body"></i>
+                        <label class="col-md-3 control-label">Beneficiary Alias
+                            <i class="fa fa-question-circle tooltips" data-original-title="nama alias penerima" data-container="body"></i>
                         </label>
                         <div class="col-md-7">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Recipient Name" class="form-control" name="recipient_name" value="{{ old('recipient_name') }}" required>
+                                <input type="text" placeholder="Beneficiary Alias" class="form-control" name="beneficiary_alias" value="{{ old('beneficiary_alias') }}">
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Beneficiary Account
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="nomor rekening penerima" data-container="body"></i>
+                        </label>
+                        <div class="col-md-7">
+                            <div class="input-icon right">
+                                <input type="text" placeholder="111116xxxxxx" class="form-control" name="beneficiary_account" value="{{ old('beneficiary_account') }}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Beneficiary Email
+                            <i class="fa fa-question-circle tooltips" data-original-title="email penerima" data-container="body"></i>
+                        </label>
+                        <div class="col-md-7">
+                            <div class="input-icon right">
+                                <input type="text" placeholder="email@example.com" class="form-control" name="beneficiary_email" value="{{ old('beneficiary_email') }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Outlet Type
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tipe Outlet yang akan diupdate" data-container="body"></i>
+                        </label>
+                        <div class="col-md-7">
+                            <div class="input-icon right">
+                                <select class="form-control select2" data-placeholder="Outlet Type" name="outlet_type" data-value="{{old('outlet_type')}}" required onchange="loadUserFranchise(this.value)">
+                                    <option></option>
+                                    <option value="Non Franchise">Outlet Pusat</option>
+                                    <option value="Franchise">Outlet Franchise</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">User Franchise
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="user franchisee yang outeltnya akan di setting" data-container="body"></i>
+                        </label>
+                        <div class="col-md-7">
+                            <div class="input-icon right">
+                                <select class="form-control select2" id="id_user_franchise" data-placeholder="User Franchise" name="id_user_franchise" data-value="{{old('id_user_franchise')}}" required>
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: none" id="div_radio_outlet">
                         <label class="col-md-3 control-label"></label>
-                        <div class="col-md-7">
+                        <div class="col-md-4">
                             <div class="md-radio-inline">
                                 <div class="md-radio">
                                     <input type="radio" id="optionsRadios4" name="outlets" class="md-radiobtn publishType" value="all" checked onclick="loadOutlets('all')">
@@ -148,6 +237,9 @@
                                         <span class="box"></span> Specific Oultet </label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-4" style="display: none">
+                            <button class="btn green" onclick="showOutlet()">Select Outlet</button>
                         </div>
                     </div>
 
@@ -166,46 +258,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase ">List Outlet</span>
-            </div>
-        </div>
-        <div class="portlet-body form">
-            <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
-                <table class="table table-striped table-bordered table-hover" id="tableReport">
-                    <thead>
-                    <tr>
-                        <th scope="col" width="30%"> Outlet </th>
-                        <th scope="col" width="25%"> Bank </th>
-                        <th scope="col" width="10%"> Account Number </th>
-                        <th scope="col" width="25%"> Recipient Number </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        @if(!empty($outlets))
-                            @foreach($outlets as $data)
-                                <tr>
-                                    <td>{{$data['outlet_code']}} - {{$data['outlet_name']}}</td>
-                                    <td>{{$data['bank_code']}} - {{$data['bank_name']}}</td>
-                                    <td>{{$data['account_number']}}</td>
-                                    <td>{{$data['recipient_name']}}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr><td colspan="5" style="text-align: center">Data Not Available</td></tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-            <br>
-            @if ($outletPaginator)
-                {{ $outletPaginator->fragment('participate')->links() }}
-            @endif
         </div>
     </div>
 

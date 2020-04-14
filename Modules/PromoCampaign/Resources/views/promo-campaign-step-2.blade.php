@@ -512,6 +512,14 @@
 							<div class="col-md-8 value">: {{ !empty($result['vouchers']) ? 'Voucher' : 'Promo code' }}</div>
 						</div>
 						<div class="row static-info">
+							<div class="col-md-4 name">Charged Central</div>
+							<div class="col-md-8 value">: {{$result['charged_central']}} %</div>
+						</div>
+						<div class="row static-info">
+							<div class="col-md-4 name">Charged Outlet</div>
+							<div class="col-md-8 value">: {{$result['charged_outlet']}} %</div>
+						</div>
+						<div class="row static-info">
                             <div class="col-md-4 name">Brand</div>
                             <div class="col-md-8 value">: {{ $result['brand']['name_brand']??'' }}</div>
                         </div>

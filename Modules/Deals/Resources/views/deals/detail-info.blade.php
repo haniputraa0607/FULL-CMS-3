@@ -80,6 +80,14 @@
                     <div class="col-md-4 name">Brand</div>
                     <div class="col-md-8 value">: {{ $deals['brand']['name_brand']??'' }}</div>
                 </div>
+                <div class="row static-info">
+                    <div class="col-md-4 name">Charged Central</div>
+                    <div class="col-md-8 value">: {{$deals['charged_central']}} %</div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-4 name">Charged Outlet</div>
+                    <div class="col-md-8 value">: {{$deals['charged_outlet']}} %</div>
+                </div>
             @if($deals_type != 'WelcomeVoucher' && $deals_type != 'Promotion')
                 @if(isset($deals['deals_start']))
                 <div class="row static-info">
