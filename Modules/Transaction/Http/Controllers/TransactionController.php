@@ -126,6 +126,12 @@ class TransactionController extends Controller
                 $data['menu_active'] = 'welcome-voucher';
                 $data['submenu_active'] = 'deals-autoresponse-welcome-voucher';
                 break;
+
+            case 'delivery-status-update':
+                $data['menu_active'] = 'transaction';
+                $data['submenu_active'] = 'delivery-status-update';
+                break;
+
             default:
                 # code...
                 break;
