@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $idUserFrenchisee = session('id_user_franchise');
  ?>
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
@@ -91,7 +92,7 @@
     </script>
 @endsection
 
-@extends('layouts.main')
+@extends(($idUserFrenchisee == NULL ? 'layouts.main' : 'disburse::layouts.main'))
 
 @section('content')
     <div class="page-bar">
@@ -144,6 +145,7 @@
                             <div class="portlet-body form">
                                 <div class="m-heading-1 border-green m-bordered">
                                     <p>Setting ini digunakan untuk mengatur fee yang akan diberikan setiap outlet kepada pihak Janji Jiwa.</p>
+                                    <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
                                 </div>
                                 <form class="form-horizontal" role="form" action="{{url('disburse/setting/fee-global')}}" method="post">
                                     <div class="form-body">
@@ -205,11 +207,12 @@
                                             <div class="col-md-3">Outlet = 100%</div>
                                         </div>
                                     </p>
+                                    <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
                                 </div>
                                 <form class="form-horizontal" role="form" action="{{url('disburse/setting/point-charged-global')}}" method="post" id="form_point">
                                     <div class="form-body">
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label">Percent to Janji Jiwa <span class="required" aria-required="true"> * </span></label>
+                                            <label class="col-md-4 control-label">Charged Central <span class="required" aria-required="true"> * </span></label>
                                             <div class="col-md-4">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" id="central" name="central" required value="{{$point['central']}}"><span class="input-group-addon">%</span>
@@ -217,7 +220,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label">Percent to Outlet <span class="required" aria-required="true"> * </span></label>
+                                            <label class="col-md-4 control-label">Charged Outlet <span class="required" aria-required="true"> * </span></label>
                                             <div class="col-md-4">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" id="outlet" name="outlet" required value="{{$point['outlet']}}"><span class="input-group-addon">%</span>

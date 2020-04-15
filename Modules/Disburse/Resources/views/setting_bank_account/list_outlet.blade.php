@@ -55,77 +55,63 @@
         </ul>
     </div><br>
 
-    <h1 class="page-title" style="margin-top: 0px;">
-        {{$sub_title}}
-    </h1>
     @include('layouts.notifications')
 
     <?php
-    $date_start = '';
-    $date_end = '';
-
-    if(Session::has('filter-list-disburse-trx')){
-        $search_param = Session::get('filter-list-disburse-trx');
-        if(isset($search_param['date_start'])){
-            $date_start = $search_param['date_start'];
-        }
-
-        if(isset($search_param['date_end'])){
-            $date_end = $search_param['date_end'];
-        }
-
-        if(isset($search_param['rule'])){
-            $rule = $search_param['rule'];
-        }
-
+    if(Session::has('filter-disburse-list-outlet')){
+        $search_param = Session::get('filter-disburse-list-outlet');
         if(isset($search_param['conditions'])){
             $conditions = $search_param['conditions'];
         }
     }
     ?>
-
     <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
         {{ csrf_field() }}
-        @include('disburse::disburse.filter_list_trx')
+        @include('disburse::setting_bank_account.filter_list_outlet')
     </form>
-    <br>
 
-    <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
-        <table class="table table-striped table-bordered table-hover" id="tableReport">
-            <thead>
-            <tr>
-                <th scope="col" width="10%"> Recipient Number </th>
-                <th scope="col" width="30%"> Outlet </th>
-                <th scope="col" width="30%"> Transaction Date </th>
-                <th scope="col" width="10%"> Nominal Transaction</th>
-                <th scope="col" width="25%"> Status Disburse</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if(!empty($trx))
-                @foreach($trx as $val)
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <span class="caption-subject font-blue sbold uppercase ">List Outlet</span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
+                <table class="table table-striped table-bordered table-hover" id="tableReport">
+                    <thead>
                     <tr>
-                        <td>{{$val['transaction_receipt_number']}}</td>
-                        <td>{{$val['outlet_code']}} - {{$val['outlet_name']}}</td>
-                        <td>{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
-                        <td>{{number_format($val['transaction_grandtotal'])}}</td>
-                        <td>
-                            @if(!is_null($val['id_disburse']))
-                                {{$val['disburse_status']}}
-                            @else
-                                Pending
-                            @endif
-                        </td>
+                        <th scope="col" width="30%"> Outlet </th>
+                        <th scope="col" width="25%"> Beneficiary Bank </th>
+                        <th scope="col" width="10%"> Beneficiary Name </th>
+                        <th scope="col" width="25%"> Beneficiary Alias </th>
+                        <th scope="col" width="25%"> Beneficiary Account </th>
+                        <th scope="col" width="25%"> Beneficiary Email </th>
                     </tr>
-                @endforeach
-            @else
-                <tr><td colspan="10" style="text-align: center">Data Not Available</td></tr>
+                    </thead>
+                    <tbody>
+                        @if(!empty($outlets))
+                            @foreach($outlets as $data)
+                                <tr>
+                                    <td>{{$data['outlet_code']}} - {{$data['outlet_name']}}</td>
+                                    <td>{{$data['bank_code']}} - {{$data['bank_name']}}</td>
+                                    <td>{{$data['beneficiary_name']}}</td>
+                                    <td>{{$data['beneficiary_alias']}}</td>
+                                    <td>{{$data['beneficiary_account']}}</td>
+                                    <td>{{$data['beneficiary_email']}}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr><td colspan="5" style="text-align: center">Data Not Available</td></tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            @if ($outletPaginator)
+                {{ $outletPaginator->links() }}
             @endif
-            </tbody>
-        </table>
+        </div>
     </div>
-    <br>
-    @if ($trxPaginator)
-        {{ $trxPaginator->links() }}
-    @endif
+
 @endsection

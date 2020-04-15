@@ -148,7 +148,7 @@ class ProductController extends Controller
                 }
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 break;
-            
+
             default:
                 return abort(404);
                 break;
@@ -253,7 +253,7 @@ class ProductController extends Controller
                     ];
                 }
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -505,8 +505,8 @@ class ProductController extends Controller
             'submenu_active' => 'product-image',
             'child_active'   => 'product-image-add',
         ];
-        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1, 'image' => 'null']);
-        
+        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1]);
+
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
@@ -532,7 +532,7 @@ class ProductController extends Controller
             'child_active'   => 'product-image-list',
         ];
         $product = MyHelper::post('product/be/list/image', ['admin_list' => 1]);
-        
+
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
@@ -544,7 +544,7 @@ class ProductController extends Controller
 
     function overrideImage(Request $request) {
         $post = $request->except('_token');
-        
+
         if (isset($post['state'])) {
             if ($post['state'] == 'true') {
                 $status = 0;
@@ -559,7 +559,7 @@ class ProductController extends Controller
         } else {
             $setting = MyHelper::post('product/be/imageOverride', ['admin_list' => 1]);
         }
-        
+
         return $setting;
     }
 

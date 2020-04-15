@@ -449,6 +449,40 @@ $configs    		= session('configs');
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                                Charged Central
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Jumlah percent yang akan di bebankan ke pusat" placeholder="Charged Central" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="charged_central"  placeholder="Charged Central" required value="{{ old('charged_central') }}"><span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                                Charged Outlet
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Jumlah percent yang akan di bebankan ke outlet" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="charged_outlet"  placeholder="Charged Outlet" required value="{{ old('charged_outlet') }}"><span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 <!--                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">

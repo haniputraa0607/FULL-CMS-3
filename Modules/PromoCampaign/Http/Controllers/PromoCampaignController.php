@@ -285,6 +285,13 @@ class PromoCampaignController extends Controller
         }
         else
         {
+            if(isset($post['charged_central']) || isset($post['charged_outlet']) ){
+                $check = $post['charged_central'] + $post['charged_outlet'];
+                if($check != 100){
+                    return back()->withErrors(['Value charged central and charged outlet not valid'])->withInput();
+                }
+            }
+
             if(!empty($id_promo_campaign)){
                 $post['id_promo_campaign'] = $id_promo_campaign;
             }

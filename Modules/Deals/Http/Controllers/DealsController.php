@@ -88,6 +88,13 @@ class DealsController extends Controller
             $post['deals_voucher_start'] = date('Y-m-d H:i:s', strtotime($post['deals_voucher_start']));
         }
 
+        if (isset($post['charged_central']) || isset($post['charged_outlet'])) {
+            $checkValue = $post['charged_central'] + $post['charged_outlet'];
+            if ((int)$checkValue != 100 ) {
+                return back()->withErrors(['Charged Center value and Charged Outlet value not valid']);
+            }
+        }
+
         $save = MyHelper::post('deals/create', $post);
 
         if (isset($save['status']) && $save['status'] == "success") {
@@ -779,6 +786,13 @@ class DealsController extends Controller
         if (isset($post['voucher_code']) && empty($post['deals_title'])) {
         	$post['id_deals'] = MyHelper::explodeSlug($post['id_deals'])[0];
             return parent::redirect($this->saveVoucherList($post['id_deals'], $post['voucher_code'], 'add'), "Voucher has been added.");
+        }
+
+        if (isset($post['charged_central']) || isset($post['charged_outlet'])) {
+            $checkValue = $post['charged_central'] + $post['charged_outlet'];
+            if ((int)$checkValue != 100 ) {
+                return back()->withErrors(['Charged Center value and Charged Outlet value not valid']);
+            }
         }
 
         // ASSIGN USER TO VOUCHER
