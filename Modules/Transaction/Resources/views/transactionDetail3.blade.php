@@ -711,6 +711,51 @@
         </div>
     </div>
     @endif
+    @if ($data['pickup_gosend_update']??false)
+    <div class="kotak">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Alamat Pengiriman <hr> </div>
+                <div class="col-12 text-13-3px seravek-font text-black">{{$data['detail']['transaction_pickup_go_send']['destination_address']}}. {{$data['detail']['transaction_pickup_go_send']['destination_note']}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="kotak">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-14-3px space-top text-greyish-brown seravek-font">Status Pengiriman <hr> </div>
+                @php $top = 5; $bg = true; @endphp
+                @foreach($data['pickup_gosend_update'] as $key => $update)
+                    <div class="col-12 text-13-3px seravek-font text-black">
+                        <div class="round-greyish-brown @if($bg) bg-greyish-brown @endif"></div>
+                        {{$update['status']}}
+                    </div>
+                    <div class="col-12 top-5px">
+                        @if($key < count($data['pickup_gosend_update']) - 1)
+                        <div class="inline text-center">
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                            <div class="line-vertical text-grey-medium-light">|</div>
+                        </div>
+                        <div class="inline vertical-top" style="    position: absolute;    top: 0;    left: 31px;">
+                            <div class="text-11-7px seravek-light-font text-black space-bottom">
+                                {{date('d F Y H:i', strtotime($update['created_at']))}}
+                            </div>
+                        </div>
+                        @else
+                        <div class="col-12 text-11-7px seravek-light-font text-black space-bottom top-{{$top}}px">
+                            {{date('d F Y H:i', strtotime($update['created_at']))}}
+                        </div>
+                        @endif
+                    </div>
+                    @php $top += 5; $bg = false; @endphp
+                @endforeach
+            </div>
+        </div>
+    </div>
+    @endif
 
     </div>
 @endsection
