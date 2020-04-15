@@ -2,6 +2,10 @@
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
     $idUserFrenchisee = session('id_user_franchise');
+    $baseUri = 'disburse';
+    if(!is_null($idUserFrenchisee)){
+        $baseUri = 'disburse/user-franchise';
+    }
  ?>
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
@@ -93,6 +97,7 @@
             <thead>
             <tr>
                 <th scope="col" width="10%"> Action </th>
+                @if($status == 'all') <th scope="col" width="10%"> Status </th>@endif
                 <th scope="col" width="30%"> Outlet </th>
                 <th scope="col" width="30%"> Date </th>
                 <th scope="col" width="10%"> Nominal </th>
@@ -108,12 +113,13 @@
                         <td>
                             <a class="btn btn-xs green" target="_blank" href="{{url('disburse/detail', $val['id_disburse'])}}">Detail</a>
                         </td>
+                        @if($status == 'all') <td>{{$val['disburse_status']}}</td>@endif
                         <td>{{$val['outlet_code']}} - {{$val['outlet_name']}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>
                         <td>{{number_format($val['disburse_nominal'])}}</td>
                         <td>{{$val['bank_name']}}</td>
                         <td>{{$val['beneficiary_account_number']}}</td>
-                        <td>{{$val['recipient_name']}}</td>
+                        <td>{{$val['beneficiary_name']}}</td>
                     </tr>
                 @endforeach
             @else

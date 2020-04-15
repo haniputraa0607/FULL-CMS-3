@@ -25,6 +25,18 @@
                 ?>
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
+        }else if(subject_value == 'status'){
+            var operator = "conditions["+index+"][operator]";
+            var operator_value = document.getElementsByName(operator)[0];
+            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+            operator_value.options[operator_value.options.length] = new Option('Success', 'Success');
+            operator_value.options[operator_value.options.length] = new Option('Queued', 'Queued');
+            operator_value.options[operator_value.options.length] = new Option('Processed', 'Processed');
+            operator_value.options[operator_value.options.length] = new Option('Fail', 'Fail');
+            operator_value.options[operator_value.options.length] = new Option('Rejected', 'Rejected');
+
+            var parameter = "conditions["+index+"][parameter]";
+            document.getElementsByName(parameter)[0].type = 'hidden';
         }else{
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
@@ -97,6 +109,9 @@
                                                     <option value="bank_name" @if ($con['subject'] == 'bank_name') selected @endif>Bank</option>
                                                     <option value="account_number" @if ($con['subject'] == 'account_number') selected @endif>Account Number</option>
                                                     <option value="recipient_name" @if ($con['subject'] == 'recipient_name') selected @endif>Recipient Name</option>
+                                                    @if($status == 'all')
+                                                    <option value="status" @if ($con['subject'] == 'status') selected @endif>Status</option>
+                                                    @endif
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -105,6 +120,12 @@
                                                         @foreach($banks as $val)
                                                             <option value="{{$val['id_bank_name']}}" @if ($con['operator'] == $val['id_bank_name']) selected @endif>{{$val['bank_name']}}</option>
                                                         @endforeach
+                                                    @elseif($con['subject'] == 'status')
+                                                        <option value="Success" @if ($con['operator']  == 'Success') selected @endif>Success</option>
+                                                        <option value="Queued" @if ($con['operator']  == 'Queued') selected @endif>Queued</option>
+                                                        <option value="Processed" @if ($con['operator']  == 'Processed') selected @endif>Processed</option>
+                                                        <option value="Fail" @if ($con['operator']  == 'Fail') selected @endif>Fail</option>
+                                                        <option value="Rejected" @if ($con['operator']  == 'Rejected') selected @endif>Rejected</option>
                                                     @else
                                                         <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                                         <option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>
@@ -112,7 +133,7 @@
                                                 </select>
                                             </div>
 
-                                            @if ($con['subject'] == 'bank_name')
+                                            @if ($con['subject'] == 'bank_name' || $con['subject'] == 'status')
                                                 <div class="col-md-3">
                                                     <input type="hidden" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
                                                 </div>
@@ -141,6 +162,7 @@
                                                     <option value="bank_name">Bank</option>
                                                     <option value="account_number">Account Number</option>
                                                     <option value="recipient_name">Recipient Name</option>
+                                                    @if($status == 'all')<option value="status">Status</option>@endif
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -174,6 +196,7 @@
                                             <option value="bank_name">Bank</option>
                                             <option value="account_number">Account Number</option>
                                             <option value="recipient_name">Recipient Name</option>
+                                            @if($status == 'all')<option value="status">Status</option>@endif
                                         </select>
                                     </div>
                                     <div class="col-md-4">

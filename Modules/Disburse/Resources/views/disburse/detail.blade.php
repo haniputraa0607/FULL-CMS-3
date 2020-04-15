@@ -84,7 +84,7 @@ $idUserFrenchisee = session('id_user_franchise');
                     </tr>
                     <tr>
                         <td width="60%">Recipient Name</td>
-                        <td>: {{$disburse['recipient_name']}}</td>
+                        <td>: {{$disburse['beneficiary_name']}}</td>
                     </tr>
                 </table>
             </div>
@@ -97,6 +97,7 @@ $idUserFrenchisee = session('id_user_franchise');
                 <th scope="col" width="10%"> Recipient Number </th>
                 <th scope="col" width="30%"> Transaction Date </th>
                 <th scope="col" width="10%"> Nominal Transaction</th>
+                <th scope="col" width="10%"> Detail Setting </th>
             </tr>
             </thead>
             <tbody>
@@ -106,6 +107,25 @@ $idUserFrenchisee = session('id_user_franchise');
                         <td>{{$val['transaction_receipt_number']}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
                         <td>{{number_format($val['transaction_grandtotal'])}}</td>
+                        <td>
+                            <?php
+                                $mdr_type = '<br>';
+                                if($val['mdr_type'] == 'Percent'){
+                                    $mdr_type = ' %<br>';
+                                }
+                                $mdr = $val['mdr'] + $val['mdr_central'];
+
+                                $html = '';
+                                $html .= 'Fee Outlet: '.$val['fee'].' %<br>';
+                                $html .= 'Fee Payment Gateway: '.$mdr.$mdr_type;
+                                $html .= 'Charged Point Central: '.$val['charged_point_central'].' %<br>';
+                                $html .= 'Charged Point Outlet: '.$val['charged_point_outlet'].' %<br>';
+                                $html .= 'Charged Promo Central: '.$val['charged_promo_central'].' %<br>';
+                                $html .= 'Charged Promo Outlet: '.$val['charged_promo_outlet'].' %<br>';
+
+                                echo $html;
+                            ?>
+                        </td>
                     </tr>
                 @endforeach
             @else

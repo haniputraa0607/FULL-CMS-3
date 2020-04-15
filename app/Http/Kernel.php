@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 		'validate_session'  => \App\Http\Middleware\ValidateSession::class,
+        'validate_session_disburse'  => \App\Http\Middleware\ValidateSessionUserFranchise::class,
 		'feature_control'   => \App\Http\Middleware\FeatureControl::class,
 		'config_control'   => \App\Http\Middleware\ConfigControl::class,
     ];
