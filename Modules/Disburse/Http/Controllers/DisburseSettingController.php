@@ -13,6 +13,56 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class DisburseSettingController extends Controller
 {
+    function listOutlet(Request $request){
+        $post = $request->all();
+        $data = [
+            'title'          => 'Settings',
+            'sub_title'      => 'Setting List Outlet',
+            'menu_active'    => 'disburse-settings',
+            'submenu_active' => 'disburse-setting-list-outlet'
+        ];
+
+        if(Session::has('filter-disburse-list-outlet') && !empty($post) && !isset($post['filter'])){
+            $post = Session::get('filter-disburse-list-outlet');
+        }else{
+            Session::forget('filter-disburse-list-outlet');
+        }
+
+        if($request->get('page')){
+            $post['page'] = $request->get('page');
+        }else{
+            $post['page'] = 1;
+        }
+        $outlets = MyHelper::post('disburse/outlets',$post);
+        if(isset($outlets['status']) && $outlets['status'] == 'success'){
+            if (!empty($outlets['result']['data'])) {
+                $data['outlets']          = $outlets['result']['data'];
+                $data['outletTotal']     = $outlets['result']['total'];
+                $data['outletPerPage']   = $outlets['result']['from'];
+                $data['outletUpTo']      = $outlets['result']['from'] + count($outlets['result']['data'])-1;
+                $data['outletPaginator'] = new LengthAwarePaginator($outlets['result']['data'], $outlets['result']['total'], $outlets['result']['per_page'], $outlets['result']['current_page'], ['path' => url()->current()]);
+            }
+            else {
+                $data['outlets']          = [];
+                $data['outletTotal']     = 0;
+                $data['outletPerPage']   = 0;
+                $data['outletUpTo']      = 0;
+                $data['outletPaginator'] = false;
+            }
+        }else{
+            $data['outlets']          = [];
+            $data['outletTotal']     = 0;
+            $data['outletPerPage']   = 0;
+            $data['outletUpTo']      = 0;
+            $data['outletPaginator'] = false;
+        }
+
+        if($post){
+            Session::put('filter-disburse-list-outlet',$post);
+        }
+        return view('disburse::setting_bank_account.list_outlet', $data);
+    }
+
     function bankAccount(Request $request){
         $post = $request->all();
         $data = [
@@ -22,8 +72,7 @@ class DisburseSettingController extends Controller
             'submenu_active' => 'disburse-setting-bank-account'
         ];
 
-        if($post & !$request->get('page')){
-            $post['id_user_franchisee'] = session('id_user_franchisee');
+        if($post){
             $storeSetting = MyHelper::post('disburse/setting/bank-account',$post);
             if(isset($storeSetting['status']) && $storeSetting['status'] == 'success'){
                 return redirect('disburse/setting/bank-account')->withSuccess(['Success Update Data']);
@@ -31,40 +80,18 @@ class DisburseSettingController extends Controller
                 return redirect('disburse/setting/bank-account')->withErrors(['Failed Update Data']);
             }
         }else{
-            if($request->get('page')){
-                $post['page'] = $request->get('page');
-            }else{
-                $post['page'] = 1;
-            }
-            $outlets = MyHelper::post('disburse/outlets',$post);
-            if(isset($outlets['status']) && $outlets['status'] == 'success'){
-                if (!empty($outlets['result']['data'])) {
-                    $data['outlets']          = $outlets['result']['data'];
-                    $data['outletTotal']     = $outlets['result']['total'];
-                    $data['outletPerPage']   = $outlets['result']['from'];
-                    $data['outletUpTo']      = $outlets['result']['from'] + count($outlets['result']['data'])-1;
-                    $data['outletPaginator'] = new LengthAwarePaginator($outlets['result']['data'], $outlets['result']['total'], $outlets['result']['per_page'], $outlets['result']['current_page'], ['path' => url()->current()]);
-                }
-                else {
-                    $data['outlets']          = [];
-                    $data['outletTotal']     = 0;
-                    $data['outletPerPage']   = 0;
-                    $data['outletUpTo']      = 0;
-                    $data['outletPaginator'] = false;
-                }
-            }else{
-                $data['outlets']          = [];
-                $data['outletTotal']     = 0;
-                $data['outletPerPage']   = 0;
-                $data['outletUpTo']      = 0;
-                $data['outletPaginator'] = false;
-            }
-
             $bank = MyHelper::post('disburse/bank',$post);
             if(isset($bank['status']) && $bank['status'] == 'success'){
                 $data['bank'] = $bank['result'];
             }else{
                 $data['bank'] = [];
+            }
+
+            $user_franchisee = MyHelper::post('disburse/user-franchisee',$post);
+            if(isset($user_franchisee['status']) && $user_franchisee['status'] == 'success'){
+                $data['user_franchises'] = $user_franchisee['result'];
+            }else{
+                $data['user_franchises'] = [];
             }
 
             return view('disburse::setting_bank_account.setting', $data);
@@ -91,10 +118,8 @@ class DisburseSettingController extends Controller
             $mdr = MyHelper::get('disburse/setting/mdr');
             if(isset($mdr['status']) && $mdr['status'] == 'success'){
                 $data['mdr'] = $mdr['result']['mdr'];
-                $data['mdr_global'] = $mdr['result']['mdr_global'];
             }else{
                 $data['mdr'] = [];
-                $data['mdr_global'] = [];
             }
 
             return view('disburse::setting_mdr.setting', $data);

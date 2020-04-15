@@ -97,9 +97,77 @@ class DisburseController extends Controller
         }
     }
 
+    public function dashboard(Request $request){
+        $post = $request->all();
+        if(!empty($post)){
+            $post['id_user_franchise'] = session('id_user_franchise');
+            $getData = MyHelper::post('disburse/dashboard', $post);
+            if(isset($getData['status']) && $getData['status'] == 'success'){
+                $data['status'] = 'success';
+                $data['nominal_success'] = $getData['result']['nominal_success'];
+                $data['nominal_fail'] = $getData['result']['nominal_fail'];
+                $data['nominal_trx'] = $getData['result']['nominal_trx'];
+
+                $data['format_nominal_success'] = number_format($getData['result']['nominal_success']);
+                $data['format_nominal_fail'] = number_format($getData['result']['nominal_fail']);
+                $data['format_nominal_trx'] = number_format($getData['result']['nominal_trx']);
+            }else{
+                $data['status'] = 'fail';
+            }
+            return response()->json($data);
+        }else{
+            $data = [
+                'title'          => 'Disburse',
+                'sub_title'      => 'Disburse Dashboard',
+                'menu_active'    => 'disburse-dashboard',
+                'submenu_active' => 'disburse-dashboard'
+            ];
+
+            $getData = MyHelper::post('disburse/dashboard', ['id_user_franchise' => session('id_user_franchise')]);
+            if(isset($getData['status']) && $getData['status'] == 'success'){
+                $data['nominal_success'] = $getData['result']['nominal_success'];
+                $data['nominal_fail'] = $getData['result']['nominal_fail'];
+                $data['nominal_trx'] = $getData['result']['nominal_trx'];
+            }else{
+                $data['nominal_success'] = [];
+                $data['nominal_fail'] = [];
+                $data['nominal_trx'] = [];
+            }
+
+            $outlets = MyHelper::post('disburse/outlets',$post);
+            if(isset($getData['status']) && $getData['status'] == 'success'){
+                $data['outlets'] = $outlets['result'];
+            }else{
+                $data['outlets'] = [];
+            }
+            return view('disburse::dashboard', $data);
+        }
+    }
+
+    public function listDisburseDataTable(Request $request, $status){
+        $post = $request->all();
+        $draw = $post["draw"];
+        $post['id_user_franchise'] = session('id_user_franchise');
+
+        $getDisburse = MyHelper::post('disburse/list-datatable/fail',$post);
+        if(isset($getDisburse['status']) && isset($getDisburse['status']) == 'success'){
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = $getDisburse['total'];
+            $arr_result['recordsFiltered'] = $getDisburse['total'];
+            $arr_result['data'] = $getDisburse['result'];
+        }else{
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = 0;
+            $arr_result['recordsFiltered'] = 0;
+            $arr_result['data'] = array();
+        }
+
+        return response()->json($arr_result);
+    }
+
     public function getOutlets(Request $request){
         $post = $request->all();
-        $post['id_user_franchisee'] = session('id_user_franchisee');
+        $post['id_user_franchise'] = session('id_user_franchise');
 
         $outlets = MyHelper::post('disburse/outlets',$post);
         return response()->json($outlets);
@@ -114,7 +182,14 @@ class DisburseController extends Controller
             'submenu_active' => 'disburse-list-trx'
         ];
 
+        if(Session::has('filter-list-disburse-trx') && !empty($post) && !isset($post['filter'])){
+            $post = Session::get('filter-list-disburse-trx');
+        }else{
+            Session::forget('filter-list-disburse-trx');
+        }
+
         $getTrx = MyHelper::post('disburse/list/trx',$post);
+
         if (isset($getTrx['status']) && $getTrx['status'] == "success") {
             $data['trx']          = $getTrx['result']['data'];
             $data['trxTotal']     = $getTrx['result']['total'];
@@ -128,18 +203,28 @@ class DisburseController extends Controller
             $data['trxUpTo']      = 0;
             $data['trxPaginator'] = false;
         }
+
+        if($post){
+            Session::put('filter-list-disburse-trx',$post);
+        }
         return view('disburse::disburse.list_trx', $data);
     }
 
     public function listDisburse(Request $request, $status){
         $post = $request->all();
-
+        $post['id_user_franchise'] = session('id_user_franchise');
         $data = [
             'title'          => 'Disburse',
             'sub_title'      => 'List Disburse '.ucfirst($status),
             'menu_active'    => 'disburse-list-'.$status,
             'submenu_active' => 'disburse-list-'.$status
         ];
+
+        if(Session::has('filter-list-disburse') && !empty($post) && !isset($post['filter'])){
+            $post = Session::get('filter-list-disburse');
+        }else{
+            Session::forget('filter-list-disburse');
+        }
 
         $getDisburse = MyHelper::post('disburse/list/'.$status,$post);
         if (isset($getDisburse['status']) && $getDisburse['status'] == "success") {
@@ -155,6 +240,18 @@ class DisburseController extends Controller
             $data['disburseUpTo']      = 0;
             $data['disbursePaginator'] = false;
         }
+
+        $bank = MyHelper::post('disburse/bank',$post);
+        if(isset($bank['status']) && $bank['status'] == 'success'){
+            $data['banks'] = $bank['result'];
+        }else{
+            $data['banks'] = [];
+        }
+
+        if($post){
+            Session::put('filter-list-disburse',$post);
+        }
+
         return view('disburse::disburse.list', $data);
     }
 
@@ -186,5 +283,13 @@ class DisburseController extends Controller
         }
 
         return view('disburse::disburse.detail', $data);
+    }
+
+    function userFranchise(Request $request){
+        $post = $request->all();
+        $post['id_user_franchise'] = session('id_user_franchise');
+
+        $user = MyHelper::post('disburse/user-franchise',$post);
+        return response()->json($user);
     }
 }

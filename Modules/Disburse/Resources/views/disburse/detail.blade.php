@@ -1,6 +1,7 @@
 <?php
 use App\Lib\MyHelper;
 $grantedFeature     = session('granted_features');
+$idUserFrenchisee = session('id_user_franchise');
 ?>
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
@@ -17,7 +18,7 @@ $grantedFeature     = session('granted_features');
     <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
 @endsection
 
-@extends('layouts.main')
+@extends(($idUserFrenchisee == NULL ? 'layouts.main' : 'disburse::layouts.main'))
 
 @section('content')
     <div class="page-bar">
@@ -58,11 +59,15 @@ $grantedFeature     = session('granted_features');
                         <td>: {{ date('d M Y H:i', strtotime($disburse['created_at'])) }}</td>
                     </tr>
                     <tr>
+                        <td width="60%">Outlet</td>
+                        <td>: {{$disburse['outlet_code']}} - {{$disburse['outlet_name']}}</td>
+                    </tr>
+                    <tr>
                         <td width="60%">Status</td>
                         @if($disburse['disburse_status'] == 'Fail')
-                            <td style="color: red">: <b>{{ $disburse['disburse_status'] }}</b></td>
+                            <td>: <b  style="color: red">{{ $disburse['disburse_status'] }}</b></td>
                         @else
-                            <td style="color: green">: <b>{{ $disburse['disburse_status'] }}</b></td>
+                            <td>: <b style="color: green">{{ $disburse['disburse_status'] }}</b></td>
                         @endif
                     </tr>
                     <tr>
@@ -71,7 +76,7 @@ $grantedFeature     = session('granted_features');
                     </tr>
                     <tr>
                         <td width="60%">Bank Name</td>
-                        <td>: {{$disburse['beneficiary_bank_name']}}</td>
+                        <td>: {{$disburse['bank_name']}}</td>
                     </tr>
                     <tr>
                         <td width="60%">Account Number</td>
