@@ -29,11 +29,7 @@
 					</a>
 					<ul class="dropdown-menu dropdown-menu-default">
 						<li>
-							<a href="{{url('profile')}}">
-								<i class="icon-user"></i> My Profile </a>
-						</li>
-						<li>
-							<a href="{{url('logout')}}">
+							<a href="{{url('disburse/logout')}}">
 								<i class="icon-key"></i> Log Out </a>
 						</li>
 					</ul>

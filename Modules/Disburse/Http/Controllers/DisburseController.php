@@ -15,85 +15,94 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Requests\loginRequest;
 use App\Lib\MyHelper;
 use Session;
+use GoogleReCaptchaV3;
 
 
 class DisburseController extends Controller
 {
-    function login(Request $request){
-        if(strlen($request->input('password')) != 6){
-            return redirect('disburse/login')->withErrors(['Pin must be 6 digits' => 'Pin must be 6 digits'])->withInput();
+    public function __construct()
+    {
+        $id_user_franchise = Session::get('id_user_franchise');
+        if(!is_null($id_user_franchise)){
+            $this->baseuri = 'disburse/user-franchise';
+        }else{
+            $this->baseuri = 'disburse';
         }
+    }
 
-        $post = $request->all();
-        $postLogin =  MyHelper::postLogin($request);
+    function loginUserFranchise(Request $request){
+        $post = $request->except('_token');
+        if(isset($post['username']) && !empty($post['username']) &&
+            isset($post['password']) && !empty($post['password'])){
 
-        if(isset($postLogin['error'])){
-            // untuk log request
-            $postLoginClient =  MyHelper::postLoginClient();
-
-            if (isset($postLoginClient['access_token'])) {
-                session([
-                    'access_token'  => 'Bearer '.$postLoginClient['access_token']
-                ]);
+            $captcha = GoogleReCaptchaV3::verifyResponse($request->input('g-recaptcha-response'))->isSuccess();
+            if (!$captcha) {
+                return redirect()->back()->withErrors(['Recaptcha failed']);
             }
-            $checkpin = MyHelper::post('users/pin/check/be', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
-            return redirect('disburse/login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
-        }
-        else{
-            if (isset($postLogin['status']) && $postLogin['status'] == "fail") {
-                $postLoginClient =  MyHelper::postLoginClient();
 
-                if (isset($postLoginClient['access_token'])) {
+
+            if(strlen($request->input('password')) != 6){
+                return redirect('disburse/login')->withErrors(['Pin must be 6 digits' => 'Pin must be 6 digits'])->withInput();
+            }
+
+            $postLogin =  MyHelper::postLoginUserFranchise($request);
+
+            if(isset($postLogin['error'])){
+                return redirect('disburse/login')->withErrors(['Invalid username / password'])->withInput();
+            }else{
+                if (isset($postLogin['status']) && $postLogin['status'] == "fail") {
+                    return redirect('disburse/login')->withErrors(['Failed Login'])->withInput();
+                }
+                else {
                     session([
-                        'access_token'  => 'Bearer '.$postLoginClient['access_token']
+                        'access_token'  => 'Bearer '.$postLogin['access_token'],
+                        'username'      => $request->input('username'),
                     ]);
-                }
 
-                $checkpin = MyHelper::post('users/pin/check/be', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
-                return redirect('disburse/login')->withErrors($postLogin['messages'])->withInput();
+                    $userFranchise = MyHelper::post('disburse/user-franchise/detail',['phone' => $request->input('username')]);
+
+                    if(isset($userFranchise['status']) && $userFranchise['status'] == 'success'){
+                        session([
+                            'id_user_franchise'      => $userFranchise['result']['id_user_franchise'],
+                            'username-franchise'   => $userFranchise['result']['phone'],
+                            'phone-franchise'   => $userFranchise['result']['phone'],
+                            'email-franchise'   => $userFranchise['result']['email']
+                        ]);
+                        return redirect('disburse/user-franchise/dashboard');
+                    }else{
+                        return redirect('disburse/login')->withErrors(['User does not exist'])->withInput();
+                    }
+
+                }
             }
-            else {
+        }else{
+            return redirect('disburse/login')->withErrors(['Incompleted Parameter'])->withInput();
+        }
+    }
 
-                $checkpin = MyHelper::post('users/pin/check/be', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
-                session([
-                    'access_token'  => 'Bearer '.$postLogin['access_token'],
-                    'username'      => $request->input('username'),
-                ]);
+    function resetPassword(Request $request){
+        $post = $request->all();
+        $data = [
+            'title'          => 'Disburse',
+            'sub_title'      => 'Disburse Reset Password',
+            'menu_active'    => 'disburse-reset-password',
+            'submenu_active' => 'disburse-reset-password'
+        ];
 
-                $getFeature = MyHelper::get('granted-feature?log_save=0');
+        if($post){
+            $post['id_user_franchise'] = session('id_user_franchise');
+            $update = MyHelper::post('disburse/user-franchise/reset-password', $post);
 
-                $features = [];
-
-                if(isset($getFeature['status']) && $getFeature['status'] == 'success' && !empty($getFeature['result'])) {
-                    $features = $getFeature['result'];
-                }
-
-                $userData = null;
-
-                while($userData == null){
-                    $userData = MyHelper::get('user');
-                }
-
-                $getConfig = MyHelper::get('config');
-
-                $configs = [];
-
-                if(isset($getConfig['status']) && $getConfig['status'] == 'success' && !empty($getConfig['result'])) {
-                    $configs = $getConfig['result'];
-                }
-
-                session([
-                    'granted_features'  => $features,
-                    'configs'  			=> $configs,
-                    'level'             => $userData['level'],
-                    'id_user'           => $userData['id'],
-                    'phone'           	=> $userData['phone'],
-                    'name'           	=> $userData['name'],
-                    'email'           	=> $userData['email']
-                ]);
+            if(isset($update['status']) && $update['status'] == 'success'){
+                $a = session('success')['s'];
+                session()->flush();
+                if($a) session(['success' => ['s' => $a]]);
+                return redirect('disburse/login')->withSuccess(['Reset PIN success, pelase re-login']);
+            }else{
+                return redirect('disburse/user-franchise/reset-password')->withErrors([$update['message']]);
             }
-
-            return redirect('disburse/dashboard');
+        }else{
+            return view('disburse::password', $data);
         }
     }
 
@@ -101,7 +110,7 @@ class DisburseController extends Controller
         $post = $request->all();
         if(!empty($post)){
             $post['id_user_franchise'] = session('id_user_franchise');
-            $getData = MyHelper::post('disburse/dashboard', $post);
+            $getData = MyHelper::post($this->baseuri.'/dashboard', $post);
             if(isset($getData['status']) && $getData['status'] == 'success'){
                 $data['status'] = 'success';
                 $data['nominal_success'] = $getData['result']['nominal_success'];
@@ -123,23 +132,24 @@ class DisburseController extends Controller
                 'submenu_active' => 'disburse-dashboard'
             ];
 
-            $getData = MyHelper::post('disburse/dashboard', ['id_user_franchise' => session('id_user_franchise')]);
+            $getData = MyHelper::post($this->baseuri.'/dashboard', ['id_user_franchise' => session('id_user_franchise')]);
             if(isset($getData['status']) && $getData['status'] == 'success'){
                 $data['nominal_success'] = $getData['result']['nominal_success'];
                 $data['nominal_fail'] = $getData['result']['nominal_fail'];
                 $data['nominal_trx'] = $getData['result']['nominal_trx'];
             }else{
-                $data['nominal_success'] = [];
-                $data['nominal_fail'] = [];
-                $data['nominal_trx'] = [];
+                $data['nominal_success'] = 0;
+                $data['nominal_fail'] = 0;
+                $data['nominal_trx'] = 0;
             }
 
-            $outlets = MyHelper::post('disburse/outlets',$post);
+            $outlets = MyHelper::post($this->baseuri.'/outlets',$post);
             if(isset($getData['status']) && $getData['status'] == 'success'){
                 $data['outlets'] = $outlets['result'];
             }else{
                 $data['outlets'] = [];
             }
+
             return view('disburse::dashboard', $data);
         }
     }
@@ -149,7 +159,7 @@ class DisburseController extends Controller
         $draw = $post["draw"];
         $post['id_user_franchise'] = session('id_user_franchise');
 
-        $getDisburse = MyHelper::post('disburse/list-datatable/fail',$post);
+        $getDisburse = MyHelper::post($this->baseuri.'/list-datatable/fail',$post);
         if(isset($getDisburse['status']) && isset($getDisburse['status']) == 'success'){
             $arr_result['draw'] = $draw;
             $arr_result['recordsTotal'] = $getDisburse['total'];
@@ -169,7 +179,7 @@ class DisburseController extends Controller
         $post = $request->all();
         $post['id_user_franchise'] = session('id_user_franchise');
 
-        $outlets = MyHelper::post('disburse/outlets',$post);
+        $outlets = MyHelper::post($this->baseuri.'/outlets',$post);
         return response()->json($outlets);
     }
 
@@ -188,7 +198,7 @@ class DisburseController extends Controller
             Session::forget('filter-list-disburse-trx');
         }
 
-        $getTrx = MyHelper::post('disburse/list/trx',$post);
+        $getTrx = MyHelper::post($this->baseuri.'/list/trx',$post);
 
         if (isset($getTrx['status']) && $getTrx['status'] == "success") {
             $data['trx']          = $getTrx['result']['data'];
@@ -212,12 +222,12 @@ class DisburseController extends Controller
 
     public function listDisburse(Request $request, $status){
         $post = $request->all();
-        $post['id_user_franchise'] = session('id_user_franchise');
         $data = [
             'title'          => 'Disburse',
             'sub_title'      => 'List Disburse '.ucfirst($status),
             'menu_active'    => 'disburse-list-'.$status,
-            'submenu_active' => 'disburse-list-'.$status
+            'submenu_active' => 'disburse-list-'.$status,
+            'status' => $status
         ];
 
         if(Session::has('filter-list-disburse') && !empty($post) && !isset($post['filter'])){
@@ -226,7 +236,9 @@ class DisburseController extends Controller
             Session::forget('filter-list-disburse');
         }
 
-        $getDisburse = MyHelper::post('disburse/list/'.$status,$post);
+        $post['id_user_franchise'] = session('id_user_franchise');
+        $getDisburse = MyHelper::post($this->baseuri.'/list/'.$status,$post);
+
         if (isset($getDisburse['status']) && $getDisburse['status'] == "success") {
             $data['disburse']          = $getDisburse['result']['data'];
             $data['disburseTotal']     = $getDisburse['result']['total'];
@@ -241,7 +253,7 @@ class DisburseController extends Controller
             $data['disbursePaginator'] = false;
         }
 
-        $bank = MyHelper::post('disburse/bank',$post);
+        $bank = MyHelper::post($this->baseuri.'/bank',$post);
         if(isset($bank['status']) && $bank['status'] == 'success'){
             $data['banks'] = $bank['result'];
         }else{
@@ -265,7 +277,8 @@ class DisburseController extends Controller
             'submenu_active' => ''
         ];
 
-        $getDisburse = MyHelper::post('disburse/detail/'.$id,$post);
+        $getDisburse = MyHelper::post($this->baseuri.'/detail/'.$id,$post);
+
         if (isset($getDisburse['status']) && $getDisburse['status'] == "success") {
             $data['trx']          = $getDisburse['result']['list_trx']['data'];
             $data['trxTotal']     = $getDisburse['result']['list_trx']['total'];
@@ -289,7 +302,7 @@ class DisburseController extends Controller
         $post = $request->all();
         $post['id_user_franchise'] = session('id_user_franchise');
 
-        $user = MyHelper::post('disburse/user-franchise',$post);
+        $user = MyHelper::post($this->baseuri.'/user-franchise',$post);
         return response()->json($user);
     }
 }
