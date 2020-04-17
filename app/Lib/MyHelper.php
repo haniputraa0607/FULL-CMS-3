@@ -93,6 +93,40 @@ class MyHelper
       }
     }
   }
+
+  public static function postLoginUserFranchise($request){
+    $api = env('APP_API_URL');
+
+    $client = new Client;
+    try {
+      $response = $client->request('POST',$api.'oauth/token', [
+          'form_params' => [
+              'grant_type'    => 'password',
+              'client_id'     => env('PASSWORD_CREDENTIAL_ID'),
+              'client_secret' => env('PASSWORD_CREDENTIAL_SECRET'),
+              'username'      => $request->input('username'),
+              'password'      => $request->input('password'),
+              'scope'        => 'be',
+              'user-franchise' => 1
+          ],
+      ]);
+      return json_decode($response->getBody(), true);
+    }catch (\GuzzleHttp\Exception\RequestException $e) {
+      try{
+        if($e->getResponse()){
+          $response = $e->getResponse()->getBody()->getContents();
+          return json_decode($response, true);
+        }
+        else{
+          return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+        }
+
+      }
+      catch(Exception $e){
+        return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+      }
+    }
+  }
   
   public static function postLoginClient(){
     $api = env('APP_API_URL');
