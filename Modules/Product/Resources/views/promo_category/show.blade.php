@@ -35,10 +35,10 @@
           });
           const template = `
             <div class="input-group append-child" style="margin: 0 0 10px 0;">
-                <select type="text" placeholder="Category Name" class="form-control select2a" name="id_product_group[]" data-placeholder="Select Product">
+                <select type="text" placeholder="Category Name" class="form-control select2a" name="id_product[]" data-placeholder="Select Product">
                     <option></option>
                     @foreach($products as $product)
-                    <option value="{{$product['id_product_group']}}">{{$product['product_group_code']}} - {{$product['product_group_name']}}</option>
+                    <option value="{{$product['id_product']}}">{{$product['product_code']}} - {{$product['product_name']}}</option>
                     @endforeach
                 </select>
                 <div class="input-group-btn">
@@ -175,10 +175,10 @@
                                     <div id="append-area">
                                         @foreach($promo_category['products'] as $selected_products)
                                         <div class="input-group append-child" style="margin: 0 0 10px 0;">
-                                            <select type="text" placeholder="Category Name" class="form-control select2" name="id_product_group[]" data-placeholder="Select Product">
+                                            <select type="text" placeholder="Category Name" class="form-control select2" name="id_product[]" data-placeholder="Select Product">
                                                 <option></option>
                                                 @foreach($products as $product)
-                                                <option value="{{$product['id_product_group']}}" @if($product['product_group_code'] == $selected_products['product_group_code']) selected @endif>{{$product['product_group_code']}} - {{$product['product_group_name']}}</option>
+                                                <option value="{{$product['id_product']}}" @if($product['product_code'] == $selected_products['product_code']) selected @endif>{{$product['product_code']}} - {{$product['product_name']}}</option>
                                                 @endforeach
                                             </select>
                                             <div class="input-group-btn">

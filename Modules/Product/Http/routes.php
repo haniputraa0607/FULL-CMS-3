@@ -56,16 +56,16 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 * promo category
 	 */
 	Route::group(['prefix' => 'promo-category'], function() {
-    	Route::get('/', ['middleware' => 'feature_control:238', 'uses' => 'PromoCategoryController@index']);
-    	Route::post('/', ['middleware' => 'feature_control:238', 'uses' => 'PromoCategoryController@indexAjax']);
-    	Route::get('create', ['middleware' => 'feature_control:241', 'uses' => 'PromoCategoryController@create']);
-    	Route::post('create', ['middleware' => 'feature_control:241', 'uses' => 'PromoCategoryController@store']);
-    	Route::post('delete', ['middleware' => 'feature_control:242', 'uses' => 'PromoCategoryController@destroy']);
+    	Route::get('/', ['middleware' => 'feature_control:236', 'uses' => 'PromoCategoryController@index']);
+    	Route::post('/', ['middleware' => 'feature_control:236', 'uses' => 'PromoCategoryController@indexAjax']);
+    	Route::get('create', ['middleware' => 'feature_control:239', 'uses' => 'PromoCategoryController@create']);
+    	Route::post('create', ['middleware' => 'feature_control:239', 'uses' => 'PromoCategoryController@store']);
+    	Route::post('delete', ['middleware' => 'feature_control:240', 'uses' => 'PromoCategoryController@destroy']);
 		/* position/ order */
-		Route::post('reorder', ['middleware' => ['feature_control:240'], 'uses' => 'PromoCategoryController@reorder']);
-    	Route::get('{id}', ['middleware' => 'feature_control:239', 'uses' => 'PromoCategoryController@show']);
-    	Route::post('{id}', ['middleware' => 'feature_control:240', 'uses' => 'PromoCategoryController@update']);
-		Route::post('{id}/assign', ['middleware' => ['feature_control:240'], 'uses' => 'PromoCategoryController@assign']);
+		Route::post('reorder', ['middleware' => ['feature_control:238'], 'uses' => 'PromoCategoryController@reorder']);
+    	Route::get('{id}', ['middleware' => 'feature_control:237', 'uses' => 'PromoCategoryController@show']);
+    	Route::post('{id}', ['middleware' => 'feature_control:238', 'uses' => 'PromoCategoryController@update']);
+		Route::post('{id}/assign', ['middleware' => ['feature_control:238'], 'uses' => 'PromoCategoryController@assign']);
 	});
 
 	/**
