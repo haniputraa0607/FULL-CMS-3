@@ -31,6 +31,17 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-md-3 text-right control-label">Promo Category <i class="fa fa-question-circle tooltips" data-original-title="Pilih Kategori Promo Produk" data-container="body"></i></label>
+            <div class="col-md-8">
+                <select name="id_product_promo_category[]" class="select2 form-control" data-placeholder="Select category" multiple>
+                    <option value=""></option>
+                    @foreach($promo_categories as $category)
+                    <option value="{{$category['id_product_promo_category']}}" @if(in_array($category['id_product_promo_category'],$product[0]['product_promo_categories'])) selected @endif>{{$category['product_promo_category_name']}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-md-3 control-label">Name <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Nama Produk" data-container="body"></i>
             </label>
