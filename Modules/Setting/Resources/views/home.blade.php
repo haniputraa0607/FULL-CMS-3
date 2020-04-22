@@ -142,6 +142,9 @@
     // featured deals
     $( "#sortable2" ).sortable();
     $( "#sortable2" ).disableSelection();
+    // featured subscription
+    $( "#sortable3" ).sortable();
+    $( "#sortable3" ).disableSelection();
 
     $(document).ready(function() {
     	$('#txt_greeting').on('keyup',function(){
@@ -280,6 +283,31 @@
 		$('#id_deals').select2().trigger('change');
     });
 
+    $('#featured_subscription .btn-edit').click(function() {
+		var id         = $(this).data('id');
+		var end_date   = $(this).data('end-date');
+		var start_date = $(this).data('start-date');
+		var id_subscription   = $(this).data('id-subscription');
+		var subscription_title   = $(this).data('subscription-title');
+
+		// assign value to form
+		$('#id_featured_subscription').val(id);
+		$('#end_date_subs').val(end_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#start_date_subs').val(start_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#id_subscription').find('option').first().attr('value',id_subscription).text(subscription_title);
+		$('#id_subscription').select2().trigger('change');
+    });
+
 	$('.datetime').datetimepicker({
         format: "dd M yyyy hh:ii",
         autoclose: true,
@@ -320,6 +348,23 @@
 		var link 	= "{{ url('setting/featured_deal/delete') }}/" + id;
 		swal({
 		  title: "Are you sure want to delete this featured deals ? ",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "Yes, delete it",
+		  closeOnConfirm: false
+		},
+		function(){
+			window.location = link;
+		});
+    });
+
+    // subscription: delete
+    $('#featured_subscription .btn-delete').click(function() {
+		var id 		= $(this).data('id');
+		var link 	= "{{ url('setting/featured_subscription/delete') }}/" + id;
+		swal({
+		  title: "Are you sure want to delete this featured subscription ? ",
 		  type: "warning",
 		  showCancelButton: true,
 		  confirmButtonClass: "btn-danger",
@@ -418,6 +463,11 @@
         <!-- <li>
             <a href="#app-navigation" data-toggle="tab">App Navigation Text</a>
         </li> -->
+        @if(MyHelper::hasAccess([241], $grantedFeature))
+        <li>
+            <a href="#featured_subscription" data-toggle="tab">Featured Subscription</a>
+        </li>
+		@endif
     </ul>
 </div>
 
@@ -771,6 +821,10 @@
     </div>
 	@endif
 	@include('setting::featured_deals')
+
+	@if(MyHelper::hasAccess([241], $grantedFeature))
+	@include('setting::featured_subscription')
+	@endif
 
 	{{-- app logo --}}
     <div class="tab-pane" id="app-logo">

@@ -626,6 +626,18 @@ class SettingController extends Controller
         else
             $data['featured_deals'] = [];
 
+        // featured subscription
+        $request = MyHelper::get('setting/featured_subscription/list');
+        if(isset($request['result']))
+            $data['featured_subscriptions'] = $request['result'];
+        else
+            $data['featured_subscriptions'] = [];
+
+        // subscription
+        $sp=['select' => ['id_subscription', 'subscription_title']];
+        $request = MyHelper::post('subscription/be/list-complete',$sp);
+        $data['subscriptions'] = $request['result']??[];
+
         // deals
         $dp=['deals_type'=>'Deals','forSelect2'=>true];
         $request = MyHelper::post('deals/be/list',$dp);
@@ -1283,4 +1295,46 @@ class SettingController extends Controller
         }
         return view('setting::maintenance-mode', $data);
     }
+
+    /*========================= featured subscription =========================*/
+
+    public function createFeaturedSubscription(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $result = MyHelper::post('setting/featured_subscription/create', $post);
+        return parent::redirect($result, 'New featured subscription has been created.', 'setting/home#featured_subscription');
+    }
+
+    public function updateFeaturedSubscription(Request $request)
+    {
+        $post = $request->except('_token');
+        $validatedData = $request->validate([
+            'id_featured_subscription'    => 'required'
+        ]);
+        $result = MyHelper::post('setting/featured_subscription/update', $post);
+        return parent::redirect($result, 'Featured Subscription has been updated.', 'setting/home#featured_subscription',[],true);
+    }
+
+    public function reorderFeaturedSubscription(Request $request)
+    {
+        $post = $request->except("_token");
+        // dd($post['id_featured_subscription']);
+
+        $result = MyHelper::post('setting/featured_subscription/reorder', $post);
+
+        return parent::redirect($result, 'Featured Subscription has been sorted.', 'setting/home#featured_subscription');
+    }
+
+    // delete featured_subscription
+    public function deleteFeaturedSubscription($id_featured_subscription)
+    {
+        $post['id_featured_subscription'] = $id_featured_subscription;
+
+        $result = MyHelper::post('setting/featured_subscription/delete', $post);
+
+        return parent::redirect($result, 'Featured Subscription has been deleted.', 'setting/home#featured_subscription');
+    }
+
+    /*========================= end of featured subscription =========================*/
 }
