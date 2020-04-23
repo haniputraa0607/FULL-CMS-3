@@ -144,16 +144,24 @@
                             </div>
                             <div class="portlet-body form">
                                 <div class="m-heading-1 border-green m-bordered">
-                                    <p>Setting ini digunakan untuk mengatur fee yang akan diberikan setiap outlet kepada pihak Janji Jiwa.</p>
+                                    <p>Setting ini digunakan untuk mengatur fee untuk outlet pusat dan outlet franchise.</p>
                                     <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
                                 </div>
                                 <form class="form-horizontal" role="form" action="{{url('disburse/setting/fee-global')}}" method="post">
                                     <div class="form-body">
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">Percent Fee <span class="required" aria-required="true"> * </span></label>
+                                            <label class="col-md-4 control-label">Percent Fee Outlet Central<span class="required" aria-required="true"> * </span></label>
                                             <div class="col-md-4">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="fee" required value="{{$fee['value']}}"><span class="input-group-addon">%</span>
+                                                    <input type="text" class="form-control" name="fee_central" required value="{{$fee['fee_central']}}"><span class="input-group-addon">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Percent Fee Outlet Franchise<span class="required" aria-required="true"> * </span></label>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="fee_outlet" required value="{{$fee['fee_outlet']}}"><span class="input-group-addon">%</span>
                                                 </div>
                                             </div>
                                         </div>

@@ -697,12 +697,11 @@
 								</div>
 								<div class="form-group">
 									<label class="control-label">Max product discount per transaction</label>
-									<span class="required" aria-required="true"> * </span>
-									<i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal masing-masing produk yang dapat dikenakan diskon dalam satu transaksi </br></br>Note : isi dengan 0 jika jumlah maksimal produk tidak dibatasi" data-container="body" data-html="true"></i>
+									<i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal masing-masing produk yang dapat dikenakan diskon dalam satu transaksi </br></br>Note : Kosongkan jika jumlah maksimal produk tidak dibatasi" data-container="body" data-html="true"></i>
 									<div class="row">
 										<div class="col-md-2">
 											
-											<input required type="text" class="form-control text-center digit_mask" name="max_product" placeholder="" @if(isset($result['promo_campaign_product_discount_rules']['max_product']) && $result['promo_campaign_product_discount_rules']['max_product'] != "") value="{{$result['promo_campaign_product_discount_rules']['max_product']}}" @elseif(old('max_product') != "") value="{{old('max_product')}}" @endif min="0" oninput="validity.valid||(value='');" autocomplete="off">
+											<input type="text" class="form-control text-center digit_mask" name="max_product" placeholder="" @if(isset($result['promo_campaign_product_discount_rules']['max_product']) && $result['promo_campaign_product_discount_rules']['max_product'] != "") value="{{$result['promo_campaign_product_discount_rules']['max_product']}}" @elseif(old('max_product') != "") value="{{old('max_product')}}" @endif min="0" oninput="validity.valid||(value='');" autocomplete="off">
 											
 										</div>
 									</div>

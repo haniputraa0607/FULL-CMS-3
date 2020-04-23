@@ -70,6 +70,12 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('featured_deal/reorder', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@reorderFeaturedDeal']);
     Route::get('featured_deal/delete/{slug}', ['middleware' => 'feature_control:147', 'uses' => 'SettingController@deleteFeaturedDeal']);
 
+    /* featured subscription */
+    Route::post('featured_subscription/create', ['middleware' => 'feature_control:242', 'uses' => 'SettingController@createFeaturedSubscription']);
+    Route::post('featured_subscription/update', ['middleware' => 'feature_control:243', 'uses' => 'SettingController@updateFeaturedSubscription']);
+    Route::post('featured_subscription/reorder', ['middleware' => 'feature_control:243', 'uses' => 'SettingController@reorderFeaturedSubscription']);
+    Route::get('featured_subscription/delete/{slug}', ['middleware' => 'feature_control:244', 'uses' => 'SettingController@deleteFeaturedSubscription']);
+
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');
 });
