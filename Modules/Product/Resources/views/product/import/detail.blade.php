@@ -17,6 +17,7 @@ $configs    		= session('configs');
 	.switcher{
 		position: relative;
 		overflow: auto;
+		overflow-x: hidden;
 		min-height: 1500px;
 		white-space: nowrap;
 	}
