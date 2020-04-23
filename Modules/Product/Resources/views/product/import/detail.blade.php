@@ -16,8 +16,8 @@ $configs    		= session('configs');
 <style>
 	.switcher{
 		position: relative;
-		overflow: hidden;
-		height: 500px;
+		overflow: auto;
+		min-height: 1500px;
 		white-space: nowrap;
 	}
 	.switcher .switcher-item{
@@ -214,22 +214,22 @@ $configs    		= session('configs');
 				<div class="col-md-3 mt-step-col first active" data-step="1">
 					<div class="mt-step-number bg-white">1</div>
 					<div class="mt-step-title uppercase font-grey-cascade">Select Brand</div>
-					<div class="mt-step-content font-grey-cascade">Select product's brand</div>
+					<div class="mt-step-content font-grey-cascade">Select {{$type == 'modifier-price'?'product\'s':'modifier'}} brand</div>
 				</div>
 				<div class="col-md-3 mt-step-col" data-step="2">
 					<div class="mt-step-number bg-white">2</div>
 					<div class="mt-step-title uppercase font-grey-cascade">Download Template</div>
-					<div class="mt-step-content font-grey-cascade">Download current product list or example list</div>
+					<div class="mt-step-content font-grey-cascade">Download current {{$type == 'modifier-price'?'product':'modifier'}} list or example list</div>
 				</div>
 				<div class="col-md-3 mt-step-col" data-step="3">
 					<div class="mt-step-number bg-white">3</div>
 					<div class="mt-step-title uppercase font-grey-cascade">Upload Data</div>
-					<div class="mt-step-content font-grey-cascade">Import from modified product list</div>
+					<div class="mt-step-content font-grey-cascade">Import from modified {{$type == 'modifier-price'?'product':'modifier'}} list</div>
 				</div>
 				<div class="col-md-3 mt-step-col last" data-step="4">
 					<div class="mt-step-number bg-white">#</div>
 					<div class="mt-step-title uppercase font-grey-cascade">Result</div>
-					<div class="mt-step-content font-grey-cascade">Report imported product</div>
+					<div class="mt-step-content font-grey-cascade">Report imported {{$type == 'modifier-price'?'product':'modifier'}}</div>
 				</div>
 			</div>
 		</div>
@@ -247,6 +247,12 @@ $configs    		= session('configs');
 				<div class="m-heading-1 border-green m-bordered">
 					<p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data produk. Dapat digunakan untuk mengubah data dibawah ini:</p>
 					<ol>
+						@if($type == 'modifier-price')
+						<li>Kode Modifier</li>
+						<li>Nama Modifier</li>
+						<li>Jenis Modifier</li>
+						<li>Harga Modifier</li>
+						@else
 						<li>Nama Produk</li>
 						<li>Deskripsi Produk</li>
 						@if($type == 'detail')
@@ -257,12 +263,19 @@ $configs    		= session('configs');
 						<li>Harga Produk global (outlet yang tidak ditandai mempunyai harga produk berbeda)</li>
 						<li>Harga Produk outlet tertentu</li>
 						@endif
+						@endif
 					</ol>
 					<p style="white-space: pre-wrap;">Saat melakukan impor produk, mohon diperhatikan bahwa:</p>
 					<ul>
+						@if($type == 'modifier-price')
+						<li>Modifier diidentifikasi berdasarkan kolom <b>code</b></li>
+						<li>Apabila code sudah ada dalam database, maka sistem akan memperbarui modifier</li>
+						<li>Apabila code belum ada dalam database, maka sistem akan <b>mengabaikan data</b></li>
+						@else
 						<li>Produk diidentifikasi berdasarkan kolom <b>product_code</b></li>
 						<li>Apabila product_code sudah ada dalam database, maka sistem akan memperbarui produk</li>
 						<li>Apabila product_code belum ada dalam database, maka sistem akan <b>{{$type == 'global'?'membuat produk baru':'mengabaikan data'}}</b></li>
+						@endif
 					</ul>
 					<p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor produk</p>
 				</div>

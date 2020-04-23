@@ -560,6 +560,11 @@
 							<span class="title">Product Modifier Price</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'product-modifier-price-import') ? 'active open' : ''}}">
+						<a href="{{url('product/import/modifier-price')}}" class="nav-link ">
+							<span class="title">Import Product Modifier Price</span>
+						</a>
+					</li>
 					@endif
 				</ul>
 			</li>

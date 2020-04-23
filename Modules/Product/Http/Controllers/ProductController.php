@@ -149,6 +149,17 @@ class ProductController extends Controller
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 break;
 
+            case 'modifier-price':
+                $data['sub_title'] = 'Import Product Modifier Price';
+                $data['menu_active'] = 'product-modifier';
+                $data['submenu_active'] = 'product-modifier-price-import';
+                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
+                if(!$products){
+                    return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
+                }
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
+
             default:
                 return abort(404);
                 break;
@@ -249,6 +260,38 @@ class ProductController extends Controller
                             'global_price' => 12000,
                             'price_PP001' => 18000,
                             'price_BL012' =>15000
+                        ],
+                    ];
+                }
+                break;
+
+            case 'modifier-price':
+                $tab_title = 'Product Modifier Price';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'type' => 'topping',
+                            'code' => 'cheese',
+                            'name' => 'Extra Cheese',
+                            'global_price' => 1000,
+                            'price_PP001' => 1500,
+                            'price_BL012' =>1350
+                        ],
+                        [
+                            'product_code' => 'topping',
+                            'product_name' => 'chicken',
+                            'product_description' => 'Extra Chicken',
+                            'global_price' => 2000,
+                            'price_PP001' => 3000,
+                            'price_BL012' =>2500
+                        ],
+                        [
+                            'product_code' => 'cream',
+                            'product_name' => 'chocolate',
+                            'product_description' => 'Chocolate Cream',
+                            'global_price' => 1200,
+                            'price_PP001' => 1800,
+                            'price_BL012' =>1500
                         ],
                     ];
                 }
