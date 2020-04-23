@@ -1146,8 +1146,10 @@ class TransactionController extends Controller
         $post['type'] = 'trx';
         $post['check'] = 1;
 
-        $check = MyHelper::post('transaction/be/detail/webview/simple?log_save=0', $post);
+        //$check = MyHelper::post('transaction/be/detail/webview/simple?log_save=0', $post);
         // $check = MyHelper::post('outletapp/order/detail/view?log_save=0', $data);
+        $check = MyHelper::post('transaction/be/detail', ['id_transaction' => $id, 'type' => 'trx', 'admin' => 1]);
+
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data['data'] = $check['result'];
     	} elseif (isset($check['status']) && $check['status'] == 'fail') {
@@ -1155,7 +1157,6 @@ class TransactionController extends Controller
         } else {
             return view('error', ['msg' => 'Something went wrong, try again']);
         }
-
         return view('transaction::transactionDetail3', $data);
     	
     }
