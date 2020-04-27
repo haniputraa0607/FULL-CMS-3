@@ -109,6 +109,7 @@ class DisburseSettingController extends Controller
         ];
 
         if($post){
+            $post['days_to_sent'] = implode(",",$post['days_to_sent']);
             $storeSetting = MyHelper::post('disburse/setting/mdr',$post);
             if(isset($storeSetting['status']) && $storeSetting['status'] == 'success'){
                 return redirect('disburse/setting/mdr')->withSuccess(['Success Update Data']);
