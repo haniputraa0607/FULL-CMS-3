@@ -35,12 +35,10 @@ $configs = session('configs');
                                                     <input type="text" class="form-control" name="content_title[]"  placeholder="Content Title" required maxlength="20" value="{{ $subscription['subscription_content'][0]['title']??'Ketentuan' }}">
                                                     <input type="hidden" name="id_subscription_content[]" value="0" >
                                                     <input type="hidden" name="content_order[]" value="0">
-                                                    <span class="input-group-addon">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" aria-expanded="true" href="#collapse_1">
-                                                            <i class="fa fa-chevron-down"></i>
-                                                            <i class="fa fa-chevron-right"></i>
-                                                        </a>
-                                                    </span>
+                                                    <a class="accordion-toggle input-group-addon" data-toggle="collapse" data-parent="#accordion1" aria-expanded="true" href="#collapse_1">
+                                                        <i class="fa fa-chevron-down custom-addon-icon"></i>
+                                                        <i class="fa fa-chevron-right custom-addon-icon"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -91,12 +89,10 @@ $configs = session('configs');
                                                     <input type="text" class="form-control" name="content_title[]"  placeholder="Content Title" required maxlength="20" value="{{ $subscription['subscription_content'][1]['title']??'Cara Pakai' }}">
                                                     <input type="hidden" name="id_subscription_content[]" value="0">
                                                     <input type="hidden" name="content_order[]" value="0">
-                                                    <span class="input-group-addon">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" aria-expanded="true" href="#collapse_2">
-                                                            <i class="fa fa-chevron-down"></i>
-                                                            <i class="fa fa-chevron-right"></i>
-                                                        </a>
-                                                    </span>
+                                                    <a class="accordion-toggle input-group-addon" data-toggle="collapse" data-parent="#accordion2" aria-expanded="true" href="#collapse_2">
+                                                        <i class="fa fa-chevron-down custom-addon-icon"></i>
+                                                        <i class="fa fa-chevron-right custom-addon-icon"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -156,12 +152,10 @@ $configs = session('configs');
                                                                 <input type="text" class="form-control" name="content_title[]"  placeholder="Content Title" required maxlength="20" value="{{ $val['title']??'' }}">
                                                                 <input type="hidden" name="id_subscription_content[]" value="0">
                                                                 <input type="hidden" name="content_order[]" value="0">
-                                                                <span class="input-group-addon">
-                                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{$key}}" aria-expanded="true" href="#collapse_{{$key}}">
-                                                                        <i class="fa fa-chevron-down"></i>
-                                                                        <i class="fa fa-chevron-right"></i>
-                                                                    </a>
-                                                                </span>
+                                                                <a class="accordion-toggle input-group-addon" data-toggle="collapse" data-parent="#accordion{{$key}}" aria-expanded="true" href="#collapse_{{$key}}">
+                                                                    <i class="fa fa-chevron-down custom-addon-icon"></i>
+                                                                    <i class="fa fa-chevron-right custom-addon-icon"></i>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">

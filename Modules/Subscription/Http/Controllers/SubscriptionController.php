@@ -173,7 +173,6 @@ class SubscriptionController extends Controller
                 isset($id_subscription) ? $message = ['Subscription has been Updated'] : $message = ['Subscription has been created'];
                 return redirect('subscription/step2/'.MyHelper::createSlug($save['result']['id_subscription'],$save['result']['created_at']??''))->with('success', $message);
             }else{
-                dd($save);
                 return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
             }
         }
@@ -329,7 +328,6 @@ class SubscriptionController extends Controller
             if (isset($post['subscription_image'])) {
                 $post['subscription_image']         = MyHelper::encodeImage($post['subscription_image']);
             }
-
             $save = MyHelper::post('subscription/updateDetail', $post);
 
             if ( ($save['status']??false) == "success") {
@@ -368,6 +366,37 @@ class SubscriptionController extends Controller
         	$data['brands'] = MyHelper::get('brand/be/list')['result']??[];
 
             return view('subscription::detail', $data);
+        }
+    }
+
+    public function detailv2(Request $request, $slug, $subs_receipt=null)
+    {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id_subscription = $exploded[0];
+        $created_at = $exploded[1];
+
+        if (isset($subs_receipt)) {
+            return $this->transaction($id_subscription, $subs_receipt);
+        }
+        $post = $request->except('_token');
+        if (!empty($post)) {
+        }
+        else {
+
+            $data = [
+                'title'          => 'Subscription',
+                'sub_title'      => 'Subscription Detail',
+                'menu_active'    => 'subscription',
+                'submenu_active' => 'subscription-List'
+            ];
+
+            $data['subscription'] = MyHelper::post('subscription/show-detail', ['id_subscription' => $id_subscription])['result']??'';
+            if ($data['subscription'] == '') {
+                return redirect('subscription')->withErrors('Subscription not found');
+            }
+            $data['subscription']['id_subscription'] = $slug;
+
+            return view('subscription::detailv2', $data);
         }
     }
 }

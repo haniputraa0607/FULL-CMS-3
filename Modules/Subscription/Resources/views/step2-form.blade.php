@@ -138,7 +138,7 @@ $configs = session('configs');
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}">
+                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" >
                             </select>
                         </div>
                     </div>
@@ -161,7 +161,7 @@ $configs = session('configs');
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_product[]" multiple data-value="{{json_encode($productselected)}}">
+                            <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_product[]" multiple data-value="{{json_encode($productselected)}}" data-all="{{ $subscription['is_all_product']??0 }}" >
                             </select>
                         </div>
                     </div>
