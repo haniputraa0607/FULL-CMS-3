@@ -43,6 +43,8 @@
                 }else{
                     $('#specific-form select,#specific-form input').attr('disabled','disabled');
                     $('#specific-form select,#specific-form input').attr('disabled','disabled');
+                    $('#global-brand-form select,#global-brand-form input').attr('disabled','disabled');
+                    $('#global-brand-form').addClass('hidden');
                     $('#specific-form').addClass('hidden');
                     $('#global-brand-form').addClass('hidden');
                 }
