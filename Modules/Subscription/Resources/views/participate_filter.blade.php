@@ -5,7 +5,7 @@ $configs  = session('configs');
 ?>
 <script>
 	rules={
-		used_by:{
+		user_phone:{
 			display:'Bought By (Phone)',
 			operator:[
 				['=','='],
@@ -13,17 +13,26 @@ $configs  = session('configs');
 			],
 			opsi:[]
 		},
-		status:{
-			display:'Status',
+		subscription_user_receipt_number:{
+			display:'Subscription User Receipt',
+			operator:[
+			['=','='],
+			['like','like']
+			],
+			opsi:[]
+		},
+		paid_status:{
+			display:'Paid Status',
 			operator:[],
 			opsi:[
-				['claimed','claimed'],
-				['redeemed','redeemed'],
-				['used','used'],
-				['expired','expired']
+				['Free','Free'],
+				['Pending','Pending'],
+				['Paid','Paid'],
+				['Completed','Completed'],
+				['Cancelled','Cancelled']
 			]
 		},
-		bought_date:{
+		bought_at:{
 			display:'Bought Date',
 			operator:[
 				['=','='],
@@ -34,14 +43,9 @@ $configs  = session('configs');
 			],
 			opsi:[],
 			type:'date'
-		},
-		id_outlet:{
-			display:'Outlet',
-			operator:[],
-			opsi:{!!json_encode($outlets2??[])!!}
-		},
+		}
 	};
-	console.log({!!json_encode($outlets2??[])!!});
+
 	database={
 		operator: 'or',
 		value: {!!json_encode(array_values($rule??[]))!!}
@@ -236,11 +240,11 @@ $configs  = session('configs');
 		</div>
 	</div>
 </form>
-@if(isset($rule))
+@if(isset($rule)&&$rule)
 <div class="alert alert-block alert-info fade in">
 	<button type="button" class="close" data-dismiss="alert"></button>
 	<h4 class="alert-heading">Displaying search result :</h4>
-	<p>{{ $userTotal??'' }}</p><br>
+	<p>{{ $subscription['total']??'' }}</p><br>
 	<form action="" method="post">
 		{{csrf_field()}}
 		<button class="btn btn-sm btn-warning" name="clear" value="session">Reset</button>
