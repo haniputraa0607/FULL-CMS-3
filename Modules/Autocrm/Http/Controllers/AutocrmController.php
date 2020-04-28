@@ -152,6 +152,9 @@ class AutocrmController extends Controller
 		}
 
 		switch ($subject){
+			case 'report-point-reset':
+				$data['noUser'] = true;
+				$data['customNotes'] = 'Previous user point data will be attached to the attachment';
 			case 'update-promo-campaign':
 			case 'create-promo-campaign':
 			case 'update-deals':
