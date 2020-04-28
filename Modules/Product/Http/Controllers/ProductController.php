@@ -270,27 +270,27 @@ class ProductController extends Controller
                 if(!$data['products']){
                     $data['products'] = [
                         [
-                            'type' => 'topping',
-                            'code' => 'cheese',
-                            'name' => 'Extra Cheese',
+                            'type' => 'mod1',
+                            'code' => 'type1',
+                            'name' => 'Example Modifier 1',
                             'global_price' => 1000,
                             'price_PP001' => 1500,
                             'price_BL012' =>1350
                         ],
                         [
-                            'product_code' => 'topping',
-                            'product_name' => 'chicken',
-                            'product_description' => 'Extra Chicken',
-                            'global_price' => 2000,
-                            'price_PP001' => 3000,
-                            'price_BL012' =>2500
+                            'type' => 'mod2',
+                            'code' => 'type1',
+                            'name' => 'Example Modifier 2',
+                            'global_price' => 1400,
+                            'price_PP001' => 1500,
+                            'price_BL012' =>1600
                         ],
                         [
-                            'product_code' => 'cream',
-                            'product_name' => 'chocolate',
-                            'product_description' => 'Chocolate Cream',
+                            'type' => 'mod3',
+                            'code' => 'type2',
+                            'name' => 'Example Modifier 3',
                             'global_price' => 1200,
-                            'price_PP001' => 1800,
+                            'price_PP001' => 1500,
                             'price_BL012' =>1500
                         ],
                     ];
