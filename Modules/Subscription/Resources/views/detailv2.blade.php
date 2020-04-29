@@ -1,6 +1,5 @@
-@include('subscription::step1-form')
-@include('subscription::step2-form')
-@include('subscription::step3-form')
+@include('subscription::detail-info')
+@include('subscription::detail-info-content')
 @include('subscription::participate')
 <?php
 use App\Lib\MyHelper;
@@ -9,54 +8,64 @@ $configs = session('configs');
 @extends('layouts.main-closed')
 
 @section('page-style')
-    
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" /> -->
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
-
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" /> 
-
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
     <style type="text/css">
-        .content-title {
-            padding-bottom: 15px;
-        }
-        .content-detail {
-            padding-bottom: 10px;
-            padding-left: 40px;
-        }
-        .p-l-40px {
-            padding-left: 40px;
-        }
-        .p-l-30px {
-            padding-left: 30px;
-        }
-        a[aria-expanded=false] .fa-chevron-down {
-            display: none;
-        }
-        a[aria-expanded=true] .fa-chevron-right {
-            display: none;
-        }
-        .bottom-border {
-            border-bottom: 1px solid #c2cad8;
-        }
-        .btn-grey {
-            color: #337ab7;
-            background-color: #eee;
-            border-color: #ccc;
-        }
-        .text-decoration-none {
-            text-decoration: none!important;
-        }
-    </style>
+		.d-none {
+			display: none;
+		}
+		.width-60-percent {
+			width: 60%;
+		}
+		.width-100-percent {
+			width: 100%;
+		}
+		.width-voucher-img {
+			max-width: 200px;
+			width: 100%;
+		}
+		.v-align-top {
+			vertical-align: top;
+		}
+		.p-t-10px {
+			padding-top: 10px;
+		}
+		.page-container-bg-solid .page-content {
+			background: #fff!important;
+		}
+		.text-decoration-none {
+			text-decoration: none!important;
+		}
+		.p-l-0{
+			padding-left: 0px;
+		}
+		.p-r-0{
+			padding-right: 0px;
+		}
+		.p-l-r-0{
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+		.font-custom-dark-grey {
+			color: #95A5A6!important;
+		}
+		.font-custom-green {
+			color: #26C281!important;
+		}
+	</style>
 @endsection
 
 @section('page-script')
@@ -72,8 +81,7 @@ $configs = session('configs');
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/form-repeater.min.js') }}" type="text/javascript"></script>
+    
     <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('js/subscription.js') }}" type="text/javascript"></script>
     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
@@ -528,6 +536,9 @@ $configs = session('configs');
 @endsection
 
 @section('content')
+@php
+    $datenow = date("Y-m-d H:i:s");
+@endphp
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -607,7 +618,7 @@ $configs = session('configs');
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase ">Detail {{ $title }}</span>
+                <span class="caption-subject font-blue sbold uppercase ">{{ $subscription['subscription_title']??'' }}</span>
             </div>
             <ul class="nav nav-tabs">
                 <li class="active" id="infoOutlet">
@@ -621,50 +632,63 @@ $configs = session('configs');
         <div class="portlet-body form">
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                    <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data" id="form">
-                        <div class="col-md-12">
-                            <div class="row static-info"><span style="font-weight: bold;">Status</span> :&nbsp;&nbsp;{{ $subscription['subscription_status'] }}
-                            </div>
+                    @if ($subscription['subscription_step_complete'] != 1)
+                    <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Mark as Complete</a>
+                    @endif
+                	<ul class="nav nav-tabs" id="tab-header">
+                        <li class="active" id="infoOutlet">
+                            <a href="#basic" data-toggle="tab" > Basic Info </a>
+                        </li>
+                        <li>
+                            <a href="#content" data-toggle="tab"> Content Info </a>
+                        </li>
+                        @if($subscription['is_all_outlet'] != 1)
+                        <li>
+                            <a href="#outlet" data-toggle="tab"> Outlet Info </a>
+                        </li>
+                        @endif
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="basic">
+                			@yield('detail-info')
                         </div>
-                        <div class="form-body">
-                            <ul class="nav nav-tabs" id="tab-header">
-                                <li class="active" id="infoOutlet">
-                                    <a href="#step1" data-toggle="tab" > Info </a>
-                                </li>
-                                <li>
-                                    <a href="#step2" data-toggle="tab" id="step2-tab-head"> Rule </a>
-                                </li>
-                                <li>
-                                    <a href="#step3" data-toggle="tab"> Content </a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="step1">
-                                    @yield('step1')
-                                </div>
-                                <div class="tab-pane " id="step2">
-                                    @yield('step2')
-                                </div>
-                                <div class="tab-pane " id="step3">
-                                    @yield('step3')
-                                </div>
-                            </div>
-
-
+                        <div class="tab-pane " id="content">
+                			@yield('detail-info-content')
                         </div>
-                        <div class="form-actions">
-                            {{ csrf_field() }}
-                            <div class="row">
-                                <div class="col-md-offset-5 col-md-7">
-                                    <input type="hidden" name="id_subscription" value="{{ $subscription['id_subscription']??'' }}">
-                                    <button type="submit" class="btn green" id="submitButton">save</button>
-                                    <!-- <button type="button" class="btn default">Cancel</button> -->
-                                </div>
+                        @if($subscription['is_all_outlet'] != 1)
+                        <div class="tab-pane" id="outlet">
+                            <!-- BEGIN: Comments -->
+                            <div class="mt-comments">
+                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(($promotion_outlets??$subscription['outlets']) as $res)
+                                            <tr>
+                                                <td>{{ $res['outlet_code'] }}</td>
+                                                <td>{{ $res['outlet_name'] }}</td>
+                                                <td>{{ $res['outlet_address'] }}</td>
+                                                <td>{{ $res['outlet_phone'] }}</td>
+                                                <td>{{ $res['outlet_email'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
+                            <!-- END: Comments -->
                         </div>
-                    </form>
+                        @endif
+                    </div>
                 </div>
                 <div class="tab-pane" id="participate">
+                	<input type="hidden" name="id_subscription" value="{{ $subscription['id_subscription']??'' }}">
                     @yield('participate')
                 </div>
             </div>

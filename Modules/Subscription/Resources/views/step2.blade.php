@@ -92,7 +92,7 @@ $configs = session('configs');
 
     <script type="text/javascript">        
         var oldOutlet=[];
-        function redrawOutlets(list,selected,convertAll){
+        function redrawOutlets(list,selected,convertAll, all){
             var html="";
             if(list.length){
                 html+="<option value=\"all\">All Outlets</option>";
@@ -102,14 +102,14 @@ $configs = session('configs');
             });
             $('select[name="id_outlet[]"]').html(html);
             $('select[name="id_outlet[]"]').val(selected);
-            if( convertAll && $('select[name="id_outlet[]"]').val() != null && $('select[name="id_outlet[]"]').val().length==list.length){
+            if( all == 1 || ( convertAll && $('select[name="id_outlet[]"]').val() != null && $('select[name="id_outlet[]"]').val().length==list.length ) ){
                 $('select[name="id_outlet[]"]').val(['all']);
             }
             oldOutlet=list;
         }
 
         var oldProduct=[];
-        function redrawProducts(list,selected,convertAll){
+        function redrawProducts(list,selected,convertAll,all){
             var html="";
             if(list.length){
                 html+="<option value=\"all\">All Products</option>";
@@ -119,7 +119,7 @@ $configs = session('configs');
             });
             $('select[name="id_product[]"]').html(html);
             $('select[name="id_product[]"]').val(selected);
-            if( convertAll && $('select[name="id_product[]"]').val() != null && $('select[name="id_product[]"]').val().length==list.length){
+            if( all == 1 || ( convertAll && $('select[name="id_product[]"]').val() != null && $('select[name="id_product[]"]').val().length==list.length ) ){
                 $('select[name="id_product[]"]').val(['all']);
             }
             oldProduct=list;
@@ -435,14 +435,15 @@ $configs = session('configs');
                     },
                     success: function(data){
                         if(data.status=='success'){
-                            var value=$('select[name="id_outlet[]"]').val();
+                            var value = $('select[name="id_outlet[]"]').val();
+                            var all = $('select[name="id_outlet[]"]').data('all');
                             var convertAll=false;
                             if($('select[name="id_outlet[]"]').data('value')){
                                 value=$('select[name="id_outlet[]"]').data('value');
                                 $('select[name="id_outlet[]"]').data('value',false);
                                 convertAll=true;
                             }
-                            redrawOutlets(data.result,value,convertAll);
+                            redrawOutlets(data.result,value,convertAll,all);
                         }
                     }
                 });
@@ -466,13 +467,14 @@ $configs = session('configs');
                     success: function(data){
                         if(data.status=='success'){
                             var value=$('select[name="id_product[]"]').val();
+                            var all = $('select[name="id_product[]"]').data('all');
                             var convertAll=false;
                             if($('select[name="id_product[]"]').data('value')){
                                 value=$('select[name="id_product[]"]').data('value');
                                 $('select[name="id_product[]"]').data('value',false);
                                 convertAll=true;
                             }
-                            redrawProducts(data.result,value,convertAll);
+                            redrawProducts(data.result,value,convertAll,all);
                         }
                     }
                 });

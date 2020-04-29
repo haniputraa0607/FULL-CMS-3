@@ -51,6 +51,10 @@ $configs = session('configs');
         .text-decoration-none {
             text-decoration: none!important;
         }
+        .custom-addon-icon {
+		    width: 14px;
+		    color: #337ab7!important;
+        }
     </style>
 @endsection
 
