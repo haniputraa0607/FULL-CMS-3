@@ -24,6 +24,22 @@
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
+                    Franchise Status
+                    <i class="fa fa-question-circle tooltips" data-original-title="Keterangan outlet ini adalah franchise atau bukan franchise" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                @if($val['status_franchise'] == 1)
+                    <input type="text" class="form-control" value="This outlet is franchise" required placeholder="Franchise Status" readonly>
+                @else
+                    <input type="text" class="form-control" value="This outlet is not franchise" required placeholder="Franchise Status" readonly>
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
                 Code
                 <i class="fa fa-question-circle tooltips" data-original-title="Kode outlet bersifat unik" data-container="body"></i>
                 </label>

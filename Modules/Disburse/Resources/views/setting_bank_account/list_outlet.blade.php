@@ -82,6 +82,8 @@
                     <thead>
                     <tr>
                         <th scope="col" width="30%"> Outlet </th>
+                        <th scope="col" width="20%">Special Outlet status </th>
+                        <th scope="col" width="20%">Special Outlet Fee </th>
                         <th scope="col" width="25%"> Beneficiary Bank </th>
                         <th scope="col" width="10%"> Beneficiary Name </th>
                         <th scope="col" width="25%"> Beneficiary Alias </th>
@@ -94,6 +96,14 @@
                             @foreach($outlets as $data)
                                 <tr>
                                     <td>{{$data['outlet_code']}} - {{$data['outlet_name']}}</td>
+                                    <td>
+                                        @if($data['outlet_special_status'] ==  1)
+                                            <b style='color: green'>This outlet is special outlet</b>
+                                        @else
+                                            This outlet is not special outlet
+                                        @endif
+                                    </td>
+                                    <td>{{$data['outlet_special_fee']}} %</td>
                                     <td>{{$data['bank_code']}} - {{$data['bank_name']}}</td>
                                     <td>{{$data['beneficiary_name']}}</td>
                                     <td>{{$data['beneficiary_alias']}}</td>
