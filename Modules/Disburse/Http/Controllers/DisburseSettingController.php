@@ -183,4 +183,35 @@ class DisburseSettingController extends Controller
             return redirect('disburse/setting/global#point')->withErrors([$update['message']]);
         }
     }
+
+    function listOutletAjax(Request $request){
+        $post = $request->except('_token');
+        $draw = $post["draw"];
+        $list = MyHelper::post('disburse/setting/fee-outlet-special/outlets', $post);
+
+        if(isset($list['status']) && isset($list['status']) == 'success'){
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = $list['total'];
+            $arr_result['recordsFiltered'] = $list['total'];
+            $arr_result['data'] = $list['result'];
+        }else{
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = 0;
+            $arr_result['recordsFiltered'] = 0;
+            $arr_result['data'] = array();
+        }
+        return response()->json($arr_result);
+    }
+
+    function settingFeeOutletSpecial(Request $request){
+        $post = $request->except('_token');
+
+        $post['id_outlet'] = explode(',', $post['id_outlet']);
+        $update = MyHelper::post('disburse/setting/fee-outlet-special/update', $post);
+        if(isset($update['status']) && $update['status'] == 'success'){
+            return redirect('disburse/setting/global#fee-special-outlet')->withSuccess(['Success Update Fee Special Outlet']);
+        }else{
+            return redirect('disburse/setting/global#fee-special-outlet')->withErrors([$update['message']]);
+        }
+    }
 }
