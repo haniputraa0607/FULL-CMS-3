@@ -43,6 +43,7 @@ class SubscriptionController extends Controller
         $post['newest'] = 1;
         $post['web'] = 1;
         $post['admin']=1;
+        $post['created_at']=1;
 
         if(($filter=session('subs_filter'))&&is_array($filter))
         {
@@ -71,19 +72,17 @@ class SubscriptionController extends Controller
 
     }
 
-    public function participateAjax(Request $request) {
+    public function participateAjax($input, $id_encrypt) {
 
-        $input = $request->query();
         $return = $input;
         $return['draw']=(int)$input['draw'];
-        $exploded = MyHelper::explodeSlug($input['id_subscription']);
-        $id_encrypt = $input['id_subscription'];
-        $input['id_subscription'] = $exploded[0];
-
+        // $exploded = MyHelper::explodeSlug($input['id_subscription']);
+        // $id_encrypt = $input['id_subscription'];
+        // $input['id_subscription'] = $exploded[0];
         $participate = MyHelper::post('subscription/participate-ajax', $input);
         
         if ( ($participate['status']??'') == 'success') {
-            $return['recordsTotal'] = $participate['count'];
+            $return['recordsTotal'] = $participate['total'];
             $return['recordsFiltered'] = $participate['count'];
             $return['data'] = array_map(function($x) use ($participate, $id_encrypt){
                 $detailUrl=url('subscription/detail/'.$id_encrypt.'/'.$x['subscription_user_receipt_number']);
@@ -173,7 +172,6 @@ class SubscriptionController extends Controller
                 isset($id_subscription) ? $message = ['Subscription has been Updated'] : $message = ['Subscription has been created'];
                 return redirect('subscription/step2/'.MyHelper::createSlug($save['result']['id_subscription'],$save['result']['created_at']??''))->with('success', $message);
             }else{
-                dd($save);
                 return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
             }
         }
@@ -329,7 +327,6 @@ class SubscriptionController extends Controller
             if (isset($post['subscription_image'])) {
                 $post['subscription_image']         = MyHelper::encodeImage($post['subscription_image']);
             }
-
             $save = MyHelper::post('subscription/updateDetail', $post);
 
             if ( ($save['status']??false) == "success") {
@@ -369,5 +366,65 @@ class SubscriptionController extends Controller
 
             return view('subscription::detail', $data);
         }
+    }
+
+    public function detailv2(Request $request, $slug, $subs_receipt=null)
+    {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id_subscription = $exploded[0];
+        $created_at = $exploded[1];
+
+        if (isset($subs_receipt)) {
+            return $this->transaction($id_subscription, $subs_receipt);
+        }
+        $post = $request->except('_token');
+
+        if ($request->post('clear') == 'session') 
+        {
+            session(['participate_subscription_'.$id_subscription => '']);
+            unset($post['rule']);
+        }
+        
+        $this->session_mixer($request, $post,'participate_subscription_'.$id_subscription);
+
+        $post['id_subscription'] = $id_subscription;
+        if($request->input('ajax')=='true')
+        {
+            return $this->participateAjax($post, $slug);
+        }
+
+        $data = [
+            'title'          => 'Subscription',
+            'sub_title'      => 'Subscription Detail',
+            'menu_active'    => 'subscription',
+            'submenu_active' => 'subscription-List'
+        ];
+
+        $data['subscription'] = MyHelper::post('subscription/show-detail', $post)['result']??'';
+        if ($data['subscription'] == '') {
+            return redirect('subscription')->withErrors('Subscription not found');
+        }
+        $data['subscription']['id_subscription'] = $slug;
+
+        $data['rule']=$post['rule']??[];
+        if (isset($data['rule'])) {	
+            $filter = array_map(function ($x) {
+                return [$x['subject'], $x['operator'] ?? '', $x['parameter']];
+            }, $data['rule']);
+            $data['rule'] = $filter;
+        }
+        
+        $data['operator']=$post['operator']??'and';
+
+        return view('subscription::detailv2', $data);
+
+    }
+
+    public function session_mixer($request, &$post,$sess='subscription_filter')
+    {
+        $session = session($sess);
+        $session = is_array($session) ? $session : array();
+        $post = array_merge($session, $post);
+        session([$sess => $post]);
     }
 }

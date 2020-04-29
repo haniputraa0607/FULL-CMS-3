@@ -11,6 +11,12 @@ $grantedFeature     = session('granted_features');
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    	.middle-center {
+            vertical-align: middle!important;
+            text-align: center;
+        }
+    </style>
 @endsection
 
 @section('page-script')
@@ -201,7 +207,17 @@ $grantedFeature     = session('granted_features');
                                         echo $price;
                                     @endphp
                                 </td>
-                                <td>{{ $value['subscription_status'] }}</td>
+                                <td class="middle-center">
+                                	@if ( empty($value['subscription_step_complete']) )
+	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #F4D03F;padding: 5px 12px;color: #fff;">Not Complete</span>
+	                                @elseif( $value['subscription_status'] == 'expired' )
+	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Ended</span>
+	                                @elseif( $value['subscription_status'] == 'available' )
+	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
+	                                @elseif( $value['subscription_status'] == 'soon' )
+	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
+	                                @endif
+	                            </td>
                                 <td style="width: 80px;">
                                     @if(MyHelper::hasAccess([176], $grantedFeature))
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_subscription'] }}"><i class="fa fa-trash-o"></i></a>
