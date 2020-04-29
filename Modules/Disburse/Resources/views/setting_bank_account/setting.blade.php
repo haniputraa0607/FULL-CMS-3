@@ -205,13 +205,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label">User Franchise
+                        <label class="col-md-3 control-label">User
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="user franchisee yang outeltnya akan di setting" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="user yang outeltnya akan di setting" data-container="body"></i>
                         </label>
                         <div class="col-md-7">
                             <div class="input-icon right">
-                                <select class="form-control select2" id="id_user_franchise" data-placeholder="User Franchise" name="id_user_franchise" data-value="{{old('id_user_franchise')}}" required>
+                                <select class="form-control select2" id="id_user_franchise" data-placeholder="User" name="id_user_franchise" data-value="{{old('id_user_franchise')}}" required>
                                     <option></option>
                                 </select>
                             </div>
