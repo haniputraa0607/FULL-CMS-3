@@ -185,8 +185,6 @@
 											<th> Category </th>
 											<th> Product </th>
 											<th> Price </th>
-											<th> Price Base </th>
-											<th> Price Tax </th>
 											<th> Visible </th>
 											<th> Stock </th>
 											<th> POS Status </th>
@@ -200,39 +198,45 @@
 													<td> {{ $pro['product_name'] }} </td>
 													<input type="hidden" name="id_outlet" value="{{ $key }}">
 													<input type="hidden" name="id_product[]" value="{{ $pro['id_product'] }}">
-													@if (!empty($data['product_prices']))
+													@if (!empty($data['product_detail']))
 															@php
 																$marker = 0;
 															@endphp
-															@foreach ($data['product_prices'] as $dpp)
+															<?php
+
+															$price = 0;
+															$id_product_special_price = 0;
+															if(isset($data['product_special_price']) && !empty($data['product_special_price'])){
+																$keyPrice = array_search($pro['id_product'], array_column($data['product_special_price'], 'id_product'));
+																if($keyPrice !== false){
+																	$price = $data['product_special_price'][$keyPrice]['product_special_price'];
+																	$id_product_special_price = $data['product_special_price'][$keyPrice]['id_product_special_price'];
+																}
+															}
+															?>
+															@foreach ($data['product_detail'] as $dpp)
 																@if ($dpp['id_product'] == $pro['id_product'])
 																	@php
 																		$marker = 1;
 																	@endphp
 																	<td style="width: 15%">
-																		<input type="text" name="price[]" value="{{ $dpp['product_price'] }}" data-placeholder="input price" data-id="{{$pro['id_product']}}" class="form-control mt-repeater-input-inline price">
-																	</td>
-																	<td style="width: 15%">
-																		<input type="text" name="price_base[]" value="{{ $dpp['product_price_base'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_base_{{$pro['id_product']}}" readonly>
-																	</td>
-																	<td style="width: 15%">
-																		<input type="text" name="price_tax[]" value="{{ $dpp['product_price_tax'] }}" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_tax_{{$pro['id_product']}}" readonly>
+																		<input type="text" name="price[]" value="{{ $price }}" data-placeholder="input price" data-id="{{$pro['id_product']}}" class="form-control mt-repeater-input-inline price">
 																	</td>
 																	<td style="width:15%">
 																		<select class="form-control" name="visible[]">
 																			<option></option>
-																			<option value="Visible" @if($dpp['product_visibility'] == 'Visible') selected @endif>Visible</option>
-																			<option value="Hidden" @if($dpp['product_visibility'] == 'Hidden') selected @endif>Hidden</option>
+																			<option value="Visible" @if($dpp['product_detail_visibility'] == 'Visible') selected @endif>Visible</option>
+																			<option value="Hidden" @if($dpp['product_detail_visibility'] == 'Hidden') selected @endif>Hidden</option>
 																		</select>
 																	</td>
 																	<td style="width:15%">
 																		<select class="form-control" name="product_stock_status[]">
-																			<option value="Available" @if($dpp['product_stock_status'] == 'Available') selected @endif>Available</option>
-																			<option value="Sold Out" @if($dpp['product_stock_status'] == 'Sold Out') selected @endif>Sold Out</option>
+																			<option value="Available" @if($dpp['product_detail_stock_status'] == 'Available') selected @endif>Available</option>
+																			<option value="Sold Out" @if($dpp['product_detail_stock_status'] == 'Sold Out') selected @endif>Sold Out</option>
 																		</select>
 																	</td>
 																	<td style="width:15%">
-																		<input type="text" value="{{ $dpp['product_status'] }}" class="form-control mt-repeater-input-inline" disabled>
+																		<input type="text" value="{{ $dpp['product_detail_status'] }}" class="form-control mt-repeater-input-inline" disabled>
 																	</td>
 																@endif
 															@endforeach
@@ -240,12 +244,6 @@
 															@if ($marker == 0)
 															<td style="width: 15%">
 																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price" data-id="{{$pro['id_product']}}">
-															</td>
-															<td style="width: 15%">
-																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_base_{{$pro['id_product']}}" readonly>
-															</td>
-															<td style="width: 15%">
-																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_tax_{{$pro['id_product']}}" readonly>
 															</td>
 															<td style="width: 15%">
 																<select class="form-control" name="visible[]">
@@ -267,12 +265,6 @@
 														@else
 															<td style="width: 15%">
 																<input type="text" name="price[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price" data-id="{{$pro['id_product']}}">
-															</td>
-															<td style="width: 15%">
-																<input type="text" name="price_base[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_base_{{$pro['id_product']}}" readonly>
-															</td>
-															<td style="width: 15%">
-																<input type="text" name="price_tax[]" data-placeholder="input price" class="form-control mt-repeater-input-inline price_float" id="price_tax_{{$pro['id_product']}}" readonly>
 															</td>
 															<td style="width: 15%">
 																<select class="form-control" name="visible[]">

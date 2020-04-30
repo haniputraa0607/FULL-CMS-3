@@ -704,8 +704,8 @@ class ProductController extends Controller
             /**
              * jika price
              */
-			if (isset($post['product_visibility'])) {
-				$save = MyHelper::post('product/price/update', $post);
+			if (isset($post['product_detail_visibility'])) {
+				$save = MyHelper::post('product/detail/update', $post);
 				// print_r($save);exit;
                 return parent::redirect($save, 'Product price & visibility setting has been updated.', 'product/detail/'.$code.'#price');
 			}
@@ -910,8 +910,6 @@ class ProductController extends Controller
                 $data = [
                     'id_product'            => $post['id_product'][$key],
                     'product_price'         => $value,
-                    'product_price_base'    => $post['price_base'][$key],
-                    'product_price_tax'     => $post['price_tax'][$key],
                     'product_visibility'    => $post['visible'][$key],
                     'product_stock_status'  => $post['product_stock_status'][$key],
                     'id_outlet'             => $post['id_outlet'],

@@ -137,14 +137,14 @@
 
             @foreach($outlet as $key => $ou)
             <?php $marker = 0; ?>
-                @foreach($ou['product_prices'] as $keyPrice => $price)
+                @foreach($ou['product_detail'] as $keyPrice => $price)
                     @if($price['id_product'] == $product[0]['id_product'])
                         @php $marker = 1; break; @endphp
                     @endif
                 @endforeach
                 var option =  '<option class="option-visibility" data-id={{$product[0]["id_product"]}}/{{$ou["id_outlet"]}}>{{$ou["outlet_code"]}} - {{$ou["outlet_name"]}}</option>'
-                @if($marker == 1 && $price["product_visibility"])
-                        $('#visibleglobal-{{lcfirst($price["product_visibility"])}}').append(option)
+                @if($marker == 1 && $price["product_detail_visibility"])
+                        $('#visibleglobal-{{lcfirst($price["product_detail_visibility"])}}').append(option)
                 @else
                     $('#visibleglobal-default').append(option)
                 @endif
@@ -763,7 +763,7 @@
                     </li>
                 @endif -->
                 <li>
-                    <a href="#price" data-toggle="tab"> Outlet Setting </a>
+                    <a href="#price" data-toggle="tab"> Outlet Setting</a>
                 </li>
                 <li>
                     <a href="#visibility" data-toggle="tab"> Visibility </a>
