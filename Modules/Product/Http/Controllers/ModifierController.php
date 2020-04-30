@@ -213,6 +213,73 @@ class ModifierController extends Controller
         if(!$outlets){
             return back()->withErrors(['Something went wrong']);
         }
+        $data = [
+            'title'          => 'Product Modifier',
+            'sub_title'      => 'Product Modifier Prices',
+            'menu_active'    => 'product-modifier',
+            'submenu_active' => 'product-modifier-price',
+            'filter_title'   => 'Filter Product Modifier',
+        ];
+        if(session('product_modifier_price_filter')){
+            $post=session('product_modifier_price_filter');
+            $data['rule']=array_map('array_values', $post['rule']);
+            $data['operator']=$post['operator'];
+        }else{
+            $post = [];
+        }
+        $page = $request->page;
+        if(!$page){
+            $page = 1;
+        }
+        $data['key'] = $id_outlet;
+        $data['outlets'] = $outlets;
+        $post['id_outlet'] = $id_outlet;
+        $types = MyHelper::get('product/modifier/type')['result']??[];
+        $data['types'] = array_map(function($q){return [$q,$q];},$types);
+        $data['modifiers'] = MyHelper::post('product/modifier/list-price?page='.$page,$post)['result']??[];
+        $data['total'] = $data['modifiers']['total'];
+        $data['paginator'] = new LengthAwarePaginator($data['modifiers']['data'], $data['modifiers']['total'], $data['modifiers']['per_page'], $data['modifiers']['current_page'], ['path' => url()->current()]);
+        
+        $data['start'] = ($page-1)*10;
+        $data['next_page'] = $data['modifiers']['next_page_url']?url()->current().'?page='.($page+1):'';
+        $data['prev_page'] = $data['modifiers']['prev_page_url']?url()->current().'?page='.($page-1):'';
+        return view('product::modifier.price',$data);
+    }
+
+    /**
+     * update price product modifiers
+     * @return view list modifiers price
+     */
+    public function updatePrice(Request $request,$id_outlet=null)
+    {
+        $post = $request->except('_token');
+        if($post['rule']??false){
+            session(['product_modifier_price_filter'=>$post]);
+            return redirect('product/modifier/price');
+        }
+        if($post['clear']??false){
+            session(['product_modifier_price_filter'=>null]);
+            return redirect('product/modifier/price');
+        }
+        $post['id_outlet'] = $id_outlet;
+        $result = MyHelper::post('product/modifier/update-price',$post);
+        if(($result['status']??false)=='success'){
+            return back()->with('success',['Success update price']);
+        }else{
+            return $result;
+            return back()->withErrors(['Fail update price']);
+        }
+    }
+    /**
+     * Get list product modifiers
+     * @return view list modifiers price
+     */
+    public function listDetail(Request $request,$id_outlet=null)
+    {
+        $outlets = MyHelper::get('outlet/be/list')['result']??[];
+        if(!$outlets){
+            return back()->withErrors(['Something went wrong']);
+        }
         if(!$id_outlet || !in_array($id_outlet,array_column($outlets, 'id_outlet'))){
             $outlet = $outlets[0]['id_outlet']??false;
             if(!$outlet){
@@ -257,7 +324,7 @@ class ModifierController extends Controller
      * update price product modifiers
      * @return view list modifiers price
      */
-    public function updatePrice(Request $request,$id_outlet=null)
+    public function updateDetail(Request $request,$id_outlet=null)
     {
         $post = $request->except('_token');
         if($post['rule']??false){
