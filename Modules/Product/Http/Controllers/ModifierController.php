@@ -212,7 +212,7 @@ class ModifierController extends Controller
         if (!$outlets) {
             return back()->withErrors(['Something went wrong']);
         }
-        if ($id_outlet && !in_array($id_outlet, array_column($outlets, 'id_outlet'))) {
+        if (($id_outlet && !in_array($id_outlet, array_column($outlets, 'id_outlet'))) || !is_numeric($id_outlet)) {
             $outlet = 0;
             return redirect('product/modifier/price/' . $outlet);
         }
