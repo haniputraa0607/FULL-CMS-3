@@ -209,9 +209,13 @@ class ModifierController extends Controller
      */
     public function listPrice(Request $request,$id_outlet=null)
     {
-        $outlets = MyHelper::get('outlet/be/list')['result']??[];
+        $outlets = MyHelper::post('outlet/be/list',['filter'=>'different_price'])['result']??[];
         if(!$outlets){
             return back()->withErrors(['Something went wrong']);
+        }
+        if($id_outlet && !in_array($id_outlet,array_column($outlets, 'id_outlet'))){
+            $outlet = 0;
+            return redirect('product/modifier/price/'.$outlet);
         }
         $data = [
             'title'          => 'Product Modifier',
