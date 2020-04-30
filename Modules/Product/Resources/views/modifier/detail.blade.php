@@ -83,7 +83,7 @@
             oncleared: function () { self.Value(''); }
         });
         $('#outlet_selector').on('change',function(){
-            window.location.href = "{{url('product/modifier/price')}}/"+$(this).val();
+            window.location.href = "{{url('product/modifier/detail')}}/"+$(this).val();
         });
         $('#form-prices').submit(function(){
             $('.price').inputmask('remove');
@@ -138,7 +138,6 @@
                         <tr>
                             <th> No </th>
                             <th> Modifier </th>
-                            <th> Price </th>
                             <th> Visible </th>
                             <th> Stock </th>
                             <th> Status </th>
@@ -151,7 +150,6 @@
                                 <tr>
                                     <td style="width: 1%">{{$start}}</td>
                                     <td>{{$modifier['code']}} - {{$modifier['text']}}</td>
-                                    <td style="width: 15%"><input type="text" class="form-control price" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_price]" value="{{$modifier['product_modifier_price']}}" style="max-width: 120px" /></td>
                                     <td style="width: 15%">
                                         <select class="form-control" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_visibility]">
                                             <option></option>

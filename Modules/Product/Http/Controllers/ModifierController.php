@@ -2,12 +2,11 @@
 
 namespace Modules\Product\Http\Controllers;
 
+use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
-
-use App\Lib\MyHelper;
+use Illuminate\Routing\Controller;
 
 class ModifierController extends Controller
 {
@@ -24,25 +23,25 @@ class ModifierController extends Controller
             'submenu_active' => 'product-modifier-list',
             'filter_title'   => 'Filter Product Modifier',
         ];
-        if(session('product_modifier_filter')){
-            $post=session('product_modifier_filter');
-            $data['rule']=array_map('array_values', $post['rule']);
-            $data['operator']=$post['operator'];
-        }else{
+        if (session('product_modifier_filter')) {
+            $post             = session('product_modifier_filter');
+            $data['rule']     = array_map('array_values', $post['rule']);
+            $data['operator'] = $post['operator'];
+        } else {
             $post = [];
         }
         $page = $request->page;
-        if(!$page){
+        if (!$page) {
             $page = 1;
         }
-        $data['start'] = ($page-1)*10;
-        $types = MyHelper::get('product/modifier/type')['result']??[];
-        $data['types'] = array_map(function($q){return [$q,$q];},$types);
-        $data['modifiers'] = MyHelper::post('product/modifier?page='.$page,$post)['result']??[];
-        $data['total'] = $data['modifiers']['total'];
-        $data['next_page'] = $data['modifiers']['next_page_url']?url()->current().'?page='.($page+1):'';
-        $data['prev_page'] = $data['modifiers']['prev_page_url']?url()->current().'?page='.($page-1):'';
-        return view('product::modifier.list',$data);
+        $data['start'] = ($page - 1) * 10;
+        $types         = MyHelper::get('product/modifier/type')['result'] ?? [];
+        $data['types'] = array_map(function ($q) {return [$q, $q];}, $types);
+        $data['modifiers'] = MyHelper::post('product/modifier?page=' . $page, $post)['result'] ?? [];
+        $data['total']     = $data['modifiers']['total'];
+        $data['next_page'] = $data['modifiers']['next_page_url'] ? url()->current() . '?page=' . ($page + 1) : '';
+        $data['prev_page'] = $data['modifiers']['prev_page_url'] ? url()->current() . '?page=' . ($page - 1) : '';
+        return view('product::modifier.list', $data);
     }
 
     /**
@@ -57,29 +56,29 @@ class ModifierController extends Controller
             'menu_active'    => 'product-modifier',
             'submenu_active' => 'product-modifier-new',
         ];
-        $data['types'] = MyHelper::get('product/modifier/type')['result']??[];
+        $data['types'] = MyHelper::get('product/modifier/type')['result'] ?? [];
 
-        $data['subject']['products'] = array_map(function($var){
+        $data['subject']['products'] = array_map(function ($var) {
             return [
-                'id' => $var['id_product'],
-                'text' => $var['product_code'].' - '.$var['product_name']
+                'id'   => $var['id_product'],
+                'text' => $var['product_code'] . ' - ' . $var['product_name'],
             ];
-        },MyHelper::get('product/be/list')['result']??[]);
+        }, MyHelper::get('product/be/list')['result'] ?? []);
 
-        $data['subject']['product_categories'] = array_map(function($var){
+        $data['subject']['product_categories'] = array_map(function ($var) {
             return [
-                'id' => $var['id_product_category'],
-                'text' => $var['product_category_name']
+                'id'   => $var['id_product_category'],
+                'text' => $var['product_category_name'],
             ];
-        },MyHelper::get('product/category/be/list')['result']??[]);
+        }, MyHelper::get('product/category/be/list')['result'] ?? []);
 
-        $data['subject']['brands'] = array_map(function($var){
+        $data['subject']['brands'] = array_map(function ($var) {
             return [
-                'id' => $var['id_brand'],
-                'text' => $var['name_brand']
+                'id'   => $var['id_brand'],
+                'text' => $var['name_brand'],
             ];
-        },MyHelper::get('brand/be/list')['result']??[]);
-        return view('product::modifier.create',$data);
+        }, MyHelper::get('brand/be/list')['result'] ?? []);
+        return view('product::modifier.create', $data);
     }
 
     /**
@@ -89,24 +88,24 @@ class ModifierController extends Controller
      */
     public function store(Request $request)
     {
-        $post =  $request->except('_token');
-        if($post['rule']??false){
-            session(['product_modifier_filter'=>$post]);
+        $post = $request->except('_token');
+        if ($post['rule'] ?? false) {
+            session(['product_modifier_filter' => $post]);
             return redirect('product/modifier');
         }
-        if($post['clear']??false){
-            session(['product_modifier_filter'=>null]);
+        if ($post['clear'] ?? false) {
+            session(['product_modifier_filter' => null]);
             return redirect('product/modifier');
         }
         $post['type'] = $post['type_dropdown'];
-        if($post['type'] == '0'){
-            $post['type'] =$post['type_textbox'];
+        if ($post['type'] == '0') {
+            $post['type'] = $post['type_textbox'];
         }
-        $result = MyHelper::post('product/modifier/create',$post);
-        if(($result['status']??false) == 'success'){
-            return redirect('product/modifier/create')->with('success',['Success create modifier']);
-        }else{
-            return back()->withErrors($result['messages']??['Something went wrong'])->withInput();
+        $result = MyHelper::post('product/modifier/create', $post);
+        if (($result['status'] ?? false) == 'success') {
+            return redirect('product/modifier/create')->with('success', ['Success create modifier']);
+        } else {
+            return back()->withErrors($result['messages'] ?? ['Something went wrong'])->withInput();
         }
     }
 
@@ -123,36 +122,36 @@ class ModifierController extends Controller
             'menu_active'    => 'product-modifier',
             'submenu_active' => 'product-modifier-list',
         ];
-        $modifier = MyHelper::post('product/modifier/detail',['code'=>$id]);
-        if(!($modifier['result']??false)){
-            return back()->withErrors($modifier['messages']??['Something went wrong']);
+        $modifier = MyHelper::post('product/modifier/detail', ['code' => $id]);
+        if (!($modifier['result'] ?? false)) {
+            return back()->withErrors($modifier['messages'] ?? ['Something went wrong']);
         }
         $data['modifier'] = $modifier['result'];
 
-        $data['types'] = MyHelper::get('product/modifier/type')['result']??[];
+        $data['types'] = MyHelper::get('product/modifier/type')['result'] ?? [];
 
-        $data['subject']['products'] = array_map(function($var){
+        $data['subject']['products'] = array_map(function ($var) {
             return [
-                'id' => $var['id_product'],
-                'text' => $var['product_code'].' - '.$var['product_name']
+                'id'   => $var['id_product'],
+                'text' => $var['product_code'] . ' - ' . $var['product_name'],
             ];
-        },MyHelper::get('product/be/list')['result']??[]);
+        }, MyHelper::get('product/be/list')['result'] ?? []);
 
-        $data['subject']['product_categories'] = array_map(function($var){
+        $data['subject']['product_categories'] = array_map(function ($var) {
             return [
-                'id' => $var['id_product_category'],
-                'text' => $var['product_category_name']
+                'id'   => $var['id_product_category'],
+                'text' => $var['product_category_name'],
             ];
-        },MyHelper::get('product/category/be/list')['result']??[]);
+        }, MyHelper::get('product/category/be/list')['result'] ?? []);
 
-        $data['subject']['brands'] = array_map(function($var){
+        $data['subject']['brands'] = array_map(function ($var) {
             return [
-                'id' => $var['id_brand'],
-                'text' => $var['name_brand']
+                'id'   => $var['id_brand'],
+                'text' => $var['name_brand'],
             ];
-        },MyHelper::get('brand/be/list')['result']??[]);
+        }, MyHelper::get('brand/be/list')['result'] ?? []);
 
-        return view('product::modifier.edit',$data);
+        return view('product::modifier.edit', $data);
     }
 
     /**
@@ -163,30 +162,30 @@ class ModifierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post =  $request->except(['_token','_method']);
-        if($request->isMethod('patch')){
-            $modifier = MyHelper::post('product/modifier/detail',['id_product_modifier'=>$id])['result']??false;
-            if(!$modifier){
-                return ['status'=>'fail'];
+        $post = $request->except(['_token', '_method']);
+        if ($request->isMethod('patch')) {
+            $modifier = MyHelper::post('product/modifier/detail', ['id_product_modifier' => $id])['result'] ?? false;
+            if (!$modifier) {
+                return ['status' => 'fail'];
             }
             $post += $modifier;
             $post['patch'] = 1;
-            $result = MyHelper::post('product/modifier/update',$post);
+            $result        = MyHelper::post('product/modifier/update', $post);
             return $result;
         }
-        $post['type'] = $post['type_dropdown'];
+        $post['type']                = $post['type_dropdown'];
         $post['id_product_modifier'] = $id;
-        if($post['type'] == '0'){
-            $post['type'] =$post['type_textbox'];
+        if ($post['type'] == '0') {
+            $post['type'] = $post['type_textbox'];
         }
-        $result = MyHelper::post('product/modifier/update',$post);
-        if(($result['status']??false) == 'success'){
-            return redirect('product/modifier/'.$post['code'])->with('success',['Success update modifier']);
-        }else{
-            if(stristr($result['message']??'', 'SQLSTATE[23000]')){
-                $result['message'] = 'Another modifier with code "'.$post['code'].'" aready exist';
+        $result = MyHelper::post('product/modifier/update', $post);
+        if (($result['status'] ?? false) == 'success') {
+            return redirect('product/modifier/' . $post['code'])->with('success', ['Success update modifier']);
+        } else {
+            if (stristr($result['message'] ?? '', 'SQLSTATE[23000]')) {
+                $result['message'] = 'Another modifier with code "' . $post['code'] . '" aready exist';
             }
-            return back()->withErrors($result['messages']??[$result['message']??'Something went wrong'])->withInput();
+            return back()->withErrors($result['messages'] ?? [$result['message'] ?? 'Something went wrong'])->withInput();
         }
     }
 
@@ -197,9 +196,9 @@ class ModifierController extends Controller
      */
     public function destroy($id)
     {
-        $result = MyHelper::post('product/modifier/delete',['id_product_modifier'=>$id]);
-        if($result['status']=='success'){
-            return redirect('product/modifier')->with('success',['Success delete modifier']);
+        $result = MyHelper::post('product/modifier/delete', ['id_product_modifier' => $id]);
+        if ($result['status'] == 'success') {
+            return redirect('product/modifier')->with('success', ['Success delete modifier']);
         }
         return redirect('product/modifier')->withErrors(['Fail delete modifier']);
     }
@@ -207,15 +206,15 @@ class ModifierController extends Controller
      * Get list product modifiers
      * @return view list modifiers price
      */
-    public function listPrice(Request $request,$id_outlet=null)
+    public function listPrice(Request $request, $id_outlet = null)
     {
-        $outlets = MyHelper::post('outlet/be/list',['filter'=>'different_price'])['result']??[];
-        if(!$outlets){
+        $outlets = MyHelper::post('outlet/be/list', ['filter' => 'different_price'])['result'] ?? [];
+        if (!$outlets) {
             return back()->withErrors(['Something went wrong']);
         }
-        if($id_outlet && !in_array($id_outlet,array_column($outlets, 'id_outlet'))){
+        if ($id_outlet && !in_array($id_outlet, array_column($outlets, 'id_outlet'))) {
             $outlet = 0;
-            return redirect('product/modifier/price/'.$outlet);
+            return redirect('product/modifier/price/' . $outlet);
         }
         $data = [
             'title'          => 'Product Modifier',
@@ -224,128 +223,126 @@ class ModifierController extends Controller
             'submenu_active' => 'product-modifier-price',
             'filter_title'   => 'Filter Product Modifier',
         ];
-        if(session('product_modifier_price_filter')){
-            $post=session('product_modifier_price_filter');
-            $data['rule']=array_map('array_values', $post['rule']);
-            $data['operator']=$post['operator'];
-        }else{
+        if (session('product_modifier_price_filter')) {
+            $post             = session('product_modifier_price_filter');
+            $data['rule']     = array_map('array_values', $post['rule']);
+            $data['operator'] = $post['operator'];
+        } else {
             $post = [];
         }
         $page = $request->page;
-        if(!$page){
+        if (!$page) {
             $page = 1;
         }
-        $data['key'] = $id_outlet;
-        $data['outlets'] = $outlets;
+        $data['key']       = $id_outlet;
+        $data['outlets']   = $outlets;
         $post['id_outlet'] = $id_outlet;
-        $types = MyHelper::get('product/modifier/type')['result']??[];
-        $data['types'] = array_map(function($q){return [$q,$q];},$types);
-        $data['modifiers'] = MyHelper::post('product/modifier/list-price?page='.$page,$post)['result']??[];
-        $data['total'] = $data['modifiers']['total'];
+        $types             = MyHelper::get('product/modifier/type')['result'] ?? [];
+        $data['types']     = array_map(function ($q) {return [$q, $q];}, $types);
+        $data['modifiers'] = MyHelper::post('product/modifier/list-price?page=' . $page, $post)['result'] ?? [];
+        $data['total']     = $data['modifiers']['total'];
         $data['paginator'] = new LengthAwarePaginator($data['modifiers']['data'], $data['modifiers']['total'], $data['modifiers']['per_page'], $data['modifiers']['current_page'], ['path' => url()->current()]);
-        
-        $data['start'] = ($page-1)*10;
-        $data['next_page'] = $data['modifiers']['next_page_url']?url()->current().'?page='.($page+1):'';
-        $data['prev_page'] = $data['modifiers']['prev_page_url']?url()->current().'?page='.($page-1):'';
-        return view('product::modifier.price',$data);
+
+        $data['start']     = ($page - 1) * 10;
+        $data['next_page'] = $data['modifiers']['next_page_url'] ? url()->current() . '?page=' . ($page + 1) : '';
+        $data['prev_page'] = $data['modifiers']['prev_page_url'] ? url()->current() . '?page=' . ($page - 1) : '';
+        return view('product::modifier.price', $data);
     }
 
     /**
      * update price product modifiers
      * @return view list modifiers price
      */
-    public function updatePrice(Request $request,$id_outlet=null)
+    public function updatePrice(Request $request, $id_outlet = null)
     {
         $post = $request->except('_token');
-        if($post['rule']??false){
-            session(['product_modifier_price_filter'=>$post]);
+        if ($post['rule'] ?? false) {
+            session(['product_modifier_price_filter' => $post]);
             return redirect('product/modifier/price');
         }
-        if($post['clear']??false){
-            session(['product_modifier_price_filter'=>null]);
+        if ($post['clear'] ?? false) {
+            session(['product_modifier_price_filter' => null]);
             return redirect('product/modifier/price');
         }
         $post['id_outlet'] = $id_outlet;
-        $result = MyHelper::post('product/modifier/update-price',$post);
-        if(($result['status']??false)=='success'){
-            return back()->with('success',['Success update price']);
-        }else{
-            return $result;
+        $result            = MyHelper::post('product/modifier/update-price', $post);
+        if (($result['status'] ?? false) == 'success') {
+            return back()->with('success', ['Success update price']);
+        } else {
             return back()->withErrors(['Fail update price']);
         }
     }
     /**
      * Get list product modifiers
-     * @return view list modifiers price
+     * @return view list modifiers detail
      */
-    public function listDetail(Request $request,$id_outlet=null)
+    public function listDetail(Request $request, $id_outlet = null)
     {
-        $outlets = MyHelper::get('outlet/be/list')['result']??[];
-        if(!$outlets){
+        $outlets = MyHelper::get('outlet/be/list')['result'] ?? [];
+        if (!$outlets) {
             return back()->withErrors(['Something went wrong']);
         }
-        if(!$id_outlet || !in_array($id_outlet,array_column($outlets, 'id_outlet'))){
-            $outlet = $outlets[0]['id_outlet']??false;
-            if(!$outlet){
+        if (!$id_outlet || !in_array($id_outlet, array_column($outlets, 'id_outlet'))) {
+            $outlet = $outlets[0]['id_outlet'] ?? false;
+            if (!$outlet) {
                 return back()->withErrors(['Something went wrong']);
             }
-            return redirect('product/modifier/price/'.$outlet);
+            return redirect('product/modifier/detail/' . $outlet);
         }
         $data = [
             'title'          => 'Product Modifier',
-            'sub_title'      => 'Product Modifier Prices',
+            'sub_title'      => 'Product Modifier Details',
             'menu_active'    => 'product-modifier',
-            'submenu_active' => 'product-modifier-price',
+            'submenu_active' => 'product-modifier-detail',
             'filter_title'   => 'Filter Product Modifier',
         ];
-        if(session('product_modifier_price_filter')){
-            $post=session('product_modifier_price_filter');
-            $data['rule']=array_map('array_values', $post['rule']);
-            $data['operator']=$post['operator'];
-        }else{
+        if (session('product_modifier_detail_filter')) {
+            $post             = session('product_modifier_detail_filter');
+            $data['rule']     = array_map('array_values', $post['rule']);
+            $data['operator'] = $post['operator'];
+        } else {
             $post = [];
         }
         $page = $request->page;
-        if(!$page){
+        if (!$page) {
             $page = 1;
         }
-        $data['key'] = $id_outlet;
-        $data['outlets'] = $outlets;
+        $data['key']       = $id_outlet;
+        $data['outlets']   = $outlets;
         $post['id_outlet'] = $id_outlet;
-        $types = MyHelper::get('product/modifier/type')['result']??[];
-        $data['types'] = array_map(function($q){return [$q,$q];},$types);
-        $data['modifiers'] = MyHelper::post('product/modifier/list-price?page='.$page,$post)['result']??[];
-        $data['total'] = $data['modifiers']['total'];
+        $types             = MyHelper::get('product/modifier/type')['result'] ?? [];
+        $data['types']     = array_map(function ($q) {return [$q, $q];}, $types);
+        $data['modifiers'] = MyHelper::post('product/modifier/list-detail?page=' . $page, $post)['result'] ?? [];
+        $data['total']     = $data['modifiers']['total'];
         $data['paginator'] = new LengthAwarePaginator($data['modifiers']['data'], $data['modifiers']['total'], $data['modifiers']['per_page'], $data['modifiers']['current_page'], ['path' => url()->current()]);
-        
-        $data['start'] = ($page-1)*10;
-        $data['next_page'] = $data['modifiers']['next_page_url']?url()->current().'?page='.($page+1):'';
-        $data['prev_page'] = $data['modifiers']['prev_page_url']?url()->current().'?page='.($page-1):'';
-        return view('product::modifier.price',$data);
+
+        $data['start']     = ($page - 1) * 10;
+        $data['next_page'] = $data['modifiers']['next_page_url'] ? url()->current() . '?page=' . ($page + 1) : '';
+        $data['prev_page'] = $data['modifiers']['prev_page_url'] ? url()->current() . '?page=' . ($page - 1) : '';
+        return view('product::modifier.detail', $data);
     }
 
     /**
-     * update price product modifiers
-     * @return view list modifiers price
+     * update detail product modifiers
+     * @return view list modifiers detail
      */
-    public function updateDetail(Request $request,$id_outlet=null)
+    public function updateDetail(Request $request, $id_outlet = null)
     {
         $post = $request->except('_token');
-        if($post['rule']??false){
-            session(['product_modifier_price_filter'=>$post]);
-            return redirect('product/modifier/price');
+        if ($post['rule'] ?? false) {
+            session(['product_modifier_detail_filter' => $post]);
+            return redirect('product/modifier/detail');
         }
-        if($post['clear']??false){
-            session(['product_modifier_price_filter'=>null]);
-            return redirect('product/modifier/price');
+        if ($post['clear'] ?? false) {
+            session(['product_modifier_detail_filter' => null]);
+            return redirect('product/modifier/detail');
         }
         $post['id_outlet'] = $id_outlet;
-        $result = MyHelper::post('product/modifier/update-price',$post);
-        if(($result['status']??false)=='success'){
-            return back()->with('success',['Success update price']);
-        }else{
-            return $result;
-            return back()->withErrors(['Fail update price']);
+        $result            = MyHelper::post('product/modifier/update-detail', $post);
+        if (($result['status'] ?? false) == 'success') {
+            return back()->with('success', ['Success update detail']);
+        } else {
+            return back()->withErrors(['Fail update detail']);
         }
     }
 }
