@@ -150,20 +150,20 @@
                                 <tr>
                                     <td style="width: 1%">{{$start}}</td>
                                     <td>{{$modifier['code']}} - {{$modifier['text']}}</td>
-                                    <td style="width: 15%">
+                                    <td>
                                         <select class="form-control" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_visibility]">
                                             <option></option>
                                             <option value="Visible" @if($modifier['product_modifier_visibility']=='Visible') selected @endif>Visible</option>
                                             <option value="Hidden" @if($modifier['product_modifier_visibility']=='Hidden') selected @endif>Hidden</option>
                                         </select>
                                     </td>
-                                    <td style="width: 15%">
+                                    <td>
                                         <select class="form-control" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_stock_status]">
                                             <option value="Available" @if($modifier['product_modifier_stock_status']=='Available') selected @endif>Available</option>
                                             <option value="Sold Out" @if($modifier['product_modifier_stock_status']=='Sold Out') selected @endif>Sold Out</option>
                                         </select>
                                     </td>
-                                    <td style="width: 15%">
+                                    <td>
                                         <input type="text" class="form-control" value="{{$modifier['product_modifier_status']}}" style="max-width: 120px" disabled />
 <!--                                         <select class="form-control" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_status]">
                                             <option value="Active" @if($modifier['product_modifier_status']=='Active') selected @endif>Active</option>

@@ -149,7 +149,7 @@
                                 <tr>
                                     <td style="width: 1%">{{$start}}</td>
                                     <td>{{$modifier['code']}} - {{$modifier['text']}}</td>
-                                    <td style="width: 25%"><input type="text" class="form-control price" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_price]" value="{{$modifier['product_modifier_price']}}" style="max-width: 200px" /></td>
+                                    <td><input type="text" class="form-control price" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_price]" value="{{$modifier['product_modifier_price']}}" style="max-width: 200px" /></td>
                                 </tr>
                             @endforeach
                         @endif
