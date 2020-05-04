@@ -565,10 +565,23 @@
 							<span class="title">Product Modifier Detail</span>
 						</a>
 					</li>
-					<li class="nav-item {{($submenu_active == 'product-modifier-price-import') ? 'active open' : ''}}">
-						<a href="{{url('product/import/modifier-price')}}" class="nav-link ">
-							<span class="title">Import Product Modifier Price</span>
+					<li class="nav-item {{(strpos($submenu_active , 'product-modifier-import') !== false) ? 'active open' : ''}}">
+						<a href="javascript:;" class="nav-link nav-toggle">
+							<span class="title">Export & Import Product Modifier</span>
+							<span class="arrow"></span>
 						</a>
+						<ul class="sub-menu">
+							<li class="nav-item {{($submenu_active == 'product-modifier-import-global') ? 'active open' : ''}}">
+								<a href="{{url('product/import/modifier')}}" class="nav-link ">
+									<span class="title">Import Product Modifier</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'product-modifier-import-price') ? 'active open' : ''}}">
+								<a href="{{url('product/import/modifier-price')}}" class="nav-link ">
+									<span class="title">Import Product Modifier Price</span>
+								</a>
+							</li>
+						</ul>
 					</li>
 					@endif
 				</ul>

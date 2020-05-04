@@ -152,11 +152,14 @@ class ProductController extends Controller
             case 'modifier-price':
                 $data['sub_title'] = 'Import Product Modifier Price';
                 $data['menu_active'] = 'product-modifier';
-                $data['submenu_active'] = 'product-modifier-price-import';
-                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
-                if(!$products){
-                    return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
-                }
+                $data['submenu_active'] = 'product-modifier-import-price';
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
+
+            case 'modifier':
+                $data['sub_title'] = 'Import Product Modifier';
+                $data['menu_active'] = 'product-modifier';
+                $data['submenu_active'] = 'product-modifier-import-global';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 break;
 
@@ -270,28 +273,51 @@ class ProductController extends Controller
                 if(!$data['products']){
                     $data['products'] = [
                         [
-                            'type' => 'mod1',
-                            'code' => 'type1',
+                            'type' => 'type1',
+                            'code' => 'mod1',
                             'name' => 'Example Modifier 1',
                             'global_price' => 1000,
                             'price_PP001' => 1500,
                             'price_BL012' =>1350
                         ],
                         [
-                            'type' => 'mod2',
-                            'code' => 'type1',
+                            'type' => 'type1',
+                            'code' => 'mod2',
                             'name' => 'Example Modifier 2',
                             'global_price' => 1400,
                             'price_PP001' => 1500,
                             'price_BL012' =>1600
                         ],
                         [
-                            'type' => 'mod3',
-                            'code' => 'type2',
+                            'type' => 'type2',
+                            'code' => 'mod1',
                             'name' => 'Example Modifier 3',
                             'global_price' => 1200,
                             'price_PP001' => 1500,
                             'price_BL012' =>1500
+                        ],
+                    ];
+                }
+                break;
+
+            case 'modifier':
+                $tab_title = 'Product Modifier';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'type' => 'type1',
+                            'code' => 'mod1',
+                            'name' => 'Example Modifier 1'
+                        ],
+                        [
+                            'type' => 'type1',
+                            'code' => 'mod2',
+                            'name' => 'Example Modifier 2'
+                        ],
+                        [
+                            'type' => 'type2',
+                            'code' => 'mod1',
+                            'name' => 'Example Modifier 3'
                         ],
                     ];
                 }
