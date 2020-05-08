@@ -13,7 +13,7 @@
                             <span class="sale-info"> Status 
                                 <i class="fa fa-img-up"></i>
                             </span>
-                            @if( empty($subscription['step_complete']) )
+                            @if( empty($subscription['subscription_step_complete']) )
                                 <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #F4D03F;padding: 5px 12px;color: #fff;">Not Complete</span>
                             @elseif( $subscription['subscription_status'] == 'expired' )
                                 <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Ended</span>
@@ -111,7 +111,7 @@
                 <div class="row static-info">
                     <div class="col-md-4 name">Subscription Price</div>
                     <div class="col-md-8 value">: 
-                    	@if($subscription['subscription_price_type'] == 'free')
+                    	@if($subscription['subscription_price_type'] == 'free' && $subscription['is_free'] == 1)
                     		{{ $subscription['subscription_price_type'] }}
                     	@elseif(!empty($subscription['subscription_price_point']))
                     		{{ number_format($subscription['subscription_price_point']).' Points' }}
@@ -126,15 +126,15 @@
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Outlet</div>
-                    <div class="col-md-8 value">: {{ empty($subscription['is_all_outlet']) ? 'Selected outlet' : 'All outlet' }}</div>
+                    <div class="col-md-8 value">: {{ !empty($subscription['is_all_outlet']) ? 'All outlet' : (!empty($subscription['outlets']) ? 'Selected outlet' : '') }}</div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Product</div>
-                    <div class="col-md-8 value">: {{ empty($subscription['is_all_product']) ? 'Selected product' : 'All product' }}</div>
+                    <div class="col-md-8 value">: {{ !empty($subscription['is_all_product']) ? 'All product' : (!empty($subscription['products']) ? 'Selected product' : '') }}</div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Subscription Total</div>
-                    <div class="col-md-8 value">: {{ !empty($subscription['subscription_total']) ? number_format($subscription['subscription_total']).' Subscriptions' : (isset($subscription['subscription_total']) ? 'unlimited' : '') }}</div>
+                    <div class="col-md-8 value">: {{ !empty($subscription['subscription_total']) ? number_format($subscription['subscription_total']).' Subscriptions' : (($subscription['subscription_total']==0) ? 'unlimited' : '') }}</div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">User Limit</div>
@@ -142,7 +142,7 @@
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Voucher Start Date</div>
-                    <div class="col-md-8 value">: {{date("d M Y", strtotime($subscription['subscription_voucher_start']))}}&nbsp;{{date("H:i", strtotime($subscription['subscription_voucher_start'])) }}</div>
+                    <div class="col-md-8 value">: @if(!empty($subscription['subscription_voucher_start'])) {{date("d M Y", strtotime($subscription['subscription_voucher_start']))}}&nbsp;{{date("H:i", strtotime($subscription['subscription_voucher_start'])) }} @endif</div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Voucher Expiry</div>
