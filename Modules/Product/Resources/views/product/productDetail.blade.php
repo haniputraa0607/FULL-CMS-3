@@ -6,7 +6,6 @@ $id_product = $product[0]['id_product'];
 
   	<div class="form-group" style="padding-left:20px">
 		<label class="bold" style="width:20%">Outlet</label>
-		<label class="bold" style="width:10%">Price</label>
 		<label class="bold" style="width:20%">Visible</label>
 		<label class="bold" style="width:20%">Stock</label>
 		<label class="bold" style="width:10%">POS Status</label>
@@ -15,21 +14,9 @@ $id_product = $product[0]['id_product'];
 		<?php $marker = 0; ?>
         <div class="form-group" style="padding-left:20px">
             <label class=""  style="width:20%">{{$ou['outlet_name']}}</label>
-			<?php
-				if(isset($ou['product_special_price']) && !empty($ou['product_special_price'])){
-					$price = $ou['product_special_price'][0]['product_special_price'];
-					$id_product_special_price = $ou['product_special_price'][0]['id_product_special_price'];
-				}else{
-					$price = 0;
-					$id_product_special_price = 0;
-				}
-			?>
 			@foreach($ou['product_detail'] as $keyDetail => $detail)
 				@if($detail['id_product'] == $id_product)
 					<?php $marker = 1;?>
-					<div style="width:10%; display:inline-block">
-						<input type="text" class="form-control nominal price product-price" name="product_price[]" value="{{$price}}" data-id="{{$ou['id_outlet']}}">
-					</div>
 					<div style="width:20%; display:inline-block">
 						<select class="form-control product-visibility" name="product_detail_visibility[]">
 							<option></option>
@@ -39,7 +26,6 @@ $id_product = $product[0]['id_product'];
 						<input type="hidden" value="{{$detail['product_detail_visibility']}}" class="product-visibility-value">
 						<input type="hidden" name="id_outlet[]" value="{{ $ou['id_outlet'] }}">
 						<input type="hidden" name="id_product_detail[]" value="{{ $detail['id_product_detail'] }}">
-						<input type="hidden" name="id_product_special_price[]" value="{{ $id_product_special_price }}">
 					</div>
 					<div style="width:20%; display:inline-block">
 						<select class="form-control product-stock" name="product_detail_stock_status[]">
@@ -54,9 +40,6 @@ $id_product = $product[0]['id_product'];
 				@endif
 			@endforeach
 			@if($marker == 0)
-				<div style="width:10%; display:inline-block">
-					<input type="text" class="form-control nominal price product-price" name="product_price[]" value="0" data-id="{{$ou['id_outlet']}}">
-				</div>
 				<div style="width:20%; display:inline-block">
 					<select class="form-control product-visibility" name="product_detail_visibility[]">
 						<option></option>
@@ -65,7 +48,6 @@ $id_product = $product[0]['id_product'];
 					</select>
 					<input type="hidden" name="id_outlet[]" value="{{ $ou['id_outlet'] }}">
 					<input type="hidden" name="id_product_detail[]" value="0">
-					<input type="hidden" name="id_product_special_price[]" value="0">
 					<input type="hidden" value="Hidden" class="product-visibility-value">
 				</div>
 				<div style="width:20%; display:inline-block">
@@ -81,7 +63,7 @@ $id_product = $product[0]['id_product'];
 			@endif
 			<div style="width:15%; display:inline-block; vertical-align: text-top;">
 				<label class="mt-checkbox mt-checkbox-outline"> Same for all Outlet
-					<input type="checkbox" name="sameall[]" class="same" data-check="ampas"/>
+					<input type="checkbox" name="sameall[]" class="same checkbox-outlet" data-check="ampas"/>
 					<span></span>
 				</label>
 			</div>
