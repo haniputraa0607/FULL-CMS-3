@@ -253,6 +253,10 @@ $configs    		= session('configs');
 						<li>Nama Modifier</li>
 						<li>Jenis Modifier</li>
 						<li>Harga Modifier</li>
+						@elseif($type == 'modifier')
+						<li>Kode Modifier</li>
+						<li>Nama Modifier</li>
+						<li>Jenis Modifier</li>
 						@else
 						<li>Nama Produk</li>
 						<li>Deskripsi Produk</li>
@@ -272,6 +276,11 @@ $configs    		= session('configs');
 						<li>Modifier diidentifikasi berdasarkan kolom <b>code</b></li>
 						<li>Apabila code sudah ada dalam database, maka sistem akan memperbarui modifier</li>
 						<li>Apabila code belum ada dalam database, maka sistem akan <b>mengabaikan data</b></li>
+						@elseif($type == 'modifier')
+						<li>Modifier diidentifikasi berdasarkan kolom <b>code</b></li>
+						<li>Apabila code sudah ada dalam database, maka sistem akan memperbarui modifier</li>
+						<li>Apabila code belum ada dalam database, maka sistem akan <b>membuat modifier baru</b></li>
+						<li>Scope modifier baru disimpan sebagai <b>Global Brand</b> dengan brand sesuai yang dipilih.</li>
 						@else
 						<li>Produk diidentifikasi berdasarkan kolom <b>product_code</b></li>
 						<li>Apabila product_code sudah ada dalam database, maka sistem akan memperbarui produk</li>

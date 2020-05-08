@@ -74,6 +74,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	Route::group(['prefix' => 'modifier'], function() {
 		Route::get('price/{id_outlet?}', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@listPrice']);
 		Route::post('price/{id_outlet}', ['middleware' => 'feature_control:186', 'uses' => 'ModifierController@updatePrice']);
+		Route::get('detail/{id_outlet?}', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@listDetail']);
+		Route::post('detail/{id_outlet}', ['middleware' => 'feature_control:186', 'uses' => 'ModifierController@updateDetail']);
 
 		Route::get('/', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@index']);
 		Route::get('/create', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@create']);
