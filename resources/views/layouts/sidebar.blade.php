@@ -804,6 +804,12 @@
 					<span class="title">Outlet Product Price</span>
 				</a>
 			</li>
+			<li class="nav-item {{($submenu_active == 'product-detail') ? 'active open' : ''}}">
+				<a href="{{url('product/outlet-detail')}}" class="nav-link ">
+					<i class="fa fa-tag"></i>
+					<span class="title">Outlet Product Detail</span>
+				</a>
+			</li>
 			<li class="nav-item {{($menu_active == 'outlet-different-price') ? 'active' : ''}}">
 				<a href="{{url('outlet/different-price')}}" class="nav-link nav-toggle">
 					<i class="fa fa-check"></i>

@@ -728,13 +728,23 @@ class ProductController extends Controller
             }
 
             /**
-             * jika price
+             * jika outlet setting
              */
-			if (isset($post['product_visibility'])) {
-				$save = MyHelper::post('product/price/update', $post);
+			if (isset($post['product_detail_visibility'])) {
+				$save = MyHelper::post('product/detail/update', $post);
 				// print_r($save);exit;
-                return parent::redirect($save, 'Product price & visibility setting has been updated.', 'product/detail/'.$code.'#price');
+                return parent::redirect($save, 'Visibility setting has been updated.', 'product/detail/'.$code.'#outletsetting');
 			}
+
+            /**
+             * if price setting
+             */
+
+            if (isset($post['product_price'])) {
+                $save = MyHelper::post('product/detail/update/price', $post);
+                // print_r($save);exit;
+                return parent::redirect($save, 'Product price setting has been updated.', 'product/detail/'.$code.'#outletpricesetting');
+            }
 
 			/**
              * jika diskon
@@ -866,35 +876,40 @@ class ProductController extends Controller
             'sub_title'      => 'Outlet Product Price',
             'menu_active'    => 'product-price',
             'submenu_active' => 'product-price',
+            'filter_title'   => 'Filter Product Price',
+            'product_setting_type' => 'product_price'
         ];
 
         $post = $request->except('_token');
+        if(isset($post['clear'])){
+            session::forget('product_price_filter');
+        }
+
+        if (session('product_price_filter')) {
+            $filter             = session('product_price_filter');
+            $data['rule']     = array_map('array_values', $filter['rule']);
+            $data['operator'] = $filter['operator'];
+        } else {
+            if((isset($post['rule']) || isset($post['operator']) )){
+                session(['product_price_filter' => $post]);
+                $data['rule']     = array_map('array_values', $post['rule']);
+                $data['operator'] = $post['operator'];
+            }
+        }
         if(isset($post['page'])){
             $page = $post['page'];
             unset($post['page']);
         }
 
-        if(array_key_exists('product_name', $post)){
-            if($post['product_name'] != NULL){
-                $data['product_name'] = $post['product_name'];
-                Session::put('search_product_name',  $data['product_name']);
-            }else{
-                Session::forget('search_product_name');
-            }
-        }
-        unset($post['product_name']);
-
-        if ($post) {
+        if ($post && (!isset($post['rule']) || !isset($post['operator'])) && !isset($post['clear'])) {
             return $this->priceProcess($post);
         }
         $data['admin'] = 1;
-        $outlet = MyHelper::post('outlet/be/list', $data);
-        if (isset($outlet['status']) && $outlet['status'] == 'success') {
-            $data['outlet'] = $outlet['result'];
-        } elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
-            return back()->witherrors([$outlet['messages']]);
-        } else {
-            return back()->witherrors(['Product Not Found']);
+        $outlets = MyHelper::post('outlet/be/list', ['filter' => 'different_price'])['result'] ?? [];
+        if (!$outlets) {
+            return back()->withErrors(['Something went wrong']);
+        }else{
+            $data['outlets'] = $outlets;
         }
 
         $data['pagination'] = true;
@@ -911,6 +926,7 @@ class ProductController extends Controller
         }
         if (isset($product['status']) && $product['status'] == 'success') {
             $data['product'] = $product['result']['data'];
+            $data['total'] = $product['result']['total'];
             $data['paginator'] = new LengthAwarePaginator($product['result']['data'], $product['result']['total'], $product['result']['per_page'], $product['result']['current_page'], ['path' => url()->current()]);
         } elseif (isset($product['status']) && $product['status'] == 'fail') {
             return back()->witherrors([$product['messages']]);
@@ -921,7 +937,7 @@ class ProductController extends Controller
         if (!is_null($key)) {
             $data['key'] = $key;
         } else {
-            $data['key'] = $data['outlet'][0]['id_outlet'];
+            $data['key'] = $data['outlets'][0]['id_outlet'];
         }
 
         return view('product::product.price', $data);
@@ -936,13 +952,104 @@ class ProductController extends Controller
                 $data = [
                     'id_product'            => $post['id_product'][$key],
                     'product_price'         => $value,
-                    'product_price_base'    => $post['price_base'][$key],
-                    'product_price_tax'     => $post['price_tax'][$key],
+                    'id_outlet'             => $post['id_outlet'],
+                ];
+                $save = MyHelper::post('product/prices', $data);
+                if (isset($save['status']) && $save['status'] != "success") {
+                    return back()->witherrors(['Product price failed to update']);
+                }
+            }
+        }
+
+        return back()->with('success', ['Product price has been updated.']);
+    }
+
+    public function productOutletDetail(Request $request, $key = null)
+    {
+        $data = [
+            'title'          => 'Order',
+            'sub_title'      => 'Outlet Product Detail',
+            'menu_active'    => 'product-detail',
+            'submenu_active' => 'product-detail',
+            'filter_title'   => 'Filter Product Detail',
+            'product_setting_type' => 'outlet_product_detail'
+        ];
+
+        $post = $request->except('_token');
+        if(isset($post['clear'])){
+            session::forget('product_detail_filter');
+        }
+
+        if(isset($post['page'])){
+            $page = $post['page'];
+            unset($post['page']);
+        }
+
+        if ($post && (!isset($post['rule']) || !isset($post['operator'])) && !isset($post['clear'])) {
+            return $this->productOutletProcess($post);
+        }
+        $data['admin'] = 1;
+        $outlet = MyHelper::post('outlet/be/list', $data);
+
+        if (isset($outlet['status']) && $outlet['status'] == 'success') {
+            $data['outlets'] = $outlet['result'];
+        } elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
+            return back()->witherrors([$outlet['messages']]);
+        } else {
+            return back()->witherrors(['Product Not Found']);
+        }
+
+        $data['pagination'] = true;
+        $data['orderBy'] = 'product_name';
+
+        if (session('product_detail_filter')) {
+            $filter             = session('product_detail_filter');
+            $data['rule']     = array_map('array_values', $filter['rule']);
+            $data['operator'] = $filter['operator'];
+        } else {
+            if((isset($post['rule']) || isset($post['operator']) )){
+                session(['product_detail_filter' => $post]);
+                $data['rule']     = array_map('array_values', $post['rule']);
+                $data['operator'] = $post['operator'];
+            }
+        }
+
+        if(isset($page)){
+            $product = MyHelper::post('product/be/list?page='.$page, $data);
+        }else{
+            $product = MyHelper::post('product/be/list', $data);
+        }
+        if (isset($product['status']) && $product['status'] == 'success') {
+            $data['product'] = $product['result']['data'];
+            $data['total'] = $product['result']['total'];
+            $data['paginator'] = new LengthAwarePaginator($product['result']['data'], $product['result']['total'], $product['result']['per_page'], $product['result']['current_page'], ['path' => url()->current()]);
+        } elseif (isset($product['status']) && $product['status'] == 'fail') {
+            return back()->witherrors([$product['messages']]);
+        } else {
+            return back()->witherrors(['Product Not Found']);
+        }
+
+        if (!is_null($key)) {
+            $data['key'] = $key;
+        } else {
+            $data['key'] = $data['outlets'][0]['id_outlet'];
+        }
+
+        return view('product::product.outlet-product-detail', $data);
+    }
+
+
+    function productOutletProcess($post)
+    {
+        if (!empty($post['visible'])) {
+            foreach ($post['visible'] as $key => $value) {
+                $data = [
+                    'id_product'            => $post['id_product'][$key],
                     'product_visibility'    => $post['visible'][$key],
                     'product_stock_status'  => $post['product_stock_status'][$key],
                     'id_outlet'             => $post['id_outlet'],
                 ];
-                $save = MyHelper::post('product/prices', $data);
+                $save = MyHelper::post('product/outlet-detail', $data);
                 if (isset($save['status']) && $save['status'] != "success") {
                     return back()->witherrors(['Product price failed to update']);
                 }
