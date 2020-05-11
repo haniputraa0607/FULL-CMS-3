@@ -137,14 +137,14 @@
 
             @foreach($outlet as $key => $ou)
             <?php $marker = 0; ?>
-                @foreach($ou['product_prices'] as $keyPrice => $price)
+                @foreach($ou['product_detail'] as $keyPrice => $price)
                     @if($price['id_product'] == $product[0]['id_product'])
                         @php $marker = 1; break; @endphp
                     @endif
                 @endforeach
                 var option =  '<option class="option-visibility" data-id={{$product[0]["id_product"]}}/{{$ou["id_outlet"]}}>{{$ou["outlet_code"]}} - {{$ou["outlet_name"]}}</option>'
-                @if($marker == 1 && $price["product_visibility"])
-                        $('#visibleglobal-{{lcfirst($price["product_visibility"])}}').append(option)
+                @if($marker == 1 && $price["product_detail_visibility"])
+                        $('#visibleglobal-{{lcfirst($price["product_detail_visibility"])}}').append(option)
                 @else
                     $('#visibleglobal-default').append(option)
                 @endif
@@ -414,18 +414,6 @@
 
 		});
 
-		$('.price').change(function(){
-			id = $(this).attr('data-id');
-
-			base = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) * 10 / 11;
-			base = base.toLocaleString( "id", {maximumFractionDigits: 2} );
-
-			tax = parseInt($( this ).val().replace(/[($)\s\._\-]+/g, '')) / 11;
-			tax = tax.toLocaleString( "id", {maximumFractionDigits: 2} )
-
-			$('#price_base_'+id).val(base);
-			$('#price_tax_'+id).val(tax);
-		})
     </script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -600,8 +588,6 @@
 <script type="text/javascript">
     $(document).on('click', '.same', function() {
       var price = $(this).parent().parent().parent().find('.product-price').val();
-      var priceBase = $(this).parent().parent().parent().find('.product-price-base').val();
-      var priceTax = $(this).parent().parent().parent().find('.product-price-tax').val();
       var visibility = $(this).parent().parent().parent().find('.product-visibility').val();
       var stock = $(this).parent().parent().parent().find('.product-stock').val();
 
@@ -611,17 +597,6 @@
         return false;
       }
 
-      if (priceBase == '') {
-        alert('Price Base field cannot be empty');
-        $(this).parent().parent().parent().find('.product-price-base').focus();
-        return false;
-      }
-
-      if (priceTax == '') {
-        alert('Price Tax field cannot be empty');
-        $(this).parent().parent().parent().find('.product-price-tax').focus();
-        return false;
-      }
 
       if (stock == '') {
         alert('Stock field cannot be empty');
@@ -629,33 +604,12 @@
         return false;
       }
 
-      if ($(this).is(':checked')) {
+      if ($('.checkbox-outlet').is(':checked')) {
         var check = $('input[name="sameall[]"]:checked').length;
-        var count = $('.same').prop('checked', false);
+        var count = $('.checkbox-outlet').prop('checked', false);
         $(this).prop('checked', true);
 
         if (check == 1) {
-            var all_price = $('.product-price');
-            var array_price = [];
-            for (i = 0; i < all_price.length; i++) {
-                array_price.push(all_price[i]['defaultValue']);
-            }
-            sessionStorage.setItem("product_price", array_price);
-
-            var all_price_base = $('.product-price-base');
-            var array_price_base = [];
-            for (i = 0; i < all_price_base.length; i++) {
-                array_price_base.push(all_price_base[i]['defaultValue']);
-            }
-            sessionStorage.setItem("product_price_base", array_price_base);
-
-            var all_price_tax = $('.product-price-tax');
-            var array_price_tax = [];
-            for (i = 0; i < all_price_tax.length; i++) {
-                array_price_tax.push(all_price_tax[i]['defaultValue']);
-            }
-            sessionStorage.setItem("product_price_tax", array_price_tax);
-
             var all_visibility = $('.product-visibility-value');
             var array_visibility = [];
             for (i = 0; i < all_visibility.length; i++) {
@@ -665,56 +619,63 @@
 
             var all_stock = $('.product-stock-value');
             var array_stock = [];
-            for (i = 0; i < all_price.length; i++) {
+            for (i = 0; i < all_stock.length; i++) {
                 array_stock.push(all_stock[i]['defaultValue']);
             }
             sessionStorage.setItem("product_stock", array_stock);
 
         }
 
-        $('.product-price').val(price);
-        $('.product-price-base').val(priceBase);
-        $('.product-price-tax').val(priceTax);
         $('.product-visibility').val(visibility);
         $('.product-stock').val(stock);
 
       } else {
 
-          var item_price = sessionStorage.getItem("product_price");
-          var item_price_base = sessionStorage.getItem("product_price_base");
-          var item_price_tax = sessionStorage.getItem("product_price_tax");
           var item_visibility = sessionStorage.getItem("product_visibility");
           var item_stock = sessionStorage.getItem("product_stock");
 
-          var item_price = item_price.split(",");
-          var item_price_base = item_price_base.split(",");
-          var item_price_tax = item_price_tax.split(",");
           var item_visibility = item_visibility.split(",");
           var item_stock = item_stock.split(",");
 
-          $('.product-price').each(function(i, obj) {
-              $(this).val(item_price[i]);
-          });
-          $('.product-price-base').each(function(i, obj) {
-              $(this).val(item_price_base[i]);
-          });
-          $('.product-price-tax').each(function(i, obj) {
-              $(this).val(item_price_tax[i]);
-          });
           $('.product-visibility').each(function(i, obj) {
               $(this).val(item_visibility[i]);
           });
           $('.product-stock').each(function(i, obj) {
               $(this).val(item_stock[i]);
           });
-          console.log(item_visibility)
 
-          $(this).parent().parent().parent().find('.product-price').val(price);
-          $(this).parent().parent().parent().find('.product-price-base').val(priceBase);
-          $(this).parent().parent().parent().find('.product-price-tax').val(priceTax);
           $(this).parent().parent().parent().find('.product-visibility').val(visibility);
           $(this).parent().parent().parent().find('.product-stock').val(stock);
       }
+
+        if ($('.checkbox-price').is(':checked')) {
+            var check = $('input[name="sameall[]"]:checked').length;
+            var count = $('.checkbox-price').prop('checked', false);
+            $(this).prop('checked', true);
+
+            if (check == 1) {
+                var all_price = $('.product-price');
+                var array_price = [];
+                for (i = 0; i < all_price.length; i++) {
+                    array_price.push(all_price[i]['defaultValue']);
+                }
+                sessionStorage.setItem("product_price", array_price);
+            }
+
+            $('.product-price').val(price);
+
+        } else {
+
+            var item_price = sessionStorage.getItem("product_price");
+
+            var item_price = item_price.split(",");
+
+            $('.product-price').each(function(i, obj) {
+                $(this).val(item_price[i]);
+            });
+
+            $(this).parent().parent().parent().find('.product-price').val(price);
+        }
     });
   </script>
 
@@ -763,7 +724,10 @@
                     </li>
                 @endif -->
                 <li>
-                    <a href="#price" data-toggle="tab"> Outlet Setting </a>
+                    <a href="#outletsetting" data-toggle="tab"> Outlet Setting</a>
+                </li>
+                <li>
+                    <a href="#outletpricesetting" data-toggle="tab"> Outlet Price Setting</a>
                 </li>
                 <li>
                     <a href="#visibility" data-toggle="tab"> Visibility </a>
@@ -781,8 +745,11 @@
                 <div class="tab-pane" id="photo">
                     @include('product::product.photo')
                 </div>
-				<div class="tab-pane" id="price">
-                    @include('product::product.priceDetail')
+				<div class="tab-pane" id="outletsetting">
+                    @include('product::product.productDetail')
+                </div>
+                <div class="tab-pane" id="outletpricesetting">
+                    @include('product::product.productSpecialPriceDetail')
                 </div>
                 <div class="tab-pane" id="discount">
                     @include('product::product.discount')

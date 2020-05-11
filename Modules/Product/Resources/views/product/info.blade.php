@@ -62,6 +62,16 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-md-3 control-label">Global Price <span class="required" aria-required="true"> * </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Global Price Product" data-container="body"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="input-icon right">
+                    <input type="text" class="form-control price" name="product_global_price" value="@if(isset($syu['global_price'][0]['product_global_price'])) {{number_format($syu['global_price'][0]['product_global_price'])}} @endif" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-md-3 control-label">POS Name
                 <i class="fa fa-question-circle tooltips" data-original-title="Nama Default Dari POS" data-container="body"></i>
             </label>

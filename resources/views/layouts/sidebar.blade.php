@@ -78,6 +78,13 @@
 									</a>
 								</li>
 							@endif
+							@if(MyHelper::hasAccess([106], $configs))
+								<li class="nav-item {{($submenu_active == 'user-autoresponse-email-verify') ? 'active open' : ''}}">
+									<a href="{{url('user/autoresponse/email-verify')}}" class="nav-link ">
+										<span class="title">[Response] Email Verify</span>
+									</a>
+								</li>
+							@endif
 							@if(MyHelper::hasAccess([43], $configs))
 								<li class="nav-item {{($submenu_active == 'user-autoresponse-pin-changed') ? 'active open' : ''}}">
 									<a href="{{url('user/autoresponse/pin-changed')}}" class="nav-link ">
@@ -802,6 +809,12 @@
 				<a href="{{url('product/price')}}" class="nav-link nav-toggle">
 					<i class="fa fa-tag"></i>
 					<span class="title">Outlet Product Price</span>
+				</a>
+			</li>
+			<li class="nav-item {{($submenu_active == 'product-detail') ? 'active open' : ''}}">
+				<a href="{{url('product/outlet-detail')}}" class="nav-link ">
+					<i class="fa fa-tag"></i>
+					<span class="title">Outlet Product Detail</span>
 				</a>
 			</li>
 			<li class="nav-item {{($menu_active == 'outlet-different-price') ? 'active' : ''}}">
