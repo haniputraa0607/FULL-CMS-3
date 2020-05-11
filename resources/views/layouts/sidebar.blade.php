@@ -78,6 +78,13 @@
 									</a>
 								</li>
 							@endif
+							@if(MyHelper::hasAccess([106], $configs))
+								<li class="nav-item {{($submenu_active == 'user-autoresponse-email-verify') ? 'active open' : ''}}">
+									<a href="{{url('user/autoresponse/email-verify')}}" class="nav-link ">
+										<span class="title">[Response] Email Verify</span>
+									</a>
+								</li>
+							@endif
 							@if(MyHelper::hasAccess([43], $configs))
 								<li class="nav-item {{($submenu_active == 'user-autoresponse-pin-changed') ? 'active open' : ''}}">
 									<a href="{{url('user/autoresponse/pin-changed')}}" class="nav-link ">
