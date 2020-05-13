@@ -3,7 +3,7 @@
     $configs = session('configs');
  ?>
 @extends('layouts.main')
-@include('userfeedback::transactionDetail3')
+@include('transaction::transaction.transaction_detail')
 
 @section('page-style')
 @yield('sub-page-style')
