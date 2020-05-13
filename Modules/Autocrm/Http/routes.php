@@ -20,3 +20,8 @@ Route::group(['middleware' => ['web','validate_session'], 'prefix' => 'about', '
 {
     Route::any('autoresponse/{subject}', 'AutocrmController@autoResponse');
 });
+
+Route::group(['middleware' => ['web', 'validate_session'],'namespace' => 'Modules\Autocrm\Http\Controllers'], function()
+{
+  Route::any('autoresponse/{type}/{subject}', 'AutocrmController@autoResponse');
+});

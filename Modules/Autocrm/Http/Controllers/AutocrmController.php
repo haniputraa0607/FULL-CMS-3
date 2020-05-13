@@ -112,11 +112,21 @@ class AutocrmController extends Controller
     public function destroy()
     {
     }
-    public function autoResponse(Request $request, $subject){
+    public function autoResponse(Request $request, $type, $subject=null){
 		$data = [ 'title'             => 'About Auto Response '.ucfirst(str_replace('-',' ',$subject)),
 				  'menu_active'       => 'about-autoresponse',
 				  'submenu_active'    => 'about-autoresponse-'.$subject
 				];
+		if($subject == null){
+			$subject = $type;
+		}else{
+			$data = [ 'title'             => ucfirst($type),
+					  'sub_title'         => ' Auto Response '.ucwords(str_replace('-',' ',$subject)),
+					  'menu_active'       => $type,
+					  'submenu_active'    => $type.'-autoresponse-'.$subject,
+					  'type' 			  => $type
+					];
+		}
 		if(stristr($subject, 'enquiry')){
 			$data['menu_active'] = 'enquiries';
 			$data['submenu_active'] = 'autoresponse-'.$subject;
@@ -140,7 +150,22 @@ class AutocrmController extends Controller
 				$auto = $autonya;
 			}
 		}
-		
+
+		switch ($subject){
+			case 'update-promo-campaign':
+			case 'create-promo-campaign':
+			case 'update-deals':
+			case 'create-deals':
+			case 'update-inject-voucher':
+			case 'create-inject-voucher':
+			case 'update-welcome-voucher':
+			case 'create-welcome-voucher':
+			case 'update-news':
+			case 'create-news':
+				$data['forwardOnly'] = true;
+				break;
+		}
+
 		if($auto == null) return back()->withErrors(['No such response']);
 		$data['data'] = $auto;
 		if($test['status'] == 'success'){
