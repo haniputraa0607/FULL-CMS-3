@@ -231,6 +231,12 @@
 					<span class="title">Setting {{env('POINT_NAME', 'Points')}} Reset</span>
 				</a>
 			</li>
+			<li class="nav-item {{($menu_active == 'balance-resets') ? 'active' : ''}}">
+				<a href="{{url('autoresponse/balance-resets/report-point-reset')}}" class="nav-link">
+					<i class="fa fa-envelope"></i>
+					<span class="title">[Email] {{env('POINT_NAME', 'Points')}} Reset</span>
+				</a>
+			</li>
 			@endif
 		@endif
 
@@ -274,6 +280,18 @@
 						<li class="nav-item {{($submenu_active == 'news-category-new') ? 'active open' : ''}}">
 							<a href="{{url('news/category/create')}}" class="nav-link ">
 								<span class="title">New News Category</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([120,122], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'news-autoresponse-create-news') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/news/create-news')}}" class="nav-link ">
+								<span class="title">[Forward] Create News</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'news-autoresponse-update-news') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/news/update-news')}}" class="nav-link ">
+								<span class="title">[Forward] Update News</span>
 							</a>
 						</li>
 						@endif
@@ -1006,6 +1024,18 @@
 									</li>
 								@endif
 							@endif
+							@if(MyHelper::hasAccess([120,122], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'deals-autoresponse-create-deals') ? 'active open' : ''}}">
+								<a href="{{url('autoresponse/deals/create-deals')}}" class="nav-link ">
+									<span class="title">[Forward] Create Deals</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'deals-autoresponse-update-deals') ? 'active open' : ''}}">
+								<a href="{{url('autoresponse/deals/update-deals')}}" class="nav-link ">
+									<span class="title">[Forward] Update Deals</span>
+								</a>
+							</li>
+							@endif
 						</ul>
 					</li>
 					@endif
@@ -1072,6 +1102,18 @@
 									</li>
 								@endif
 							@endif
+							@if(MyHelper::hasAccess([120,122], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'inject-voucher-autoresponse-create-inject-voucher') ? 'active open' : ''}}">
+								<a href="{{url('autoresponse/inject-voucher/create-inject-voucher')}}" class="nav-link ">
+									<span class="title">[Forward] Create Inject Voucher</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'inject-voucher-autoresponse-update-inject-voucher') ? 'active open' : ''}}">
+								<a href="{{url('autoresponse/inject-voucher/update-inject-voucher')}}" class="nav-link ">
+									<span class="title">[Forward] Update Inject Voucher</span>
+								</a>
+							</li>
+							@endif
 						</ul>
 					</li>
 					@endif
@@ -1111,6 +1153,18 @@
 									<span class="title">[Response] Welcome Voucher</span>
 								</a>
 							</li>
+							@if(MyHelper::hasAccess([120,122], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'welcome-voucher-autoresponse-create-welcome-voucher') ? 'active open' : ''}}">
+								<a href="{{url('autoresponse/welcome-voucher/create-welcome-voucher')}}" class="nav-link ">
+									<span class="title">[Forward] Create Welcome Voucher</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'welcome-voucher-autoresponse-update-welcome-voucher') ? 'active open' : ''}}">
+								<a href="{{url('autoresponse/welcome-voucher/update-welcome-voucher')}}" class="nav-link ">
+									<span class="title">[Forward] Update Welcome Voucher</span>
+								</a>
+							</li>
+							@endif
 						</ul>
 					</li>
 				@endif
@@ -1145,6 +1199,18 @@
 						<li class="nav-item {{($submenu_active == 'promo-campaign-list') ? 'active open' : ''}}">
 							<a href="{{url('promo-campaign')}}" class="nav-link ">
 								<span class="title">Promo Campaign List</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([120,122], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'promo-campaign-autoresponse-create-promo-campaign') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/promo-campaign/create-promo-campaign')}}" class="nav-link ">
+								<span class="title">[Forward] Create Promo Campaign</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'promo-campaign-autoresponse-update-promo-campaign') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/promo-campaign/update-promo-campaign')}}" class="nav-link ">
+								<span class="title">[Forward] Update Promo Campaign</span>
 							</a>
 						</li>
 						@endif
