@@ -84,7 +84,7 @@
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" name="email" placeholder="Email (Required & Unique)" class="form-control" required />
+								<input type="text" name="email" placeholder="Email (Required & Unique)" class="form-control" required autocomplete="new-password" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -96,7 +96,7 @@
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" name="phone" placeholder="Phone Number (Required & Unique)" class="form-control" required />
+								<input type="text" name="phone" placeholder="Phone Number (Required & Unique)" class="form-control" required autocomplete="new-password" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -108,7 +108,7 @@
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="password" name="pin" placeholder="6 digits PIN (Leave empty to autogenerate)" class="form-control mask_number" maxlength="6" />
+								<input type="password" name="pin" placeholder="6 digits PIN (Leave empty to autogenerate)" class="form-control mask_number" maxlength="6" autocomplete="new-password" />
 							</div>
 						</div>
 						<div class="form-group">
