@@ -534,9 +534,10 @@ class UsersController extends Controller
 
 		if(isset($post['password'])){
 			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success") {
+			if($checkpin['status'] != "success")
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			}
+			else
+				Session::put('secure','yes');
 		}
 		
 		if(isset($post['phone'])){
@@ -636,7 +637,7 @@ class UsersController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
 
-        if (!isset($post['password'])) {
+        if (empty(Session::get('secure'))) {
             $data = [ 'title'             => 'User',
                 'menu_active'       => 'user',
                 'submenu_active'    => 'user-list',
@@ -826,11 +827,12 @@ class UsersController extends Controller
 			Session::put('form',$post);
 		}
 		
-		if(isset($input['password'])){
-			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $input['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success") {
+		if(isset($post['password'])){
+			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+			if($checkpin['status'] != "success")
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			}
+			else
+				Session::put('secure','yes');
 		}
 		
 		$data = [ 'title'             => 'User',
@@ -878,7 +880,7 @@ class UsersController extends Controller
 		
 		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
 
-        if (!isset($input['password'])) {
+        if (empty(Session::get('secure'))) {
             $data = [
                 'title'             => 'User',
                 'menu_active'       => 'user',
@@ -900,22 +902,22 @@ class UsersController extends Controller
 		
         if(isset($post['password'])){
 			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success") {
+			if($checkpin['status'] != "success")
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			}
+			else
+				Session::put('secure','yes');
 		}
 		
 		$data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
 
-        if (!isset($post['password'])) {
-            $data = [ 'title'             => 'User',
-                'subtitle'		  => 'Favorite',
-                'menu_active'       => 'user',
-                'submenu_active'    => 'user-list',
-                'phone'    		  => $phone
-            ];
-            return view('users::password', $data);
-        } else {
+		if(empty(Session::get('secure'))){
+			$data = [ 'title'             => 'User',
+					  'menu_active'       => 'user',
+					  'submenu_active'    => 'user-list',
+					  'phone'    		  => $phone
+					];
+			return view('users::password', $data);
+		} else {
             return view('users::favorite', $data);
         }
     }
