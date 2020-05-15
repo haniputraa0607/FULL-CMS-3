@@ -537,7 +537,7 @@ class UsersController extends Controller
 			if($checkpin['status'] != "success")
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
 			else
-				Session::put('secure','yes');
+				Session::put('secure','yes');Session::put('secure_last_activity',time());
 		}
 		
 		if(isset($post['phone'])){
@@ -637,7 +637,7 @@ class UsersController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
 
-        if (empty(Session::get('secure'))) {
+        if (empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)) {
             $data = [ 'title'             => 'User',
                 'menu_active'       => 'user',
                 'submenu_active'    => 'user-list',
@@ -832,7 +832,7 @@ class UsersController extends Controller
 			if($checkpin['status'] != "success")
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
 			else
-				Session::put('secure','yes');
+				Session::put('secure','yes');Session::put('secure_last_activity',time());
 		}
 		
 		$data = [ 'title'             => 'User',
@@ -880,7 +880,7 @@ class UsersController extends Controller
 		
 		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
 
-        if (empty(Session::get('secure'))) {
+        if (empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)) {
             $data = [
                 'title'             => 'User',
                 'menu_active'       => 'user',
@@ -905,12 +905,12 @@ class UsersController extends Controller
 			if($checkpin['status'] != "success")
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
 			else
-				Session::put('secure','yes');
+				Session::put('secure','yes');Session::put('secure_last_activity',time());
 		}
 		
 		$data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
 
-		if(empty(Session::get('secure'))){
+		if(empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)){
 			$data = [ 'title'             => 'User',
 					  'menu_active'       => 'user',
 					  'submenu_active'    => 'user-list',
