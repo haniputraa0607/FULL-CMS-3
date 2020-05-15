@@ -68,6 +68,12 @@
 				reqIDR[i].style.display = 'none';
 			}
 
+			var reqIDR = document.getElementsByClassName('levelAchievement');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'none';
+			}
+
 			var reqBalance = document.getElementsByClassName('levelReqBalance');
 			var i;
 			for (i = 0; i < reqBalance.length; i++) {
@@ -116,6 +122,66 @@
 				reqIDR[i].style.display = 'table-cell';
 			}
 
+			var reqIDR = document.getElementsByClassName('levelAchievement');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'none';
+			}
+
+			var reqBalance = document.getElementsByClassName('levelReqBalance');
+			var i;
+			for (i = 0; i < reqBalance.length; i++) {
+				reqBalance[i].style.display = 'none';
+			}
+
+			var reqX = document.getElementsByClassName('levelReqX');
+			var j;
+			for (j = 0; j < reqX.length; j++) {
+				reqX[j].style.display = 'none';
+			}
+
+			var retIDR = document.getElementsByClassName('levelRetIDR');
+			var k;
+			for (k = 0; k < retIDR.length; k++) {
+				retIDR[k].style.display = 'table-cell';
+			}
+
+			var retX = document.getElementsByClassName('levelRetX');
+			var l;
+			for (l = 0; l < retX.length; l++) {
+				retX[l].style.display = 'none';
+			}
+
+			var retBalance = document.getElementsByClassName('levelRetBalance');
+			var l;
+			for (l = 0; l < retBalance.length; l++) {
+				retBalance[l].style.display = 'none';
+			}
+
+			var Ret = document.getElementsByClassName('levelRet');
+			var m;
+			for (m = 0; m < Ret.length; m++) {
+				Ret[m].className = 'input-icon input-group right levelRet';
+			}
+		} else if(varnya == 'achievement') {
+			var Req = document.getElementsByClassName('levelReq');
+			var h;
+			for (h = 0; h < Req.length; h++) {
+				Req[h].className = 'input-icon input-group right levelReq';
+			}
+
+			var reqIDR = document.getElementsByClassName('levelReqIDR');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'none';
+			}
+
+			var reqIDR = document.getElementsByClassName('levelAchievement');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'table-cell';
+			}
+
 			var reqBalance = document.getElementsByClassName('levelReqBalance');
 			var i;
 			for (i = 0; i < reqBalance.length; i++) {
@@ -159,6 +225,12 @@
 			}
 
 			var reqIDR = document.getElementsByClassName('levelReqIDR');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'none';
+			}
+
+			var reqIDR = document.getElementsByClassName('levelAchievement');
 			var i;
 			for (i = 0; i < reqIDR.length; i++) {
 				reqIDR[i].style.display = 'none';
@@ -380,6 +452,7 @@
 							<option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
 							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option>
 							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By {{env('POINT_NAME', 'Points')}} Received </option>
+							<option value="achievement"@if(isset($value) && $value == 'achievement') selected @endif>By Achievement Reward </option>
 						</select>
 					</div>
 				</div>
@@ -540,7 +613,10 @@
 												<span class="input-group-btn levelReqBalance" @if($value != 'balance') style="display:none;" @endif>
 													<button class="btn blue" type="button" >{{env('POINT_NAME', 'Points')}}</button>
 												</span>
-												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @endif placeholder="Level Requirement">
+												<span class="input-group-btn levelAchievement" @if($value != 'achievement') style="display:none;" @endif>
+													<button class="btn blue" type="button" >Total Achievement</button>
+												</span>
+												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @elseif($value == 'achievement') value="{{$membership['min_total_achievement']}}" @endif placeholder="Level Requirement">
 												<span class="input-group-btn levelReqX" @if($value != 'count') style="display:none;" @endif>
 													<button class="btn yellow" type="button" >X trx</button>
 												</span>
