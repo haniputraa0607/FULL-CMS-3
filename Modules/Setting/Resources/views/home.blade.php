@@ -468,6 +468,11 @@
             <a href="#featured_subscription" data-toggle="tab">Featured Subscription</a>
         </li>
 		@endif
+        @if(MyHelper::hasAccess([246], $grantedFeature))
+        <li>
+            <a href="#user_inbox" data-toggle="tab">User Inbox</a>
+        </li>
+		@endif
     </ul>
 </div>
 
@@ -824,6 +829,10 @@
 
 	@if(MyHelper::hasAccess([241], $grantedFeature))
 	@include('setting::featured_subscription')
+	@endif
+
+	@if(MyHelper::hasAccess([246], $grantedFeature))
+	@include('setting::user_inbox')
 	@endif
 
 	{{-- app logo --}}

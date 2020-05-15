@@ -663,6 +663,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Calculate Membership
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Apakah achievement ini digunakan untuk kalkulasi pendapatan di membership?" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mt-radio-inline">
+                                            <label class="mt-radio">
+                                                <input type="radio" name="is_calculate" value="1"> Yes
+                                                <span></span>
+                                            </label>
+                                            <label class="mt-radio">
+                                                <input type="radio" name="is_calculate" value="0"> No
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <hr>
                             <div class="form-body box-repeat" style="display: table;width: 100%;">
