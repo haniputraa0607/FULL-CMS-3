@@ -57,6 +57,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
         Route::post('edit/{id_user_outlet}', ['middleware' => 'feature_control:41', 'uses' => 'OutletController@updateAdminOutlet']);
     });
 
+    //user franchise
+    Route::get('list/user-franchise', ['middleware' => 'feature_control:247', 'uses' => 'OutletController@listUserFranchise']);
+    Route::any('detail/user-franchise/{phone}', ['middleware' => 'feature_control:248', 'uses' => 'OutletController@detailUserFranchise']);
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet', 'namespace' => 'Modules\Advert\Http\Controllers'], function()

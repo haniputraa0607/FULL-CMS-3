@@ -1105,4 +1105,74 @@ class OutletController extends Controller
         $data['custom'] = explode(';',$data['data']['custom_text_replace']);
         return view('outlet::response',$data);
     }
+
+
+    /*=========== User Franchise ===========*/
+   public function listUserFranchise(Request $request) {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'User Franchise',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-list-user-franchise',
+        ];
+
+        $list = MyHelper::post('outlet/list/user-franchise', []);
+
+       if (isset($list['status']) && $list['status'] == "success") {
+           $data['paginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
+           $data['list'] = $list['result']['data'];
+           $data['from'] = $list['result']['from'];
+           $data['to'] = $list['result']['to'];
+           $data['total'] = $list['result']['total'];
+       }
+       else {
+           $data['paginator'] = [];
+           $data['list'] = [];
+           $data['from'] = [];
+           $data['to'] = [];
+           $data['total'] = [];
+       }
+
+        return view('outlet::users_franchise.list', $data);
+   }
+
+    public function detailUserFranchise(Request $request, $phone) {
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Detail User Franchise',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-list-user-franchise',
+        ];
+
+        $post['phone'] = $phone;
+        $detail = MyHelper::post('outlet/detail/user-franchise', $post);
+
+        if (isset($detail['status']) && $detail['status'] == "success") {
+            $data['user'] = $detail['data_user'];
+            if(!empty($detail['list_outlet'])){
+                $data['paginator'] = new LengthAwarePaginator($detail['list_outlet']['data'], $detail['list_outlet']['total'], $detail['list_outlet']['per_page'], $detail['list_outlet']['current_page'], ['path' => url()->current()]);
+                $data['outlets'] = $detail['list_outlet']['data'];
+                $data['from'] = $detail['list_outlet']['from'];
+                $data['to'] = $detail['list_outlet']['to'];
+                $data['total'] = $detail['list_outlet']['total'];
+            }else{
+                $data['paginator'] = [];
+                $data['outlets'] = [];
+                $data['from'] = [];
+                $data['to'] = [];
+                $data['total'] = [];
+            }
+        }
+        else {
+            $data['user'] = [];
+            $data['paginator'] = [];
+            $data['outlets'] = [];
+            $data['from'] = [];
+            $data['to'] = [];
+            $data['total'] = [];
+        }
+
+        return view('outlet::users_franchise.detail', $data);
+    }
 }

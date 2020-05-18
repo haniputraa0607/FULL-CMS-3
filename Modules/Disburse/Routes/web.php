@@ -48,8 +48,9 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::post('getUserFranchise', 'DisburseController@userFranchise');
 
         //Setting
-        Route::any('setting/list-outlet', 'DisburseSettingController@listOutlet');
+        Route::any('setting/edit-bank-account', 'DisburseSettingController@editBankAccount');
         Route::any('setting/bank-account', 'DisburseSettingController@bankAccount');
+        Route::any('setting/bank-account-update', 'DisburseSettingController@bankAccountUpdate');
         Route::any('setting/mdr', 'DisburseSettingController@mdr');
         Route::any('setting/mdr-global', 'DisburseSettingController@mdrGlobal');
         Route::get('setting/global', 'DisburseSettingController@settingGlobal');
@@ -57,6 +58,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::post('setting/point-charged-global', 'DisburseSettingController@pointChargedGlobal');
         Route::any('setting/fee-outlet-special/outlets', 'DisburseSettingController@listOutletAjax');
         Route::any('setting/fee-outlet-special/update', 'DisburseSettingController@settingFeeOutletSpecial');
+        Route::any('setting/outlet-special', 'DisburseSettingController@settingSpecialOutlet');
 
         //Disburse
         Route::any('list/trx', 'DisburseController@listTrx');

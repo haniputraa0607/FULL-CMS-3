@@ -14,13 +14,23 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class DisburseSettingController extends Controller
 {
-    function listOutlet(Request $request){
+    public function __construct()
+    {
+        $id_user_franchise = Session::get('id_user_franchise');
+        if(!is_null($id_user_franchise)){
+            $this->baseuri = 'disburse/user-franchise';
+        }else{
+            $this->baseuri = 'disburse';
+        }
+    }
+
+    function editBankAccount(Request $request){
         $post = $request->all();
         $data = [
             'title'          => 'Settings',
-            'sub_title'      => 'Setting List Outlet',
+            'sub_title'      => 'Setting Bank Account',
             'menu_active'    => 'disburse-settings',
-            'submenu_active' => 'disburse-setting-list-outlet'
+            'submenu_active' => 'disburse-setting-edit-bank-account'
         ];
 
         if(Session::has('filter-disburse-list-outlet') && !empty($post) && !isset($post['filter'])){
@@ -58,10 +68,30 @@ class DisburseSettingController extends Controller
             $data['outletPaginator'] = false;
         }
 
+        $bank = MyHelper::post('disburse/bank',$post);
+        if(isset($bank['status']) && $bank['status'] == 'success'){
+            $data['bank'] = $bank['result'];
+        }else{
+            $data['bank'] = [];
+        }
+
         if($post){
             Session::put('filter-disburse-list-outlet',$post);
         }
-        return view('disburse::setting_bank_account.list_outlet', $data);
+        return view('disburse::setting_bank_account.edit', $data);
+    }
+
+    function bankAccountUpdate(Request $request){
+        $post = $request->all();
+
+        if($post){
+            $udpateSetting = MyHelper::post('disburse/setting/bank-account',$post);
+            if(isset($udpateSetting['status']) && $udpateSetting['status'] == 'success'){
+                return redirect('disburse/setting/edit-bank-account')->withSuccess(['Success Update Data']);
+            }else{
+                return redirect('disburse/setting/edit-bank-account')->withErrors(['Failed Update Data']);
+            }
+        }
     }
 
     function bankAccount(Request $request){
@@ -70,7 +100,7 @@ class DisburseSettingController extends Controller
             'title'          => 'Settings',
             'sub_title'      => 'Setting Bank Account',
             'menu_active'    => 'disburse-settings',
-            'submenu_active' => 'disburse-setting-bank-account'
+            'submenu_active' => 'disburse-setting-add-bank-account'
         ];
 
         if($post){
@@ -95,7 +125,7 @@ class DisburseSettingController extends Controller
                 $data['user_franchises'] = [];
             }
 
-            return view('disburse::setting_bank_account.setting', $data);
+            return view('disburse::setting_bank_account.add', $data);
         }
     }
 
@@ -109,7 +139,10 @@ class DisburseSettingController extends Controller
         ];
 
         if($post){
-            $post['days_to_sent'] = implode(",",$post['days_to_sent']);
+            if(!empty($post['days_to_sent'])){
+                $post['days_to_sent'] = implode(",",$post['days_to_sent']);
+            }
+
             $storeSetting = MyHelper::post('disburse/setting/mdr',$post);
             if(isset($storeSetting['status']) && $storeSetting['status'] == 'success'){
                 return redirect('disburse/setting/mdr')->withSuccess(['Success Update Data']);
@@ -160,6 +193,13 @@ class DisburseSettingController extends Controller
             $data['point'] = [];
         }
 
+        $outlets = MyHelper::post($this->baseuri.'/outlets',[]);
+        if(isset($outlets['status']) && $outlets['status'] == 'success'){
+            $data['outlets'] = $outlets['result'];
+        }else{
+            $data['outlets'] = [];
+        }
+
         return view('disburse::setting_global.setting', $data);
     }
     function feeGlobal(Request $request){
@@ -203,15 +243,52 @@ class DisburseSettingController extends Controller
         return response()->json($arr_result);
     }
 
+    function listOutletNotSpecialAjax(Request $request){
+        $post = $request->except('_token');
+        $draw = $post["draw"];
+        $list = MyHelper::post('disburse/setting/fee-outlet-special/outlets-not-special', $post);
+
+        if(isset($list['status']) && isset($list['status']) == 'success'){
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = $list['total'];
+            $arr_result['recordsFiltered'] = $list['total'];
+            $arr_result['data'] = $list['result'];
+        }else{
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = 0;
+            $arr_result['recordsFiltered'] = 0;
+            $arr_result['data'] = array();
+        }
+        return response()->json($arr_result);
+    }
+
     function settingFeeOutletSpecial(Request $request){
         $post = $request->except('_token');
 
-        $post['id_outlet'] = explode(',', $post['id_outlet']);
+        if($post['id_outlet'] != 'all'){
+            $post['id_outlet'] = explode(',', $post['id_outlet']);
+        }
         $update = MyHelper::post('disburse/setting/fee-outlet-special/update', $post);
         if(isset($update['status']) && $update['status'] == 'success'){
             return redirect('disburse/setting/global#fee-special-outlet')->withSuccess(['Success Update Fee Special Outlet']);
         }else{
-            return redirect('disburse/setting/global#fee-special-outlet')->withErrors([$update['message']]);
+            return redirect('disburse/setting/global#fee-special-outlet')->withErrors([$update['messages']]);
         }
+    }
+
+    function settingSpecialOutlet(Request $request){
+        $post = $request->except('_token');
+        $post['id_outlet'] = explode(',',$post['id_outlet']);
+        $save = MyHelper::post('disburse/setting/outlet-special', $post);
+        if (isset($save['status']) && $save['status'] == "success") {
+            $data = ['status' => 'success'];
+        }
+        else {
+            $data = ['status' => 'fail'];
+            if(isset($save['messages'])){
+                $data['messages'] = $save['messages'];
+            }
+        }
+        return response()->json($save);
     }
 }
