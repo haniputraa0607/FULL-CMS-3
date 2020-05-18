@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
  ?>
  @extends('layouts.main-closed')
 
@@ -625,7 +626,7 @@
         <div class="portlet-body m-form__group row">
                 <div class="col-md-4">
                     <img src="{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
-                    <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">                
+                    <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">
                 </div>
                 <div class="col-md-8">
                 <div class="form-body">
@@ -1196,6 +1197,7 @@
                         </div>
                     </div>
 
+                @if(MyHelper::hasAccess([107], $configs))
 					<!-- BUTTON TO FORM -->
                     <div class="form-group" id="customform">
                         <div class="input-icon right">
@@ -1553,6 +1555,7 @@
                             </div>
                         </div>
                     </div>
+                @endif
                 </div>
                 </div>
                 </div>
