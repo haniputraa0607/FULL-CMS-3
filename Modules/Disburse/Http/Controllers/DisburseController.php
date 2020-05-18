@@ -305,4 +305,17 @@ class DisburseController extends Controller
         $user = MyHelper::post($this->baseuri.'/user-franchise',$post);
         return response()->json($user);
     }
+
+    function updateStatusDisburse(Request $request, $id){
+        $post = $request->all();
+        $post['disburse_status'] = 'Retry From Failed';
+        $post['id'] = $id;
+        $update = MyHelper::post($this->baseuri.'/update-status',$post);
+
+        if(isset($update['status']) && $update['status'] == 'success'){
+            return redirect('disburse/list/all')->withSuccess(['Success update status']);
+        }else{
+            return redirect('disburse/list/fail')->withErrors(['Failed update status']);
+        }
+    }
 }

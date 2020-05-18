@@ -97,6 +97,7 @@
             <thead>
             <tr>
                 <th scope="col" width="10%"> Action </th>
+                <th scope="col" width="10%"> Count Retry </th>
                 @if($status == 'all') <th scope="col" width="10%"> Status </th>@endif
                 <th scope="col" width="30%"> Outlet </th>
                 <th scope="col" width="30%"> Date </th>
@@ -112,7 +113,13 @@
                     <tr>
                         <td>
                             <a class="btn btn-xs green" target="_blank" href="{{url('disburse/detail', $val['id_disburse'])}}">Detail</a>
+                            @if(MyHelper::hasAccess([235], $grantedFeature))
+                                @if($status == 'fail')
+                                    <a class="btn btn-xs yellow" href="{{url('disburse/update-status', $val['id_disburse'])}}">Retry</a>
+                                @endif
+                            @endif
                         </td>
+                        <td>{{$val['count_retry']}}</td>
                         @if($status == 'all') <td>{{$val['disburse_status']}}</td>@endif
                         <td>{{$val['outlet_code']}} - {{$val['outlet_name']}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>
