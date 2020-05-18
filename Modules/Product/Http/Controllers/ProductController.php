@@ -907,7 +907,7 @@ class ProductController extends Controller
         $data['admin'] = 1;
         $outlets = MyHelper::post('outlet/be/list', ['filter' => 'different_price'])['result'] ?? [];
         if (!$outlets) {
-            return back()->withErrors(['Something went wrong']);
+            $data['outlets'] = [];
         }else{
             $data['outlets'] = $outlets;
         }
@@ -937,7 +937,7 @@ class ProductController extends Controller
         if (!is_null($key)) {
             $data['key'] = $key;
         } else {
-            $data['key'] = $data['outlets'][0]['id_outlet'];
+            $data['key'] = $data['outlets'][0]['id_outlet']??'';
         }
 
         return view('product::product.price', $data);

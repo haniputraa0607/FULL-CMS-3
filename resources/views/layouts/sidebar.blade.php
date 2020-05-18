@@ -352,6 +352,13 @@
 						</li>
 						@endif
 					@endif
+					@if(MyHelper::hasAccess([247], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'outlet-list-user-franchise') ? 'active open' : ''}}">
+							<a href="{{url('outlet/list/user-franchise')}}" class="nav-link ">
+								<span class="title">List User Franchise</span>
+							</a>
+						</li>
+					@endif
 					@if(MyHelper::hasAccess([24], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'outlet-list') ? 'active open' : ''}}">
 						<a href="{{url('outlet/list')}}" class="nav-link ">
@@ -2080,14 +2087,14 @@
 						<span class="arrow {{($menu_active == 'disburse-settings') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
-						<li class="nav-item {{($submenu_active == 'disburse-setting-list-outlet') ? 'active open' : ''}}">
-							<a href="{{url('disburse/setting/list-outlet')}}" class="nav-link ">
-								<span class="title">List Outlet</span>
+						<li class="nav-item {{($submenu_active == 'disburse-setting-add-bank-account') ? 'active open' : ''}}">
+							<a href="{{url('disburse/setting/bank-account')}}" class="nav-link ">
+								<span class="title">Add Bank Account</span>
 							</a>
 						</li>
-						<li class="nav-item {{($submenu_active == 'disburse-setting-bank-account') ? 'active open' : ''}}">
-							<a href="{{url('disburse/setting/bank-account')}}" class="nav-link ">
-								<span class="title">Bank Account</span>
+						<li class="nav-item {{($submenu_active == 'disburse-setting-edit-bank-account') ? 'active open' : ''}}">
+							<a href="{{url('disburse/setting/edit-bank-account')}}" class="nav-link ">
+								<span class="title">Edit Bank Account</span>
 							</a>
 						</li>
 						<li class="nav-item {{($submenu_active == 'disburse-setting-mdr') ? 'active open' : ''}}">

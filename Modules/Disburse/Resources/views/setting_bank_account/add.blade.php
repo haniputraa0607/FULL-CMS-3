@@ -32,7 +32,8 @@
                     url : url,
                     data : {
                         _token : token,
-                        id_user_franchise : user
+                        id_user_franchise : user,
+                        type: 'add_bank_account'
                     },
                     success : function(result) {
                         if(result.status === 'success'){
@@ -40,7 +41,11 @@
                             var len = result.result.length;
                             var data = result.result;
                             for (var i=0; i<len;i++){
-                                $("#outlet").append('<option value=' + data[i].id_outlet + '>' + data[i].outlet_code +' - '+ data[i].outlet_name + '</option>');
+                                var status_franchise = 'Outlet Central';
+                                if(data[i].status_franchise == 1){
+                                    status_franchise = 'Outlet Franchise';
+                                }
+                                $("#outlet").append('<option value=' + data[i].id_outlet + '>' + data[i].outlet_code +' - '+ data[i].outlet_name + ' - ' +status_franchise + '</option>');
                             }
                         }else{
                             document.getElementById('div_outlet').style.display = 'none';
@@ -52,40 +57,6 @@
                     }
                 });
             }
-        }
-        
-        function loadUserFranchise(userType) {
-            $("#outlet").empty();
-            document.getElementById('div_outlet').style.display = 'none';
-            var token  = "{{ csrf_token() }}";
-            var url = "{{url('disburse/getUserFranchise')}}";
-            $("#id_user_franchise").empty();
-
-            $.ajax({
-                type : "POST",
-                url : url,
-                data : {
-                    _token : token,
-                    user_type : userType
-                },
-                success : function(result) {
-                    $("#id_user_franchise").append('<option></option>');
-                    if(result.status === 'success'){
-                        var len = result.result.length;
-                        var data = result.result;
-                        for (var i=0; i<len;i++){
-                            $("#id_user_franchise").append('<option value=' + data[i].id_user_franchise + '>' + data[i].phone + '</option>');
-                        }
-                        document.getElementById('div_radio_outlet').style.display = 'block';
-                    }else{
-                        document.getElementById('div_radio_outlet').style.display = 'none';
-                    }
-                },
-                error: function (jqXHR, exception) {
-                    document.getElementById('div_radio_outlet').style.display = 'none';
-                    toastr.warning('Failed get outlet');
-                }
-            });
         }
     </script>
 @endsection
@@ -118,7 +89,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase ">Setting Bank Account</span>
+                <span class="caption-subject font-blue sbold uppercase ">Add Bank Account Outlet</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -189,36 +160,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Outlet Type
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Tipe Outlet yang akan diupdate" data-container="body"></i>
-                        </label>
-                        <div class="col-md-7">
-                            <div class="input-icon right">
-                                <select class="form-control select2" data-placeholder="Outlet Type" name="outlet_type" data-value="{{old('outlet_type')}}" required onchange="loadUserFranchise(this.value)">
-                                    <option></option>
-                                    <option value="Non Franchise">Outlet Pusat</option>
-                                    <option value="Franchise">Outlet Franchise</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">User
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="user yang outeltnya akan di setting" data-container="body"></i>
-                        </label>
-                        <div class="col-md-7">
-                            <div class="input-icon right">
-                                <select class="form-control select2" id="id_user_franchise" data-placeholder="User" name="id_user_franchise" data-value="{{old('id_user_franchise')}}" required>
-                                    <option></option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group" style="display: none" id="div_radio_outlet">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-4">
                             <div class="md-radio-inline">
