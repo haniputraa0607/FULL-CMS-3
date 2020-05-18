@@ -18,6 +18,12 @@
     <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
 
     <script>
+        $(document).ready(function() {
+            $("#detail_days").select2({
+                dropdownParent: $("#mdrModal")
+            });
+            $("body").tooltip({selector:'[data-toggle=tooltip]'});
+        });
         function showModal(id_mdr){
             var daysToSent = document.getElementById ( id_mdr+'_days_to_sent' ).innerText;
             var arrayDaysToSent = daysToSent.split(/(?:\r\n|\r|\n)/g);
@@ -101,7 +107,7 @@
                     @foreach($mdr as $data)
                         <tr>
                             <td>
-                                <a class="btn btn-xs green" onClick="showModal('{{$data['id_mdr']}}')"><i class="fa fa-edit"></i> Update</a>
+                                <a class="btn btn-xs green" onClick="showModal('{{$data['id_mdr']}}')"><i class="fa fa-edit"></i> Edit</a>
                             </td>
                             <td id="{{$data['id_mdr']}}_payment_name">{{$data['payment_name']}}</td>
                             <td id="{{$data['id_mdr']}}_mdr_central">{{$data['mdr_central']}}</td>
@@ -109,16 +115,18 @@
                             <td id="{{$data['id_mdr']}}_percent_type">{{$data['percent_type']}}</td>
                             <td id="{{$data['id_mdr']}}_days_to_sent">
                                 <?php
-                                    $explode = explode(',', $data['days_to_sent']);
+                                    if(!is_null($data['days_to_sent'])){
+                                        $explode = explode(',', $data['days_to_sent']);
 
-                                    $html = '';
-                                    $html .= '<ul>';
-                                    foreach ($explode as $day) {
-                                        $html .= '<li>'.$day.'</li>';
+                                        $html = '';
+                                        $html .= '<ul>';
+                                        foreach ($explode as $day) {
+                                            $html .= '<li>'.$day.'</li>';
+                                        }
+                                        $html .= '</ul>';
+
+                                        echo $html;
                                     }
-                                    $html .= '</ul>';
-
-                                    echo $html;
                                 ?>
                             </td>
                             <td>{{ date('d M Y H:i', strtotime($data['updated_at'])) }}</td>
@@ -143,11 +151,15 @@
                     <div class="modal-body form">
                         <div class="form-body">
                             <div class="form-group">
-                                <label>Payment Name</label>
+                                <label>Payment Name
+                                    <i class="fa fa-question-circle tooltips" title="nama payment method" data-toggle="tooltip" data-placement="top"></i>
+                                </label>
                                 <input type="text" class="form-control" disabled id="detail_payment_name">
                             </div>
                             <div class="form-group">
-                                <label>MDR Type</label>
+                                <label>MDR Type
+                                    <i class="fa fa-question-circle tooltips" title="tipe mdr berupa persen atau nominal" data-toggle="tooltip" data-placement="top"></i>
+                                </label>
                                 <select class="form-control select2-multiple" data-placeholder="MDR Type" id="detail_percent_type" name="percent_type">
                                     <option></option>
                                     <option value="Percent">Percent (%)</option>
@@ -155,19 +167,25 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>MDR Central</label>
+                                <label>MDR Central
+                                    <i class="fa fa-question-circle tooltips" title="jumlah yang akan di bebankan ke pihak pusat" data-toggle="tooltip" data-placement="top"></i>
+                                </label>
                                 <br><div style="font-size: 11px;color: red">(Please use '.' if you want to use commas. <br>Example : 0.2)</div>
                                 <input type="text" class="form-control" name="mdr_central" id="detail_mdr_central">
                             </div>
                             <div class="form-group">
-                                <label>MDR Outlet</label>
+                                <label>MDR Outlet
+                                    <i class="fa fa-question-circle tooltips" title="jumlah yang akan di bebankan ke pihak outlet" data-toggle="tooltip" data-placement="top"></i>
+                                </label>
                                 <br><div style="font-size: 11px;color: red">(Please use '.' if you want to use commas. <br>Example : 0.2)</div>
                                 <input type="text" class="form-control" name="mdr" id="detail_mdr">
                             </div>
                             <div class="form-group">
-                                <label>Days to Sent</label>
+                                <label>Days to Sent
+                                    <i class="fa fa-question-circle tooltips" title="menetukan hari untuk melakukan transfer ke outlet, jika hari tidak dipilih maka transfer akan dilakukan setiap hari" data-toggle="tooltip" data-placement="top"></i>
+                                </label>
                                 <br><div style="font-size: 11px;color: red">note: Funds will be sent based on the selected day. If no day is selected then delivery will take place every day.</div>
-                                <select class="form-control select2-multiple" data-placeholder="Days" id="detail_days" name="days_to_sent[]" multiple>
+                                <select class="form-control select2-multiple" data-placeholder="Days" id="detail_days" name="days_to_sent[]" multiple style="width: 100%">
                                 </select>
                             </div>
                             <input type="hidden" id="detail_id_mdr" name="id_mdr">
@@ -175,8 +193,7 @@
                     </div>
                     <div class="modal-footer">
                         {{ csrf_field() }}
-                        <button type="submit" class="btn green btn-outline">Submit</button>
-                        <button type="button" class="btn red btn-outline" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn green">Submit</button>
                     </div>
                 </form>
             </div>

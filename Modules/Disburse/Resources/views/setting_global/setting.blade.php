@@ -9,6 +9,7 @@
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
@@ -87,6 +88,34 @@
             return false;
         });
 
+        $('input[name=central]').keyup(function () {
+            var outlet = $('input[name=outlet]').val();
+            var central = $('input[name=central]').val();
+
+            var check = Number(outlet) + Number(central);
+            if(check !== 100){
+                document.getElementById('label_central').style.display = 'block';
+                document.getElementById('label_outlet').style.display = 'none';
+            }else{
+                document.getElementById('label_central').style.display = 'none';
+                document.getElementById('label_outlet').style.display = 'none';
+            }
+        });
+
+        $('input[name=outlet]').keyup(function (e) {
+            var outlet = $('#outlet').val();
+            var central = $('#central').val();
+
+            var check = Number(outlet) + Number(central);
+            if(check !== 100){
+                document.getElementById('label_central').style.display = 'none';
+                document.getElementById('label_outlet').style.display = 'block';
+            }else{
+                document.getElementById('label_central').style.display = 'none';
+                document.getElementById('label_outlet').style.display = 'none';
+            }
+        });
+
         function submit(){
             var outlet = $('#outlet').val();
             var central = $('#central').val();
@@ -122,7 +151,7 @@
                 "iDisplayLength": data_display,
                 "bProcessing": true,
                 "serverSide": true,
-                "searching": false,
+                "searching": true,
                 "ajax": {
                     url : url,
                     dataType: "json",
@@ -136,7 +165,7 @@
                     {
                         targets: 0,
                         render: function ( data, type, row, meta ) {
-                            var html = '<label class="mt-checkbox"><input value="'+data+'" onchange="checkboxEvent(this)" type="checkbox" id="check'+data+'" class="md-check" /> <span></span></label>';
+                            var html = '<label class="mt-checkbox"><input value="'+data+'" onchange="checkboxEvent(this)" type="checkbox" id="check'+data+'" class="md-check checkbox-fee-special-outlet" /> <span></span></label>';
                             return html;
                         }
                     },
@@ -144,20 +173,9 @@
                         targets: 2,
                         render: function ( data, type, row, meta ) {
                             if(data == 1){
-                                var html = "<b style='color: green'>This outlet is franchise</b>"
+                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;\">Franchise</span>";
                             }else{
-                                var html = "This outlet is not franchise"
-                            }
-                            return html;
-                        }
-                    },
-                    {
-                        targets: 3,
-                        render: function ( data, type, row, meta ) {
-                            if(data == 1){
-                                var html = "<b style='color: green'>This outlet is special outlet</b>"
-                            }else{
-                                var html = "This outlet is not special outlet"
+                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;\">Not franchise</span>";
                             }
                             return html;
                         }
@@ -168,12 +186,23 @@
 
         var arrOutlet = [];
         function checkboxEvent(checkboxElem) {
-            if (checkboxElem.checked) {
-                arrOutlet.push(Number(checkboxElem.value));
-            } else {
-                var index = arrOutlet.indexOf(Number(checkboxElem.value));
-                if (index > -1) {
-                    arrOutlet.splice(index, 1);
+            var value = checkboxElem.value;
+
+            if(value == 'all'){
+                if (checkboxElem.checked) {
+                    arrOutlet.push('all');
+                    $(".checkbox-fee-special-outlet").prop("checked", true);
+                }else{
+                    $(".checkbox-fee-special-outlet").prop("checked", false);
+                }
+            }else{
+                if (checkboxElem.checked) {
+                    arrOutlet.push(Number(checkboxElem.value));
+                } else {
+                    var index = arrOutlet.indexOf(Number(checkboxElem.value));
+                    if (index > -1) {
+                        arrOutlet.splice(index, 1);
+                    }
                 }
             }
         }
@@ -182,10 +211,11 @@
             var msg = "";
             var percentFee = $('input[name=outlet_special_fee]').val();
 
-            if(arrOutlet.length <= 0){
-                msg += "-Please select one or more outlet to setting \n";
+            if(document.getElementById("checkall").checked === false){
+                if(arrOutlet.length <= 0){
+                    msg += "-Please select one or more outlet to setting \n";
+                }
             }
-
             if(percentFee === ""){
                 msg += "-Please input Percent Fee \n";
             }
@@ -197,6 +227,104 @@
                 $( "#form_fee_outlet_special" ).submit();
             }
         }
+
+        $('#move-special').click(function() {
+            var id =[];
+            $('#not-special-outlet option:selected').each(function () {
+                var $this = $(this);
+                id.push($this.attr('data-id'))
+            })
+            let token  = "{{ csrf_token() }}";
+
+            if(id.length <= 0){
+                toastr.warning("Please select one or more from not special outlet");
+            }else{
+                $.ajax({
+                    type : "POST",
+                    url : "{{ url('disburse/setting/outlet-special') }}",
+                    data : "_token="+token+"&id_outlet="+id+"&status=1",
+                    success : function(result) {
+                        if (result.status == "success") {
+                            outlets();
+                            arrOutlet = [];
+                            toastr.info("Special Outlet has been updated.");
+                            $('#not-special-outlet option:selected').each(function () {
+                                var $this = $(this);
+                                $('#special-outlet-select').append('<option data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>');
+                                $(this).remove();
+                            })
+
+                        }
+                        else {
+                            toastr.warning("Something went wrong. Failed to update special outlet.");
+                        }
+                    },
+                    error: function (jqXHR, exception) {
+                        toastr.warning('Something went wrong. Failed to update special outlet');
+                    }
+                });
+            }
+        });
+
+        $('#move-not-special').click(function() {
+            var id =[];
+            $('#special-outlet-select option:selected').each(function () {
+                var $this = $(this);
+                id.push($this.attr('data-id'))
+            })
+            let token  = "{{ csrf_token() }}";
+
+            if(id.length <= 0){
+                toastr.warning("Please select one or more from special outlet");
+            }else{
+                $.ajax({
+                    type : "POST",
+                    url : "{{ url('disburse/setting/outlet-special') }}",
+                    data : "_token="+token+"&id_outlet="+id+"&status=0",
+                    success : function(result) {
+                        if (result.status == "success") {
+                            outlets();
+                            arrOutlet = [];
+                            toastr.info("Special Outlet has been updated.");
+                            $('#special-outlet-select option:selected').each(function () {
+                                var $this = $(this);
+                                $('#not-special-outlet').append('<option data-id='+$this.attr('data-id')+'>'+$this.text()+'</option>');
+                                $(this).remove();
+                            })
+
+                        }
+                        else {
+                            toastr.warning("Something went wrong. Failed to update special outlet.");
+                        }
+                    },
+                    error: function (jqXHR, exception) {
+                        toastr.warning('Something went wrong. Failed to update special outlet');
+                    }
+                });
+            }
+        });
+
+        $('#search-outlet').on("keyup", function(){
+            var search = $('#search-outlet').val();
+            $(".option-special").each(function(){
+                if(!$(this).text().toLowerCase().includes(search.toLowerCase())){
+                    $(this).hide()
+                }else{
+                    $(this).show()
+                }
+            });
+            $('#btn-reset').show()
+            $('#div-left').hide()
+        })
+
+        $('#btn-reset').click(function(){
+            $('#search-outlet').val("")
+            $(".option-special").each(function(){
+                $(this).show()
+            })
+            $('#btn-reset').hide()
+            $('#div-left').show()
+        })
     </script>
 @endsection
 
@@ -234,6 +362,9 @@
                 <a data-toggle="tab" href="#fee">Fee Global </a>
             </li>
             <li>
+                <a data-toggle="tab" href="#special-outlet">Special Outlet</a>
+            </li>
+            <li>
                 <a data-toggle="tab" href="#fee-special-outlet">Fee Special Outlet</a>
             </li>
             <li>
@@ -258,7 +389,8 @@
                     <form class="form-horizontal" role="form" action="{{url('disburse/setting/fee-global')}}" method="post">
                         <div class="form-body">
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Percent Fee Outlet Central<span class="required" aria-required="true"> * </span></label>
+                                <label class="col-md-4 control-label">Percent Fee Outlet Central<span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah  fee yang akan di bebankan ke outlet milik pusat" data-container="body"></i></label>
                                 <div class="col-md-4">
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="fee_central" required value="{{$fee['fee_central']}}"><span class="input-group-addon">%</span>
@@ -266,7 +398,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Percent Fee Outlet Franchise<span class="required" aria-required="true"> * </span></label>
+                                <label class="col-md-4 control-label">Percent Fee Outlet Franchise<span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah  fee yang akan di bebankan ke outlet milik franchise" data-container="body"></i></label></label>
                                 <div class="col-md-4">
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="fee_outlet" required value="{{$fee['fee_outlet']}}"><span class="input-group-addon">%</span>
@@ -283,9 +416,17 @@
             </div>
         </div>
 
+        <div id="special-outlet" class="tab-pane">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur outlet mana saja yang termasuk sebagai special fee.</p>
+            </div>
+            <br>
+            @include('disburse::setting_global.setting_special_outlet')
+        </div>
+
         <div id="fee-special-outlet" class="tab-pane">
             <div class="m-heading-1 border-green m-bordered">
-                <p>Setting ini digunakan untuk mengatur fee untuk outlet tertentu atau outlet pusat.</p>
+                <p>Setting ini digunakan untuk mengatur fee untuk outlet special fee.</p>
                 <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
             </div>
             <br>
@@ -336,19 +477,24 @@
                     <form class="form-horizontal" role="form" action="{{url('disburse/setting/point-charged-global')}}" method="post" id="form_point">
                         <div class="form-body">
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Charged Central <span class="required" aria-required="true"> * </span></label>
-                                <div class="col-md-4">
+                                <label class="col-md-4 control-label">Charged Central <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah point yang akan di bebankan ke pusat" data-container="body"></i></label></label>
+                                <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="central" name="central" required value="{{$point['central']}}"><span class="input-group-addon">%</span>
+                                        <input type="text" class="form-control" id="central" maxlength="3" name="central" required value="{{$point['central']}}"><span class="input-group-addon">%</span>
                                     </div>
+                                    <p style="color: red;display: none" id="label_central">Invalid value, please check description</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Charged Outlet <span class="required" aria-required="true"> * </span></label>
-                                <div class="col-md-4">
+                                <label class="col-md-4 control-label">Charged Outlet <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah point yang akan di bebankan ke outlet" data-container="body"></i></label>
+                                </label>
+                                <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="outlet" name="outlet" required value="{{$point['outlet']}}"><span class="input-group-addon">%</span>
+                                        <input type="text" class="form-control" id="outlet" maxlength="3" name="outlet" required value="{{$point['outlet']}}"><span class="input-group-addon">%</span>
                                     </div>
+                                    <p style="color: red;display: none" id="label_outlet">Invalid value, please check description</p>
                                 </div>
                             </div>
                             <div class="form-actions" style="text-align: center">
