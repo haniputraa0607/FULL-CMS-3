@@ -34,6 +34,8 @@
             operator_value.options[operator_value.options.length] = new Option('Processed', 'Processed');
             operator_value.options[operator_value.options.length] = new Option('Fail', 'Fail');
             operator_value.options[operator_value.options.length] = new Option('Rejected', 'Rejected');
+            operator_value.options[operator_value.options.length] = new Option('Approved', 'Approved');
+            operator_value.options[operator_value.options.length] = new Option('Retry From Failed', 'Retry From Failed');
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
@@ -126,6 +128,8 @@
                                                         <option value="Processed" @if ($con['operator']  == 'Processed') selected @endif>Processed</option>
                                                         <option value="Fail" @if ($con['operator']  == 'Fail') selected @endif>Fail</option>
                                                         <option value="Rejected" @if ($con['operator']  == 'Rejected') selected @endif>Rejected</option>
+                                                        <option value="Approved" @if ($con['operator']  == 'Approved') selected @endif>Approved</option>
+                                                        <option value="Approved" @if ($con['operator']  == 'Retry From Failed') selected @endif>Retry From Failed</option>
                                                     @else
                                                         <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                                         <option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>

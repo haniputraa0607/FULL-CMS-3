@@ -200,6 +200,13 @@ class DisburseSettingController extends Controller
             $data['outlets'] = [];
         }
 
+        $approver = MyHelper::get('disburse/setting/approver');
+        if(isset($approver['status']) && $approver['status'] == 'success'){
+            $data['approver'] = $approver['result'];
+        }else{
+            $data['approver'] = [];
+        }
+
         return view('disburse::setting_global.setting', $data);
     }
     function feeGlobal(Request $request){
@@ -290,5 +297,20 @@ class DisburseSettingController extends Controller
             }
         }
         return response()->json($save);
+    }
+
+    function settingApprover(Request $request){
+        $post = $request->except('_token');
+        if(isset($post['approver'])){
+            $data['value'] = 1;
+        }else{
+            $data['value'] = 0;
+        }
+        $save = MyHelper::post('disburse/setting/approver', $data);
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('disburse/setting/global#approver')->withSuccess(['Success Update Data']);
+        }else{
+            return redirect('disburse/setting/global#approver')->withErrors(['Failed Update Data']);
+        }
     }
 }
