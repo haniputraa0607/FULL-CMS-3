@@ -370,6 +370,9 @@
             <li>
                 <a data-toggle="tab" href="#point">Point</a>
             </li>
+            <li>
+                <a data-toggle="tab" href="#approver">Approver Payouts</a>
+            </li>
         </ul>
     </div>
     <br>
@@ -422,6 +425,14 @@
             </div>
             <br>
             @include('disburse::setting_global.setting_special_outlet')
+        </div>
+
+        <div id="approver" class="tab-pane">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur proses appove payouts. Approver bisa dilakukan oleh sistem(auto approve) atau oleh admin.</p>
+            </div>
+            <br>
+            @include('disburse::setting_global.setting_auto_approve')
         </div>
 
         <div id="fee-special-outlet" class="tab-pane">

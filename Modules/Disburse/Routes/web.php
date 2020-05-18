@@ -59,11 +59,13 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('setting/fee-outlet-special/outlets', 'DisburseSettingController@listOutletAjax');
         Route::any('setting/fee-outlet-special/update', 'DisburseSettingController@settingFeeOutletSpecial');
         Route::any('setting/outlet-special', 'DisburseSettingController@settingSpecialOutlet');
+        Route::any('setting/approver', 'DisburseSettingController@settingApprover');
 
         //Disburse
         Route::any('list/trx', 'DisburseController@listTrx');
         Route::any('list/{status}', 'DisburseController@listDisburse');
         Route::any('list-datatable/{status}', 'DisburseController@listDisburseDataTable');
         Route::any('detail/{id}', 'DisburseController@detailDisburse');
+        Route::any('update-status/{id}', 'DisburseController@updateStatusDisburse');
     });
 });
