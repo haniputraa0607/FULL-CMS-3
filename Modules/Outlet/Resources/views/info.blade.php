@@ -58,7 +58,7 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="text" class="form-control" name="outlet_name" value="{{ $val['outlet_name'] }}" required placeholder="Outlet Name" readonly>
+                <input type="text" class="form-control" name="outlet_name" value="{{ $val['outlet_name'] }}" required placeholder="Outlet Name">
             </div>
         </div>
         @if(MyHelper::hasAccess([95], $configs))
@@ -192,6 +192,7 @@
             </div>
         </div>
 
+        @if(MyHelper::hasAccess([96], $configs))
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -203,6 +204,7 @@
                 <input type="checkbox" name="big_order" @if(old('big_order',$val['big_order']) == '1') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="1">
             </div>
         </div>
+        @endif
 
         <hr>
         <h4>Maps</h4>

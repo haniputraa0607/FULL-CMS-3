@@ -1863,30 +1863,32 @@
 			</ul>
 		</li>
 		@endif
-		@if(MyHelper::hasAccess([168,169,170,171], $grantedFeature))
-		<li class="nav-item {{($menu_active == 'setting-intro') ? 'active open' : ''}}">
-			<a href="javascript:;" class="nav-link nav-toggle">
-				<i class="icon-screen-tablet"></i>
-				<span class="title">Intro Apps</span>
-				<span class="arrow {{($menu_active == 'setting-intro') ? 'open' : ''}}"></span>
-			</a>
-			<ul class="sub-menu">
-				@if(MyHelper::hasAccess([150], $grantedFeature))
-				<li class="nav-item {{($submenu_active == 'setting-intro-first') ? 'active open' : ''}}">
-					<a href="{{url('setting/intro/first')}}" class="nav-link ">
-						<span class="title">Intro First Install</span>
-					</a>
-				</li>
-				@endif
-				@if(MyHelper::hasAccess([149,151,152,153], $grantedFeature))
-				<li class="nav-item {{($submenu_active == 'setting-intro-home') ? 'active open' : ''}}">
-					<a href="{{url('setting/intro/home')}}" class="nav-link ">
-						<span class="title">Tutorial In Home</span>
-					</a>
-				</li>
-				@endif
-			</ul>
-		</li>
+		@if(MyHelper::hasAccess([108], $configs))
+			@if(MyHelper::hasAccess([168,169,170,171], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'setting-intro') ? 'active open' : ''}}">
+				<a href="javascript:;" class="nav-link nav-toggle">
+					<i class="icon-screen-tablet"></i>
+					<span class="title">Intro Apps</span>
+					<span class="arrow {{($menu_active == 'setting-intro') ? 'open' : ''}}"></span>
+				</a>
+				<ul class="sub-menu">
+					@if(MyHelper::hasAccess([150], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'setting-intro-first') ? 'active open' : ''}}">
+						<a href="{{url('setting/intro/first')}}" class="nav-link ">
+							<span class="title">Intro First Install</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([149,151,152,153], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'setting-intro-home') ? 'active open' : ''}}">
+						<a href="{{url('setting/intro/home')}}" class="nav-link ">
+							<span class="title">Tutorial In Home</span>
+						</a>
+					</li>
+					@endif
+				</ul>
+			</li>
+			@endif
 		@endif
 
 		@if(MyHelper::hasAccess([162,163], $grantedFeature))
@@ -1912,14 +1914,14 @@
 				<h3 class="uppercase" style="color: #383b67;font-weight: 600;">About</h3>
 			</li>
 
-			<!--@if(MyHelper::hasAccess([85], $grantedFeature))-->
-			<!--<li class="nav-item {{($menu_active == 'about') ? 'active' : ''}}">-->
-			<!--	<a href="{{url('setting/about')}}" class="nav-link nav-toggle">-->
-			<!--		<i class="icon-info"></i>-->
-			<!--		<span class="title">About Us</span>-->
-			<!--	</a>-->
-			<!--</li>-->
-			<!--@endif-->
+			@if(MyHelper::hasAccess([85], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'about') ? 'active' : ''}}">
+				<a href="{{url('setting/about')}}" class="nav-link nav-toggle">
+					<i class="icon-info"></i>
+					<span class="title">About Us</span>
+				</a>
+			</li>
+			@endif
 
 			@if(MyHelper::hasAccess([88,89], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'faq') ? 'active' : ''}}">
