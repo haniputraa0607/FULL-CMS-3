@@ -154,6 +154,14 @@ class SettingController extends Controller
             $subTitle = 'Default Outlet';
             $colInput = 4;
             $colLabel = 3;
+        } elseif ($key == 'credit_card_payment_gateway') {
+            $sub = 'credit_card_payment_gateway';
+            $active = 'order';
+            $subTitle = 'Credit Card Payment Gateway';
+            $label = 'Payment Gateway';
+            $span = 'credit_card_payment_gateway';
+            $colInput = 4;
+            $colLabel = 3;
         }
 
         $data = [
