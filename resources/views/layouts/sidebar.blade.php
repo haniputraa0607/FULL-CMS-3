@@ -825,7 +825,7 @@
 						</a>
 					</li>
 					@endif
-					@if(MyHelper::hasAccess([107], $configs))
+					@if(MyHelper::hasAccess([109], $configs))
 					<li class="nav-item {{($submenu_active == 'credit_card_payment_gateway') ? 'active open' : ''}}">
 						<a href="{{url('setting/credit_card_payment_gateway')}}" class="nav-link ">
 							<span class="title">Credit Card Payment Gateway</span>
