@@ -74,6 +74,56 @@ $configs    		= session('configs');
 		$('#form-prices').submit(function(){
 			$('.price').inputmask('remove');
 		});
+
+		$(document).on('click', '.same', function() {
+			var id = this.id;
+			var code = id.split("-");
+			code = code[1];
+			var visibility = $('#product-visibility-'+code).val();
+			var stock = $('#product-stock-'+code).val();
+
+			if (stock == '') {
+				alert('Stock field cannot be empty');
+				return false;
+			}
+
+			if ($('.checkbox-outlet').is(':checked')) {
+				var count = $('.checkbox-outlet').prop('checked', false);
+				$(this).prop('checked', true);
+
+				var all_visibility = $('.product-visibility-value');
+				var array_visibility = [];
+				for (i = 0; i < all_visibility.length; i++) {
+					array_visibility.push(all_visibility[i]['defaultValue']);
+				}
+				sessionStorage.setItem("product_visibility", array_visibility);
+
+				var all_stock = $('.product-stock-value');
+				var array_stock = [];
+				for (i = 0; i < all_stock.length; i++) {
+					array_stock.push(all_stock[i]['defaultValue']);
+				}
+				sessionStorage.setItem("product_stock", array_stock);
+
+				$('.product-visibility').val(visibility);
+				$('.product-stock').val(stock);
+
+			} else {
+
+				var item_visibility = sessionStorage.getItem("product_visibility");
+				var item_stock = sessionStorage.getItem("product_stock");
+
+				var item_visibility = item_visibility.split(",");
+				var item_stock = item_stock.split(",");
+
+				$('.product-visibility').each(function(i, obj) {
+					$(this).val(item_visibility[i]);
+				});
+				$('.product-stock').each(function(i, obj) {
+					$(this).val(item_stock[i]);
+				});
+			}
+		});
 	</script>
 
 @endsection
@@ -119,7 +169,7 @@ $configs    		= session('configs');
 		</div>
 		<div class="portlet-body form">
 			<form id="form-prices" action="{{url()->current()}}" method="POST">
-				<table class="table table-striped table-bordered table-hover table-responsive" width="100%">
+				<table class="table table-striped table-bordered table-hover table-responsive">
 					<thead>
 					<tr>
 						<th> Category </th>
@@ -127,6 +177,7 @@ $configs    		= session('configs');
 						<th> Visible </th>
 						<th> Stock </th>
 						<th> POS Status </th>
+						<th> Checkbox</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -145,18 +196,20 @@ $configs    		= session('configs');
 											@php
 												$marker = 1;
 											@endphp
-											<td style="width:15%">
-												<select class="form-control" name="visible[]">
-													<option></option>
+											<td style="width:20%">
+												<select class="form-control product-visibility" name="visible[]" id="product-visibility-{{ $pro['product_code'] }}">
+													<option @if(empty($dpp['product_detail_visibility'])) selected @endif>Default Visibilty Product</option>
 													<option value="Visible" @if($dpp['product_detail_visibility'] == 'Visible') selected @endif>Visible</option>
 													<option value="Hidden" @if($dpp['product_detail_visibility'] == 'Hidden') selected @endif>Hidden</option>
 												</select>
+												<input type="hidden" value="{{$dpp['product_detail_visibility']}}" class="product-visibility-value">
 											</td>
 											<td style="width:15%">
-												<select class="form-control" name="product_stock_status[]">
+												<select class="form-control product-stock" name="product_stock_status[]" id="product-stock-{{ $pro['product_code'] }}">
 													<option value="Available" @if($dpp['product_detail_stock_status'] == 'Available') selected @endif>Available</option>
 													<option value="Sold Out" @if($dpp['product_detail_stock_status'] == 'Sold Out') selected @endif>Sold Out</option>
 												</select>
+												<input type="hidden" value="{{$dpp['product_detail_stock_status']}}" class="product-stock-value">
 											</td>
 											<td style="width:15%">
 												<input type="text" value="{{ $dpp['product_detail_status'] }}" class="form-control mt-repeater-input-inline" disabled>
@@ -165,41 +218,59 @@ $configs    		= session('configs');
 									@endforeach
 
 									@if ($marker == 0)
-										<td style="width: 15%">
-											<select class="form-control" name="visible[]">
-												<option></option>
+										<td style="width: 20%">
+											<select class="form-control product-visibility" name="visible[]" id="product-visibility-{{ $pro['product_code'] }}">
+												<option>Default Visibilty Product</option>
 												<option value="Visible">Visible</option>
 												<option value="Hidden">Hidden</option>
 											</select>
+											<input type="hidden" value="Hidden" class="product-visibility-value">
 										</td>
 										<td style="width: 15%">
-											<select class="form-control" name="product_stock_status[]">
+											<select class="form-control product-stock" name="product_stock_status[]" id="product-stock-{{ $pro['product_code'] }}">
 												<option value="Available">Available</option>
 												<option value="Sold Out" selected>Sold Out</option>
 											</select>
+											<input type="hidden" value="Available" class="product-stock-value">
 										</td>
 										<td style="width: 15%">
 											<input type="text" value="" class="form-control mt-repeater-input-inline" disabled>
 										</td>
 									@endif
 								@else
-									<td style="width: 15%">
-										<select class="form-control" name="visible[]">
-											<option></option>
+									<td style="width: 20%">
+										<select class="form-control product-visibility" name="visible[]" id="product-visibility-{{ $pro['product_code'] }}">
+											<option>Default Visibilty Product</option>
 											<option value="Visible">Visible</option>
 											<option value="Hidden" selected>Hidden</option>
+											<input type="hidden" value="Hidden" class="product-visibility-value">
 										</select>
 									</td>
 									<td style="width: 15%">
-										<select class="form-control" name="product_stock_status[]">
+										<select class="form-control product-stock" name="product_stock_status[]" id="product-stock-{{ $pro['product_code'] }}">
 											<option value="Available">Available</option>
 											<option value="Sold Out" selected>Sold Out</option>
 										</select>
+										<input type="hidden" value="Available" class="product-stock-value">
 									</td>
 									<td style="width: 15%">
 										<input type="text" value="" class="form-control mt-repeater-input-inline" disabled>
 									</td>
 								@endif
+								<td>
+									<div style="width:40%; display:inline-block; vertical-align: text-top;">
+										<label class="mt-checkbox mt-checkbox-outline"> Same for all product
+											<input type="checkbox" name="sameall[]" class="same checkbox-outlet" data-check="ampas" id="sameall-{{ $pro['product_code'] }}"/>
+											<span></span>
+										</label>
+									</div>
+									<div style="width:40%; display:inline-block; vertical-align: text-top;">
+										<label class="mt-checkbox mt-checkbox-outline"> Same for all product on the list
+											<input type="checkbox" name="sameallonlist[]" class="same checkbox-outlet" id="sameallonlist-{{ $pro['product_code'] }}"/>
+											<span></span>
+										</label>
+									</div>
+								</td>
 							</tr>
 							<input type="hidden" name="id_product[]" value="{{ $pro['id_product'] }}">
 							<input type="hidden" name="id_outlet" value="{{ $key }}">
