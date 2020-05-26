@@ -902,7 +902,21 @@ class ProductController extends Controller
         }
 
         if ($post && (!isset($post['rule']) || !isset($post['operator'])) && !isset($post['clear'])) {
-            return $this->priceProcess($post);
+            if(isset($post['sameall']) && !empty($post['sameall'])){
+                $dataToUpdate = [
+                    'product_price'         => $post['price'][0],
+                    'id_outlet'             => $post['id_outlet'],
+                ];
+                $updatePrice = MyHelper::post('product/prices/all-product', $dataToUpdate);
+
+                if (isset($updatePrice['status']) && $updatePrice['status'] == 'success') {
+                    return redirect('product/price/'.$key)->withSuccess(['Success update price']);
+                } else {
+                    return back()->witherrors([$updatePrice['messages']]);
+                }
+            }else{
+                return $this->priceProcess($post);
+            }
         }
         $data['admin'] = 1;
         $outlets = MyHelper::post('outlet/be/list', ['filter' => 'different_price'])['result'] ?? [];
@@ -986,7 +1000,22 @@ class ProductController extends Controller
         }
 
         if ($post && (!isset($post['rule']) || !isset($post['operator'])) && !isset($post['clear'])) {
-            return $this->productOutletProcess($post);
+            if(isset($post['sameall']) && !empty($post['sameall'])){
+                $dataToUpdate = [
+                    'product_visibility'    => $post['visible'][0],
+                    'product_stock_status'  => $post['product_stock_status'][0],
+                    'id_outlet'             => $post['id_outlet']
+                ];
+                $updatePrice = MyHelper::post('product/outlet-detail/all-product', $dataToUpdate);
+
+                if (isset($updatePrice['status']) && $updatePrice['status'] == 'success') {
+                    return redirect('product/outlet-detail/'.$key)->withSuccess(['Success update price']);
+                } else {
+                    return back()->witherrors([$updatePrice['messages']]);
+                }
+            }else{
+                return $this->productOutletProcess($post);
+            }
         }
         $data['admin'] = 1;
         $outlet = MyHelper::post('outlet/be/list', $data);
