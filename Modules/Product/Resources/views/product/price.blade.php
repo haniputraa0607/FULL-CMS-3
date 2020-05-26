@@ -74,6 +74,40 @@ $configs    		= session('configs');
         $('#form-prices').submit(function(){
             $('.price').inputmask('remove');
         });
+
+        $(document).on('click', '.same', function() {
+            var price = $(this).parent().parent().parent().find('.product-price').val();
+            price = price.replace(".", "");
+
+            if ($('.checkbox-product-price').is(':checked')) {
+                var check = $('input[name="sameall[]"]:checked').length;
+                var count = $('.checkbox-product-price').prop('checked', false);
+                $(this).prop('checked', true);
+
+                if (check == 1) {
+                    var all_price = $('.product-price');
+                    var array_price = [];
+                    for (i = 0; i < all_price.length; i++) {
+                        array_price.push(all_price[i]['defaultValue']);
+                    }
+                    sessionStorage.setItem("product_price", array_price);
+                }
+
+               $('.product-price').val(price);
+
+            } else {
+
+                var item_price = sessionStorage.getItem("product_price");
+
+                var item_price = item_price.split(",");
+
+                $('.product-price').each(function(i, obj) {
+                    $(this).val(item_price[i]);
+                });
+
+                $(this).parent().parent().parent().find('.product-price').val(price);
+            }
+        });
     </script>
 
 @endsection
@@ -134,7 +168,8 @@ $configs    		= session('configs');
                             <tr>
                                 <td>@if(isset($pro['category'][0]['product_category_name'])) {{ $pro['category'][0]['product_category_name'] }} @else Uncategorized @endif</td>
                                 <td> {{ $pro['product_code'] }} - {{ $pro['product_name'] }} </td>
-                                <td style="width: 15%">
+                                <td style="width:40%;">
+                                    <div style="width:40%;">
                                     @if($key == 0)
                                         <?php
                                             $priceGlobal = 0;
@@ -142,7 +177,7 @@ $configs    		= session('configs');
                                                 $priceGlobal = $pro['global_price'][0]['product_global_price'];
                                             }
                                         ?>
-                                        <input type="text" name="price[]" value="{{(int)$priceGlobal}}" data-placeholder="input price" data-id="{{$pro['id_product']}}" class="form-control mt-repeater-input-inline price">
+                                        <input type="text" name="price[]" value="{{(int)$priceGlobal}}" data-placeholder="input price" data-id="{{$pro['id_product']}}" class="form-control mt-repeater-input-inline price product-price">
                                     @else
                                         <?php
                                             $price = 0;
@@ -153,8 +188,22 @@ $configs    		= session('configs');
                                                 }
                                             }
                                         ?>
-                                        <input type="text" name="price[]" value="{{(int)$price}}" data-placeholder="input price" data-id="{{$pro['id_product']}}" class="form-control mt-repeater-input-inline price">
+                                        <input type="text" name="price[]" value="{{(int)$price}}" data-placeholder="input price" data-id="{{$pro['id_product']}}" class="form-control mt-repeater-input-inline price product-price">
                                     @endif
+                                    </div>
+                                    <br>
+                                    <div style="width:40%; display:inline-block; vertical-align: text-top;">
+                                        <label class="mt-checkbox mt-checkbox-outline"> Same for all product
+                                            <input type="checkbox" name="sameall[]" class="same checkbox-product-price" data-check="ampas"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div style="width:40%; display:inline-block; vertical-align: text-top;">
+                                        <label class="mt-checkbox mt-checkbox-outline"> Same for all product on the list
+                                            <input type="checkbox" name="sameallonlist[]" class="same checkbox-product-price"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
                                 </td>
                             </tr>
                             <input type="hidden" name="id_product[]" value="{{ $pro['id_product'] }}">

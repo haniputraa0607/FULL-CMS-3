@@ -18,6 +18,7 @@
 	<link href="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
     <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 	
 	<style type="text/css">
 	    #sample_1_filter label, #sample_5_filter label, #sample_4_filter label, .pagination, .dataTables_filter label {
@@ -70,13 +71,16 @@
 	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 
 	<script>
     $(document).ready( function () {
         $('.select2-multiple').select2({
             placeholder : "Select",
             allowClear : true,
-            width: '100%'
+            width: '100%',
+            dropdownParent: $('.modal'),
+            dropdownParent: $('#addBadge')
         })
         $('.digit_mask').inputmask({
             removeMaskOnSubmit: true, 
@@ -425,9 +429,9 @@
         $('#editBadge').find("input[name='trx_total']").val(params.trx_total)
         $('#editBadge').find("input[name='product_total']").val(params.product_total)
         $('#editBadge').find("select[name='id_outlet']").val(params.id_outlet).trigger('change')
-        $('#editBadge').find("select[name='different_outlet']").val(params.different_outlet).trigger('change')
+        $('#editBadge').find("input[name='different_outlet']").val(params.different_outlet).trigger('change')
         $('#editBadge').find("select[name='id_province']").val(params.id_province).trigger('change')
-        $('#editBadge').find("select[name='different_province']").val(params.different_province).trigger('change')
+        $('#editBadge').find("input[name='different_province']").val(params.different_province).trigger('change')
         $('#editBadge').find("input[name='id_achievement_detail']").val(params.id_achievement_detail)
         $('.digit_mask').inputmask({
             removeMaskOnSubmit: true, 
@@ -440,7 +444,8 @@
         });
         $(".select2-multiple").select2({
             allowClear: true,
-            width: '100%'
+            width: '100%',
+            dropdownParent: $('#editBadge')
         });
     }
     function removeBadge(params, data) {
@@ -481,7 +486,7 @@
 	</ul>
 </div>
 @include('layouts.notifications')
-<div class="modal fade bs-modal-lg" id="addBadge" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+<div class="modal fade bs-modal-lg" id="addBadge" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg" style="width: 800px;">
         <form role="form" action="{{ url('achievement/create') }}" method="post" enctype="multipart/form-data" class="form-horizontal modal-content">
             <div class="modal-header">
@@ -695,7 +700,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<div class="modal fade bs-modal-lg" id="editBadge" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+<div class="modal fade bs-modal-lg" id="editBadge" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg" style="width: 700px;">
         <form role="form" action="{{ url('achievement/update/detail') }}" method="post" enctype="multipart/form-data" class="form-horizontal modal-content">
             <div class="modal-header">
@@ -1068,7 +1073,7 @@
                                                                 @endif
                                                                 @if (!is_null($item['different_outlet']))
                                                                     <div class="col-md-5 name">Outlet Different ?</div>
-                                                                    <div class="col-md-7 value">: Yes</div>
+                                                                    <div class="col-md-7 value">: {{$item['different_outlet']}} Outlet</div>
                                                                 @endif
                                                             </div>
                                                         @endif
@@ -1083,7 +1088,7 @@
                                                                 @endif
                                                                 @if (!is_null($item['different_province']))
                                                                     <div class="col-md-5 name">Province Different ?</div>
-                                                                    <div class="col-md-7 value">: Yes</div>
+                                                                    <div class="col-md-7 value">: {{$item['different_province']}} Provice</div>
                                                                 @endif
                                                             </div>
                                                         @endif
