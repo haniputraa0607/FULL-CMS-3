@@ -175,7 +175,7 @@ class OutletController extends Controller
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
-                $product = MyHelper::get('product/be/list/price/'.$outlet['result'][0]['id_outlet']);
+                $product = MyHelper::get('product/list/product-detail/'.$outlet['result'][0]['id_outlet']);
 
                 if (isset($product['status']) && $product['status'] == "success") {
                     $data['product']    = $product['result'];
@@ -1101,9 +1101,18 @@ class OutletController extends Controller
         }
 
         $data['textreplaces'] = [];
-        $data['data'] = MyHelper::post('autocrm/list',['autocrm_title'=>'Outlet App Request PIN'])['result']??[];
+        if($type == 'request_pin'){
+            $type = 'outlet-app-request-pin';
+            $view = 'outlet::response';
+        }else{
+            $data['title'] = 'Setting Forward Incomplete Outlet Data';
+            $data['submenu_active'] = 'outlet-incomplete-response';
+            $data['forwardOnly'] = true;
+            $view = 'users::response';
+        }
+        $data['data'] = MyHelper::post('autocrm/list',['autocrm_title'=>ucfirst(str_replace('-',' ',$type))])['result']??[];
         $data['custom'] = explode(';',$data['data']['custom_text_replace']);
-        return view('outlet::response',$data);
+        return view($view,$data);
     }
 
 

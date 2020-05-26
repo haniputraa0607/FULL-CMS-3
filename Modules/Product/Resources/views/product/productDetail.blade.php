@@ -6,7 +6,7 @@ $id_product = $product[0]['id_product'];
 
   	<div class="form-group" style="padding-left:20px">
 		<label class="bold" style="width:20%">Outlet</label>
-		<label class="bold" style="width:20%">Visible</label>
+		<label class="bold" style="width:25%">Visible</label>
 		<label class="bold" style="width:20%">Stock</label>
 		<label class="bold" style="width:10%">POS Status</label>
 	</div>
@@ -17,9 +17,9 @@ $id_product = $product[0]['id_product'];
 			@foreach($ou['product_detail'] as $keyDetail => $detail)
 				@if($detail['id_product'] == $id_product)
 					<?php $marker = 1;?>
-					<div style="width:20%; display:inline-block">
+					<div style="width:25%; display:inline-block">
 						<select class="form-control product-visibility" name="product_detail_visibility[]">
-							<option></option>
+							<option @if(empty($detail['product_detail_visibility'])) selected @endif>Default Visibilty Product</option>
 							<option value="Visible" @if($detail['product_detail_visibility'] == 'Visible') selected @endif>Visible</option>
 							<option value="Hidden" @if($detail['product_detail_visibility'] == 'Hidden') selected @endif>Hidden</option>
 						</select>
@@ -40,9 +40,9 @@ $id_product = $product[0]['id_product'];
 				@endif
 			@endforeach
 			@if($marker == 0)
-				<div style="width:20%; display:inline-block">
+				<div style="width:25%; display:inline-block">
 					<select class="form-control product-visibility" name="product_detail_visibility[]">
-						<option></option>
+						<option>Default Visibilty Product</option>
 						<option value="Visible">Visible</option>
 						<option value="Hidden">Hidden</option>
 					</select>

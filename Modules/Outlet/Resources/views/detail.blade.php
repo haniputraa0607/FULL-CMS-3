@@ -267,8 +267,8 @@
 
             @foreach($product as $key => $pro)
                 var option =  '<option class="option-visibility" data-id={{$pro["id_product"]}}/{{$outlet[0]["id_outlet"]}}>{{$pro["product_code"]}} - {{$pro["product_name"]}}</option>'
-                @if(isset($pro['all_prices'][0]["product_visibility"]))
-                    $('#visibleglobal-{{lcfirst($pro["all_prices"][0]["product_visibility"])}}').append(option)
+                @if(isset($pro['product_detail'][0]["product_detail_visibility"]) && $pro['product_detail'][0]["product_detail_visibility"])
+                    $('#visibleglobal-{{lcfirst($pro["product_detail"][0]["product_detail_visibility"])}}').append(option)
                 @else
                     $('#visibleglobal-{{lcfirst($pro["product_visibility"])}}').append(option)
                 @endif
