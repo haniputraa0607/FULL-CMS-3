@@ -1045,6 +1045,12 @@
 											<span class="title">[Response] Claim Paid Deals Success</span>
 										</a>
 									</li>
+									<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-point-deals-success') ? 'active open' : ''}}">
+										<a href="{{url('transaction/autoresponse/claim-point-deals-success')}}" class="nav-link ">
+											<i class="fa fa-mail-forward"></i>
+											<span class="title">[Response] Claim Point Deals Success</span>
+										</a>
+									</li>
 									<li class="nav-item {{($submenu_active == 'deals-autoresponse-redeem-deals-success') ? 'active open' : ''}}">
 										<a href="{{url('transaction/autoresponse/redeem-voucher-success')}}" class="nav-link ">
 											<i class="fa fa-mail-forward"></i>
