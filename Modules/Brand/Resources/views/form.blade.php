@@ -29,7 +29,7 @@
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['insert', ['table']],
                 ['insert', ['link', 'picture', 'video']],
-                ['misc', ['fullscreen', 'codeview', 'help']]
+                ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
             ],
             height: 120
         });
