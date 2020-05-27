@@ -96,7 +96,11 @@ $idUserFrenchisee = session('id_user_franchise');
             <tr>
                 <th scope="col" width="10%"> Recipient Number </th>
                 <th scope="col" width="30%"> Transaction Date </th>
-                <th scope="col" width="10%"> Nominal Transaction</th>
+                <th scope="col" width="10%"> Detail Transaction</th>
+                <th scope="col" width="10%"> Income Outlet</th>
+                @if(MyHelper::hasAccess([235], $grantedFeature))
+                    <th scope="col" width="10%"> Income Central</th>
+                @endif
                 <th scope="col" width="10%"> Detail Setting </th>
             </tr>
             </thead>
@@ -106,22 +110,41 @@ $idUserFrenchisee = session('id_user_franchise');
                     <tr>
                         <td>{{$val['transaction_receipt_number']}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
-                        <td>{{number_format($val['transaction_grandtotal'])}}</td>
+                        <td>
+                            Subtotal = {{number_format($val['transaction_subtotal'])}}<br>
+                            Grandtotal = {{number_format($val['transaction_grandtotal'])}}<br>
+                            Discount = {{number_format($val['transaction_discount'])}}<br>
+                            Gosend Price = {{number_format($val['transaction_shipment_go_send'])}}<br>
+                        </td>
+                        <td>{{number_format($val['income_outlet'])}}</td>
+                        <td>{{number_format($val['income_central'])}}</td>
                         <td>
                             <?php
                                 $mdr_type = '<br>';
                                 if($val['mdr_type'] == 'Percent'){
                                     $mdr_type = ' %<br>';
                                 }
-                                $mdr = $val['mdr'] + $val['mdr_central'];
 
-                                $html = '';
-                                $html .= 'Fee Outlet: '.$val['fee'].' %<br>';
-                                $html .= 'Fee Payment Gateway: '.$mdr.$mdr_type;
-                                $html .= 'Charged Point Central: '.$val['charged_point_central'].' %<br>';
-                                $html .= 'Charged Point Outlet: '.$val['charged_point_outlet'].' %<br>';
-                                $html .= 'Charged Promo Central: '.$val['charged_promo_central'].' %<br>';
-                                $html .= 'Charged Promo Outlet: '.$val['charged_promo_outlet'].' %<br>';
+
+                                if(MyHelper::hasAccess([235], $grantedFeature)){
+                                    $html = '';
+                                    $html .= 'Fee Outlet: '.$val['fee'].' %<br>';
+                                    $html .= 'Fee PG Outlet: '.$val['mdr'].$mdr_type;
+                                    $html .= 'Fee PG Central: '.$val['mdr_central'].$mdr_type;
+                                    $html .= 'Charged Point Central: '.$val['charged_point_central'].' %<br>';
+                                    $html .= 'Charged Point Outlet: '.$val['charged_point_outlet'].' %<br>';
+                                    $html .= 'Charged Promo Central: '.$val['charged_promo_central'].' %<br>';
+                                    $html .= 'Charged Promo Outlet: '.$val['charged_promo_outlet'].' %<br>';
+                                }else{
+                                    $mdr = $val['mdr'] + $val['mdr_central'];
+                                    $html = '';
+                                    $html .= 'Fee Outlet: '.$val['fee'].' %<br>';
+                                    $html .= 'Fee Payment Gateway: '.$mdr.$mdr_type;
+                                    $html .= 'Charged Point Central: '.$val['charged_point_central'].' %<br>';
+                                    $html .= 'Charged Point Outlet: '.$val['charged_point_outlet'].' %<br>';
+                                    $html .= 'Charged Promo Central: '.$val['charged_promo_central'].' %<br>';
+                                    $html .= 'Charged Promo Outlet: '.$val['charged_promo_outlet'].' %<br>';
+                                }
 
                                 echo $html;
                             ?>

@@ -804,9 +804,9 @@
 					 			 		<div>Click to:</div>
 										<div>{{ $click_to }}</div><br>
 										<div>Date Start:</div>
-										<div>{{ ($banner['banner_start']??false)?date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'-' }}</div><br>
+										<div>{{ ($banner['banner_start']??false)?date("d F Y H:i", strtotime($banner['banner_start'])):'-' }}</div><br>
 										<div>Date End:</div>
-					 			 		<div>{{ ($banner['banner_start']??false)?date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):'-' }}</div>
+					 			 		<div>{{ ($banner['banner_end']??false)?date("d F Y H:i", strtotime($banner['banner_end'])):'-' }}</div>
 					 			 	</div>
 					 			</div>
 					 			@endforeach

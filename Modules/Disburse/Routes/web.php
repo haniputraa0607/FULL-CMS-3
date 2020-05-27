@@ -60,6 +60,9 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('setting/fee-outlet-special/update', 'DisburseSettingController@settingFeeOutletSpecial');
         Route::any('setting/outlet-special', 'DisburseSettingController@settingSpecialOutlet');
         Route::any('setting/approver', 'DisburseSettingController@settingApprover');
+        Route::any('setting/export-list-bank', 'DisburseSettingController@exportListBank');
+        Route::any('setting/export-bank-account-outlet', 'DisburseSettingController@exportBankAccoutOutlet');
+        Route::post('setting/import-bank-account-outlet', 'DisburseSettingController@importBankAccoutOutlet');
 
         //Disburse
         Route::any('list/trx', 'DisburseController@listTrx');
