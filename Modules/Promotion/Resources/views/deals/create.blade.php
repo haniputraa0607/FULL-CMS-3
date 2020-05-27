@@ -139,7 +139,8 @@
                 height: 120,
                 toolbar: [
                     ['style', ['style']],
-                    ['style', ['bold', 'underline', 'clear']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['insert', ['table']],

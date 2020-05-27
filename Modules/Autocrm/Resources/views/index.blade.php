@@ -90,16 +90,17 @@
         $(document).ready(function() {
 			$.fn.modal.Constructor.prototype.enforceFocus = function() {};
 			$('.summernote').summernote({
-				placeholder: 'Product Description',
+				placeholder: 'Email Content',
 				tabsize: 2,
 				toolbar: [
-                  ['style', ['style']],
-                  ['style', ['bold', 'underline', 'clear']],
-                  ['color', ['color']],
-                  ['para', ['ul', 'ol', 'paragraph']],
-                  ['insert', ['table']],
-                  ['insert', ['link', 'picture', 'video']],
-                  ['misc', ['fullscreen', 'codeview', 'help']]
+                    ['style', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
 				height: 120
 			});

@@ -229,7 +229,17 @@
                 placeholder: 'News Content Long',
                 tabsize: 2,
                 height: 120,
-                fontNames: ['Open Sans'],
+                // fontNames: ['Open Sans'],
+                 toolbar: [
+                    ['style', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']]
+                ],
                 callbacks: {
                     onFocus: function() {
                         $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
