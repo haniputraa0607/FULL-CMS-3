@@ -27,10 +27,10 @@ class PromoSettingController extends Controller
             'submenu_active' => ''
         ];
 
-        $data['cashback'] = MyHelper::get('promo-setting/cashback')['result']??'';
-
         if (empty($post)) 
         {
+        	$data['cashback'] = MyHelper::get('promo-setting/cashback')['result']??'';
+
         	return view('setting::promo-setting.promo_cashback_setting', $data);
         }
         else
