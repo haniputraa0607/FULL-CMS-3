@@ -160,15 +160,16 @@
 	        placeholder: 'Success Page Content',
 	        tabsize: 2,
 	        height: 180,
-	        toolbar: [
-	          ['style', ['style']],
-	          ['style', ['bold', 'underline', 'clear']],
-	          ['color', ['color']],
-	          ['para', ['ul', 'ol', 'paragraph']],
-	          ['insert', ['table']],
-	          ['insert', ['link', 'picture', 'video']],
-	          ['misc', ['fullscreen', 'codeview', 'help']]
-	        ],
+			toolbar: [
+				['style', ['style']],
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['insert', ['table']],
+				['insert', ['link', 'picture', 'video']],
+				['misc', ['fullscreen', 'codeview', 'help']]
+			],
 	        callbacks: {
 	            onImageUpload: function(files){
 	                sendFile(files[0]);
@@ -1147,11 +1148,11 @@
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
 									</label>
 	                            </div>
-	                            <div class="col-md-4">
+	                            <!--<div class="col-md-4">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
-	                            </div>
+	                            </div>-->
                             </div>
 
                             <div class="col-md-12 click-to-type" style="margin-top: 10px;">
@@ -1259,11 +1260,11 @@
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
 									</label>
 	                            </div>
-	                            <div class="col-md-4">
+	                            <!--<div class="col-md-4">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
-	                            </div>
+	                            </div>-->
                             </div>
 
                             <div class="col-md-12 click-to-type" style="margin-top: 10px;">

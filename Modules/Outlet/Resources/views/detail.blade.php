@@ -367,16 +367,15 @@
             $('.summernote').summernote({
                 placeholder: 'Category Description',
                 tabsize: 2,
-                toolbar: [
+                 toolbar: [
                     ['style', ['style']],
-                    ['style', ['bold', 'underline', 'clear']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['insert', ['table']],
                     ['insert', ['link', 'picture', 'video']],
-                    ['misc', ['fullscreen', 'codeview', 'help']],
-                    ['fontsize', ['fontsize']],
-                    ['height', ['height']]
+                    ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
                 height: 120
             });

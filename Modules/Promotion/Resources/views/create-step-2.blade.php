@@ -64,6 +64,16 @@ $configs    		= session('configs');
 			placeholder: 'Content',
 			tabsize: 2,
 			height: 120,
+			toolbar: [
+				['style', ['style']],
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['insert', ['table']],
+				['insert', ['link', 'picture', 'video']],
+				['misc', ['fullscreen', 'codeview', 'help']]
+			],
         	fontNames: ['Open Sans'],
 			callbacks: {
 				onImageUpload: function(files){
@@ -199,8 +209,18 @@ $configs    		= session('configs');
 		$('.summernote').summernote({
 			placeholder: 'Deals Content Long',
 			tabsize: 2,
-        	fontNames: ['Open Sans'],
-			height: 120
+        	// fontNames: ['Open Sans'],
+			height: 120,
+			toolbar: [
+				['style', ['style']],
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['insert', ['table']],
+				['insert', ['link', 'picture', 'video']],
+				['misc', ['fullscreen', 'codeview', 'help']]
+			],
 		});
 	});
 

@@ -204,13 +204,12 @@
             token = '<?php echo csrf_token()?>';
 
             $('.summernote').summernote({
-                placeholder: 'News Content Long',
+                placeholder: 'Content',
                 tabsize: 2,
                 height: 120,
                 toolbar: [
                     ['style', ['style']],
                     ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
@@ -218,8 +217,6 @@
                     ['insert', ['link', 'picture', 'video']],
                     ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
-                fontNames: ['Product Sans'],
-                fontNamesIgnoreCheck: ['Product Sans'],
                 callbacks: {
                     onFocus: function() {
                         $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
