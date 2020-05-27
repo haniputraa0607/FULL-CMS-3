@@ -39,4 +39,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'report',
     // COMPARE REPORT
     Route::any('compare/', [ 'uses' => 'CompareReportController@index']);
     Route::post('compare/ajax', [ 'uses' => 'CompareReportController@ajaxCompareReport']);
+
+    // REPORT GOSEND
+    Route::any('gosend', [ 'uses' => 'ReportGosend@index']);
+    Route::any('gosend/export', [ 'uses' => 'ReportGosend@export']);
 });
