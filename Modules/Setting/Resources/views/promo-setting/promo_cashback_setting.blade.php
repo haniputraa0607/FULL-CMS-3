@@ -77,9 +77,22 @@ $grantedFeature     = session('granted_features');
 	            $('#voucher-offline-false').show();
 	        }
 	    });
+
+	    $('#subscription-checkbox').on('switchChange.bootstrapSwitch',function(){
+	        var state=$(this).bootstrapSwitch('state');
+	        if(state){
+	            $('#subscription-true').show();
+	            $('#subscription-false').hide();
+	        }else{
+	            $('#subscription-true').hide();
+	            $('#subscription-false').show();
+	        }
+	    });
+
 	    $('#promo-code-checkbox').trigger('switchChange.bootstrapSwitch');
 	    $('#voucher-online-checkbox').trigger('switchChange.bootstrapSwitch');
 	    $('#voucher-offline-checkbox').trigger('switchChange.bootstrapSwitch');
+	    $('#subscription-checkbox').trigger('switchChange.bootstrapSwitch');
     </script>
 
 @endsection
@@ -120,7 +133,7 @@ $grantedFeature     = session('granted_features');
 					<div class="form-group row">
 						<label class="col-md-3 control-label text-left" style="text-align: left;">Promo Code
 	                        <span class="required" aria-required="true"> * </span>
-	                        <i class="fa fa-question-circle tooltips" data-original-title="Status fitur referral" data-container="body"></i>
+	                        <i class="fa fa-question-circle tooltips" data-original-title="Setting cashback promo code" data-container="body"></i>
 	                    </label>
 	                    <div class="col-md-9">
 							<div class="form-group">
@@ -135,7 +148,7 @@ $grantedFeature     = session('granted_features');
 					<div class="form-group row">
 						<label class="col-md-3 control-label text-left" style="text-align: left;">Voucher Online
 	                        <span class="required" aria-required="true"> * </span>
-	                        <i class="fa fa-question-circle tooltips" data-original-title="Status fitur referral" data-container="body"></i>
+	                        <i class="fa fa-question-circle tooltips" data-original-title="Setting cashback voucher online" data-container="body"></i>
 	                    </label>
 	                    <div class="col-md-9">
 							<div class="form-group">
@@ -151,7 +164,7 @@ $grantedFeature     = session('granted_features');
 					<div class="form-group row">
 						<label class="col-md-3 control-label text-left" style="text-align: left;">Voucher Offline
 	                        <span class="required" aria-required="true"> * </span>
-	                        <i class="fa fa-question-circle tooltips" data-original-title="Status fitur referral" data-container="body"></i>
+	                        <i class="fa fa-question-circle tooltips" data-original-title="Setting cashback voucher offline" data-container="body"></i>
 	                    </label>
 	                    <div class="col-md-9">
 							<div class="form-group">
@@ -163,6 +176,20 @@ $grantedFeature     = session('granted_features');
 	                    </div>
 					</div>
 					@endif
+					<div class="form-group row">
+						<label class="col-md-3 control-label text-left" style="text-align: left;">Subscription
+	                        <span class="required" aria-required="true"> * </span>
+	                        <i class="fa fa-question-circle tooltips" data-original-title="Setting cashback Subscription" data-container="body"></i>
+	                    </label>
+	                    <div class="col-md-9">
+							<div class="form-group">
+	                    		<span style="margin-right: 5px;">:</span>
+	                            <input type="checkbox" id="subscription-checkbox" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" value="1" name="subscription_cashback" @if(old('subscription_cashback')=='1' || !empty($cashback['subscription get point'])) checked @endif>
+	                            <span class="help-block" id="subscription-true" style="margin-left: 12px;"> Customer <span class="text-success font-weight-bold">will get</span> cashback when making transactions using Subscription </span>
+	                            <span class="help-block" id="subscription-false" style="margin-left: 12px;"> Customer <span class="text-danger font-weight-bold">will not get</span> cashback when making transactions using Subscription </span>
+	                        </div>
+	                    </div>
+					</div>
 					<input type="hidden" name="update" value="1">
 					
 				</div>

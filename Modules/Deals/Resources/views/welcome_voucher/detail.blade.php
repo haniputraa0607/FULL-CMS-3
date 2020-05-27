@@ -273,7 +273,6 @@ $configs    		= session('configs');
                 toolbar: [
                     ['style', ['style']],
                     ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
@@ -281,8 +280,6 @@ $configs    		= session('configs');
                     ['insert', ['link', 'picture', 'video']],
                     ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
-                fontNames: ['Open Sans', 'Product Sans'],
-                fontNamesIgnoreCheck: ['Product Sans'],
                 callbacks: {
                     onInit: function(e) {
                       this.placeholder
