@@ -977,6 +977,14 @@
 				</ul>
 			</li>
 			@endif
+			@if(MyHelper::hasAccess([249], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'report-gosend') ? 'active open' : ''}}">
+					<a href="{{url('report/gosend')}}" class="nav-link nav-toggle">
+						<i class="fa fa-truck"></i>
+						<span class="title">Report GoSend</span>
+					</a>
+				</li>
+			@endif
 		@endif
 
 		@if(MyHelper::hasAccess([25], $configs) || MyHelper::hasAccess([26], $configs))
