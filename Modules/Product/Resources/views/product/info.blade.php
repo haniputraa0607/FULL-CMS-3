@@ -31,6 +31,17 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-md-3 text-right control-label">Promo Category <i class="fa fa-question-circle tooltips" data-original-title="Pilih Kategori Promo Produk" data-container="body"></i></label>
+            <div class="col-md-8">
+                <select name="id_product_promo_category[]" class="select2 form-control" data-placeholder="Select category" multiple>
+                    <option value=""></option>
+                    @foreach($promo_categories as $category)
+                    <option value="{{$category['id_product_promo_category']}}" @if(in_array($category['id_product_promo_category'],$product[0]['product_promo_categories'])) selected @endif>{{$category['product_promo_category_name']}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-md-3 control-label">Name <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Nama Produk" data-container="body"></i>
             </label>
@@ -47,6 +58,16 @@
             <div class="col-md-8">
                 <div class="input-icon right">
                     <input type="text" class="form-control" name="product_code" value="{{ $syu['product_code'] }}" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Global Price <span class="required" aria-required="true"> * </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Global Price Product" data-container="body"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="input-icon right">
+                    <input type="text" class="form-control price" name="product_global_price" value="@if(isset($syu['global_price'][0]['product_global_price'])) {{number_format($syu['global_price'][0]['product_global_price'])}} @endif" required>
                 </div>
             </div>
         </div>

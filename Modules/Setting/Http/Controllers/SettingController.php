@@ -71,6 +71,12 @@ class SettingController extends Controller
         return parent::redirect($result, 'Application Top Navigation Text has been updated.');
     }
 
+    public function userInboxSave(Request $request){
+        $post = $request->except('_token');
+        $result = MyHelper::post('setting/update2', ['update'=>['inbox_max_days' => ['value',$post['inbox_max_days']]]]);
+        return parent::redirect($result, 'User Inbox setting has been updated.','setting/home#user_inbox');
+    }
+
     public function settingList($key)
     {
         $data = [];
@@ -146,6 +152,14 @@ class SettingController extends Controller
             $sub = 'default-outlet';
             $active = 'outlet';
             $subTitle = 'Default Outlet';
+            $colInput = 4;
+            $colLabel = 3;
+        } elseif ($key == 'credit_card_payment_gateway') {
+            $sub = 'credit_card_payment_gateway';
+            $active = 'order';
+            $subTitle = 'Credit Card Payment Gateway';
+            $label = 'Payment Gateway';
+            $span = 'credit_card_payment_gateway';
             $colInput = 4;
             $colLabel = 3;
         }
@@ -626,6 +640,18 @@ class SettingController extends Controller
         else
             $data['featured_deals'] = [];
 
+        // featured subscription
+        $request = MyHelper::get('setting/featured_subscription/list');
+        if(isset($request['result']))
+            $data['featured_subscriptions'] = $request['result'];
+        else
+            $data['featured_subscriptions'] = [];
+
+        // subscription
+        $sp=['select' => ['id_subscription', 'subscription_title']];
+        $request = MyHelper::post('subscription/be/list-complete',$sp);
+        $data['subscriptions'] = $request['result']??[];
+
         // deals
         $dp=['deals_type'=>'Deals','forSelect2'=>true];
         $request = MyHelper::post('deals/be/list',$dp);
@@ -661,6 +687,7 @@ class SettingController extends Controller
         $data['app_logo'] = parent::getData(MyHelper::get('setting/app_logo'));
         $data['app_sidebar'] = parent::getData(MyHelper::get('setting/app_sidebar'));
         $data['app_navbar'] = parent::getData(MyHelper::get('setting/app_navbar'));
+        $data['inbox_max_days'] = parent::getData(MyHelper::post('setting',['key'=>'inbox_max_days']))['value']??30;
 		return view('setting::home', $data);
 	}
 
@@ -1097,7 +1124,7 @@ class SettingController extends Controller
             // update complete profile
             $result = MyHelper::post('setting/be/complete-profile', $post);
 
-            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/be/complete-profile');
+            return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/complete-profile');
         }else{
             $data = [
                 'title'         => 'Complete Profile Setting',
@@ -1251,4 +1278,78 @@ class SettingController extends Controller
             return redirect('setting/phone')->withErrors([$updateSetting['message']]);
         }
     }
+
+    function maintenanceMode(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'   		=> 'Maintenance Mode Setting',
+            'menu_active'    => 'maintenance-mode',
+            'submenu_active' => 'maintenance-mode'
+        ];
+        if($post){
+            if(isset($post['image']) && $post['image'] !== null){
+                $post['image']= MyHelper::encodeImage($post['image']);
+            }
+            $updateMaintenanceMode = MyHelper::post('setting/maintenance-mode/update', $post);
+            if(($updateMaintenanceMode['status']??'')=='success'){
+                return redirect('setting/maintenance-mode')->with('success',['Success update maintenance']);
+            }else{
+                return redirect('setting/maintenance-mode')->withErrors([$updateMaintenanceMode['message']]);
+            }
+        }else{
+            $maintenanceMode = MyHelper::get('setting/maintenance-mode');
+            if(isset($maintenanceMode['status']) &&  $maintenanceMode['status']=='success'){
+                $data['status'] = $maintenanceMode['result']['status'];
+                $data['message'] = $maintenanceMode['result']['message'];
+                $data['image'] = $maintenanceMode['result']['image'];
+            }else{
+                $data['status'] = 0;
+                $data['message'] = '';
+                $data['image'] = '';
+            }
+        }
+        return view('setting::maintenance-mode', $data);
+    }
+
+    /*========================= featured subscription =========================*/
+
+    public function createFeaturedSubscription(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $result = MyHelper::post('setting/featured_subscription/create', $post);
+        return parent::redirect($result, 'New featured subscription has been created.', 'setting/home#featured_subscription');
+    }
+
+    public function updateFeaturedSubscription(Request $request)
+    {
+        $post = $request->except('_token');
+        $validatedData = $request->validate([
+            'id_featured_subscription'    => 'required'
+        ]);
+        $result = MyHelper::post('setting/featured_subscription/update', $post);
+        return parent::redirect($result, 'Featured Subscription has been updated.', 'setting/home#featured_subscription',[],true);
+    }
+
+    public function reorderFeaturedSubscription(Request $request)
+    {
+        $post = $request->except("_token");
+        // dd($post['id_featured_subscription']);
+
+        $result = MyHelper::post('setting/featured_subscription/reorder', $post);
+
+        return parent::redirect($result, 'Featured Subscription has been sorted.', 'setting/home#featured_subscription');
+    }
+
+    // delete featured_subscription
+    public function deleteFeaturedSubscription($id_featured_subscription)
+    {
+        $post['id_featured_subscription'] = $id_featured_subscription;
+
+        $result = MyHelper::post('setting/featured_subscription/delete', $post);
+
+        return parent::redirect($result, 'Featured Subscription has been deleted.', 'setting/home#featured_subscription');
+    }
+
+    /*========================= end of featured subscription =========================*/
 }

@@ -171,9 +171,11 @@ $configs    		= session('configs');
                     <li>
                         <a data-toggle="tab" href="#tab_3-3"><i class="fa fa-database"></i> Import Outlet</a>
                     </li>
+                    @if(MyHelper::hasAccess([95], $configs))
                     <li>
                         <a data-toggle="tab" href="#tab_4-4"><i class="fa fa-database"></i> Import Brand Outlet </a>
                     </li>
+                    @endif
                 </ul>
             </div>
             <div class="col-md-9">
@@ -209,6 +211,7 @@ $configs    		= session('configs');
                                                                     <span class="check"></span>
                                                                     <span class="box"></span> All </label>
                                                             </div>
+                                                            @if(MyHelper::hasAccess([95], $configs))
                                                             <div class="md-radio">
                                                                 <input type="radio" id="radio_single" name="outlet_type" class="md-radiobtn" value="single" required @if(old('outlet_type')=='single') checked @endif>
                                                                 <label for="radio_single">
@@ -223,6 +226,7 @@ $configs    		= session('configs');
                                                                     <span class="check"></span>
                                                                     <span class="box"></span> Combo </label>
                                                             </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>

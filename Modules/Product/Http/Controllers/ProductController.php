@@ -11,9 +11,9 @@ use App\Lib\MyHelper;
 use Excel;
 use Session;
 
-use App\Exports\ArrayExport;
+use App\Exports\ProductExport;
 use App\Exports\MultisheetExport;
-use App\Imports\ExcelImport;
+use App\Imports\ProductImport;
 use App\Imports\FirstSheetOnlyImport;
 
 class ProductController extends Controller
@@ -114,20 +114,267 @@ class ProductController extends Controller
 
 	}
 
-    public function importProduct() {
+    public function importProduct($type) {
         $data = [
             'title'          => 'Product',
             'sub_title'      => 'Import Product',
             'menu_active'    => 'product',
             'submenu_active' => 'product-import',
+            'type'           => $type
         ];
+        switch ($type) {
+            case 'global':
+                $data['sub_title'] = 'Import Product Global';
+                $data['submenu_active'] = 'product-import-global';
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
 
-        return view('product::product.import', $data);
+            case 'detail':
+                $data['sub_title'] = 'Import Detail Product';
+                $data['submenu_active'] = 'product-import-detail';
+                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
+                if(!$products){
+                    return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
+                }
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
+
+            case 'price':
+                $data['sub_title'] = 'Import Product Price';
+                $data['submenu_active'] = 'product-import-price';
+                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
+                if(!$products){
+                    return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
+                }
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
+
+            case 'modifier-price':
+                $data['sub_title'] = 'Import Product Modifier Price';
+                $data['menu_active'] = 'product-modifier';
+                $data['submenu_active'] = 'product-modifier-import-price';
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
+
+            case 'modifier':
+                $data['sub_title'] = 'Import Product Modifier';
+                $data['menu_active'] = 'product-modifier';
+                $data['submenu_active'] = 'product-modifier-import-global';
+                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                break;
+
+            default:
+                return abort(404);
+                break;
+        }
+        return view('product::product.import.detail', $data);
     }
 
-    public function example()
-    {
-        $listProduct = MyHelper::get('product/be/list');
+    /**
+     * Export product
+     */
+    public function export(Request $request,$type) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('product/export',['type'=>$type]+$post)['result']??[];
+        if(!$data){
+            return back()->withErrors(['Something went wrong']);
+        }
+        $tab_title = 'List Products';
+        switch ($type) {
+            case 'global':
+                $tab_title = 'List Products';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'product_code' => '001',
+                            'product_name' => 'Product 1',
+                            'product_description' => 'Example product 1'
+                        ],
+                        [
+                            'product_code' => '002',
+                            'product_name' => 'Product 2',
+                            'product_description' => 'Example product 2'
+                        ],
+                        [
+                            'product_code' => '003',
+                            'product_name' => 'Product 3',
+                            'product_description' => 'Example product 3'
+                        ],
+                    ];
+                }
+                break;
+
+            case 'detail':
+                $tab_title = 'Product Detail';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'product_category_name' => 'Snacks',
+                            'position' => '1',
+                            'product_code' => '001',
+                            'product_name' => 'Product 1',
+                            'product_description' => 'Example product 1',
+                            'product_visibility' => 'Visible'
+                        ],
+                        [
+                            'product_category_name' => 'Snacks',
+                            'position' => '2',
+                            'product_code' => '002',
+                            'product_name' => 'Product 2',
+                            'product_description' => 'Example product 2',
+                            'product_visibility' => 'Hidden'
+                        ],
+                        [
+                            'product_category_name' => 'Drinks',
+                            'position' => '1',
+                            'product_code' => '003',
+                            'product_name' => 'Product 3',
+                            'product_description' => 'Example product 3',
+                            'product_visibility' => 'Visible'
+                        ],
+                    ];
+                }
+                break;
+
+            case 'price':
+                $tab_title = 'Product Price';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'product_code' => '001',
+                            'product_name' => 'Product 1',
+                            'product_description' => 'Example product 1',
+                            'global_price' => 10000,
+                            'price_PP001' => 15000,
+                            'price_BL012' =>13500
+                        ],
+                        [
+                            'product_code' => '002',
+                            'product_name' => 'Product 2',
+                            'product_description' => 'Example product 2',
+                            'global_price' => 20000,
+                            'price_PP001' => 30000,
+                            'price_BL012' =>25000
+                        ],
+                        [
+                            'product_code' => '003',
+                            'product_name' => 'Product 3',
+                            'product_description' => 'Example product 3',
+                            'global_price' => 12000,
+                            'price_PP001' => 18000,
+                            'price_BL012' =>15000
+                        ],
+                    ];
+                }
+                break;
+
+            case 'modifier-price':
+                $tab_title = 'Product Modifier Price';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'type' => 'type1',
+                            'code' => 'mod1',
+                            'name' => 'Example Modifier 1',
+                            'global_price' => 1000,
+                            'price_PP001' => 1500,
+                            'price_BL012' =>1350
+                        ],
+                        [
+                            'type' => 'type1',
+                            'code' => 'mod2',
+                            'name' => 'Example Modifier 2',
+                            'global_price' => 1400,
+                            'price_PP001' => 1500,
+                            'price_BL012' =>1600
+                        ],
+                        [
+                            'type' => 'type2',
+                            'code' => 'mod1',
+                            'name' => 'Example Modifier 3',
+                            'global_price' => 1200,
+                            'price_PP001' => 1500,
+                            'price_BL012' =>1500
+                        ],
+                    ];
+                }
+                break;
+
+            case 'modifier':
+                $tab_title = 'Product Modifier';
+                if(!$data['products']){
+                    $data['products'] = [
+                        [
+                            'type' => 'type1',
+                            'code' => 'mod1',
+                            'name' => 'Example Modifier 1'
+                        ],
+                        [
+                            'type' => 'type1',
+                            'code' => 'mod2',
+                            'name' => 'Example Modifier 2'
+                        ],
+                        [
+                            'type' => 'type2',
+                            'code' => 'mod1',
+                            'name' => 'Example Modifier 3'
+                        ],
+                    ];
+                }
+                break;
+
+            default:
+                # code...
+                break;
+        }
+        return Excel::download(new ProductExport($data['products'],$data['brand'],$tab_title),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
+    }
+
+    /**
+     * Import product
+     */
+    public function import(Request $request,$type) {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $excel = \Excel::toArray(new ProductImport(),$request->file('import_file'))[0]??[];
+            $data = [];
+            $head = [];
+            foreach ($excel as $key => $value) {
+                if($key === 0 ){
+                    $data['code_brand'] = $value[1];
+                }elseif($key == 2){
+                    $head = $value;
+                }elseif($key !== 1){
+                    $data['products'][] = array_combine($head, $value);
+                }
+            }
+            if(!empty($data)){
+                $code_brand = '';
+                $import = MyHelper::post('product/import', [
+                    'id_brand' => $post['id_brand'],
+                    'type' => $type,
+                    'data' => $data
+                ]);
+                return $import;
+            }else{
+                return [
+                    'status'=>'fail',
+                    'messages'=>['File empty']
+                ];
+            }
+        }
+
+        return [
+            'status'=>'fail',
+            'messages'=>['Something went wrong']
+        ];
+    }
+
+    public function example(Request $request) {
+        $post = $request->except('_token');
+        $listProduct = MyHelper::get('product/export',['type'=>$type]+$post);
         $listOutlet = MyHelper::post('outlet/be/list', ['admin' => 1, 'type' => 'export']);
         $dataPrice = [];
 
@@ -327,8 +574,8 @@ class ProductController extends Controller
             'submenu_active' => 'product-image',
             'child_active'   => 'product-image-add',
         ];
-        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1, 'image' => 'null']);
-        
+        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1]);
+
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
@@ -354,7 +601,7 @@ class ProductController extends Controller
             'child_active'   => 'product-image-list',
         ];
         $product = MyHelper::post('product/be/list/image', ['admin_list' => 1]);
-        
+
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
@@ -366,7 +613,7 @@ class ProductController extends Controller
 
     function overrideImage(Request $request) {
         $post = $request->except('_token');
-        
+
         if (isset($post['state'])) {
             if ($post['state'] == 'true') {
                 $status = 0;
@@ -381,7 +628,7 @@ class ProductController extends Controller
         } else {
             $setting = MyHelper::post('product/be/imageOverride', ['admin_list' => 1]);
         }
-        
+
         return $setting;
     }
 
@@ -431,7 +678,8 @@ class ProductController extends Controller
             }
 
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-
+            $data['promo_categories'] = MyHelper::get('product/promo-category')['result']??[];
+            $data['product'][0]['product_promo_categories'] = array_column($data['product'][0]['product_promo_categories'],'id_product_promo_category');
             $nextId = MyHelper::get('product/next/'.$data['product'][0]['id_product']);
             if (isset($nextId['result']['product_code'])) {
                 $data['next_id'] = $nextId['result']['product_code'];
@@ -480,13 +728,23 @@ class ProductController extends Controller
             }
 
             /**
-             * jika price
+             * jika outlet setting
              */
-			if (isset($post['product_visibility'])) {
-				$save = MyHelper::post('product/price/update', $post);
+			if (isset($post['product_detail_visibility'])) {
+				$save = MyHelper::post('product/detail/update', $post);
 				// print_r($save);exit;
-                return parent::redirect($save, 'Product price & visibility setting has been updated.', 'product/detail/'.$code.'#price');
+                return parent::redirect($save, 'Visibility setting has been updated.', 'product/detail/'.$code.'#outletsetting');
 			}
+
+            /**
+             * if price setting
+             */
+
+            if (isset($post['product_price'])) {
+                $save = MyHelper::post('product/detail/update/price', $post);
+                // print_r($save);exit;
+                return parent::redirect($save, 'Product price setting has been updated.', 'product/detail/'.$code.'#outletpricesetting');
+            }
 
 			/**
              * jika diskon
@@ -618,35 +876,54 @@ class ProductController extends Controller
             'sub_title'      => 'Outlet Product Price',
             'menu_active'    => 'product-price',
             'submenu_active' => 'product-price',
+            'filter_title'   => 'Filter Product Price',
+            'product_setting_type' => 'product_price'
         ];
 
         $post = $request->except('_token');
+        if(isset($post['clear'])){
+            session::forget('product_price_filter');
+        }
+
+        if (session('product_price_filter')) {
+            $filter             = session('product_price_filter');
+            $data['rule']     = array_map('array_values', $filter['rule']);
+            $data['operator'] = $filter['operator'];
+        } else {
+            if((isset($post['rule']) || isset($post['operator']) )){
+                session(['product_price_filter' => $post]);
+                $data['rule']     = array_map('array_values', $post['rule']);
+                $data['operator'] = $post['operator'];
+            }
+        }
         if(isset($post['page'])){
             $page = $post['page'];
             unset($post['page']);
         }
 
-        if(array_key_exists('product_name', $post)){
-            if($post['product_name'] != NULL){
-                $data['product_name'] = $post['product_name'];
-                Session::put('search_product_name',  $data['product_name']);
+        if ($post && (!isset($post['rule']) || !isset($post['operator'])) && !isset($post['clear'])) {
+            if(isset($post['sameall']) && !empty($post['sameall'])){
+                $dataToUpdate = [
+                    'product_price'         => $post['price'][0],
+                    'id_outlet'             => $post['id_outlet'],
+                ];
+                $updatePrice = MyHelper::post('product/prices/all-product', $dataToUpdate);
+
+                if (isset($updatePrice['status']) && $updatePrice['status'] == 'success') {
+                    return redirect('product/price/'.$key)->withSuccess(['Success update price']);
+                } else {
+                    return back()->witherrors([$updatePrice['messages']]);
+                }
             }else{
-                Session::forget('search_product_name');
+                return $this->priceProcess($post);
             }
         }
-        unset($post['product_name']);
-
-        if ($post) {
-            return $this->priceProcess($post);
-        }
         $data['admin'] = 1;
-        $outlet = MyHelper::post('outlet/be/list', $data);
-        if (isset($outlet['status']) && $outlet['status'] == 'success') {
-            $data['outlet'] = $outlet['result'];
-        } elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
-            return back()->witherrors([$outlet['messages']]);
-        } else {
-            return back()->witherrors(['Product Not Found']);
+        $outlets = MyHelper::post('outlet/be/list', ['filter' => 'different_price'])['result'] ?? [];
+        if (!$outlets) {
+            $data['outlets'] = [];
+        }else{
+            $data['outlets'] = $outlets;
         }
 
         $data['pagination'] = true;
@@ -663,6 +940,7 @@ class ProductController extends Controller
         }
         if (isset($product['status']) && $product['status'] == 'success') {
             $data['product'] = $product['result']['data'];
+            $data['total'] = $product['result']['total'];
             $data['paginator'] = new LengthAwarePaginator($product['result']['data'], $product['result']['total'], $product['result']['per_page'], $product['result']['current_page'], ['path' => url()->current()]);
         } elseif (isset($product['status']) && $product['status'] == 'fail') {
             return back()->witherrors([$product['messages']]);
@@ -673,7 +951,7 @@ class ProductController extends Controller
         if (!is_null($key)) {
             $data['key'] = $key;
         } else {
-            $data['key'] = $data['outlet'][0]['id_outlet'];
+            $data['key'] = $data['outlets'][0]['id_outlet']??'';
         }
 
         return view('product::product.price', $data);
@@ -688,13 +966,119 @@ class ProductController extends Controller
                 $data = [
                     'id_product'            => $post['id_product'][$key],
                     'product_price'         => $value,
-                    'product_price_base'    => $post['price_base'][$key],
-                    'product_price_tax'     => $post['price_tax'][$key],
+                    'id_outlet'             => $post['id_outlet'],
+                ];
+                $save = MyHelper::post('product/prices', $data);
+                if (isset($save['status']) && $save['status'] != "success") {
+                    return back()->witherrors(['Product price failed to update']);
+                }
+            }
+        }
+
+        return back()->with('success', ['Product price has been updated.']);
+    }
+
+    public function productOutletDetail(Request $request, $key = null)
+    {
+        $data = [
+            'title'          => 'Order',
+            'sub_title'      => 'Outlet Product Detail',
+            'menu_active'    => 'product-detail',
+            'submenu_active' => 'product-detail',
+            'filter_title'   => 'Filter Product Detail',
+            'product_setting_type' => 'outlet_product_detail'
+        ];
+
+        $post = $request->except('_token');
+        if(isset($post['clear'])){
+            session::forget('product_detail_filter');
+        }
+
+        if(isset($post['page'])){
+            $page = $post['page'];
+            unset($post['page']);
+        }
+
+        if ($post && (!isset($post['rule']) || !isset($post['operator'])) && !isset($post['clear'])) {
+            if(isset($post['sameall']) && !empty($post['sameall'])){
+                $dataToUpdate = [
+                    'product_visibility'    => $post['visible'][0],
+                    'product_stock_status'  => $post['product_stock_status'][0],
+                    'id_outlet'             => $post['id_outlet']
+                ];
+                $updatePrice = MyHelper::post('product/outlet-detail/all-product', $dataToUpdate);
+
+                if (isset($updatePrice['status']) && $updatePrice['status'] == 'success') {
+                    return redirect('product/outlet-detail/'.$key)->withSuccess(['Success update price']);
+                } else {
+                    return back()->witherrors([$updatePrice['messages']]);
+                }
+            }else{
+                return $this->productOutletProcess($post);
+            }
+        }
+        $data['admin'] = 1;
+        $outlet = MyHelper::post('outlet/be/list', $data);
+
+        if (isset($outlet['status']) && $outlet['status'] == 'success') {
+            $data['outlets'] = $outlet['result'];
+        } elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
+            return back()->witherrors([$outlet['messages']]);
+        } else {
+            return back()->witherrors(['Product Not Found']);
+        }
+
+        $data['pagination'] = true;
+        $data['orderBy'] = 'product_name';
+
+        if (session('product_detail_filter')) {
+            $filter             = session('product_detail_filter');
+            $data['rule']     = array_map('array_values', $filter['rule']);
+            $data['operator'] = $filter['operator'];
+        } else {
+            if((isset($post['rule']) || isset($post['operator']) )){
+                session(['product_detail_filter' => $post]);
+                $data['rule']     = array_map('array_values', $post['rule']);
+                $data['operator'] = $post['operator'];
+            }
+        }
+
+        if(isset($page)){
+            $product = MyHelper::post('product/be/list?page='.$page, $data);
+        }else{
+            $product = MyHelper::post('product/be/list', $data);
+        }
+        if (isset($product['status']) && $product['status'] == 'success') {
+            $data['product'] = $product['result']['data'];
+            $data['total'] = $product['result']['total'];
+            $data['paginator'] = new LengthAwarePaginator($product['result']['data'], $product['result']['total'], $product['result']['per_page'], $product['result']['current_page'], ['path' => url()->current()]);
+        } elseif (isset($product['status']) && $product['status'] == 'fail') {
+            return back()->witherrors([$product['messages']]);
+        } else {
+            return back()->witherrors(['Product Not Found']);
+        }
+
+        if (!is_null($key)) {
+            $data['key'] = $key;
+        } else {
+            $data['key'] = $data['outlets'][0]['id_outlet'];
+        }
+
+        return view('product::product.outlet-product-detail', $data);
+    }
+
+
+    function productOutletProcess($post)
+    {
+        if (!empty($post['visible'])) {
+            foreach ($post['visible'] as $key => $value) {
+                $data = [
+                    'id_product'            => $post['id_product'][$key],
                     'product_visibility'    => $post['visible'][$key],
                     'product_stock_status'  => $post['product_stock_status'][$key],
                     'id_outlet'             => $post['id_outlet'],
                 ];
-                $save = MyHelper::post('product/prices', $data);
+                $save = MyHelper::post('product/outlet-detail', $data);
                 if (isset($save['status']) && $save['status'] != "success") {
                     return back()->witherrors(['Product price failed to update']);
                 }
@@ -974,6 +1358,13 @@ class ProductController extends Controller
             }
         }
 		return response()->json($data);
+    }
+
+    public function ajaxProductBrand(Request $request)
+    {
+    	$post=$request->except('_token');
+        $product=MyHelper::post('product/ajax-product-brand', $post);
+        return $product;
     }
 
 }

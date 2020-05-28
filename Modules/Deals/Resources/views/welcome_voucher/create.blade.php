@@ -1,5 +1,8 @@
 @extends('layouts.main')
-
+<?php
+use App\Lib\MyHelper;
+$configs    		= session('configs');
+?>
 @section('page-style')
 
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
@@ -163,16 +166,13 @@
                 toolbar: [
                     ['style', ['style']],
                     ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['insert', ['table']],
                     ['insert', ['link', 'picture', 'video']],
-                    ['misc', ['fullscreen', 'codeview', 'help']]
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
                 ],
-                fontNames: ['Open Sans', 'Product Sans'],
-                fontNamesIgnoreCheck: ['Product Sans'],
                 callbacks: {
                     onInit: function(e) {
                       this.placeholder
@@ -237,6 +237,7 @@
                     }
                 };
             });
+            @if(MyHelper::hasAccess([95], $configs))
             $('select[name="id_brand"]').on('change',function(){
                 var id_brand=$('select[name="id_brand"]').val();
                 $.ajax({
@@ -270,6 +271,7 @@
                 });
             });
             $('select[name="id_brand"]').change();
+            @endif
         });
     </script>
 @endsection
@@ -345,7 +347,7 @@
                     </div>
                     --}}
                     @endif
-
+                    @if(MyHelper::hasAccess([95], $configs))
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -367,6 +369,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -440,6 +443,40 @@
                             <input type="text" class="form-control dealsPromoTypeValuePromo" name="deals_promo_id_promoid" value="{{ old('deals_promo_id_promoid') }}" placeholder="Input Promo ID"  @if (old('deals_promo_id_type') == "promoid") style="display: block;" @else style="display: none;" @endif>
 
                             <input type="text" class="form-control dealsPromoTypeValuePrice price" name="deals_promo_id_nominal" value="{{ old('deals_promo_id_nominal') }}" placeholder="Input nominal" @if (old('deals_promo_id_type') == "nominal") style="display: block;" @else style="display: none;" @endif>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                                Charged Central
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Jumlah percent yang akan di bebankan ke pusat" placeholder="Charged Central" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="charged_central"  placeholder="Charged Central" required value="{{ old('charged_central') }}"><span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                                Charged Outlet
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Jumlah percent yang akan di bebankan ke outlet" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="charged_outlet"  placeholder="Charged Outlet" required value="{{ old('charged_outlet') }}"><span class="input-group-addon">%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -535,19 +572,41 @@
                     </div>
 
 
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Outlet Available
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
-                            </label>
+                    @if(MyHelper::hasAccess([95], $configs))
+                        <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Outlet Available
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet',[]))}}">
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet',[]))}}">
-                            </select>
+                    @else
+                        <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Outlet Available
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet',[]))}}">
+                                    @if(!empty($outlets))
+                                        <option value="all">All Outlets</option>
+                                        @foreach($outlets as $row)
+                                            <option value="{{$row['id_outlet']}}">{{$row['outlet_code']}} - {{$row['outlet_name']}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <!-- IDENTIFIER DEALS OR HIDDEN -->
                     @include('deals::welcome_voucher.welcome_voucher_form')

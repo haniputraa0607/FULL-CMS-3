@@ -3,7 +3,7 @@
 use App\Lib\MyHelper;
 $configs = session('configs');
 ?>
-@extends('layouts.main')
+@extends('layouts.main-closed')
 
 @section('page-style')
 
@@ -92,7 +92,7 @@ $configs = session('configs');
 
     <script type="text/javascript">        
         var oldOutlet=[];
-        function redrawOutlets(list,selected,convertAll){
+        function redrawOutlets(list,selected,convertAll, all){
             var html="";
             if(list.length){
                 html+="<option value=\"all\">All Outlets</option>";
@@ -102,11 +102,29 @@ $configs = session('configs');
             });
             $('select[name="id_outlet[]"]').html(html);
             $('select[name="id_outlet[]"]').val(selected);
-            if(convertAll&&$('select[name="id_outlet[]"]').val().length==list.length){
+            if( all == 1 || ( convertAll && $('select[name="id_outlet[]"]').val() != null && $('select[name="id_outlet[]"]').val().length==list.length ) ){
                 $('select[name="id_outlet[]"]').val(['all']);
             }
             oldOutlet=list;
         }
+
+        var oldProduct=[];
+        function redrawProducts(list,selected,convertAll,all){
+            var html="";
+            if(list.length){
+                html+="<option value=\"all\">All Products</option>";
+            }
+            list.forEach(function(product){
+                html+="<option value=\""+product.id_product+"\">"+product.product_code+" - "+product.product_name+"</option>";
+            });
+            $('select[name="id_product[]"]').html(html);
+            $('select[name="id_product[]"]').val(selected);
+            if( all == 1 || ( convertAll && $('select[name="id_product[]"]').val() != null && $('select[name="id_product[]"]').val().length==list.length ) ){
+                $('select[name="id_product[]"]').val(['all']);
+            }
+            oldProduct=list;
+        }
+
         $(document).ready(function() {
 
             var _URL = window.URL || window.webkitURL;
@@ -122,19 +140,18 @@ $configs = session('configs');
             });
             token = '<?php echo csrf_token();?>';
 
-            /* PRICES */
-            $('.prices').click(function() {
-                var nilai = $(this).val();
-
-                if (nilai != "free") {
+            /* SELECT PRICES */
+            $('select[name=prices_by]').change(function() {
+                price = $('select[name=prices_by] option:selected').val();
+                if (price != "free") {
                     $('#prices').show();
 
                     $('.payment').hide();
 
-                    $('#'+nilai).show();
-                    $('.'+nilai).prop('required', true);
-                    $('.'+nilai+'Opp').removeAttr('required');
-                    $('.'+nilai+'Opp').val('');
+                    $('#'+price).show();
+                    $('.'+price).prop('required', true);
+                    $('.'+price+'Opp').removeAttr('required');
+                    $('.'+price+'Opp').val('');
                 }
                 else {
                     $('#prices').hide();
@@ -144,8 +161,8 @@ $configs = session('configs');
             });
 
             /* VOUCHER TYPE */
-            $("input[name='voucher_type']").click(function() {
-                var nilai = $(this).val();
+            $('select[name=voucher_type]').change(function() {
+                nilai = $('select[name=voucher_type] option:selected').val();
 
                 $('#voucher-value').show();
                 $('#discount-max-form, #discount-max-value').hide();
@@ -169,12 +186,10 @@ $configs = session('configs');
             });
 
             /* PURCHASE LIMIT */
-            $("input[name='purchase_limit']").click(function() {
-                var nilai = $(this).val();
+            $('select[name=purchase_limit]').change(function() {
+                nilai = $('select[name=purchase_limit] option:selected').val();
 
-                $('#discount-max-form, #discount-max-value').hide();
-                $("input[name='new_purchase_after']").prop('checked', false);
-                $("input[name='subscription_voucher_percent_max']").prop('required', false);
+                $("input[name='new_purchase_after']").prop('selected', false);
 
                 if (nilai == "limit") {
 
@@ -187,10 +202,10 @@ $configs = session('configs');
 
                 }
             });
-
+            
             /* DISCOUNT MAX */
-            $("input[name='percent_max']").click(function() {
-                var nilai = $(this).val();
+            $('select[name=percent_max]').change(function() {
+                nilai = $('select[name=percent_max] option:selected').val();
 
                 $('#voucher-percent').show();
 
@@ -205,11 +220,10 @@ $configs = session('configs');
                     $("input[name='subscription_voucher_percent_max']").prop('required', false);
                 }
             });
-
+            
             /* SUBSCRIPTION TOTAL */
-            $("input[name='subscription_total_type']").click(function() {
-                var nilai = $(this).val();
-
+            $('select[name=subscription_total_type]').change(function() {
+                nilai = $('select[name=subscription_total_type] option:selected').val();
                 if (nilai == "limited") {
 
                     $('#subscription-total-form, #subscription-total-value').show();
@@ -222,8 +236,8 @@ $configs = session('configs');
             });
 
             /* EXPIRY */
-            $('.expiry').click(function() {
-                var nilai = $(this).val();
+            $('select[name=duration]').change(function() {
+                nilai = $('select[name=duration] option:selected').val();
 
                 $('#times').show();
 
@@ -234,7 +248,7 @@ $configs = session('configs');
                 $('.'+nilai+'Opp').removeAttr('required');
                 $('.'+nilai+'Opp').val('');
             });
-
+            
             $('.subscriptionPromoType').click(function() {
                 $('.subscriptionPromoTypeShow').show();
                 var nilai = $(this).val();
@@ -263,13 +277,14 @@ $configs = session('configs');
                 tabsize: 2,
                 height: 120,
                 toolbar: [
-                  ['style', ['style']],
-                  ['style', ['bold', 'underline', 'clear']],
-                  ['color', ['color']],
-                  ['para', ['ul', 'ol', 'paragraph']],
-                  ['insert', ['table']],
-                  ['insert', ['link', 'picture', 'video']],
-                  ['misc', ['fullscreen', 'codeview', 'help']]
+                    ['style', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
                 ],
                 callbacks: {
                     onInit: function(e) {
@@ -341,22 +356,32 @@ $configs = session('configs');
                     mbok.remove();
                 });
             }
+
             $('.collapse').collapse({
               toggle: true
             })
+
             $('.sortable').sortable({
+                items: '> div:not(.unsortable)',
                 handle: ".sortable-handle",
                 connectWith: ".sortable",
                 axis: 'y',
             });
+
             $('.sortable-detail-0').sortable({
                 handle: '.sortable-detail-handle-0',
                 connectWith: '.sortable-detail-0',
                 axis: 'y'
             });
+
             $('.sortable-detail-1').sortable({
                 handle: '.sortable-detail-handle-1',
                 connectWith: '.sortable-detail-1',
+                axis: 'y'
+            });
+            $('.sortable-detail-2').sortable({
+                handle: '.sortable-detail-handle-2',
+                connectWith: '.sortable-detail-2',
                 axis: 'y'
             });
 
@@ -390,6 +415,72 @@ $configs = session('configs');
                 rightAlign: false,
                 allowPlus : false
             });
+
+            $('select[name="id_brand"]').on('change',function(){
+                var id_brand=$('select[name="id_brand"]').val();
+                $.ajax({
+                    url:"{{url('outlet/ajax_handler')}}",
+                    method: 'GET',
+                    data: {
+                        select:['id_outlet','outlet_code','outlet_name'],
+                        condition:{
+                            rules:[
+                                {
+                                    subject:'id_brand',
+                                    parameter:id_brand,
+                                    operator:'=',
+                                }
+                            ],
+                            operator:'and'
+                        }
+                    },
+                    success: function(data){
+                        if(data.status=='success'){
+                            var value = $('select[name="id_outlet[]"]').val();
+                            var all = $('select[name="id_outlet[]"]').data('all');
+                            var convertAll=false;
+                            if($('select[name="id_outlet[]"]').data('value')){
+                                value=$('select[name="id_outlet[]"]').data('value');
+                                $('select[name="id_outlet[]"]').data('value',false);
+                                convertAll=true;
+                            }
+                            redrawOutlets(data.result,value,convertAll,all);
+                        }
+                    }
+                });
+
+                $.ajax({
+                    url:"{{url('product/ajax-product-brand')}}",
+                    method: 'GET',
+                    data: {
+                        select:['id_product','product_code','product_name'],
+                        condition:{
+                            rules:[
+                                {
+                                    subject:'id_brand',
+                                    parameter:id_brand,
+                                    operator:'=',
+                                }
+                            ],
+                            operator:'and'
+                        }
+                    },
+                    success: function(data){
+                        if(data.status=='success'){
+                            var value=$('select[name="id_product[]"]').val();
+                            var all = $('select[name="id_product[]"]').data('all');
+                            var convertAll=false;
+                            if($('select[name="id_product[]"]').data('value')){
+                                value=$('select[name="id_product[]"]').data('value');
+                                $('select[name="id_product[]"]').data('value',false);
+                                convertAll=true;
+                            }
+                            redrawProducts(data.result,value,convertAll,all);
+                        }
+                    }
+                });
+            });
+            $('select[name="id_brand"]').change();
         });
     </script>
 @endsection

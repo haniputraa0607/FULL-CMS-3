@@ -61,7 +61,7 @@ class NewsController extends Controller
 
             // get outlet
             $data['outlet']    = parent::getData(MyHelper::get('outlet/be/list'));
-            $data['categories']    = parent::getData(MyHelper::get('news/be/category'));
+            $data['categories']    = parent::getData(MyHelper::post('news/be/category', ['admin' => '1']));
             // get product
             $data['product']   = parent::getData(MyHelper::get('product/be/list'));
             
@@ -162,7 +162,16 @@ class NewsController extends Controller
             }
             $news['news_image_dalam']  = MyHelper::encodeImage($news['news_image_dalam']);
 
-            // dd($news);
+            if(isset($post['news_outlet_text'])){
+                $news['news_outlet_text'] = $post['news_outlet_text'];
+                $news['id_outlet'] = $post['id_outlet'];
+            }
+
+            if(isset($post['news_product_text'])){
+                $news['news_product_text'] = $post['news_product_text'];
+                $news['id_product'] = $post['id_product'];
+            }
+
             $save = MyHelper::post('news/create', $news);
 
             if (isset($save['status']) && $save['status'] == "success") {
@@ -250,7 +259,7 @@ class NewsController extends Controller
             }
             else {
                 $data['news'] = $news;
-                $data['categories']    = parent::getData(MyHelper::get('news/be/category'));
+                $data['categories']    = parent::getData(MyHelper::post('news/be/category', ['admin' => '1']));
             }
 
             // get outlet

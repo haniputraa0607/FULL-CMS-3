@@ -1,5 +1,9 @@
 @extends('layouts.main')
+<?php
+use App\Lib\MyHelper;
+$configs    		= session('configs');
 
+?>
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
@@ -160,7 +164,8 @@
             });
             $('select[name="id_outlet[]"]').html(html);
             $('select[name="id_outlet[]"]').val(selected);
-            if(convertAll&&$('select[name="id_outlet[]"]').val().length==list.length){
+            var isAllOutlet = "{{$deals[0]['is_all_outlet']}}";
+            if(isAllOutlet == 1){
                 $('select[name="id_outlet[]"]').val(['all']);
             }
             oldOutlet=list;
@@ -268,16 +273,13 @@
                 toolbar: [
                     ['style', ['style']],
                     ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['insert', ['table']],
                     ['insert', ['link', 'picture', 'video']],
-                    ['misc', ['fullscreen', 'codeview', 'help']]
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
                 ],
-                fontNames: ['Open Sans', 'Product Sans'],
-                fontNamesIgnoreCheck: ['Product Sans'],
                 callbacks: {
                     onInit: function(e) {
                       this.placeholder

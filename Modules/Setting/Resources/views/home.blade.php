@@ -142,6 +142,9 @@
     // featured deals
     $( "#sortable2" ).sortable();
     $( "#sortable2" ).disableSelection();
+    // featured subscription
+    $( "#sortable3" ).sortable();
+    $( "#sortable3" ).disableSelection();
 
     $(document).ready(function() {
     	$('#txt_greeting').on('keyup',function(){
@@ -157,15 +160,16 @@
 	        placeholder: 'Success Page Content',
 	        tabsize: 2,
 	        height: 180,
-	        toolbar: [
-	          ['style', ['style']],
-	          ['style', ['bold', 'underline', 'clear']],
-	          ['color', ['color']],
-	          ['para', ['ul', 'ol', 'paragraph']],
-	          ['insert', ['table']],
-	          ['insert', ['link', 'picture', 'video']],
-	          ['misc', ['fullscreen', 'codeview', 'help']]
-	        ],
+			toolbar: [
+				['style', ['style']],
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['insert', ['table']],
+				['insert', ['link', 'picture', 'video']],
+				['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+			],
 	        callbacks: {
 	            onImageUpload: function(files){
 	                sendFile(files[0]);
@@ -280,6 +284,31 @@
 		$('#id_deals').select2().trigger('change');
     });
 
+    $('#featured_subscription .btn-edit').click(function() {
+		var id         = $(this).data('id');
+		var end_date   = $(this).data('end-date');
+		var start_date = $(this).data('start-date');
+		var id_subscription   = $(this).data('id-subscription');
+		var subscription_title   = $(this).data('subscription-title');
+
+		// assign value to form
+		$('#id_featured_subscription').val(id);
+		$('#end_date_subs').val(end_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#start_date_subs').val(start_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#id_subscription').find('option').first().attr('value',id_subscription).text(subscription_title);
+		$('#id_subscription').select2().trigger('change');
+    });
+
 	$('.datetime').datetimepicker({
         format: "dd M yyyy hh:ii",
         autoclose: true,
@@ -320,6 +349,23 @@
 		var link 	= "{{ url('setting/featured_deal/delete') }}/" + id;
 		swal({
 		  title: "Are you sure want to delete this featured deals ? ",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "Yes, delete it",
+		  closeOnConfirm: false
+		},
+		function(){
+			window.location = link;
+		});
+    });
+
+    // subscription: delete
+    $('#featured_subscription .btn-delete').click(function() {
+		var id 		= $(this).data('id');
+		var link 	= "{{ url('setting/featured_subscription/delete') }}/" + id;
+		swal({
+		  title: "Are you sure want to delete this featured subscription ? ",
 		  type: "warning",
 		  showCancelButton: true,
 		  confirmButtonClass: "btn-danger",
@@ -409,15 +455,25 @@
             <a href="#banner" data-toggle="tab">Banner</a>
         </li>
 		@endif
-        <li>
+        {{-- <li>
             <a href="#featured_deals" data-toggle="tab">Featured Deals</a>
-        </li>
+        </li> --}}
         <!-- <li>
             <a href="#app-logo" data-toggle="tab">Application Logo</a>
         </li> -->
         <!-- <li>
             <a href="#app-navigation" data-toggle="tab">App Navigation Text</a>
         </li> -->
+        @if(MyHelper::hasAccess([241], $grantedFeature))
+        <li>
+            <a href="#featured_subscription" data-toggle="tab">Featured Subscription</a>
+        </li>
+		@endif
+        @if(MyHelper::hasAccess([246], $grantedFeature))
+        <li>
+            <a href="#user_inbox" data-toggle="tab">User Inbox</a>
+        </li>
+		@endif
     </ul>
 </div>
 
@@ -749,9 +805,9 @@
 					 			 		<div>Click to:</div>
 										<div>{{ $click_to }}</div><br>
 										<div>Date Start:</div>
-										<div>{{ ($banner['banner_start']??false)?date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'-' }}</div><br>
+										<div>{{ ($banner['banner_start']??false)?date("d F Y H:i", strtotime($banner['banner_start'])):'-' }}</div><br>
 										<div>Date End:</div>
-					 			 		<div>{{ ($banner['banner_start']??false)?date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):'-' }}</div>
+					 			 		<div>{{ ($banner['banner_end']??false)?date("d F Y H:i", strtotime($banner['banner_end'])):'-' }}</div>
 					 			 	</div>
 					 			</div>
 					 			@endforeach
@@ -771,6 +827,14 @@
     </div>
 	@endif
 	@include('setting::featured_deals')
+
+	@if(MyHelper::hasAccess([241], $grantedFeature))
+	@include('setting::featured_subscription')
+	@endif
+
+	@if(MyHelper::hasAccess([246], $grantedFeature))
+	@include('setting::user_inbox')
+	@endif
 
 	{{-- app logo --}}
     <div class="tab-pane" id="app-logo">
@@ -1084,11 +1148,11 @@
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
 									</label>
 	                            </div>
-	                            <div class="col-md-4">
+	                            <!--<div class="col-md-4">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
-	                            </div>
+	                            </div>-->
                             </div>
 
                             <div class="col-md-12 click-to-type" style="margin-top: 10px;">
@@ -1196,11 +1260,11 @@
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
 									</label>
 	                            </div>
-	                            <div class="col-md-4">
+	                            <!--<div class="col-md-4">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
-	                            </div>
+	                            </div>-->
                             </div>
 
                             <div class="col-md-12 click-to-type" style="margin-top: 10px;">

@@ -175,7 +175,7 @@ class OutletController extends Controller
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
-                $product = MyHelper::get('product/be/list/price/'.$outlet['result'][0]['id_outlet']);
+                $product = MyHelper::get('product/list/product-detail/'.$outlet['result'][0]['id_outlet']);
 
                 if (isset($product['status']) && $product['status'] == "success") {
                     $data['product']    = $product['result'];
@@ -1042,5 +1042,146 @@ class OutletController extends Controller
         $dataExport['All Type'] = $data;
         $dataExport = new MultisheetExport($dataExport);
         return Excel::download($dataExport,'Data_Brand_'.date('Ymdhis').'.xls');
+    }
+
+    public function differentPrice(Request $request) {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Outlet Different Price',
+            'menu_active'    => 'outlet-different-price',
+            'submenu_active' => 'outlet-different-price',
+            'filter_title'   => 'Filter Product',
+        ];
+        return view('outlet::different_price',$data);
+    }
+    public function getDifferentPrice(Request $request) {
+        $filter['keyword'] = $request->post('keyword');
+        $data = MyHelper::post('outlet/different_price',$filter)['result']??[];
+        return $data;
+    }
+    public function updateDifferentPrice(Request $request) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('outlet/different_price/update',$post);
+        return $data;
+    }
+    public function autoresponse(Request $request, $type='') {
+        $post = $request->except('_token');
+        if(!empty($post)){
+            if (isset($post['whatsapp_content'])) {
+                foreach($post['whatsapp_content'] as $key => $content){
+                    if($content['content'] || isset($content['content_file']) && $content['content_file']){
+                        if($content['content_type'] == 'image'){
+                            $post['whatsapp_content'][$key]['content'] = MyHelper::encodeImage($content['content']);
+                        }
+                        else if($content['content_type'] == 'file'){
+                            $post['whatsapp_content'][$key]['content'] = base64_encode(file_get_contents($content['content_file']));
+                            $post['whatsapp_content'][$key]['content_file_name'] = pathinfo($content['content_file']->getClientOriginalName(), PATHINFO_FILENAME);
+                            $post['whatsapp_content'][$key]['content_file_ext'] = pathinfo($content['content_file']->getClientOriginalName(), PATHINFO_EXTENSION);
+                            unset($post['whatsapp_content'][$key]['content_file']);
+                        }
+                    }
+                }
+            }
+
+            $query = MyHelper::post('autocrm/update', $post);
+            // print_r($query);exit;
+            return back()->withSuccess(['Response updated']);
+        }
+        $data = [ 'title'             => 'Setting Messages Outlet App OTP',
+                  'menu_active'       => 'outlet',
+                  'submenu_active'    => 'outlet-pin-response',
+                  'subject'           => 'outlet-app-request-pin'
+                ];
+        
+        $getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
+        if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+            $data['api_key_whatsapp'] = $getApiKey['result']['value'];
+        }else{
+            $data['api_key_whatsapp'] = null;
+        }
+
+        $data['textreplaces'] = [];
+        if($type == 'request_pin'){
+            $type = 'outlet-app-request-pin';
+            $view = 'outlet::response';
+        }else{
+            $data['title'] = 'Setting Forward Incomplete Outlet Data';
+            $data['submenu_active'] = 'outlet-incomplete-response';
+            $data['forwardOnly'] = true;
+            $view = 'users::response';
+        }
+        $data['data'] = MyHelper::post('autocrm/list',['autocrm_title'=>ucfirst(str_replace('-',' ',$type))])['result']??[];
+        $data['custom'] = explode(';',$data['data']['custom_text_replace']);
+        return view($view,$data);
+    }
+
+
+    /*=========== User Franchise ===========*/
+   public function listUserFranchise(Request $request) {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'User Franchise',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-list-user-franchise',
+        ];
+
+        $list = MyHelper::post('outlet/list/user-franchise', []);
+
+       if (isset($list['status']) && $list['status'] == "success") {
+           $data['paginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
+           $data['list'] = $list['result']['data'];
+           $data['from'] = $list['result']['from'];
+           $data['to'] = $list['result']['to'];
+           $data['total'] = $list['result']['total'];
+       }
+       else {
+           $data['paginator'] = [];
+           $data['list'] = [];
+           $data['from'] = [];
+           $data['to'] = [];
+           $data['total'] = [];
+       }
+
+        return view('outlet::users_franchise.list', $data);
+   }
+
+    public function detailUserFranchise(Request $request, $phone) {
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Detail User Franchise',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-list-user-franchise',
+        ];
+
+        $post['phone'] = $phone;
+        $detail = MyHelper::post('outlet/detail/user-franchise', $post);
+
+        if (isset($detail['status']) && $detail['status'] == "success") {
+            $data['user'] = $detail['data_user'];
+            if(!empty($detail['list_outlet'])){
+                $data['paginator'] = new LengthAwarePaginator($detail['list_outlet']['data'], $detail['list_outlet']['total'], $detail['list_outlet']['per_page'], $detail['list_outlet']['current_page'], ['path' => url()->current()]);
+                $data['outlets'] = $detail['list_outlet']['data'];
+                $data['from'] = $detail['list_outlet']['from'];
+                $data['to'] = $detail['list_outlet']['to'];
+                $data['total'] = $detail['list_outlet']['total'];
+            }else{
+                $data['paginator'] = [];
+                $data['outlets'] = [];
+                $data['from'] = [];
+                $data['to'] = [];
+                $data['total'] = [];
+            }
+        }
+        else {
+            $data['user'] = [];
+            $data['paginator'] = [];
+            $data['outlets'] = [];
+            $data['from'] = [];
+            $data['to'] = [];
+            $data['total'] = [];
+        }
+
+        return view('outlet::users_franchise.detail', $data);
     }
 }

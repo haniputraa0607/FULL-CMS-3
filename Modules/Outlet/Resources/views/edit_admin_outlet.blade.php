@@ -127,6 +127,11 @@
 											<option @if($user_outlet['payment'] == "1") selected @endif value="delivery">Payment</option>
 										@endif
 									@endif
+
+									{{-- cek config outlet apps --}}
+									@if(MyHelper::hasAccess([101], $configs))
+										<option @if($user_outlet['outlet_apps'] == "1") selected @endif value="outlet_apps">Outlet Apps</option>
+									@endif
 								</select>
 							</div>
 						</div>

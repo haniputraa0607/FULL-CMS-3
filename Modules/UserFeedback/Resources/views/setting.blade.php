@@ -146,6 +146,19 @@
                         </div>
                     </div>
                     <div class="row">
+                        <label class="col-md-3 control-label text-right">Transaction Date <i class="fa fa-question-circle tooltips" data-original-title="Rentang hari maksimal dari transaksi yang memungkinkan untuk ditampilkan di popup rating mobile apps" data-container="body"></i></label>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="number" min="0" class="form-control" name="popup_max_days" required value="{{old('popup_max_days',$setting['popup_max_days']['value']??3)}}" /><br/>
+                                    <span class="input-group-addon">
+                                        days before
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-offset-3 col-md-5">
                             <div class="form-group">
                                 <button type="submit" class="btn green"><i class="fa fa-check"></i> Save</button>
@@ -376,7 +389,7 @@
                                         <div class="fileinput fileinput-new" data-provides="fileinput">
                                             <div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
                                                 @if($items['1']['image_selected']??false)
-                                                <img id="preview_image" src="{{$items['1']['image_selected']}}"/>
+                                                <img id="preview_image" src="{{$items['-1']['image_selected']}}"/>
                                                 @else
                                                 <img id="preview_image" src="https://www.placehold.it/100x100/EFEFEF/AAAAAA"/>
                                                 @endif

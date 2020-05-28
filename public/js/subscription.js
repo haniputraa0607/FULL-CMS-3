@@ -16,12 +16,10 @@ $('.content').click(function() {
                     <input type="text" class="form-control" name="content_title[]"  placeholder="Content Title" required maxlength="20">\
                     <input type="hidden" name="id_subscription_content[]" value="0">\
                     <input type="hidden" name="content_order[]" value="0">\
-                    <span class="input-group-addon">\
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion'+count+'" aria-expanded="true" href="#collapse_'+count+'">\
-                            <i class="fa fa-chevron-down"></i>\
-                            <i class="fa fa-chevron-right"></i>\
-                        </a>\
-                    </span>\
+                    <a class="accordion-toggle input-group-addon" data-toggle="collapse" data-parent="#accordion'+count+'" aria-expanded="true" href="#collapse_'+count+'">\
+                        <i class="fa fa-chevron-down custom-addon-icon"></i>\
+                        <i class="fa fa-chevron-right custom-addon-icon"></i>\
+                    </a>\
                 </div>\
             </div>\
             <div class="col-md-3">\

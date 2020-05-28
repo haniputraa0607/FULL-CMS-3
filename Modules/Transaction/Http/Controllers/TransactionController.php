@@ -106,6 +106,11 @@ class TransactionController extends Controller
                 $data['submenu_active'] = 'deals-autoresponse-claim-paid-deals-success';
                 break;
 
+            case 'claim-point-deals-success':
+                $data['menu_active'] = 'deals';
+                $data['submenu_active'] = 'deals-autoresponse-claim-point-deals-success';
+                break;
+
             case 'transaction-point-achievement':
                 $data['menu_active'] = 'transaction';
                 $data['submenu_active'] = 'transaction-point-achievement';
@@ -126,6 +131,27 @@ class TransactionController extends Controller
                 $data['menu_active'] = 'welcome-voucher';
                 $data['submenu_active'] = 'deals-autoresponse-welcome-voucher';
                 break;
+
+            case 'delivery-status-update':
+                $data['menu_active'] = 'transaction';
+                $data['submenu_active'] = 'delivery-status-update';
+                break;
+
+            case 'get-free-subscription-success':
+                $data['menu_active'] = 'subscription';
+                $data['submenu_active'] = 'subscription-autoresponse-get-free-subscription-success';
+                break;
+
+            case 'buy-paid-subscription-success':
+                $data['menu_active'] = 'subscription';
+                $data['submenu_active'] = 'subscription-autoresponse-buy-paid-subscription-success';
+                break;
+
+            case 'buy-point-subscription-success':
+                $data['menu_active'] = 'subscription';
+                $data['submenu_active'] = 'subscription-autoresponse-buy-point-subscription-success';
+                break;
+
             default:
                 # code...
                 break;
@@ -1140,8 +1166,10 @@ class TransactionController extends Controller
         $post['type'] = 'trx';
         $post['check'] = 1;
 
-        $check = MyHelper::post('transaction/be/detail/webview/simple?log_save=0', $post);
+        //$check = MyHelper::post('transaction/be/detail/webview/simple?log_save=0', $post);
         // $check = MyHelper::post('outletapp/order/detail/view?log_save=0', $data);
+        $check = MyHelper::post('transaction/be/detail', ['id_transaction' => $id, 'type' => 'trx', 'admin' => 1]);
+
     	if (isset($check['status']) && $check['status'] == 'success') {
     		$data['data'] = $check['result'];
     	} elseif (isset($check['status']) && $check['status'] == 'fail') {
@@ -1149,7 +1177,6 @@ class TransactionController extends Controller
         } else {
             return view('error', ['msg' => 'Something went wrong, try again']);
         }
-
         return view('transaction::transactionDetail3', $data);
     	
     }

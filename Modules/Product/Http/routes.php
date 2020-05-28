@@ -13,7 +13,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	Route::any('/hidden/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::post('/id_visibility', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addIdVisibility']);
 	Route::post('update/visible', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@updateVisibilityProduct']);
-	Route::get('import', ['middleware' => ['feature_control:56,57', 'config_control:10,11,or'], 'uses' => 'ProductController@importProduct']);
+	Route::get('import/{type}', ['middleware' => ['feature_control:56,57', 'config_control:10,11,or'], 'uses' => 'ProductController@importProduct']);
 	Route::post('import/save', ['middleware' => ['feature_control:56', 'config_control:10'], 'uses' => 'ProductController@importProductSave']);
 	Route::get('ajax', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProductAjax']);
 	Route::any('create', ['middleware' => 'feature_control:50', 'uses' => 'ProductController@create']);
@@ -22,14 +22,17 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	Route::post('update/visibility/global', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@updateVisibility']);
 	Route::any('delete', ['middleware' => 'feature_control:52', 'uses' => 'ProductController@delete']);
 	Route::any('detail/{product_code}', ['middleware' => 'feature_control:49', 'uses' => 'ProductController@detail']);
-	Route::any('example', ['middleware' => ['feature_control:57', 'config_control:11'], 'uses' => 'ProductController@example']);
+	Route::post('export/{type}', ['middleware' => ['feature_control:57', 'config_control:11'], 'uses' => 'ProductController@export']);
+	Route::post('import/{type}', ['middleware' => ['feature_control:56', 'config_control:10'], 'uses' => 'ProductController@import']);
 	Route::any('price/{key?}', ['middleware' => ['feature_control:62', 'config_control:11'], 'uses' => 'ProductController@price']);
+    Route::any('outlet-detail/{key?}', ['middleware' => ['feature_control:62', 'config_control:11'], 'uses' => 'ProductController@productOutletDetail']);
 	Route::any('category/assign', ['middleware' => ['feature_control:44', 'config_control:11'], 'uses' => 'ProductController@categoryAssign']);
 
 	Route::get('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'ProductController@positionAssign']);
 	// ajax for ordering position
 	Route::post('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'ProductController@positionProductAssign']);
 
+	Route::get('ajax-product-brand', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@ajaxProductBrand']);
 	/**
 	 * photo
 	 */
@@ -51,11 +54,29 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	});
 
 	/**
+	 * promo category
+	 */
+	Route::group(['prefix' => 'promo-category'], function() {
+    	Route::get('/', ['middleware' => 'feature_control:236', 'uses' => 'PromoCategoryController@index']);
+    	Route::post('/', ['middleware' => 'feature_control:236', 'uses' => 'PromoCategoryController@indexAjax']);
+    	Route::get('create', ['middleware' => 'feature_control:239', 'uses' => 'PromoCategoryController@create']);
+    	Route::post('create', ['middleware' => 'feature_control:239', 'uses' => 'PromoCategoryController@store']);
+    	Route::post('delete', ['middleware' => 'feature_control:240', 'uses' => 'PromoCategoryController@destroy']);
+		/* position/ order */
+		Route::post('reorder', ['middleware' => ['feature_control:238'], 'uses' => 'PromoCategoryController@reorder']);
+    	Route::get('{id}', ['middleware' => 'feature_control:237', 'uses' => 'PromoCategoryController@show']);
+    	Route::post('{id}', ['middleware' => 'feature_control:238', 'uses' => 'PromoCategoryController@update']);
+		Route::post('{id}/assign', ['middleware' => ['feature_control:238'], 'uses' => 'PromoCategoryController@assign']);
+	});
+
+	/**
 	 * modifier
 	 */
 	Route::group(['prefix' => 'modifier'], function() {
 		Route::get('price/{id_outlet?}', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@listPrice']);
 		Route::post('price/{id_outlet}', ['middleware' => 'feature_control:186', 'uses' => 'ModifierController@updatePrice']);
+		Route::get('detail/{id_outlet?}', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@listDetail']);
+		Route::post('detail/{id_outlet}', ['middleware' => 'feature_control:186', 'uses' => 'ModifierController@updateDetail']);
 
 		Route::get('/', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@index']);
 		Route::get('/create', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@create']);

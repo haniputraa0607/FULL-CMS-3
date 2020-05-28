@@ -27,6 +27,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::post('import-brand', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@importBrand']);
     Route::get('export/brand-outlet', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@exportBrandOutle']);
     Route::get('export-city', 'OutletController@exportDataCity');
+    Route::any('autoresponse/{name}', 'OutletController@autoresponse');
 
     Route::get('max-order/{outlet_code?}', ['middleware' => 'feature_control:197', 'uses' => 'OutletController@maxOrder']);
     Route::post('max-order/{outlet_code}', ['middleware' => 'feature_control:198', 'uses' => 'OutletController@maxOrderUpdate']);
@@ -34,6 +35,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     // photo
     Route::post('photo/delete', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@deletePhoto']);
     Route::post('schedule/save', ['middleware' => 'feature_control:31', 'uses' => 'OutletController@scheduleSave']);
+    //different price
+    Route::get('different-price', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@differentPrice']);
+    Route::post('different-price', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@getDifferentPrice']);
+    Route::post('different-price/update', ['middleware' => 'feature_control:24', 'uses' => 'OutletController@updateDifferentPrice']);
 
     // holiday
     Route::group(['middleware' => 'config_control:4'], function()
@@ -52,6 +57,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
         Route::post('edit/{id_user_outlet}', ['middleware' => 'feature_control:41', 'uses' => 'OutletController@updateAdminOutlet']);
     });
 
+    //user franchise
+    Route::get('list/user-franchise', ['middleware' => 'feature_control:247', 'uses' => 'OutletController@listUserFranchise']);
+    Route::any('detail/user-franchise/{phone}', ['middleware' => 'feature_control:248', 'uses' => 'OutletController@detailUserFranchise']);
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet', 'namespace' => 'Modules\Advert\Http\Controllers'], function()

@@ -23,12 +23,13 @@
             tabsize: 2,
             toolbar: [
                 ['style', ['style']],
-                ['style', ['bold', 'underline', 'clear']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['insert', ['table']],
                 ['insert', ['link', 'picture', 'video']],
-                ['misc', ['fullscreen', 'codeview', 'help']]
+                ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
             ],
             height: 120
         });
@@ -45,6 +46,10 @@
                 image.onload = function() {
                     if (type == "logo_brand") {
                         if ($(".file").val().split('.').pop().toLowerCase() != 'png') {
+                            toastr.warning("Please check type of your photo.");
+                            $("#removeLogo").trigger( "click" );
+                        }
+                        if (this.width != 200 || this.height != 200) {
                             toastr.warning("Please check dimension of your photo.");
                             $("#removeLogo").trigger( "click" );
                         }
@@ -144,6 +149,8 @@
                             Logo
                             <span class="required" aria-required="true"> * </span>
                             <br>
+                            <span class="required" aria-required="true"> (200*200)</span>
+                            <br>
                             <span class="required" aria-required="true"> (Only PNG) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran square digunakan utnuk menjadi logo brand" data-container="body"></i>
                         </label>
@@ -162,13 +169,13 @@
                                     <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/png" name="logo_brand" class="file" data-jenis="logo_brand" @if (!isset($result['name_brand'])) required @endif> </span>
+                                        <input type="file" accept="image/png" name="logo_brand" class="file" data-jenis="logo_brand" required> </span>
                                     <a href="javascript:;" id="removeLogo" class="btn red default fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="col-md-3 control-label">
                             Image
                             <span class="required" aria-required="true"> * </span>
@@ -195,7 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}

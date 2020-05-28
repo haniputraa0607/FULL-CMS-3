@@ -5,6 +5,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 	Route::post('app_logo', 'SettingController@appLogoSave');
     Route::post('app_sidebar', 'SettingController@appSidebarSave');
     Route::post('app_navbar', 'SettingController@appNavbarSave');
+    Route::post('user_inbox', 'SettingController@userInboxSave');
     Route::get('faq', 'SettingController@faqList');
     Route::get('faq/create', 'SettingController@faqCreate');
     Route::post('faq/save', 'SettingController@faqStore');
@@ -34,6 +35,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     /*Setting Phone*/
     Route::get('phone', 'SettingController@phoneNumberSetting');
     Route::post('phone/update', 'SettingController@updatePhoneNumberSetting');
+
+    /*maintenance mode*/
+    Route::any('maintenance-mode', 'SettingController@maintenanceMode');
 
     Route::any('home', 'SettingController@homeSetting');
 	Route::any('date', 'SettingController@dateSetting');
@@ -67,6 +71,12 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('featured_deal/reorder', ['middleware' => 'feature_control:146', 'uses' => 'SettingController@reorderFeaturedDeal']);
     Route::get('featured_deal/delete/{slug}', ['middleware' => 'feature_control:147', 'uses' => 'SettingController@deleteFeaturedDeal']);
 
+    /* featured subscription */
+    Route::post('featured_subscription/create', ['middleware' => 'feature_control:242', 'uses' => 'SettingController@createFeaturedSubscription']);
+    Route::post('featured_subscription/update', ['middleware' => 'feature_control:243', 'uses' => 'SettingController@updateFeaturedSubscription']);
+    Route::post('featured_subscription/reorder', ['middleware' => 'feature_control:243', 'uses' => 'SettingController@reorderFeaturedSubscription']);
+    Route::get('featured_subscription/delete/{slug}', ['middleware' => 'feature_control:244', 'uses' => 'SettingController@deleteFeaturedSubscription']);
+
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');
 });
@@ -85,4 +95,9 @@ Route::group(['prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Contro
 {
     Route::any('webview/{slug}', 'SettingController@aboutWebview');
     Route::any('faq/webview', 'SettingController@faqWebview');
+});
+
+/* Promo Setting */
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'promo-setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
+    Route::any('cashback', ['middleware' => 'feature_control:233', 'uses' => 'PromoSettingController@promoCashback']);
 });

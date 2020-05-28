@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
  ?>
 <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
     @foreach ($outlet as $key => $val)
@@ -17,6 +18,22 @@
                 <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
                     <img src="{{$val['qrcode']}}">
                 </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    Franchise Status
+                    <i class="fa fa-question-circle tooltips" data-original-title="Keterangan outlet ini adalah franchise atau bukan franchise" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                @if($val['status_franchise'] == 1)
+                    <input type="text" class="form-control" value="This outlet is franchise" required placeholder="Franchise Status" readonly>
+                @else
+                    <input type="text" class="form-control" value="This outlet is not franchise" required placeholder="Franchise Status" readonly>
+                @endif
             </div>
         </div>
 
@@ -41,10 +58,10 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="text" class="form-control" name="outlet_name" value="{{ $val['outlet_name'] }}" required placeholder="Outlet Name" readonly>
+                <input type="text" class="form-control" name="outlet_name" value="{{ $val['outlet_name'] }}" required placeholder="Outlet Name">
             </div>
         </div>
-
+        @if(MyHelper::hasAccess([95], $configs))
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -62,7 +79,7 @@
                 </select>
             </div>
         </div>
-
+        @endif
         <div class="form-group">
             <label class="col-md-3 control-label">Status
                 <span class="required" aria-required="true"> * </span>
@@ -151,7 +168,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <!--<div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Deep Link Gojek
@@ -173,8 +190,9 @@
             <div class="col-md-9">
                 <input type="text" class="form-control" name="deep_link_grab" value="{{ $val['deep_link_grab'] }}" placeholder="Deep link grab">
             </div>
-        </div>
+        </div>-->
 
+        @if(MyHelper::hasAccess([96], $configs))
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -186,6 +204,7 @@
                 <input type="checkbox" name="big_order" @if(old('big_order',$val['big_order']) == '1') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="1">
             </div>
         </div>
+        @endif
 
         <hr>
         <h4>Maps</h4>

@@ -55,6 +55,19 @@ class UsersController extends Controller
 		return response()->json($data);
 	}
 	
+	public function listAddressUser(Request $request,$phone){
+		$post = $request->except('_token');
+		$post['phone'] = $phone;
+		$raw_data = MyHelper::post('users/list/address', $post)['result']??[];
+		$data['data'] = $raw_data['data'];
+        $data['total'] = $raw_data['total']??0;
+        $data['from'] = $raw_data['from']??0;
+        $data['order_by'] = $raw_data['order_by']??0;
+        $data['order_sorting'] = $raw_data['order_sorting']??0;
+        $data['last_page'] = !($raw_data['next_page_url']??false);
+        return $data;
+	}
+	
     public function autoResponse(Request $request, $subject){
 		$data = [ 'title'             => 'User Auto Response '.ucfirst(str_replace('-',' ',$subject)),
 				  'menu_active'       => 'user',
@@ -146,8 +159,13 @@ class UsersController extends Controller
 			if(isset($post['relationship']) && $post['relationship']=="-"){
 				$post['relationship'] = null;
 			}
+
+			if(isset($post['id_card_image']) && !empty($post['id_card_image'])){
+                $post['id_card_image'] = MyHelper::encodeImage($post['id_card_image']);
+            }
+
 			$query = MyHelper::post('users/create', $post);
-			
+
 			if(isset($query['status']) && $query['status'] == 'success'){
 				return back()->withSuccess(['User Create Success']);
 			} else{
@@ -516,11 +534,10 @@ class UsersController extends Controller
 
 		if(isset($post['password'])){
 			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success") {
+			if($checkpin['status'] != "success")
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			} else {
-				Cookie::queue('_strictaccess', 'granted access', env('STRICT_COOKIE_LIFETIME', 10));
-			}
+			else
+				Session::put('secure','yes');Session::put('secure_last_activity',time());
 		}
 		
 		if(isset($post['phone'])){
@@ -530,6 +547,11 @@ class UsersController extends Controller
 			if(isset($post['relationship']) && $post['relationship']=="-"){
 				$post['relationship'] = null;
 			}
+
+            if(isset($post['id_card_image']) && !empty($post['id_card_image'])){
+                $post['id_card_image'] = MyHelper::encodeImage($post['id_card_image']);
+            }
+
 			$update = MyHelper::post('users/update', ['phone' => $phone, 'update' => $post]);
 			return parent::redirect($update, 'Profile has been updated');
 		}
@@ -551,13 +573,13 @@ class UsersController extends Controller
 			// print_r($post);exit;
 			$update = MyHelper::post('users/update/level', $post);
 			// print_r($update);exit;
-			return parent::redirect($update, 'Account Level has been changed.');
+			return parent::redirect($update, 'Account Level has been changed.',url()->current().'#permission');
         }
 		
 		if (isset($post['password_permission'])) {
 			$post['phone'] = $phone;
 			$update = MyHelper::post('users/update/permission', $post);
-			return parent::redirect($update, 'Account Permission has been changed.');
+			return parent::redirect($update, 'Account Permission has been changed.',url()->current().'#permission');
 		}
 		if (isset($post['is_suspended'])) {
 			$post['phone'] = $phone;
@@ -615,17 +637,13 @@ class UsersController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
 
-		if(!($request->cookie('_strictaccess')) && $request->cookie('_strictaccess') != 'granted access'){
-			if (!isset($post['password'])) {
-				$data = [ 'title'             => 'User',
-					'menu_active'       => 'user',
-					'submenu_active'    => 'user-list',
-					'phone'    		  => $phone
-				];
-				return view('users::password', $data);
-			} else {
-				return view('users::detail', $data);
-			}
+        if (empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)) {
+            $data = [ 'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-list',
+                'phone'    		  => $phone
+            ];
+            return view('users::password', $data);
         } else {
             return view('users::detail', $data);
         }
@@ -809,13 +827,12 @@ class UsersController extends Controller
 			Session::put('form',$post);
 		}
 		
-		if(isset($input['password'])){
-			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $input['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success") {
+		if(isset($post['password'])){
+			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+			if($checkpin['status'] != "success")
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			} else {
-				Cookie::queue('_strictaccess', 'granted access', env('STRICT_COOKIE_LIFETIME', 10));
-			}
+			else
+				Session::put('secure','yes');Session::put('secure_last_activity',time());
 		}
 		
 		$data = [ 'title'             => 'User',
@@ -863,17 +880,13 @@ class UsersController extends Controller
 		
 		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
 
-        if(!($request->cookie('_strictaccess')) && $request->cookie('_strictaccess') != 'granted access'){
-			if (!isset($input['password'])) {
-				$data = [ 	
-					'title'             => 'User',
-					'menu_active'       => 'user',
-					'submenu_active'    => 'user-log'
-				];
-				return view('users::password', $data);
-			} else {
-				return view('users::log', $data);
-			}
+        if (empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)) {
+            $data = [
+                'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-log'
+            ];
+            return view('users::password', $data);
         } else {
             return view('users::log', $data);
         }
@@ -889,28 +902,22 @@ class UsersController extends Controller
 		
         if(isset($post['password'])){
 			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success") {
+			if($checkpin['status'] != "success")
 				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			} else {
-				Cookie::queue('_strictaccess', 'granted access', env('STRICT_COOKIE_LIFETIME', 10));
-			}
+			else
+				Session::put('secure','yes');Session::put('secure_last_activity',time());
 		}
 		
 		$data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
-		
-		if(!($request->cookie('_strictaccess')) && $request->cookie('_strictaccess') != 'granted access'){
-			if (!isset($post['password'])) {
-				$data = [ 'title'             => 'User',
-					'subtitle'		  => 'Favorite',
-					'menu_active'       => 'user',
-					'submenu_active'    => 'user-list',
-					'phone'    		  => $phone
-				];
-				return view('users::password', $data);
-			} else {
-				return view('users::favorite', $data);
-			}
-        } else {
+
+		if(empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)){
+			$data = [ 'title'             => 'User',
+					  'menu_active'       => 'user',
+					  'submenu_active'    => 'user-list',
+					  'phone'    		  => $phone
+					];
+			return view('users::password', $data);
+		} else {
             return view('users::favorite', $data);
         }
     }

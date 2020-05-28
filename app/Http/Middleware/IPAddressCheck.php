@@ -17,6 +17,9 @@ class IPAddressCheck
      */
     public function handle($request, Closure $next)
     {
+        if(env('APP_ENV') == 'local'){
+            return $next($request);
+        }
         if(!empty($_SERVER['HTTP_CLIENT_IP'])){
             $ip = $_SERVER['HTTP_CLIENT_IP'];
         }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){

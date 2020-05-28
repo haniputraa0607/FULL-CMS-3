@@ -21,13 +21,14 @@
             placeholder: 'Category Description',
             tabsize: 2,
             toolbar: [
-              ['style', ['style']],
-              ['style', ['bold', 'underline', 'clear']],
-              ['color', ['color']],
-              ['para', ['ul', 'ol', 'paragraph']],
-              ['insert', ['table']],
-              ['insert', ['link', 'picture', 'video']],
-              ['misc', ['fullscreen', 'codeview', 'help']]
+                ['style', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
             ],
             height: 120
           });
@@ -107,6 +108,7 @@
                             </div>
                         </div>
                     </div>
+                    {{--
                     <div class="form-group">
                         <label class="col-md-3 control-label">Image <br> <span class="required" aria-required="true"> (300*300) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar Kategori Produk" data-container="body"></i>
@@ -130,6 +132,7 @@
                             </div>
                         </div>
                     </div>
+                    --}}
                 </div>
                 <input type="hidden" name="id_product_category" value="{{ $cat['id_product_category'] }}">
                 @endforeach

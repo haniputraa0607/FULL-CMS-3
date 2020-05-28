@@ -267,8 +267,8 @@
 
             @foreach($product as $key => $pro)
                 var option =  '<option class="option-visibility" data-id={{$pro["id_product"]}}/{{$outlet[0]["id_outlet"]}}>{{$pro["product_code"]}} - {{$pro["product_name"]}}</option>'
-                @if(isset($pro['all_prices'][0]["product_visibility"]))
-                    $('#visibleglobal-{{lcfirst($pro["all_prices"][0]["product_visibility"])}}').append(option)
+                @if(isset($pro['product_detail'][0]["product_detail_visibility"]) && $pro['product_detail'][0]["product_detail_visibility"])
+                    $('#visibleglobal-{{lcfirst($pro["product_detail"][0]["product_detail_visibility"])}}').append(option)
                 @else
                     $('#visibleglobal-{{lcfirst($pro["product_visibility"])}}').append(option)
                 @endif
@@ -367,16 +367,15 @@
             $('.summernote').summernote({
                 placeholder: 'Category Description',
                 tabsize: 2,
-                toolbar: [
+                 toolbar: [
                     ['style', ['style']],
-                    ['style', ['bold', 'underline', 'clear']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['insert', ['table']],
                     ['insert', ['link', 'picture', 'video']],
-                    ['misc', ['fullscreen', 'codeview', 'help']],
-                    ['fontsize', ['fontsize']],
-                    ['height', ['height']]
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
                 ],
                 height: 120
             });
@@ -557,14 +556,14 @@
                 <li class="active" id="infoOutlet">
                     <a href="#info" data-toggle="tab" > Info </a>
                 </li>
-<!--                 <li id="pinOutlet">
+                <li id="pinOutlet">
                     <a href="#pin" data-toggle="tab" > Update Pin </a>
-                </li> -->
-                <!-- @if(MyHelper::hasAccess([29], $grantedFeature))
+                </li>
+                @if(MyHelper::hasAccess([29], $grantedFeature))
                     <li>
                         <a href="#photo" data-toggle="tab"> Photo </a>
                     </li>
-                @endif -->
+                @endif
                 @if(MyHelper::hasAccess([4], $configs))
                     @if(MyHelper::hasAccess([34], $grantedFeature))
                         <li>
@@ -592,12 +591,12 @@
                 <div class="tab-pane active" id="info">
                     @include('outlet::info')
                 </div>
-                <!-- <div class="tab-pane" id="pin">
-                    @ i n c l u d e ('outlet::pin')
-                </div> -->
-                <!-- <div class="tab-pane" id="photo">
+                <div class="tab-pane" id="pin">
+                    @include('outlet::pin')
+                </div>
+                <div class="tab-pane" id="photo">
                     @include('outlet::photo')
-                </div> -->
+                </div>
                 <div class="tab-pane" id="holiday">
                     @include('outlet::holiday')
                 </div>

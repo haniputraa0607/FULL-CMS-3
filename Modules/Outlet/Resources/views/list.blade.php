@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
  ?>
 @extends('layouts.main')
 
@@ -174,9 +175,12 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
+                        <th> Franchise Status </th>
                         <th> Code </th>
                         <th> Name </th>
+                        @if(MyHelper::hasAccess([95], $configs))
                         <th> Brand </th>
+                        @endif
                         <th> City </th>
                         <th> Open - Close </th>
                         <th> Status </th>
@@ -189,8 +193,16 @@
                     @if (!empty($outlet))
                         @foreach($outlet as $value)
                             <tr>
+                                <td>
+                                    @if($value['status_franchise'] == 1)
+                                        <p style="color: green">This outlet is franchise</p>
+                                    @else
+                                        This outlet is not franchise
+                                    @endif
+                                </td>
                                 <td>{{ $value['outlet_code'] }}</td>
                                 <td>{{ $value['outlet_name'] }}</td>
+                                @if(MyHelper::hasAccess([95], $configs))
                                 <td>
                                     <ul style="padding-left: 20px;">
                                         @foreach ($value['brands'] as $item)
@@ -198,6 +210,7 @@
                                         @endforeach
                                     </ul>
                                 </td>
+                                @endif
                                 @if (empty($value['city']))
                                     <td> - </td>
                                 @else

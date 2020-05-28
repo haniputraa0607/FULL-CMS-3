@@ -359,6 +359,10 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body">
+                                	<div class="row static-info">
+                                        <div class="col-md-4 name">Brand</div>
+                                        <div class="col-md-8 value">: {{ $result['brand']['name_brand']??'' }}</div>
+                                    </div>
                                     <div class="row static-info">
                                         <div class="col-md-4 name">Tag</div>
                                         @if (count($result['promo_campaign_have_tags']) > 1)
@@ -433,7 +437,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                @if( strtotime($datenow) < strtotime($result['date_start']) || empty($result['step_complete']))
+                                @if( empty($result['promo_campaign_reports']) || empty($result['step_complete']))
                                 <div class="row static-info">
                                     <div class="col-md-11 value">
                                         <a class="btn blue" href="{{ url('/')}}/promo-campaign/step1/{{$result['id_promo_campaign']}}">Edit Detail</a>
@@ -565,7 +569,19 @@
                                                         <td>{{ $res['max_qty_requirement'] }}</td>
                                                         <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}">{{ $res['product']['product_code'].' - '.$res['product']['product_name'] }}</a></td>
                                                         <td>{{ $res['benefit_qty'] }}</td>
-                                                        <td>{{ ( ($res['discount_percent']??'') == 100) ? 'Free' : ( ($res['discount_percent']??false) ? $res['discount_percent'].' %' : (($res['discount_nominal']??false) ? 'IDR '.number_format($res['discount_nominal']) : '' ) ) }}</td>
+                                                        <td>
+                                                        @if( ($res['discount_type']??false) == 'nominal' )
+                                                        	{{'IDR '.number_format($res['discount_value'])}}
+                                                        @elseif( ($res['discount_type']??false) == 'percent' )
+                                                        	@if( ($res['discount_value']??false) == 100 )
+                                                        		Free
+                                                        	@else
+                                                        		{{ ($res['discount_value']??false).'%' }}
+                                                        	@endif
+                                                        @endif
+                                                        </td>
+                                                        <td>
+                                                        {{ ( ($res['discount_percent']??'') == 100) ? 'Free' : ( ($res['discount_percent']??false) ? $res['discount_percent'].' %' : (($res['discount_nominal']??false) ? 'IDR '.number_format($res['discount_nominal']) : '' ) ) }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -586,7 +602,7 @@
                                         </div>
                                         @endif
                                     @endif
-                                    @if( strtotime($datenow) < strtotime($result['date_start']) || empty($result['step_complete']))
+                                    @if( empty($result['promo_campaign_reports']) || empty($result['step_complete']))
                                     <div class="row static-info">
                                         <div class="col-md-11 value">
                                             <a class="btn blue" href="{{ url('/')}}/promo-campaign/step2/{{$result['id_promo_campaign']}}">Edit Rule</a>
