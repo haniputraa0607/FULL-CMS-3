@@ -1368,6 +1368,28 @@
 							</a>
 						</li>
 						@endif
+						@if(MyHelper::hasAccess([113], $configs))
+							@if(MyHelper::hasAccess([97], $grantedFeature))
+								<li class="nav-item {{($submenu_active == 'subscription-autoresponse-get-free-subscription-success') ? 'active open' : ''}}">
+									<a href="{{url('transaction/autoresponse/get-free-subscription-success')}}" class="nav-link ">
+										<i class="fa fa-mail-forward"></i>
+										<span class="title">[Response] Get Free Subscription Success</span>
+									</a>
+								</li>
+								<li class="nav-item {{($submenu_active == 'subscription-autoresponse-buy-paid-subscription-success') ? 'active open' : ''}}">
+									<a href="{{url('transaction/autoresponse/buy-paid-subscription-success')}}" class="nav-link ">
+										<i class="fa fa-mail-forward"></i>
+										<span class="title">[Response] Buy Paid Subscription Success</span>
+									</a>
+								</li>
+								<li class="nav-item {{($submenu_active == 'subscription-autoresponse-Buy-point-subscription-success') ? 'active open' : ''}}">
+									<a href="{{url('transaction/autoresponse/buy-point-subscription-success')}}" class="nav-link ">
+										<i class="fa fa-mail-forward"></i>
+										<span class="title">[Response] Buy Point Subscription Success</span>
+									</a>
+								</li>
+							@endif
+						@endif
 					</ul>
 				</li>
 				@endif
