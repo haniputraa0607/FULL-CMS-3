@@ -115,6 +115,7 @@ $idUserFrenchisee = session('id_user_franchise');
                             Grandtotal = {{number_format($val['transaction_grandtotal'])}}<br>
                             Discount = {{number_format($val['transaction_discount'])}}<br>
                             Gosend Price = {{number_format($val['transaction_shipment_go_send'])}}<br>
+                            Point Use = {{number_format($val['balance_nominal'])}}<br>
                         </td>
                         <td>{{number_format($val['income_outlet'])}}</td>
                         <td>{{number_format($val['income_central'])}}</td>

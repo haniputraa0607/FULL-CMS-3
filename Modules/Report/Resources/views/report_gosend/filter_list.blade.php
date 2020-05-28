@@ -26,7 +26,7 @@
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
-        }else if(subject_value == 'transaction_shipment_go_send'){
+        }else if(subject_value == 'transaction_shipment_go_send' || subject_value == 'transaction_grandtotal'){
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
             for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -109,6 +109,7 @@
                                                     <option value="outlet_name" @if ($con['subject'] == 'outlet_name') selected @endif>Outlet Name</option>
                                                     <option value="transaction_receipt_number" @if ($con['subject'] == 'transaction_receipt_number') selected @endif>Receipt Number</option>
                                                     <option value="order_id" @if ($con['subject'] == 'order_id') selected @endif>Order ID Number</option>
+                                                    <option value="transaction_grandtotal" @if ($con['subject'] == 'transaction_grandtotal') selected @endif>Grand Total</option>
                                                     <option value="transaction_shipment_go_send" @if ($con['subject'] == 'transaction_shipment_go_send') selected @endif>Price GoSend</option>
                                                     <option value="destination_name" @if ($con['subject'] == 'destination_name') selected @endif>Receiver Name</option>
                                                     <option value="destination_phone" @if ($con['subject'] == 'destination_phone') selected @endif>Receiver Phone</option>
@@ -127,7 +128,7 @@
                                                         <option value="cancelled" @if ($con['operator']  == 'cancelled') selected @endif>Booking is cancelled by CS</option>
                                                         <option value="delivered" @if ($con['operator']  == 'delivered') selected @endif>Delivered</option>
                                                         <option value="no_driver" @if ($con['operator']  == 'no_driver') selected @endif>Driver not found</option>
-                                                    @elseif($con['subject'] == 'transaction_shipment_go_send')
+                                                    @elseif($con['subject'] == 'transaction_shipment_go_send' || $con['subject'] == 'transaction_grandtotal')
                                                         <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                                         <option value=">" @if ($con['operator']  == '>') selected @endif>></option>
                                                         <option value=">=" @if ($con['operator'] == '>=') selected @endif>>=</option>
@@ -166,6 +167,7 @@
                                                     <option value="" selected disabled>Search Subject</option>
                                                     <option value="outlet_code">Outlet Code</option>
                                                     <option value="outlet_name">Outlet Name</option>
+                                                    <option value="transaction_grandtotal">Grand Total</option>
                                                     <option value="transaction_receipt_number">Receipt Number</option>
                                                     <option value="order_id">Order ID Number</option>
                                                     <option value="transaction_shipment_go_send">Price GoSend</option>
@@ -206,6 +208,7 @@
                                             <option value="outlet_name">Outlet Name</option>
                                             <option value="transaction_receipt_number">Receipt Number</option>
                                             <option value="order_id">Order ID Number</option>
+                                            <option value="transaction_grandtotal">Grand Total</option>
                                             <option value="transaction_shipment_go_send">Price GoSend</option>
                                             <option value="destination_name">Receiver Name</option>
                                             <option value="destination_phone">Receiver Phone</option>
