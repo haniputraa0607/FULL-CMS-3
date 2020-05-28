@@ -137,6 +137,21 @@ class TransactionController extends Controller
                 $data['submenu_active'] = 'delivery-status-update';
                 break;
 
+            case 'get-free-subscription-success':
+                $data['menu_active'] = 'subscription';
+                $data['submenu_active'] = 'subscription-autoresponse-get-free-subscription-success';
+                break;
+
+            case 'buy-paid-subscription-success':
+                $data['menu_active'] = 'subscription';
+                $data['submenu_active'] = 'subscription-autoresponse-buy-paid-subscription-success';
+                break;
+
+            case 'buy-point-subscription-success':
+                $data['menu_active'] = 'subscription';
+                $data['submenu_active'] = 'subscription-autoresponse-buy-point-subscription-success';
+                break;
+
             default:
                 # code...
                 break;
