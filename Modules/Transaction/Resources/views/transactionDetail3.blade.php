@@ -38,6 +38,7 @@
 
     @include('layouts.notifications')
 
+    @if(isset($data['detail']['order_id_qrcode']))
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content" style="border-radius: 42.3px; border: 0;">
@@ -47,6 +48,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <!-- <div id="modal-usaha">
         <div class="modal-usaha-content">
