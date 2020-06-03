@@ -74,6 +74,7 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
             <thead>
               <tr>
+                  <th>Date</th>
                   <th>Receipt Number</th>
                   <th>Customer Name</th>
                   <th>Phone</th>
@@ -89,6 +90,7 @@
                 @if(!empty($trx))
                     @foreach($trx as $res)
                         <tr>
+                            <td>{{ date('d M Y H:i:s', strtotime($res['transaction_date'])) }}</td>
                             <td>{{ $res['transaction_receipt_number'] }}</td>
                             @if (isset($res['name']))
                               <td>{{ $res['name'] }}</td>

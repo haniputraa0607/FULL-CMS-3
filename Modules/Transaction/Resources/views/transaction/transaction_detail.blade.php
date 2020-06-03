@@ -3,38 +3,31 @@
 
     <style type="text/css">
         @font-face {
-            font-family: 'Seravek';
+            font-family: 'WorkSans-Bold';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek.ttf")}}') format('truetype');
+            src: url('{{env("S3_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-Bold.ttf")}}') format('truetype');
         }
 
         @font-face {
-            font-family: 'Seravek Light';
+            font-family: 'WorkSans-Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek-Light.ttf")}}') format('truetype');
+            src: url('{{env("S3_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-Regular.ttf")}}') format('truetype');
         }
 
         @font-face {
-            font-family: 'Seravek Medium';
+            font-family: 'WorkSans-SemiBold';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek-Medium.ttf")}}') format('truetype');
+            src: url('{{env("S3_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-SemiBold.ttf")}}') format('truetype');
         }
 
         @font-face {
-            font-family: 'Seravek Italic';
+            font-family: 'WorkSans-Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Seravek-Italic.ttf")}}') format('truetype');
-        }
-
-        @font-face {
-            font-family: 'Roboto Regular';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{env("S3_URL_VIEW") }}{{("assets/fonts/Roboto-Regular.ttf")}}') format('truetype');
+            src: url('{{env("S3_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-Medium.ttf")}}') format('truetype');
         }
 
         .swal-text {
@@ -131,7 +124,7 @@
         }
 
         .text-medium-grey {
-            color: #806e6e6e;
+            color: #707070;
         }
 
         .text-grey-white {
@@ -139,7 +132,7 @@
         }
 
         .text-grey-light {
-            color: #b6b6b6;
+            color: #333333;
         }
 
         .text-grey-medium-light{
@@ -195,24 +188,20 @@
             font-family: 'Questrial', sans-serif;
         }
 
-        .seravek-font {
-            font-family: 'Seravek';
+        .WorkSans-Bold {
+            font-family: 'WorkSans-Bold';
         }
 
-        .seravek-light-font {
-            font-family: 'Seravek Light';
+        .WorkSans-Regular {
+            font-family: 'WorkSans-Regular';
         }
 
-        .seravek-medium-font {
-            font-family: 'Seravek Medium';
+        .WorkSans-SemiBold {
+            font-family: 'WorkSans-SemiBold';
         }
 
-        .seravek-italic-font {
-            font-family: 'Seravek Italic';
-        }
-
-        .roboto-regular-font {
-            font-family: 'Roboto Regular';
+        .WorkSans-Medium {
+            font-family: 'WorkSans-Medium';
         }
 
         .text-21-7px {
@@ -245,6 +234,10 @@
 
         .text-12px {
             font-size: 12px;
+        }
+
+        .text-13px {
+            font-size: 13px;
         }
 
         .text-11-7px {
@@ -371,233 +364,114 @@
 @php $bulan = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']; @endphp
 <div style="max-width: 480px; margin: auto">
     @if ($data['trasaction_type'] != 'Offline')
-        @if(isset($data['detail']['pickup_by']) && $data['detail']['pickup_by'] == 'GO-SEND')
-            <div class="kotak-biasa">
-                <div class="container">
-                    <?php
-                    if (isset($data['transaction_payment_status']) && $data['transaction_payment_status'] == 'Cancelled') {
-                        $html = '<div class="kotak-full" style="background-color: #de2f1f;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                        $html .= '<div class="container">';
-                        $html .= '<div class="row text-center">';
-                        $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER ANDA DIBATALKAN</b></div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
+        <div class="kotak-biasa">
+            <div class="container">
+                <?php
+                $bg = ['rgb(222, 46, 31)', 'rgb(56, 53, 103)', 'rgb(166, 186, 53)', 'rgb(223, 143, 23)', 'rgb(234, 179, 8)', 'rgb(142, 140, 138)'];
+                
+                    $html = '<div class="kotak-full" style="background-color: '.$bg[$data['transaction_status']].';padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
+                    $html .= '<div class="container">';
+                    $html .= '<div class="row text-center">';
+                    $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>'.$data['transaction_status_text'].'</b></div>';
+                    $html .= '</div>';
+                    $html .= '</div>';
+                    $html .= '</div>';
 
-                        echo $html;
-                    } elseif(isset($data['detail']['reject_at']) && $data['detail']['reject_at'] != null) {
-                        $html = '<div class="kotak-full" style="background-color: #de2f1f;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                        $html .= '<div class="container">';
-                        $html .= '<div class="row text-center">';
-                        $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER ANDA DITOLAK</b></div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-
-                        echo $html;
-                    } elseif(isset($data['detail']['taken_by_system_at']) && $data['detail']['taken_by_system_at'] != null) {
-                        $html = '<div class="kotak-full" style="background-color: #383567;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                        $html .= '<div class="container">';
-                        $html .= '<div class="row text-center">';
-                        $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER SELESAI</b></div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-
-                        echo $html;
-                    } elseif(isset($data['detail']['taken_at']) && $data['detail']['taken_at'] != null) {
-                        $html = '<div class="kotak-full" style="background-color: #eab208;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                        $html .= '<div class="container">';
-                        $html .= '<div class="row text-center">';
-                        $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER SUDAH DITERIMA</b></div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-
-                        echo $html;
-                    } elseif(isset($data['detail']['ready_at']) && $data['detail']['ready_at'] != null) {
-                        $html = '<div class="kotak-full" style="background-color: #eab208;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                        $html .= '<div class="container">';
-                        $html .= '<div class="row text-center">';
-                        $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER SUDAH SIAP</b></div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-
-                        echo $html;
-                    } elseif(isset($data['detail']['receive_at']) && $data['detail']['receive_at'] != null) {
-                        $html = '<div class="kotak-full" style="background-color: #df8f17;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                        $html .= '<div class="container">';
-                        $html .= '<div class="row text-center">';
-                        $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER SEDANG DIPROSES</b></div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-
-                        echo $html;
-                    } else {
-                        $html = '<div class="kotak-full" style="background-color: #df8f17;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                        $html .= '<div class="container">';
-                        $html .= '<div class="row text-center">';
-                        $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER PENDING</b></div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-                        $html .= '</div>';
-                        echo $html;
-                    }
-                    ?>
-                <div class="container">
-                    <div class="row text-center">
-                        <div class="col-12 WorkSans text-15px space-nice text-grey">Detail Pengiriman</div>
-                        <div class="col-12 text-red text-21-7px space-bottom WorkSans-Medium">GO-SEND</div>
-                        <div class="col-12 text-16-7px text-black space-bottom WorkSans">
-                            {{ $data['detail']['transaction_pickup_go_send']['destination_name'] }}
-                            <br>
-                            {{ $data['detail']['transaction_pickup_go_send']['destination_phone'] }}
-                        </div>
-                        <div class="kotak-inside col-12">
-                            <div class="col-12 text-13-3px text-grey-white space-nice text-center WorkSans">{{ $data['detail']['transaction_pickup_go_send']['destination_address'] }}</div>
-                        </div>
-                        <div class="col-12 text-15px space-bottom text-black WorkSans">Map</div>
-                        <div class="col-12 space-bottom-big">
-                            <div class="container">
-                                <div id="map"></div>
+                    echo $html;
+                ?>
+                <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-12 text-15px text-black-grey-light space-text WorkSans-Bold">{{ $data['outlet']['outlet_name'] }}</div>
+                            <div class="kotak-inside col-12">
+                                <div class="col-12 text-11-7px text-grey-white space-nice text-center WorkSans">{{ $data['outlet']['outlet_address'] }}</div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @else
-            <div class="kotak-biasa" style="background-color: #FFFFFF;box-shadow: 0 0.7px 3.3px #eeeeee;">
-                <div class="container" style="padding: 0px;">
-                        <?php
-                        if (isset($data['transaction_payment_status']) && $data['transaction_payment_status'] == 'Cancelled') {
-                            $html = '<div class="kotak-full" style="background-color: #de2f1f;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                            $html .= '<div class="container">';
-                            $html .= '<div class="row text-center">';
-                            $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER ANDA DIBATALKAN</b></div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-
-                            echo $html;
-                        } elseif(isset($data['detail']['reject_at']) && $data['detail']['reject_at'] != null) {
-                            $html = '<div class="kotak-full" style="background-color: #de2f1f;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                            $html .= '<div class="container">';
-                            $html .= '<div class="row text-center">';
-                            $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER ANDA DITOLAK</b></div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-
-                            echo $html;
-                        } elseif(isset($data['detail']['taken_by_system_at']) && $data['detail']['taken_by_system_at'] != null) {
-                            $html = '<div class="kotak-full" style="background-color: #383567;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                            $html .= '<div class="container">';
-                            $html .= '<div class="row text-center">';
-                            $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER SELESAI</b></div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-
-                            echo $html;
-                        } elseif(isset($data['detail']['taken_at']) && $data['detail']['taken_at'] != null) {
-                            $html = '<div class="kotak-full" style="background-color: #eab208;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                            $html .= '<div class="container">';
-                            $html .= '<div class="row text-center">';
-                            $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER SUDAH DITERIMA</b></div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-
-                            echo $html;
-                        } elseif(isset($data['detail']['ready_at']) && $data['detail']['ready_at'] != null) {
-                            $html = '<div class="kotak-full" style="background-color: #eab208;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                            $html .= '<div class="container">';
-                            $html .= '<div class="row text-center">';
-                            $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER SUDAH SIAP</b></div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-
-                            echo $html;
-                        } elseif(isset($data['detail']['receive_at']) && $data['detail']['receive_at'] != null) {
-                            $html = '<div class="kotak-full" style="background-color: #df8f17;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                            $html .= '<div class="container">';
-                            $html .= '<div class="row text-center">';
-                            $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER SEDANG DIPROSES</b></div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-
-                            echo $html;
-                        } else {
-                            $html = '<div class="kotak-full" style="background-color: #df8f17;margin-bottom: 0px;box-shadow: 0 3.3px 6.7px #b3b3b3;">';
-                            $html .= '<div class="container">';
-                            $html .= '<div class="row text-center">';
-                            $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>ORDER PENDING</b></div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-                            $html .= '</div>';
-
-                            echo $html;
-                        }
-                        ?>
-                    <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="col-12 text-15px text-black-grey-light space-text WorkSans-Bold">{{ $data['outlet']['outlet_name'] }}</div>
-                                <div class="kotak-inside col-12">
-                                    <div class="col-12 text-11-7px text-grey-white space-nice text-center WorkSans">{{ $data['outlet']['outlet_address'] }}</div>
-                                </div>
+                            
+                            @if(isset($data['detail']['order_id_qrcode']))
                                 <div class="col-12 WorkSans-Bold text-14px space-text text-black-grey-light">Kode Pickup Anda</div>
 
                                 <div style="width: 135px;height: 135px;margin: 0 auto;" data-toggle="modal" data-target="#exampleModal">
                                     <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['detail']['order_id_qrcode'] }}"></div>
                                 </div>
                                 <div class="col-12 text-black-grey-light text-20px WorkSans-SemiBold">{{ $data['detail']['order_id'] }}</div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
+        </div>
         <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
             <div class="container">
                 <div class="row text-center">
-                    @if(isset($data['admin']))
-                        <div class="col-12 text-16-7px text-black space-text WorkSans">{{ strtoupper($data['user']['name']) }}</div>
-                        <div class="col-12 text-16-7px text-black WorkSans space-nice">{{ $data['user']['phone'] }}</div>
+                    @if(isset($data['user']['phone']))
+                        <div class="col-12 text-13-3px space-text text-medium-grey WorkSans-Regular">Customer</div>
+                        <div class="col-12 text-14px text-grey-light space-text WorkSans-Bold" style="padding-bottom: 5px;">{{ strtoupper($data['user']['name']) }}</div>
+                        <div class="col-12 text-14px text-grey-light WorkSans-Bold" style="padding-bottom: 25px;">{{ $data['user']['phone'] }}</div>
                     @endif
-                    <div class="col-12 text-13-3px space-nice text-black-grey-light WorkSans-Medium" style="padding-bottom: 10px;">
-                        @if ($data['detail']['pickup_type'] == 'set time')
-                            Pesanan Anda akan siap pada
+                    @if(isset($data['detail']['order_id_qrcode']))
+                        <div class="col-12 text-13px space-text text-medium-grey WorkSans-Regular">
+                            @if ($data['detail']['pickup_type'] == 'set time')
+                                Pesanan Anda akan siap pada
+                            @else
+                                Pesanan Anda akan diproses pada
+                            @endif
+                        </div>
+                        <div class="col-12 text-13-3px text-grey-light WorkSans-SemiBold" style="padding-bottom: 25px;">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y', strtotime($data['transaction_date'])) }}</div>
+                        <div class="col-12 text-14px space-text text-grey-light WorkSans-Bold">{{strtoupper($data['trasaction_type'])}}</div>
+                        @if($data['trasaction_type'] == 'Delivery')
+                            <div class="col-12 text-12px WorkSans-Regular" style="color: #707070;">
+                            @if(isset($data['delivery_info']['delivery_address'])) {{ $data['delivery_info']['delivery_address'] }} @endif
+                            </div>
                         @else
-                            Pesanan Anda akan diproses pada
+                            <div class="col-12 text-14px WorkSans-Bold" style="color: #a6ba35;">
+                                @if ($data['detail']['pickup_type'] == 'set time')
+                                    {{ date('H:i', strtotime($data['detail']['pickup_at'])) }}
+                                @elseif($data['detail']['pickup_type'] == 'at arrival')
+                                    SAAT KEDATANGAN
+                                @else
+                                    SAAT INI
+                                @endif
+                            </div>
                         @endif
-                    </div>
-                    <div class="col-12 text-14px space-text text-black-grey-light WorkSans-SemiBold" style="padding-bottom: 20px;">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y', strtotime($data['transaction_date'])) }}</div>
-                    <div class="col-12 text-15px space-nice text-black-grey-light WorkSans-Bold" style="padding-bottom: 8.3px;">PICK UP</div>
-                    <div class="col-12 text-21-7px WorkSans-Bold" style="color: #a6ba35;">
-                        @if ($data['detail']['pickup_type'] == 'set time')
-                            {{ date('H:i', strtotime($data['detail']['pickup_at'])) }}
-                        @elseif($data['detail']['pickup_type'] == 'at arrival')
-                            SAAT KEDATANGAN
-                        @else
-                            SAAT INI
-                        @endif
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
+
+        @if($data['trasaction_type'] == 'Delivery')
+        <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-12 text-13px space-nice WorkSans" style="color: #707070;"><img src="{{env('S3_URL_VIEW')}}img/webview/motorcycle.png" style = "margin-right: 8px;">Info Driver</div>
+                    @if(isset($data['delivery_info']))
+                        <div class="col-12 text-15px space-text text-grey-light WorkSans-Bold">
+                            {{$data['delivery_info']['driver']['driver_name']}}
+                        </div>
+                        <div class="col-12 text-13px text-grey-light WorkSans-Medium" style="padding-bottom: 5px;">
+                            {{$data['delivery_info']['driver']['driver_phone']}}
+                        </div>
+                        <div class="col-12 text-13px space-nice WorkSans-Regular" style="color: #707070;">
+                            {{$data['delivery_info']['driver']['vehicle_number']}}
+                        </div>
+                        <div class="col-12 text-12px space-text WorkSans-Regular" style="color: #707070;">
+                            Status Pengiriman
+                        </div>
+                        <div class="col-12 text-13px space-nice text-grey-light WorkSans-Bold" style="padding-bottom: 10px;">
+                            {{$data['delivery_info']['delivery_status']}}
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endif
 
     @else
         @if(isset($data['admin']) && isset($data['user']['name']))
             <div class="kotak-biasa space-top-all">
                 <div class="container">
                     <div class="row text-center">
-                        <div class="col-12 text-16-7px text-black space-text WorkSans">{{ strtoupper($data['user']['name']) }}</div>
-                        <div class="col-12 text-16-7px text-black WorkSans space-nice">{{ $data['user']['phone'] }}</div>
+                        <div class="col-12 text-15px text-black space-text WorkSans">{{ strtoupper($data['user']['name']) }}</div>
+                        <div class="col-12 text-15px text-black WorkSans space-nice">{{ $data['user']['phone'] }}</div>
 
                     </div>
                 </div>
@@ -608,30 +482,45 @@
     <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
         <div class="row space-bottom">
             <div class="col-4 text-black-grey-light text-14px WorkSans-Bold">Transaksi</div>
-            <div class="col-8 text-grey-white text-right text-medium-grey text-11-7px WorkSans">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y H:i', strtotime($data['transaction_date'])) }}</div>
+            <div class="col-8 text-grey-white text-right text-medium-grey text-12px WorkSans-Regular">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y H:i', strtotime($data['transaction_date'])) }}</div>
         </div>
         <div class="row space-text">
             <div class="col-4"></div>
-            <div class="col-8 text-right text-black-grey-light text-13-3px WorkSans-SemiBold">#{{ $data['transaction_receipt_number'] }}</div>
+            <div class="col-8 text-right text-black-grey-light text-13px WorkSans-SemiBold">#{{ $data['transaction_receipt_number'] }}</div>
         </div>
         <div class="kotak" style="margin: 0px;border-radius: 10px;">
             <div class="row">
                 @foreach ($data['product_transaction'] as $trx)
-                    <div class="col-2 text-14px WorkSans text-black">
+                    <div class="col-2 text-14px WorkSans text-grey-light">
                         <div class="round-grey bg-grey" style="background: #aaaaaa;"></div>
                     </div>
-                    <div class="col-10 text-14px WorkSans-SemiBold text-black" style="margin-left: -30px;margin-bottom: 10px;">{{$trx['brand']}}</div>
+                    <div class="col-10 text-13-3px WorkSans-SemiBold text-grey-light" style="margin-left: -30px;margin-bottom: 10px;">{{$trx['brand']}}</div>
                     @foreach ($trx['product'] as $prod)
-                        <div class="col-2 text-13-3px WorkSans-SemiBold text-black">{{$prod['transaction_product_qty']}}x</div>
-                        <div class="col-6 text-14px WorkSans-SemiBold text-black" style="margin-left: -30px;margin-right: 20px;">{{$prod['product']['product_name']}}</div>
-                        <div class="col-4 text-13-3px text-right WorkSans-SemiBold text-black">{{ str_replace(',', '.', explode('.',$prod['transaction_product_subtotal'])[0]) }}</div>
+                        <div class="col-2 text-13-3px WorkSans-SemiBold text-grey-light space-text">{{$prod['transaction_product_qty']}}x</div>
+                        <div class="col-7 text-13-3px WorkSans-SemiBold text-grey-light space-text" style="margin-left: -30px;margin-right: 20px;">{{$prod['product']['product_name']}}</div>
+                        <div class="col-3 text-13-3px text-right WorkSans-SemiBold text-black space-text">{{$prod['transaction_product_subtotal']}}</div>
                         @if(isset($prod['product']['product_modifiers']))
-                            @foreach($prod['product']['product_modifiers'] as $mod)
-                                <div class="col-2 text-13-3px WorkSans-SemiBold text-black"></div>
-                                <div class="col-6 text-14px WorkSans-SemiBold text-black" style="margin-left: -30px;margin-right: 20px;color: darkgrey;font-size: 11px;">{{$mod['product_modifier_name']}}</div>
-                                <div class="col-4 text-13-3px text-right WorkSans-SemiBold text-black"></div>
+                            <div class="col-2 text-13px WorkSans-SemiBold text-grey-light"></div>
+                            <div class="col-6 text-13px WorkSans-Regular text-grey-light" style="margin-left: -30px;margin-right: 20px;padding-bottom:5px">
+                            @php $modTotal = count($prod['product']['product_modifiers']); @endphp
+                            @foreach($prod['product']['product_modifiers'] as $index => $mod)
+                                {{$mod['product_modifier_name']}}
+                                @if($index < $modTotal-1), @endif
                             @endforeach
+                            </div>
+                            <div class="col-4 text-13-3px text-right WorkSans-SemiBold text-black"></div>
                         @endif
+                        @if($prod['transaction_product_note'])
+                            <div class="col-2 text-13px WorkSans-Regular text-black"></div>
+                            <div class="col-7 text-13px WorkSans-Regular text-medium-grey" style="margin-left: -30px;margin-right: 20px;">{{$prod['transaction_product_note']}}</div>
+                            <div class="col-3 text-13px text-right WorkSans-Regular text-black"></div>
+                        @endif
+                        @if($prod['transaction_product_discount'])
+                            <div class="col-2 text-13-3px WorkSans-SemiBold text-grey-light space-text"></div>
+                            <div class="col-7 text-13-3px WorkSans-SemiBold text-grey-light space-text" style="margin-left: -30px;margin-right: 20px;">Diskon (Promo)</div>
+                            <div class="col-3 text-13-3px text-right WorkSans-Medium space-text" style="color:#a6ba35;">- {{number_format($prod['transaction_product_discount'], 0, ',', '.')}}</div>
+                        @endif
+
                     @endforeach
                     @if ($trx != end($data['product_transaction']))
                         <div class="col-12">
@@ -650,11 +539,12 @@
         <div class="kotak" style="margin: 0px;margin-top: 10px;border-radius: 10px;">
             @foreach($data['payment_detail'] as $dt)
                 <div class="row">
-                    <div class="col-6 text-13-3px WorkSans-SemiBold text-black ">{{$dt['name']}} ({{$dt['desc']}})</div>
                     @if(is_numeric(strpos(strtolower($dt['name']), 'discount')))
-                        <div class="col-6 text-13-3px text-right WorkSans-SemiBold text-black" style="color:#a6ba35;">{{ str_replace(',', '.', $dt['amount']) }}</div>
+                        <div class="col-6 text-13-3px WorkSans-Medium text-grey-light space-text">Diskon ({{$dt['desc']}})</div>
+                        <div class="col-6 text-13-3px text-right WorkSans-Medium space-text" style="color:#a6ba35;">- {{ str_replace(',', '.', $dt['amount']) }}</div>
                     @else
-                        <div class="col-6 text-13-3px text-right WorkSans-SemiBold text-black">{{ str_replace(',', '.', $dt['amount']) }}</div>
+                        <div class="col-6 text-13-3px WorkSans-Medium text-grey-light space-text">{{$dt['name']}} ({{$dt['desc']}})</div>
+                        <div class="col-6 text-13-3px text-right WorkSans-Medium text-grey-light space-text">{{ str_replace(',', '.', $dt['amount']) }}</div>
                     @endif
 
                 </div>
@@ -663,12 +553,8 @@
 
         <div style="margin: 0px;margin-top: 10px;padding: 10px;background: #f0f3f7;">
             <div class="row">
-                <div class="col-6 text-13-3px WorkSans-SemiBold text-black ">Grand Total</div>
-                @if(isset($data['balance']))
-                    <div class="col-6 text-13-3px text-right WorkSans-SemiBold text-black">{{ str_replace(',', '.', $data['transaction_grandtotal'] - $data['balance']) }}</div>
-                @else
-                    <div class="col-6 text-13-3px text-right WorkSans-SemiBold text-black">{{ str_replace(',', '.', $data['transaction_grandtotal']) }}</div>
-                @endif
+                <div class="col-6 text-14px WorkSans-SemiBold text-grey-light">Grand Total</div>
+                    <div class="col-6 text-14px text-right WorkSans-SemiBold text-grey-light">{{ str_replace(',', '.', $data['transaction_grandtotal']) }}</div>
             </div>
         </div>
     </div>
@@ -680,8 +566,13 @@
         <div class="kotak" style="margin: 0px;margin-top: 10px;border-radius: 10px;">
             <div class="row">
                 @foreach($data['transaction_payment']??[] as $dt)
-                    <div class="col-6 text-13-3px WorkSans-SemiBold text-black ">{{$dt['name']}}</div>
-                    <div class="col-6 text-13-3px text-right WorkSans-SemiBold text-black">{{ str_replace(',', '.', explode('.',$dt['amount'])[0]) }}</div>
+                    @if($dt['name'] == 'Balance')
+                        <div class="col-6 text-13-3px WorkSans-Medium text-grey-light space-text">{{env('POINT_NAME')}}</div>
+                        <div class="col-6 text-13-3px text-right WorkSans-Medium space-text" style="color:#de2e1f;">{{ $dt['amount'] }}</div>
+                    @else
+                        <div class="col-6 text-13-3px WorkSans-Medium text-grey-light space-text">{{$dt['name']}}</div>
+                        <div class="col-6 text-13-3px text-right WorkSans-Medium text-grey-light space-text">{{ $dt['amount'] }}</div>
+                    @endif
                 @endforeach
             </div>
         </div>
@@ -699,24 +590,24 @@
                         $count = count($data['detail']['detail_status']);
                         foreach ($data['detail']['detail_status'] as $status){
                             if($i == 1 ){
-                                $html = '<div class="col-12 text-13-3px WorkSans-Medium text-black">';
+                                $html = '<div class="col-12 text-13-3px WorkSans-Medium text-grey-light">';
                                 $html .= '<div class="round-grey bg-grey"></div>';
                                 $html .= $status['text'];
                                 $html .= '</div>';
                                 $html .= '<div class="inline vertical-top">';
-                                $html .= '<div class="col-12 text-11-7px WorkSans text-black space-bottom" style="margin-left: 10%">';
+                                $html .= '<div class="col-12 text-11-7px WorkSans-Regular text-medium-grey space-bottom" style="margin-left: 10%">';
                                 $html .= $status['date'];
                                 $html .= '</div>';
                                 $html .= '</div>';
 
                                 echo $html;
                             }else{
-                                $html = '<div class="col-12 text-13-3px WorkSans-Medium text-black">';
+                                $html = '<div class="col-12 text-13-3px WorkSans-Medium text-grey-light">';
                                 $html .= '<div class="round-green bg-green2"></div>';
                                 $html .= $status['text'];
                                 $html .= '</div>';
                                 $html .= '<div class="inline vertical-top">';
-                                $html .= '<div class="col-12 text-11-7px WorkSans text-black space-bottom" style="margin-left: 10%">';
+                                $html .= '<div class="col-12 text-11-7px WorkSans-Regular text-medium-grey space-bottom" style="margin-left: 10%">';
                                 $html .= $status['date'];
                                 $html .= '</div>';
                                 $html .= '</div>';
