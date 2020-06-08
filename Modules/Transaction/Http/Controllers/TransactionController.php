@@ -106,6 +106,11 @@ class TransactionController extends Controller
                 $data['submenu_active'] = 'deals-autoresponse-claim-paid-deals-success';
                 break;
 
+            case 'claim-point-deals-success':
+                $data['menu_active'] = 'deals';
+                $data['submenu_active'] = 'deals-autoresponse-claim-point-deals-success';
+                break;
+
             case 'transaction-point-achievement':
                 $data['menu_active'] = 'transaction';
                 $data['submenu_active'] = 'transaction-point-achievement';
@@ -130,6 +135,21 @@ class TransactionController extends Controller
             case 'delivery-status-update':
                 $data['menu_active'] = 'transaction';
                 $data['submenu_active'] = 'delivery-status-update';
+                break;
+
+            case 'get-free-subscription-success':
+                $data['menu_active'] = 'subscription';
+                $data['submenu_active'] = 'subscription-autoresponse-get-free-subscription-success';
+                break;
+
+            case 'buy-paid-subscription-success':
+                $data['menu_active'] = 'subscription';
+                $data['submenu_active'] = 'subscription-autoresponse-buy-paid-subscription-success';
+                break;
+
+            case 'buy-point-subscription-success':
+                $data['menu_active'] = 'subscription';
+                $data['submenu_active'] = 'subscription-autoresponse-buy-point-subscription-success';
                 break;
 
             default:

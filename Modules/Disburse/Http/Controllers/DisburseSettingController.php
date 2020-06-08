@@ -2,6 +2,8 @@
 
 namespace Modules\Disburse\Http\Controllers;
 
+use App\Exports\MultisheetExport;
+use App\Imports\FirstSheetOnlyImport;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -10,7 +12,7 @@ use Session;
 use App\Lib\MyHelper;
 
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Excel;
 
 class DisburseSettingController extends Controller
 {
@@ -106,9 +108,9 @@ class DisburseSettingController extends Controller
         if($post){
             $storeSetting = MyHelper::post('disburse/setting/bank-account',$post);
             if(isset($storeSetting['status']) && $storeSetting['status'] == 'success'){
-                return redirect('disburse/setting/bank-account')->withSuccess(['Success Update Data']);
+                return redirect('disburse/setting/bank-account#add')->withSuccess(['Success Update Data']);
             }else{
-                return redirect('disburse/setting/bank-account')->withErrors(['Failed Update Data']);
+                return redirect('disburse/setting/bank-account#add')->withErrors(['Failed Update Data']);
             }
         }else{
             $bank = MyHelper::post('disburse/bank',$post);
@@ -126,6 +128,80 @@ class DisburseSettingController extends Controller
             }
 
             return view('disburse::setting_bank_account.add', $data);
+        }
+    }
+
+    function exportListBank(Request $request){
+        $bank = MyHelper::get('disburse/bank');
+        if(isset($bank['status']) && $bank['status'] == 'success'){
+            $arr['All Type'] = [];
+            foreach ($bank['result'] as $value){
+                $dt = [
+                    'bank_code' => $value['bank_code'],
+                    'bank_name' => $value['bank_name']
+                ];
+                $arr['All Type'][] = $dt;
+            }
+            $data = new MultisheetExport($arr);
+            return Excel::download($data,'list_bank.xls');
+        }else{
+            return redirect('disburse/setting/bank-account#export-import')->withErrors(['Failed Get Data List Bank']);
+        }
+    }
+
+    function exportBankAccoutOutlet(Request $request){
+        $outlet =  MyHelper::get('disburse/outlets');
+        if(isset($outlet['status']) && $outlet['status'] == 'success'){
+            $arr['All Type'] = [];
+            foreach ($outlet['result'] as $value){
+                $dt = [
+                    'outlet_code' => $value['outlet_code'],
+                    'outlet_name' => $value['outlet_name'],
+                    'bank_code' => $value['bank_code'],
+                    'beneficiary_name' => $value['beneficiary_name'],
+                    'beneficiary_alias' => $value['beneficiary_alias'],
+                    'beneficiary_account' => ' '.$value['beneficiary_account'],
+                    'beneficiary_email' => $value['beneficiary_email']
+                ];
+                $arr['All Type'][] = $dt;
+            }
+            $data = new MultisheetExport($arr);
+            return Excel::download($data,'janji_jiwa_bank_accout_outlet_'.date('dmYHis').'.xls');
+        }else{
+            return redirect('disburse/setting/bank-account#export-import')->withErrors(['Failed Get Data List Bank']);
+        }
+    }
+
+    function importBankAccoutOutlet(Request $request){
+        $post = $request->except('_token');
+
+        if($request->file('import_file')){
+
+            $path = $request->file('import_file')->getRealPath();
+            $name = $request->file('import_file')->getClientOriginalName();
+            $dataimport = Excel::toArray(new FirstSheetOnlyImport(),$request->file('import_file'));
+            $dataimport = array_map(function($x){return (Object)$x;}, $dataimport[0]??[]);
+            $save = MyHelper::post('disburse/setting/import-bank-account-outlet', ['data_import' => $dataimport]);
+            if (isset($save['status']) && $save['status'] == "success") {
+                if(count($save['data_failed']) == 0){
+                    $message = ['Success import '.count($save['data_success'])];
+                }else{
+                    $message = ['Success import '.count($save['data_success']),'Failed import ('.implode(",",$save['data_failed']).')'];
+                }
+                return redirect('disburse/setting/bank-account#export-import')->withSuccess($message);
+            }else {
+                if (isset($save['errors'])) {
+                    return redirect('disburse/setting/bank-account#export-import')->withErrors($save['errors'])->withInput();
+                }
+
+                if (isset($save['status']) && $save['status'] == "fail") {
+                    return back()->withErrors($save['messages'])->withInput();
+                }
+                return redirect('disburse/setting/bank-account#export-import')->withErrors(['Something when wrong. Please try again.'])->withInput();
+            }
+            return redirect('disburse/setting/bank-account#export-import')->withErrors(['Something when wrong. Please try again.'])->withInput();
+        }else{
+            return redirect('disburse/setting/bank-account#export-import')->withErrors(['File is required.'])->withInput();
         }
     }
 

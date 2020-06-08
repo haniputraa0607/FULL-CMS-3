@@ -168,7 +168,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <!--<div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Deep Link Gojek
@@ -190,7 +190,7 @@
             <div class="col-md-9">
                 <input type="text" class="form-control" name="deep_link_grab" value="{{ $val['deep_link_grab'] }}" placeholder="Deep link grab">
             </div>
-        </div>
+        </div>-->
 
         @if(MyHelper::hasAccess([96], $configs))
         <div class="form-group">

@@ -116,10 +116,12 @@ class DisburseController extends Controller
                 $data['nominal_success'] = $getData['result']['nominal_success'];
                 $data['nominal_fail'] = $getData['result']['nominal_fail'];
                 $data['nominal_trx'] = $getData['result']['nominal_trx'];
+                $data['total_income_central'] = $getData['result']['income_central'];
 
                 $data['format_nominal_success'] = number_format($getData['result']['nominal_success']);
                 $data['format_nominal_fail'] = number_format($getData['result']['nominal_fail']);
                 $data['format_nominal_trx'] = number_format($getData['result']['nominal_trx']);
+                $data['format_total_income_central'] = number_format($getData['result']['income_central']);
             }else{
                 $data['status'] = 'fail';
             }
@@ -137,10 +139,12 @@ class DisburseController extends Controller
                 $data['nominal_success'] = $getData['result']['nominal_success'];
                 $data['nominal_fail'] = $getData['result']['nominal_fail'];
                 $data['nominal_trx'] = $getData['result']['nominal_trx'];
+                $data['total_income_central'] = $getData['result']['income_central'];
             }else{
                 $data['nominal_success'] = 0;
                 $data['nominal_fail'] = 0;
                 $data['nominal_trx'] = 0;
+                $data['total_income_central'] = 0;
             }
 
             $outlets = MyHelper::post($this->baseuri.'/outlets',$post);

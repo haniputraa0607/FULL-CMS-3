@@ -649,11 +649,11 @@
 						</a>
 					</li>
 					@endif
-					<li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
+					<!-- <li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
 						<a href="{{url('transaction/offline/'.date('YmdHis'))}}" class="nav-link ">
 							<span class="title">Offline</span>
 						</a>
-					</li>
+					</li> -->
 					@if(MyHelper::hasAccess([12], $configs))
 					<li class="nav-item {{($submenu_active == 'transaction-pickup order') ? 'active open' : ''}}">
 						<a href="{{url('transaction/pickup order/'.date('YmdHis'))}}" class="nav-link ">
@@ -977,6 +977,14 @@
 				</ul>
 			</li>
 			@endif
+			@if(MyHelper::hasAccess([249], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'report-gosend') ? 'active open' : ''}}">
+					<a href="{{url('report/gosend')}}" class="nav-link nav-toggle">
+						<i class="fa fa-truck"></i>
+						<span class="title">Report GoSend</span>
+					</a>
+				</li>
+			@endif
 		@endif
 
 		@if(MyHelper::hasAccess([25], $configs) || MyHelper::hasAccess([26], $configs))
@@ -1035,6 +1043,12 @@
 										<a href="{{url('transaction/autoresponse/claim-paid-deals-success')}}" class="nav-link ">
 											<i class="fa fa-mail-forward"></i>
 											<span class="title">[Response] Claim Paid Deals Success</span>
+										</a>
+									</li>
+									<li class="nav-item {{($submenu_active == 'deals-autoresponse-claim-point-deals-success') ? 'active open' : ''}}">
+										<a href="{{url('transaction/autoresponse/claim-point-deals-success')}}" class="nav-link ">
+											<i class="fa fa-mail-forward"></i>
+											<span class="title">[Response] Claim Point Deals Success</span>
 										</a>
 									</li>
 									<li class="nav-item {{($submenu_active == 'deals-autoresponse-redeem-deals-success') ? 'active open' : ''}}">
@@ -1361,6 +1375,28 @@
 								<span class="title">Subscription List</span>
 							</a>
 						</li>
+						@endif
+						@if(MyHelper::hasAccess([113], $configs))
+							@if(MyHelper::hasAccess([97], $grantedFeature))
+								<li class="nav-item {{($submenu_active == 'subscription-autoresponse-get-free-subscription-success') ? 'active open' : ''}}">
+									<a href="{{url('transaction/autoresponse/get-free-subscription-success')}}" class="nav-link ">
+										<i class="fa fa-mail-forward"></i>
+										<span class="title">[Response] Get Free Subscription Success</span>
+									</a>
+								</li>
+								<li class="nav-item {{($submenu_active == 'subscription-autoresponse-buy-paid-subscription-success') ? 'active open' : ''}}">
+									<a href="{{url('transaction/autoresponse/buy-paid-subscription-success')}}" class="nav-link ">
+										<i class="fa fa-mail-forward"></i>
+										<span class="title">[Response] Buy Paid Subscription Success</span>
+									</a>
+								</li>
+								<li class="nav-item {{($submenu_active == 'subscription-autoresponse-Buy-point-subscription-success') ? 'active open' : ''}}">
+									<a href="{{url('transaction/autoresponse/buy-point-subscription-success')}}" class="nav-link ">
+										<i class="fa fa-mail-forward"></i>
+										<span class="title">[Response] Buy Point Subscription Success</span>
+									</a>
+								</li>
+							@endif
 						@endif
 					</ul>
 				</li>
@@ -1997,64 +2033,6 @@
 			@endif -->
 		@endif
 
-		<!-- @if(MyHelper::hasAccess([125,126,127,128,129], $grantedFeature))
-			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #383b67;font-weight: 600;">Report</h3>
-			</li>
-			<li class="nav-item {{($menu_active == 'report-single') ? 'active' : ''}}">
-				<a href="{{url('report')}}" class="nav-link nav-toggle">
-					<i class="icon-graph"></i>
-					<span class="title">Report</span>
-				</a>
-			</li>
-			{{-- <li class="nav-item {{($menu_active == 'report-compare') ? 'active' : ''}}">
-				<a href="{{url('report/compare')}}" class="nav-link nav-toggle">
-					<i class="icon-graph"></i>
-					<span class="title">Compare Report</span>
-				</a>
-			</li> --}}
-			{{-- @if(MyHelper::hasAccess([125], $grantedFeature))
-			<li class="nav-item {{($menu_active == 'report-global') ? 'active' : ''}}">
-				<a href="{{url('report/global')}}" class="nav-link nav-toggle">
-					<i class="icon-graph"></i>
-					<span class="title">Global</span>
-				</a>
-			</li>
-			@endif
-			@if(MyHelper::hasAccess([126], $grantedFeature))
-			<li class="nav-item {{($menu_active == 'report-customer') ? 'active' : ''}}">
-				<a href="{{url('report/customer/summary')}}" class="nav-link nav-toggle">
-					<i class="icon-graph"></i>
-					<span class="title">Customer</span>
-				</a>
-			</li>
-			@endif
-			@if(MyHelper::hasAccess([127], $grantedFeature))
-			<li class="nav-item {{($menu_active == 'report-product') ? 'active' : ''}}">
-				<a href="{{url('report/product')}}" class="nav-link nav-toggle">
-					<i class="icon-graph"></i>
-					<span class="title">Product</span>
-				</a>
-			</li>
-			@endif
-			@if(MyHelper::hasAccess([128], $grantedFeature))
-			<li class="nav-item {{($submenu_active == 'report-outlet') ? 'active' : ''}}">
-				<a href="{{url('report/outlet')}}" class="nav-link nav-toggle">
-					<i class="icon-graph"></i>
-					<span class="title">Outlet</span>
-				</a>
-			</li>
-			@endif --}}
-		@endif -->
-
-		{{-- @if(MyHelper::hasAccess([129], $grantedFeature))
-		<li class="nav-item {{($menu_active == 'report-magic') ? 'active' : ''}}">
-			<a href="{{url('report/magic')}}" class="nav-link nav-toggle">
-				<i class="icon-graph"></i>
-				<span class="title">Magic Report</span>
-			</a>
-		</li>
-		@endif --}}
 		@if(MyHelper::hasAccess([234,235], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #383b67;font-weight: 600;">Disburse</h3>
@@ -2127,3 +2105,62 @@
 				</li>
 			@endif
 		@endif
+
+		@if(MyHelper::hasAccess([125,126,127,128,129], $grantedFeature))
+			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
+				<h3 class="uppercase" style="color: #383b67;font-weight: 600;">Report</h3>
+			</li>
+			<li class="nav-item {{($menu_active == 'report-single') ? 'active' : ''}}">
+				<a href="{{url('report')}}" class="nav-link nav-toggle">
+					<i class="icon-graph"></i>
+					<span class="title">Report</span>
+				</a>
+			</li>
+			<li class="nav-item {{($menu_active == 'report-compare') ? 'active' : ''}}">
+				<a href="{{url('report/compare')}}" class="nav-link nav-toggle">
+					<i class="icon-graph"></i>
+					<span class="title">Compare Report</span>
+				</a>
+			</li> 
+			@if(MyHelper::hasAccess([125], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'report-global') ? 'active' : ''}}">
+				<a href="{{url('report/global')}}" class="nav-link nav-toggle">
+					<i class="icon-graph"></i>
+					<span class="title">Global</span>
+				</a>
+			</li>
+			@endif
+			@if(MyHelper::hasAccess([126], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'report-customer') ? 'active' : ''}}">
+				<a href="{{url('report/customer/summary')}}" class="nav-link nav-toggle">
+					<i class="icon-graph"></i>
+					<span class="title">Customer</span>
+				</a>
+			</li>
+			@endif
+			@if(MyHelper::hasAccess([127], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'report-product') ? 'active' : ''}}">
+				<a href="{{url('report/product')}}" class="nav-link nav-toggle">
+					<i class="icon-graph"></i>
+					<span class="title">Product</span>
+				</a>
+			</li>
+			@endif
+			@if(MyHelper::hasAccess([128], $grantedFeature))
+			<li class="nav-item {{($submenu_active == 'report-outlet') ? 'active' : ''}}">
+				<a href="{{url('report/outlet')}}" class="nav-link nav-toggle">
+					<i class="icon-graph"></i>
+					<span class="title">Outlet</span>
+				</a>
+			</li>
+			@endif
+		@endif
+
+		{{-- @if(MyHelper::hasAccess([129], $grantedFeature))
+		<li class="nav-item {{($menu_active == 'report-magic') ? 'active' : ''}}">
+			<a href="{{url('report/magic')}}" class="nav-link nav-toggle">
+				<i class="icon-graph"></i>
+				<span class="title">Magic Report</span>
+			</a>
+		</li>
+		@endif --}}

@@ -37,7 +37,17 @@
                 placeholder: 'Product Description',
                 tabsize: 2,
                 height: 120,
-                fontNames: ['Open Sans'],
+                // fontNames: ['Open Sans'],
+                 toolbar: [
+                    ['style', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                ],
                 callbacks: {
                     onImageUpload: function(files){
                         sendFile(files[0], $(this).attr('id'));

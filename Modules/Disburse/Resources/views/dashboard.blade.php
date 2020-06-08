@@ -147,15 +147,18 @@ $idUserFrenchisee = session('id_user_franchise');
 					$("#nom_success").empty();
 					$("#nom_fail").empty();
 					$("#nom_trx").empty();
-
+					$("#nom_income").empty();
+					nom_income
 					if (result.status === "success") {
 						$("#nom_success").append('<span data-counter="counterup" data-value="'+result.nominal_success+'">Rp '+result.format_nominal_success+'</span>');
 						$("#nom_fail").append('<span data-counter="counterup" data-value="'+result.nominal_fail+'">Rp '+result.format_nominal_fail+'</span>');
 						$("#nom_trx").append('<span data-counter="counterup" data-value="'+result.nominal_trx+'">Rp '+result.format_nominal_trx+'</span>');
+						$("#nom_income").append('<span data-counter="counterup" data-value="'+result.total_income_central+'">Rp '+result.format_total_income_central+'</span>');
 					}else{
 						$("#nom_success").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
 						$("#nom_fail").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
 						$("#nom_trx").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
+						$("#nom_income").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
 					}
 				},
 				error: function (jqXHR, exception) {
@@ -252,40 +255,55 @@ $idUserFrenchisee = session('id_user_franchise');
 	</div>
 
 	<div class="row" style="margin-top: 3%;">
-		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		@if(MyHelper::hasAccess([235], $grantedFeature))
+			<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+				<a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+					<div class="visual">
+						<i class="fa fa-shopping-cart"></i>
+					</div>
+					<div class="details">
+						<div class="number" id="nom_income">
+							<span data-counter="counterup" data-value="{{$total_income_central}}" style="font-size: 25px">Rp {{number_format($total_income_central)}}</span>
+						</div>
+						<div class="desc"> Income Central </div>
+					</div>
+				</a>
+			</div>
+		@endif
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
 			<a class="dashboard-stat dashboard-stat-v2 green" href="#">
 				<div class="visual">
 					<i class="fa fa-shopping-cart"></i>
 				</div>
 				<div class="details">
 					<div class="number" id="nom_success">
-						<span data-counter="counterup" data-value="{{$nominal_success}}">Rp {{number_format($nominal_success)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_success}}" style="font-size: 25px">Rp {{number_format($nominal_success)}}</span>
 					</div>
-					<div class="desc"> Nominal Success </div>
+					<div class="desc"> Total Success Disburse</div>
 				</div>
 			</a>
 		</div>
-		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
 			<a class="dashboard-stat dashboard-stat-v2 red" href="#">
 				<div class="visual">
 					<i class="fa fa-bar-chart-o"></i>
 				</div>
 				<div class="details">
 					<div class="number" id="nom_fail">
-						<span data-counter="counterup" data-value="{{$nominal_fail}}">Rp {{number_format($nominal_fail)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_fail}}" style="font-size: 25px">Rp {{number_format($nominal_fail)}}</span>
 					</div>
-					<div class="desc"> Nominal Failed </div>
+					<div class="desc"> Total Failed Disburse</div>
 				</div>
 			</a>
 		</div>
-		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
 			<a class="dashboard-stat dashboard-stat-v2 blue" href="#">
 				<div class="visual">
 					<i class="fa fa-comments"></i>
 				</div>
 				<div class="details">
 					<div class="number" id="nom_trx">
-						<span data-counter="counterup" data-value="{{$nominal_trx}}">Rp {{number_format($nominal_trx)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_trx}}" style="font-size: 25px">Rp {{number_format($nominal_trx)}}</span>
 					</div>
 					<div class="desc"> Nominal Transaction </div>
 				</div>

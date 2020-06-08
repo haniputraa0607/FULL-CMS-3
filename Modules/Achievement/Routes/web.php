@@ -18,4 +18,5 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'achievem
     Route::any('remove', 'AchievementController@remove');
     Route::any('detail/{slug}', 'AchievementController@show');
     Route::any('update/detail', 'AchievementController@update');
+    Route::any('report/{slug}', 'AchievementController@report');
 });

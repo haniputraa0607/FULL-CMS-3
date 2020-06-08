@@ -160,15 +160,16 @@
 	        placeholder: 'Success Page Content',
 	        tabsize: 2,
 	        height: 180,
-	        toolbar: [
-	          ['style', ['style']],
-	          ['style', ['bold', 'underline', 'clear']],
-	          ['color', ['color']],
-	          ['para', ['ul', 'ol', 'paragraph']],
-	          ['insert', ['table']],
-	          ['insert', ['link', 'picture', 'video']],
-	          ['misc', ['fullscreen', 'codeview', 'help']]
-	        ],
+			toolbar: [
+				['style', ['style']],
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['insert', ['table']],
+				['insert', ['link', 'picture', 'video']],
+				['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+			],
 	        callbacks: {
 	            onImageUpload: function(files){
 	                sendFile(files[0]);
@@ -804,9 +805,9 @@
 					 			 		<div>Click to:</div>
 										<div>{{ $click_to }}</div><br>
 										<div>Date Start:</div>
-										<div>{{ ($banner['banner_start']??false)?date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'-' }}</div><br>
+										<div>{{ ($banner['banner_start']??false)?date("d F Y H:i", strtotime($banner['banner_start'])):'-' }}</div><br>
 										<div>Date End:</div>
-					 			 		<div>{{ ($banner['banner_start']??false)?date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):'-' }}</div>
+					 			 		<div>{{ ($banner['banner_end']??false)?date("d F Y H:i", strtotime($banner['banner_end'])):'-' }}</div>
 					 			 	</div>
 					 			</div>
 					 			@endforeach
@@ -1147,11 +1148,11 @@
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
 									</label>
 	                            </div>
-	                            <div class="col-md-4">
+	                            <!--<div class="col-md-4">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
-	                            </div>
+	                            </div>-->
                             </div>
 
                             <div class="col-md-12 click-to-type" style="margin-top: 10px;">
@@ -1259,11 +1260,11 @@
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
 									</label>
 	                            </div>
-	                            <div class="col-md-4">
+	                            <!--<div class="col-md-4">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
-	                            </div>
+	                            </div>-->
                             </div>
 
                             <div class="col-md-12 click-to-type" style="margin-top: 10px;">
