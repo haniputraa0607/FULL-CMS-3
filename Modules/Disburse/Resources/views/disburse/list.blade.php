@@ -98,6 +98,7 @@
             <tr>
                 <th scope="col" width="10%"> Action </th>
                 <th scope="col" width="10%"> Count Retry </th>
+                @if($status == 'fail') <th scope="col" width="10%"> Error Message </th>@endif
                 @if($status == 'all') <th scope="col" width="10%"> Status </th>@endif
                 <th scope="col" width="30%"> Outlet </th>
                 <th scope="col" width="30%"> Date </th>
@@ -120,6 +121,7 @@
                             @endif
                         </td>
                         <td>{{$val['count_retry']}}</td>
+                        @if($status == 'fail') <td>{{$val['error_message']}}</td>@endif
                         @if($status == 'all') <td>{{$val['disburse_status']}}</td>@endif
                         <td>{{$val['outlet_code']}} - {{$val['outlet_name']}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>

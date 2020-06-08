@@ -100,6 +100,7 @@ $idUserFrenchisee = session('id_user_franchise');
                 <th scope="col" width="10%"> Income Outlet</th>
                 @if(MyHelper::hasAccess([235], $grantedFeature))
                     <th scope="col" width="10%"> Income Central</th>
+                    <th scope="col" width="10%"> Expense Central</th>
                 @endif
                 <th scope="col" width="10%"> Detail Setting </th>
             </tr>
@@ -118,7 +119,10 @@ $idUserFrenchisee = session('id_user_franchise');
                             Point Use = {{number_format($val['balance_nominal'])}}<br>
                         </td>
                         <td>{{number_format($val['income_outlet'])}}</td>
-                        <td>{{number_format($val['income_central'])}}</td>
+                        @if(MyHelper::hasAccess([235], $grantedFeature))
+                            <td>{{number_format($val['income_central'])}}</td>
+                            <td>{{number_format($val['expense_central'])}}</td>
+                        @endif
                         <td>
                             <?php
                                 $mdr_type = '<br>';
