@@ -468,7 +468,6 @@ class SettingFraudController extends Controller
                         'Tanggal transaksi' => date('d F Y', strtotime($value['transaction_date'])),
                         'Jam transaksi' => date('H:i', strtotime($value['transaction_date'])),
                         'Lokasi transaksi' => $value['outlet_name'],
-                        'Point' => $value['transaction_cashback_earned'],
                         'Nominal transaksi' => number_format($value['transaction_grandtotal'], 2),
                     ];
                     $arr['All Type'][] = $dt;
@@ -677,9 +676,7 @@ class SettingFraudController extends Controller
                         'No HP' => $value['phone'],
                         'Email' => $value['email'],
                         'Tanggal Fraud' => date('d F Y', strtotime($value['created_at'])),
-                        'Waktu Fraud' => date('H:i', strtotime($value['created_at'])),
-                        'At Outlet' => $value['at_outlet']['outlet_name'],
-                        'Most Outlet' => $value['most_outlet']['outlet_name']
+                        'Waktu Fraud' => date('H:i', strtotime($value['created_at']))
                     ];
                     $arr['All Type'][] = $dt;
                 }

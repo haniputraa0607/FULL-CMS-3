@@ -559,7 +559,18 @@ $configs = session('configs');
             }
         })
     }
-
+    function showOtp() {
+    	const currentMethod = $('#outlet_apps_access_feature').val();
+    	if (currentMethod == 'otp') {
+    		$('#otp-form').removeClass('hidden');
+    	} else {
+    		$('#otp-form').addClass('hidden');    		
+    	}
+    }
+    $(document).ready(function () {
+    	$('#outlet_apps_access_feature').change(showOtp);
+    	$('#outlet_apps_access_feature').change();
+    });
     </script>
 @endsection
 
@@ -591,14 +602,31 @@ $configs = session('configs');
 	<div class="portlet-title">
 		<div class="caption">
 			@if($subject == 'enquiry-partnership') @php $subject = 'enquiry-karir'; @endphp @endif
-			<span class="caption-subject font-dark sbold uppercase font-blue">SETTING MESSAGES OUTLET APP OTP</span>
+			<span class="caption-subject font-dark sbold uppercase font-blue">Outlet Apps Access Feature</span>
 		</div>
 	</div>
 	<div class="portlet-body form">
 		<form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
 			<div class="form-body">
-
+				<div class="form-group" >
+					<div class="input-icon right">
+						<label class="col-md-3 control-label">
+						Validation Method
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Pilih metode untuk memvalidasi pengguna yang melakukan update data" data-container="body"></i>
+						</label>
+					</div>
+					<div class="col-md-4">
+						<select name="outlet_apps_access_feature" id="outlet_apps_access_feature" class="form-control select2">
+							<option value="off" @if($data['outlet_apps_access_feature'] == 'off') selected @endif>No Validation</option>
+							<option value="otp" @if($data['outlet_apps_access_feature'] == 'otp') selected @endif>OTP</option>
+							<option value="seeds" @if($data['outlet_apps_access_feature'] == 'seeds') selected @endif>Email & Password Validation</option>
+						</select>
+					</div>
+				</div>
+				<div id="otp-form">
 				@if(MyHelper::hasAccess([39], $configs))
+					<hr>
 					<h4>SMS</h4>
 					<div class="form-group" >
 						<div class="input-icon right">
@@ -649,7 +677,85 @@ $configs = session('configs');
 				@else
 					<input hidden name="autocrm_sms_toogle" value="0">
 				@endif
+				@if(MyHelper::hasAccess([38], $configs))
+					<h4>Email</h4>
+					<div class="form-group">
+						<div class="input-icon right">
+							<label class="col-md-3 control-label">
+							Status
+							<span class="required" aria-required="true"> * </span>
+							<i class="fa fa-question-circle tooltips" data-original-title="Pilih enabled untuk mengedit template email auto response ketika {{strtolower(str_replace('-',' ',$subject))}}" data-container="body"></i>
+							</label>
+						</div>
+						<div class="col-md-9">
+							<select name="autocrm_email_toogle" id="autocrm_email_toogle" class="form-control select2" id="email_toogle" onChange="visibleDiv('email',this.value)">
+								<option value="0" @if($data['autocrm_email_toogle'] == 0) selected @endif>Disabled</option>
+								<option value="1" @if($data['autocrm_email_toogle'] == 1) selected @endif>Enabled</option>
+							</select>
+						</div>
+					</div>
 
+					<div class="form-group" id="div_email_subject" @if($data['autocrm_email_toogle'] == 0) style="display:none;" @endif>
+						<div class="input-icon right">
+							<label class="col-md-3 control-label">
+							Subject
+							<span class="required" aria-required="true"> * </span>
+							<i class="fa fa-question-circle tooltips" data-original-title="Diisi dengan subjek email, tambahkan text replacer bila perlu" data-container="body"></i>
+							</label>
+						</div>
+						<div class="col-md-9">
+							<input type="text" placeholder="Email Subject" class="form-control" name="autocrm_email_subject" id="autocrm_email_subject" value="{{$data['autocrm_email_subject']}}">
+							<br>
+							You can use this variables to display user personalized information:
+							<br><br>
+							<div class="row">
+								@foreach($textreplaces as $key=>$row)
+									<div class="col-md-3" style="margin-bottom:5px;">
+										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addEmailSubject('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+									</div>
+								@endforeach
+								@if (isset($custom))
+									@foreach($custom as $key=>$row)
+										<div class="col-md-3" style="margin-bottom:5px;">
+											<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addEmailSubject('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
+										</div>
+									@endforeach
+								@endif
+							</div>
+						</div>
+					</div>
+					<div class="form-group" id="div_email_content" @if($data['autocrm_email_toogle'] == 0) style="display:none;" @endif>
+						<div class="input-icon right">
+							<label class="col-md-3 control-label">
+							Content
+							<span class="required" aria-required="true"> * </span>
+							<i class="fa fa-question-circle tooltips" data-original-title="Diisi dengan konten email, tambahkan text replacer bila perlu" data-container="body"></i>
+							</label>
+						</div>
+						<div class="col-md-9">
+							<textarea name="autocrm_email_content" id="autocrm_email_content" class="form-control summernote"><?php echo $data['autocrm_email_content'];?></textarea>
+							You can use this variables to display user personalized information:
+							<br><br>
+							<div class="row" >
+								@foreach($textreplaces as $key=>$row)
+									<div class="col-md-3" style="margin-bottom:5px;">
+										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addEmailContent('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+									</div>
+								@endforeach
+								@if (isset($custom))
+									@foreach($custom as $key=>$row)
+										<div class="col-md-3" style="margin-bottom:5px;">
+											<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addEmailContent('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
+										</div>
+									@endforeach
+								@endif
+							</div>
+						</div>
+					</div>
+				@else
+					<input hidden name="autocrm_email_toogle" value="0">
+				@endif
+				</div>
 				<div class="form-actions">
 					{{ csrf_field() }}
 					<div class="row">
