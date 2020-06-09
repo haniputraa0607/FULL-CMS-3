@@ -169,6 +169,13 @@ class AutocrmController extends Controller
 				break;
 		}
 
+        $data['click_inbox'] = [
+            ['value' => "No Action",'title' => 'No Action']
+        ];
+        $data['click_notification'] = [
+            ['value' => 'Home','title' => 'Home']
+        ];
+
 		if($auto == null) return back()->withErrors(['No such response']);
 		$data['data'] = $auto;
 		if($test['status'] == 'success'){
