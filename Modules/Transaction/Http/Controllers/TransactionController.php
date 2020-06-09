@@ -89,71 +89,162 @@ class TransactionController extends Controller
             case 'receive-inject-voucher':
                 $data['menu_active'] = 'inject-voucher';
                 $data['submenu_active'] = 'deals-autoresponse-receive-inject-voucher';
+                $data['click_inbox'] = [
+                    ['value' => "Voucher",'title' => 'Voucher']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher','title' => 'Voucher']
+                ];
                 break;
 
             case 'redeem-voucher-success':
                 $data['menu_active'] = 'deals';
                 $data['submenu_active'] = 'deals-autoresponse-redeem-deals-success';
+                $data['click_inbox'] = [
+                    ['value' => "Voucher",'title' => 'Voucher']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher','title' => 'Voucher']
+                ];
                 break;
             
             case 'claim-free-deals-success':
                 $data['menu_active'] = 'deals';
                 $data['submenu_active'] = 'deals-autoresponse-claim-free-deals-success';
+                $data['click_inbox'] = [
+                    ['value' => "Voucher",'title' => 'Voucher']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher','title' => 'Voucher']
+                ];
                 break;
 
             case 'claim-paid-deals-success':
                 $data['menu_active'] = 'deals';
                 $data['submenu_active'] = 'deals-autoresponse-claim-paid-deals-success';
+                $data['click_inbox'] = [
+                    ['value' => "Voucher",'title' => 'Voucher']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher','title' => 'Voucher']
+                ];
                 break;
 
             case 'claim-point-deals-success':
                 $data['menu_active'] = 'deals';
                 $data['submenu_active'] = 'deals-autoresponse-claim-point-deals-success';
+                $data['click_inbox'] = [
+                    ['value' => "Voucher",'title' => 'Voucher']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher','title' => 'Voucher']
+                ];
                 break;
 
             case 'transaction-point-achievement':
                 $data['menu_active'] = 'transaction';
                 $data['submenu_active'] = 'transaction-point-achievement';
+                $data['click_inbox'] = [
+                    ['value' => "Home",'title' => 'Home'],
+                    ['value' => "History Transaction",'title' => 'History Transaction'],
+                    ['value' => "History Point",'title' => 'History Point']
+                ];
+                $data['click_notification'] = [
+                    ['value' => "Home",'title' => 'Home'],
+                    ['value' => "History Transaction",'title' => 'History Transaction'],
+                    ['value' => "History Point",'title' => 'History Point']
+                ];
                 break;
                         
             case 'transaction-failed-point-refund':
                 $data['menu_active'] = 'transaction';
                 $data['submenu_active'] = 'transaction-failed-point-refund';
+                $data['click_inbox'] = [
+                    ['value' => "Home",'title' => 'Home'],
+                    ['value' => "History Transaction",'title' => 'History Transaction']
+                ];
+                $data['click_notification'] = [
+                    ['value' => "Home",'title' => 'Home'],
+                    ['value' => "History Transaction",'title' => 'History Transaction']
+                ];
                 break;
                         
             case 'rejected-order-point-refund':
                 $data['menu_active'] = 'transaction';
                 $data['submenu_active'] = 'rejected-order-point-refund';
+                $data['click_inbox'] = [
+                    ['value' => "Home",'title' => 'Home'],
+                    ['value' => "History Transaction",'title' => 'History Transaction']
+                ];
+                $data['click_notification'] = [
+                    ['value' => "Home",'title' => 'Home'],
+                    ['value' => "History Transaction",'title' => 'History Transaction']
+                ];
                 break;
 
             case 'receive-welcome-voucher':
                 $data['title'] = 'Auto Response '.ucfirst(str_replace('-',' ',$subject));
                 $data['menu_active'] = 'welcome-voucher';
                 $data['submenu_active'] = 'deals-autoresponse-welcome-voucher';
+                $data['click_inbox'] = [
+                    ['value' => "Voucher",'title' => 'Voucher']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher','title' => 'Voucher']
+                ];
                 break;
 
             case 'delivery-status-update':
                 $data['menu_active'] = 'transaction';
                 $data['submenu_active'] = 'delivery-status-update';
+                $data['click_inbox'] = [
+                    ['value' => "History Transaction",'title' => 'History Transaction']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'History Transaction','title' => 'History Transaction']
+                ];
                 break;
 
             case 'get-free-subscription-success':
                 $data['menu_active'] = 'subscription';
                 $data['submenu_active'] = 'subscription-autoresponse-get-free-subscription-success';
+                $data['click_inbox'] = [
+                    ['value' => "Subcription",'title' => 'Subcription']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Subcription','title' => 'Subcription']
+                ];
                 break;
 
             case 'buy-paid-subscription-success':
                 $data['menu_active'] = 'subscription';
                 $data['submenu_active'] = 'subscription-autoresponse-buy-paid-subscription-success';
+                $data['click_inbox'] = [
+                    ['value' => "Subcription",'title' => 'Subcription']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Subcription','title' => 'Subcription']
+                ];
                 break;
 
             case 'buy-point-subscription-success':
                 $data['menu_active'] = 'subscription';
                 $data['submenu_active'] = 'subscription-autoresponse-buy-point-subscription-success';
+                $data['click_inbox'] = [
+                    ['value' => "Subcription",'title' => 'Subcription']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Subcription','title' => 'Subcription']
+                ];
                 break;
 
             default:
-                # code...
+                $data['click_inbox'] = [
+                    ['value' => "History Transaction",'title' => 'History Transaction']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'History Transaction','title' => 'History Transaction']
+                ];
                 break;
         }
         $query = MyHelper::get('autocrm/list');

@@ -40,6 +40,7 @@ class AchievementController extends Controller
                 if (!empty($post)) {
                     $post = $request->except('_token');
                     $raw_data = MyHelper::post('achievement/report/' . $slug, $post)['result'] ?? [];
+                    return MyHelper::post('achievement/report/' . $slug, $post);
                     $data['data'] = $raw_data['data'];
                     $data['total'] = $raw_data['total'] ?? 0;
                     $data['from'] = $raw_data['from'] ?? 0;
@@ -63,6 +64,20 @@ class AchievementController extends Controller
                     return $data;
                 }
                 return view('achievement::report.index', $data);
+                break;
+            case 'membership-achivement':
+                if (!empty($post)) {
+                    $post = $request->except('_token');
+                    $raw_data = MyHelper::post('achievement/report/' . $slug, $post)['result'] ?? [];
+                    $data['data'] = $raw_data['data'];
+                    $data['total'] = $raw_data['total'] ?? 0;
+                    $data['from'] = $raw_data['from'] ?? 0;
+                    $data['order_by'] = $raw_data['order_by'] ?? 0;
+                    $data['order_sorting'] = $raw_data['order_sorting'] ?? 0;
+                    $data['last_page'] = !($raw_data['next_page_url'] ?? false);
+                    return $data;
+                }
+                return view('achievement::report.membership', $data);
                 break;
         }
     }

@@ -411,7 +411,7 @@
 						@if(MyHelper::hasAccess([24], $grantedFeature) && MyHelper::hasAccess([40], $grantedFeature))
 							<li class="nav-item {{($submenu_active == 'outlet-pin-response') ? 'active open' : ''}}">
 								<a href="{{url('outlet/autoresponse/request_pin')}}" class="nav-link ">
-									<span class="title">[Response] Request PIN Outlet Apps</span>
+									<span class="title">Outlet Apps Access Feature</span>
 								</a>
 							</li>
 						@endif

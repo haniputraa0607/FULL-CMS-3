@@ -807,6 +807,9 @@ class CampaignController extends Controller
 			$getMembership = MyHelper::post('membership/be/list',[]);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
+            $getSubcription = MyHelper::get('subscription/be/list/ajax');
+            if (isset($getSubcription['status']) && $getSubcription['status'] == 'success') $data['subcription'] = $getSubcription['result']; else $data['subcription'] = [];
+
 			return view('campaign::create-step-3', $data);
 		} else{
 			return back()->withErrors($action['messages']);

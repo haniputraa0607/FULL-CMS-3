@@ -1067,6 +1067,8 @@ class OutletController extends Controller
     public function autoresponse(Request $request, $type='') {
         $post = $request->except('_token');
         if(!empty($post)){
+            $outlet_apps_access_feature = $post['outlet_apps_access_feature'];
+            unset($post['outlet_apps_access_feature']);
             if (isset($post['whatsapp_content'])) {
                 foreach($post['whatsapp_content'] as $key => $content){
                     if($content['content'] || isset($content['content_file']) && $content['content_file']){
@@ -1084,8 +1086,9 @@ class OutletController extends Controller
             }
 
             $query = MyHelper::post('autocrm/update', $post);
+            MyHelper::post('setting/update2',['update' => ['outlet_apps_access_feature' => ['value',$outlet_apps_access_feature]]]);
             // print_r($query);exit;
-            return back()->withSuccess(['Response updated']);
+            return back()->withSuccess(['Setting updated']);
         }
         $data = [ 'title'             => 'Setting Messages Outlet App OTP',
                   'menu_active'       => 'outlet',
@@ -1111,6 +1114,7 @@ class OutletController extends Controller
             $view = 'users::response';
         }
         $data['data'] = MyHelper::post('autocrm/list',['autocrm_title'=>ucfirst(str_replace('-',' ',$type))])['result']??[];
+        $data['data']['outlet_apps_access_feature'] = MyHelper::post('setting',['key'=>'outlet_apps_access_feature'])['result']['value']??'otp';
         $data['custom'] = explode(';',$data['data']['custom_text_replace']);
         return view($view,$data);
     }

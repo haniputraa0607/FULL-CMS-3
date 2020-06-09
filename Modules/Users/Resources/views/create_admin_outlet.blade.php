@@ -243,6 +243,11 @@
 											<option @if(old('type') == 'payment') selected @endif value="payment">Payment</option>
 										@endif
 									@endif
+									
+									{{-- cek config outlet apps --}}
+									@if(MyHelper::hasAccess([101], $configs))
+										<option @if(old('type') == 'outlet_apps') selected @endif value="outlet_apps">Outlet Apps</option>
+									@endif
 								</select>
 							</div>
 						</div>

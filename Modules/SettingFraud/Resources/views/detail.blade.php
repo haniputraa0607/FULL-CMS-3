@@ -39,7 +39,7 @@
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['insert', ['table']],
                     ['insert', ['link', 'picture', 'video']],
-                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                    ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
 				callbacks: {
 					onImageUpload: function(files){

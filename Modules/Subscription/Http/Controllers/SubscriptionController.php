@@ -427,4 +427,9 @@ class SubscriptionController extends Controller
         $post = array_merge($session, $post);
         session([$sess => $post]);
     }
+
+    function listSubcriptionAjax(Request $request){
+        $get = MyHelper::get('subscription/be/list/ajax');
+        return response()->json($get);
+    }
 }
