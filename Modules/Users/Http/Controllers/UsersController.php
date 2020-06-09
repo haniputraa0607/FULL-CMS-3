@@ -148,6 +148,12 @@ class UsersController extends Controller
 		}
 		
 		$data['custom'] = $custom;
+        $data['click_inbox'] = [
+            ['value' => "No Action",'title' => 'No Action']
+        ];
+        $data['click_notification'] = [
+            ['value' => 'Home','title' => 'Home']
+        ];
 		// print_r($data);exit;
         return view('users::response', $data);
 	}
