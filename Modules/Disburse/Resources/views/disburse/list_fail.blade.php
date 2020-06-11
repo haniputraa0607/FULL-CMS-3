@@ -2,6 +2,10 @@
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
     $idUserFrenchisee = session('id_user_franchise');
+    $baseUri = 'disburse';
+    if(!is_null($idUserFrenchisee)){
+        $baseUri = 'disburse/user-franchise';
+    }
  ?>
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
@@ -64,8 +68,8 @@
     $date_start = '';
     $date_end = '';
 
-    if(Session::has('filter-list-disburse-trx')){
-        $search_param = Session::get('filter-list-disburse-trx');
+    if(Session::has('filter-list-disburse-fail')){
+        $search_param = Session::get('filter-list-disburse-fail');
         if(isset($search_param['date_start'])){
             $date_start = $search_param['date_start'];
         }
@@ -86,45 +90,51 @@
 
     <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
         {{ csrf_field() }}
-        @include('disburse::disburse.filter_list_trx')
+        @include('disburse::disburse.filter_list')
     </form>
-    <br>
-
     <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
         <table class="table table-striped table-bordered table-hover" id="tableReport">
             <thead>
             <tr>
-                <th scope="col" width="25%"> Status Disburse</th>
-                <th scope="col" width="10%"> Recipient Number </th>
+                <th scope="col" width="10%"> Action </th>
+                <th scope="col" width="10%"> Count Retry </th>
+                <th scope="col" width="10%"> Error Message </th>
                 <th scope="col" width="30%"> Outlet </th>
-                <th scope="col" width="30%"> Transaction Date </th>
-                <th scope="col" width="10%"> Grand total Transaction</th>
+                <th scope="col" width="30%"> Date </th>
+                <th scope="col" width="10%"> Nominal </th>
+                <th scope="col" width="25%"> Bank Name </th>
+                <th scope="col" width="25%"> Account Number </th>
+                <th scope="col" width="25%"> Recipient Name </th>
             </tr>
             </thead>
             <tbody>
-            @if(!empty($trx))
-                @foreach($trx as $val)
+            @if(!empty($disburse))
+                @foreach($disburse as $val)
                     <tr>
                         <td>
-                            @if(!is_null($val['disburse_status']))
-
-                                <?php
-                                     $color = 'grey';
-                                     if($val['disburse_status'] == 'Success'){
-                                         $color = '#26C281';
-                                     }elseif ($val['disburse_status'] == 'Fail'){
-                                         $color = '#f54842';
-                                     }
-                                ?>
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: {{$color}};padding: 5px 12px;color: #fff;">{{$val['disburse_status']}}</span>
-                            @else
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: grey;padding: 5px 12px;color: #fff;">Unprocessed</span>
+                            <a class="btn btn-xs green" target="_blank" href="{{url('disburse/list/all', $val['id_disburse'])}}">Detail</a>
+                            @if(MyHelper::hasAccess([235], $grantedFeature))
+                                @if($status == 'fail-action')
+                                    <a class="btn btn-xs yellow" href="{{url('disburse/update-status', $val['id_disburse'])}}">Retry</a>
+                                @endif
                             @endif
                         </td>
-                        <td>{{$val['transaction_receipt_number']}}</td>
-                        <td>{{$val['outlet_code']}} - {{$val['outlet_name']}}</td>
-                        <td>{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
-                        <td>{{number_format($val['transaction_grandtotal'])}}</td>
+                        <td>{{$val['count_retry']}}</td>
+                        <td style="color: red">{{$val['error_message']}}</td>
+                        <td>
+                            @if(!empty($val['disburse_outlet']))
+                                <ul>
+                                    @foreach($val['disburse_outlet'] as $outlet)
+                                        <li>{{$outlet['outlet_code']}} - {{$outlet['outlet_name']}}</li>
+                                    @endforeach
+                                </ul>
+                            @else - @endif
+                        </td>
+                        <td>{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>
+                        <td>{{number_format($val['disburse_nominal'])}}</td>
+                        <td>{{$val['bank_name']}}</td>
+                        <td>{{$val['beneficiary_account_number']}}</td>
+                        <td>{{$val['beneficiary_name']}}</td>
                     </tr>
                 @endforeach
             @else
@@ -134,7 +144,7 @@
         </table>
     </div>
     <br>
-    @if ($trxPaginator)
-        {{ $trxPaginator->links() }}
+    @if ($disbursePaginator)
+        {{ $disbursePaginator->links() }}
     @endif
 @endsection

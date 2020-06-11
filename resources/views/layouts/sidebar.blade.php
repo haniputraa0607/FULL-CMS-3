@@ -2033,7 +2033,7 @@
 			@endif -->
 		@endif
 
-		@if(MyHelper::hasAccess([234,235], $grantedFeature))
+		@if(MyHelper::hasAccess([234], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #383b67;font-weight: 600;">Disburse</h3>
 			</li>
@@ -2059,12 +2059,21 @@
 				</a>
 			</li>
 
-			<li class="nav-item {{($menu_active == 'disburse-list-fail') ? 'active' : ''}}">
-				<a href="{{url('disburse/list/fail')}}" class="nav-link nav-toggle">
-					<i class="fa fa-list"></i>
-					<span class="title">List Fail</span>
-				</a>
-			</li>
+			@if(MyHelper::hasAccess([235], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'disburse-list-fail-action') ? 'active' : ''}}">
+					<a href="{{url('disburse/list/fail-action')}}" class="nav-link nav-toggle">
+						<i class="fa fa-list"></i>
+						<span class="title">List Fail</span>
+					</a>
+				</li>
+			@else
+				<li class="nav-item {{($menu_active == 'disburse-list-fail') ? 'active' : ''}}">
+					<a href="{{url('disburse/list/fail')}}" class="nav-link nav-toggle">
+						<i class="fa fa-list"></i>
+						<span class="title">List Fail</span>
+					</a>
+				</li>
+			@endif
 
 			<li class="nav-item {{($menu_active == 'disburse-list-trx') ? 'active' : ''}}">
 				<a href="{{url('disburse/list/trx')}}" class="nav-link nav-toggle">
