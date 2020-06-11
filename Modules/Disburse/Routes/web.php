@@ -37,6 +37,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('user-franchise/list/trx', 'DisburseController@listTrx');
         Route::any('user-franchise/list/{status}', 'DisburseController@listDisburse');
         Route::any('user-franchise/list-datatable/{status}', 'DisburseController@listDisburseDataTable');
+        Route::any('user-franchise/detail-trx/{id}', 'DisburseController@detailDisburseTrx');
         Route::any('user-franchise/detail/{id}', 'DisburseController@detailDisburse');
 
         Route::any('user-franchise/reset-password', 'DisburseController@resetPassword');
@@ -66,9 +67,10 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
 
         //Disburse
         Route::any('list/trx', 'DisburseController@listTrx');
-        Route::any('list/{status}', 'DisburseController@listDisburse');
+        Route::any('list/fail-action', 'DisburseController@listDisburseFailAction');
+        Route::any('list/{status}/{id_disburse??}', 'DisburseController@listDisburse');
         Route::any('list-datatable/{status}', 'DisburseController@listDisburseDataTable');
-        Route::any('detail/{id}', 'DisburseController@detailDisburse');
+        Route::any('detail-trx/{id}', 'DisburseController@detailDisburseTrx');
         Route::any('update-status/{id}', 'DisburseController@updateStatusDisburse');
     });
 });

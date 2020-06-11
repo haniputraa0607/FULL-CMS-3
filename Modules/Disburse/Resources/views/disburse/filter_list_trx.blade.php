@@ -18,7 +18,7 @@
             for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
             operator_value.options[operator_value.options.length] = new Option('Success', 'Success');
             operator_value.options[operator_value.options.length] = new Option('Fail', 'Fail');
-            operator_value.options[operator_value.options.length] = new Option('Pending', 'Pending');
+            operator_value.options[operator_value.options.length] = new Option('Unprocessed', 'Unprocessed');
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
         }else{
@@ -97,7 +97,7 @@
                                                     @if($con['subject'] == 'status')
                                                         <option value="Success" @if ($con['operator'] == 'Success') selected @endif>Success</option>
                                                         <option value="Fail" @if ($con['operator'] == 'Fail') selected @endif>Fail</option>
-                                                        <option value="Pending" @if ($con['operator'] == 'Pending') selected @endif>Pending</option>
+                                                        <option value="Pending" @if ($con['operator'] == 'Unprocessed') selected @endif>Unprocessed</option>
                                                     @else
                                                         <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                                         <option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>

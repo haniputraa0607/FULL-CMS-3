@@ -22,12 +22,16 @@ class DisburseController extends Controller
 {
     public function __construct()
     {
-        $id_user_franchise = Session::get('id_user_franchise');
-        if(!is_null($id_user_franchise)){
-            $this->baseuri = 'disburse/user-franchise';
-        }else{
-            $this->baseuri = 'disburse';
-        }
+        $this->middleware(function ($request, $next) {
+
+            $id_user_franchise = Session::get('id_user_franchise');
+            if(!is_null($id_user_franchise)){
+                $this->baseuri = 'disburse/user-franchise';
+            }else{
+                $this->baseuri = 'disburse';
+            }
+            return $next($request);
+        });
     }
 
     function loginUserFranchise(Request $request){
@@ -66,7 +70,8 @@ class DisburseController extends Controller
                             'id_user_franchise'      => $userFranchise['result']['id_user_franchise'],
                             'username-franchise'   => $userFranchise['result']['phone'],
                             'phone-franchise'   => $userFranchise['result']['phone'],
-                            'email-franchise'   => $userFranchise['result']['email']
+                            'email-franchise'   => $userFranchise['result']['email'],
+                            'granted_features'  => [234]
                         ]);
                         return redirect('disburse/user-franchise/dashboard');
                     }else{
@@ -197,11 +202,17 @@ class DisburseController extends Controller
         ];
 
         if(Session::has('filter-list-disburse-trx') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
             $post = Session::get('filter-list-disburse-trx');
+            $post['page'] = $page;
         }else{
             Session::forget('filter-list-disburse-trx');
         }
 
+        $post['id_user_franchise'] = session('id_user_franchise');
         $getTrx = MyHelper::post($this->baseuri.'/list/trx',$post);
 
         if (isset($getTrx['status']) && $getTrx['status'] == "success") {
@@ -224,7 +235,7 @@ class DisburseController extends Controller
         return view('disburse::disburse.list_trx', $data);
     }
 
-    public function listDisburse(Request $request, $status){
+    public function listDisburse(Request $request, $status, $id_disburse = null){
         $post = $request->all();
         $data = [
             'title'          => 'Disburse',
@@ -235,12 +246,18 @@ class DisburseController extends Controller
         ];
 
         if(Session::has('filter-list-disburse') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
             $post = Session::get('filter-list-disburse');
+            $post['page'] = $page;
         }else{
             Session::forget('filter-list-disburse');
         }
 
         $post['id_user_franchise'] = session('id_user_franchise');
+        $post['id_disburse'] = $id_disburse;
         $getDisburse = MyHelper::post($this->baseuri.'/list/'.$status,$post);
 
         if (isset($getDisburse['status']) && $getDisburse['status'] == "success") {
@@ -271,7 +288,59 @@ class DisburseController extends Controller
         return view('disburse::disburse.list', $data);
     }
 
-    public function detailDisburse(Request $request, $id){
+    public function listDisburseFailAction(Request $request){
+        $post = $request->all();
+        $data = [
+            'title'          => 'Disburse',
+            'sub_title'      => 'List Disburse Fail',
+            'menu_active'    => 'disburse-list-fail-action',
+            'submenu_active' => 'disburse-list-fail-action',
+            'status' => 'fail-action'
+        ];
+
+        if(Session::has('filter-list-disburse-fail') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-list-disburse-fail');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-list-disburse-fail');
+        }
+
+        $post['id_user_franchise'] = session('id_user_franchise');
+        $getDisburse = MyHelper::post($this->baseuri.'/list/fail-action',$post);
+
+        if (isset($getDisburse['status']) && $getDisburse['status'] == "success") {
+            $data['disburse']          = $getDisburse['result']['data'];
+            $data['disburseTotal']     = $getDisburse['result']['total'];
+            $data['disbursePerPage']   = $getDisburse['result']['from'];
+            $data['disburseUpTo']      = $getDisburse['result']['from'] + count($getDisburse['result']['data'])-1;
+            $data['disbursePaginator'] = new LengthAwarePaginator($getDisburse['result']['data'], $getDisburse['result']['total'], $getDisburse['result']['per_page'], $getDisburse['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['disburse']          = [];
+            $data['disburseTotal']     = 0;
+            $data['disbursePerPage']   = 0;
+            $data['disburseUpTo']      = 0;
+            $data['disbursePaginator'] = false;
+        }
+
+        $bank = MyHelper::post($this->baseuri.'/bank',$post);
+        if(isset($bank['status']) && $bank['status'] == 'success'){
+            $data['banks'] = $bank['result'];
+        }else{
+            $data['banks'] = [];
+        }
+
+        if($post){
+            Session::put('filter-list-disburse-fail',$post);
+        }
+
+        return view('disburse::disburse.list_fail', $data);
+    }
+
+    public function detailDisburseTrx(Request $request, $id){
         $post = $request->all();
 
         $data = [

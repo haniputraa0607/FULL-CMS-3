@@ -113,12 +113,7 @@
                 @foreach($disburse as $val)
                     <tr>
                         <td>
-                            <a class="btn btn-xs green" target="_blank" href="{{url('disburse/detail', $val['id_disburse'])}}">Detail</a>
-                            @if(MyHelper::hasAccess([235], $grantedFeature))
-                                @if($status == 'fail')
-                                    <a class="btn btn-xs yellow" href="{{url('disburse/update-status', $val['id_disburse'])}}">Retry</a>
-                                @endif
-                            @endif
+                            <a class="btn btn-xs green" target="_blank" href="{{url($baseUri.'/detail-trx', $val['id_disburse_outlet'])}}">Detail</a>
                         </td>
                         <td>{{$val['count_retry']}}</td>
                         @if($status == 'fail') <td>{{$val['error_message']}}</td>@endif
