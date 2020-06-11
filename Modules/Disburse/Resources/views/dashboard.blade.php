@@ -73,7 +73,12 @@ $idUserFrenchisee = session('id_user_franchise');
 			$("#tbodyListFail").empty();
 			var data_display = 25;
 			var token  = "{{ csrf_token() }}";
-			var url = "{{url('disburse/list-datatable/fail')}}";
+			@if(is_null($idUserFrenchisee))
+			    var url = "{{url('disburse/list-datatable/fail')}}";
+			@else
+				var url = "{{url('disburse/user-franchise/list-datatable/fail')}}";
+			@endif
+
 			var dt = 0;
 			var tab = $.fn.dataTable.isDataTable( '#tableListFail' );
 			if(tab){
@@ -115,7 +120,7 @@ $idUserFrenchisee = session('id_user_franchise');
 					{
 						targets: 0,
 						render: function ( data, type, row, meta ) {
-							var detailUrl = "{{ url('disburse/detail') }}/"+data;
+							var detailUrl = "{{ url('disburse/detail-trx') }}/"+data;
 							var data = '<a href="' + detailUrl + '" target="_blank" class="btn btn-block green btn-xs">Detail</a>';
 							return data;
 						}
@@ -126,7 +131,11 @@ $idUserFrenchisee = session('id_user_franchise');
 
 		function dataDashboard(){
 			var token  = "{{ csrf_token() }}";
+			@if(is_null($idUserFrenchisee))
 			var url = "{{url('disburse/dashboard')}}";
+			@else
+			var url = "{{url('disburse/user-franchise/dashboard')}}";
+			@endif
 			var outlet = $("#fitler_outlet").val();
 			var fitler_date = $("#fitler_date").val();
 			var start_date = $("#date_start").val();

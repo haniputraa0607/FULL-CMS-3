@@ -51,11 +51,10 @@
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                                     <option value="outlet_code" @if ($con['subject'] == 'outlet_code') selected @endif>Outlet Code</option>
                                                     <option value="outlet_name" @if ($con['subject'] == 'outlet_name') selected @endif>Outlet Name</option>
-                                                    <option value="beneficiary_bank" @if ($con['subject'] == 'beneficiary_bank') selected @endif>Beneficiary Bank</option>
-                                                    <option value="beneficiary_name" @if ($con['subject'] == 'bank_name') selected @endif>Beneficiary Name</option>
-                                                    <option value="beneficiary_alias" @if ($con['subject'] == 'bank_name') selected @endif>Beneficiary Alias</option>
-                                                    <option value="beneficiary_account" @if ($con['subject'] == 'bank_name') selected @endif>Beneficiary Account</option>
-                                                    <option value="beneficiary_email" @if ($con['subject'] == 'bank_name') selected @endif>Beneficiary Email</option>
+                                                    <option value="beneficiary_name" @if ($con['subject'] == 'beneficiary_name') selected @endif>Beneficiary Name</option>
+                                                    <option value="beneficiary_alias" @if ($con['subject'] == 'beneficiary_alias') selected @endif>Beneficiary Alias</option>
+                                                    <option value="beneficiary_account" @if ($con['subject'] == 'beneficiary_account') selected @endif>Beneficiary Account</option>
+                                                    <option value="beneficiary_email" @if ($con['subject'] == 'beneficiary_email') selected @endif>Beneficiary Email</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -85,7 +84,6 @@
                                                     <option value="" selected disabled>Search Subject</option>
                                                     <option value="outlet_code">Outlet Code</option>
                                                     <option value="outlet_name">Outlet Name</option>
-                                                    <option value="beneficiary_bank">Beneficiary Bank</option>
                                                     <option value="beneficiary_name">Beneficiary Name</option>
                                                     <option value="beneficiary_alias">Beneficiary Alias</option>
                                                     <option value="beneficiary_account">Beneficiary Account</option>
@@ -120,7 +118,6 @@
                                             <option value="" selected disabled>Search Subject</option>
                                             <option value="outlet_code">Outlet Code</option>
                                             <option value="outlet_name">Outlet Name</option>
-                                            <option value="beneficiary_bank">Beneficiary Bank</option>
                                             <option value="beneficiary_name">Beneficiary Name</option>
                                             <option value="beneficiary_alias">Beneficiary Alias</option>
                                             <option value="beneficiary_account">Beneficiary Account</option>
