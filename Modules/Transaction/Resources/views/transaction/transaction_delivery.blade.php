@@ -58,7 +58,7 @@
 	    <div class="alert alert-block alert-info fade in">
 			<button type="button" class="close" data-dismiss="alert"></button>
 			<h4 class="alert-heading">Displaying search result :</h4>
-				<p>{{ $count }}</p><br>
+            @if(isset($trxTotal))<p>{{ $trxTotal }} data</p><br>@else<p>0 data</p><br>@endif
         <a href="{{ url('transaction/'.$key.'/'.date('YmdHis')) }}" class="btn btn-sm btn-warning">Reset</a>
 			<br>
 		</div>
@@ -71,10 +71,12 @@
             </div>
         </div>
         <div class="portlet-body">
-            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+            <div style="overflow-x:auto;">
+            <table class="table table-striped table-bordered table-hover dt-responsive">
             <thead>
               <tr>
                   <th>Date</th>
+                  <th>Outlet</th>
                   <th>Receipt Number</th>
                   <th>Customer Name</th>
                   <th>Phone</th>
@@ -91,6 +93,7 @@
                     @foreach($trx as $res)
                         <tr>
                             <td>{{ date('d M Y H:i:s', strtotime($res['transaction_date'])) }}</td>
+                            <td>{{ $res['outlet_code'] }} - {{ $res['outlet_name'] }}</td>
                             <td>{{ $res['transaction_receipt_number'] }}</td>
                             @if (isset($res['name']))
                               <td>{{ $res['name'] }}</td>
@@ -103,6 +106,7 @@
                             @else
                               <td>{{ $res['user']['phone'] }}</td>
                             @endif
+
                             <td>Rp {{ number_format($res['transaction_grandtotal'], 2) }}</td>
                             <td>{{ $res['transaction_payment_status'] }}</td>
                             @if(strtolower($key) == 'delivery')
@@ -141,9 +145,13 @@
                 @endif
             </tbody>
             </table>
+            </div>
+            @if(isset($trxPerPage) && isset($trxUpTo) && isset($trxTotal))
+                Showing {{$trxPerPage}} to {{$trxUpTo}} of {{ $trxTotal }} entries<br>
+            @endif
             @if ($trxPaginator)
-                      {{ $trxPaginator->links() }}
-                    @endif
+                {{ $trxPaginator->links() }}
+            @endif
         </div>
     </div>
 @endsection

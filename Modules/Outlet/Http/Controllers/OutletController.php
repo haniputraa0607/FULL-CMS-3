@@ -1122,6 +1122,7 @@ class OutletController extends Controller
 
     /*=========== User Franchise ===========*/
    public function listUserFranchise(Request $request) {
+        $post = $request->all();
         $data = [
             'title'          => 'Outlet',
             'sub_title'      => 'User Franchise',
@@ -1129,7 +1130,18 @@ class OutletController extends Controller
             'submenu_active' => 'outlet-list-user-franchise',
         ];
 
-        $list = MyHelper::post('outlet/list/user-franchise', []);
+       if(Session::has('filter-list-user-franchise') && !empty($post) && !isset($post['filter'])){
+           $page = 1;
+           if(isset($post['page'])){
+               $page = $post['page'];
+           }
+           $post = Session::get('filter-list-user-franchise');
+           $post['page'] = $page;
+       }else{
+           Session::forget('filter-list-user-franchise');
+       }
+
+        $list = MyHelper::post('outlet/list/user-franchise', $post);
 
        if (isset($list['status']) && $list['status'] == "success") {
            $data['paginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
@@ -1146,7 +1158,11 @@ class OutletController extends Controller
            $data['total'] = [];
        }
 
-        return view('outlet::users_franchise.list', $data);
+       if($post){
+           Session::put('filter-list-user-franchise',$post);
+       }
+
+       return view('outlet::users_franchise.list', $data);
    }
 
     public function detailUserFranchise(Request $request, $phone) {
@@ -1187,5 +1203,16 @@ class OutletController extends Controller
         }
 
         return view('outlet::users_franchise.detail', $data);
+    }
+
+    function setPasswordDefaultUserFranchise(Request $request) {
+        $post = $request->except('_token');
+        $update = MyHelper::post('outlet/user-franchise/set-password-default', $post);
+
+        if (isset($update['status']) && $update['status'] == "success") {
+            return redirect('outlet/list/user-franchise')->with('success',['Set up password success']);
+        }else{
+            return redirect('outlet/list/user-franchise')->withErrors($update['messages']);
+        }
     }
 }
