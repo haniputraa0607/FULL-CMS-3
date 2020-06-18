@@ -189,6 +189,16 @@ class AutocrmController extends Controller
 		}else{
 			$data['api_key_whatsapp'] = null;
 		}
+
+		$custom = [];
+        if (isset($data['data']['custom_text_replace'])) {
+			$custom = explode(';', $data['data']['custom_text_replace']);
+			if($custom[count($custom) - 1] == ''){
+				unset($custom[count($custom) - 1]);
+			}
+        }
+
+		$data['custom'] = $custom;
 		// dd($data);exit;
         return view('users::response', $data);
 	}
