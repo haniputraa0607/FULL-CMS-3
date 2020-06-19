@@ -1328,7 +1328,7 @@ class ProductController extends Controller
                 'submenu_active' => 'product-photo-default',
             ];
 
-            $data['photo'] = env('S3_URL_API').'img/product/item/default.png?';
+            $data['photo'] = env('STORAGE_URL_API').'img/product/item/default.png?';
 
             return view('product::product.photo-default', $data);
         }else{

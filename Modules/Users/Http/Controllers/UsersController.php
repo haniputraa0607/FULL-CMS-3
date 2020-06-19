@@ -814,7 +814,7 @@ class UsersController extends Controller
 	
 	public function activity(Request $request, $page = 1){
         $input = $request->input();
-		$post = $request->except('_token', 'password');
+		$post = $request->except('_token');
 		
 		if(!empty(Session::get('form'))){
 			if(isset($post['take'])) $takes = $post['take'];

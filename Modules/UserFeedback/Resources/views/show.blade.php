@@ -100,7 +100,7 @@
                 </div>
                 <div class="row">
                     <label class="col-md-3  text-right">Image</label>
-                    <div class="col-md-9">@if(empty($feedback['image']))No Image @else <div class="row"><div class="col-md-6"><img src="{{env('S3_URL_API')}}{{$feedback['image']}}" class="img-responsive"></div></div> @endif</div>
+                    <div class="col-md-9">@if(empty($feedback['image']))No Image @else <div class="row"><div class="col-md-6"><img src="{{env('STORAGE_URL_API')}}{{$feedback['image']}}" class="img-responsive"></div></div> @endif</div>
                 </div>
 
             </div>
