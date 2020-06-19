@@ -6,18 +6,18 @@
 	.is-container{
 		overflow: hidden;
 	}
-	.table-infinite{
+	.table-user{
 		max-height: 75vh;
 		overflow: auto;
 		position: relative;
 	}
-	.table-infinite thead{
+	.table-user thead{
 		position: sticky;
 		top: 0;
 		background: white;
 		border-bottom: 1px solid grey;
 	}
-	.table-infinite table{
+	.table-user table{
 		border-collapse: separate;
 		margin: 0;
 	}
@@ -58,27 +58,27 @@
 		}
 	}
 
-	.table-infinite th[data-order]{
+	.table-user th[data-order]{
 		cursor: pointer;
 	}
 
-	.table-infinite th[data-order] span{
+	.table-user th[data-order] span{
 		display: none;
 	}
 
-	.table-infinite th[data-order] span.sort-inactive{
+	.table-user th[data-order] span.sort-inactive{
 		display: inline;
 	}
 
-	.table-infinite th[data-order].active span.sort-inactive{
+	.table-user th[data-order].active span.sort-inactive{
 		display: none;
 	}
 
-	.table-infinite th[data-order].active.asc span.sort-asc{
+	.table-user th[data-order].active.asc span.sort-asc{
 		display: inline;
 	}
 
-	.table-infinite th[data-order].active.desc span.sort-desc{
+	.table-user th[data-order].active.desc span.sort-desc{
 		display: inline;
 	}
 	 /* INFINITE SCROLL END */
@@ -149,7 +149,7 @@
 					}else{
 						table.data('is-loading',0);
 						table.data('page',(table.data('page')+1));
-						table.parents('.table-infinite').trigger('scroll');
+						table.parents('.table-user').trigger('scroll');
 					}
 				},
 				error: function(event){
@@ -166,10 +166,10 @@
 		table.data('page',0);
 		table.data('is-loading',0);
 		table.data('is-last',0);
-		$('.table-infinite').trigger('scroll');
+		$('.table-user').trigger('scroll');
 	}
 	$(document).ready(function(){
-		$('.table-infinite').on('scroll resize', function(){
+		$('.table-user').on('scroll resize', function(){
 			var s = $(this).scrollTop();
 			var table = $(this).find('table');
 			var d = table.height();
@@ -181,8 +181,8 @@
 		    	listUser(table);
 		    }
 		})
-		$('.table-infinite').trigger('scroll');
-		$('.table-infinite').on('click','th',function(){
+		$('.table-user').trigger('scroll');
+		$('.table-user').on('click','th',function(){
 			if($(this).data('order')){
 				var postdata = {
 					order_by : $(this).data('order'),
@@ -217,7 +217,7 @@
 			e.preventDefault();
 			ISReset($(this).parents('.is-container').find('table'));
 		});
-		$('.table-infinite th[data-order]').prepend('<span class="sort-inactive"><i class="fa fa-sort text-muted"></i></span><span class="sort-asc"><i class="fa fa-sort-alpha-asc"></i></span><span class="sort-desc"><i class="fa fa-sort-alpha-desc"></i></span> ');
+		$('.table-user th[data-order]').prepend('<span class="sort-inactive"><i class="fa fa-sort text-muted"></i></span><span class="sort-asc"><i class="fa fa-sort-alpha-asc"></i></span><span class="sort-desc"><i class="fa fa-sort-alpha-desc"></i></span> ');
 	});
 	// INFINITE SCROLL END	
 </script>
