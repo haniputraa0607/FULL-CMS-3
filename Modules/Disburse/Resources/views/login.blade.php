@@ -13,27 +13,27 @@
 		<meta property="og:description" content="Technopartner Indonesia CRM System" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="{{env('TITLE', 'Behave')}}" />
-		<meta property="og:image" content="{{env('S3_URL_VIEW') }}{{ ('images/logo.png')}}" />
+		<meta property="og:image" content="{{env('STORAGE_URL_VIEW') }}{{ ('images/logo.png')}}" />
 		<meta property="og:image:width" content="200" />
 		<meta property="og:image:height" content="200" />
-		<link href="{{env('S3_URL_VIEW') }}{{ ('images/logo.png')}}" rel="image_src" />
+		<link href="{{env('STORAGE_URL_VIEW') }}{{ ('images/logo.png')}}" rel="image_src" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<link rel="shortcut icon" sizes="200x200" href="{{env('S3_URL_VIEW') }}{{ ('images/icon.png')}}">
+		<link rel="shortcut icon" sizes="200x200" href="{{env('STORAGE_URL_VIEW') }}{{ ('images/icon.png')}}">
 
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-        <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN THEME GLOBAL STYLES -->
-        <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/css/components.min.css')}}" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/css/plugins.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/css/components.min.css')}}" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/css/plugins.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- END THEME GLOBAL STYLES -->
         <!-- BEGIN PAGE LEVEL STYLES -->
-        <link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/login.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/css/login.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
-		<link rel="shortcut icon" href="{{env('S3_URL_VIEW') }}{{ ('images/icon.png')}}" />
+		<link rel="shortcut icon" href="{{env('STORAGE_URL_VIEW') }}{{ ('images/icon.png')}}" />
 
         <style type="text/css">
             .captcha_div > div{
@@ -49,7 +49,7 @@
         <!-- BEGIN LOGO -->
         <div class="logo">
             <a href="index.html">
-                <img src="{{env('S3_URL_VIEW') }}{{ ('images/logo.png')}}" alt="" style="height:70px; margin: 40px" />
+                <img src="{{env('STORAGE_URL_VIEW') }}{{ ('images/logo.png')}}" alt="" style="height:70px; margin: 40px" />
             </a>
         </div>
         <!-- END LOGO -->
@@ -83,22 +83,22 @@
         </div>
         <div class="copyright" style="color: #fff"> Copyright © 2019 Technopartner Indonesia</div>
         <!--[if lt IE 9]>
-<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/respond.min.js')}}"></script>
-<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/excanvas.min.js')}}"></script>
-<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/ie8.fix.min.js')}}"></script>
+<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/respond.min.js')}}"></script>
+<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/excanvas.min.js')}}"></script>
+<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/ie8.fix.min.js')}}"></script>
 <![endif]-->
         <!-- BEGIN CORE PLUGINS -->
-        <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
-        <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
+        <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
+        <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
+        <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
-        <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/app.min.js')}}" type="text/javascript"></script>
+        <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/app.min.js')}}" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
-        <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/login.min.js')}}" type="text/javascript"></script>
+        <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/login.min.js')}}" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <!-- END THEME LAYOUT SCRIPTS -->

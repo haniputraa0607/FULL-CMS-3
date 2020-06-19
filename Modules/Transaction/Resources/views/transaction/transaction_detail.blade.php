@@ -6,28 +6,28 @@
             font-family: 'WorkSans-Bold';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("S3_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-Bold.ttf")}}') format('truetype');
+            src: url('{{env("STORAGE_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-Bold.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'WorkSans-Regular';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("S3_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-Regular.ttf")}}') format('truetype');
+            src: url('{{env("STORAGE_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-Regular.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'WorkSans-SemiBold';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("S3_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-SemiBold.ttf")}}') format('truetype');
+            src: url('{{env("STORAGE_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-SemiBold.ttf")}}') format('truetype');
         }
 
         @font-face {
             font-family: 'WorkSans-Medium';
             font-style: normal;
             font-weight: 400;
-            src: url('{{env("S3_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-Medium.ttf")}}') format('truetype');
+            src: url('{{env("STORAGE_URL_VIEW") }}{{("fonts/Work_Sans/WorkSans-Medium.ttf")}}') format('truetype');
         }
 
         .swal-text {
@@ -442,7 +442,7 @@
         <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
             <div class="container">
                 <div class="row text-center">
-                    <div class="col-12 text-13px space-nice WorkSans" style="color: #707070;"><img src="{{env('S3_URL_VIEW')}}img/webview/motorcycle.png" style = "margin-right: 8px;">Info Driver</div>
+                    <div class="col-12 text-13px space-nice WorkSans" style="color: #707070;"><img src="{{env('STORAGE_URL_VIEW')}}img/webview/motorcycle.png" style = "margin-right: 8px;">Info Driver</div>
                     @if(isset($data['delivery_info']))
                         <div class="col-12 text-15px space-text text-grey-light WorkSans-Bold">
                             {{$data['delivery_info']['driver']['driver_name']}}

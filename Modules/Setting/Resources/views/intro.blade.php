@@ -5,22 +5,22 @@
  @extends('layouts.main-closed')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 
     <style type="text/css">
         .sort-icon{
@@ -143,7 +143,7 @@
                         <div class="col-md-9">
                             <div class="col-md-6">
                                 <div class="form-group" style="border: none;">
-                                    <img class="img-responsive" src="{{env('S3_URL_VIEW').'img/setting/next.png'}}" alt="">
+                                    <img class="img-responsive" src="{{env('STORAGE_URL_VIEW').'img/setting/next.png'}}" alt="">
                                     <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
                                         <input maxlength="11" type="text" name="text_next" @if(isset($value['text_next'])) value="{{$value['text_next']}}" @endif class="form-control">
                                         <span class="input-group-addon">
@@ -154,7 +154,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" style="border: none;">
-                                    <img class="img-responsive" src="{{env('S3_URL_VIEW').'img/setting/skip.png'}}" alt="">
+                                    <img class="img-responsive" src="{{env('STORAGE_URL_VIEW').'img/setting/skip.png'}}" alt="">
                                     <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
                                         <input maxlength="11" type="text" name="text_skip" @if(isset($value['text_skip'])) value="{{$value['text_skip']}}" @endif class="form-control">
                                         <span class="input-group-addon">
@@ -165,7 +165,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" style="border: none;">
-                                    <img class="img-responsive" src="{{env('S3_URL_VIEW').'img/setting/last_button.png'}}" alt="">
+                                    <img class="img-responsive" src="{{env('STORAGE_URL_VIEW').'img/setting/last_button.png'}}" alt="">
                                     <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
                                         <input maxlength="11" type="text" name="text_last" @if(isset($value['text_last'])) value="{{$value['text_last']}}" @endif class="form-control">
                                         <span class="input-group-addon">
@@ -212,7 +212,7 @@
                                                     <div class="col-md-6">
                                                         <div class="fileinput fileinput-new" data-provides="fileinput">
                                                             <div class="fileinput-new thumbnail" style="width: 100px; height: 17Z0px;">
-                                                            <img class='previewImage' src="{{env('S3_URL_API') . $item}}" alt="">
+                                                            <img class='previewImage' src="{{env('STORAGE_URL_API') . $item}}" alt="">
                                                             </div>
                                                             <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 17Z0px; max-height: 100px;"></div>
                                                             <div class='btnImage' hidden>

@@ -6,43 +6,43 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Questrial" rel="stylesheet">
-        <link href="{{ env('S3_URL_VIEW') }}{{('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
+        <link href="{{ env('STORAGE_URL_VIEW') }}{{('kopikenangan-view-asset/public/css/slide.css') }}" rel="stylesheet">
         <style type="text/css">
         @font-face {
                 font-family: "GoogleSans-Bold";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('/fonts/GoogleSans-Bold.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-BoldItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('/fonts/GoogleSans-BoldItalic.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-Italic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('/fonts/GoogleSans-Italic.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-Medium";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('/fonts/GoogleSans-Medium.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans-MediumItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('/fonts/GoogleSans-MediumItalic.ttf') }}');
         }
         @font-face {
                 font-family: "GoogleSans";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('/fonts/GoogleSans-Regular.ttf') }}');
         }
         .GoogleSans{
             font-family: "GoogleSans";
@@ -316,7 +316,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                         <div class="row space-bottom">
                             <div class="owl-carousel owl-theme">
                                 @foreach ($result['custom_page_image_header'] as $key => $value)
-                                <div class="item"> <img style="height: 60vw !important; object-fit: cover" src="{{env('S3_URL_API')}}{{ $value['custom_page_image'] }}"> <div class="questrial-font image-caption-all text-13-3px"></div> </div>
+                                <div class="item"> <img style="height: 60vw !important; object-fit: cover" src="{{env('STORAGE_URL_API')}}{{ $value['custom_page_image'] }}"> <div class="questrial-font image-caption-all text-13-3px"></div> </div>
                                 @endforeach
                             </div>
                         </div>
