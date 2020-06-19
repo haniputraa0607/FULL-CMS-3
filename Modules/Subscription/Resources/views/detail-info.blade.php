@@ -57,7 +57,7 @@
                     <div class="col-md-4 name">Image</div>
                     <div class="col-md-8 value">
                     	<span style="float: left;margin-right: 5px">:</span> 
-                    	<div><img src="{{ env('S3_URL_api').$subscription['subscription_image'] }}" style="width: 250px"></div>
+                    	<div><img src="{{ env('STORAGE_URL_API').$subscription['subscription_image'] }}" style="width: 250px"></div>
                     </div>
                 </div>
                 

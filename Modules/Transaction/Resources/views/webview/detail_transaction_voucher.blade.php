@@ -7,19 +7,19 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="{{ env('S3_URL_VIEW') }}{{('css/slide.css') }}" rel="stylesheet">
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('css/slide.css') }}" rel="stylesheet">
     <style type="text/css">
         @font-face {
                 font-family: "ProductSans-Bold";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Bold.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('fonts/ProductSans-Bold.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-Regular";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
         }
         .ProductSans{
             font-family: "ProductSans-Regular";
