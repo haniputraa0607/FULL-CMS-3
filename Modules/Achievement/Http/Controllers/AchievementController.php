@@ -35,6 +35,13 @@ class AchievementController extends Controller
             'menu_active'    => 'achievement',
             'submenu_active' => 'achievement-list'
         ];
+
+        // dd(MyHelper::get('achievement/category'));
+        $data['category']   = MyHelper::get('achievement/category')['data'];
+        $data['product']    = MyHelper::get('product/be/list')['result'];
+        $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+        $data['province']   = MyHelper::get('province/list')['result'];
+
         switch ($slug) {
             case 'user-achivement':
                 if (!empty($post)) {
@@ -154,7 +161,7 @@ class AchievementController extends Controller
                 }
 
                 $save = MyHelper::post('achievement/create', $post);
-
+                
                 if (isset($save['status']) && $save['status'] == "success") {
                     return redirect('achievement/detail/' . $save['data']);
                 } else {
