@@ -135,22 +135,23 @@ if(!is_null($idUserFrenchisee)){
                         </td>
                         <td>
                             <?php
-                                $latest_status = $val['latest_status'];
-                                $arrStatus = [
-                                    'confirmed' => 'Booking is received',
-                                    'allocated' => 'Driver is found',
-                                    'out_for_pickup' => 'Driver is on their way to pick-up location',
-                                    'out_for_delivery' => 'Driver is enroute to deliver the item',
-                                    'cancelled' => 'Booking is cancelled by CS',
-                                    'delivered' => 'Delivered',
-                                    'no_driver' => 'Driver not found',
-                                ];
+                            $latest_status = $val['latest_status'];
+                            $arrStatus = [
+                                'confirmed' => 'Booking is received',
+                                'allocated' => 'Driver is found',
+                                'out_for_pickup' => 'Driver is on their way to pick-up location',
+                                'out_for_delivery' => 'Driver is enroute to deliver the item',
+                                'cancelled' => 'Booking is cancelled by CS',
+                                'delivered' => 'Delivered',
+                                'no_driver' => 'Driver not found',
+                                'Finding Driver' => 'Finding Driver'
+                            ];
 
-                                if(is_null($latest_status)){
-                                    echo '-';
-                                }else{
-                                    echo $arrStatus[$latest_status];
-                                }
+                            if(isset($arrStatus[$latest_status]) &&  !is_null($val['latest_status'])){
+                                echo $arrStatus[$latest_status];
+                            }else{
+                                echo '-';
+                            }
                             ?>
                         </td>
                     </tr>
