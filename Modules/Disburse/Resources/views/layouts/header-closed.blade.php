@@ -4,7 +4,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="index.html" style="height:100%">
-				<img src="{{ env('S3_URL_VIEW') }}{{ ('images/logo.png') }}" alt="logo" class="logo-default"  style="margin: 0; height:100%"/> </a>
+				<img src="{{ env('STORAGE_URL_VIEW') }}{{ ('images/logo.png') }}" alt="logo" class="logo-default"  style="margin: 0; height:100%"/> </a>
 			<div class="menu-toggler sidebar-toggler">
 				<span></span>
 			</div>
