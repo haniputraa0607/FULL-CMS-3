@@ -47,7 +47,7 @@ class AchievementController extends Controller
                 if (!empty($post)) {
                     $post = $request->except('_token');
                     $raw_data = MyHelper::post('achievement/report/' . $slug, $post)['result'] ?? [];
-                    return MyHelper::post('achievement/report/' . $slug, $post);
+                    // return MyHelper::post('achievement/report/' . $slug, $post);
                     $data['data'] = $raw_data['data'];
                     $data['total'] = $raw_data['total'] ?? 0;
                     $data['from'] = $raw_data['from'] ?? 0;

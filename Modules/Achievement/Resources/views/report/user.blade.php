@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@include('filter-achievement')
+@include('filter-user-achievement')
 
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -47,7 +47,7 @@
                 <td>${item.membership_name}</td>
                 <td>
                     <div class="btn-group btn-group-solid pull-right dropleft">
-                        <a class="btn blue dropdown-toggle" href="{{url('achievement/detail/${item.id_achievement_group}')}}/"> Detail </a>
+                        <a class="btn blue dropdown-toggle" href="{{url('achievement/report/user-achivement/detail/${item.id}')}}/"> Detail </a>
                     </div>
                 </td>
             </tr>
@@ -70,6 +70,24 @@
         });
     }
     function updater(table,response){
+    }
+    function phoneClick() {
+        $('#filter_by').val('phone')
+        $('#user_filter').val('')
+        $('#btnUserFilter').replaceWith( '<span id="btnUserFilter">Phone</span>' );
+        console.log('phone');
+    }
+    function emailClick() {
+        $('#filter_by').val('email')
+        $('#user_filter').val('')
+        $('#btnUserFilter').replaceWith( '<span id="btnUserFilter">Email</span>' );
+        console.log('email');
+    }
+    function nameClick() {
+        $('#filter_by').val('name')
+        $('#user_filter').val('')
+        $('#btnUserFilter').replaceWith( '<span id="btnUserFilter">Nama</span>' );
+        console.log('name');
     }
     $(document).ready(function(){
         $('.is-container').on('change','.checkbox-different',function(){
@@ -192,28 +210,29 @@
             <div class=" table-responsive is-container">
                 <form class="filter-form">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Phone
+                                    <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <span id="btnUserFilter">Phone</span>
                                         <i class="fa fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="javascript:;"> Phone </a>
+                                            <a href="javascript:;" onclick="phoneClick()"> Phone </a>
                                         </li>
                                         <li>
-                                            <a href="javascript:;"> Email </a>
+                                            <a href="javascript:;" onclick="emailClick()"> Email </a>
                                         </li>
                                         <li>
-                                            <a href="javascript:;"> Nama </a>
+                                            <a href="javascript:;" onclick="nameClick()"> Nama </a>
                                         </li>
                                     </ul>
                                 </div>
-                                <input type="text" class="form-control" id="user_filter">
+                                <input type="hidden" class="form-control" id="filter_by" name="filter_by" value="phone">
+                                <input type="text" class="form-control" id="user_filter" name="user_filter">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-5">
                             <div class="input-group">
                                 <input type="text" class="form-control daterange" name="date_range">
                                 <span class="input-group-btn">
@@ -222,15 +241,8 @@
                                     </button>
                                 </span>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control search-field" name="keyword" placeholder="Search">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
+                        </div> --}}
+                        {{-- <div class="col-md-12">
                             <div class="form-group">
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
@@ -370,8 +382,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3">
+                        </div> --}}
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-btn">
