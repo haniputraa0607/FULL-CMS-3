@@ -116,19 +116,6 @@ class AchievementController extends Controller
             if (isset($post['id_achievement_group'])) {
                 foreach ($post['detail'] as $key => $value) {
                     $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
-                    switch ($value['rule_total']) {
-                        case 'total_transaction':
-                            $post['detail'][$key]['trx_total'] = $value['value_total'];
-                            break;
-                        case 'total_outlet':
-                            $post['detail'][$key]['different_outlet'] = $value['value_total'];
-                            break;
-                        case 'total_province':
-                            $post['detail'][$key]['different_province'] = $value['value_total'];
-                            break;
-                    }
-                    unset($post['detail'][$key]['rule_total']);
-                    unset($post['detail'][$key]['value_total']);
                 }
 
                 $save = MyHelper::post('achievement/create', $post);
@@ -144,24 +131,11 @@ class AchievementController extends Controller
                 if (isset($post['detail'])) {
                     foreach ($post['detail'] as $key => $value) {
                         $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
-                        switch ($value['rule_total']) {
-                            case 'total_transaction':
-                                $post['detail'][$key]['trx_total'] = $value['value_total'];
-                                break;
-                            case 'total_outlet':
-                                $post['detail'][$key]['different_outlet'] = $value['value_total'];
-                                break;
-                            case 'total_province':
-                                $post['detail'][$key]['different_province'] = $value['value_total'];
-                                break;
-                        }
-                        unset($post['detail'][$key]['rule_total']);
-                        unset($post['detail'][$key]['value_total']);
                     }
                 }
 
                 $save = MyHelper::post('achievement/create', $post);
-                
+                // return $save;
                 if (isset($save['status']) && $save['status'] == "success") {
                     return redirect('achievement/detail/' . $save['data']);
                 } else {

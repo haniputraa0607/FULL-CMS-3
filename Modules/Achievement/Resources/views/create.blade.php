@@ -181,145 +181,27 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <label class="col-md-3 control-label">
+                                                    Badge Rule
+                                                    <span class="required" aria-required="true"> * </span>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Detail Badge Rule" data-container="body"></i>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <div class="input-icon right">
-                                                    <label class="col-md-3 control-label">
-                                                        Achievement Rule
-                                                        <span class="required" aria-required="true"> * </span>
-                                                        <i class="fa fa-question-circle tooltips" data-original-title="Detail Achievement Name" data-container="body"></i>
-                                                    </label>
-                                                </div>
-                                                <div class="col-9">
-                                                    <div class="mt-checkbox-inline">
-                                                        <label class="mt-checkbox" style="margin-left: 15px;">
-                                                            <input type="checkbox" class="rule_trx"> Transaction
-                                                            <span></span>
-                                                        </label>
-                                                        <label class="mt-checkbox">
-                                                            <input type="checkbox" class="rule_product"> Product
-                                                            <span></span>
-                                                        </label>
-                                                        <label class="mt-checkbox">
-                                                            <input type="checkbox" class="rule_total"> Total
-                                                            <span></span>
-                                                        </label>
-                                                        <label class="mt-checkbox">
-                                                            <input type="checkbox" class="rule_additional"> Additional
-                                                            <span></span>
-                                                        </label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control digit_mask" name="detail[`+nomer+`][value_total]" placeholder="Value Total">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
+                                                            </button>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group trx_rule_form" hidden>
-                                                <div class="input-icon right">
-                                                    <label class="col-md-3 control-label">
-                                                    Achievement Transaction Rule
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the achievement is not based on the transaction" data-container="body"></i>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-icon right">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control digit_mask" name="detail[`+nomer+`][trx_nominal]" placeholder="Transaction Nominal">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn default" type="button">
-                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
-                                                                </button>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group product_rule_form" hidden>
-                                                <div class="input-icon right">
-                                                    <label class="col-md-3 control-label">
-                                                    Achievement Product Rule
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the achievement is not based on the product" data-container="body"></i>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-icon right">
-                                                        <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[`+nomer+`][id_product]">
-                                                            <option></option>
-                                                            @foreach ($product as $item)
-                                                                <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-icon right">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" name="detail[`+nomer+`][product_total]" placeholder="Total Product">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn default" type="button">
-                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
-                                                                </button>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group total_rule_form" hidden>
-                                                <div class="input-icon right">
-                                                    <label class="col-md-3 control-label">
-                                                    Achievement Total Rule
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the achievement is not based on the transaction" data-container="body"></i>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-icon right">
-                                                        <div class="input-group">
-                                                            <select class="form-control select2-multiple" name="detail[`+nomer+`][rule_total]" id="total_rule" data-placeholder="Select Total Rule By">
-                                                                <option></option>
-                                                                <option value="total_transaction">Transaction</option>
-                                                                <option value="total_outlet">Outlet Different</option>
-                                                                <option value="total_province">Province Different</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-icon right">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control digit_mask" name="detail[`+nomer+`][value_total]" placeholder="Value Total">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn default" type="button">
-                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
-                                                                </button>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group additional_rule_form" hidden>
-                                                <div class="input-icon right">
-                                                    <label class="col-md-3 control-label">
-                                                    Achievement Additional Rule
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the achievement is not based on the product" data-container="body"></i>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-4" id="select_outlet">
-                                                    <div class="input-icon right">
-                                                        <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="detail[`+nomer+`][id_outlet]">
-                                                            <option></option>
-                                                            @foreach ($outlet as $item)
-                                                                <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4" id="select_province">
-                                                    <div class="input-icon right">
-                                                        <select class="form-control select2-multiple" data-placeholder="Select Province" name="detail[`+nomer+`][id_province]">
-                                                            <option></option>
-                                                            @foreach ($province as $item)
-                                                                <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        </div>
                                         </div>
                                     </div>`);
                 $('.digit_mask').inputmask({
@@ -697,6 +579,10 @@
                                                 <input type="checkbox" class="rule_additional"> Additional
                                                 <span></span>
                                             </label>
+                                            {{-- <label class="mt-checkbox">
+                                                <input type="checkbox" class="rule_total"> Total
+                                                <span></span>
+                                            </label> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -710,7 +596,7 @@
                                     <div class="col-md-4">
                                         <div class="input-icon right">
                                             <div class="input-group">
-                                                <input type="text" class="form-control digit_mask" name="detail[0][trx_nominal]" placeholder="Transaction Nominal">
+                                                <input type="text" class="form-control digit_mask" name="rule[trx_nominal]" placeholder="Transaction Nominal">
                                                 <span class="input-group-btn">
                                                     <button class="btn default" type="button">
                                                         <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -729,7 +615,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-icon right">
-                                            <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[0][id_product]">
+                                            <select class="form-control select2-multiple" data-placeholder="Select Product" name="rule[id_product]">
                                                 <option></option>
                                                 @foreach ($product as $item)
                                                     <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
@@ -740,7 +626,7 @@
                                     <div class="col-md-4" id="rule_product">
                                         <div class="input-icon right">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="detail[0][product_total]" placeholder="Total Product">
+                                                <input type="text" class="form-control" name="rule[product_total]" placeholder="Total Product">
                                                 <span class="input-group-btn">
                                                     <button class="btn default" type="button">
                                                         <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -759,7 +645,7 @@
                                     </div>
                                     <div class="col-md-4" id="select_outlet">
                                         <div class="input-icon right">
-                                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="detail[0][id_outlet]">
+                                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="rule[id_outlet]">
                                                 <option></option>
                                                 @foreach ($outlet as $item)
                                                     <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
@@ -769,7 +655,7 @@
                                     </div>
                                     <div class="col-md-4" id="select_province">
                                         <div class="input-icon right">
-                                            <select class="form-control select2-multiple" data-placeholder="Select Province" name="detail[0][id_province]">
+                                            <select class="form-control select2-multiple" data-placeholder="Select Province" name="rule[id_province]">
                                                 <option></option>
                                                 @foreach ($province as $item)
                                                     <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
@@ -778,6 +664,38 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- <div class="form-group total_rule_form" hidden>
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Achievement Total Rule
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the achievement is not based on the transaction" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            <div class="input-group">
+                                                <select class="form-control select2-multiple" name="detail[0][rule_total]" id="total_rule" data-placeholder="Select Total Rule By">
+                                                    <option></option>
+                                                    <option value="total_transaction">Transaction</option>
+                                                    <option value="total_outlet">Outlet Different</option>
+                                                    <option value="total_province">Province Different</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control digit_mask" name="detail[0][value_total]" placeholder="Value Total">
+                                                <span class="input-group-btn">
+                                                    <button class="btn default" type="button">
+                                                        <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   --}}
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
@@ -789,11 +707,11 @@
                                     <div class="col-md-8">
                                         <div class="mt-radio-inline">
                                             <label class="mt-radio">
-                                                <input type="radio" name="is_calculate" value="1"> Yes
+                                                <input type="radio" name="group[is_calculate]" value="1"> Yes
                                                 <span></span>
                                             </label>
                                             <label class="mt-radio">
-                                                <input type="radio" name="is_calculate" value="0"> No
+                                                <input type="radio" name="group[is_calculate]" value="0"> No
                                                 <span></span>
                                             </label>
                                         </div>
@@ -853,9 +771,9 @@
                                         <div class="form-group">
                                             <div class="input-icon right">
                                                 <label class="col-md-3 control-label">
-                                                    Achievement Rule
+                                                    Badge Rule
                                                     <span class="required" aria-required="true"> * </span>
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Detail Achievement Name" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Detail Badge Rule" data-container="body"></i>
                                                 </label>
                                             </div>
                                             <div class="col-md-4">
