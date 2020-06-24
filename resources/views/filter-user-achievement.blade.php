@@ -127,8 +127,9 @@
 				data: {
 					ajax:1,
 					page: table.data('page')+1,
-					keyword: table.parents('.is-container').find('.search-field').val(),
-					date_range: table.parents('.is-container').find('.daterange').val()
+					// date_range: table.parents('.is-container').find('.daterange').val(),
+					filter_by: table.parents('.is-container').find('#filter_by').val(),
+					user_filter: table.parents('.is-container').find('#user_filter').val()
 				},
 				success: function(response){
 					table.find('.loading-row').remove();
