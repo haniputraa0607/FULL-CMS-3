@@ -266,7 +266,7 @@ $idUserFrenchisee = session('id_user_franchise');
 	<div class="row" style="margin-top: 3%;">
 		@if(MyHelper::hasAccess([235], $grantedFeature))
 			<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-				<a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+				<a class="dashboard-stat dashboard-stat-v2 purple" target="_blank" href="{{url('disburse/list/all')}}">
 					<div class="visual">
 						<i class="fa fa-shopping-cart"></i>
 					</div>
@@ -280,7 +280,7 @@ $idUserFrenchisee = session('id_user_franchise');
 			</div>
 		@endif
 		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
-			<a class="dashboard-stat dashboard-stat-v2 green" href="#">
+			<a class="dashboard-stat dashboard-stat-v2 green" target="_blank" href="{{url('disburse/list/success')}}">
 				<div class="visual">
 					<i class="fa fa-shopping-cart"></i>
 				</div>
@@ -293,7 +293,7 @@ $idUserFrenchisee = session('id_user_franchise');
 			</a>
 		</div>
 		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
-			<a class="dashboard-stat dashboard-stat-v2 red" href="#">
+			<a class="dashboard-stat dashboard-stat-v2 red" target="_blank" href="{{url('disburse/list/fail-action')}}">
 				<div class="visual">
 					<i class="fa fa-bar-chart-o"></i>
 				</div>
@@ -306,7 +306,7 @@ $idUserFrenchisee = session('id_user_franchise');
 			</a>
 		</div>
 		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
-			<a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+			<a class="dashboard-stat dashboard-stat-v2 blue" target="_blank" href="{{url('disburse/list/trx')}}">
 				<div class="visual">
 					<i class="fa fa-comments"></i>
 				</div>

@@ -2045,7 +2045,7 @@
 				<h3 class="uppercase" style="color: #383b67;font-weight: 600;">Disburse</h3>
 			</li>
 
-			<li class="nav-item {{($menu_active == 'disburse-dasboard') ? 'active' : ''}}">
+			<li class="nav-item {{($menu_active == 'disburse-dashboard') ? 'active' : ''}}">
 				<a href="{{url('disburse/dashboard')}}" class="nav-link nav-toggle">
 					<i class="fa fa-th"></i>
 					<span class="title">Dashboard</span>

@@ -373,6 +373,9 @@
             <li>
                 <a data-toggle="tab" href="#approver">Approver Payouts</a>
             </li>
+            <li>
+                <a data-toggle="tab" href="#time-to-sent">Time To Sent Disburse</a>
+            </li>
         </ul>
     </div>
     <br>
@@ -516,6 +519,14 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div id="time-to-sent" class="tab-pane">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur waktu pengiriman disburse dari tanggal transaksi. Value dalam bentuk hari.</p>
+                <br><p><b>Contoh: <br>Waktu diset = 3</b> <br>maka disburse akan dikirim ke tiap outlet h+ 3 hari dari tanggal transaksi.</p>
+            </div>
+            <br>
+            @include('disburse::setting_global.setting_time_to_sent')
         </div>
     </div>
 @endsection

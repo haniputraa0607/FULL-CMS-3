@@ -29,6 +29,14 @@
                 </div>
             </div>
             <div class="portlet-body">
+                <div class="row static-info">
+                    <div class="col-md-4 name">Charged Central</div>
+                    <div class="col-md-8 value">: {{$subscription['charged_central']}} %</div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-4 name">Charged Outlet</div>
+                    <div class="col-md-8 value">: {{$subscription['charged_outlet']}} %</div>
+                </div>
                 @if(isset($subscription['subscription_start']))
                 <div class="row static-info">
                     <div class="col-md-4 name">Start</div>
