@@ -139,6 +139,7 @@
 	                            		|| $res['source'] == 'Rejected Order Midtrans' 
 	                            		|| $res['source'] == 'Rejected Order Point' 
 	                            		|| $res['source'] == 'Reversal'
+	                            		|| $res['source'] == 'Online Transaction'
 	                            	)
 	                            		<a href="{{ url('transaction/detail/'.$res['id_reference'].'/'.($res['transaction']['trasaction_type']??'')) }}">{{ $res['transaction']['transaction_receipt_number']??'' }}</a>
 	                            	@elseif ($res['source'] == 'Point Injection')
