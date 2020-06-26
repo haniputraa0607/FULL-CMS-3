@@ -124,7 +124,7 @@
                         <td>{{$val['transaction_receipt_number']}}</td>
                         <td>{{$val['outlet_code']}} - {{$val['outlet_name']}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
-                        <td>{{number_format($val['transaction_grandtotal'])}}</td>
+                        <td>{{number_format($val['transaction_grandtotal'], 2)}}</td>
                     </tr>
                 @endforeach
             @else

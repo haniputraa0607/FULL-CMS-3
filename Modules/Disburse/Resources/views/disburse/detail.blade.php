@@ -84,7 +84,7 @@ $idUserFrenchisee = session('id_user_franchise');
                     </tr>
                     <tr>
                         <td width="60%" style="font-size: 22px"><b>Nominal</b></td>
-                        <td style="font-size: 22px"><b>: {{number_format($disburse['disburse_nominal'])}}</b></td>
+                        <td style="font-size: 22px"><b>: {{number_format($disburse['disburse_nominal'], 2)}}</b></td>
                     </tr>
                 </table>
             </div>
@@ -114,16 +114,16 @@ $idUserFrenchisee = session('id_user_franchise');
                         </td>
                         <td>{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
                         <td>
-                            Subtotal = {{number_format($val['transaction_subtotal'])}}<br>
-                            Grandtotal = {{number_format($val['transaction_grandtotal'])}}<br>
-                            Discount = {{number_format($val['transaction_discount'])}}<br>
-                            Gosend Price = {{number_format($val['transaction_shipment_go_send'])}}<br>
-                            Point Use = {{number_format($val['balance_nominal'])}}<br>
+                            Subtotal = {{number_format($val['transaction_subtotal'], 2)}}<br>
+                            Grandtotal = {{number_format($val['transaction_grandtotal'], 2)}}<br>
+                            Discount = {{number_format($val['transaction_discount'], 2)}}<br>
+                            Gosend Price = {{number_format($val['transaction_shipment_go_send'], 2)}}<br>
+                            Point Use = {{number_format($val['balance_nominal'], 2)}}<br>
                         </td>
-                        <td>{{number_format($val['income_outlet'])}}</td>
+                        <td>{{number_format($val['income_outlet'], 2)}}</td>
                         @if(MyHelper::hasAccess([235], $grantedFeature))
-                            <td>{{number_format($val['income_central'])}}</td>
-                            <td>{{number_format($val['expense_central'])}}</td>
+                            <td>{{number_format($val['income_central'], 2)}}</td>
+                            <td>{{number_format($val['expense_central'], 2)}}</td>
                         @endif
                         <td>
                             <?php
