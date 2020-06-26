@@ -133,4 +133,36 @@ $configs = session('configs');
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"> Charged Central
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak pusat" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input required type="text" class="form-control" name="charged_central" placeholder="Charged Central" @if(isset($subscription['charged_central']) && $subscription['charged_central'] != "") value="{{$subscription['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                                <p style="color: red;display: none" id="label_central">Invalid value, charged central and outlet must be 100</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"> Charged Outlet
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak outlet" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input required type="text" class="form-control" name="charged_outlet" placeholder="Charged Outlet" @if(isset($subscription['charged_outlet']) && $subscription['charged_outlet'] != "") value="{{$subscription['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                                <p style="color: red;display: none" id="label_outlet">Invalid value, charged central and outlet must be 100</p>
+                            </div>
+                        </div>
+                    </div>
 @endsection

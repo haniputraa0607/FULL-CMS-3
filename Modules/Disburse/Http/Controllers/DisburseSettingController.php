@@ -223,9 +223,6 @@ class DisburseSettingController extends Controller
         ];
 
         if($post){
-            if(!empty($post['days_to_sent'])){
-                $post['days_to_sent'] = implode(",",$post['days_to_sent']);
-            }
 
             $storeSetting = MyHelper::post('disburse/setting/mdr',$post);
             if(isset($storeSetting['status']) && $storeSetting['status'] == 'success'){
@@ -289,6 +286,13 @@ class DisburseSettingController extends Controller
             $data['approver'] = $approver['result'];
         }else{
             $data['approver'] = [];
+        }
+
+        $timeToSent = MyHelper::get('disburse/setting/time-to-sent');
+        if(isset($timeToSent['status']) && $timeToSent['status'] == 'success'){
+            $data['time_to_sent'] = $timeToSent['result'];
+        }else{
+            $data['time_to_sent'] = [];
         }
 
         return view('disburse::setting_global.setting', $data);
@@ -395,6 +399,17 @@ class DisburseSettingController extends Controller
             return redirect('disburse/setting/global#approver')->withSuccess(['Success Update Data']);
         }else{
             return redirect('disburse/setting/global#approver')->withErrors(['Failed Update Data']);
+        }
+    }
+
+    function settingTimeToSent(Request $request){
+        $post = $request->except('_token');
+
+        $save = MyHelper::post('disburse/setting/time-to-sent', $post);
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('disburse/setting/global#time-to-sent')->withSuccess(['Success Update Data']);
+        }else{
+            return redirect('disburse/setting/global#time-to-sent')->withErrors(['Failed Update Data']);
         }
     }
 }
