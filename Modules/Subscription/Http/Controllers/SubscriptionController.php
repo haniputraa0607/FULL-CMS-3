@@ -154,6 +154,12 @@ class SubscriptionController extends Controller
         }
         $post = $request->except('_token');
         if (!empty($post)) {
+            if(isset($post['charged_central']) && isset($post['charged_outlet'])){
+                $check = $post['charged_central'] + $post['charged_outlet'];
+                if((int)$check !== 100){
+                    return back()->withErrors(['Value charged central and outlet not valid. Value charged central and outlet must be 100 %.'])->withInput();
+                }
+            }
             if($post['id_subscription']){
                 $post['id_subscription'] = MyHelper::explodeSlug($post['id_subscription'])[0];
             }

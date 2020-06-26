@@ -71,10 +71,6 @@ $idUserFrenchisee = session('id_user_franchise');
                         @endif
                     </tr>
                     <tr>
-                        <td width="60%">Nominal</td>
-                        <td>: {{number_format($disburse['disburse_nominal'])}}</td>
-                    </tr>
-                    <tr>
                         <td width="60%">Bank Name</td>
                         <td>: {{$disburse['bank_name']}}</td>
                     </tr>
@@ -85,6 +81,10 @@ $idUserFrenchisee = session('id_user_franchise');
                     <tr>
                         <td width="60%">Recipient Name</td>
                         <td>: {{$disburse['beneficiary_name']}}</td>
+                    </tr>
+                    <tr>
+                        <td width="60%" style="font-size: 22px"><b>Nominal</b></td>
+                        <td style="font-size: 22px"><b>: {{number_format($disburse['disburse_nominal'])}}</b></td>
                     </tr>
                 </table>
             </div>
@@ -109,7 +109,9 @@ $idUserFrenchisee = session('id_user_franchise');
             @if(!empty($trx))
                 @foreach($trx as $val)
                     <tr>
-                        <td>{{$val['transaction_receipt_number']}}</td>
+                        <td>
+                            <a target="_blank" href="{{ url('transaction/detail/'.$val['id_transaction'].'/'.($val['trasaction_type']??'')) }}">{{ $val['transaction_receipt_number']??'' }}</a>
+                        </td>
                         <td>{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
                         <td>
                             Subtotal = {{number_format($val['transaction_subtotal'])}}<br>
@@ -140,6 +142,8 @@ $idUserFrenchisee = session('id_user_franchise');
                                     $html .= 'Charged Point Outlet: '.$val['charged_point_outlet'].' %<br>';
                                     $html .= 'Charged Promo Central: '.$val['charged_promo_central'].' %<br>';
                                     $html .= 'Charged Promo Outlet: '.$val['charged_promo_outlet'].' %<br>';
+                                    $html .= 'Charged Subscription Central: '.$val['charged_subscription_central'].' %<br>';
+                                    $html .= 'Charged Subscription Outlet: '.$val['charged_subscription_outlet'].' %<br>';
                                 }else{
                                     $mdr = $val['mdr'] + $val['mdr_central'];
                                     $html = '';
@@ -149,6 +153,8 @@ $idUserFrenchisee = session('id_user_franchise');
                                     $html .= 'Charged Point Outlet: '.$val['charged_point_outlet'].' %<br>';
                                     $html .= 'Charged Promo Central: '.$val['charged_promo_central'].' %<br>';
                                     $html .= 'Charged Promo Outlet: '.$val['charged_promo_outlet'].' %<br>';
+                                    $html .= 'Charged Subscription Central: '.$val['charged_subscription_central'].' %<br>';
+                                    $html .= 'Charged Subscription Outlet: '.$val['charged_subscription_outlet'].' %<br>';
                                 }
 
                                 echo $html;

@@ -121,6 +121,34 @@ if(isset($deals['is_all_outlet'])){
                 }
             });
         });
+
+        $('input[name=charged_central]').keyup(function () {
+            var outlet = $('input[name=charged_outlet]').val();
+            var central = $('input[name=charged_central]').val();
+
+            var check = Number(outlet) + Number(central);
+            if(check !== 100){
+                document.getElementById('label_central').style.display = 'block';
+                document.getElementById('label_outlet').style.display = 'none';
+            }else{
+                document.getElementById('label_central').style.display = 'none';
+                document.getElementById('label_outlet').style.display = 'none';
+            }
+        });
+
+        $('input[name=charged_outlet]').keyup(function (e) {
+            var outlet = $('input[name=charged_outlet]').val();
+            var central = $('input[name=charged_central]').val();
+
+            var check = Number(outlet) + Number(central);
+            if(check !== 100){
+                document.getElementById('label_central').style.display = 'none';
+                document.getElementById('label_outlet').style.display = 'block';
+            }else{
+                document.getElementById('label_central').style.display = 'none';
+                document.getElementById('label_outlet').style.display = 'none';
+            }
+        });
     </script>
     <script type="text/javascript">
         $('#sample_2').dataTable({
