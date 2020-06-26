@@ -1966,6 +1966,15 @@
 			</li>
 		@endif
 
+		@if(MyHelper::hasAccess([251,252], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'time-expired') ? 'active' : ''}}">
+				<a href="{{url('setting/time-expired')}}" class="nav-link">
+					<i class="fa fa-envelope"></i>
+					<span class="title">Time Expired OTP and Email</span>
+				</a>
+			</li>
+		@endif
+
 		@if(MyHelper::hasAccess([85,86,87,88,89,90,91,94], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #383b67;font-weight: 600;">About</h3>

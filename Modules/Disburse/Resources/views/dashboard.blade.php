@@ -272,7 +272,7 @@ $idUserFrenchisee = session('id_user_franchise');
 					</div>
 					<div class="details">
 						<div class="number" id="nom_income">
-							<span data-counter="counterup" data-value="{{$total_income_central}}" style="font-size: 25px">Rp {{number_format($total_income_central)}}</span>
+							<span data-counter="counterup" data-value="{{$total_income_central}}" style="font-size: 22px">Rp {{number_format($total_income_central, 2)}}</span>
 						</div>
 						<div class="desc"> Income Central </div>
 					</div>
@@ -286,7 +286,7 @@ $idUserFrenchisee = session('id_user_franchise');
 				</div>
 				<div class="details">
 					<div class="number" id="nom_success">
-						<span data-counter="counterup" data-value="{{$nominal_success}}" style="font-size: 25px">Rp {{number_format($nominal_success)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_success}}" style="font-size: 22px">Rp {{number_format($nominal_success, 2)}}</span>
 					</div>
 					<div class="desc"> Total Success Disburse</div>
 				</div>
@@ -299,7 +299,7 @@ $idUserFrenchisee = session('id_user_franchise');
 				</div>
 				<div class="details">
 					<div class="number" id="nom_fail">
-						<span data-counter="counterup" data-value="{{$nominal_fail}}" style="font-size: 25px">Rp {{number_format($nominal_fail)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_fail}}" style="font-size: 22px">Rp {{number_format($nominal_fail, 2)}}</span>
 					</div>
 					<div class="desc"> Total Failed Disburse</div>
 				</div>
@@ -312,7 +312,7 @@ $idUserFrenchisee = session('id_user_franchise');
 				</div>
 				<div class="details">
 					<div class="number" id="nom_trx">
-						<span data-counter="counterup" data-value="{{$nominal_trx}}" style="font-size: 25px">Rp {{number_format($nominal_trx)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_trx}}" style="font-size: 22px">Rp {{number_format($nominal_trx, 2)}}</span>
 					</div>
 					<div class="desc"> Nominal Transaction </div>
 				</div>
