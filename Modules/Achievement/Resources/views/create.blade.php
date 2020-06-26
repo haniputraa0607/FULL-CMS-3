@@ -285,10 +285,14 @@
                 switch ($(this).val()) {
                     case 'total_product':
                         $('#rule_product').hide()
+                        $('#product_total_rule').val("")
                         toastr.warning("Kamu tidak bisa menggunakan Additional Rule Product Total");
                         break;
                     case 'nominal_transaction':
+                        $('.rule_trx').prop('checked', false)
                         $('#rule_transaction').hide()
+                        $('.trx_rule_form').hide()
+                        $('#nominal_trx').val("")
                         $('#rule_product_add').css('margin-left', '15px')
                         toastr.warning("Kamu tidak bisa menggunakan Additional Rule Transaction Nominal");
                         break;
@@ -298,11 +302,13 @@
                         toastr.warning("Kamu tidak bisa menggunakan Additional Rule Outlet");
                         break;
                     case 'total_outlet':
+                        $('#outlet_total_rule').val("").trigger("change")
                         $('#select_outlet').hide()
                         $('#select_outlet').children().children().val()
                         toastr.warning("Kamu tidak bisa menggunakan Additional Rule Outlet");
                         break;
                     case 'total_province':
+                        $('#province_total_rule').val("").trigger("change") 
                         $('#select_province').hide()
                         $('#select_province').children().children().val()
                         toastr.warning("Kamu tidak bisa menggunakan Additional Rule Province");
@@ -596,7 +602,7 @@
                                     <div class="col-md-4">
                                         <div class="input-icon right">
                                             <div class="input-group">
-                                                <input type="text" class="form-control digit_mask" name="rule[trx_nominal]" placeholder="Transaction Nominal">
+                                                <input type="text" class="form-control digit_mask" name="rule[trx_nominal]" id="nominal_trx" placeholder="Transaction Nominal">
                                                 <span class="input-group-btn">
                                                     <button class="btn default" type="button">
                                                         <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -626,7 +632,7 @@
                                     <div class="col-md-4" id="rule_product">
                                         <div class="input-icon right">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="rule[product_total]" placeholder="Total Product">
+                                                <input type="text" class="form-control" name="rule[product_total]" id="product_total_rule" placeholder="Total Product">
                                                 <span class="input-group-btn">
                                                     <button class="btn default" type="button">
                                                         <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -645,7 +651,7 @@
                                     </div>
                                     <div class="col-md-4" id="select_outlet">
                                         <div class="input-icon right">
-                                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="rule[id_outlet]">
+                                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="rule[id_outlet]" id="outlet_total_rule">
                                                 <option></option>
                                                 @foreach ($outlet as $item)
                                                     <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
@@ -655,7 +661,7 @@
                                     </div>
                                     <div class="col-md-4" id="select_province">
                                         <div class="input-icon right">
-                                            <select class="form-control select2-multiple" data-placeholder="Select Province" name="rule[id_province]">
+                                            <select class="form-control select2-multiple" data-placeholder="Select Province" name="rule[id_province]" id="province_total_rule">
                                                 <option></option>
                                                 @foreach ($province as $item)
                                                     <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
@@ -715,6 +721,18 @@
                                                 <span></span>
                                             </label>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                            Progress Text
+                                            <span class="required" aria-required="true"> * </span>
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Progress Text" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="group[progress_text]" placeholder="Text" required maxlength="255">
                                     </div>
                                 </div>
                             </div>

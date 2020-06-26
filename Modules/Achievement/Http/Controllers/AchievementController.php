@@ -127,13 +127,14 @@ class AchievementController extends Controller
                 }
             } else {
                 $post['group']['logo_badge_default'] = MyHelper::encodeImage($post['group']['logo_badge_default']);
+                $post['group']['order_by']  = $post['rule_total'];
 
                 if (isset($post['detail'])) {
                     foreach ($post['detail'] as $key => $value) {
                         $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
                     }
                 }
-
+                
                 $save = MyHelper::post('achievement/create', $post);
                 // return $save;
                 if (isset($save['status']) && $save['status'] == "success") {
