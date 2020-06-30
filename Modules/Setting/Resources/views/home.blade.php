@@ -788,11 +788,11 @@
 					 			 	<div class="click-to">
 					 			 		@php
 					 			 			if ($banner['news_title'] != null) {
-					 			 				$click_to = str_limit($banner['news_title'], 20);
+					 			 				$click_to = str_limit($banner['news_title'], 18);
 					 			 			}
 					 			 			elseif ($banner['url'] != null) {
 					 			 				if ($banner['type'] == 'general') {
-					 			 					$click_to = str_limit($banner['url'], 20);
+					 			 					$click_to = str_limit($banner['url'], 18);
 					 			 				} else {
 					 			 					$click_to = "GO-FOOD";
 					 			 				}
