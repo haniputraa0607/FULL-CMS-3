@@ -1423,4 +1423,19 @@ class DealsController extends Controller
 			return ['status' => 'fail', 'messages' => 'Something went wrong'];	
 		}
     }
+
+    /* get list of deals that haven't ended yet */
+    public function listActiveDeals(Request $request) {
+        $post = $request->except('_token');
+        $post['select'] = ['id_deals', 'deals_title', 'deals_second_title'];
+
+        $deals = MyHelper::post('deals/list/active?log_save=0', $post);
+        if (isset($deals['status']) && $deals['status'] == "success") {
+            $data = $deals['result'];
+        }
+        else {
+            $data = [];
+        }
+        return response()->json($data);
+    }
 }
