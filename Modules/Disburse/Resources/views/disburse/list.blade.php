@@ -120,7 +120,7 @@
                         @if($status == 'all') <td>{{$val['disburse_status']}}</td>@endif
                         <td>{{$val['outlet_code']}} - {{$val['outlet_name']}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>
-                        <td>{{number_format($val['disburse_nominal'])}}</td>
+                        <td>{{number_format($val['disburse_nominal'], 2)}}</td>
                         <td>{{$val['bank_name']}}</td>
                         <td>{{$val['beneficiary_account_number']}}</td>
                         <td>{{$val['beneficiary_name']}}</td>

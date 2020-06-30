@@ -180,6 +180,29 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
+		else if(det == 'Deals'){
+			$.ajax({
+				type : "GET",
+				url : "{{ url('deals/list/active') }}",
+				data : "_token="+token,
+				success : function(result) {
+					document.getElementById('atd_'+type).style.display = 'block';
+					var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
+					for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+					operator_value.options[operator_value.options.length] = new Option("", "");
+					for(x=0;x < result.length; x++){
+						if(idref == result[x]['id_deals']){
+							operator_value.options[operator_value.options.length] = new Option(result[x]['deals_title']+' '+result[x]['deals_second_title'], result[x]['id_deals'], false, true);
+						}else{
+							operator_value.options[operator_value.options.length] = new Option(result[x]['deals_title']+' '+result[x]['deals_second_title'], result[x]['id_deals']);
+						}
+					}
+				}
+			});
+			document.getElementById('link_'+type).style.display = 'none';
+			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+		}
+
 		else if(det == 'Home'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];

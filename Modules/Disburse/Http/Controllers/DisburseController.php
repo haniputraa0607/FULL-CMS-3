@@ -123,10 +123,10 @@ class DisburseController extends Controller
                 $data['nominal_trx'] = $getData['result']['nominal_trx'];
                 $data['total_income_central'] = $getData['result']['income_central'];
 
-                $data['format_nominal_success'] = number_format($getData['result']['nominal_success']);
-                $data['format_nominal_fail'] = number_format($getData['result']['nominal_fail']);
-                $data['format_nominal_trx'] = number_format($getData['result']['nominal_trx']);
-                $data['format_total_income_central'] = number_format($getData['result']['income_central']);
+                $data['format_nominal_success'] = number_format($getData['result']['nominal_success'], 2);
+                $data['format_nominal_fail'] = number_format($getData['result']['nominal_fail'], 2);
+                $data['format_nominal_trx'] = number_format($getData['result']['nominal_trx'], 2);
+                $data['format_total_income_central'] = number_format($getData['result']['income_central'], 2);
             }else{
                 $data['status'] = 'fail';
             }
