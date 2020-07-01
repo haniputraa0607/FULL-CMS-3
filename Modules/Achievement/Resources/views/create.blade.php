@@ -298,19 +298,19 @@
                         break;
                     case 'total_outlet':
                         $('#select_outlet').hide()
-                        $('#select_outlet').children().children().val()
+                        $('#select_outlet').children().children().val("").trigger("change")
                         toastr.warning("Kamu tidak bisa menggunakan Additional Rule Outlet");
                         break;
                     case 'total_outlet':
                         $('#outlet_total_rule').val("").trigger("change")
                         $('#select_outlet').hide()
-                        $('#select_outlet').children().children().val()
+                        $('#select_outlet').children().children().val("").trigger("change")
                         toastr.warning("Kamu tidak bisa menggunakan Additional Rule Outlet");
                         break;
                     case 'total_province':
                         $('#province_total_rule').val("").trigger("change") 
                         $('#select_province').hide()
-                        $('#select_province').children().children().val()
+                        $('#select_province').children().children().val("").trigger("change")
                         toastr.warning("Kamu tidak bisa menggunakan Additional Rule Province");
                         break;
                 }
@@ -318,13 +318,17 @@
             $('.rule_trx').change(function() {
                 var form = $(this).parents()[4]
                 $(form).find('.trx_rule_form').hide()
+                $(form).find('.nominal_transaksi').val("").trigger("change")
                 if ($(this).is(':checked')) {
                     $(form).find('.trx_rule_form').show()
                 }
             });
             $('.rule_product').change(function() {
                 var form = $(this).parents()[4]
+                $(form).find('.id_product').val("").trigger("change")
+                $(form).find('.total_product').val("").trigger("change")
                 $(form).find('.product_rule_form').hide()
+                $('#product_total_rule').val("")
                 if ($(this).is(':checked')) {
                     $(form).find('.product_rule_form').show()
                 }
@@ -338,6 +342,8 @@
             });
             $('.rule_additional').change(function() {
                 var form = $(this).parents()[4]
+                $(form).find('.id_outlet').val("").trigger("change")
+                $(form).find('.id_province').val("").trigger("change")
                 $(form).find('.additional_rule_form').hide()
                 if ($(this).is(':checked')) {
                     $(form).find('.additional_rule_form').show()
@@ -602,7 +608,7 @@
                                     <div class="col-md-4">
                                         <div class="input-icon right">
                                             <div class="input-group">
-                                                <input type="text" class="form-control digit_mask" name="rule[trx_nominal]" id="nominal_trx" placeholder="Transaction Nominal">
+                                                <input type="text" class="form-control digit_mask nominal_transaksi" name="rule[trx_nominal]" id="nominal_trx" placeholder="Transaction Nominal">
                                                 <span class="input-group-btn">
                                                     <button class="btn default" type="button">
                                                         <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -621,7 +627,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-icon right">
-                                            <select class="form-control select2-multiple" data-placeholder="Select Product" name="rule[id_product]">
+                                            <select class="form-control select2-multiple id_product" data-placeholder="Select Product" name="rule[id_product]">
                                                 <option></option>
                                                 @foreach ($product as $item)
                                                     <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
@@ -632,7 +638,7 @@
                                     <div class="col-md-4" id="rule_product">
                                         <div class="input-icon right">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="rule[product_total]" id="product_total_rule" placeholder="Total Product">
+                                                <input type="text" class="form-control total_product" name="rule[product_total]" id="product_total_rule" placeholder="Total Product">
                                                 <span class="input-group-btn">
                                                     <button class="btn default" type="button">
                                                         <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
@@ -651,7 +657,7 @@
                                     </div>
                                     <div class="col-md-4" id="select_outlet">
                                         <div class="input-icon right">
-                                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="rule[id_outlet]" id="outlet_total_rule">
+                                            <select class="form-control select2-multiple id_outlet" data-placeholder="Select Outlet" name="rule[id_outlet]" id="outlet_total_rule">
                                                 <option></option>
                                                 @foreach ($outlet as $item)
                                                     <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
@@ -661,7 +667,7 @@
                                     </div>
                                     <div class="col-md-4" id="select_province">
                                         <div class="input-icon right">
-                                            <select class="form-control select2-multiple" data-placeholder="Select Province" name="rule[id_province]" id="province_total_rule">
+                                            <select class="form-control select2-multiple id_province" data-placeholder="Select Province" name="rule[id_province]" id="province_total_rule">
                                                 <option></option>
                                                 @foreach ($province as $item)
                                                     <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
