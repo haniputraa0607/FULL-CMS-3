@@ -1434,11 +1434,24 @@
 						</li>
 						@endif
 						@if(MyHelper::hasAccess([226], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'achievement-report') ? 'active open' : ''}}">
-							<a href="{{url('achievement/report')}}" class="nav-link ">
-								<span class="title">Report Achievement</span>
-							</a>
-						</li>
+							<li class="nav-item {{(strpos($submenu_active , 'achievement-report') !== false) ? 'active open' : ''}}">
+								<a href="javascript:;" class="nav-link nav-toggle">
+									<span class="title">Report Achievement</span>
+									<span class="arrow"></span>
+								</a>
+								<ul class="sub-menu">
+{{--									<li class="nav-item {{($submenu_active == 'achievement-report') ? 'active open' : ''}}">--}}
+{{--										<a href="{{url('achievement/report')}}" class="nav-link ">--}}
+{{--											<span class="title">Achievement</span>--}}
+{{--										</a>--}}
+{{--									</li>--}}
+									<li class="nav-item {{($submenu_active == 'achievement-report-user') ? 'active open' : ''}}">
+										<a href="{{url('achievement/report/user-achievement')}}" class="nav-link ">
+											<span class="title">User Achievement</span>
+										</a>
+									</li>
+								</ul>
+							</li>
 						@endif
 					</ul>
 				</li>
