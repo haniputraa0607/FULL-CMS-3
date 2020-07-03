@@ -57,6 +57,9 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 	<script>
 	function hapus1(value){
 		swal({
@@ -249,6 +252,9 @@
 				$('#modalBannerUpdate .click-to-radio[value="news"]').prop("checked", true);
 	            $('.click-to-type').find('.select2-container').show();
 			}
+			else if(type == "order") {
+				$('#modalBannerUpdate .click-to-radio[value="order"]').prop("checked", true);
+			}
 			else {
 				$('#modalBannerUpdate .click-to-radio[value="none"]').prop("checked", true);
 			}
@@ -318,7 +324,7 @@
 
     // clear banner edit form when modal close
     $('#modalBannerUpdate').on('hide.bs.modal', function () {
-		$('#id_banner').val('');
+		// $('#id_banner').val('');
 		$('#modalBannerUpdate .click-to-news').val('').trigger('change');
 		$('#modalBannerUpdate .click-to-url').val('');
 		$('#edit-banner-img').attr('src', '');
@@ -793,7 +799,11 @@
 					 			 			elseif ($banner['url'] != null) {
 					 			 				if ($banner['type'] == 'general') {
 					 			 					$click_to = str_limit($banner['url'], 18);
-					 			 				} else {
+					 			 				} 
+					 			 				elseif ($banner['type'] == 'order') {
+					 			 					$click_to = "Order";
+					 			 				} 
+					 			 				else {
 					 			 					$click_to = "GO-FOOD";
 					 			 				}
 					 			 			}
@@ -1145,6 +1155,11 @@
 	                            </div>
 	                            <div class="col-md-2">
                                     <label class="radio-inline">
+										<input class="click-to-radio" type="radio" name="click_to" value="order"> Order
+									</label>
+	                            </div>
+	                            <div class="col-md-2">
+                                    <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
 									</label>
 	                            </div>
@@ -1253,6 +1268,11 @@
 	                            <div class="col-md-2">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="url"> Link
+									</label>
+	                            </div>
+	                            <div class="col-md-2">
+                                    <label class="radio-inline">
+										<input class="click-to-radio" type="radio" name="click_to" value="order"> Order
 									</label>
 	                            </div>
 	                            <div class="col-md-2">
