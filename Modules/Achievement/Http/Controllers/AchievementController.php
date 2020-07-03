@@ -3,11 +3,14 @@
 namespace Modules\Achievement\Http\Controllers;
 
 use App\Lib\MyHelper;
+use Cassandra\RetryPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Session;
 
 class AchievementController extends Controller
 {
@@ -43,22 +46,7 @@ class AchievementController extends Controller
         $data['province']   = MyHelper::get('province/list')['result'];
 
         switch ($slug) {
-            case 'user-achivement':
-                if (!empty($post)) {
-                    $post = $request->except('_token');
-                    $raw_data = MyHelper::post('achievement/report/' . $slug, $post)['result'] ?? [];
-                    // return MyHelper::post('achievement/report/' . $slug, $post);
-                    $data['data'] = $raw_data['data'];
-                    $data['total'] = $raw_data['total'] ?? 0;
-                    $data['from'] = $raw_data['from'] ?? 0;
-                    $data['order_by'] = $raw_data['order_by'] ?? 0;
-                    $data['order_sorting'] = $raw_data['order_sorting'] ?? 0;
-                    $data['last_page'] = !($raw_data['next_page_url'] ?? false);
-                    return $data;
-                }
-                return view('achievement::report.user', $data);
-                break;
-            case 'list-achivement':
+            case 'list-achievement':
                 if (!empty($post)) {
                     $post = $request->except('_token');
                     $raw_data = MyHelper::post('achievement/report/' . $slug, $post)['result'] ?? [];
@@ -72,7 +60,7 @@ class AchievementController extends Controller
                 }
                 return view('achievement::report.index', $data);
                 break;
-            case 'membership-achivement':
+            case 'membership-achievement':
                 if (!empty($post)) {
                     $post = $request->except('_token');
                     $raw_data = MyHelper::post('achievement/report/' . $slug, $post)['result'] ?? [];
@@ -89,6 +77,164 @@ class AchievementController extends Controller
         }
     }
 
+    function reportAchievement(Request $request){
+        $post = $request->all();
+        $data = [
+            'title'          => 'Achievement',
+            'sub_title'      => 'Report Achievement',
+            'menu_active'    => 'achievement',
+            'submenu_active' => 'achievement-report'
+        ];
+
+        $getData = MyHelper::post('achievement/report', $post);
+
+        if (isset($getData['status']) && $getData['status'] == "success") {
+            $data['data']          = $getData['result']['data'];
+            $data['dataTotal']     = $getData['result']['total'];
+            $data['dataPerPage']   = $getData['result']['from'];
+            $data['dataUpTo']      = $getData['result']['from'] + count($getData['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($getData['result']['data'], $getData['result']['total'], $getData['result']['per_page'], $getData['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        return view('achievement::report.achievement.achievement', $data);
+    }
+
+    function reportDetailAchievement(Request $request, $id){
+        $post = $request->all();
+        $data = [
+            'title'          => 'Achievement',
+            'sub_title'      => 'Report Detail Achievement',
+            'menu_active'    => 'achievement',
+            'submenu_active' => 'achievement-report'
+        ];
+
+        $post['id_achievement_group'] = $id;
+        $getData = MyHelper::post('achievement/report/detail', $post);
+
+        $data['data_achievement'] = [];
+        $data['data_badge'] = [];
+        $data['data_list_user'] = [];
+
+        if (isset($getData['status']) && $getData['status'] == "success") {
+            $data['data_achievement'] = $getData['result']['data_achievement'];
+            $data['data_badge'] = $getData['result']['data_badge'];
+            //$getDataListUser = MyHelper::post('achievement/report/list/user-achievement', $post);
+        }
+
+        return view('achievement::report.achievement.detail', $data);
+    }
+
+    function reportUser(Request $request){
+        $post = $request->all();
+        $data = [
+            'title'          => 'Achievement',
+            'sub_title'      => 'Report Achievement User',
+            'menu_active'    => 'achievement',
+            'submenu_active' => 'achievement-report-user'
+        ];
+
+        if(Session::has('filter-report-achievement-user') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-report-achievement-user');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-report-achievement-user');
+        }
+
+        $getData = MyHelper::post('achievement/report/user-achievement', $post);
+
+        if (isset($getData['status']) && $getData['status'] == "success") {
+            $data['data']          = $getData['result']['data'];
+            $data['dataTotal']     = $getData['result']['total'];
+            $data['dataPerPage']   = $getData['result']['from'];
+            $data['dataUpTo']      = $getData['result']['from'] + count($getData['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($getData['result']['data'], $getData['result']['total'], $getData['result']['per_page'], $getData['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        if($post){
+            Session::put('filter-report-achievement-user',$post);
+        }
+        return view('achievement::report.user.user', $data);
+    }
+
+    function reportDetailUser(Request $request, $phone){
+        $post = $request->all();
+        $data = [
+            'title'          => 'Achievement',
+            'sub_title'      => 'Report Detail Achievement User',
+            'menu_active'    => 'achievement',
+            'submenu_active' => 'achievement-report-user'
+        ];
+
+        $post['phone'] = $phone;
+        $getData = MyHelper::post('achievement/report/user-achievement/detail', $post);
+
+        if (isset($getData['status']) && $getData['status'] == "success") {
+            $data['user'] = $getData['result']['data_user'];
+
+            if(!empty($getData['result']['list_achievement'])){
+                $listachievement = $getData['result']['list_achievement'];
+                $data['data']          = $listachievement['data'];
+                $data['dataTotal']     = $listachievement['total'];
+                $data['dataPerPage']   = $listachievement['from'];
+                $data['dataUpTo']      = $listachievement['from'] + count($listachievement['data'])-1;
+                $data['dataPaginator'] = new LengthAwarePaginator($listachievement['data'], $listachievement['total'], $listachievement['per_page'], $listachievement['current_page'], ['path' => url()->current()]);
+            }else{
+                $data['data']          = [];
+                $data['dataTotal']     = 0;
+                $data['dataPerPage']   = 0;
+                $data['dataUpTo']      = 0;
+                $data['dataPaginator'] = false;
+            }
+
+        }else{
+            $data['user'] = [];
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        $data['phone'] = $phone;
+
+        return view('achievement::report.user.detail', $data);
+    }
+
+    function reportDetailBadgeUser(Request $request, $id_achievement_group,$phone){
+        $post = $request->all();
+        $data = [
+            'title'          => 'Achievement',
+            'sub_title'      => 'Report Detail Badged User',
+            'menu_active'    => 'achievement',
+            'submenu_active' => 'achievement-report-user'
+        ];
+
+        $post['phone'] = $phone;
+        $post['id_achievement_group'] = $id_achievement_group;
+        $getData = MyHelper::post('achievement/report/user-achievement/detail-badge', $post);
+
+        $data['data'] = [];
+        if (isset($getData['status']) && $getData['status'] == "success") {
+            $data['data'] = $getData['result'];
+        }
+        return view('achievement::report.user.detail_badge', $data);
+    }
     /**
      * Display a listing of the resource.
      * @return Response
