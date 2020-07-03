@@ -995,6 +995,9 @@ class SettingController extends Controller
             if ($post['click_to'] == 'gofood') {
                 $post['type'] = 'gofood';
             }
+            elseif ($post['click_to'] == 'order') {
+                $post['type'] = 'order';
+            }
 
             // remove click_to index
             unset($post['click_to']);
@@ -1009,6 +1012,7 @@ class SettingController extends Controller
         }
 
         $result = MyHelper::post('setting/banner/create', $post);
+
         return parent::redirect($result, 'New banner has been created.', 'setting/home#banner');
     }
 
@@ -1031,6 +1035,9 @@ class SettingController extends Controller
         if (isset($post['click_to'])) {
             if ($post['click_to'] == 'gofood') {
                 $post['type'] = 'gofood';
+            }
+            elseif ($post['click_to'] == 'order') {
+                $post['type'] = 'order';
             }
 
             // remove click_to index
