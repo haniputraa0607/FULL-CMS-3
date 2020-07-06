@@ -24,7 +24,12 @@ class ReportGosend extends Controller
         ];
 
         if(Session::has('filter-list-gosend') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
             $post = Session::get('filter-list-gosend');
+            $post['page'] = $page;
         }else{
             Session::forget('filter-list-gosend');
         }
@@ -52,7 +57,8 @@ class ReportGosend extends Controller
 
     function export(Request $request){
         $post = $request->except('_token');
-        if(Session::has('filter-list-gosend') && !empty($post) && !isset($post['filter'])){
+
+        if(Session::has('filter-list-gosend') && !isset($post['filter'])){
             $post = Session::get('filter-list-gosend');
         }
         $post['export'] = 1;
