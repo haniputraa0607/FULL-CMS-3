@@ -93,6 +93,11 @@ if(!is_null($idUserFrenchisee)){
         @include('report::report_gosend.filter_list')
     </form>
 
+    <div class="m-heading-1 border-green m-bordered">
+        <p>Default data yang ditampilkan adalah data dengan status <b>"Delivered"</b>. Untuk mencari data dengan status selain <b>"Delivered"</b>, Anda bisa menggunakan filter diatas dengan memilih subject "Status". Export akan menghasilkan data sesuai dengan list data yang tampil saat ini.</p>
+        <p>Tombol export akan muncul jika list dibawah tersedia.</p>
+    </div>
+
     <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
         <table class="table table-striped table-bordered table-hover" id="tableReport">
             <thead>
