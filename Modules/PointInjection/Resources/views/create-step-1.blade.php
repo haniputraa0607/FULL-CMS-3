@@ -713,7 +713,7 @@
 									<div class="fileinput fileinput-new" data-provides="fileinput">
 										<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 											@if(isset($result['point_injection_push_image']) && $result['point_injection_push_image'] != "")
-												<img src="{{env('AWS_URL')}}{{$result['point_injection_push_image']}}" id="point_injection_push_image" />
+												<img src="{{env('STORAGE_URL_API')}}{{$result['point_injection_push_image']}}" id="point_injection_push_image" />
 											@else
 												<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="point_injection_push_image" />
 											@endif
