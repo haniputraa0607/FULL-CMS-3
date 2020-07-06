@@ -1440,11 +1440,11 @@
 									<span class="arrow"></span>
 								</a>
 								<ul class="sub-menu">
-{{--									<li class="nav-item {{($submenu_active == 'achievement-report') ? 'active open' : ''}}">--}}
-{{--										<a href="{{url('achievement/report')}}" class="nav-link ">--}}
-{{--											<span class="title">Achievement</span>--}}
-{{--										</a>--}}
-{{--									</li>--}}
+									<li class="nav-item {{($submenu_active == 'achievement-report') ? 'active open' : ''}}">
+										<a href="{{url('achievement/report')}}" class="nav-link ">
+											<span class="title">Achievement</span>
+										</a>
+									</li>
 									<li class="nav-item {{($submenu_active == 'achievement-report-user') ? 'active open' : ''}}">
 										<a href="{{url('achievement/report/user-achievement')}}" class="nav-link ">
 											<span class="title">User Achievement</span>

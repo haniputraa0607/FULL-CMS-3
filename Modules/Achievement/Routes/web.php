@@ -22,6 +22,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'achievem
     /*Report Achievement*/
     Route::any('report', 'AchievementController@reportAchievement');
     Route::any('report/detail/{id}', 'AchievementController@reportDetailAchievement');
+    Route::any('report/list-user/{id}', 'AchievementController@reportListUserAchievement');
 
     /*Report User Achievement*/
     Route::any('report/user-achievement', 'AchievementController@reportUser');

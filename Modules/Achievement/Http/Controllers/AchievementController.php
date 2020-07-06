@@ -114,20 +114,52 @@ class AchievementController extends Controller
             'submenu_active' => 'achievement-report'
         ];
 
+        $data['id_achievement_group'] = $id;
+        if(!empty($post)){
+            $post['id_achievement_group'] = $id;
+            $getData = MyHelper::post('achievement/report/detail', $post);
+
+            $result['id_achievement_group'] = $id;
+            $result['data_achievement'] = [];
+            $result['data_badge'] = [];
+
+            if (isset($getData['status']) && $getData['status'] == "success") {
+                $result['data_achievement'] = $getData['result']['data_achievement'];
+                $result['data_badge'] = $getData['result']['data_badge'];
+            }
+
+            return response()->json($result);
+        }else{
+            $data['data_achievement'] = [];
+            $data['data_badge'] = [];
+            return view('achievement::report.achievement.detail', $data);
+        }
+    }
+
+    function reportListUserAchievement(Request $request, $id){
+        $post = $request->all();
         $post['id_achievement_group'] = $id;
-        $getData = MyHelper::post('achievement/report/detail', $post);
+        $draw =$post['draw'];
 
-        $data['data_achievement'] = [];
-        $data['data_badge'] = [];
-        $data['data_list_user'] = [];
+        $page = 1;
+        if(isset($post['start']) && isset($post['length'])){
+            $page = $post['start']/$post['length'] + 1;
+        }
+        $getDataListUser = MyHelper::post('achievement/report/list/user-achievement?page='.$page, $post);
 
-        if (isset($getData['status']) && $getData['status'] == "success") {
-            $data['data_achievement'] = $getData['result']['data_achievement'];
-            $data['data_badge'] = $getData['result']['data_badge'];
-            //$getDataListUser = MyHelper::post('achievement/report/list/user-achievement', $post);
+        if(isset($getDataListUser['status']) && $getDataListUser['status'] == 'success'){
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = $getDataListUser['result']['total'];
+            $arr_result['recordsFiltered'] = $getDataListUser['result']['total'];
+            $arr_result['data'] = $getDataListUser['result']['data'];
+        }else{
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = 0;
+            $arr_result['recordsFiltered'] = 0;
+            $arr_result['data'] = array();
         }
 
-        return view('achievement::report.achievement.detail', $data);
+        return response()->json($arr_result);
     }
 
     function reportUser(Request $request){
