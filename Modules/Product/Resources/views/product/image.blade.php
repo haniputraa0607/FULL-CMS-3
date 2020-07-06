@@ -734,7 +734,7 @@
                                 @if (empty($value['photos']))
                                     <td id="{{$value['product_code']}}">No Image</td>
                                 @else
-                                    <td id="{{$value['product_code']}}"><img style="width: 75px;" src="{{env('AWS_URL').$value['photos'][0]['product_photo'] }}" alt=""></td>
+                                    <td id="{{$value['product_code']}}"><img style="width: 75px;" src="{{env('STORAGE_URL_API').$value['photos'][0]['url_product_photo'] }}" alt=""></td>
                                 @endif
                             </tr>
                         @endforeach
