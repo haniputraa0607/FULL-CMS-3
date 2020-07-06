@@ -98,6 +98,17 @@ if(!is_null($idUserFrenchisee)){
         <p>Tombol export akan muncul jika list dibawah tersedia.</p>
     </div>
 
+    <br>
+    <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5" style="text-align: center;">
+            <div style="border: solid 1px black;">
+                <h4><b>Total Price GoSend : {{number_format($sum)}}</b></h4>
+            </div>
+        </div>
+    </div>
+    <br>
+
     <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
         <table class="table table-striped table-bordered table-hover" id="tableReport">
             <thead>
