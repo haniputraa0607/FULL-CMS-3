@@ -178,7 +178,7 @@
                 @endif
                 <div class="row static-info">
                     <div class="col-md-4 name">Minimal Transaction (Subtotal)</div>
-                    <div class="col-md-8 value">: {{ !empty($subscription['transaction_minimal_transaction']) ? number_format($subscription['transaction_minimal_transaction']) : '' }}</div>
+                    <div class="col-md-8 value">: {{ !empty($subscription['subscription_minimal_transaction']) ? number_format($subscription['subscription_minimal_transaction']) : '' }}</div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Daily Usage Limit</div>
