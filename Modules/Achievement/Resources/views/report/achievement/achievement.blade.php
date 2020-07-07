@@ -55,8 +55,8 @@
     <?php
     $date_start = '';
     $date_end = '';
-    if(Session::has('filter-report-achievement-user')){
-        $search_param = Session::get('filter-report-achievement-user');
+    if(Session::has('filter-report-achievement')){
+        $search_param = Session::get('filter-report-achievement');
         if(isset($search_param['date_start'])){
             $date_start = $search_param['date_start'];
         }
@@ -75,10 +75,10 @@
     }
     ?>
 
-{{--    <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">--}}
-{{--        {{ csrf_field() }}--}}
-{{--        @include('achievement::report.user.filter_user')--}}
-{{--    </form>--}}
+    <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
+        {{ csrf_field() }}
+        @include('achievement::report.achievement.filter_achievement')
+    </form>
 
     <div class="portlet light bordered">
         <div class="portlet-title">

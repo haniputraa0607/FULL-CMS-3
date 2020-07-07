@@ -12,7 +12,7 @@
         var index = temp1.replace("][subject]", "");
         var subject_value = document.getElementsByName(val)[0].value;
 
-        if(subject_value == 'achievement_total'){
+        if(subject_value == 'number_of_user_achievement' || subject_value == 'number_of_user_badge'){
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
             for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -24,6 +24,18 @@
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'text';
+        }else if(subject_value = 'rule_achievement'){
+            var operator = "conditions["+index+"][operator]";
+            var operator_value = document.getElementsByName(operator)[0];
+            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+            operator_value.options[operator_value.options.length] = new Option('Product', 'product');
+            operator_value.options[operator_value.options.length] = new Option('Outlet', 'outlet');
+            operator_value.options[operator_value.options.length] = new Option('Province', 'province');
+            operator_value.options[operator_value.options.length] = new Option('Transaction Nominal', 'trx_nominal');
+            operator_value.options[operator_value.options.length] = new Option('Total Transaction', 'trx_total');
+
+            var parameter = "conditions["+index+"][parameter]";
+            document.getElementsByName(parameter)[0].type = 'hidden';
         }else{
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
@@ -91,19 +103,27 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
-                                                    <option value="name" @if ($con['subject'] == 'name') selected @endif>Name</option>
-                                                    <option value="phone" @if ($con['subject'] == 'phone') selected @endif>Phone</option>
-                                                    <option value="achievement_total" @if ($con['subject'] == 'achievement_total') selected @endif>Achievement Total</option>
+                                                    <option value="achievement_name" @if ($con['subject'] == 'achievement_name') selected @endif>Achievement Name</option>
+                                                    <option value="badge_name" @if ($con['subject'] == 'badge_name') selected @endif>Badge Name</option>
+                                                    <option value="rule_achievement" @if ($con['subject'] == 'rule_achievement') selected @endif>Rule Achievement</option>
+                                                    <option value="number_of_user_achievement" @if ($con['subject'] == 'number_of_user_achievement') selected @endif>Number of User on Achievement</option>
+                                                    <option value="number_of_user_badge" @if ($con['subject'] == 'number_of_user_badge') selected @endif>Number of User on Badge</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
                                                 <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
-                                                    @if($con['subject'] == 'achievement_total')
+                                                    @if($con['subject'] == 'achievement_name' || $con['subject'] == 'number_of_user_badge')
                                                         <option value="=" @if ($con['operator']  == '=') selected @endif>=</option>
                                                         <option value=">" @if ($con['operator']  == '>') selected @endif>></option>
                                                         <option value=">=" @if ($con['operator']  == '>=') selected @endif>>=</option>
                                                         <option value="<" @if ($con['operator']  == '<') selected @endif><</option>
                                                         <option value="<=" @if ($con['operator']  == '<=') selected @endif><=</option>
+                                                    @elseif($con['subject'] == 'rule_achievement')
+                                                        <option value="product" @if ($con['operator']  == 'product') selected @endif>Product</option>
+                                                        <option value="outlet" @if ($con['operator']  == 'outlet') selected @endif>Outlet</option>
+                                                        <option value="province" @if ($con['operator']  == 'province') selected @endif>Province</option>
+                                                        <option value="trx_nominal" @if ($con['operator']  == 'trx_nominal') selected @endif>Transaction Nominal</option>
+                                                        <option value="trx_total" @if ($con['operator']  == 'trx_total') selected @endif>Total Transaction</option>
                                                     @else
                                                         <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                                         <option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>
@@ -111,9 +131,15 @@
                                                 </select>
                                             </div>
 
-                                            <div class="col-md-3">
-                                                <input type="text" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
-                                            </div>
+                                            @if ($con['subject'] == 'rule_achievement')
+                                                <div class="col-md-3">
+                                                    <input type="hidden" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
+                                                </div>
+                                            @else
+                                                <div class="col-md-3">
+                                                    <input type="text" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -128,9 +154,11 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
-                                                    <option value="name">Name</option>
-                                                    <option value="phone">Phone</option>
-                                                    <option value="achievement_total">Achievement Total</option>
+                                                    <option value="achievement_name">Achievement Name</option>
+                                                    <option value="badge_name">Badge Name</option>
+                                                    <option value="rule_achievement">Rule Achievement</option>
+                                                    <option value="number_of_user_achievement">Number of User on Achievement</option>
+                                                    <option value="number_of_user_badge">Number of User on Badge</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -158,9 +186,11 @@
                                     </div>
                                     <div class="col-md-4">
                                         <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
-                                            <option value="name">Name</option>
-                                            <option value="phone">Phone</option>
-                                            <option value="achievement_total">Achievement Total</option>
+                                            <option value="achievement_name">Achievement Name</option>
+                                            <option value="badge_name">Badge Name</option>
+                                            <option value="rule_achievement">Rule Achievement</option>
+                                            <option value="number_of_user_achievement">Number of User on Achievement</option>
+                                            <option value="number_of_user_badge">Number of User on Badge</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4">

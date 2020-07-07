@@ -86,6 +86,17 @@ class AchievementController extends Controller
             'submenu_active' => 'achievement-report'
         ];
 
+        if(Session::has('filter-report-achievement') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-report-achievement');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-report-achievement');
+        }
+
         $getData = MyHelper::post('achievement/report', $post);
 
         if (isset($getData['status']) && $getData['status'] == "success") {
@@ -102,6 +113,9 @@ class AchievementController extends Controller
             $data['dataPaginator'] = false;
         }
 
+        if($post){
+            Session::put('filter-report-achievement',$post);
+        }
         return view('achievement::report.achievement.achievement', $data);
     }
 
@@ -314,6 +328,7 @@ class AchievementController extends Controller
                 }
                 
                 $save = MyHelper::post('achievement/create', $post);
+                dd($save);
                 // return $save;
                 if (isset($save['status']) && $save['status'] == "success") {
                     return redirect('achievement/detail/' . $save['data']);
