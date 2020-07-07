@@ -367,9 +367,13 @@
         <div class="kotak-biasa">
             <div class="container">
                 <?php
-                $bg = ['rgb(222, 46, 31)', 'rgb(56, 53, 103)', 'rgb(166, 186, 53)', 'rgb(223, 143, 23)', 'rgb(234, 179, 8)', 'rgb(142, 140, 138)'];
+                $bg = ['rgb(222, 46, 31)', 'rgb(56, 53, 103)', 'rgb(166, 186, 53)', 'rgb(223, 143, 23)', 'rgb(234, 179, 8)', 'rgb(142, 140, 138)', 'rgb(142, 140, 138)'];
+                    if(!isset($bg[$data['transaction_status']])){
+                        $html = '<div class="kotak-full" style="background-color: #ffffff;padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
+                    }else{
+                        $html = '<div class="kotak-full" style="background-color: '.$bg[$data['transaction_status']].';padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
+                    }
 
-                    $html = '<div class="kotak-full" style="background-color: '.$bg[$data['transaction_status']].';padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
                     $html .= '<div class="container">';
                     $html .= '<div class="row text-center">';
                     $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>'.$data['transaction_status_text'].'</b></div>';
