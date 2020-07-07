@@ -26,6 +26,12 @@ class AchievementController extends Controller
             'menu_active'    => 'achievement',
             'submenu_active' => 'achievement-list'
         ];
+
+        $data['category']   = MyHelper::get('achievement/category')['data'];
+        $data['product']    = MyHelper::get('product/be/list')['result'];
+        $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+        $data['province']   = MyHelper::get('province/list')['result'];
+
         return view('achievement::index', $data);
     }
 
@@ -357,9 +363,30 @@ class AchievementController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function detailAjax(Request $request)
     {
-        //
+        $post = $request->except('_token');
+        $data = MyHelper::post('achievement/detailAjax', $post)['data'];
+        $data['logo_badge_default'] = env('STORAGE_URL_API') . $data['logo_badge_default'];
+        return $data;
+    }
+
+    public function updateAchievement(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if (isset($post['group']['logo_badge_default'])) {
+            $post['group']['logo_badge_default'] = MyHelper::encodeImage($post['group']['logo_badge_default']);
+        }
+        
+        $save = MyHelper::post('achievement/update', $post);
+        
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('achievement');
+        } else {
+            return back()->with('error', $save['errors'])->withInput();
+        }
+        return $request;
     }
 
     /**
