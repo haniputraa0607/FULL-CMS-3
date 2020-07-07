@@ -146,6 +146,9 @@
                                     html += '<div class="col-md-5 name">Transaction Nominal</div>';
                                     html += '<div class="col-md-7 value">: Minimum '+item.trx_nominal+'</div>';
                                 }
+                                html += '</div>';
+
+                                html += '<div class="row static-info">';
                                 if(item.trx_total !== null){
                                     html += '<div class="col-md-5 name">Transaction Total</div>';
                                     html += '<div class="col-md-7 value">: Minimum '+item.trx_total+'</div>';

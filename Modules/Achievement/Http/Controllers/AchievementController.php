@@ -328,7 +328,6 @@ class AchievementController extends Controller
                 }
                 
                 $save = MyHelper::post('achievement/create', $post);
-                dd($save);
                 // return $save;
                 if (isset($save['status']) && $save['status'] == "success") {
                     return redirect('achievement/detail/' . $save['data']);

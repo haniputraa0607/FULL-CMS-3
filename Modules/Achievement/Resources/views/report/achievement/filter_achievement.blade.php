@@ -24,7 +24,7 @@
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'text';
-        }else if(subject_value = 'rule_achievement'){
+        }else if(subject_value == 'rule_achievement'){
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
             for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -112,7 +112,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
-                                                    @if($con['subject'] == 'achievement_name' || $con['subject'] == 'number_of_user_badge')
+                                                    @if($con['subject'] == 'number_of_user_achievement' || $con['subject'] == 'number_of_user_badge')
                                                         <option value="=" @if ($con['operator']  == '=') selected @endif>=</option>
                                                         <option value=">" @if ($con['operator']  == '>') selected @endif>></option>
                                                         <option value=">=" @if ($con['operator']  == '>=') selected @endif>>=</option>

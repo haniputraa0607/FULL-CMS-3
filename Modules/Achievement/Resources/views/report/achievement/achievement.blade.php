@@ -93,6 +93,8 @@
                     <th>Achievement Name</th>
                     <th>Achievement Category</th>
                     <th>Achievement Description</th>
+                    <th>Date Start</th>
+                    <th>Date Start</th>
                     <th>Total User</th>
                     <th>Badge</th>
                     <th>Action</th>
@@ -105,6 +107,8 @@
                             <td>{{$val['name']}}</td>
                             <td>{{$val['category_name']}}</td>
                             <td><?php echo $val['description']?></td>
+                            <td>@if(!is_null($val['date_start'])){{date('d M Y H:i', strtotime($val['date_start']))}}@else Not Set @endif</td>
+                            <td>@if(!is_null($val['date_end'])){{date('d M Y H:i', strtotime($val['date_end']))}}@else Not Set @endif</td>
                             <td>{{number_format($val['total_user'])}}</td>
                             <td>{{$val['achievement_badge']}}</td>
                             <td>
