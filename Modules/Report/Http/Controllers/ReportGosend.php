@@ -35,18 +35,21 @@ class ReportGosend extends Controller
         }
 
         $report = MyHelper::post('report/gosend', $post);
+
         if (isset($report['status']) && $report['status'] == "success") {
-            $data['trx']          = $report['result']['data'];
-            $data['trxTotal']     = $report['result']['total'];
-            $data['trxPerPage']   = $report['result']['from'];
-            $data['trxUpTo']      = $report['result']['from'] + count($report['result']['data'])-1;
-            $data['trxPaginator'] = new LengthAwarePaginator($report['result']['data'], $report['result']['total'], $report['result']['per_page'], $report['result']['current_page'], ['path' => url()->current()]);
+            $data['trx']          = $report['result']['data']['data'];
+            $data['trxTotal']     = $report['result']['data']['total'];
+            $data['trxPerPage']   = $report['result']['data']['from'];
+            $data['trxUpTo']      = $report['result']['data']['from'] + count($report['result']['data']['data'])-1;
+            $data['trxPaginator'] = new LengthAwarePaginator($report['result']['data']['data'], $report['result']['data']['total'], $report['result']['data']['per_page'], $report['result']['data']['current_page'], ['path' => url()->current()]);
+            $data['sum'] = $report['result']['sum']['total_price_go_send']??0;
         }else{
             $data['trx']          = [];
             $data['trxTotal']     = 0;
             $data['trxPerPage']   = 0;
             $data['trxUpTo']      = 0;
             $data['trxPaginator'] = false;
+            $data['sum'] = 0;
         }
 
         if($post){
