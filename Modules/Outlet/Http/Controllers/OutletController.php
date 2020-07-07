@@ -912,9 +912,15 @@ class OutletController extends Controller
 
             if($createFolder){
                 foreach ($outlet['result'] as $val){
-                    $urlImage = $val['qrcode'];
                     $newFilename = $val['outlet_name'].'.jpg';
-                    $putToStorange = Storage::put('QRCODE/'.$folderName.'/'.$newFilename, file_get_contents($urlImage));
+                    $urlImage = $val['qrcode'];
+                    $file_headers = @get_headers($urlImage);
+
+                    if(isset($file_headers[0]) && strpos($file_headers[0], '200 OK') !== false) {
+                        $putToStorange = Storage::put('QRCODE/'.$folderName.'/'.$newFilename, file_get_contents($urlImage));
+                    }else{
+                        continue;
+                    }
                 }
 
                 $files = glob(storage_path('app/QRCODE/'.$folderName.'/*.jpg'));
