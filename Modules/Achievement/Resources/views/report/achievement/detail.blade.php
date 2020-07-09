@@ -44,8 +44,7 @@
             var url = "{{url('achievement/report/detail/'.$id_achievement_group)}}";
 
             var data = {
-                _token : token,
-                id_achievement_group : "{{$id_achievement_group}}"
+                _token : token
             };
 
             $.ajax({
@@ -184,8 +183,7 @@
             }
 
             var data = {
-                _token : token,
-                id_achievement_group : "{{$id_achievement_group}}"
+                _token : token
             };
 
             $('#tableListUser').DataTable( {

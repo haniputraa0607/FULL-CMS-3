@@ -22,13 +22,19 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'achievem
     Route::any('update/achievement', 'AchievementController@updateAchievement');
 
     /*Report Achievement*/
-    Route::any('report', 'AchievementController@reportAchievement');
-    Route::any('report/detail/{id}', 'AchievementController@reportDetailAchievement');
-    Route::any('report/list-user/{id}', 'AchievementController@reportListUserAchievement');
+    Route::any('report', 'ReportAchievementController@reportAchievement');
+    Route::any('report/detail/{id}', 'ReportAchievementController@reportDetailAchievement');
+    Route::any('report/list-user/{id}', 'ReportAchievementController@reportListUserAchievement');
 
     /*Report User Achievement*/
-    Route::any('report/user-achievement', 'AchievementController@reportUser');
-    Route::any('report/user-achievement/detail/{phone}', 'AchievementController@reportDetailUser');
-    Route::any('report/user-achievement/detail-badge/{id_achievement_group}/{phone}', 'AchievementController@reportDetailBadgeUser');
+    Route::any('report/user-achievement', 'ReportAchievementController@reportUser');
+    Route::any('report/user-achievement/detail/{phone}', 'ReportAchievementController@reportDetailUser');
+    Route::any('report/user-achievement/detail-badge/{id_achievement_group}/{phone}', 'ReportAchievementController@reportDetailBadgeUser');
+
+    /*Report Membership*/
+    Route::any('report/membership', 'ReportAchievementController@reportMembership');
+    Route::any('report/membership/detail-view/{id}', 'ReportAchievementController@reportDetailMembershipView');
+    Route::any('report/membership/detail/{id}', 'ReportAchievementController@reportDetailMembership');
+    Route::any('report/membership/list-user/{id}', 'ReportAchievementController@reportListUserMembership');
 
 });
