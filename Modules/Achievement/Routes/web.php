@@ -17,11 +17,14 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'achievem
     Route::any('create', 'AchievementController@create');
     Route::any('remove', 'AchievementController@remove');
     Route::any('detail/{slug}', 'AchievementController@show');
+    Route::any('detailAjax', 'AchievementController@detailAjax');
     Route::any('update/detail', 'AchievementController@update');
+    Route::any('update/achievement', 'AchievementController@updateAchievement');
 
     /*Report Achievement*/
     Route::any('report', 'AchievementController@reportAchievement');
     Route::any('report/detail/{id}', 'AchievementController@reportDetailAchievement');
+    Route::any('report/list-user/{id}', 'AchievementController@reportListUserAchievement');
 
     /*Report User Achievement*/
     Route::any('report/user-achievement', 'AchievementController@reportUser');

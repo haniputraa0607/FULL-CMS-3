@@ -26,6 +26,12 @@ class AchievementController extends Controller
             'menu_active'    => 'achievement',
             'submenu_active' => 'achievement-list'
         ];
+
+        $data['category']   = MyHelper::get('achievement/category')['data'];
+        $data['product']    = MyHelper::get('product/be/list')['result'];
+        $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+        $data['province']   = MyHelper::get('province/list')['result'];
+
         return view('achievement::index', $data);
     }
 
@@ -86,6 +92,17 @@ class AchievementController extends Controller
             'submenu_active' => 'achievement-report'
         ];
 
+        if(Session::has('filter-report-achievement') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-report-achievement');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-report-achievement');
+        }
+
         $getData = MyHelper::post('achievement/report', $post);
 
         if (isset($getData['status']) && $getData['status'] == "success") {
@@ -102,6 +119,9 @@ class AchievementController extends Controller
             $data['dataPaginator'] = false;
         }
 
+        if($post){
+            Session::put('filter-report-achievement',$post);
+        }
         return view('achievement::report.achievement.achievement', $data);
     }
 
@@ -114,20 +134,52 @@ class AchievementController extends Controller
             'submenu_active' => 'achievement-report'
         ];
 
+        $data['id_achievement_group'] = $id;
+        if(!empty($post)){
+            $post['id_achievement_group'] = $id;
+            $getData = MyHelper::post('achievement/report/detail', $post);
+
+            $result['id_achievement_group'] = $id;
+            $result['data_achievement'] = [];
+            $result['data_badge'] = [];
+
+            if (isset($getData['status']) && $getData['status'] == "success") {
+                $result['data_achievement'] = $getData['result']['data_achievement'];
+                $result['data_badge'] = $getData['result']['data_badge'];
+            }
+
+            return response()->json($result);
+        }else{
+            $data['data_achievement'] = [];
+            $data['data_badge'] = [];
+            return view('achievement::report.achievement.detail', $data);
+        }
+    }
+
+    function reportListUserAchievement(Request $request, $id){
+        $post = $request->all();
         $post['id_achievement_group'] = $id;
-        $getData = MyHelper::post('achievement/report/detail', $post);
+        $draw =$post['draw'];
 
-        $data['data_achievement'] = [];
-        $data['data_badge'] = [];
-        $data['data_list_user'] = [];
+        $page = 1;
+        if(isset($post['start']) && isset($post['length'])){
+            $page = $post['start']/$post['length'] + 1;
+        }
+        $getDataListUser = MyHelper::post('achievement/report/list/user-achievement?page='.$page, $post);
 
-        if (isset($getData['status']) && $getData['status'] == "success") {
-            $data['data_achievement'] = $getData['result']['data_achievement'];
-            $data['data_badge'] = $getData['result']['data_badge'];
-            //$getDataListUser = MyHelper::post('achievement/report/list/user-achievement', $post);
+        if(isset($getDataListUser['status']) && $getDataListUser['status'] == 'success'){
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = $getDataListUser['result']['total'];
+            $arr_result['recordsFiltered'] = $getDataListUser['result']['total'];
+            $arr_result['data'] = $getDataListUser['result']['data'];
+        }else{
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = 0;
+            $arr_result['recordsFiltered'] = 0;
+            $arr_result['data'] = array();
         }
 
-        return view('achievement::report.achievement.detail', $data);
+        return response()->json($arr_result);
     }
 
     function reportUser(Request $request){
@@ -311,9 +363,30 @@ class AchievementController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function detailAjax(Request $request)
     {
-        //
+        $post = $request->except('_token');
+        $data = MyHelper::post('achievement/detailAjax', $post)['data'];
+        $data['logo_badge_default'] = env('STORAGE_URL_API') . $data['logo_badge_default'];
+        return $data;
+    }
+
+    public function updateAchievement(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if (isset($post['group']['logo_badge_default'])) {
+            $post['group']['logo_badge_default'] = MyHelper::encodeImage($post['group']['logo_badge_default']);
+        }
+        
+        $save = MyHelper::post('achievement/update', $post);
+        
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('achievement');
+        } else {
+            return back()->with('error', $save['errors'])->withInput();
+        }
+        return $request;
     }
 
     /**

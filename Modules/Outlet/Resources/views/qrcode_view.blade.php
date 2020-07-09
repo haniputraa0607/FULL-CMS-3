@@ -64,10 +64,12 @@
                     <span class="caption-subject bold uppercase">List QRCode Outlet</span>
 				</div>
                 <div class="actions">
+                    @if(!empty($outlet))
                     <div class="btn-group">
                         <a class="btn btn-sm green" href="{{url('outlet/qrcode/print')}}" target="_blank"><i class="fa fa-print"></i> Print </a>
                     </div>
                     <a class="btn btn-sm green" id="export" onclick="exportQRCode()"><i class="fa fa-download"></i> Export QR Code </a>
+                    @endif
                 </div>
 			</div>
 			<div class="portlet-body">
