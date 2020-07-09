@@ -275,18 +275,19 @@
                 max: '999999999'
             });
             $('#total_rule').change(function() {
-                console.log($(this).val())
                 $('#select_outlet').show()
                 $('#select_province').show()
                 $('#additional_rule').show()
                 $('#rule_transaction').show()
+                $('#additionalnya').show()
                 $('#rule_product').show()
+                $('#additional_rule_form').show()
                 $('#rule_product_add').css('margin-left', '0')
                 switch ($(this).val()) {
                     case 'total_product':
                         $('#rule_product').hide()
                         $('#product_total_rule').val("")
-                        toastr.warning("Kamu tidak bisa menggunakan Additional Rule Product Total");
+                        // toastr.warning("Kamu tidak bisa menggunakan Additional Rule Product Total");
                         break;
                     case 'nominal_transaction':
                         $('.rule_trx').prop('checked', false)
@@ -294,24 +295,28 @@
                         $('.trx_rule_form').hide()
                         $('#nominal_trx').val("")
                         $('#rule_product_add').css('margin-left', '15px')
-                        toastr.warning("Kamu tidak bisa menggunakan Additional Rule Transaction Nominal");
+                        // toastr.warning("Kamu tidak bisa menggunakan Additional Rule Transaction Nominal");
                         break;
                     case 'total_outlet':
                         $('#select_outlet').hide()
                         $('#select_outlet').children().children().val("").trigger("change")
-                        toastr.warning("Kamu tidak bisa menggunakan Additional Rule Outlet");
+                        // toastr.warning("Kamu tidak bisa menggunakan Additional Rule Outlet");
                         break;
                     case 'total_outlet':
                         $('#outlet_total_rule').val("").trigger("change")
                         $('#select_outlet').hide()
                         $('#select_outlet').children().children().val("").trigger("change")
-                        toastr.warning("Kamu tidak bisa menggunakan Additional Rule Outlet");
+                        // toastr.warning("Kamu tidak bisa menggunakan Additional Rule Outlet");
                         break;
                     case 'total_province':
+                        $('.rule_additional').prop('checked', false)
+                        $('.additional_rule_form').hide()
+                        $('#additionalnya').hide()
                         $('#province_total_rule').val("").trigger("change") 
+                        $('#outlet_total_rule').val("").trigger("change")
                         $('#select_province').hide()
                         $('#select_province').children().children().val("").trigger("change")
-                        toastr.warning("Kamu tidak bisa menggunakan Additional Rule Province");
+                        // toastr.warning("Kamu tidak bisa menggunakan Additional Rule Province");
                         break;
                 }
             });
@@ -587,7 +592,7 @@
                                                 <input type="checkbox" class="rule_product"> Product
                                                 <span></span>
                                             </label>
-                                            <label class="mt-checkbox">
+                                            <label class="mt-checkbox" id="additionalnya">
                                                 <input type="checkbox" class="rule_additional"> Additional
                                                 <span></span>
                                             </label>

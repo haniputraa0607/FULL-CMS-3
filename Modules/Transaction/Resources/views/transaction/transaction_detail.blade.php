@@ -367,9 +367,13 @@
         <div class="kotak-biasa">
             <div class="container">
                 <?php
-                $bg = ['rgb(222, 46, 31)', 'rgb(56, 53, 103)', 'rgb(166, 186, 53)', 'rgb(223, 143, 23)', 'rgb(234, 179, 8)', 'rgb(142, 140, 138)'];
-                
-                    $html = '<div class="kotak-full" style="background-color: '.$bg[$data['transaction_status']].';padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
+                $bg = ['rgb(222, 46, 31)', 'rgb(56, 53, 103)', 'rgb(166, 186, 53)', 'rgb(223, 143, 23)', 'rgb(234, 179, 8)', 'rgb(142, 140, 138)', 'rgb(142, 140, 138)'];
+                    if(!isset($bg[$data['transaction_status']])){
+                        $html = '<div class="kotak-full" style="background-color: #ffffff;padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
+                    }else{
+                        $html = '<div class="kotak-full" style="background-color: '.$bg[$data['transaction_status']].';padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
+                    }
+
                     $html .= '<div class="container">';
                     $html .= '<div class="row text-center">';
                     $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>'.$data['transaction_status_text'].'</b></div>';
@@ -386,7 +390,7 @@
                             <div class="kotak-inside col-12">
                                 <div class="col-12 text-11-7px text-grey-white space-nice text-center WorkSans">{{ $data['outlet']['outlet_address'] }}</div>
                             </div>
-                            
+
                             @if(isset($data['detail']['order_id_qrcode']))
                                 <div class="col-12 WorkSans-Bold text-14px space-text text-black-grey-light">Kode Pickup Anda</div>
 
@@ -400,15 +404,10 @@
                 </div>
             </div>
         </div>
-        <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
-            <div class="container">
-                <div class="row text-center">
-                    @if(isset($data['user']['phone']))
-                        <div class="col-12 text-13-3px space-text text-medium-grey WorkSans-Regular">Customer</div>
-                        <div class="col-12 text-14px text-grey-light space-text WorkSans-Bold" style="padding-bottom: 5px;">{{ strtoupper($data['user']['name']) }}</div>
-                        <div class="col-12 text-14px text-grey-light WorkSans-Bold" style="padding-bottom: 25px;">{{ $data['user']['phone'] }}</div>
-                    @endif
-                    @if(isset($data['detail']['order_id_qrcode']))
+        @if(isset($data['detail']['order_id_qrcode']))
+            <div class="kotak-biasa" style="background-color: #FFFFFF;box-shadow: 0 0.7px 3.3px #eeeeee;">
+                <div class="container" style="padding: 10px;margin-top: 10px;">
+                    <div class="text-center">
                         <div class="col-12 text-13px space-text text-medium-grey WorkSans-Regular">
                             @if ($data['detail']['pickup_type'] == 'set time')
                                 Pesanan Anda akan siap pada
@@ -416,16 +415,17 @@
                                 Pesanan Anda akan diproses pada
                             @endif
                         </div>
-                        <div class="col-12 text-13-3px text-grey-light WorkSans-SemiBold" style="padding-bottom: 25px;">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y', strtotime($data['transaction_date'])) }}</div>
-                        <div class="col-12 text-14px space-text text-grey-light WorkSans-Bold">{{strtoupper($data['trasaction_type'])}}</div>
-                        @if($data['trasaction_type'] == 'Delivery')
+                        <div class="col-12 text-13-3px" style="padding-bottom: 25px;color: #000000">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y', strtotime($data['transaction_date'])) }}</div>
+                        @if(isset($data['delivery_info']))
+                            <div class="col-12 text-14px"><b>DELIVERY</b></div>
                             <div class="col-12 text-12px WorkSans-Regular" style="color: #707070;">
-                            @if(isset($data['delivery_info']['delivery_address'])) {{ $data['delivery_info']['delivery_address'] }} @endif
+                                @if(isset($data['delivery_info']['delivery_address'])) {{ $data['delivery_info']['delivery_address'] }} @endif
                             </div>
                         @else
+                            <div class="col-12 text-14px"><b>PICK UP</b></div>
                             <div class="col-12 text-14px WorkSans-Bold" style="color: #a6ba35;">
                                 @if ($data['detail']['pickup_type'] == 'set time')
-                                    {{ date('H:i', strtotime($data['detail']['pickup_at'])) }}
+                                    {{ date('H:i', strtotime($data['detail']['pickup_time'])) }}
                                 @elseif($data['detail']['pickup_type'] == 'at arrival')
                                     SAAT KEDATANGAN
                                 @else
@@ -433,10 +433,10 @@
                                 @endif
                             </div>
                         @endif
-                    @endif
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
 
         @if($data['trasaction_type'] == 'Delivery')
         <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">

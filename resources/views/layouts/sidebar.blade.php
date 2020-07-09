@@ -161,7 +161,7 @@
 		@endif
 
 		@if(MyHelper::hasAccess([20], $configs))
-			@if(MyHelper::hasAccess([10,12], $grantedFeature))
+			@if(MyHelper::hasAccess([11,13], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'membership') ? 'active' : ''}}">
 				<a href="{{url('membership')}}" class="nav-link">
 					<i class="icon-badge"></i>
@@ -1440,11 +1440,11 @@
 									<span class="arrow"></span>
 								</a>
 								<ul class="sub-menu">
-{{--									<li class="nav-item {{($submenu_active == 'achievement-report') ? 'active open' : ''}}">--}}
-{{--										<a href="{{url('achievement/report')}}" class="nav-link ">--}}
-{{--											<span class="title">Achievement</span>--}}
-{{--										</a>--}}
-{{--									</li>--}}
+									<li class="nav-item {{($submenu_active == 'achievement-report') ? 'active open' : ''}}">
+										<a href="{{url('achievement/report')}}" class="nav-link ">
+											<span class="title">Achievement</span>
+										</a>
+									</li>
 									<li class="nav-item {{($submenu_active == 'achievement-report-user') ? 'active open' : ''}}">
 										<a href="{{url('achievement/report/user-achievement')}}" class="nav-link ">
 											<span class="title">User Achievement</span>

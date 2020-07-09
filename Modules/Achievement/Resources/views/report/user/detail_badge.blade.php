@@ -74,7 +74,7 @@
                                     <td>
                                         @if ($data[0]['date_start'] < date('Y-m-d H:i:s'))
                                             <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                                        @elseif (!is_null($data[0]['date_end']) && $data[0]['date_end'] > date('Y-m-d H:i:s'))
+                                        @elseif (!is_null($data[0]['date_end']) && strtotime($data[0]['date_end']) < strtotime(date('Y-m-d H:i:s')))
                                             <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
                                         @else
                                             <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
@@ -184,10 +184,12 @@
                                                 <div class="col-md-5 name">Transaction Nominal</div>
                                                 <div class="col-md-7 value">: Minimum {{number_format($item['trx_nominal'])}}</div>
                                             @endif
-                                            @if (!is_null($item['trx_total']))
-                                                <div class="col-md-5 name">Transaction Total</div>
-                                                <div class="col-md-7 value">: Minimum {{number_format($item['trx_total'])}}</div>
-                                            @endif
+                                        </div>
+                                        <div class="row static-info">
+                                        @if (!is_null($item['trx_total']))
+                                            <div class="col-md-5 name">Transaction Total</div>
+                                            <div class="col-md-7 value">: Minimum {{number_format($item['trx_total'])}}</div>
+                                        @endif
                                         </div>
                                     @endif
                                 </div>
