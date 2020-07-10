@@ -438,4 +438,17 @@ class SubscriptionController extends Controller
         $get = MyHelper::get('subscription/be/list/ajax');
         return response()->json($get);
     }
+
+    function deleteSubscription(Request $request) {
+        $post    = $request->except('_token');
+        $post['id_subscription'] = MyHelper::explodeSlug($post['id_subscription'])[0]??'';
+        $delete = MyHelper::post('subscription/delete', ['id_subscription' => $post['id_subscription']]);
+
+        if (isset($delete['status']) && $delete['status'] == "success") {
+            return "success";
+        }
+        else {
+            return "fail";
+        }
+    }
 }
