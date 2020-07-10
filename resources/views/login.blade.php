@@ -10,7 +10,7 @@
         <meta content="{{env('TITLE', 'CRM System')}} Admin Portal" name="description" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-		<meta property="og:description" content="Technopartner Indonesia CRM System" />
+		<meta property="og:description" content="Technopartner Indonesia - BEHAVE Loyalty Platform" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="{{env('TITLE', 'Behave')}}" />
 		<meta property="og:image" content="{{env('STORAGE_URL_VIEW') }}{{ ('images/logo.png')}}" />

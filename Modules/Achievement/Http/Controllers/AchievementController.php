@@ -371,6 +371,12 @@ class AchievementController extends Controller
         return $data;
     }
 
+    public function getOutlet($id_province)
+    {
+        $data = MyHelper::post('achievement/getOutlet', ['id_province' => $id_province])['data'];
+        return $data;
+    }
+
     public function updateAchievement(Request $request)
     {
         $post = $request->except('_token');
