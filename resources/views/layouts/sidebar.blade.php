@@ -1450,6 +1450,11 @@
 											<span class="title">User Achievement</span>
 										</a>
 									</li>
+									<li class="nav-item {{($submenu_active == 'achievement-report-membership') ? 'active open' : ''}}">
+										<a href="{{url('achievement/report/membership')}}" class="nav-link ">
+											<span class="title">Membership Achievement</span>
+										</a>
+									</li>
 								</ul>
 							</li>
 						@endif
