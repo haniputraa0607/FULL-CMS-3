@@ -1038,9 +1038,17 @@ class OutletController extends Controller
             $count = count($codeOutlet['result']);
             $result = $codeOutlet['result'];
             for($i=0;$i<$count;$i++){
-                $data[$i]['code_outlet'] = $result[$i];
+                $data[$i]['code_outlet'] = $result[$i]['outlet_code'];
+                $brands = $result[$i]['brands'];
                 foreach ($brand['result'] as $value){
-                    $data[$i][$value['name_brand']] = '';
+                    $check = array_search($value['name_brand'], array_column($brands, 'name_brand'));
+
+                    if($check !== false){
+                        $data[$i][$value['name_brand']] = 'YES';
+                    }else{
+                        $data[$i][$value['name_brand']] = 'NO';
+                    }
+
                 }
             }
         }
