@@ -295,6 +295,7 @@
                         $('.trx_rule_form').hide()
                         $('#nominal_trx').val("")
                         $('#rule_product_add').css('margin-left', '15px')
+                        // $('.id_outlet').select2('data', {id: '123', text: 'res_data.primary_email'})
                         // toastr.warning("Kamu tidak bisa menggunakan Additional Rule Transaction Nominal");
                         break;
                     case 'total_outlet':
@@ -353,6 +354,21 @@
                 if ($(this).is(':checked')) {
                     $(form).find('.additional_rule_form').show()
                 }
+            });
+            $('.id_province').change(function() {
+                var id_province = $(this).val()
+                $.ajax({
+                    type: 'GET',
+                    url: "{{url('achievement/outlet')}}/" + id_province
+                }).then(function (data) {
+                    // create the option and append to Select2
+                    $('.id_outlet').empty()
+                    $.each( data, function( key, value ) {
+                        var option = new Option(value.outlet_name, value.id_outlet, true, true);
+                        $('.id_outlet').append(option).trigger('change');
+                    });
+                    $('.id_outlet').val("").trigger("change")
+                });
             });
         });
         function removeBox(params) {
@@ -660,22 +676,22 @@
                                         <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the achievement is not based on the product" data-container="body"></i>
                                         </label>
                                     </div>
-                                    <div class="col-md-4" id="select_outlet">
-                                        <div class="input-icon right">
-                                            <select class="form-control select2-multiple id_outlet" data-placeholder="Select Outlet" name="rule[id_outlet]" id="outlet_total_rule">
-                                                <option></option>
-                                                @foreach ($outlet as $item)
-                                                    <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="col-md-4" id="select_province">
                                         <div class="input-icon right">
                                             <select class="form-control select2-multiple id_province" data-placeholder="Select Province" name="rule[id_province]" id="province_total_rule">
                                                 <option></option>
                                                 @foreach ($province as $item)
                                                     <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="select_outlet">
+                                        <div class="input-icon right">
+                                            <select class="form-control select2-multiple id_outlet" data-placeholder="Select Outlet" name="rule[id_outlet]" id="outlet_total_rule">
+                                                <option></option>
+                                                @foreach ($outlet as $item)
+                                                    <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -14,6 +14,7 @@
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'achievement'], function () {
     Route::get('/', 'AchievementController@index');
     Route::post('/', 'AchievementController@indexAjax');
+    Route::any('outlet/{id_province}', 'AchievementController@getOutlet');
     Route::any('create', 'AchievementController@create');
     Route::any('remove', 'AchievementController@remove');
     Route::any('detail/{slug}', 'AchievementController@show');
