@@ -151,10 +151,10 @@ class PaymentMethodController extends Controller
 
         if(isset($payment_method['status']) && $payment_method['status'] == 'success'){
             $data = [
-                'title'          => 'Outlet',
-                'sub_title'      => 'Outlet Different Payment Method',
+                'title'          => 'Payment Method',
+                'sub_title'      => 'Detail Payment Method',
                 'menu_active'    => 'payment-method',
-                'submenu_active' => 'outlet-different-payment-method',
+                'submenu_active' => 'payment-method-list',
                 'payment_method' => $payment_method['result']
             ];
             return view('paymentmethod::detail',$data);
