@@ -504,8 +504,12 @@
 					</div>
 					<div class="portlet-body">
 						<div class="row static-info">
-							<div class="col-md-4 name">Campaign</div>
+							<div class="col-md-4 name">Campaign Name</div>
 							<div class="col-md-8 value">: {{ isset($result['campaign_name']) ? $result['campaign_name'] : '' }}</div>
+						</div>
+						<div class="row static-info">
+							<div class="col-md-4 name">Promo Title</div>
+							<div class="col-md-8 value">: {{ isset($result['promo_title']) ? $result['promo_title'] : '' }}</div>
 						</div>
 						<div class="row static-info">
 							<div class="col-md-4 name">Campaign Type</div>
@@ -631,7 +635,7 @@
 							</div>
 						</div>
 						
-						<div id="selectOutlet" class="form-group" @if($result['is_all_outlet'] != 1 && empty($result['outlets'])) style="display: none;" @endif>
+						<div id="selectOutlet" class="form-group" @if($result['is_all_outlet'] == 1  || empty($result['outlets']) ) style="display: none;" @endif>
 							<label for="multipleOutlet" class="control-label">Select Outlet</label>
 							<select id="multipleOutlet" name="multiple_outlet[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true"></select>
 						</div>

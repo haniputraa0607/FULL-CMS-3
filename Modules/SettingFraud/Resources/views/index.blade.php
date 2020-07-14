@@ -933,10 +933,12 @@ $configs    		= session('configs');
                             <a data-toggle="tab" href="#fraud_check_referral_user"><i class="fa fa-cog"></i> Check Referral User </a>
                         </li>
                         @endif
-                        @if(MyHelper::hasAccess([216], $grantedFeature) || MyHelper::hasAccess([218], $grantedFeature))
-                        <li class=" @if(isset($tipe) && $tipe == 'fraud_referral') active @endif">
-                            <a data-toggle="tab" href="#fraud_referral"><i class="fa fa-cog"></i> Check Referral </a>
-                        </li>
+                        @if(MyHelper::hasAccess([115], $configs))
+                            @if(MyHelper::hasAccess([216], $grantedFeature) || MyHelper::hasAccess([218], $grantedFeature))
+                            <li class=" @if(isset($tipe) && $tipe == 'fraud_referral') active @endif">
+                                <a data-toggle="tab" href="#fraud_referral"><i class="fa fa-cog"></i> Check Referral </a>
+                            </li>
+                            @endif
                         @endif
                     </ul>
                 </div>
