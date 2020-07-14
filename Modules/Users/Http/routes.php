@@ -16,9 +16,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', '
 	Route::group(['middleware' => 'config_control:5', 'prefix' => 'adminoutlet'], function()
 	{
 		Route::any('/', ['middleware' => 'feature_control:9', 'uses' => 'UsersController@indexAdminOutlet']);
-		Route::any('/{phone}/{id_outlet}', ['middleware' => 'feature_control:4', 'uses' => 'UsersController@updateAdminOutlet']);
-		Route::any('/delete/{phone}/{id_outlet}', ['middleware' => 'feature_control:4', 'uses' => 'UsersController@deleteAdminOutlet']);
 		Route::any('/create', ['middleware' => 'feature_control:4', 'uses' => 'UsersController@createAdminOutlet']);
+		Route::any('/{phone}', ['middleware' => 'feature_control:4', 'uses' => 'UsersController@updateAdminOutlet']);
+		Route::any('/delete/{phone}/{id_outlet}', ['middleware' => 'feature_control:4', 'uses' => 'UsersController@deleteAdminOutlet']);
 	});
 
 	Route::any('create', ['middleware' => 'feature_control:4', 'uses' => 'UsersController@create']);
