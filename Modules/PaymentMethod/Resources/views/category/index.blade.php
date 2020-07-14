@@ -41,7 +41,7 @@ $configs     		= session('configs');
                 <i class="fa fa-circle"></i>
 			</li>
 			<li>
-				<a href="{{url('/payment-method')}}">Payment Method</a>
+				<a href="{{url('/payment-method-category')}}">Payment Method Category</a>
 			</li>
 		</ul>
 	</div>
@@ -52,7 +52,7 @@ $configs     		= session('configs');
 			<div class="portlet light portlet-fit bordered" >
 				<div class="portlet-title">
 					<div class="caption">
-						<span class="caption-subject font-blue sbold uppercase"><i class="fa fa-list"></i> Payment Method</span>
+						<span class="caption-subject font-blue sbold uppercase"><i class="fa fa-list"></i> Payment Method Category</span>
 					</div>
 				</div>
 				<div class="portlet-body">
@@ -62,33 +62,22 @@ $configs     		= session('configs');
 							<tr>
 								<th scope="col"> No </th>
 								<th scope="col"> Actions </th>
-								<th scope="col"> Name </th>
-								<th scope="col"> Category </th>
-								<th scope="col"> Status </th>
-								<th scope="col"> Created At </th>
-								<th scope="col"> Updated At </th>
+                                <th scope="col"> Category Name</th>
+                                <th scope="col"> Created At</th>
+                                <th scope="col"> Updated At</th>
 							</tr>
 							</thead>
 							<tbody>
-								@if(!empty($payment_method))
-									@foreach($payment_method as $no => $data)
+								@if(!empty($payment_method_category))
+									@foreach($payment_method_category as $no => $data)
                                         <tr>
                                             <td> {{$no+1}}</td>
                                             <td>
-												<a class="btn btn-block blue btn-xs" href="{{ url('payment-method/detail', $data['id_payment_method']) }}"><i class="icon-pencil"></i> Detail </a>
-                                                <a class="btn btn-block yellow btn-xs" href="{{ url('payment-method/edit', $data['id_payment_method']) }}"><i class="icon-pencil"></i> Edit </a>
-                                                <a class="btn btn-block red btn-xs" href="{{ url('payment-method/delete', $data['id_payment_method']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a>
+                                                <a class="btn btn-block yellow btn-xs" href="{{ url('payment-method-category/edit', $data['id_payment_method_category']) }}"><i class="icon-pencil"></i> Edit </a>
+                                                <a class="btn btn-block red btn-xs" href="{{ url('payment-method-category/delete', $data['id_payment_method_category']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a>
                                             </td>
-                                            <td> {{$data['payment_method_name']}}</td>
-											<td> {{$data['payment_method_category']['payment_method_category_name']}} </td>
-											
-											@if ($data['status'] == 'Disable')
-												<td style="color:red"> {{$data['status']}}</td>
-											@else
-												<td> {{$data['status']}}</td>
-											@endif
-											
-											<td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))!!} </td>
+                                            <td> {{$data['payment_method_category_name']}}</td>
+                                            <td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))!!} </td>
 											<td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['updated_at'])))!!} </td>
                                         </tr>
 							        @endforeach
