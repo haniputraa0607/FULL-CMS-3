@@ -1269,7 +1269,7 @@
 			</li>
 			@endif
 
-			@if(MyHelper::hasAccess([93], $configs))
+			@if(MyHelper::hasAccess([115], $configs))
 				@if(MyHelper::hasAccess([216], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'referral') ? 'active open' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
@@ -1876,12 +1876,14 @@
 							</a>
 						</li>
 					@endif
-					@if(MyHelper::hasAccess([217], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'report-fraud-referral-user') ? 'active open' : ''}}">
-							<a href="{{url('fraud-detection/report/referral-user')}}" class="nav-link ">
-								<span class="title">Report Fraud Referral User</span>
-							</a>
-						</li>
+					@if(MyHelper::hasAccess([115], $configs))
+						@if(MyHelper::hasAccess([217], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'report-fraud-referral-user') ? 'active open' : ''}}">
+								<a href="{{url('fraud-detection/report/referral-user')}}" class="nav-link ">
+									<span class="title">Report Fraud Referral User</span>
+								</a>
+							</li>
+						@endif
 					@endif
 					@if(MyHelper::hasAccess([218], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'report-fraud-referral') ? 'active open' : ''}}">

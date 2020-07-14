@@ -560,15 +560,16 @@
 										</div>
 									</div>
 
+									{{-- 
 									<div class="col-md-12" style="margin-top:20px">
-										<div class="input-icon right">
+									<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 												Next Level Image
 												<i class="fa fa-question-circle tooltips next_level_preview_trigger" data-original-title="Ikon next level membership yang akan ditampilkan di samping progress bar membership" data-container="body"></i>
 												<br>
 												<span class="required" aria-required="true"> (75 x 75, Max 50 KB, Only PNG) </span>
 											</div>
-										</div>
+										</div> 
 
 										<div class="col-md-4" >
 											<div class="input-icon right">
@@ -597,6 +598,7 @@
 											<img src="{{env('STORAGE_URL_VIEW')}}img/membership/preview_next_level_image.jpg" class="img-responsive"></img>
 										</div>
 									</div>
+									--}}
 
 									<div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
