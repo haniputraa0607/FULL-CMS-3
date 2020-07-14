@@ -233,7 +233,7 @@
                         <th> Code </th>
                         <th> Category </th>
                         <th> Name </th>
-                        <th> Allow Sync </th>
+                        <!-- <th> Allow Sync </th> -->
                         <th >Default Visibility Product</th>
                         <th> Override Visible </th>
                         <th> Override Hidden </th>
@@ -254,14 +254,14 @@
                                     <td>{{ $value['category'][0]['product_category_name']??'Uncategories' }}</td>
                                 @endif
                                 <td>{{ $value['product_name'] }}</td>
-                                <td>
+                                {{-- <td>
                                     <div class="bootstrap-switch-container">
                                         <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>
                                         <span class="bootstrap-switch-label" style="width: 35px;">&nbsp;</span>
                                         <span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 35px;"></span>
                                         <input type="checkbox" name="allow_sync" @if($value['product_allow_sync'] == '1') checked @endif data-id="{{ $value['id_product'] }}" class="make-switch switch-large switch-change" data-label-icon="fa fa-fullscreen" data-on-text="<i class='fa fa-check'></i>" data-off-text="<i class='fa fa-times'></i>">
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <div class="bootstrap-switch-container">
                                         <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>
