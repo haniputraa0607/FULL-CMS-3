@@ -81,7 +81,7 @@
 
     <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
         {{ csrf_field() }}
-        @include('report::report_gosend.filter_list')
+        @include('report::report_payment.filter_list')
     </form>
 
     <div class="m-heading-1 border-green m-bordered">
