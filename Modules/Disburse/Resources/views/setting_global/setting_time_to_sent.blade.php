@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="portlet-body form">
-        <form class="form-horizontal" role="form" id="form_fee_outlet_special" action="{{url('disburse/setting/time-to-sent')}}" method="post">
+        <form class="form-horizontal" role="form" action="{{url('disburse/setting/time-to-sent')}}" method="post">
             {{ csrf_field() }}
             <div class="form-body">
                 <div class="form-group">
