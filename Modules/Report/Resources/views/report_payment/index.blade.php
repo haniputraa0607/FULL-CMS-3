@@ -85,7 +85,7 @@
     </form>
 
     <div class="m-heading-1 border-green m-bordered">
-        <p>Default data yang ditampilkan adalah data dengan status <b>"Delivered"</b>. Untuk mencari data dengan status selain <b>"Delivered"</b>, Anda bisa menggunakan filter diatas dengan memilih subject "Status". Export akan menghasilkan data sesuai dengan list data yang tampil saat ini.</p>
+        <p>Default data yang ditampilkan adalah data dengan status <b>"Completed"</b>. Untuk mencari data dengan status selain <b>"Completed"</b>, Anda bisa menggunakan filter diatas dengan memilih subject "Status". Export akan menghasilkan data sesuai dengan list data yang tampil saat ini.</p>
         <p>Tombol export akan muncul jika list dibawah tersedia.</p>
     </div>
 
@@ -94,7 +94,7 @@
         <div class="col-md-7"></div>
         <div class="col-md-5" style="text-align: center;">
             <div style="border: solid 1px black;">
-                <h4><b>Total Price GoSend : {{number_format($sum)}}</b></h4>
+                <h4><b>Total Amount : {{number_format($sum)}}</b></h4>
             </div>
         </div>
     </div>
@@ -104,63 +104,28 @@
         <table class="table table-striped table-bordered table-hover" id="tableReport">
             <thead>
             <tr>
-                <th scope="col" width="10%"> Outlet </th>
-                <th scope="col" width="10%"> Transaction Date </th>
-                <th scope="col" width="10%"> Receipt Number </th>
-                <th scope="col" width="10%"> Order ID </th>
+                <th scope="col" width="10%"> Date </th>
+                <th scope="col" width="10%"> Type </th>
+                <th scope="col" width="10%"> Payment Type </th>
                 <th scope="col" width="10%"> Grand Total </th>
-                <th scope="col" width="10%"> Price GoSend </th>
-                <th scope="col" width="10%"> Detail Receiver </th>
-                <th scope="col" width="10%"> Detail Driver </th>
-                <th scope="col" width="10%"> Latest Status </th>
+                <th scope="col" width="10%"> Payment Amount </th>
+                <th scope="col" width="10%"> User Name </th>
+                <th scope="col" width="10%"> User Phone </th>
+                <th scope="col" width="10%"> Receipt Number </th>
             </tr>
             </thead>
             <tbody>
-            @if(!empty($trx))
-                @foreach($trx as $val)
+            @if(!empty($data))
+                @foreach($data as $val)
                     <tr>
-                        <td>{{$val['outlet_code']}} - {{$val['outlet_name']}}</td>
-                        <td>{{date("d F Y H:i", strtotime($val['transaction_date']))}}</td>
-                        <td>
-                            @if(strtolower($val['trasaction_type']) == 'offline')
-                                <a target="_blank" href="{{ url('transaction/detail/') }}/{{ $val['id_transaction'] }}/offline">{{$val['transaction_receipt_number']}}</a>
-                            @else
-                                <a target="_blank" href="{{ url('transaction/detail/') }}/{{ $val['id_transaction'] }}/pickup order">{{$val['transaction_receipt_number']}}</a>
-                            @endif
-                        </td>
-                        <td>{{$val['order_id']}}</td>
-                        <td>{{number_format($val['transaction_grandtotal'])}}</td>
-                        <td>{{number_format($val['transaction_shipment_go_send'])}}</td>
-                        <td>
-                            Name : {{$val['destination_name']}}<br>
-                            Phone : {{$val['destination_phone']}}<br>
-                            Address : {{$val['destination_address']}}<br>
-                        </td>
-                        <td>
-                            Driver Name : {{$val['driver_name']}}<br>
-                            Driver Phone : {{$val['driver_phone']}}<br>
-                        </td>
-                        <td>
-                            <?php
-                            $latest_status = $val['latest_status'];
-                            $arrStatus = [
-                                'confirmed' => 'Booking is received',
-                                'allocated' => 'Driver is found',
-                                'out_for_pickup' => 'Driver is on their way to pick-up location',
-                                'out_for_delivery' => 'Driver is enroute to deliver the item',
-                                'cancelled' => 'Booking is cancelled by CS',
-                                'delivered' => 'Delivered',
-                                'no_driver' => 'Driver not found',
-                                'Finding Driver' => 'Finding Driver'
-                            ];
-
-                            if(isset($arrStatus[$latest_status]) &&  !is_null($val['latest_status'])){
-                                echo $arrStatus[$latest_status];
-                            }else{
-                                echo '-';
-                            }
-                            ?>
-                        </td>
+                        <td>{{date('d M Y H:i', strtotime($val['created_at']))}}</td>
+                        <td>{{$val['type']}}</td>
+                        <td>{{$val['payment_type']}}</td>
+                        <td>{{number_format($val['grand_total'])}}</td>
+                        <td>{{number_format($val['gross_amount'])}}</td>
+                        <td>{{$val['name']}}</td>
+                        <td><a target="_blank" href="{{ url('user/detail', $val['phone']) }}">{{$val['phone']}} </a></td>
+                        <td><a target="_blank" href="{{ url('transaction/detail') }}/{{ $val['id_report'] }}/{{ $val['trx_type'] }}">{{$val['receipt_number']}} </a></td>
                     </tr>
                 @endforeach
             @else
@@ -170,7 +135,10 @@
         </table>
     </div>
     <br>
-    @if ($trxPaginator)
-        {{ $trxPaginator->links() }}
+    @if(isset($dataPerPage) && isset($dataUpTo) && isset($dataTotal))
+        Showing {{$dataPerPage}} to {{$dataUpTo}} of {{ $dataTotal }} entries<br>
+    @endif
+    @if ($dataPaginator)
+        {{ $dataPaginator->links() }}
     @endif
 @endsection

@@ -857,7 +857,7 @@
 					<span class="title">Outlet Product Price</span>
 				</a>
 			</li>
-			<li class="nav-item {{($submenu_active == 'product-detail') ? 'active open' : ''}}">
+			<li class="nav-item {{($menu_active == 'product-detail') ? 'active open' : ''}}">
 				<a href="{{url('product/outlet-detail')}}" class="nav-link ">
 					<i class="fa fa-tag"></i>
 					<span class="title">Outlet Product Detail</span>
@@ -985,11 +985,32 @@
 			</li>
 			@endif
 			@if(MyHelper::hasAccess([249], $grantedFeature))
-				<li class="nav-item {{($menu_active == 'report-gosend') ? 'active open' : ''}}">
+				<li class="nav-item {{($menu_active == 'report-payment') ? 'active open' : ''}}">
 					<a href="{{url('report/gosend')}}" class="nav-link nav-toggle">
 						<i class="fa fa-truck"></i>
 						<span class="title">Report GoSend</span>
 					</a>
+				</li>
+			@endif
+			@if(MyHelper::hasAccess([253], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'report-payment') ? 'active' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-credit-card"></i>
+						<span class="title">Report Payment</span>
+						<span class="arrow {{($menu_active == 'report-payment') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						<li class="nav-item {{($submenu_active == 'report-payment-midtrans') ? 'active open' : ''}}">
+							<a href="{{url('report/payment/midtrans')}}" class="nav-link ">
+								<span class="title">Midtrans</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'report-payment-ipay88') ? 'active open' : ''}}">
+							<a href="{{url('report/payment/ipay88')}}" class="nav-link ">
+								<span class="title">Ipay88</span>
+							</a>
+						</li>
+					</ul>
 				</li>
 			@endif
 		@endif
