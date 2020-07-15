@@ -48,6 +48,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::any('/setting/go-send-package-detail', 'TransactionController@goSendPackageDetail');
     Route::get('/setting/available-payment', 'TransactionController@availablePayment');
     Route::post('/setting/available-payment', 'TransactionController@availablePaymentUpdate');
+    Route::get('/setting/refund-reject-order', 'TransactionSettingController@refundRejectOrder');
+    Route::post('/setting/refund-reject-order', 'TransactionSettingController@updateRefundRejectOrder');
 });
 
 Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
