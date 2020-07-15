@@ -699,6 +699,11 @@
 							<span class="title">[Response] Order Taken</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-order-taken-by-driver') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/order-taken-by-driver')}}" class="nav-link ">
+							<span class="title">[Response] Order Taken By Driver</span>
+						</a>
+					</li>
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-order-reject') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/order-reject')}}" class="nav-link ">
 							<span class="title">[Response] Order Rejected</span>
