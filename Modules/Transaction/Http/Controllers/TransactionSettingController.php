@@ -51,8 +51,8 @@ class TransactionSettingController extends Controller
         $data = [
             'title'          => 'Setting',
             'menu_active'    => 'order',
-            'sub_title'      => 'Global '.env('POINT_NAME', 'Points'),
-            'submenu_active' => 'transaction-setting'
+            'sub_title'      => 'Setting Refund Reject Order',
+            'submenu_active' => 'refund-reject-order'
         ];
 
         $data['status'] = ['refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value']??0];
