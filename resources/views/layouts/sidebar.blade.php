@@ -699,6 +699,11 @@
 							<span class="title">[Response] Order Taken</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-order-taken-by-driver') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/order-taken-by-driver')}}" class="nav-link ">
+							<span class="title">[Response] Order Taken By Driver</span>
+						</a>
+					</li>
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-order-reject') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/order-reject')}}" class="nav-link ">
 							<span class="title">[Response] Order Rejected</span>
@@ -843,6 +848,13 @@
 						<li class="nav-item {{($submenu_active == 'setting-payment-method') ? 'active open' : ''}}">
 							<a href="{{url('transaction/setting/available-payment')}}" class="nav-link ">
 								<span class="title">Setting Payment Method</span>
+							</a>
+						</li>
+					@endif
+					@if(MyHelper::hasAccess([250], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'refund-reject-order') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/refund-reject-order')}}" class="nav-link ">
+								<span class="title">Setting Refund Reject Order</span>
 							</a>
 						</li>
 					@endif

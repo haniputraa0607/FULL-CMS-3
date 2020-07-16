@@ -45,4 +45,32 @@ class TransactionSettingController extends Controller
             return back()->withErrors(['Something went wrong']);
         }
     }
+
+    public function refundRejectOrder(Request $request)
+    {
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Refund Reject Order',
+            'submenu_active' => 'refund-reject-order'
+        ];
+
+        $data['status'] = ['refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value']??0];
+
+        return view('transaction::setting.refund_reject_order', $data);
+    }
+
+    public function updateRefundRejectOrder(Request $request)
+    {
+        $sendData = [
+            'refund_midtrans' => ['value', $request->refund_midtrans?1:0]
+        ];
+        $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
+        if ($data['status']??false == 'success') {
+            return back()->withSuccess(['Success update']);
+        } else{
+            return back()->withErrors(['Update failed']);
+        }
+    }
+
 }
