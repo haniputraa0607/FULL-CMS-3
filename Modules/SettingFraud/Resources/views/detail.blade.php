@@ -379,7 +379,7 @@
 										</label>
 									</div>
 									<div class="col-md-9">
-										<textarea name="sms_content" id="sms_content" class="form-control field_sms" placeholder="SMS Content">@if(!empty(old('sms_content'))) {{old('sms_content')}} @else @if(isset($result['sms_content']) && $result['sms_content'] != '') {{$result['sms_content']}} @endif @endif</textarea>
+										<textarea name="sms_content" id="sms_content" class="form-control field_sms" placeholder="SMS Content" maxlength="135">@if(!empty(old('sms_content'))) {{old('sms_content')}} @else @if(isset($result['sms_content']) && $result['sms_content'] != '') {{$result['sms_content']}} @endif @endif</textarea>
 										<br>
 										You can use this variables to display user personalized information:
 										<br><br>
