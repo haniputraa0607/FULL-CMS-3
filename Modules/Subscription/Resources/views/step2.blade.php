@@ -92,6 +92,8 @@ $configs = session('configs');
 
     <script type="text/javascript">        
         var oldOutlet=[];
+        let id_brand = null;
+
         function redrawOutlets(list,selected,convertAll, all){
             var html="";
             if(list.length){
@@ -416,23 +418,38 @@ $configs = session('configs');
                 allowPlus : false
             });
 
+            ajaxProduct();
+            ajaxOutlet();
             $('select[name="id_brand"]').on('change',function(){
-                var id_brand=$('select[name="id_brand"]').val();
+                id_brand=$('select[name="id_brand"]').val();
+                ajaxOutlet(id_brand);
+                ajaxProduct(id_brand);
+
+            });
+            $('select[name="id_brand"]').change();
+
+            function ajaxOutlet(id_brand = null) {
+
+            	let condition;
+            	if(id_brand) {
+            		condition = {
+                        rules:[
+                            {
+                                subject:'id_brand',
+                                parameter:id_brand,
+                                operator:'=',
+                            }
+                        ],
+                        operator:'and'
+                    }
+            	}
+
                 $.ajax({
                     url:"{{url('outlet/ajax_handler')}}",
                     method: 'GET',
                     data: {
                         select:['id_outlet','outlet_code','outlet_name'],
-                        condition:{
-                            rules:[
-                                {
-                                    subject:'id_brand',
-                                    parameter:id_brand,
-                                    operator:'=',
-                                }
-                            ],
-                            operator:'and'
-                        }
+                        condition: condition
                     },
                     success: function(data){
                         if(data.status=='success'){
@@ -448,22 +465,28 @@ $configs = session('configs');
                         }
                     }
                 });
+            };
 
+            function ajaxProduct(id_brand = null) {
+            	let condition;
+            	if(id_brand) {
+            		condition = {
+                        rules:[
+                            {
+                                subject:'id_brand',
+                                parameter:id_brand,
+                                operator:'=',
+                            }
+                        ],
+                        operator:'and'
+                    }
+            	}
                 $.ajax({
                     url:"{{url('product/ajax-product-brand')}}",
                     method: 'GET',
                     data: {
                         select:['id_product','product_code','product_name'],
-                        condition:{
-                            rules:[
-                                {
-                                    subject:'id_brand',
-                                    parameter:id_brand,
-                                    operator:'=',
-                                }
-                            ],
-                            operator:'and'
-                        }
+                        condition : condition
                     },
                     success: function(data){
                         if(data.status=='success'){
@@ -479,8 +502,7 @@ $configs = session('configs');
                         }
                     }
                 });
-            });
-            $('select[name="id_brand"]').change();
+            };
         });
     </script>
 @endsection

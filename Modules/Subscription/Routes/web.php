@@ -26,4 +26,5 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 
     Route::any('delete', 'SubscriptionController@deleteSubscription');
 
     Route::any('list-ajax', 'SubscriptionController@listSubcriptionAjax');
+    Route::post('update-complete', ['uses' => 'SubscriptionController@updateComplete']);
 });
