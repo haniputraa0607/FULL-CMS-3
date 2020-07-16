@@ -1,4 +1,4 @@
-@extends('layouts.main') 
+@extends('layouts.main-closed') 
 
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
@@ -295,7 +295,6 @@
                         $('.trx_rule_form').hide()
                         $('#nominal_trx').val("")
                         $('#rule_product_add').css('margin-left', '15px')
-                        // $('.id_outlet').select2('data', {id: '123', text: 'res_data.primary_email'})
                         // toastr.warning("Kamu tidak bisa menggunakan Additional Rule Transaction Nominal");
                         break;
                     case 'total_outlet':
@@ -410,7 +409,7 @@
                 <div class="tab-pane active" id="info">
                     <div class="portlet-body form">
                         <form id="form" class="form-horizontal" role="form" action="{{ url('achievement/create') }}" method="post" enctype="multipart/form-data">
-                            <div class="form-body">
+                            <div class="col-md-8 form-body">
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
@@ -763,8 +762,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="form-body box-repeat" style="display: table;width: 100%;">
+                            <div class="col-md-4 form-body">
+                                <img class="img-responsive" src="https://staging-jj-customer-view.s3-ap-southeast-1.amazonaws.com/img/achievement/achievement.jpeg" alt="">
+                                <br>
+                                <p><span class="required" aria-required="true"> * </span> Kotak Hijau &nbsp; : Category Achievement</p>
+                                <p><span class="required" aria-required="true"> * </span> Kotak Biru &nbsp;&nbsp;&nbsp; : Achievement</p>
+                            </div>
+                            <div class="col-md-12">
+                                <hr>
+                            </div>
+                            <div class="col-md-8 form-body box-repeat" style="display: table;">
                                 <div class="box">
                                     <div class="col-md-2 text-right" style="text-align: -webkit-right;">
                                         <a href="javascript:;" onclick="removeBox(this)" class="remove-box btn btn-danger">
@@ -841,6 +848,13 @@
                                         <i class="fa fa-plus"></i> Add New Input
                                     </a>
                                 </div>
+                            </div>
+                            <div class="col-md-4 form-body">
+                                <img class="img-responsive" src="https://staging-jj-customer-view.s3-ap-southeast-1.amazonaws.com/img/achievement/badge.jpeg" alt="">
+                                <br>
+                                <p><span class="required" aria-required="true"> * </span> Kotak Hijau &nbsp;&nbsp;&nbsp; : Achievement Badge</p>
+                                <p><span class="required" aria-required="true"> * </span> Kotak Biru &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Deskripsi Achievement</p>
+                                <p><span class="required" aria-required="true"> * </span> Kotak Merah &nbsp; : Progress Text Achievement</p>
                             </div>
                             {{-- @include('deals::deals.step1-form') --}}
                             <div class="form-actions" style="margin-top: 10px;">

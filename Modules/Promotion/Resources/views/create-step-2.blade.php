@@ -1098,7 +1098,7 @@ $configs    		= session('configs');
 													<div class="form-group" style="margin-bottom:30px">
 														<label class="col-md-2 control-label">Content</label>
 														<div class="col-md-10">
-															<textarea name="promotion_sms_content[]" id="promotion_sms_content_{{$x}}" class="form-control" placeholder="SMS Content">@if(isset($result['contents'][$x-1]['promotion_sms_content'])){{$result['contents'][$x-1]['promotion_sms_content']}}@endif</textarea>
+															<textarea name="promotion_sms_content[]" id="promotion_sms_content_{{$x}}" class="form-control" placeholder="SMS Content" maxlength="135">@if(isset($result['contents'][$x-1]['promotion_sms_content'])){{$result['contents'][$x-1]['promotion_sms_content']}}@endif</textarea>
 															<br>
 															You can use this variables to display user personalized information:
 															<br><br>

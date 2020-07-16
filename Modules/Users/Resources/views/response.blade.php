@@ -706,7 +706,7 @@ $configs = session('configs');
 									</label>
 								</div>
 								<div class="col-md-9">
-									<textarea name="autocrm_sms_content" id="autocrm_sms_content" class="form-control" placeholder="SMS Content @if($subject == 'pin-sent') maximum 120 character @endif" @if($subject == 'pin-sent') maxlength="120" @endif><?php echo $data['autocrm_sms_content'];?></textarea>
+									<textarea name="autocrm_sms_content" id="autocrm_sms_content" class="form-control" placeholder="SMS Content @if($subject == 'pin-sent') maximum 120 character @endif" @if($subject == 'pin-sent') maxlength="135" @endif><?php echo $data['autocrm_sms_content'];?></textarea>
 									<br>
 									You can use this variables to display user personalized information:
 									<br><br>

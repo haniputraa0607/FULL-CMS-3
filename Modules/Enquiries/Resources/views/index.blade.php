@@ -1119,7 +1119,7 @@ $configs = session('configs');
 						<div class="form-group">
 							<label class="col-md-3 control-label">SMS Content</label>
 							<div class="col-md-9">
-								<textarea name="reply_sms_content" id="reply_sms_content" class="form-control" placeholder="SMS Content"></textarea>
+								<textarea name="reply_sms_content" id="reply_sms_content" class="form-control" placeholder="SMS Content" maxlength="135"></textarea>
 								<br>
 								You can use this variables to display user personalized information:
 								<br><br>
