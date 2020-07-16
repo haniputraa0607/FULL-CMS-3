@@ -699,6 +699,11 @@
 							<span class="title">[Response] Order Taken</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-order-taken-by-driver') ? 'active open' : ''}}">
+						<a href="{{url('transaction/autoresponse/order-taken-by-driver')}}" class="nav-link ">
+							<span class="title">[Response] Order Taken By Driver</span>
+						</a>
+					</li>
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-order-reject') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/order-reject')}}" class="nav-link ">
 							<span class="title">[Response] Order Rejected</span>
@@ -845,6 +850,53 @@
 								<span class="title">Setting Payment Method</span>
 							</a>
 						</li>
+					@endif
+					@if(MyHelper::hasAccess([250], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'refund-reject-order') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/refund-reject-order')}}" class="nav-link ">
+								<span class="title">Setting Refund Reject Order</span>
+							</a>
+						</li>
+					@endif
+				</ul>
+			</li>
+			@endif
+
+			@if(MyHelper::hasAccess([116], $configs))
+			<li class="nav-item {{($menu_active == 'payment-method') ? 'active' : ''}}">
+				<a href="javascript:;" class="nav-link nav-toggle">
+					<i class="fa fa-credit-card"></i>
+					<span class="title">Payment Method</span>
+					<span class="arrow {{($menu_active == 'payment-method') ? 'open' : ''}}"></span>
+				</a>
+				<ul class="sub-menu">
+					@if(MyHelper::hasAccess([257], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'new-category') ? 'active open' : ''}}">
+						<a href="{{url('payment-method-category/create')}}" class="nav-link ">
+							<span class="title">New Category</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([258,259,260], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'category-list') ? 'active open' : ''}}">
+						<a href="{{url('payment-method-category')}}" class="nav-link ">
+							<span class="title">Category List</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([253], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'new-payment-method') ? 'active open' : ''}}">
+						<a href="{{url('payment-method/create')}}" class="nav-link ">
+							<span class="title">New Payment Method</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([254,255,256], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'payment-method-list') ? 'active open' : ''}}">
+						<a href="{{url('payment-method')}}" class="nav-link ">
+							<span class="title">Payment Method List</span>
+						</a>
+					</li>
 					@endif
 				</ul>
 			</li>
