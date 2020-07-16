@@ -72,7 +72,11 @@
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control" value="{{$details['outlet_name']}}" readonly />
+								<select name="id_outlet[]" class="form-control input-sm select2-multiple" multiple data-placeholder="Select Outlet" required>
+									@foreach($outlets as $outlet)
+										<option value="{{$outlet['id_outlet']}}" @if(in_array($outlet['id_outlet'], $details['outlets'])) selected @endif>{{$outlet['outlet_name']}}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
