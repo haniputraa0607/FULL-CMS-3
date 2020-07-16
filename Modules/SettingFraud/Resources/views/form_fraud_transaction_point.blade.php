@@ -243,7 +243,7 @@ $configs = session('configs');
                                             </label>
                                         </div>
                                         <div class="col-md-9">
-                                            <textarea name="sms_content" id="sms_content_transaction_point" class="form-control field_sms_transaction_point" placeholder="SMS Content">@if(!empty(old('sms_content'))) {{old('sms_content')}} @else @if(isset($result[4]['sms_content']) && $result[4]['sms_content'] != '') {{$result[4]['sms_content']}} @endif @endif</textarea>
+                                            <textarea name="sms_content" id="sms_content_transaction_point" class="form-control field_sms_transaction_point" placeholder="SMS Content" maxlength="135">@if(!empty(old('sms_content'))) {{old('sms_content')}} @else @if(isset($result[4]['sms_content']) && $result[4]['sms_content'] != '') {{$result[4]['sms_content']}} @endif @endif</textarea>
                                             <br>
                                             You can use this variables to display user personalized information:
                                             <br><br>

@@ -768,7 +768,7 @@
 							<div class="form-group" style="margin-bottom:30px">
 								<label class="col-md-2 control-label">Content</label>
 								<div class="col-md-10">
-									<textarea name="campaign_sms_content" id="campaign_sms_content" class="form-control" placeholder="SMS Content" required>@if(isset($result['campaign_sms_content']) && $result['campaign_sms_content'] != ""){{$result['campaign_sms_content']}}@endif</textarea>
+									<textarea name="campaign_sms_content" id="campaign_sms_content" class="form-control" placeholder="SMS Content" maxlength="135" required>@if(isset($result['campaign_sms_content']) && $result['campaign_sms_content'] != ""){{$result['campaign_sms_content']}}@endif</textarea>
 									<br>
 									You can use this variables to display user personalized information:
 									<br><br>
