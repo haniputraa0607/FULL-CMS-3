@@ -76,38 +76,39 @@
         $('#select_tag').val(value)
         $('#select_tag').selectpicker('refresh')
 	})
-
-    $('.summernote').summernote({
-        placeholder: 'Product Description',
-        tabsize: 2,
-        height: 120,
-        toolbar: [
-            ['style', ['style']],
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
-        ],
-        callbacks: {
-            onImageUpload: function(files){
-                sendFile(files[0], $(this).attr('id'));
-            },
-            onMediaDelete: function(target){
-                var name = target[0].src;
-                token = "<?php echo csrf_token(); ?>";
-                $.ajax({
-                    type: 'post',
-                    data: 'filename='+name+'&_token='+token,
-                    url: "{{url('summernote/picture/delete/product')}}",
-                    success: function(data){
-                        // console.log(data);
-                    }
-                });
+    $(document).ready(function() {
+        $('.summernote').summernote({
+            placeholder: 'Product Description',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+            ],
+            callbacks: {
+                onImageUpload: function(files){
+                    sendFile(files[0], $(this).attr('id'));
+                },
+                onMediaDelete: function(target){
+                    var name = target[0].src;
+                    token = "<?php echo csrf_token(); ?>";
+                    $.ajax({
+                        type: 'post',
+                        data: 'filename='+name+'&_token='+token,
+                        url: "{{url('summernote/picture/delete/product')}}",
+                        success: function(data){
+                            // console.log(data);
+                        }
+                    });
+                }
             }
-        }
+        });
     });
 
 
@@ -168,6 +169,43 @@
         }
 
     });
+    $('.price').each(function() {
+        var input = $(this).val();
+        var input = input.replace(/[\D\s\._\-]+/g, "");
+        input = input ? parseInt( input, 10 ) : 0;
+
+        $(this).val( function() {
+            return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+        });
+    });
+
+    $( ".price" ).on( "keyup", numberFormat);
+    function numberFormat(event){
+        var selection = window.getSelection().toString();
+        if ( selection !== '' ) {
+            return;
+        }
+
+        if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+            return;
+        }
+        var $this = $( this );
+        var input = $this.val();
+        var input = input.replace(/[\D\s\._\-]+/g, "");
+        input = input ? parseInt( input, 10 ) : 0;
+
+        $this.val( function() {
+            return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+        });
+    }
+
+    $( ".price" ).on( "blur", checkFormat);
+    function checkFormat(event){
+        var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+        if(!$.isNumeric(data)){
+            $( this ).val("");
+        }
+    }
     </script>
 
 @endsection
@@ -249,6 +287,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Global Price <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Global Price Product" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <input type="text" class="form-control price" name="product_global_price" value="{{old('product_global_price')}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Product Visible
                             <i class="fa fa-question-circle tooltips" data-original-title="Setting apakah produk akan ditampilkan di aplikasi" data-container="body"></i>
                         </label>
@@ -282,11 +330,11 @@
                             <label class="col-md-3 control-label">
                             Brand
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand untuk produk ini" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <select class="select2 form-control" multiple="multiple" name="product_brands[]">
+                            <select class="select2 form-control" multiple="multiple" name="product_brands[]" required>
                                 <option value="*">All Brand</option>
                                 @foreach($brands as $brand)
                                 <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],old('product_brands',[]))) selected="selected" @endif>{{$brand['name_brand']}}</option>
