@@ -204,8 +204,9 @@
 					$('#multipleNumberLastCode').val('')
 					$('#exampleCode').replaceWith("<span id='exampleCode'></span>")
 					$('#multipleNumberLastCode').attr('max', maxChar - this.value.length)
+					$('#digit-random-max').text(maxChar - this.value.length)
 				}, 1000));
-				$('#multipleNumberLastCode').keyup(function() {
+				$('#multipleNumberLastCode').on('input',function() {
 					prefix = ($('#multiplePrefixCode').val())
 					last_code = ($('#multipleNumberLastCode').val())
 					var result           = '';
@@ -247,6 +248,38 @@
 			$('#multiplePrefixCode').val(prefix_code).trigger('keyup');
 			$('#multipleNumberLastCode').val(number_last_code).trigger('keyup');
 		}
+
+		$('input[name=charged_central]').keyup(function () {
+            var outlet = $('input[name=charged_outlet]').val();
+            var central = $('input[name=charged_central]').val();
+
+            var check = Number(outlet) + Number(central);
+            if(check !== 100){
+                document.getElementById('label_central').style.display = 'block';
+                document.getElementById('label_outlet').style.display = 'block';
+                $(':input[type="submit"]').prop('disabled', true);
+            }else{
+                document.getElementById('label_central').style.display = 'none';
+                document.getElementById('label_outlet').style.display = 'none';
+                $(':input[type="submit"]').prop('disabled', false);
+            }
+        });
+
+        $('input[name=charged_outlet]').keyup(function (e) {
+            var outlet = $('input[name=charged_outlet]').val();
+            var central = $('input[name=charged_central]').val();
+
+            var check = Number(outlet) + Number(central);
+            if(check !== 100){
+                document.getElementById('label_central').style.display = 'block';
+                document.getElementById('label_outlet').style.display = 'block';
+                $(':input[type="submit"]').prop('disabled', true);
+            }else{
+                document.getElementById('label_central').style.display = 'none';
+                document.getElementById('label_outlet').style.display = 'none';
+                $(':input[type="submit"]').prop('disabled', false);
+            }
+        });
 	});
 	</script>
 	<style>
@@ -323,15 +356,6 @@
 					</div>
 
 					<div class="form-group">
-						<label class="control-label">Title</label>
-						<span class="required" aria-required="true"> * </span>
-						<i class="fa fa-question-circle tooltips" data-original-title="Judul Promo" data-container="body"></i>
-						<div class="input-group col-md-12">
-							<input required type="text" class="form-control" name="promo_title" placeholder="Promo Title" @if(isset($result['promo_title']) && $result['promo_title'] != "") value="{{$result['promo_title']}}" @elseif(old('promo_title') != "") value="{{old('promo_title')}}" @endif autocomplete="off">
-						</div>
-					</div>
-
-					<div class="form-group">
 						<label class="control-label">Charged Central</label>
 						<span class="required" aria-required="true"> * </span>
 						<i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak pusat" data-container="body"></i>
@@ -340,6 +364,7 @@
 								<input required type="text" class="form-control" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
+							<p style="color: red;display: none" id="label_central">Invalid value, charged central and outlet must be 100</p>
 						</div>
 					</div>
 
@@ -352,6 +377,7 @@
 								<input required type="text" class="form-control" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
+							<p style="color: red;display: none" id="label_outlet">Invalid value, charged central and outlet must be 100</p>
 						</div>
 					</div>
 					<div class="form-group">
@@ -443,19 +469,20 @@
 						<div class="form-group" id="alertMultipleCode">
 							<label class="control-label">Prefix Code</label>
 							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Kode prefix untuk judul kode" data-container="body"></i>
+							<i class="fa fa-question-circle tooltips" data-original-title="Kode prefix untuk judul kode. Maksimal 9 karakter. Prefix Code + Digit Random tidak boleh lebih dari 15 karakter" data-container="body"></i>
 							<div class="input-group col-md-12">
-								<input id="multiplePrefixCode" maxlength="15" type="text" class="form-control" name="prefix_code" onkeyup="this.value=this.value.replace(/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]/g,'');" placeholder="Prefix Code" @if(isset($result['prefix_code']) && $result['prefix_code'] != "") value="{{$result['prefix_code']}}" @elseif(old('prefix_code') != "") value="{{old('prefix_code')}}" @endif autocomplete="off">
+								<input id="multiplePrefixCode" maxlength="9" type="text" class="form-control" name="prefix_code" onkeyup="this.value=this.value.replace(/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]/g,'');" placeholder="Prefix Code" @if(isset($result['prefix_code']) && $result['prefix_code'] != "") value="{{$result['prefix_code']}}" @elseif(old('prefix_code') != "") value="{{old('prefix_code')}}" @endif autocomplete="off">
 								<p id="alertMultiplePromoCode" style="display: none;" class="help-block">Kode prefix sudah pernah dibuat, lebih disarankan untuk membuat kode baru!</p>
 							</div>
 						</div>
 						<div class="form-group" id="number_last_code">
 							<label class="control-label">Digit Random</label>
 							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Jumlah digit yang digenerate secara otomatis untuk akhiran kode" data-container="body"></i>
+							<i class="fa fa-question-circle tooltips" data-original-title="Jumlah digit yang digenerate secara otomatis untuk akhiran kode. Prefix Code + Digit Random tidak boleh lebih dari 15 karakter" data-container="body"></i>
 							<div class="input-group col-md-12">
 								<input id="multipleNumberLastCode" type="number" class="form-control" name="number_last_code" placeholder="Total Digit Random Last Code" @if(isset($result['number_last_code']) && $result['number_last_code'] != "") value="{{$result['number_last_code']}}" @elseif(old('number_last_code') != "") value="{{old('number_last_code')}}" @endif autocomplete="off" oninput="validity.valid||(value='');" min="6" max="15">
 							</div>
+							<span class="help-block" id="subscription-false"> Min : <span id="digit-random-min" class="font-weight-bold" style="padding-right: 12px">6</span> Max : <span id="digit-random-max" class="font-weight-bold">15</span></span>
 						</div>
 						<div class="form-group">
 							<label class="control-label">Example Code 
@@ -476,7 +503,7 @@
 						<span class="required" aria-required="true"> * </span>
 						<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo" data-container="body"></i>
 						<div class="input-group col-md-12">
-							<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" @if(isset($result['limitation_usage']) && $result['limitation_usage'] != "") value="{{$result['limitation_usage']}}" @elseif(old('limitation_usage') != "") value="{{old('total_coupon')}}" @endif autocomplete="off">
+							<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" @if(isset($result['limitation_usage']) && $result['limitation_usage'] != "") value="{{$result['limitation_usage']}}" @elseif(old('limitation_usage') != "") value="{{old('limitation_usage')}}" @endif autocomplete="off">
 						</div>
 					</div>
 					<div class="form-group" id="totalCoupon">
