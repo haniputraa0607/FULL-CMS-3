@@ -1317,7 +1317,10 @@ class TransactionController extends Controller
 		
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
-			
+
+        $data['outlets'] = MyHelper::get('outlet/be/list?log_save=0')['result'] ?? [];
+        $data['products'] = MyHelper::get('product/be/list?log_save=0')['result'] ?? [];
+
         return view('transaction::transaction.transaction_delivery', $data);
     }
 
@@ -1359,6 +1362,9 @@ class TransactionController extends Controller
             $post['rule'] = 'and';
         }
         $filter = MyHelper::post('transaction/be/filter', $post);
+
+        $data['outlets'] = MyHelper::get('outlet/be/list?log_save=0')['result'] ?? [];
+        $data['products'] = MyHelper::get('product/be/list?log_save=0')['result'] ?? [];
 
         if (isset($filter['status']) && $filter['status'] == 'success') {
             if (!empty($filter['data']['data'])) {

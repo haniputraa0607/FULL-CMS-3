@@ -642,14 +642,14 @@
 					<span class="arrow {{($menu_active == 'transaction') ? 'open' : ''}}"></span>
 				</a>
 				<ul class="sub-menu">
-					@if(MyHelper::hasAccess([13], $configs))
-					<li class="nav-item {{($submenu_active == 'transaction-delivery') ? 'active open' : ''}}">
-						<a href="{{url('transaction/delivery/'.date('YmdHis'))}}" class="nav-link ">
-							<span class="title">Delivery</span>
+					@if(MyHelper::hasAccess([13,12], $configs))
+					<li class="nav-item {{($submenu_active == 'transaction-all') ? 'active open' : ''}}">
+						<a href="{{url('transaction/all/'.date('YmdHis'))}}" class="nav-link ">
+							<span class="title">All Transaction</span>
 						</a>
 					</li>
 					@endif
-					<!-- <li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
+					{{-- <!-- <li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
 						<a href="{{url('transaction/offline/'.date('YmdHis'))}}" class="nav-link ">
 							<span class="title">Offline</span>
 						</a>
@@ -667,7 +667,7 @@
 							<span class="title">Catering Order</span>
 						</a>
 					</li>
-					@endif
+					@endif --}}
 					@if(MyHelper::hasAccess([12, 13], $configs))
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-success')}}" class="nav-link ">

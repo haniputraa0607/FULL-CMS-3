@@ -67,7 +67,7 @@
     <div class="portlet light portlet-fit bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-red sbold uppercase">List Transaction {{ $key }}</span>
+                <span class="caption-subject font-red sbold uppercase">List Transaction {{ strtolower($key) == 'all' ? '' : $key }}</span>
             </div>
         </div>
         <div class="portlet-body">
