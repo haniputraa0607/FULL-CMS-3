@@ -862,6 +862,46 @@
 			</li>
 			@endif
 
+			@if(MyHelper::hasAccess([116], $configs))
+			<li class="nav-item {{($menu_active == 'payment-method') ? 'active' : ''}}">
+				<a href="javascript:;" class="nav-link nav-toggle">
+					<i class="fa fa-credit-card"></i>
+					<span class="title">Payment Method</span>
+					<span class="arrow {{($menu_active == 'payment-method') ? 'open' : ''}}"></span>
+				</a>
+				<ul class="sub-menu">
+					@if(MyHelper::hasAccess([257], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'new-category') ? 'active open' : ''}}">
+						<a href="{{url('payment-method-category/create')}}" class="nav-link ">
+							<span class="title">New Category</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([258,259,260], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'category-list') ? 'active open' : ''}}">
+						<a href="{{url('payment-method-category')}}" class="nav-link ">
+							<span class="title">Category List</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([253], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'new-payment-method') ? 'active open' : ''}}">
+						<a href="{{url('payment-method/create')}}" class="nav-link ">
+							<span class="title">New Payment Method</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([254,255,256], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'payment-method-list') ? 'active open' : ''}}">
+						<a href="{{url('payment-method')}}" class="nav-link ">
+							<span class="title">Payment Method List</span>
+						</a>
+					</li>
+					@endif
+				</ul>
+			</li>
+			@endif
+
 			@if(MyHelper::hasAccess([62], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'product-price') ? 'active' : ''}}">
 				<a href="{{url('product/price')}}" class="nav-link nav-toggle">
