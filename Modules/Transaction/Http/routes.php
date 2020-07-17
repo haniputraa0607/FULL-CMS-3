@@ -11,7 +11,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
 
     Route::get('/point', 'TransactionController@pointUser');
     Route::get('/balance', 'TransactionController@balanceUser');
-	Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:17', 'uses' =>'TransactionController@autoResponse']);
+	Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:93', 'uses' =>'TransactionController@autoResponse']);
     Route::group(['prefix' => 'manualpayment', 'middleware' => 'config_control:17'], function()
     {
 		Route::any('/banks', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@banksList']);
