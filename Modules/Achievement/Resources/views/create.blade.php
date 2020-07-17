@@ -412,13 +412,13 @@
                             <div class="col-md-8 form-body">
                                 <div class="form-group">
                                     <div class="input-icon right">
-                                        <label class="col-md-3 control-label">
+                                        <label class="col-md-4 control-label">
                                             Category
                                             <span class="required" aria-required="true"> * </span>
                                             <i class="fa fa-question-circle tooltips" data-original-title="Select category or type a new category, if it isn't available in the selection" data-container="body"></i>
                                         </label>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-7">
 						                <select id="selectCategory" data-placeholder="Select or Type new Category" name="category[name]" class="form-control">
                                             <option></option>
                                             @foreach ($category as $item)
@@ -429,19 +429,19 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="input-icon right">
-                                        <label class="col-md-3 control-label">
+                                        <label class="col-md-4 control-label">
                                             Name
                                             <span class="required" aria-required="true"> * </span>
                                             <i class="fa fa-question-circle tooltips" data-original-title="Achievement Name" data-container="body"></i>
                                         </label>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-7">
                                         <input type="text" class="form-control" name="group[name]" value="{{ old('group.name') }}" placeholder="Achievement" required maxlength="20">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-icon right">
-                                        <label class="col-md-3 control-label">
+                                        <label class="col-md-4 control-label">
                                         Image Default Badge
                                         <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
@@ -449,7 +449,7 @@
                                         <span class="required" aria-required="true"> (500*500) </span>
                                         </label>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-7">
                                         <div class="input-icon right">
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                 <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
@@ -469,8 +469,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label"> Achievement Publish Periode <span class="required" aria-required="true"> * </span> </label>
-                                    <div class="col-md-4">
+                                    <label class="col-md-4 control-label"> Achievement Publish Start Periode <span class="required" aria-required="true"> * </span> </label>
+                                    <div class="col-md-5">
                                         <div class="input-icon right">
                                             <div class="input-group">
                                                 <input type="text" class="form_datetime form-control" name="group[publish_start]" value="{{ old('group.publish_start') }}" required autocomplete="off">
@@ -485,7 +485,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"> Achievement Publish End Periode </label>
+                                    <div class="col-md-5">
                                         <div class="input-icon right">
                                             <div class="input-group">
                                                 <input type="text" class="form_datetime form-control" name="group[publish_end]" value="{{ old('group.publish_end.') }}" autocomplete="off">
@@ -502,8 +505,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label"> Achievement Periode <span class="required" aria-required="true"> * </span> </label>
-                                    <div class="col-md-4">
+                                    <label class="col-md-4 control-label"> Achievement Start Periode <span class="required" aria-required="true"> * </span> </label>
+                                    <div class="col-md-5">
                                         <div class="input-icon right">
                                             <div class="input-group">
                                                 <input type="text" class="form_datetime form-control" name="group[date_start]" value="{{ old('group.date_start') }}" autocomplete="off">
@@ -518,7 +521,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"> Achievement End Periode </label>
+                                    <div class="col-md-5">
                                         <div class="input-icon right">
                                             <div class="input-group">
                                                 <input type="text" class="form_datetime form-control" name="group[date_end]" value="{{ old('group.date_end') }}" autocomplete="off">
@@ -536,13 +542,13 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="input-icon right">
-                                        <label class="col-md-3 control-label">
+                                        <label class="col-md-4 control-label">
                                         Description
                                         <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang deals yang dibuat" data-container="body"></i>
                                         </label>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-7">
                                         <div class="input-icon right">
                                             <textarea name="group[description]" id="field_content_long" class="form-control summernote" placeholder="Achievement Description">{{ old('group.description') }}</textarea>
                                         </div>
