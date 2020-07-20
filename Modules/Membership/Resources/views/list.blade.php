@@ -490,7 +490,7 @@
 
 									<input type="hidden" name="id_membership" value="{{$membership['id_membership']}}">
 
-									@if(MyHelper::hasAccess([14], $grantedFeature))
+									@if(MyHelper::hasAccess([13], $grantedFeature))
 									<div class="col-md-1 col-md-offset-1">
 										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
 											<i class="fa fa-close"></i>
@@ -848,7 +848,7 @@
 
 									<input type="hidden" name="id_membership" value="">
 
-									@if(MyHelper::hasAccess([14], $grantedFeature))
+									@if(MyHelper::hasAccess([13], $grantedFeature))
 									<div class="col-md-1 col-md-offset-1">
 										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
 											<i class="fa fa-close"></i>
