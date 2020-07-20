@@ -26,6 +26,9 @@ class TransactionSettingController extends Controller
 
             return view('transaction::setting.cashback_list', $data);
         } elseif (isset($lists['status']) && $lists['status'] == 'fail') {
+            if(isset($lists['messages'][0]) && $lists['messages'][0] == 'empty'){
+                return view('transaction::setting.cashback_list', $data);
+            }
             return view('transaction::setting.cashback_list', $data)->withErrors($lists['messages']);
         } else {
             return view('transaction::setting.cashback_list', $data)->withErrors(['Data not found']);
