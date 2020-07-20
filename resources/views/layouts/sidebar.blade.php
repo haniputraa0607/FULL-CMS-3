@@ -335,7 +335,7 @@
 			@endif
 			@endif
 
-			@if(MyHelper::hasAccess([24,26,32,33,34], $grantedFeature))
+			@if(MyHelper::hasAccess([24,26,32,33,34,261], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'outlet') ? 'active' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
 					<i class="icon-pointer"></i>
@@ -406,6 +406,13 @@
 								</a>
 							</li>
 						@endif
+					@endif
+					@if(MyHelper::hasAccess([261], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'export-outlet-pin') ? 'active open' : ''}}">
+							<a href="{{url('outlet/export-outlet-pin')}}" class="nav-link ">
+								<span class="title">Export Outlet PIN</span>
+							</a>
+						</li>
 					@endif
 					@if(MyHelper::hasAccess([5], $configs) && MyHelper::hasAccess([101], $configs))
 						@if(MyHelper::hasAccess([24], $grantedFeature) && MyHelper::hasAccess([40], $grantedFeature))

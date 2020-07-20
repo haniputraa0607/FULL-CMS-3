@@ -6,8 +6,12 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
 
-class ArrayExport implements FromArray, WithTitle, WithHeadings, ShouldAutoSize
+use App\Lib\MyHelper;
+
+class ArrayExport implements FromArray, WithTitle, WithHeadings, ShouldAutoSize, WithEvents
 {
     protected $outlets;
     protected $title;
@@ -35,5 +39,47 @@ class ArrayExport implements FromArray, WithTitle, WithHeadings, ShouldAutoSize
     public function title(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return array
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+                $last = count($this->outlets);
+                $styleArray = [
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['rgb' => '000000'],
+                        ]
+                    ],
+                ];
+                $styleHead = [
+                    'font' => [
+                        'bold' => true,
+                    ],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'rotation' => 90,
+                        'startColor' => [
+                            'argb' => 'FFA0A0A0',
+                        ],
+                        'endColor' => [
+                            'argb' => 'FFFFFFFF',
+                        ],
+                    ],
+                ];
+                $x_coor = MyHelper::getNameFromNumber(count($this->outlets[0]??[]));
+                $event->sheet->getStyle('A1:'.$x_coor.($last+1))->applyFromArray($styleArray);
+                $headRange = 'A1:'.$x_coor.'1';
+                $event->sheet->getStyle($headRange)->applyFromArray($styleHead);
+            },
+        ];
     }
 }
