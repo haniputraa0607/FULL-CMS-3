@@ -75,5 +75,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::any('/point/filter/{date}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@pointUserFilter']);
     Route::any('/balance/filter/{date}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@balanceUserFilter']);
     // Route::any('/{key}/{slug}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transaction']);
+
+    Route::any('list-export', [ 'uses' => 'TransactionController@listExport']);
+    Route::any('export-action/{action}/{id}', [ 'uses' => 'TransactionController@actionExport']);
 });
 

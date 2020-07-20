@@ -16,17 +16,24 @@
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
             for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-            operator_value.options[operator_value.options.length] = new Option('Booking is received', 'confirmed');
-            operator_value.options[operator_value.options.length] = new Option('Driver is found', 'allocated');
-            operator_value.options[operator_value.options.length] = new Option('Driver is on their way to pick-up location', 'out_for_pickup');
-            operator_value.options[operator_value.options.length] = new Option('Driver is enroute to deliver the item', 'out_for_delivery');
-            operator_value.options[operator_value.options.length] = new Option('Booking is cancelled by CS', 'cancelled');
-            operator_value.options[operator_value.options.length] = new Option('Delivered', 'delivered');
-            operator_value.options[operator_value.options.length] = new Option('Driver not found', 'no_driver');
+            operator_value.options[operator_value.options.length] = new Option('Pending', 'Pending');
+            operator_value.options[operator_value.options.length] = new Option('Paid', 'Paid');
+            operator_value.options[operator_value.options.length] = new Option('Completed', 'Completed');
+            operator_value.options[operator_value.options.length] = new Option('Cancelled', 'Cancelled');
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
-        }else if(subject_value == 'transaction_shipment_go_send' || subject_value == 'transaction_grandtotal'){
+        }else if(subject_value == 'type'){
+            var operator = "conditions["+index+"][operator]";
+            var operator_value = document.getElementsByName(operator)[0];
+            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+            operator_value.options[operator_value.options.length] = new Option('Deals', 'Deals');
+            operator_value.options[operator_value.options.length] = new Option('Subscription', 'Subscription');
+            operator_value.options[operator_value.options.length] = new Option('Transaction', 'Transaction');
+
+            var parameter = "conditions["+index+"][parameter]";
+            document.getElementsByName(parameter)[0].type = 'hidden';
+        }else if(subject_value == 'grandtotal' || subject_value == 'amount'){
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
             for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -106,8 +113,8 @@
                                             <div class="col-md-4">
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                                     <option value="type" @if ($con['subject'] == 'type') selected @endif>Type</option>
-                                                    <option value="outlet_code" @if ($con['subject'] == 'outlet_code') selected @endif>Outlet Code</option>
-                                                    <option value="outlet_name" @if ($con['subject'] == 'outlet_name') selected @endif>Outlet Name</option>
+                                                    <option value="name" @if ($con['subject'] == 'name') selected @endif>Customer Name</option>
+                                                    <option value="phone" @if ($con['subject'] == 'phone') selected @endif>Customer Phone</option>
                                                     <option value="transaction_receipt_number" @if ($con['subject'] == 'transaction_receipt_number') selected @endif>Receipt Number</option>
                                                     <option value="grandtotal" @if ($con['subject'] == 'grandtotal') selected @endif>Grand Total</option>
                                                     <option value="amount" @if ($con['subject'] == 'amount') selected @endif>Amount</option>
@@ -117,10 +124,10 @@
                                             <div class="col-md-4">
                                                 <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
                                                     @if($con['subject'] == 'status')
-                                                        <option value="Pending" @if ($con['operator']  == 'confirmed') selected @endif>Pending</option>
-                                                        <option value="Pending" @if ($con['operator']  == 'confirmed') selected @endif>Paid</option>
-                                                        <option value="Pending" @if ($con['operator']  == 'confirmed') selected @endif>Completed</option>
-                                                        <option value="Pending" @if ($con['operator']  == 'confirmed') selected @endif>Cancelled</option>
+                                                        <option value="Pending" @if ($con['operator']  == 'Pending') selected @endif>Pending</option>
+                                                        <option value="Paid" @if ($con['operator']  == 'Paid') selected @endif>Paid</option>
+                                                        <option value="Completed" @if ($con['operator']  == 'Completed') selected @endif>Completed</option>
+                                                        <option value="Cancelled" @if ($con['operator']  == 'Cancelled') selected @endif>Cancelled</option>
                                                     @elseif($con['subject'] == 'type')
                                                         <option value="Deals" @if ($con['operator']  == 'Deals') selected @endif>Deals</option>
                                                         <option value="Subscription" @if ($con['operator']  == 'Subscription') selected @endif>Subscription</option>
@@ -138,7 +145,7 @@
                                                 </select>
                                             </div>
 
-                                            @if ($con['subject'] == 'status')
+                                            @if ($con['subject'] == 'status' || $con['subject'] == 'type')
                                                 <div class="col-md-3">
                                                     <input type="hidden" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
                                                 </div>
@@ -163,8 +170,8 @@
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                                     <option value="" selected disabled>Search Subject</option>
                                                     <option value="type">Type</option>
-                                                    <option value="outlet_code">Outlet Code</option>
-                                                    <option value="outlet_name">Outlet Name</option>
+                                                    <option value="name">Customer Name</option>
+                                                    <option value="phone">Customer Phone</option>
                                                     <option value="transaction_receipt_number">Receipt Number</option>
                                                     <option value="grandtotal">Grand Total</option>
                                                     <option value="amount">Amount</option>
@@ -198,8 +205,8 @@
                                         <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                             <option value="" selected disabled>Search Subject</option>
                                             <option value="type">Type</option>
-                                            <option value="outlet_code">Outlet Code</option>
-                                            <option value="outlet_name">Outlet Name</option>
+                                            <option value="name">Customer Name</option>
+                                            <option value="phone">Customer Phone</option>
                                             <option value="transaction_receipt_number">Receipt Number</option>
                                             <option value="grandtotal">Grand Total</option>
                                             <option value="amount">Amount</option>
@@ -239,7 +246,7 @@
                         <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
                         <a class="btn green" href="{{url()->current()}}">Reset</a>
                         @if(!empty($data))
-                        <a class="btn purple" id="btn-export" href="{{url()->current()}}/export">Export</a>
+                        <a class="btn purple" id="btn-export" href="{{url('report/payment/export')}}/{{$type}}">Export</a>
                         @endif
                     </div>
                 </div>

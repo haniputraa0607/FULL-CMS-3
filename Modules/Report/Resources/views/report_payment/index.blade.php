@@ -59,8 +59,8 @@
     $date_start = '';
     $date_end = '';
 
-    if(Session::has('filter-list-gosend')){
-        $search_param = Session::get('filter-list-gosend');
+    if(Session::has('filter-list-payment-'.$type)){
+        $search_param = Session::get('filter-list-payment-'.$type);
         if(isset($search_param['date_start'])){
             $date_start = $search_param['date_start'];
         }
@@ -105,6 +105,7 @@
             <thead>
             <tr>
                 <th scope="col" width="10%"> Date </th>
+                <th scope="col" width="10%">Status</th>
                 <th scope="col" width="10%"> Type </th>
                 <th scope="col" width="10%"> Payment Type </th>
                 <th scope="col" width="10%"> Grand Total </th>
@@ -119,10 +120,17 @@
                 @foreach($data as $val)
                     <tr>
                         <td>{{date('d M Y H:i', strtotime($val['created_at']))}}</td>
+                        <td>{{$val['payment_status']}}</td>
                         <td>{{$val['type']}}</td>
                         <td>{{$val['payment_type']}}</td>
                         <td>{{number_format($val['grand_total'])}}</td>
-                        <td>{{number_format($val['gross_amount'])}}</td>
+                        <td>
+                            @if($type == "ipay88")
+                                {{number_format($val['gross_amount']/100)}}
+                            @else
+                                {{number_format($val['gross_amount'])}}
+                            @endif
+                        </td>
                         <td>{{$val['name']}}</td>
                         <td><a target="_blank" href="{{ url('user/detail', $val['phone']) }}">{{$val['phone']}} </a></td>
                         <td><a target="_blank" href="{{ url('transaction/detail') }}/{{ $val['id_report'] }}/{{ $val['trx_type'] }}">{{$val['receipt_number']}} </a></td>

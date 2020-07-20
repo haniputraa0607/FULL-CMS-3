@@ -668,6 +668,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([12,92], $configs))
+					<li class="nav-item {{($submenu_active == 'transactions-export') ? 'active open' : ''}}">
+						<a href="{{url('transaction/list-export')}}" class="nav-link ">
+							<span class="title">List Export</span>
+						</a>
+					</li>
+					@endif
 					@if(MyHelper::hasAccess([12, 13], $configs))
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-success')}}" class="nav-link ">
@@ -1044,7 +1051,7 @@
 					</a>
 				</li>
 			@endif
-			@if(MyHelper::hasAccess([253], $grantedFeature))
+			@if(MyHelper::hasAccess([261], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'report-payment') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="fa fa-credit-card"></i>
@@ -1060,6 +1067,11 @@
 						<li class="nav-item {{($submenu_active == 'report-payment-ipay88') ? 'active open' : ''}}">
 							<a href="{{url('report/payment/ipay88')}}" class="nav-link ">
 								<span class="title">Ipay88</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'report-payment-export') ? 'active open' : ''}}">
+							<a href="{{url('report/payment/list-export')}}" class="nav-link ">
+								<span class="title">List Export</span>
 							</a>
 						</li>
 					</ul>
