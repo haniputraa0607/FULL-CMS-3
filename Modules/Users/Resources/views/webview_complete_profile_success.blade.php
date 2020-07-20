@@ -6,7 +6,7 @@
 
 @section('page-style-plugin')
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
 @stop
 
 @section('content')

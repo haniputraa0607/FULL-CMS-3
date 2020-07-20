@@ -6,53 +6,53 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-color-pickers.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-	 <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-color-pickers.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	 <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/prices.js')}}"></script>
 	<script>
 	function typeChange(varnya){
 		if(varnya == 'count'){
@@ -63,6 +63,12 @@
 			}
 
 			var reqIDR = document.getElementsByClassName('levelReqIDR');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'none';
+			}
+
+			var reqIDR = document.getElementsByClassName('levelAchievement');
 			var i;
 			for (i = 0; i < reqIDR.length; i++) {
 				reqIDR[i].style.display = 'none';
@@ -116,6 +122,66 @@
 				reqIDR[i].style.display = 'table-cell';
 			}
 
+			var reqIDR = document.getElementsByClassName('levelAchievement');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'none';
+			}
+
+			var reqBalance = document.getElementsByClassName('levelReqBalance');
+			var i;
+			for (i = 0; i < reqBalance.length; i++) {
+				reqBalance[i].style.display = 'none';
+			}
+
+			var reqX = document.getElementsByClassName('levelReqX');
+			var j;
+			for (j = 0; j < reqX.length; j++) {
+				reqX[j].style.display = 'none';
+			}
+
+			var retIDR = document.getElementsByClassName('levelRetIDR');
+			var k;
+			for (k = 0; k < retIDR.length; k++) {
+				retIDR[k].style.display = 'table-cell';
+			}
+
+			var retX = document.getElementsByClassName('levelRetX');
+			var l;
+			for (l = 0; l < retX.length; l++) {
+				retX[l].style.display = 'none';
+			}
+
+			var retBalance = document.getElementsByClassName('levelRetBalance');
+			var l;
+			for (l = 0; l < retBalance.length; l++) {
+				retBalance[l].style.display = 'none';
+			}
+
+			var Ret = document.getElementsByClassName('levelRet');
+			var m;
+			for (m = 0; m < Ret.length; m++) {
+				Ret[m].className = 'input-icon input-group right levelRet';
+			}
+		} else if(varnya == 'achievement') {
+			var Req = document.getElementsByClassName('levelReq');
+			var h;
+			for (h = 0; h < Req.length; h++) {
+				Req[h].className = 'input-icon input-group right levelReq';
+			}
+
+			var reqIDR = document.getElementsByClassName('levelReqIDR');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'none';
+			}
+
+			var reqIDR = document.getElementsByClassName('levelAchievement');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'table-cell';
+			}
+
 			var reqBalance = document.getElementsByClassName('levelReqBalance');
 			var i;
 			for (i = 0; i < reqBalance.length; i++) {
@@ -159,6 +225,12 @@
 			}
 
 			var reqIDR = document.getElementsByClassName('levelReqIDR');
+			var i;
+			for (i = 0; i < reqIDR.length; i++) {
+				reqIDR[i].style.display = 'none';
+			}
+
+			var reqIDR = document.getElementsByClassName('levelAchievement');
 			var i;
 			for (i = 0; i < reqIDR.length; i++) {
 				reqIDR[i].style.display = 'none';
@@ -282,27 +354,42 @@
 				},
             }]
         });
+        $('.next_level_preview_trigger').on('mouseover',function(){
+        	$('.next_level_preview').css('opacity','1');
+        });
+        $('.next_level_preview_trigger').on('mouseout',function(){
+        	$('.next_level_preview').css('opacity',0);
+        });
 	});
 
 		$(".file").change(function(e) {
                 var _URL = window.URL || window.webkitURL;
                 var image, file;
-
+                var input = $(this);
+                var cancelBtn = $(this).closest('.btn-file').closest('.aa').find('.btn.red.fileinput-exists');
                 if ((file = this.files[0])) {
                     image = new Image();
 
                     image.onload = function() {
-                        if (this.width == this.height && $(".file").val().split('.').pop().toLowerCase() == 'png') {
-                            // image.src = _URL.createObjectURL(file);
-                        }
-                        else {
+                    	if(this.width != 75 || this.height != 75){
                             toastr.warning("Please check dimension of your photo.");
                             $(this).val("");
                             // $('#remove_square').click()
                             // image.src = _URL.createObjectURL();
-							console.log($(this))
-							$(this).closest('.btn-file').closest('.aa').find('.thumbnail').children('img').attr('src', 'https://www.placehold.it/750x250/EFEFEF/AAAAAA&amp;text=no+image');
-                        }
+							cancelBtn.click();
+                    	}else if(input.val().split('.').pop().toLowerCase() != 'png'){
+                            toastr.warning("Only PNG image allowed");
+                            $(this).val("");
+                            // $('#remove_square').click()
+                            // image.src = _URL.createObjectURL();
+							cancelBtn.click();
+                    	}else if(file.size > (50 * 1024)){
+                            toastr.warning("Max uploaded file is 50 KB");
+                            $(this).val("");
+                            // $('#remove_square').click()
+                            // image.src = _URL.createObjectURL();
+							cancelBtn.click();
+                    	}
                     };
 
                     image.src = _URL.createObjectURL(file);
@@ -317,9 +404,21 @@
 	<ul class="page-breadcrumb">
 		<li>
 			<a href="{{url('/')}}">Home</a>
-		</li>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>{{ $title }}</span>
+            @if (!empty($sub_title))
+                <i class="fa fa-circle"></i>
+            @endif
+        </li>
+        @if (!empty($sub_title))
+        <li>
+            <span>{{ $sub_title }}</span>
+        </li>
+        @endif
 	</ul>
-</div>
+</div><br>
 @include('layouts.notifications')
 
 <div class="portlet light bordered">
@@ -350,9 +449,10 @@
 						?>
 
 						<select class="form-control" name="membership_type" onChange="typeChange(this.value)">
-							<!-- <option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
-							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option> -->
+							<option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
+							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option>
 							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By {{env('POINT_NAME', 'Points')}} Received </option>
+							<option value="achievement"@if(isset($value) && $value == 'achievement') selected @endif>By Achievement Reward </option>
 						</select>
 					</div>
 				</div>
@@ -390,7 +490,7 @@
 
 									<input type="hidden" name="id_membership" value="{{$membership['id_membership']}}">
 
-									@if(MyHelper::hasAccess([14], $grantedFeature))
+									@if(MyHelper::hasAccess([13], $grantedFeature))
 									<div class="col-md-1 col-md-offset-1">
 										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
 											<i class="fa fa-close"></i>
@@ -431,22 +531,22 @@
 												Level Image
 												<i class="fa fa-question-circle tooltips" data-original-title="Icon membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
 												<br>
-												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
+												<span class="required" aria-required="true"> (75 x 75, Max 50 KB, Only PNG) </span>
 											</div>
 										</div>
-										
+
 										<div class="col-md-4" >
 											<div class="input-icon right">
 												<div class="fileinput fileinput-new" data-provides="fileinput">
-													<div class="fileinput-new thumbnail" style="max-width: 2500px;">
+													<div class="fileinput-new thumbnail" style="width: 75px;">
 														@if($membership['membership_image'] != "")
-															<img src="{{env('S3_URL_API')}}{{$membership['membership_image']}}" alt="" />
+															<img src="{{env('STORAGE_URL_API')}}{{$membership['membership_image']}}" alt="" />
 														@else
-															<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+															<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 														@endif
 													</div>
 
-													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
+													<div class="fileinput-preview fileinput-exists thumbnail" style="width: 75px;"> </div>
 													<div class="aa">
 														<span class="btn default btn-file">
 															<span class="fileinput-new"> Select image </span>
@@ -460,28 +560,29 @@
 										</div>
 									</div>
 
+									{{-- 
 									<div class="col-md-12" style="margin-top:20px">
-										<div class="input-icon right">
+									<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 												Next Level Image
-												<i class="fa fa-question-circle tooltips" data-original-title="Icon next level membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
+												<i class="fa fa-question-circle tooltips next_level_preview_trigger" data-original-title="Ikon next level membership yang akan ditampilkan di samping progress bar membership" data-container="body"></i>
 												<br>
-												<span class="required" aria-required="true"> (1 : 1, Only PNG) </span>
+												<span class="required" aria-required="true"> (75 x 75, Max 50 KB, Only PNG) </span>
 											</div>
-										</div>
-										
+										</div> 
+
 										<div class="col-md-4" >
 											<div class="input-icon right">
 												<div class="fileinput fileinput-new" data-provides="fileinput">
-													<div class="fileinput-new thumbnail" style="max-width: 2500px;">
+													<div class="fileinput-new thumbnail" style="width: 75px;">
 														@if($membership['membership_next_image'] != "")
-															<img src="{{env('S3_URL_API')}}{{$membership['membership_next_image']}}" alt="" />
+															<img src="{{env('STORAGE_URL_API')}}{{$membership['membership_next_image']}}" alt="" />
 														@else
-															<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+															<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 														@endif
 													</div>
 
-													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px;"> </div>
+													<div class="fileinput-preview fileinput-exists thumbnail" style="width: 75px;"> </div>
 													<div class="aa">
 														<span class="btn default btn-file">
 															<span class="fileinput-new"> Select image </span>
@@ -493,7 +594,11 @@
 												</div>
 											</div>
 										</div>
+										<div class="col-md-3 next_level_preview" style="height: 0;overflow-y: all; transition-duration: .5s;opacity: 0">
+											<img src="{{env('STORAGE_URL_VIEW')}}img/membership/preview_next_level_image.jpg" class="img-responsive"></img>
+										</div>
 									</div>
+									--}}
 
 									<div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
@@ -510,7 +615,10 @@
 												<span class="input-group-btn levelReqBalance" @if($value != 'balance') style="display:none;" @endif>
 													<button class="btn blue" type="button" >{{env('POINT_NAME', 'Points')}}</button>
 												</span>
-												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @endif placeholder="Level Requirement">
+												<span class="input-group-btn levelAchievement" @if($value != 'achievement') style="display:none;" @endif>
+													<button class="btn blue" type="button" >Total Achievement</button>
+												</span>
+												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @elseif($value == 'achievement') value="{{$membership['min_total_achievement']}}" @endif placeholder="Level Requirement">
 												<span class="input-group-btn levelReqX" @if($value != 'count') style="display:none;" @endif>
 													<button class="btn yellow" type="button" >X trx</button>
 												</span>
@@ -554,7 +662,7 @@
 											</div>
 											<div class="col-md-4">
 												<div class="input-icon input-group">
-													<input class="form-control price" type="text" name="benefit_point_multiplier" @if(empty($membership['benefit_point_multiplier'])) value="0" @else value="{{$membership['benefit_point_multiplier']}}" @endif placeholder="Point Received">
+													<input class="form-control price" type="number" step=".01" min="0" name="benefit_point_multiplier" @if(empty($membership['benefit_point_multiplier'])) value="0" @else value="{{$membership['benefit_point_multiplier']}}" @endif placeholder="Point Received">
 													<span class="input-group-btn">
 														<button class="btn blue" type="button" >%</button>
 													</span>
@@ -576,7 +684,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="{{env('POINT_NAME', 'Points')}} Received">
+														<input class="form-control" type="number" step=".01" min="0" name="benefit_cashback_multiplier" @if(empty($membership['benefit_cashback_multiplier'])) value="0" @else value="{{$membership['benefit_cashback_multiplier']}}" @endif placeholder="{{env('POINT_NAME', 'Points')}} Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -622,6 +730,54 @@
 									<!--@endif-->
 									{{-- cek configs membership benefit promo id --}}
 									@if(MyHelper::hasAccess([24], $configs))
+										<div class="col-md-12" style="margin-top:20px">
+											<div class="input-icon right">
+												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+													Benefit
+													<i class="fa fa-question-circle tooltips" data-original-title="Daftar teks tambahan yang akan ditampilkan pada halaman membership" data-container="body"></i>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<!-- <div class="input-icon right">
+													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea>
+												</div> -->
+												<div class="inner-repeater">
+          											<div data-repeater-list="benefit_text">
+														@if(count($membership['benefit_text']??[]) > 0)
+															@foreach($membership['benefit_text'] as $benefit_text)
+																<div data-repeater-item="" class="row" style="margin-bottom:15px">
+																	<div class="col-md-10">
+																		<textarea type="text" name="benefit_text[]" class="form-control">{{$benefit_text}}</textarea>
+																	</div>
+																	<div class="col-md-2">
+																		<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																			<i class="fa fa-close"></i>
+																		</a>
+																	</div>
+																</div>
+															@endforeach
+														@else
+															<div data-repeater-item="" class="row" style="margin-bottom:15px">
+																<div class="col-md-10">
+																	<textarea type="text" name="benefit_text[]" class="form-control" placeholder="Benefit text"></textarea>
+																</div>
+																<div class="col-md-2">
+																	<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																		<i class="fa fa-close"></i>
+																	</a>
+																</div>
+															</div>
+														@endif
+													</div>
+													<hr>
+													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+														<i class="fa fa-plus"></i> Add Benefit</a>
+													<br>
+												</div>
+												<br>
+											</div>
+										</div>
+
 										<div class="col-md-12" style="margin-top:20px">
 											<div class="input-icon right">
 												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
@@ -692,7 +848,7 @@
 
 									<input type="hidden" name="id_membership" value="">
 
-									@if(MyHelper::hasAccess([14], $grantedFeature))
+									@if(MyHelper::hasAccess([13], $grantedFeature))
 									<div class="col-md-1 col-md-offset-1">
 										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
 											<i class="fa fa-close"></i>
@@ -737,11 +893,11 @@
 									<div class="col-md-4" >
 										<div class="input-icon right">
 											<div class="fileinput fileinput-new" data-provides="fileinput">
-												<div class="fileinput-new thumbnail" style="width: 200px;">
-													<img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+												<div class="fileinput-new thumbnail" style="width: 75px;">
+													<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 												</div>
 
-												<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+												<div class="fileinput-preview fileinput-exists thumbnail" style="width: 75px; height: 75px;"> </div>
 												<div>
 													<span class="btn default btn-file">
 														<span class="fileinput-new"> Select image </span>
@@ -807,7 +963,7 @@
 											</div>
 											<div class="col-md-4">
 												<div class="input-icon input-group">
-													<input class="form-control price" type="text" name="benefit_point_multiplier" value="0" placeholder="Point Received">
+													<input class="form-control price" type="number" step=".01" min="0" name="benefit_point_multiplier" value="0" placeholder="Point Received">
 													<span class="input-group-btn">
 														<button class="btn blue" type="button" >%</button>
 													</span>
@@ -829,7 +985,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="input-icon input-group">
-														<input class="form-control price" type="text" name="benefit_cashback_multiplier" value="0" placeholder="{{env('POINT_NAME', 'Points')}} Received">
+														<input class="form-control" type="number" step=".01" min="0" name="benefit_cashback_multiplier" value="0" placeholder="{{env('POINT_NAME', 'Points')}} Received">
 														<span class="input-group-btn">
 															<button class="btn blue" type="button" >%</button>
 														</span>
@@ -865,7 +1021,7 @@
 											</div>
 											<div class="col-md-4">
 												<div class="input-icon input-group">
-													<input class="form-control price" type="text" name="benefit_discount"  value="0" placeholder="Discount Received">
+													<input class="form-control price" type="number" step=".01" min="0" name="benefit_discount"  value="0" placeholder="Discount Received">
 													<span class="input-group-btn">
 														<button class="btn blue" type="button" >%</button>
 													</span>
@@ -875,6 +1031,38 @@
 									@endif
 									{{-- cek configs membership benefit promo id --}}
 									@if(MyHelper::hasAccess([24], $configs))
+										<div class="col-md-12" style="margin-top:20px">
+											<div class="input-icon right">
+												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+													Benefit
+													<i class="fa fa-question-circle tooltips" data-original-title="Teks benefit yang akan ditampilkan di halaman membership" data-container="body"></i>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<!-- <div class="input-icon right">
+													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea>
+												</div> -->
+												<div class="inner-repeater">
+          											<div data-repeater-list="benefit_text">\
+														<div data-repeater-item="" class="row" style="margin-bottom:15px">
+															<div class="col-md-10">
+																<textarea type="text" name="benefit_text[]" class="form-control" placeholder="Benefit text"></textarea>
+															</div>
+															<div class="col-md-2">
+																<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+																	<i class="fa fa-close"></i>
+																</a>
+															</div>
+														</div>
+													</div>
+													<hr>
+													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+														<i class="fa fa-plus"></i> Add Promo ID</a>
+													<br>
+												</div>
+												<br>
+											</div>
+										</div>
 										<div class="col-md-12" style="margin-top:20px">
 											<div class="input-icon right">
 												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
@@ -930,14 +1118,14 @@
 				{{ csrf_field() }}
 				<div class="row">
 					<div class="col-12">
-						@if(MyHelper::hasAccess([12,13,14], $grantedFeature))
+						@if(MyHelper::hasAccess([12,13], $grantedFeature))
 							<div class="alert alert-warning" role="alert">
 							If you click submit, it may take a long time because the system will recalculate the user's membership
 							</div>
 						@endif
 					</div>
 					<div class="col-md-offset-5 col-md-7">
-						@if(MyHelper::hasAccess([12,13,14], $grantedFeature))
+						@if(MyHelper::hasAccess([12,13], $grantedFeature))
 							<button type="submit" class="btn green">Submit</button>
 						@endif
 						<!-- <button type="button" class="btn default">Cancel</button> -->

@@ -1,21 +1,21 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    {{-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
     $(document).ready(function() {
         $('.summernote').summernote({
@@ -23,12 +23,13 @@
             tabsize: 2,
             toolbar: [
                 ['style', ['style']],
-                ['style', ['bold', 'underline', 'clear']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['insert', ['table']],
                 ['insert', ['link', 'picture', 'video']],
-                ['misc', ['fullscreen', 'codeview', 'help']]
+                ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
             ],
             height: 120
         });
@@ -45,6 +46,10 @@
                 image.onload = function() {
                     if (type == "logo_brand") {
                         if ($(".file").val().split('.').pop().toLowerCase() != 'png') {
+                            toastr.warning("Please check type of your photo.");
+                            $("#removeLogo").trigger( "click" );
+                        }
+                        if (this.width != 200 || this.height != 200) {
                             toastr.warning("Please check dimension of your photo.");
                             $("#removeLogo").trigger( "click" );
                         }
@@ -89,7 +94,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase font-blue">New Brand</span>
+                <span class="caption-subject font-dark sbold uppercase font-blue">{{$title}}</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -103,7 +108,7 @@
                         </label>
                         <div class="col-md-7">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Brand Name" class="form-control" name="name_brand" @if (isset($result['name_brand'])) value="{{ $result['name_brand'] }}" @else value="{{ old('name_brand') }}" @endif>
+                                <input type="text" placeholder="Brand Name" class="form-control" name="name_brand" @if (isset($result['name_brand'])) value="{{ $result['name_brand'] }}" @else value="{{ old('name_brand') }}" @endif required>
                             </div>
                         </div>
                     </div>
@@ -118,6 +123,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Brand Visibility
+                            <i class="fa fa-question-circle tooltips" data-original-title="Status brand. Visible/Hidden" data-container="body"></i>
+                        </label>
+                        <div class="col-md-7">
+                            <div class="input-icon right">
+                                <input type="checkbox" class="make-switch" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-off-text="Hidden" name="brand_visibility" value="1" @if(old('brand_visibility',$result['brand_visibility']??'')) checked @endif>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Code
                             <span class="required" aria-required="true"> *
                             </span>
@@ -125,7 +140,7 @@
                         </label>
                         <div class="col-md-7">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Brand Code" class="form-control" name="code_brand" @if (isset($result['code_brand'])) value="{{ $result['code_brand'] }}" disabled @else value="{{ old('code_brand') }}" @endif>
+                                <input type="text" placeholder="Brand Code" class="form-control" name="code_brand" @if (isset($result['code_brand'])) value="{{ $result['code_brand'] }}" disabled @else value="{{ old('code_brand') }}" required @endif>
                             </div>
                         </div>
                     </div>
@@ -134,7 +149,9 @@
                             Logo
                             <span class="required" aria-required="true"> * </span>
                             <br>
-                            <span class="required" aria-required="true"> (PNG Only) </span>
+                            <span class="required" aria-required="true"> (200*200)</span>
+                            <br>
+                            <span class="required" aria-required="true"> (Only PNG) </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran square digunakan utnuk menjadi logo brand" data-container="body"></i>
                         </label>
                         <div class="col-md-7">
@@ -152,13 +169,13 @@
                                     <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/png" name="logo_brand" class="file" data-jenis="logo_brand"> </span>
+                                        <input type="file" accept="image/png" name="logo_brand" class="file" data-jenis="logo_brand" required> </span>
                                     <a href="javascript:;" id="removeLogo" class="btn red default fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="col-md-3 control-label">
                             Image
                             <span class="required" aria-required="true"> * </span>
@@ -180,12 +197,12 @@
                                     <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/*" name="image_brand" class="file" data-jenis="image_brand"> </span>
+                                        <input type="file" accept="image/*" name="image_brand" class="file" data-jenis="image_brand" @if (!isset($result['name_brand'])) required @endif> </span>
                                     <a href="javascript:;" id="removeImage" class="btn red default fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}

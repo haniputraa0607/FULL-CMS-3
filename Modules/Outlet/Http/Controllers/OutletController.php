@@ -2,6 +2,7 @@
 
 namespace Modules\Outlet\Http\Controllers;
 
+use App\Imports\BrandOutletImport;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -10,8 +11,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Lib\MyHelper;
 use Excel;
 use Validator;
+use Session;
+use Storage;
+use File;
+use ZipArchive;
 
-use \App\Exports\ArrayExport;
+use App\Exports\MultisheetExport;
 use App\Imports\FirstSheetOnlyImport;
 
 class OutletController extends Controller
@@ -28,7 +33,7 @@ class OutletController extends Controller
         ];
 
         // outlet
-        $outlet = MyHelper::get('outlet/list');
+        $outlet = MyHelper::post('outlet/be/list', ['all_outlet' => 1]);
 
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
@@ -46,7 +51,7 @@ class OutletController extends Controller
         if($post){
 
         }
-        $outlet = MyHelper::get('outlet/list?log_save=0');
+        $outlet = MyHelper::get('outlet/be/list?log_save=0');
 
 		if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data = $outlet['result'];
@@ -63,7 +68,7 @@ class OutletController extends Controller
         if($type == 'Order'){
             $post['type'] = 'transaction';
         }
-        $outlet = MyHelper::post('outlet/filter?log_save=0', $post);
+        $outlet = MyHelper::post('outlet/be/filter?log_save=0', $post);
         if (isset($outlet['result'])) {
             $data = $outlet['result'];
         }
@@ -91,7 +96,7 @@ class OutletController extends Controller
 
             // province
             $data['province'] = $this->getPropinsi();
-            $data['brands'] = MyHelper::get('brand/list')['result']??[];
+            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
 
             return view('outlet::create', $data);
         }
@@ -164,13 +169,13 @@ class OutletController extends Controller
                 'submenu_active' => 'outlet-list',
             ];
 
-            $outlet = MyHelper::post('outlet/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
-            $data['brands'] = MyHelper::get('brand/list')['result']??[];
+            $outlet = MyHelper::post('outlet/be/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
+            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
             // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
-                $product = MyHelper::get('product/list/price/'.$outlet['result'][0]['id_outlet']);
+                $product = MyHelper::get('product/list/product-detail/'.$outlet['result'][0]['id_outlet']);
 
                 if (isset($product['status']) && $product['status'] == "success") {
                     $data['product']    = $product['result'];
@@ -296,7 +301,7 @@ class OutletController extends Controller
         $data['order_field']=$post['order_field'];
         $post['order_method']=session('outlet_location_order_method')??'asc';
         $data['order_method']=$post['order_method'];
-        $req=MyHelper::post('outlet/list?page='.$page,$post);
+        $req=MyHelper::post('outlet/be/list?page='.$page,$post);
         $data['total']=$req['result']['total']??0;
         $data['outlets']=$req['result']['data']??[];
         $data['next_page_url']=($req['result']['next_page_url']??false)?url()->current().'?page='.($page+1):null;
@@ -408,7 +413,7 @@ class OutletController extends Controller
             'menu_active'    => 'outlet',
             'submenu_active' => 'outlet-holiday',
         ];
-        $outlet = MyHelper::get('outlet/list');
+        $outlet = MyHelper::get('outlet/be/list');
 
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
@@ -438,7 +443,7 @@ class OutletController extends Controller
                 'submenu_active' => 'outlet-holiday',
             ];
 
-            $outlet = MyHelper::get('outlet/list');
+            $outlet = MyHelper::get('outlet/be/list');
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet'] = $outlet['result'];
@@ -505,7 +510,7 @@ class OutletController extends Controller
                 return back()->witherrors($e);
             }
 
-            $outlet = MyHelper::get('outlet/list');
+            $outlet = MyHelper::get('outlet/be/list');
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet'] = $outlet['result'];
@@ -538,6 +543,17 @@ class OutletController extends Controller
         }
     }
 
+    function exportImport(Request $request) {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Export & Import Outlet',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-export-import',
+        ];
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+        return view('outlet::export_import', $data);
+    }
+
     function import(Request $request) {
         $data = [
             'title'          => 'Outlet',
@@ -555,12 +571,12 @@ class OutletController extends Controller
         if (empty($post)) {
             $data = [
                 'title'          => 'Outlet',
-                'sub_title'      => 'Import Outlet',
+                'sub_title'      => 'Export & Import Outlet',
                 'menu_active'    => 'outlet',
-                'submenu_active' => 'outlet-import',
+                'submenu_active' => 'outlet-export-import',
             ];
-
-            return view('outlet::import', $data);
+            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+            return view('outlet::export_import', $data);
         }else{
             if($request->file('import_file')){
 
@@ -589,6 +605,46 @@ class OutletController extends Controller
         }
     }
 
+    function importBrand(Request $request) {
+        $post = $request->except('_token');
+
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Outlet',
+                'sub_title'      => 'Export & Import Outlet',
+                'menu_active'    => 'outlet',
+                'submenu_active' => 'outlet-export-import',
+            ];
+            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+            return view('outlet::export_import', $data);
+        }else{
+            if($request->file('import_file')){
+
+                $path = $request->file('import_file')->getRealPath();
+                $name = $request->file('import_file')->getClientOriginalName();
+                $dataimport = Excel::toArray(new BrandOutletImport(),$request->file('import_file'));
+                $dataimport = array_map(function($x){return (Object)$x;}, $dataimport[0]??[]);
+                $save = MyHelper::post('outlet/import-brand', ['data_import' => $dataimport]);
+
+                if (isset($save['status']) && $save['status'] == "success") {
+                    return parent::redirect($save, $save['message'], 'outlet/list');
+                }else {
+                    if (isset($save['errors'])) {
+                        return back()->withErrors($save['errors'])->withInput();
+                    }
+
+                    if (isset($save['status']) && $save['status'] == "fail") {
+                        return back()->withErrors($save['messages'])->withInput();
+                    }
+                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+                }
+                return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+            }else{
+                return back()->withErrors(['File is required.'])->withInput();
+            }
+        }
+    }
+
     function exportForm(Request $request) {
         $data = [
             'title'          => 'Outlet',
@@ -597,16 +653,30 @@ class OutletController extends Controller
             'submenu_active' => 'outlet-export',
         ];
 
-        $data['brands'] = MyHelper::get('brand/list')['result']??[];
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
 
         return view('outlet::export', $data);
+    }
+
+    function exportDataCity(Request $request) {
+        $post=$request->except('_token');
+        $cities = MyHelper::post('outlet/export-city',$post);
+        if (isset($cities['status']) && $cities['status'] == "success") {
+            $dataExport['All Type'] = $cities['result'];
+            $data = new MultisheetExport($dataExport);
+            return Excel::download($data,'Data_City_'.date('Ymdhis').'.xls');
+
+        }else {
+            return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+        }
+
     }
 
     function exportData(Request $request) {
         $post=$request->except('_token');
         $outlet = MyHelper::post('outlet/export',$post);
         if (isset($outlet['status']) && $outlet['status'] == "success") {
-            $data = new ArrayExport($outlet['result'],'Outlet List');
+            $data = new MultisheetExport($outlet['result']);
             return Excel::download($data,'Data_Outlets_'.date('Ymdhis').'.xls');
 
         }else {
@@ -749,7 +819,7 @@ class OutletController extends Controller
 
     public function qrcodePrint()
     {
-        $outlet = MyHelper::post('outlet/list', ['qrcode'=>true]);
+        $outlet = MyHelper::post('outlet/be/list', ['qrcode'=>true]);
 
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
@@ -763,6 +833,7 @@ class OutletController extends Controller
     public function qrcodeView(Request $request)
     {
         $post = $request->except('_token');
+
         $data = [
             'title'          => 'Outlet',
             'sub_title'      => 'Outlet QRCode',
@@ -770,10 +841,43 @@ class OutletController extends Controller
             'submenu_active' => 'outlet-qrcode',
         ];
 
+        $data['key'] = '';
+
         if(isset($post['page'])){
-            $outlet = MyHelper::post('outlet/list?page='.$post['page'], ['qrcode'=>true, 'qrcode_paginate'=>true]);
+            $dataPost = [
+                'qrcode' => true,
+                'qrcode_paginate' => true
+            ];
+            if(isset($post['key'])) {
+                Session::forget('key_search');
+                Session::put('key_search', $post['key']);
+                $data['key'] = $post['key'];
+                $dataPost['key_free'] = $post['key'];
+            }else{
+                if(Session::has('key_search')){
+                    $data['key'] = Session::get('key_search');
+                    $dataPost['key_free'] = Session::get('key_search');
+                }
+            }
+            $outlet = MyHelper::post('outlet/be/list?page='.$post['page'], $dataPost);
+
         }else{
-            $outlet = MyHelper::post('outlet/list', ['qrcode'=>true, 'qrcode_paginate'=>true]);
+            $dataPost = [
+                'qrcode' => true,
+                'qrcode_paginate' => true
+            ];
+            if(isset($post['key'])) {
+                Session::forget('key_search');
+                Session::put('key_search', $post['key']);
+                $data['key'] = $post['key'];
+                $dataPost['key_free'] = $post['key'];
+            }else{
+                if(Session::has('key_search')){
+                    $data['key'] = Session::get('key_search');
+                    $dataPost['key_free'] = Session::get('key_search');
+                }
+            }
+            $outlet = MyHelper::post('outlet/be/list', $dataPost);
         }
 
         $data['from'] = 0;
@@ -792,9 +896,337 @@ class OutletController extends Controller
         return view('outlet::qrcode_view', $data);
     }
 
+    public function qrcodeExport()
+    {
+        ini_set('max_execution_time', '300');
+        if(Session::has('key_search')){
+            $dataPost['qrcode'] = true;
+            $dataPost['key_free'] = Session::get('key_search');
+        }else{
+            $dataPost['qrcode'] = true;
+        }
+        $outlet = MyHelper::post('outlet/be/list', $dataPost);
+        if (isset($outlet['status']) && $outlet['status'] == "success") {
+            $folderName = "QRCode_".date('Ymdhis');
+            $createFolder = Storage::makeDirectory('QRCODE/'.$folderName, $mode=0775);
+
+            if($createFolder){
+                foreach ($outlet['result'] as $val){
+                    $newFilename = $val['outlet_name'].'.jpg';
+                    $urlImage = $val['qrcode'];
+                    $file_headers = @get_headers($urlImage);
+
+                    if(isset($file_headers[0]) && strpos($file_headers[0], '200 OK') !== false) {
+                        $putToStorange = Storage::put('QRCODE/'.$folderName.'/'.$newFilename, file_get_contents($urlImage));
+                    }else{
+                        continue;
+                    }
+                }
+
+                $files = glob(storage_path('app/QRCODE/'.$folderName.'/*.jpg'));
+                $archiveFile = storage_path('app/QRCODE/'.$folderName.'.zip');
+                $zip = new ZipArchive;
+
+                if ($zip->open($archiveFile, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
+                    foreach ($files as $file) {
+                        if ($zip->addFile($file, basename($file))) {
+                            continue;
+                        } else {
+                            throw new Exception("file `{$file}` could not be added to the zip file: " . $zip->getStatusString());
+                        }
+                    }
+
+                    // close the archive.
+                    if ($zip->close()) {
+                        // archive is now downloadable ...
+                        File::deleteDirectory(storage_path('app/QRCODE/'.$folderName));
+                        return response()->download($archiveFile, basename($archiveFile))->deleteFileAfterSend(true);
+                    } else {
+                        return redirect('outlet/qrcode')->withErrors('Can not export this file');
+                    }
+                }
+            }
+        }
+        else {
+            return redirect('outlet/qrcode')->withErrors('Not found QRCode outlet');
+        }
+    }
+
+    public function  qrcodeReset(){
+        Session::forget('key_search');
+        return redirect('outlet/qrcode');
+    }
+
     public function ajaxHandler(Request $request){
         $post=$request->except('_token');
         $outlets=MyHelper::post('outlet/ajax_handler', $post);
         return $outlets;
+    }
+
+    public function maxOrder(Request $request,$outlet_code=null) {
+        $outlets = MyHelper::get('outlet/be/list')['result']??[];
+        if(!$outlets){
+            return back()->withErrors(['Something went wrong']);
+        }
+        if(!$outlet_code || !in_array($outlet_code,array_column($outlets, 'outlet_code'))){
+            $outlet = $outlets[0]['outlet_code']??false;
+            if(!$outlet){
+                return back()->withErrors(['Something went wrong']);
+            }
+            return redirect('outlet/max-order/'.$outlet);
+        }
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => '',
+            'menu_active'    => 'max-order',
+            'submenu_active' => 'max-order',
+            'filter_title'   => 'Filter Product',
+        ];
+        if(session('maxx_order_filter')){
+            $post=session('maxx_order_filter');
+            $data['rule']=array_map('array_values', $post['rule']);
+            $data['operator']=$post['operator'];
+        }else{
+            $post = [];
+        }
+        $data['outlets'] = $outlets;
+        $data['key'] = $outlet_code;
+        $page = $request->page;
+        if(!$page){
+            $page = 1;
+        }
+        $post['outlet_code'] = $outlet_code;
+        $result = MyHelper::post('outlet/max-order?page='.$page,$post)['result']??false;
+        if(!$result){
+            return MyHelper::post('outlet/max-order?page='.$page,$post);
+            return back()->withErrors(['Something went wrong']);
+        }
+        $data['total'] = $result['products']['total'];
+        $data['start'] = $result['products']['from'];
+        $data['data'] =$result;
+        $data['paginator'] = new LengthAwarePaginator($result['products']['data'], $result['products']['total'], $result['products']['per_page'], $result['products']['current_page'], ['path' => url()->current()]);
+        return view('outlet::max_order',$data);
+    }
+    public function maxOrderUpdate(Request $request,$outlet_code) {
+        $post = $request->except('_token');
+        if($post['rule']??false){
+            session(['maxx_order_filter'=>$post]);
+            return redirect('outlet/max-order/'.$outlet_code);
+        }
+        if($post['clear']??false){
+            session(['maxx_order_filter'=>null]);
+            return redirect('outlet/max-order/'.$outlet_code);
+        }
+        $post['outlet_code'] = $outlet_code;
+
+        $update = MyHelper::post('outlet/max-order/update',$post);
+
+        if(($update['status']??false) == 'success'){
+            return back()->with('success',['Success update maximum order']);
+        }else{
+            return back()->withErrors($update['messages']??['Something went wrong']);
+        }
+    }
+
+    public function exportBrandOutle(Request $request){
+        $post=$request->except('_token');
+        $brand = MyHelper::post('brand/be/list', ['web' => 1]);
+        $codeOutlet =  MyHelper::get('outlet/list/code');
+
+        $data = [];
+        if(isset($codeOutlet['status']) && $codeOutlet['status'] == 'success'){
+            $count = count($codeOutlet['result']);
+            $result = $codeOutlet['result'];
+            for($i=0;$i<$count;$i++){
+                $data[$i]['code_outlet'] = $result[$i]['outlet_code'];
+                $brands = $result[$i]['brands'];
+                foreach ($brand['result'] as $value){
+                    $check = array_search($value['name_brand'], array_column($brands, 'name_brand'));
+
+                    if($check !== false){
+                        $data[$i][$value['name_brand']] = 'YES';
+                    }else{
+                        $data[$i][$value['name_brand']] = 'NO';
+                    }
+
+                }
+            }
+        }
+
+        $dataExport['All Type'] = $data;
+        $dataExport = new MultisheetExport($dataExport);
+        return Excel::download($dataExport,'Data_Brand_'.date('Ymdhis').'.xls');
+    }
+
+    public function differentPrice(Request $request) {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Outlet Different Price',
+            'menu_active'    => 'outlet-different-price',
+            'submenu_active' => 'outlet-different-price',
+            'filter_title'   => 'Filter Product',
+        ];
+        return view('outlet::different_price',$data);
+    }
+    public function getDifferentPrice(Request $request) {
+        $filter['keyword'] = $request->post('keyword');
+        $data = MyHelper::post('outlet/different_price',$filter)['result']??[];
+        return $data;
+    }
+    public function updateDifferentPrice(Request $request) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('outlet/different_price/update',$post);
+        return $data;
+    }
+    public function autoresponse(Request $request, $type='') {
+        $post = $request->except('_token');
+        if(!empty($post)){
+            $outlet_apps_access_feature = $post['outlet_apps_access_feature'];
+            unset($post['outlet_apps_access_feature']);
+            if (isset($post['whatsapp_content'])) {
+                foreach($post['whatsapp_content'] as $key => $content){
+                    if($content['content'] || isset($content['content_file']) && $content['content_file']){
+                        if($content['content_type'] == 'image'){
+                            $post['whatsapp_content'][$key]['content'] = MyHelper::encodeImage($content['content']);
+                        }
+                        else if($content['content_type'] == 'file'){
+                            $post['whatsapp_content'][$key]['content'] = base64_encode(file_get_contents($content['content_file']));
+                            $post['whatsapp_content'][$key]['content_file_name'] = pathinfo($content['content_file']->getClientOriginalName(), PATHINFO_FILENAME);
+                            $post['whatsapp_content'][$key]['content_file_ext'] = pathinfo($content['content_file']->getClientOriginalName(), PATHINFO_EXTENSION);
+                            unset($post['whatsapp_content'][$key]['content_file']);
+                        }
+                    }
+                }
+            }
+
+            $query = MyHelper::post('autocrm/update', $post);
+            MyHelper::post('setting/update2',['update' => ['outlet_apps_access_feature' => ['value',$outlet_apps_access_feature]]]);
+            // print_r($query);exit;
+            return back()->withSuccess(['Setting updated']);
+        }
+        $data = [ 'title'             => 'Setting Messages Outlet App OTP',
+                  'menu_active'       => 'outlet',
+                  'submenu_active'    => 'outlet-pin-response',
+                  'subject'           => 'outlet-app-request-pin'
+                ];
+        
+        $getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
+        if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+            $data['api_key_whatsapp'] = $getApiKey['result']['value'];
+        }else{
+            $data['api_key_whatsapp'] = null;
+        }
+
+        $data['textreplaces'] = [];
+        if($type == 'request_pin'){
+            $type = 'outlet-app-request-pin';
+            $view = 'outlet::response';
+        }else{
+            $data['title'] = 'Setting Forward Incomplete Outlet Data';
+            $data['submenu_active'] = 'outlet-incomplete-response';
+            $data['forwardOnly'] = true;
+            $view = 'users::response';
+        }
+        $data['data'] = MyHelper::post('autocrm/list',['autocrm_title'=>ucfirst(str_replace('-',' ',$type))])['result']??[];
+        $data['data']['outlet_apps_access_feature'] = MyHelper::post('setting',['key'=>'outlet_apps_access_feature'])['result']['value']??'otp';
+        $data['custom'] = explode(';',$data['data']['custom_text_replace']);
+        return view($view,$data);
+    }
+
+
+    /*=========== User Franchise ===========*/
+   public function listUserFranchise(Request $request) {
+        $post = $request->all();
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'User Franchise',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-list-user-franchise',
+        ];
+
+       if(Session::has('filter-list-user-franchise') && !empty($post) && !isset($post['filter'])){
+           $page = 1;
+           if(isset($post['page'])){
+               $page = $post['page'];
+           }
+           $post = Session::get('filter-list-user-franchise');
+           $post['page'] = $page;
+       }else{
+           Session::forget('filter-list-user-franchise');
+       }
+
+        $list = MyHelper::post('outlet/list/user-franchise', $post);
+
+       if (isset($list['status']) && $list['status'] == "success") {
+           $data['paginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
+           $data['list'] = $list['result']['data'];
+           $data['from'] = $list['result']['from'];
+           $data['to'] = $list['result']['to'];
+           $data['total'] = $list['result']['total'];
+       }
+       else {
+           $data['paginator'] = [];
+           $data['list'] = [];
+           $data['from'] = [];
+           $data['to'] = [];
+           $data['total'] = [];
+       }
+
+       if($post){
+           Session::put('filter-list-user-franchise',$post);
+       }
+
+       return view('outlet::users_franchise.list', $data);
+   }
+
+    public function detailUserFranchise(Request $request, $phone) {
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Detail User Franchise',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'outlet-list-user-franchise',
+        ];
+
+        $post['phone'] = $phone;
+        $detail = MyHelper::post('outlet/detail/user-franchise', $post);
+
+        if (isset($detail['status']) && $detail['status'] == "success") {
+            $data['user'] = $detail['data_user'];
+            if(!empty($detail['list_outlet'])){
+                $data['paginator'] = new LengthAwarePaginator($detail['list_outlet']['data'], $detail['list_outlet']['total'], $detail['list_outlet']['per_page'], $detail['list_outlet']['current_page'], ['path' => url()->current()]);
+                $data['outlets'] = $detail['list_outlet']['data'];
+                $data['from'] = $detail['list_outlet']['from'];
+                $data['to'] = $detail['list_outlet']['to'];
+                $data['total'] = $detail['list_outlet']['total'];
+            }else{
+                $data['paginator'] = [];
+                $data['outlets'] = [];
+                $data['from'] = [];
+                $data['to'] = [];
+                $data['total'] = [];
+            }
+        }
+        else {
+            $data['user'] = [];
+            $data['paginator'] = [];
+            $data['outlets'] = [];
+            $data['from'] = [];
+            $data['to'] = [];
+            $data['total'] = [];
+        }
+
+        return view('outlet::users_franchise.detail', $data);
+    }
+
+    function setPasswordDefaultUserFranchise(Request $request) {
+        $post = $request->except('_token');
+        $update = MyHelper::post('outlet/user-franchise/set-password-default', $post);
+
+        if (isset($update['status']) && $update['status'] == "success") {
+            return redirect('outlet/list/user-franchise')->with('success',['Set up password success']);
+        }else{
+            return redirect('outlet/list/user-franchise')->withErrors($update['messages']);
+        }
     }
 }

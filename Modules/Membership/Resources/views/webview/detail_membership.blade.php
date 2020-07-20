@@ -14,25 +14,25 @@
                 font-family: "ProductSans-Bold";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Bold.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('fonts/ProductSans-Bold.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-BoldItalic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-BoldItalic.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('fonts/ProductSans-BoldItalic.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-Italic";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Italic.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('fonts/ProductSans-Italic.ttf') }}');
         }
         @font-face {
                 font-family: "ProductSans-Regular";
                 font-style: normal;
                 font-weight: 400;
-                src: url('{{ env('S3_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
+                src: url('{{ env('STORAGE_URL_VIEW') }}{{ ('fonts/ProductSans-Regular.ttf') }}');
         }
         body {
             background-color: rgba(0, 0, 0, 0.1);

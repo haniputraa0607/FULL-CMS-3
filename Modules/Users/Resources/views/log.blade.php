@@ -1,31 +1,31 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
 	<script>
 	function centang(no){
 		alert(no);
@@ -46,6 +46,21 @@
 		   slides[i].checked = false;
 		}
 	}
+
+	// function viewLogDetail(url, status, request, response, ip, useragent){
+	function viewLogDetail(id_log, log_type){
+		$.get("{{url('user/ajax/log')}}"+'/'+id_log+'/'+log_type, function(result){
+			if(result){
+				document.getElementById("log-url").value = result.url;
+				document.getElementById("log-status").value = result.response_status;
+				document.getElementById("log-request").innerHTML = JSON.stringify(JSON.parse(result.request), null, 4);
+				document.getElementById("log-response").innerHTML = JSON.stringify(JSON.parse(result.response), null, 4);
+				document.getElementById("log-ip").value = result.ip;
+				document.getElementById("log-useragent").value = result.useragent;
+				$('#logModal').modal('show');
+			}
+		})
+	}
 	</script>
 @endsection
 
@@ -54,19 +69,23 @@
 	<ul class="page-breadcrumb">
 		<li>
 			<a href="{{url('/')}}">Home</a>
+            <i class="fa fa-circle"></i>
 		</li>
+		<li>
+			<a href="{{url('/user')}}">User</a>
+            <i class="fa fa-circle"></i>
+		</li>
+		<li class="active"><a href="{{url('/user/activity')}}">Log Activity</a></li>
 	</ul>
 </div>
 @include('layouts.notifications')
 
 <div class="row" style="margin-top:20px">
 	<div class="col-md-12">
-		@if(!Session::has('form'))
 		<form role="form" action="{{ url('user/activity') }}" method="post">
 			{{ csrf_field() }}
 			@include('filter-log')
 		</form>
-		@endif
 	</div>
 	<div class="col-md-12">
 		<div class="portlet light portlet-fit bordered" >
@@ -161,8 +180,6 @@
 											<th scope="col"> Status </th>
 											<th scope="col"> Subject </th>
 											<th scope="col"> Email </th>
-											<th scope="col"> Request </th>
-											<th scope="col"> Response </th>
 											<th scope="col"> IP </th>
 											<th scope="col"> User Agent </th>
 
@@ -182,19 +199,17 @@
 															<td> {{$no+1}}
 															</td>
 															<td>
-																<a class="btn btn-block green btn-xs" href="{{ url('user/detail', $data['phone']) }}"><i class="icon-pencil"></i> Detail </a>
-																<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
+																<a class="btn btn-block green btn-xs" onClick="viewLogDetail('{{$data['id_log_activities_apps']}}','apps')" href="#"><i class="icon-pencil"></i> Detail </a>
+																<a class="btn btn-block red btn-xs" href="{{ url('user/delete/logApp', $data['id_log_activities_apps']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
 															</td>
-															<td> {{str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['name'])}} </td>
+															<td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['name'])!!} </td>
 															<td> {{$data['phone']}} </td>
 															<td> {{$data['response_status']}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['subject'])}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['email'])}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['request'])}} </td>
-															<td> {{substr(str_replace(" ","&nbsp;", $data['response']), 0, 350)}} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['subject'])!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['email'])!!} </td>
 															<td> {{$data['ip']}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['useragent'])}} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['useragent'])!!} </td>
 														</tr>
 													@endforeach
 											@else
@@ -239,8 +254,6 @@
 											<th scope="col"> Status </th>
 											<th scope="col"> Subject </th>
 											<th scope="col"> Email </th>
-											<th scope="col"> Request </th>
-											<th scope="col"> Response </th>
 											<th scope="col"> IP </th>
 											<th scope="col"> User Agent </th>
 
@@ -260,19 +273,17 @@
 															<td> {{$no+1}}
 															</td>
 															<td>
-																<a class="btn btn-block green btn-xs" href="{{ url('user/detail', $data['phone']) }}"><i class="icon-pencil"></i> Detail </a>
-																<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
+																<a class="btn btn-block green btn-xs" onClick="viewLogDetail('{{$data['id_log_activities_be']}}','be')" href="#"><i class="icon-pencil"></i> Detail </a>
+																<a class="btn btn-block red btn-xs" href="{{ url('user/delete/logBE', $data['id_log_activities_be']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
 															</td>
-															<td> {{str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['name'])}} </td>
+															<td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['name'])!!} </td>
 															<td> {{$data['phone']}} </td>
 															<td> {{$data['response_status']}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['subject'])}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['email'])}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['request'])}} </td>
-															<td> {{substr(str_replace(" ","&nbsp;", $data['response']), 0, 350)}} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['subject'])!!} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['email'])!!} </td>
 															<td> {{$data['ip']}} </td>
-															<td> {{str_replace(" ","&nbsp;", $data['useragent'])}} </td>
+															<td> {!!str_replace(" ","&nbsp;", $data['useragent'])!!} </td>
 														</tr>
 														@endforeach
 														@else
@@ -312,5 +323,52 @@
 
 		</div>
 	</div>
+</div>
+
+
+<div class="modal fade" id="logModal" tabindex="-1" role="basic" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Request & Response Detail</h4>
+			</div>
+			<div class="modal-body form">
+				<form role="form">
+					<div class="form-body">
+						<div class="form-group">
+							<label>URL</label>
+							<input type="text" class="form-control" readonly id="log-url">
+						</div>
+						<div class="form-group">
+							<label>Status</label>
+							<input type="text" class="form-control" readonly id="log-status">
+						</div>
+						<div class="form-group">
+							<label>IP Address</label>
+							<input type="text" class="form-control" readonly id="log-ip">
+						</div>
+						<div class="form-group">
+							<label>User Agent</label>
+							<input type="text" class="form-control" readonly id="log-useragent">
+						</div>
+						<div class="form-group">
+							<label>Request</label>
+							<pre  id="log-request"></pre>
+						</div>
+						<div class="form-group">
+							<label>Response</label>
+							<pre id="log-response"></pre>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
 </div>
 @endsection

@@ -1,30 +1,30 @@
 @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/table-datatables-buttons.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/table-datatables-buttons.js') }}" type="text/javascript"></script>
 
 	<script type="text/javascript">
 	function addEmailContent(param){
@@ -157,6 +157,52 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
+		else if(det == 'Subscription'){
+			$.ajax({
+				type : "GET",
+				url : "{{ url('subscription/list-ajax') }}",
+				data : "_token="+token,
+				success : function(result) {
+					document.getElementById('atd_'+type).style.display = 'block';
+					var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
+					for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+					operator_value.options[operator_value.options.length] = new Option("", "");
+					for(x=0;x < result.result.length; x++){
+						if(idref == result.result[x]['id_subscription']){
+							operator_value.options[operator_value.options.length] = new Option(result.result[x]['subscription_title'], result.result[x]['id_subscription'], false, true);
+						}else{
+							operator_value.options[operator_value.options.length] = new Option(result.result[x]['subscription_title'], result.result[x]['id_subscription']);
+						}
+					}
+				}
+			});
+			document.getElementById('link_'+type).style.display = 'none';
+			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+		}
+
+		else if(det == 'Deals'){
+			$.ajax({
+				type : "GET",
+				url : "{{ url('deals/list/active') }}",
+				data : "_token="+token,
+				success : function(result) {
+					document.getElementById('atd_'+type).style.display = 'block';
+					var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
+					for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+					operator_value.options[operator_value.options.length] = new Option("", "");
+					for(x=0;x < result.length; x++){
+						if(idref == result[x]['id_deals']){
+							operator_value.options[operator_value.options.length] = new Option(result[x]['deals_title']+' '+result[x]['deals_second_title'], result[x]['id_deals'], false, true);
+						}else{
+							operator_value.options[operator_value.options.length] = new Option(result[x]['deals_title']+' '+result[x]['deals_second_title'], result[x]['id_deals']);
+						}
+					}
+				}
+			});
+			document.getElementById('link_'+type).style.display = 'none';
+			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+		}
+
 		else if(det == 'Home'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
@@ -231,18 +277,19 @@
 
 	$(document).ready(function() {
 		$('.summernote').summernote({
-			placeholder: 'News Content Long',
+			placeholder: 'Email Content',
 			tabsize: 2,
 			height: 120,
 			toolbar: [
-                  ['style', ['style']],
-                  ['style', ['bold', 'underline', 'clear']],
-                  ['color', ['color']],
-                  ['para', ['ul', 'ol', 'paragraph']],
-                  ['insert', ['table']],
-                  ['insert', ['link', 'picture', 'video']],
-                  ['misc', ['fullscreen', 'codeview', 'help']]
-                ],
+				['style', ['style']],
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['insert', ['table']],
+				['insert', ['link', 'picture', 'video']],
+				['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+			],
 			callbacks: {
 				onImageUpload: function(files){
 					sendFile(files[0], $(this).attr('id'));
@@ -352,7 +399,19 @@
 	<ul class="page-breadcrumb">
 		<li>
 			<a href="{{url('/')}}">Home</a>
+			<i class="fa fa-circle"></i>
 		</li>
+		<li>
+			<span>{{ $title }}</span>
+			@if (!empty($sub_title))
+				<i class="fa fa-circle"></i>
+			@endif
+		</li>
+		@if (!empty($sub_title))
+		<li>
+			<span>{{ $sub_title }}</span>
+		</li>
+		@endif
 	</ul>
 </div>
 @include('layouts.notifications')
@@ -463,14 +522,29 @@
 								<div class="col-md-4 name">Conditions</div>
 								<div class="col-md-8 value">: </div>
 							</div>
-							@php $i=0; @endphp
+							@php $i=0; $where=false;@endphp
 							@foreach($result['campaign_rule_parents'] as $ruleParent)
 							<div class="portlet light bordered" style="margin-bottom:10px">
 								@foreach($ruleParent['rules'] as $rule)
 								<div class="row static-info">
+									@php if($rule['operator'] == 'WHERE IN'): $where=true; @endphp
+										<div class="col-md-12 text-center">Based on CSV file upload</div>
+									@php else: $where=false; @endphp
 									<div class="col-md-1 name"></div>
-									<div class="col-md-10 value"><li>{{ucwords(str_replace("_", " ", $rule['subject']))}} @if($rule['subject'] != "all_user") @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif @endif
-									@if($rule['subject'] == 'trx_outlet' || $rule['subject'] == 'trx_outlet_not')
+									<div class="col-md-10 value"><li>
+									@if($rule['subject'] != 'trx_outlet' && $rule['subject'] != 'trx_product')
+										{{ucwords(str_replace("_", " ", $rule['subject']))}} @if($rule['subject'] != "all_user") @if(empty($rule['operator']))=@else{{$rule['operator']}}@endif @endif
+									@endif
+									@if($rule['subject'] == 'trx_outlet')
+										{{ucwords(str_replace("_", " ", $rule['subject']))}}
+										<?php $name = null; ?>
+										@foreach($outlets as $outlet)
+											@if($outlet['id_outlet'] == $rule['id'])
+												<?php $name = $outlet['outlet_name']; ?>
+											@endif
+										@endforeach
+										"{{$name}}" with outlet count {{$rule['operator']}} {{$rule['parameter']}}
+									@elseif($rule['subject'] == 'trx_outlet_not')
 										<?php $name = null; ?>
 										@foreach($outlets as $outlet)
 											@if($outlet['id_outlet'] == $rule['parameter'])
@@ -478,7 +552,16 @@
 											@endif
 										@endforeach
 										{{$name}}
-									@elseif($rule['subject'] == 'trx_product' || $rule['subject'] == 'trx_product_not')
+									@elseif($rule['subject'] == 'trx_product')
+										{{ucwords(str_replace("_", " ", $rule['subject']))}}
+										<?php $name = null; ?>
+										@foreach($products as $product)
+											@if($product['id_product'] == $rule['id'])
+												<?php $name = $product['product_name']; ?>
+											@endif
+										@endforeach
+										"{{$name}}" with product count {{$rule['operator']}} {{$rule['parameter']}}
+									@elseif($rule['subject'] == 'trx_product_not')
 										<?php $name = null; ?>
 										@foreach($products as $product)
 											@if($product['id_product'] == $rule['parameter'])
@@ -505,16 +588,20 @@
 									@else
 										{{$rule['parameter']}}
 									@endif
-									</li></div>
+									</li>
+									</div>
+									@php endif; @endphp
 								</div>
 								@endforeach
 								<div class="row static-info">
 									<div class="col-md-11 value">
+									@if(!$where)
 										@if($ruleParent['rule'] == 'and')
 											All conditions must valid
 										@else
 											Atleast one condition is valid
 										@endif
+									@endif
 									</div>
 								</div>
 							</div>
@@ -527,6 +614,17 @@
 							@endif
 							@php $i++; @endphp
 							@endforeach
+							@if($where&&$result['campaign_description'])
+							<div class="row static-info">
+								<div class="col-md-4 name">Description</div>
+								<div class="col-md-8 value">: </div>
+							</div>
+							<div class="portlet light bordered" style="margin-bottom:10px">
+								<div class="row static-info">
+									<div class="col-md-12 text-justify">{{$result['campaign_description']}}</div>
+								</div>
+							</div>
+							@endif
 						@endif
 						<div class="row static-info">
 							<div class="col-md-11 value">
@@ -670,7 +768,7 @@
 							<div class="form-group" style="margin-bottom:30px">
 								<label class="col-md-2 control-label">Content</label>
 								<div class="col-md-10">
-									<textarea name="campaign_sms_content" id="campaign_sms_content" class="form-control" placeholder="SMS Content" required>@if(isset($result['campaign_sms_content']) && $result['campaign_sms_content'] != ""){{$result['campaign_sms_content']}}@endif</textarea>
+									<textarea name="campaign_sms_content" id="campaign_sms_content" class="form-control" placeholder="SMS Content" maxlength="135" required>@if(isset($result['campaign_sms_content']) && $result['campaign_sms_content'] != ""){{$result['campaign_sms_content']}}@endif</textarea>
 									<br>
 									You can use this variables to display user personalized information:
 									<br><br>
@@ -740,7 +838,7 @@
 									<div class="fileinput fileinput-new" data-provides="fileinput">
 										<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 											@if(isset($result['campaign_push_image']) && $result['campaign_push_image'] != "")
-												<img src="{{env('S3_URL_API')}}{{$result['campaign_push_image']}}" id="campaign_push_image" />
+												<img src="{{env('STORAGE_URL_API')}}{{$result['campaign_push_image']}}" id="campaign_push_image" />
 											@else
 												<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="campaign_push_image" />
 											@endif
@@ -762,21 +860,20 @@
 								<div class="col-md-10" style="padding-top:30px">
 									<select name="campaign_push_clickto" id="campaign_push_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'push')">
 										<option value="Home" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Home") selected @endif>Home</option>
-										<option value="News" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "New") selected @endif>News</option>
-										<!-- <option value="Product" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Product") selected @endif>Product</option> -->
-										{{-- <option value="Order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Order") selected @endif>Order</option> --}}
-										<!-- <option value="Transaction" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Transaction") selected @endif>History</option> -->
-										{{-- <option value="History On Going" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History On Going") selected @endif>History On Going</option> --}}
-										<option value="History Transaksi" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
-										<option value="History Point" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Point") selected @endif>History Point</option>
-										<option value="Outlet" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Outlet") selected @endif>Outlet</option>
+										<option value="Deals" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Deals") selected @endif>Deals</option>
+										<option value="Subscription" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Subscription") selected @endif>Subscription</option>
+										<option value="My Subscription" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "My Subscription") selected @endif>My Subscription</option>
 										<option value="Voucher" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Voucher") selected @endif>Voucher</option>
-										<!-- <option value="Voucher Detail" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option> -->
-										<option value="Profil" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Profil") selected @endif>Profil</option>
-										<option value="Inbox" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Inbox") selected @endif>Inbox</option>
-										<option value="About" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "About") selected @endif>Delivery Service</option>
+										<option value="Order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Order") selected @endif>Order</option>
+										<option value="History Transaction" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Transaction") selected @endif>History Transaction</option>
+										<option value="History Point" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Point") selected @endif>History Point</option>
+										<option value="Profil" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Profil") selected @endif>Profile</option>
+										<option value="Membership" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Membership") selected @endif>Membership</option>
+										<option value="News" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "News") selected @endif>News</option>
+										<option value="Outlet" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Outlet") selected @endif>Outlet</option>
+										<option value="About" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "About") selected @endif>About</option>
 										<option value="FAQ" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "FAQ") selected @endif>FAQ</option>
-										<option value="TOS" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "TOS") selected @endif>Ketentuan Layanan</option>
+										<option value="TOS" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "TOS") selected @endif>Term Of Services</option>
 										<option value="Contact Us" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 										<option value="Link" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Link") selected @endif>Link</option>
 										<option value="Logout" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Logout") selected @endif>Logout</option>
@@ -835,21 +932,21 @@
 								<label for="campaign_inbox_clickto" class="control-label col-md-2">Click Action</label>
 								<div class="col-md-10">
 									<select name="campaign_inbox_clickto" id="campaign_inbox_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
-										<option value="Home" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Home") selected @endif>Home</option>
-										<option value="News" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "New") selected @endif>News</option>
-										<!-- <option value="Product" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Product") selected @endif>Product</option> -->
-										{{-- <option value="Order" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Order") selected @endif>Order</option> --}}
-										{{-- <option value="History On Going" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History On Going") selected @endif>History On Going</option> --}}
-										<option value="History Transaksi" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
-										<option value="History Point" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Point") selected @endif>History Point</option>
-										<option value="Outlet" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
+										<option value="No Action" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "No Action") selected @endif>No Action</option>
+										<option value="Deals" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Deals") selected @endif>Deals</option>
+										<option value="Subscription" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Subscription") selected @endif>Subscription</option>
+										<option value="My Subscription" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "My Subscription") selected @endif>My Subscription</option>
 										<option value="Voucher" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
-										<!-- <option value="Voucher Detail" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Voucher Detail") selected @endif>Voucher Detail</option> -->
-										<option value="Profil" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Profil") selected @endif>Profil</option>
-										<!-- <option value="Inbox" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Inbox") selected @endif>Inbox</option> -->
-										<option value="About" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "About") selected @endif>Delivery Service</option>
+										<option value="Order" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Order") selected @endif>Order</option>
+										<option value="History Transaction" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Transaction") selected @endif>History Transaction</option>
+										<option value="History Point" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Point") selected @endif>History Point</option>
+										<option value="Profil" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Profil") selected @endif>Profile</option>
+										<option value="Membership" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Membership") selected @endif>Membership</option>
+										<option value="News" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "News") selected @endif>News</option>
+										<option value="Outlet" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
+										<option value="About" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "About") selected @endif>About</option>
 										<option value="FAQ" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
-										<option value="TOS" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "TOS") selected @endif>Ketentuan Layanan</option>
+										<option value="TOS" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "TOS") selected @endif>Term Of Services</option>
 										<option value="Contact Us" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
 										<option value="Link" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Link") selected @endif>Link</option>
 										<option value="Logout" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Logout") selected @endif>Logout</option>

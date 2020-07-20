@@ -71,6 +71,12 @@ class SettingController extends Controller
         return parent::redirect($result, 'Application Top Navigation Text has been updated.');
     }
 
+    public function userInboxSave(Request $request){
+        $post = $request->except('_token');
+        $result = MyHelper::post('setting/update2', ['update'=>['inbox_max_days' => ['value',$post['inbox_max_days']]]]);
+        return parent::redirect($result, 'User Inbox setting has been updated.','setting/home#user_inbox');
+    }
+
     public function settingList($key)
     {
         $data = [];
@@ -87,8 +93,8 @@ class SettingController extends Controller
         } elseif($key == 'tos') {
             $sub = 'about-tos';
             $active = 'tos';
-            $subTitle = 'Terms of Service';
-            $label = 'TOS';
+            $subTitle = 'Ketentuan Layanan';
+            $label = 'Ketentuan Layanan';
         } elseif($key == 'tax') {
             $sub = 'about-tax';
             $active = 'tax';
@@ -131,16 +137,38 @@ class SettingController extends Controller
             $sub = 'point-reset';
             $active = 'point-reset';
             $subTitle = 'Point Reset';
+        } elseif ($key == 'max_order') {
+            $span = 'item';
+            $colInput = 3;
+            $colLabel = 3;
+            $sub = 'default-max-order';
+            $active = 'default-max-order';
+            $subTitle = 'Default Max Order';
         } elseif ($key == 'balance_reset') {
             $sub = 'balance-reset';
             $active = 'balance-reset';
             $subTitle = env('POINT_NAME', 'Points').' Reset';
+        } elseif ($key == 'default_outlet') {
+            $sub = 'default-outlet';
+            $active = 'outlet';
+            $subTitle = 'Default Outlet';
+            $colInput = 4;
+            $colLabel = 3;
+        } elseif ($key == 'credit_card_payment_gateway') {
+            $sub = 'credit_card_payment_gateway';
+            $active = 'order';
+            $subTitle = 'Credit Card Payment Gateway';
+            $label = 'Payment Gateway';
+            $span = 'credit_card_payment_gateway';
+            $colInput = 4;
+            $colLabel = 3;
         }
 
         $data = [
             'title'          => 'Setting',
             'menu_active'    => $active,
             'submenu_active' => $sub,
+            'sub_title'       => $subTitle,
             'subTitle'       => $subTitle,
             'label'          => $label,
             'colLabel'       => $colLabel,
@@ -156,14 +184,23 @@ class SettingController extends Controller
             if (isset($request['status']) && $request['status'] == 'success') {
                 $data['result'] = $request['result'];
                 return view('setting::point-reset', $data);
-            } elseif (isset($request['status']) && $request['messages'][0] == 'empty') {
+            }/* elseif (isset($request['status']) && $request['messages'][0] == 'empty') {
                 return view('setting::point-reset', $data);
-            }else {
-                return view('setting::point-reset', $data)->withErrors($request['messages']);
+            }*/else {
+                return view('setting::point-reset',$data);
+                // return view('setting::point-reset', $data)->withErrors($request['messages']);
             }
 
+        } elseif ($key == 'default_outlet') {
+            $data['outlets'] = MyHelper::get('outlet/be/list')['result']??[];
+            $result = MyHelper::post('setting', ['key' => $key])['result']??false;
+            $data['id'] = $result['id_setting'];
+            $data['value'] = $result['value'];
+            $data['key'] = 'value';
+            return view('setting::default_outlet', $data);
         }else{
             $request = MyHelper::post('setting', ['key' => $key]);
+
             if (isset($request['status']) && $request['status'] == 'success') {
                 $result = $request['result'];
                 $data['id'] = $result['id_setting'];
@@ -178,7 +215,6 @@ class SettingController extends Controller
             } else {
                 return view('setting::index', $data)->withErrors($request['messages']);
             }
-
             return view('setting::index', $data);
         }
     }
@@ -208,10 +244,13 @@ class SettingController extends Controller
             'submenu_active' => 'faq-list'
         ];
 
-        $faqList = MyHelper::get('setting/faq');
+        $faqList = MyHelper::get('setting/be/faq');
 
         if (isset($faqList['status']) && $faqList['status'] == 'success') {
-            $data['result'] = $faqList['result'];
+            $data['result'] = array_map(function($var){
+                $var['id_faq'] = MyHelper::createSlug($var['id_faq'],$var['created_at']);
+                return $var;
+            },$faqList['result']);
         } else {
             if (isset($faqList['status']) && $faqList['status'] == 'fail') {
                 $data['result'] = [];
@@ -244,7 +283,46 @@ class SettingController extends Controller
         return parent::redirect($insert, 'FAQ has been created.');
     }
 
-    public function faqEdit($id) {
+    /*======== This function is used to display the FAQ list that will be sorted ========*/
+    public function faqSort() {
+        $data = [];
+        $data = [
+            'title'   => 'Sorting FAQ List',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-sort'
+        ];
+
+        $faqList = MyHelper::get('setting/be/faq');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = $faqList['result'];
+        } else {
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::faqList', $data)->withErrors($e);
+            }
+        }
+        return view('setting::faqSort', $data);
+    }
+
+    public function faqSortUpdate(Request $request) {
+        $post = $request->except('_token');
+        $status = 0;
+        $update = MyHelper::post('setting/faq/sort/update', $post);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            $status = 1;
+        }
+
+        return response()->json(['status' => $status]);
+    }
+
+    public function faqEdit($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $data = [];
         $data = [
             'title'   => 'Setting',
@@ -252,10 +330,13 @@ class SettingController extends Controller
             'submenu_active' => 'faq-list'
         ];
 
-        $edit = MyHelper::post('setting/faq/edit', ['id_faq' => $id]);
+        $edit = MyHelper::post('setting/faq/edit', ['id_faq' => $id,'created_at'=>$created_at]);
 
         if (isset($edit['status']) && $edit['status'] == 'success') {
             $data['faq'] = $edit['result'];
+            if(isset($data['faq']['id_faq'])){
+                $data['faq']['id_faq'] = $slug;
+            }
             return view('setting::faqEdit', $data);
         }
         else {
@@ -265,11 +346,15 @@ class SettingController extends Controller
         }
     }
 
-    public function faqUpdate(Request $request, $id) {
+    public function faqUpdate(Request $request, $slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $post =[
             'id_faq'    => $id,
             'question'  => $request['question'],
-            'answer'    => $request['answer']
+            'answer'    => $request['answer'],
+            'created_at' => $created_at
         ];
 
         $update = MyHelper::post('setting/faq/update', $post);
@@ -277,8 +362,11 @@ class SettingController extends Controller
         return parent::redirect($update, 'FAQ has been updated.');
     }
 
-    public function faqDelete($id) {
-        $delete = MyHelper::post('setting/faq/delete', ['id_faq' => $id]);
+    public function faqDelete($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
+        $delete = MyHelper::post('setting/faq/delete', ['id_faq' => $id,'created_at',$created_at]);
 
         return parent::redirect($delete, 'FAQ has been deleted.');
     }
@@ -552,9 +640,21 @@ class SettingController extends Controller
         else
             $data['featured_deals'] = [];
 
+        // featured subscription
+        $request = MyHelper::get('setting/featured_subscription/list');
+        if(isset($request['result']))
+            $data['featured_subscriptions'] = $request['result'];
+        else
+            $data['featured_subscriptions'] = [];
+
+        // subscription
+        $sp=['select' => ['id_subscription', 'subscription_title']];
+        $request = MyHelper::post('subscription/be/list-complete',$sp);
+        $data['subscriptions'] = $request['result']??[];
+
         // deals
-        $dp=['deals_type'=>'Deals','forSelect2'=>true];
-        $request = MyHelper::post('deals/list',$dp);
+        $dp=['deals_type'=>'Deals','forSelect2'=>true, 'featured'=>true];
+        $request = MyHelper::post('deals/be/list',$dp);
         $data['deals'] = $request['result']??[];
 
         // news for banner
@@ -562,14 +662,14 @@ class SettingController extends Controller
             'published' => 1,
             'admin' => 1
         ];
-        $request = MyHelper::post('news/list', $news_req);
+        $request = MyHelper::post('news/be/list', $news_req);
         if(isset($request['result']))
             $data['news'] = $request['result'];
         else
             $data['news'] = [];
 
         // complete profile
-        $request = MyHelper::get('setting/complete-profile');
+        $request = MyHelper::get('setting/be/complete-profile');
         if(isset($request['result'])) {
             $data['complete_profile'] = $request['result'];
         }
@@ -587,6 +687,7 @@ class SettingController extends Controller
         $data['app_logo'] = parent::getData(MyHelper::get('setting/app_logo'));
         $data['app_sidebar'] = parent::getData(MyHelper::get('setting/app_sidebar'));
         $data['app_navbar'] = parent::getData(MyHelper::get('setting/app_navbar'));
+        $data['inbox_max_days'] = parent::getData(MyHelper::post('setting',['key'=>'inbox_max_days']))['value']??30;
 		return view('setting::home', $data);
 	}
 
@@ -795,6 +896,12 @@ class SettingController extends Controller
         }
     }
 
+    function visibilityDashboardSection(Request $request){
+        $post = $request->except('_token');
+        $save = MyHelper::post('setting/dashboard/update-visibility', $post);
+        return $save;
+    }
+
     function orderDashboardSection(Request $request){
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/order-section', $post);
@@ -888,6 +995,9 @@ class SettingController extends Controller
             if ($post['click_to'] == 'gofood') {
                 $post['type'] = 'gofood';
             }
+            elseif ($post['click_to'] == 'order') {
+                $post['type'] = 'order';
+            }
 
             // remove click_to index
             unset($post['click_to']);
@@ -896,12 +1006,13 @@ class SettingController extends Controller
         if(isset($post['banner_start'])){
             $post['banner_start'] = MyHelper::convertDateTime2($post['banner_start']);
         }
-        
+
         if(isset($post['banner_end'])){
             $post['banner_end'] = MyHelper::convertDateTime2($post['banner_end']);
         }
-        
+
         $result = MyHelper::post('setting/banner/create', $post);
+
         return parent::redirect($result, 'New banner has been created.', 'setting/home#banner');
     }
 
@@ -925,6 +1036,9 @@ class SettingController extends Controller
             if ($post['click_to'] == 'gofood') {
                 $post['type'] = 'gofood';
             }
+            elseif ($post['click_to'] == 'order') {
+                $post['type'] = 'order';
+            }
 
             // remove click_to index
             unset($post['click_to']);
@@ -933,11 +1047,11 @@ class SettingController extends Controller
         if(isset($post['banner_start'])){
             $post['banner_start'] = MyHelper::convertDateTime2($post['banner_start']);
         }
-        
+
         if(isset($post['banner_end'])){
             $post['banner_end'] = MyHelper::convertDateTime2($post['banner_end']);
         }
-        
+
         $result = MyHelper::post('setting/banner/update', $post);
         return parent::redirect($result, 'Banner has been updated.', 'setting/home#banner');
     }
@@ -1015,7 +1129,7 @@ class SettingController extends Controller
             $post['complete_profile_point'] = 0;
 
             // update complete profile
-            $result = MyHelper::post('setting/complete-profile', $post);
+            $result = MyHelper::post('setting/be/complete-profile', $post);
 
             return parent::redirect($result, 'User Profile Completing has been updated.', 'setting/complete-profile');
         }else{
@@ -1024,7 +1138,7 @@ class SettingController extends Controller
                 'menu_active'    => 'profile-completion',
                 'submenu_active' => 'complete-profile'
             ];
-            $request = MyHelper::get('setting/complete-profile');
+            $request = MyHelper::get('setting/be/complete-profile');
             if(isset($request['result'])) {
                 $data['complete_profile'] = $request['result'];
             }
@@ -1056,17 +1170,24 @@ class SettingController extends Controller
             'submenu_active' => 'setting-text-menu-list'
         ];
 
-        $request = MyHelper::get('setting/text_menu_list');
+        $request = MyHelper::post('setting/be/text_menu_list',['webview' => 1]);
         if(isset($request['result']) && !empty($request['result'])) {
-            $data['text_menu_list'] = $request['result'];
-        }
-        else {
-            $data['text_menu_list'] = [
-                'text_menu_home' => [],
-                'text_menu_account'=> []
+            $data['menu_list'] = $request['result'];
+        }else {
+            $data['menu_list'] = [
+                'main_menu' => [],
+                'other_menu'=> []
             ];
         }
 
+        $configMenu = MyHelper::get('setting/text_menu/configs');
+        if(isset($configMenu['result']) && !empty($configMenu['result'])) {
+            $data['config_main_menu'] = $configMenu['result']['config_main_menu'];
+            $data['config_other_menu'] = $configMenu['result']['config_other_menu'];
+        }else{
+            $data['config_main_menu'] = [];
+            $data['config_other_menu'] = [];
+        }
         return view('setting::text_menu', $data);
     }
 
@@ -1074,9 +1195,11 @@ class SettingController extends Controller
         $post = $request->except('_token');
         $allData = $request->all();
 
-        if($category == 'menu-account' && isset($allData['images'])){
+        if(isset($allData['images'])){
             foreach($allData['images'] as $key => $value){
-                $allData['images'][$key] = MyHelper::encodeImage($allData['images'][$key]);
+                if($allData['images'][$key] !== null){
+                    $allData['images'][$key] = MyHelper::encodeImage($allData['images'][$key]);
+                }
             }
         }
 
@@ -1086,8 +1209,12 @@ class SettingController extends Controller
         ];
 
         $result = MyHelper::post('setting/text_menu/update', $post);
-        
-        return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu');
+
+        if($category == 'other-menu') {
+            return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#other_menu');
+        }else{
+            return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#main_menu');
+        }
     }
 
     public function confirmationMessages(Request $request){
@@ -1124,5 +1251,138 @@ class SettingController extends Controller
             ];
             return view('setting::confirmation-messages.confirmation-messages',$data);
         }
+    }
+
+    public function phoneNumberSetting(Request $request){
+        $getSetting = MyHelper::get('setting/phone');
+
+        $data = [
+            'title'   		=> 'Phone Setting',
+            'menu_active'    => 'setting-phone',
+            'submenu_active' => 'setting-phone'
+        ];
+
+        if(($getSetting['status']??'')=='success'){
+            $data['result'] = $getSetting['result'];
+            $data['example_phone'] = $getSetting['result']['phone_code'].$getSetting['result']['example_phone'];
+            $data['length_example_phone'] = strlen($data['example_phone']);
+        }else{
+            $data['result'] = [];
+            $data['example_phone'] = '';
+            $data['length_example_phone'] = '';
+        }
+
+        return view('setting::phone-setting', $data);
+    }
+
+    public function updatePhoneNumberSetting(Request $request){
+        $post = $request->except('_token');
+        $updateSetting = MyHelper::post('setting/phone/update', $post);
+
+        if(($updateSetting['status']??'')=='success'){
+            return redirect('setting/phone')->with('success',['Success update phone setting']);
+        }else{
+            return redirect('setting/phone')->withErrors([$updateSetting['message']]);
+        }
+    }
+
+    function maintenanceMode(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'   		=> 'Maintenance Mode Setting',
+            'menu_active'    => 'maintenance-mode',
+            'submenu_active' => 'maintenance-mode'
+        ];
+        if($post){
+            if(isset($post['image']) && $post['image'] !== null){
+                $post['image']= MyHelper::encodeImage($post['image']);
+            }
+            $updateMaintenanceMode = MyHelper::post('setting/maintenance-mode/update', $post);
+            if(($updateMaintenanceMode['status']??'')=='success'){
+                return redirect('setting/maintenance-mode')->with('success',['Success update maintenance']);
+            }else{
+                return redirect('setting/maintenance-mode')->withErrors([$updateMaintenanceMode['message']]);
+            }
+        }else{
+            $maintenanceMode = MyHelper::get('setting/maintenance-mode');
+            if(isset($maintenanceMode['status']) &&  $maintenanceMode['status']=='success'){
+                $data['status'] = $maintenanceMode['result']['status'];
+                $data['message'] = $maintenanceMode['result']['message'];
+                $data['image'] = $maintenanceMode['result']['image'];
+            }else{
+                $data['status'] = 0;
+                $data['message'] = '';
+                $data['image'] = '';
+            }
+        }
+        return view('setting::maintenance-mode', $data);
+    }
+
+    /*========================= featured subscription =========================*/
+
+    public function createFeaturedSubscription(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $result = MyHelper::post('setting/featured_subscription/create', $post);
+        return parent::redirect($result, 'New featured subscription has been created.', 'setting/home#featured_subscription');
+    }
+
+    public function updateFeaturedSubscription(Request $request)
+    {
+        $post = $request->except('_token');
+        $validatedData = $request->validate([
+            'id_featured_subscription'    => 'required'
+        ]);
+        $result = MyHelper::post('setting/featured_subscription/update', $post);
+        return parent::redirect($result, 'Featured Subscription has been updated.', 'setting/home#featured_subscription',[],true);
+    }
+
+    public function reorderFeaturedSubscription(Request $request)
+    {
+        $post = $request->except("_token");
+        // dd($post['id_featured_subscription']);
+
+        $result = MyHelper::post('setting/featured_subscription/reorder', $post);
+
+        return parent::redirect($result, 'Featured Subscription has been sorted.', 'setting/home#featured_subscription');
+    }
+
+    // delete featured_subscription
+    public function deleteFeaturedSubscription($id_featured_subscription)
+    {
+        $post['id_featured_subscription'] = $id_featured_subscription;
+
+        $result = MyHelper::post('setting/featured_subscription/delete', $post);
+
+        return parent::redirect($result, 'Featured Subscription has been deleted.', 'setting/home#featured_subscription');
+    }
+
+    /*========================= end of featured subscription =========================*/
+
+    function timeExpired(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'   		=> 'Time Expired Setting',
+            'menu_active'    => 'time-expired',
+            'submenu_active' => 'time-expired'
+        ];
+        if($post){
+            $update= MyHelper::post('setting/time-expired/update', $post);
+            if(($update['status']??'')=='success'){
+                return redirect('setting/time-expired')->with('success',['Success update time expired']);
+            }else{
+                return redirect('setting/time-expired')->withErrors([$update['message']]);
+            }
+        }else{
+            $get = MyHelper::get('setting/time-expired');
+            if(isset($get['status']) &&  $get['status']=='success'){
+                $data['result'] = $get['result'];
+            }else{
+                return back()->withErrors(['Failed get data setting time expired']);
+            }
+        }
+
+        return view('setting::time-expired', $data);
     }
 }

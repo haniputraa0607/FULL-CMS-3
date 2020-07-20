@@ -6,27 +6,27 @@
 
 @section('page-style')
 
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <!-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/portlet-draggable.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <!-- <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/portlet-draggable.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
-
+    var manual=1;
     function changeSelect(){
         setTimeout(function(){
             $(".select2").select2({
@@ -98,6 +98,37 @@
             });
 
         } );
+        $('table').on('switchChange.bootstrapSwitch','.section_visibility',function(){
+            if(!manual){
+                manual=1;
+                return false;
+            }
+            var token  = "{{ csrf_token() }}";
+            var switcher=$(this);
+            var newState=switcher.bootstrapSwitch('state');
+            $.ajax({
+                method:'POST',
+                url:"{{url('setting/dashboard/visibility-section')}}",
+                data:{
+                    _token:token,
+                    id_dashboard_user:switcher.data('id'),
+                    section_visible:newState?1:0
+                },
+                success:function(data){
+                    if(data.status == 'success'){
+                        toastr.info("Success update section visibility");
+                    }else{
+                        manual=0;
+                        toastr.warning("Fail update section visibility");
+                        switcher.bootstrapSwitch('state',!newState);
+                    }
+                }
+            }).fail(function(data){
+                manual=0;
+                toastr.warning("Fail update section visibility");
+                switcher.bootstrapSwitch('state',!newState);
+            });
+        });
 
     });
 
@@ -387,8 +418,7 @@
                                     <div data-repeater-item="" class="row" style="margin-bottom: 15px;">
                                         <div class="col-md-7">
                                             <select name="card" class="form-control select2" style="width:100%" required>
-                                                <option></option>
-                                                <optgroup label="Customer">
+                                                <option></option>                                                <optgroup label="Customer">
                                                     <option value="New Customer">New Customer</option>
                                                     <option value="Total Customer">Total Customer</option>
                                                     <option value="Total Male Customer">Total Male Customer</option>
@@ -413,23 +443,47 @@
                                                     <option value="Top 10 User Graphic">Top 10 User Graphic</option>
                                                 </optgroup>
                                                 <optgroup label="Transaction">
-                                                    <option value="Total Transaction Count">Total Transaction Count</option>
-                                                    <option value="Total Transaction Value">Total Transaction Value</option>
-                                                    <option value="Transaction Average">Transaction Average</option>
-                                                    <option value="Transaction Average per Day">Transaction Average per Day</option>
+                                                    <option value="Total All Transaction Count">Total All Transaction Count</option>
+                                                    <option value="Total Online Transaction Count">Total Online Transaction Count</option>
+                                                    <option value="Total Offline Transaction Member Count">Total Offline Transaction Member Count</option>
+                                                    <option value="Total Offline Transaction Non Member Count">Total Offline Transaction Non Member Count</option>
+                                                    <option value="Total All Transaction Value">Total All Transaction Value</option>
+                                                    <option value="Total Online Transaction Value">Total Online Transaction Value</option>
+                                                    <option value="Total Offline Transaction Member Value">Total Offline Transaction Member Value</option>
+                                                    <option value="Total Offline Transaction Non Member Value">Total Offline Transaction Non Member Value</option>
+                                                    <option value="All Transaction Average">All Transaction Average</option>
+                                                    <option value="Online Transaction Average">Online Transaction Average</option>
+                                                    <option value="Offline Transaction Member Average">Offline Transaction Member Average</option>
+                                                    <option value="Offline Transaction Non Member Average">Offline Transaction Non Member Average</option>
+                                                    <option value="All Transaction Average per Day">All Transaction Average per Day</option>
+                                                    <option value="Online Transaction Average per Day">Online Transaction Average per Day</option>
+                                                    <option value="Offline Transaction Member Average per Day">Offline Transaction Member Average per Day</option>
+                                                    <option value="Offline Transaction Non Member Average per Day">Offline Transaction Non Member Average per Day</option>
                                                 </optgroup>
                                                 <optgroup label="Outlet">
-                                                    <option value="Top 10 Outlet By Transaction Count Table">Top 10 Outlet By Transaction Count Table</option>
-                                                    <option value="Top 10 Outlet By Transaction Count Graphic">Top 10 Outlet By Transaction Count Graphic</option>
-                                                    <option value="Top 10 Outlet By Transaction Value Table">Top 10 Outlet By Transaction Value Table</option>
-                                                    <option value="Top 10 Outlet By Transaction Value Graphic">Top 10 Outlet By Transaction Value Graphic</option>
+                                                    <option value="Top 10 Outlet By All Transaction Count Table">Top 10 Outlet By All Transaction Count Table</option>
+                                                    <option value="Top 10 Outlet By Online Transaction Count Table">Top 10 Outlet By Online Transaction Count Table</option>
+                                                    <option value="Top 10 Outlet By Offline Transaction Member Count Table">Top 10 Outlet By Offline Transaction Member Count Table</option>
+                                                    <option value="Top 10 Outlet By Offline Transaction Non Member Count Table">Top 10 Outlet By Offline Transaction Non Member Count Table</option>
+                                                    <option value="Top 10 Outlet By All Transaction Count Graphic">Top 10 Outlet By All Transaction Count Graphic</option>
+                                                    <option value="Top 10 Outlet By Online Transaction Count Graphic">Top 10 Outlet By Online Transaction Count Graphic</option>
+                                                    <option value="Top 10 Outlet By Offline Transaction Member Count Graphic">Top 10 Outlet By Offline Transaction Member Count Graphic</option>
+                                                    <option value="Top 10 Outlet By Offline Transaction Non Member Count Graphic">Top 10 Outlet By Offline Transaction Non Member Count Graphic</option>
+                                                    <option value="Top 10 Outlet By All Transaction Value Table">Top 10 Outlet By All Transaction Value Table</option>
+                                                    <option value="Top 10 Outlet By Online Transaction Value Table">Top 10 Outlet By Online Transaction Value Table</option>
+                                                    <option value="Top 10 Outlet By Offline Transaction Member Value Table">Top 10 Outlet By Offline Transaction Member Value Table</option>
+                                                    <option value="Top 10 Outlet By Offline Transaction Non Member Value Table">Top 10 Outlet By Offline Transaction Non Member Value Table</option>
+                                                    <option value="Top 10 Outlet By All Transaction Value Graphic">Top 10 Outlet By All Transaction Value Graphic</option>
+                                                    <option value="Top 10 Outlet By Online Transaction Value Graphic">Top 10 Outlet By Online Transaction Value Graphic</option>
+                                                    <option value="Top 10 Outlet By Offline Transaction Member Value Graphic">Top 10 Outlet By Offline Transaction Member Value Graphic</option>
+                                                    <option value="Top 10 Outlet By Offline Transaction Non Member Value Graphic">Top 10 Outlet By Offline Transaction Non Member Value Graphic</option>
                                                 </optgroup>
                                                 <optgroup label="Product">
                                                     <option value="Top 10 Product By Recurring Table">Top 10 Product By Recurring Table</option>
                                                     <option value="Top 10 Product By Recurring Graphic">Top 10 Product By Recurring Graphic</option>
                                                     <option value="Top 10 Product By Quantity Table">Top 10 Product By Quantity Table</option>
                                                     <option value="Top 10 Product By Quantity Graphic">Top 10 Product By Quantity Graphic</option>
-                                                </optgroup>
+                                                </optgroup> 
                                             </select>
                                         </div>
                                         <div class="col-md-1">
@@ -464,12 +518,12 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">Order Section Dashboard</span>
+                <span class="caption-subject font-blue sbold uppercase">Order and Visibility Section Dashboard</span>
             </div>
         </div>
         <div class="portlet-body form">
                 <div class="alert alert-warning deteksi-trigger">
-                    <p> The menu below is used to set the order of section displayed in home page. </p>
+                    <p> The menu below is used to set the order and visibility of section displayed in home page. </p>
                     <p> To arrange the order of section, drag and drop the table row according to the order of the desired section. </p>
                 </div>
             <table class="table table-striped table-bordered dt-responsive" width="100%" id="sample_1">
@@ -478,6 +532,7 @@
                         <th> No </th>
                         <th> Section Title </th>
                         <th> Id </th>
+                        <th> Visibility </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -491,6 +546,9 @@
                                 </td>
                                 <td>
                                     {{ $value['id_dashboard_user'] }}
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="make-switch section_visibility" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-id="{{$value['id_dashboard_user']}}" data-off-text="Hidden" value="1" @if($value['section_visible']??false) checked @endif>
                                 </td>
                             </tr>
                             @endif
@@ -536,6 +594,7 @@
                                                                 @foreach($value['dashboard_card'] as $q => $card)
                                                                 <div data-repeater-item="" class="row rowcard" style="margin-bottom: 15px;" data-id="{{ $card['id_dashboard_card'] }}" data-id-dash="{{ $value['id_dashboard_user'] }}">
                                                                     <div class="col-md-10">
+
                                                                         <select name="card" class="form-control select2 select-card" style="width:100%" required data-id="{{ $card['id_dashboard_card'] }}" data-id-dash="{{ $value['id_dashboard_user'] }}">
                                                                             <option></option>
                                                                             <optgroup label="Customer">
@@ -565,16 +624,40 @@
                                                                                 <option @if($card['card_name'] == 'Top 10 User Graphic') selected @endif value="Top 10 User Graphic">Top 10 User Graphic</option>
                                                                             </optgroup>
                                                                             <optgroup label="Transaction">
-                                                                                <option @if($card['card_name'] == 'Total Transaction Count') selected @endif value="Total Transaction Count">Total Transaction Count</option>
-                                                                                <option @if($card['card_name'] == 'Total Transaction Value') selected @endif value="Total Transaction Value">Total Transaction Value</option>
-                                                                                <option @if($card['card_name'] == 'Transaction Average') selected @endif value="Transaction Average">Transaction Average</option>
-                                                                                <option @if($card['card_name'] == 'Transaction Average per Day') selected @endif value="Transaction Average per Day">Transaction Average per Day</option>
+                                                                                <option @if($card['card_name'] == 'Total All Transaction Count') selected @endif value="Total All Transaction Count">Total All Transaction Count</option>
+                                                                                <option @if($card['card_name'] == 'Total Online Transaction Count') selected @endif value="Total Online Transaction Count">Total Online Transaction Count</option>
+                                                                                <option @if($card['card_name'] == 'Total Offline Transaction Member Count') selected @endif value="Total Offline Transaction Member Count">Total Offline Transaction Member Count</option>
+                                                                                <option @if($card['card_name'] == 'Total Offline Transaction Non Member Count') selected @endif value="Total Offline Transaction Non Member Count">Total Offline Transaction Non Member Count</option>
+                                                                                <option @if($card['card_name'] == 'Total All Transaction Value') selected @endif value="Total All Transaction Value">Total All Transaction Value</option>
+                                                                                <option @if($card['card_name'] == 'Total Online Transaction Value') selected @endif value="Total Online Transaction Value">Total Online Transaction Value</option>
+                                                                                <option @if($card['card_name'] == 'Total Offline Transaction Member Value') selected @endif value="Total Offline Transaction Member Value">Total Offline Transaction Member Value</option>
+                                                                                <option @if($card['card_name'] == 'Total Offline Transaction Non Member Value') selected @endif value="Total Offline Transaction Non Member Value">Total Offline Transaction Non Member Value</option>
+                                                                                <option @if($card['card_name'] == 'All Transaction Average') selected @endif value="All Transaction Average">All Transaction Average</option>
+                                                                                <option @if($card['card_name'] == 'Online Transaction Average') selected @endif value="Online Transaction Average">Online Transaction Average</option>
+                                                                                <option @if($card['card_name'] == 'Offline Transaction Member Average') selected @endif value="Offline Transaction Member Average">Offline Transaction Member Average</option>
+                                                                                <option @if($card['card_name'] == 'Offline Transaction Non Member Average') selected @endif value="Offline Transaction Non Member Average">Offline Transaction Non Member Average</option>
+                                                                                <option @if($card['card_name'] == 'All Transaction Average per Day') selected @endif value="All Transaction Average per Day">All Transaction Average per Day</option>
+                                                                                <option @if($card['card_name'] == 'Online Transaction Average per Day') selected @endif value="Online Transaction Average per Day">Online Transaction Average per Day</option>
+                                                                                <option @if($card['card_name'] == 'Offline Transaction Member Average per Day') selected @endif value="Offline Transaction Member Average per Day">Offline Transaction Member Average per Day</option>
+                                                                                <option @if($card['card_name'] == 'Offline Transaction Non Member Average per Day') selected @endif value="Offline Transaction Non Member Average per Day">Offline Transaction Non Member Average per Day</option>
                                                                             </optgroup>
                                                                             <optgroup label="Outlet">
-                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Transaction Count Table') selected @endif value="Top 10 Outlet By Transaction Count Table">Top 10 Outlet By Transaction Count Table</option>
-                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Transaction Count Graphic') selected @endif value="Top 10 Outlet By Transaction Count Graphic">Top 10 Outlet By Transaction Count Graphic</option>
-                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Transaction Value Table') selected @endif value="Top 10 Outlet By Transaction Value Table">Top 10 Outlet By Transaction Value Table</option>
-                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Transaction Value Graphic') selected @endif value="Top 10 Outlet By Transaction Value Graphic">Top 10 Outlet By Transaction Value Graphic</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By All Transaction Count Table') selected @endif value="Top 10 Outlet By All Transaction Count Table">Top 10 Outlet By All Transaction Count Table</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Online Transaction Count Table') selected @endif value="Top 10 Outlet By Online Transaction Count Table">Top 10 Outlet By Online Transaction Count Table</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Offline Transaction Member Count Table') selected @endif value="Top 10 Outlet By Offline Transaction Member Count Table">Top 10 Outlet By Offline Transaction Member Count Table</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Offline Transaction Non Member Count Table') selected @endif value="Top 10 Outlet By Offline Transaction Non Member Count Table">Top 10 Outlet By Offline Transaction Non Member Count Table</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By All Transaction Count Graphic') selected @endif value="Top 10 Outlet By All Transaction Count Graphic">Top 10 Outlet By All Transaction Count Graphic</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Online Transaction Count Graphic') selected @endif value="Top 10 Outlet By Online Transaction Count Graphic">Top 10 Outlet By Online Transaction Count Graphic</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Offline Transaction Member Count Graphic') selected @endif value="Top 10 Outlet By Offline Transaction Member Count Graphic">Top 10 Outlet By Offline Transaction Member Count Graphic</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Offline Transaction Non Member Count Graphic') selected @endif value="Top 10 Outlet By Offline Transaction Non Member Count Graphic">Top 10 Outlet By Offline Transaction Non Member Count Graphic</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By All Transaction Value Table') selected @endif value="Top 10 Outlet By All Transaction Value Table">Top 10 Outlet By All Transaction Value Table</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Online Transaction Value Table') selected @endif value="Top 10 Outlet By Online Transaction Value Table">Top 10 Outlet By Online Transaction Value Table</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Offline Transaction Member Value Table') selected @endif value="Top 10 Outlet By Offline Transaction Member Value Table">Top 10 Outlet By Offline Transaction Member Value Table</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Offline Transaction Non Member Value Table') selected @endif value="Top 10 Outlet By Offline Transaction Non Member Value Table">Top 10 Outlet By Offline Transaction Non Member Value Table</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By All Transaction Value Graphic') selected @endif value="Top 10 Outlet By All Transaction Value Graphic">Top 10 Outlet By All Transaction Value Graphic</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Online Transaction Value Graphic') selected @endif value="Top 10 Outlet By Online Transaction Value Graphic">Top 10 Outlet By Online Transaction Value Graphic</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Offline Transaction Member Value Graphic') selected @endif value="Top 10 Outlet By Offline Transaction Member Value Graphic">Top 10 Outlet By Offline Transaction Member Value Graphic</option>
+                                                                                <option @if($card['card_name'] == 'Top 10 Outlet By Offline Transaction Non Member Value Graphic') selected @endif value="Top 10 Outlet By Offline Transaction Non Member Value Graphic">Top 10 Outlet By Offline Transaction Non Member Value Graphic</option>
                                                                             </optgroup>
                                                                             <optgroup label="Product">
                                                                                 <option @if($card['card_name'] == 'Top 10 Product By Recurring Table') selected @endif value="Top 10 Product By Recurring Table">Top 10 Product By Recurring Table</option>

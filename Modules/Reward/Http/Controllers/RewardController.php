@@ -53,7 +53,10 @@ class RewardController extends Controller
         $reward = MyHelper::get('reward/list');
         
         if (isset($reward['status']) && $reward['status'] == "success") {
-            $data['reward'] = $reward['result'];
+            $data['reward'] = array_map(function($var){
+                $var['id_reward'] = MyHelper::createSlug($var['id_reward'],$var['created_at']);
+                return $var;
+            },$reward['result']);
         }
         else {
             $data['reward'] = [];
@@ -61,7 +64,10 @@ class RewardController extends Controller
         return view('reward::list', $data);
     }
 
-    function detail(Request $request, $id){
+    function detail(Request $request, $slug){
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
         $post = $request->except('_token');
 
         $data = [
@@ -72,7 +78,7 @@ class RewardController extends Controller
         ];
 
         if(empty($post)){
-            $reward = MyHelper::post('reward/list', ['id_reward' => $id]);
+            $reward = MyHelper::post('reward/list', ['id_reward' => $id,'created_at'=>$created_at]);
             
             if (isset($reward['status']) && $reward['status'] == "success") {
                 $data['reward'] = $reward['result'];
@@ -89,7 +95,7 @@ class RewardController extends Controller
             $save = MyHelper::post('reward/update', $post);
 
             if (isset($save['status']) && $save['status'] == "success") {
-                return redirect('reward/detail/'.$post['id_reward'])->withSuccess(['Reward has been updated.']);
+                return redirect('reward/detail/'.$slug)->withSuccess(['Reward has been updated.']);
             }else {
                 if (isset($save['errors'])) {
                     return back()->withErrors($save['errors'])->withInput();

@@ -2,11 +2,11 @@
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
  ?>
-@extends('layouts.main')
+@extends('layouts.main-closed')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <style type="text/css">
         #sortable{
             cursor: move;
@@ -15,11 +15,11 @@
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         var table=$('#sample_1').DataTable({
                 language: {
@@ -217,11 +217,11 @@
                             <th> Code </th>
                             <th> Name </th>
                             <th> Logo </th>
-                            <th> Image </th>
+                            {{-- <th> Image </th> --}}
                             <th> Visibility </th>
                             <th> Status </th>
                             @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
-                                <th> Action </th>
+                                <th width="100px;"> Action </th>
                             @endif
                         </tr>
                     </thead>
@@ -240,11 +240,11 @@
                                     @else
                                         <td>Logo Available</td>
                                     @endif
-                                    @if (end($image) == 'jpg' || end($image) == 'png')
+                                    {{-- @if (end($image) == 'jpg' || end($image) == 'png')
                                         <td>Image Available</td>
                                     @else
                                         <td>No Image</td>
-                                    @endif
+                                    @endif --}}
                                     <td><input type="checkbox" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-id="{{$value['id_brand']}}" data-off-text="Hidden" value="1" @if($value['brand_visibility']??'') checked @endif></td>
                                     <td><input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-id="{{$value['id_brand']}}" data-off-text="Inactive" value="1" @if($value['brand_active']??'') checked @endif></td>
                                     @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
@@ -254,7 +254,7 @@
                                                     <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_brand'] }}"><i class="fa fa-trash-o"></i></a>
                                                 @endif
                                                 @if(MyHelper::hasAccess([25,27], $grantedFeature))
-                                                    <a href="{{ url('brand/show') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                                    <a href="{{ url('brand/detail') }}/{{ $value['id_brand'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                                 @endif
                                                 <a class="btn btn-sm grey-cascade" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false"><i class="fa fa-link"></i></a>
                                                 <ul class="dropdown-menu" role="menu">

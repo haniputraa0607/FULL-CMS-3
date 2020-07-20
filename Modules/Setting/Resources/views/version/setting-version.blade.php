@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
         function addTextReplace(id ,param){
             if (id == 'mobile') {
@@ -180,7 +180,7 @@
                                                         <div class="input-group">
                                                             <select name="IOS[0][rules]" class="form-control" placeholder="Rules For Different Verion" required>
                                                                 <option disabled selected value="">Rules For Different Verion</option>
-                                                                <option value="1">Alowed</option>
+                                                                <option value="1">Allowed</option>
                                                                 <option value="0">Not Allowed</option>
                                                             </select>
                                                             <span class="input-group-addon">
@@ -256,7 +256,7 @@
                                                         <div class="input-group">
                                                             <select name="OutletApp[0][rules]" class="form-control" placeholder="Rules For Different Verion" required="">
                                                                 <option disabled selected value="">Rules For Different Verion</option>
-                                                                <option value="1">Alowed</option>
+                                                                <option value="1">Allowed</option>
                                                                 <option value="0">Not Allowed</option>
                                                             </select>
                                                             <span class="input-group-addon">
@@ -326,7 +326,7 @@
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
                                                     @if(isset($version['version_image_mobile']))
-                                                    <img src="{{ env('S3_URL_API')}}{{$version['version_image_mobile']}}" alt="">
+                                                    <img src="{{ env('STORAGE_URL_API')}}{{$version['version_image_mobile']}}" alt="">
                                                     @else
                                                     <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                                     @endif
@@ -410,7 +410,7 @@
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
                                                     @if(isset($version['version_image_outlet']))
-                                                    <img src="{{ env('S3_URL_API')}}{{$version['version_image_outlet']}}" alt="">
+                                                    <img src="{{ env('STORAGE_URL_API')}}{{$version['version_image_outlet']}}" alt="">
                                                     @else
                                                     <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                                     @endif
@@ -537,7 +537,7 @@
                                             '<div class="input-group">'+
                                                 '<select name="'+id+'['+number+'][rules]" class="form-control" placeholder="Rules For Different Verion" required>'+
                                                     '<option disabled selected value="">Rules For Different Version</option>'+
-                                                    '<option '+allow+' value="1">Alowed</option>'+
+                                                    '<option '+allow+' value="1">Allowed</option>'+
                                                     '<option '+not_allow+' value="0">Not Allowed</option>'+
                                                 '</select>'+
                                                 '<span class="input-group-addon">'+
@@ -603,7 +603,7 @@
                                             '<div class="input-group">'+
                                                 '<select name="'+id+'['+number+'][rules]" class="form-control" placeholder="Rules For Different Verion" required>'+
                                                     '<option disabled selected value="">Rules For Different Version</option>'+
-                                                    '<option value="1">Alowed</option>'+
+                                                    '<option value="1">Allowed</option>'+
                                                     '<option value="0">Not Allowed</option>'+
                                                 '</select>'+
                                                 '<span class="input-group-addon">'+

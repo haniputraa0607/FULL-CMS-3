@@ -1,11 +1,11 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
     $(document).ready(function() {
         $('.summernote').summernote({
@@ -14,12 +14,13 @@
             height: 120,
             toolbar: [
                 ['style', ['style']],
-                ['style', ['bold', 'underline', 'clear']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['insert', ['table']],
                 ['insert', ['link', 'picture', 'video']],
-                ['misc', ['fullscreen', 'codeview', 'help']]
+                ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
             ],
             callbacks: {
                 onImageUpload: function(files){

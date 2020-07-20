@@ -2,20 +2,21 @@
     use App\Lib\MyHelper;
     $configs  = session('configs');
  ?>
- @extends('layouts.main-closed')
+@extends('layouts.main-closed')
+@include('infinitescroll')
 
 @section('page-style')
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 
 	<style type="text/css">
 	    #sample_1_filter label, #sample_5_filter label, #sample_4_filter label, .pagination, .dataTables_filter label {
@@ -26,29 +27,70 @@
 	        margin-left: 30px;
 	    }
 	</style>
+@yield('is-style')
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+    @yield('is-script')
+    <script type="text/javascript">
+        function enableConfirmation(table,response){
+            $(`.page${table.data('page')+1} [data-toggle='confirmation']`).confirmation({
+                'btnOkClass':'btn btn-sm green',
+                'btnCancelClass':'btn btn-sm red',
+                'placement':'left'
+            });
+            table.parents('.is-container').find('.total-record').text(response.total?response.total:0).val(response.total?response.total:0);
+        }
+        $(document).ready(function(){
+            template = {
+                useraddress: function(item){
+                    return `
+                    <tr class="page${item.page}">
+                        <td class="text-center">${item.increment}</td>
+                        <td>${item.name}</td>
+                        <td>${item.favorite?'Yes':'No'}</td>
+                        <td>${item.short_address}</td>
+                        <td>${item.address}</td>
+                        <td>${item.description?item.description:'-'}</td>
+                        <td>${new Date(item.updated_at).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric",timeStyle:"medium",hour:"2-digit",minute:"2-digit"})}</td>
+                    </tr>
+                    `;
+                },
+                useraddressfavorite: function(item){
+                    return `
+                    <tr class="page${item.page}">
+                        <td class="text-center">${item.increment}</td>
+                        <td>${item.name}</td>
+                        <td>${item.type?item.type:'-'}</td>
+                        <td>${item.short_address}</td>
+                        <td>${item.address}</td>
+                        <td>${item.description?item.description:'-'}</td>
+                    </tr>
+                    `;
+                }
+            };
+        })
+    </script>
 	<script>
 	function checkAll(var1,var2){
 		for(x=1;x<=var2;x++){
@@ -338,6 +380,7 @@
     }
 
 	$('[data-toggle=confirmation]').confirmation({ btnOkClass: 'btn btn-sm btn-success submit', btnCancelClass: 'btn btn-sm btn-danger'});
+    $('[data-toggle=confirmationx]').confirmation({ btnOkClass: 'btn btn-sm btn-success', btnCancelClass: 'btn btn-sm btn-danger'});
 
 	$(document).on('click', '.submit', function() {
 		if ($('#pinUser').val() == ''){
@@ -354,7 +397,15 @@
 	<ul class="page-breadcrumb">
 		<li>
 			<a href="{{url('/')}}">Home</a>
+            <i class="fa fa-circle"></i>
 		</li>
+        <li>
+            <span>{{ $title }}</span>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>{{$profile['phone']}}</span>
+        </li>
 	</ul>
 </div>
 @include('layouts.notifications')
@@ -435,16 +486,22 @@
 											<li class="list-group-item" style="padding: 5px !important;" title="User Gender">
 												@if($profile['gender'] == 'Male')<i class="fa fa-male"></i> {{$profile['gender']}} </li>@else<i class="fa fa-female"></i> {{$profile['gender']}} </li>
 												@endif
+                                            <li class="list-group-item" style="padding: 5px !important;" title="Users Celebrate">
+                                                <i class="fa fa-calendar-check-o"></i> {{$profile['celebrate']}} </li>
+                                            <li class="list-group-item" style="padding: 5px !important;" title="User's Job">
+                                                <i class="fa fa-black-tie"></i> {{$profile['job']}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User City & Province">
 												<i class="fa fa-map"></i> {{$profile['city_name']}}, {{$profile['province_name']}} </li>
+                                            <li class="list-group-item" style="padding: 5px !important;" title="User Address">
+                                                <i class="fa fa-map-pin"></i> {{$profile['address']}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Birthday">
 												<i class="fa fa-birthday-cake"></i> @if($profile['birthday']){{date("d F Y", strtotime($profile['birthday']))}} @endif</li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Register date & time">
 												<i class="fa fa-registered"></i> {{date("d F Y", strtotime($profile['created_at']))}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="User Membership">
 												<i class="icon-badge"></i> @if(isset($profile['user_membership']['membership_name'])){{$profile['user_membership']['membership_name']}} @endif</li>
-                        					<li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
-												<i class="fa fa-heart"></i> {{$profile['relationship']}} </li>
+                        					<!-- <li class="list-group-item" style="padding: 5px !important;" title="User Relationship">
+												<i class="fa fa-heart"></i> { {$profile['relationship']} } </li> -->
 											<li class="list-group-item" style="padding: 5px !important;" title="Total {{env('POINT_NAME', 'Points')}} Obtained By The User">
 												<i class="fa fa-gift"></i> {{number_format($profile['balance_acquisition'], 0, ',', '.')}} </li>
 											<li class="list-group-item" style="padding: 5px !important;" title="Remaining User {{env('POINT_NAME', 'Points')}}">
@@ -823,7 +880,7 @@
                                                                     {{csrf_field()}}
                                                                     <input type="hidden" name="action" value="delete_inbox">
                                                                     <input type="hidden" name="id_inbox" value="{{$it['id_inbox']}}">
-                                                                    <button class="btn btn-sm btn-danger" data-toggle="confirmation"
+                                                                    <button class="btn btn-sm btn-danger" data-toggle="confirmationx"
                                                                     data-btn-ok-label="Delete" data-btn-ok-class="btn btn-danger"
                                                                     data-btn-ok-icon-class="material-icons" data-btn-ok-icon-content="check"
                                                                     data-btn-cancel-label="No" data-btn-cancel-class="btn-info"
@@ -1041,6 +1098,96 @@
 
 											</div>
 										</div>
+                                    <div class="col-md-12" style="margin-top:30px">
+                                        <h4 class="font-blue sbold uppercase">Address</h4>
+                                            <div class="tabbable-line tabbable-full-width" style="position:absolute">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active">
+                                                        <a href="#favorite_address" data-toggle="tab"> Favorite </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#history_address" data-toggle="tab"> History </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content" style="margin-top:20px">
+                                                <div class="tab-pane active" id="favorite_address">
+                                                    <div class="mt-comments">
+                                                        <div class=" table-responsive is-container">
+                                                            <div class="row">
+                                                                <div class="col-md-offset-9 col-md-3 col-xs-offset-6 col-xs-6">
+                                                                    <form class="filter-form">
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <input type="text" class="form-control search-field" name="keyword" placeholder="Search">
+                                                                                <div class="input-group-btn">
+                                                                                    <button class="btn blue search-btn" type="submit"><i class="fa fa-search"></i></button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <div class="table-infinite">
+                                                                <table class="table table-striped" id="tableFavoriteAddress" data-template="useraddressfavorite"  data-page="0" data-is-loading="0" data-is-last="0" data-url="{{url('user/ajax/address/'.$profile['phone'])}}?favorite=1" data-callback="enableConfirmation" data-order="promo_campaign_referral_transactions.created_at" data-sort="asc">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width: 1%" class="text-center">No</th>
+                                                                            <th>Name</th>
+                                                                            <th>Type</th>
+                                                                            <th>Short Address</th>
+                                                                            <th>Address</th>
+                                                                            <th>Description</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div><span class="text-muted">Total record: </span><span class="total-record"></span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="history_address">
+                                                    <div class="mt-comments">
+                                                        <div class=" table-responsive is-container">
+                                                            <div class="row">
+                                                                <div class="col-md-offset-9 col-md-3 col-xs-offset-6 col-xs-6">
+                                                                    <form class="filter-form">
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <input type="text" class="form-control search-field" name="keyword" placeholder="Search">
+                                                                                <div class="input-group-btn">
+                                                                                    <button class="btn blue search-btn" type="submit"><i class="fa fa-search"></i></button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <div class="table-infinite">
+                                                                <table class="table table-striped" id="tableHistoryAddress" data-template="useraddress"  data-page="0" data-is-loading="0" data-is-last="0" data-url="{{url('user/ajax/address/'.$profile['phone'])}}" data-callback="enableConfirmation" data-order="promo_campaign_referral_transactions.created_at" data-sort="asc">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width: 1%" class="text-center">No</th>
+                                                                            <th>Name</th>
+                                                                            <th>Favorite</th>
+                                                                            <th>Short Address</th>
+                                                                            <th>Address</th>
+                                                                            <th>Description</th>
+                                                                            <th>Last Update</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div><span class="text-muted">Total record: </span><span class="total-record"></span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 								</div>
 							</div>
 						</div>
@@ -1072,7 +1219,7 @@
 							<div class="col-md-9">
 								<div class="tab-content">
 									<div id="tab_1-1" class="tab-pane active">
-										<form role="form" action="{{url('user/detail')}}/{{$profile['phone']}}" method="POST">
+										<form role="form" action="{{url('user/detail')}}/{{$profile['phone']}}" method="POST" enctype="multipart/form-data">
 										{{ csrf_field() }}
 											<div class="form-group">
 												<label class="control-label">Name</label>
@@ -1097,15 +1244,37 @@
 													@endif
 												</select>
 											</div>
+                                            <div class="form-group">
+                                                <label class="control-label">Address</label>
+                                                <input type="text" name="address" placeholder="User Address" class="form-control" value="{{$profile['address']}}" />
+                                            </div>
 											<div class="form-group">
-												<label class="control-label">Gender</label>
-												<select name="gender" class="form-control input-sm select2">
-													<option value="">Select...</option>
-													<option value="Male" @if(isset($profile['gender'])) @if($profile['gender'] == 'Male') selected @endif @endif>Male</option>
-													<option value="Female" @if(isset($profile['gender'])) @if($profile['gender'] == 'Female') selected @endif @endif>Female</option>
+												<label class="control-label">Celebrate</label>
+												<select name="celebrate" class="form-control input-sm select2" data-placeholder="Select Users Celebrate">
+													<option value=""></option>
+                                                    @php $was=false; @endphp
+                                                    @foreach($celebrates??[] as $celebrate)
+                                                    <option value="{{$celebrate}}" @if($celebrate==$profile['celebrate']) @php $was=true; @endphp selected @endif>{{$celebrate}}</option>
+                                                    @endforeach
+                                                    @if(!$was)
+                                                    <option value="{{$profile['celebrate']}}" selected>{{$profile['celebrate']}}</option>
+                                                    @endif
 												</select>
 											</div>
-											<div class="form-group">
+                                            <div class="form-group">
+                                                <label class="control-label">Job</label>
+                                                <select name="job" class="form-control input-sm select2" data-placeholder="Select User's Job">
+                                                    <option value=""></option>
+                                                    @php $was=false; @endphp
+                                                    @foreach($jobs??[] as $job)
+                                                    <option value="{{$job}}" @if($job==$profile['job']) @php $was=true; @endphp selected @endif>{{$job}}</option>
+                                                    @endforeach
+                                                    @if(!$was)
+                                                    <option value="{{$profile['job']}}" selected>{{$profile['job']}}</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+											<!-- <div class="form-group">
 												<label class="control-label">Relationship</label>
 												<select name="relationship" class="form-control input-sm select2">
 													<option value="">Select...</option>
@@ -1113,7 +1282,7 @@
 						                            <option value="Complicated" {{ ($profile['relationship']=="Complicated" ? "selected" : "") }}>Complicated</option>
 						                            <option value="Jomblo" {{ ($profile['relationship']=="Jomblo" ? "selected" : "") }}>Jomblo</option>
 												</select>
-											</div>
+											</div> -->
 											<div class="form-group">
 												<label class="control-label">Birthday</label>
 												<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
@@ -1136,6 +1305,22 @@
 														<input type="radio" name="phone_verified" id="optionsRadios2" value="0" @if($profile['phone_verified'] == '0') checked @endif> Not Verified
 														<span></span>
 													</label>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
+														<img src="{{env('STORAGE_URL_API').$profile['id_card_image']}}">
+													</div>
+													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
+													<div>
+															<span class="btn default btn-file">
+																<span class="fileinput-new"> Select image ID Card </span>
+																<span class="fileinput-exists"> Change </span>
+																<input type="file" accept="image/*" id="field_image" class="file" name="id_card_image">
+															</span>
+														<a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													</div>
 												</div>
 											</div>
 											<!-- <div class="form-group">
@@ -1169,7 +1354,7 @@
 										{{ csrf_field() }}
 											<div class="form-group">
 												<label class="control-label">New PIN</label>
-												<input type="password" class="form-control" name="password_new" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)"/> </div>
+												<input type="password" class="form-control" name="password_new" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)" autocomplete="new-password" /> </div>
 											<div class="form-group">
 												<label class="control-label">Re-type New PIN</label>
 												<input type="password" class="form-control" name="password_new_confirmation" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)"/> </div>

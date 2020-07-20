@@ -53,7 +53,6 @@ class DealsPaymentManualController extends Controller
             Session::put('filterDealPaymentManual',$post);
 
             $list = MyHelper::post('deals/manualpayment/filter/'.$type, $post);
-            
             if (isset($list['status']) && $list['status'] == 'success') {
                 $data['list'] = $list['result']['data'];
                 $data['page'] = $list['result']['current_page'];
@@ -94,6 +93,11 @@ class DealsPaymentManualController extends Controller
                 }
             }
             if (isset($list['status']) && $list['status'] == 'success') {
+            	if (!empty($list['result']['data'])) {
+            		foreach ($list['result']['data'] as $key => $value) {
+		        		$list['result']['data'][$key]['id_deals_payment_manual'] = MyHelper::createSlug($value['id_deals_payment_manual'], $value['created_at']);
+		        	}
+            	}
                 $data['list'] = $list['result']['data'];
                 $data['page'] = $list['result']['current_page'];
                 $data['to'] = $list['result']['to'];
@@ -122,6 +126,7 @@ class DealsPaymentManualController extends Controller
 
     public function manualPaymentConfirm(Request $request,$id) {
         $post = $request->except('_token');
+        $id = MyHelper::explodeSlug($id)[0]??'';
 
         if (empty($post)) {
             $data = [

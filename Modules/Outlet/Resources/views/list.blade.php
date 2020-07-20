@@ -1,26 +1,28 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
  ?>
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
+                stateSave: true,
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -173,12 +175,14 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
+                        <th> Franchise Status </th>
                         <th> Code </th>
                         <th> Name </th>
+                        @if(MyHelper::hasAccess([95], $configs))
                         <th> Brand </th>
+                        @endif
                         <th> City </th>
-                        <th> Open Hour </th>
-                        <th> Close Hour </th>
+                        <th> Open - Close </th>
                         <th> Status </th>
                         @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                             <th> Action </th>
@@ -189,8 +193,16 @@
                     @if (!empty($outlet))
                         @foreach($outlet as $value)
                             <tr>
+                                <td>
+                                    @if($value['status_franchise'] == 1)
+                                        <p style="color: green">This outlet is franchise</p>
+                                    @else
+                                        This outlet is not franchise
+                                    @endif
+                                </td>
                                 <td>{{ $value['outlet_code'] }}</td>
                                 <td>{{ $value['outlet_name'] }}</td>
+                                @if(MyHelper::hasAccess([95], $configs))
                                 <td>
                                     <ul style="padding-left: 20px;">
                                         @foreach ($value['brands'] as $item)
@@ -198,6 +210,7 @@
                                         @endforeach
                                     </ul>
                                 </td>
+                                @endif
                                 @if (empty($value['city']))
                                     <td> - </td>
                                 @else
@@ -205,8 +218,7 @@
                                 @endif
                                 <td>
                                     @if(!empty($value['today']['open'])){{ date('H:i', strtotime($value['today']['open'])) }}@endif
-                                </td>
-                                <td>
+                                    @if(!empty($value['today']['open']) && !empty($value['today']['close']))-@endif
                                     @if(!empty($value['today']['close'])){{ date('H:i', strtotime($value['today']['close'])) }}@endif
                                 </td>
                                 <td>

@@ -1,24 +1,25 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
  ?>
 @extends('layouts.main-closed')
 
 @section('page-style')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
 
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet" type="text/css" />
-   <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.css')}}" rel="stylesheet" type="text/css" />
-	 <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.css')}}" rel="stylesheet" type="text/css" />
+	 <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
 
    <style type="text/css">
      .sort-icon{
@@ -42,20 +43,19 @@
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/handlebars.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
-     <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/typeahead/handlebars.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
+     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
     <script>
 
      $('.datepicker').datepicker({
@@ -229,11 +229,21 @@
                 placeholder: 'News Content Long',
                 tabsize: 2,
                 height: 120,
-                fontNames: ['Open Sans'],
+                // fontNames: ['Open Sans'],
+                 toolbar: [
+                    ['style', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                ],
                 callbacks: {
                     onFocus: function() {
-                        $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                        $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/content-long.jpg')}}")
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/content-long.jpg')}}")
                     },
                     onImageUpload: function(files){
                         sendFile(files[0], $(this).attr('id'));
@@ -395,50 +405,55 @@
 			 /* BUTTON TO FORM */
             $('#featureForm').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureForm', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.jpg')}}")
             });
 
             /* OUTLET */
             $('#featureOutlet').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureOutlet', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
             });
 
             /* VIDEO */
             $('#featureVideo').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureVideo', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/video.jpg')}}")
+                if(state){
+                  drawVideo();
+                }else{
+                  $('#video-container').html('');
+                }
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/video.jpg')}}")
             });
 
             /* LOCATION */
             $('#featureLocation').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureLocation', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.jpg')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.jpg')}}")
             });
 
             /* PRODUCT */
             $('#featureProduct').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureProduct', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.jpg')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/product.jpg')}}")
             });
 
             /* DATE */
             $('#featureDate').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureDate', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.jpg')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.jpg')}}")
             });
 
             /* TIME */
             $('#featureTime').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureTime', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.jpg')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.jpg')}}")
             });
 
             /* PUBLISH DATE */
@@ -506,7 +521,9 @@
                 }
 
             });
+            @if(old('news_video'))
             drawVideo();
+            @endif
         });
     </script>
     <script type="text/javascript">
@@ -528,60 +545,60 @@
         }
 
         $('#field_title').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/title.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/title2.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/title.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/title2.jpg')}}")
         })
         $('#field_post_date').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/post-date.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/post-date2.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/post-date.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/post-date2.jpg')}}")
         })
         $('#field_content_short').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/content-short.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/content-short.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news4.jpg')}}")
         })
         $('#field_image_square').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-square.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/image-square.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news4.jpg')}}")
         })
         $('#field_image_landscape').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape2.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/image-landscape2.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/image-landscape.jpg')}}")
         })
         $('.field_event').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.jpg')}}")
         })
         $('.featureVideoForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/video.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/video.jpg')}}")
         })
         $('.featureProductForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/product.jpg')}}")
         })
         $('.featureOutletForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
         })
         $("input[name='publish_type']").change(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.jpg')}}")
         })
         $(".field_publish_date").focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.jpg')}}")
         })
         $(document).on('focus', '#selectOutlet .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
         })
         $(document).on('focus', '#selectProduct .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/product.jpg')}}")
         })
         $(document).on('focus', '#selectCategory .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.jpg')}}")
         })
         $('#add-video-btn').on('click',addVideo);
         $('#video-container').on('click','.remove-video-btn',function(){
@@ -628,8 +645,8 @@
         <div class="portlet-body m-form__group row">
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                     <div class="col-md-4">
-                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
-                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.jpg')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">
+                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
+                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.jpg')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">
                     </div>
                     <div class="col-md-8">
                     <div class="form-body">
@@ -1032,7 +1049,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <div class="col-md-6">
-                                        <input type="text" id="field_event_latitude" class="form-control" name="news_event_latitude" value="{{ old('news_event_latitude') }}" id="lat" readonly>
+                                        <input type="text" class="form-control" name="news_event_latitude" value="{{ old('news_event_latitude') }}" id="lat" readonly>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="news_event_longitude" value="{{ old('news_event_longitude') }}" id="lng" readonly>
@@ -1184,211 +1201,213 @@
                                 </div>
                             </div>
                         </div>
-						<!-- BUTTON TO FORM -->
-						<div class="form-group" id="customform">
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-								Custom Form
-								<i class="fa fa-question-circle tooltips" data-original-title="Button to Form 'ON' jika news memiliki form yang harus diisi" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<span class="m-switch">
-									<label>
-									<input name="custom_form_checkbox" type="checkbox" class="make-switch" id="featureForm" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_button_form_text'))) checked @endif>
-									<span></span>
-									</label>
-								</span>
-							</div>
-						</div>
-
-						<div class="form-group featureForm">
-							<label class="col-md-3 control-label"></label>
-							<div class="col-md-9">
-								<div class="col-md-3">
-									<label class="control-label">Button Text <span class="required" aria-required="true"> * </span> </label>
-								</div>
-								<div class="col-md-9">
-									<input type="text" class="form-control featureFormForm" name="news_button_form_text" value="{{ old('news_button_form_text') }}" placeholder="Button to Form text">
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group featureForm">
-							<label class="col-md-3 control-label"></label>
-							<div class="col-md-9">
-								<div class="col-md-3">
-									<label class="control-label">Button Exp <span class="required" aria-required="true"> * </span> </label>
-								</div>
-								<div class="col-md-9">
-									<div class="input-group">
-										<input type="text" class="datepicker form-control featureFormForm field_event" name="news_button_form_expired" value="@if(!empty(old('news_button_form_expired'))){{ date('d-M-Y',strtotime(old('news_button_form_expired'))) }}@endif">
-										<span class="input-group-btn">
-											<button class="btn default" type="button">
-												<i class="fa fa-calendar"></i>
-											</button>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-
-            <div class="form-group featureForm">
-              <label class="col-md-3 control-label"></label>
-              <div class="col-md-9">
-                <div class="col-md-3">
-                  <label class="control-label">Success Msg</label>
-                </div>
-                <div class="col-md-9">
-                  <input type="text" class="form-control field_event" name="news_form_success_message" value="{{ old('news_form_success_message') }}">
-                </div>
-              </div>
-            </div>
-
-						<div class="form-group featureForm">
-							<label class="col-md-3 control-label"></label>
-							<div class="col-md-9">
-								<div class="col-md-12">
-									<div class="form-group mt-repeater">
-										<div data-repeater-list="customform" id="sortable">
-											<div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
-												<div class="mt-repeater-cell" style="position: relative;">
-                          <div class="sort-icon">
-                            <i class="fa fa-arrows"></i>
-                          </div>
-													<div class="col-md-12">
-                            <div class="col-md-2">
-															<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
-																<i class="fa fa-close"></i>
-															</a>
-														</div>
-														<div class="input-icon right">
-															<div class="col-md-4" style="padding-top: 5px;">
-																Input Name
-																<i class="fa fa-question-circle tooltips" data-original-title="Nama Input pada Form" data-container="body"></i>
-                                <span class="required" aria-required="true"> * </span>
-															</div>
-														</div>
-														<div class="col-md-6" >
-															<div class="input-icon right">
-																<input type="text" name="form_input_label" class="form-control demo featureFormForm">
-															</div>
-														</div>
-													</div>
-													<div class="col-md-12" style="margin-top:20px">
-														<div class="input-icon right">
-															<div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
-																Input Types
-																<i class="fa fa-question-circle tooltips" data-original-title="Tipe inputan user" data-container="body"></i>
-                                <span class="required" aria-required="true"> * </span>
-															</div>
-														</div>
-														<div class="col-md-6" >
-															<select class="form-control form_input_types featureFormForm" name="form_input_types">
-																<option value="Short Text">Short Text</option>
-																<option value="Long Text">Long Text</option>
-																<option value="Number Input">Number Input</option>
-																<option value="Date">Date</option>
-																<option value="Date & Time">Date & Time</option>
-																<option value="Dropdown Choice">Dropdown Choice</option>
-																<option value="Radio Button Choice">Radio Button Choice</option>
-																<option value="Multiple Choice">Multiple Choice</option>
-																<option value="File Upload">File Upload</option>
-																<option value="Image Upload">Image Upload</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-md-12 form_input_options" style="margin-top:20px; display: none;">
-														<div class="input-icon right">
-															<div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
-																Input Options
-																<i class="fa fa-question-circle tooltips" data-original-title="Warna teks nama level pada aplikasi" data-container="body"></i>
-                                <span class="required" aria-required="true"> * </span>
-															</div>
-														</div>
-														<div class="col-md-6" >
-															<div class="input-icon right">
-																<input type="text" name="form_input_options" class="form-control demo tagsinput" data-role="tagsinput" placeholder="comma (,) separated">
-															</div>
-														</div>
-													</div>
-                          <div class="col-md-12 form_input_autofill" style="margin-top:20px;">
-                            <div class="input-icon right">
-                              <div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
-                                Input Autofill
-                                <i class="fa fa-question-circle tooltips" data-original-title="Isian otomatis dari data profil user" data-container="body"></i>
-                              </div>
-                            </div>
-                            <div class="col-md-6" >
-                              <div class="input-icon right">
-                                <select class="form-control" name="form_input_autofill">
-                                  <option value="">--None--</option>
-                                  <option value="Name">Name</option>
-                                  <option value="Phone">Phone</option>
-                                  <option value="Email">Email</option>
-                                  <option value="Gender">Gender</option>
-                                  <option value="City">City</option>
-                                  <option value="Birthday">Birthday</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-md-12" style="margin-top:20px;">
-                            <div class="input-icon right">
-                              <div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
-                                Is Required
-                                <i class="fa fa-question-circle tooltips" data-original-title="Apakah wajib diisi?" data-container="body"></i>
-                              </div>
-                            </div>
-                            <div class="col-md-6" >
-                              <div class="input-icon right">
-                                <div class="mt-checkbox-list">
-                                  <label class="mt-checkbox mt-checkbox-outline">
-                                      <input type="checkbox" name="is_required" value="1">
-                                      <span></span>
-                                  </label>
+                        @if(MyHelper::hasAccess([107], $configs))
+                            <!-- BUTTON TO FORM -->
+                            <div class="form-group" id="customform">
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Custom Form
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Button to Form 'ON' jika news memiliki form yang harus diisi" data-container="body"></i>
+                                    </label>
                                 </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-md-12 is_unique" style="margin-top:20px;">
-                            <div class="input-icon right">
-                              <div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
-                                Is Unique
-                                <i class="fa fa-question-circle tooltips" data-original-title="Apakah data unik?" data-container="body"></i>
-                              </div>
-                            </div>
-                            <div class="col-md-6" >
-                              <div class="input-icon right">
-                                <div class="mt-checkbox-list">
-                                  <label class="mt-checkbox mt-checkbox-outline">
-                                      <input type="checkbox" name="is_unique" value="1">
-                                      <span></span>
-                                  </label>
+                                <div class="col-md-9">
+                                    <span class="m-switch">
+                                        <label>
+                                        <input name="custom_form_checkbox" type="checkbox" class="make-switch" id="featureForm" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty(old('news_button_form_text'))) checked @endif>
+                                        <span></span>
+                                        </label>
+                                    </span>
                                 </div>
-
-                              </div>
                             </div>
-                          </div>
 
-												</div>
-											</div>
-										</div>
-										<div class="form-action col-md-12">
-											<div class="col-md-2"></div>
-											<div class="col-md-10">
-												@if(MyHelper::hasAccess([12], $grantedFeature))
-													<a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add">
-													<i class="fa fa-plus"></i> Add New Input</a>
-												@endif
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+                            <div class="form-group featureForm">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-9">
+                                    <div class="col-md-3">
+                                        <label class="control-label">Button Text <span class="required" aria-required="true"> * </span> </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control featureFormForm" name="news_button_form_text" value="{{ old('news_button_form_text') }}" placeholder="Button to Form text">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group featureForm">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-9">
+                                    <div class="col-md-3">
+                                        <label class="control-label">Button Exp <span class="required" aria-required="true"> * </span> </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <input type="text" class="datepicker form-control featureFormForm field_event" name="news_button_form_expired" value="@if(!empty(old('news_button_form_expired'))){{ date('d-M-Y',strtotime(old('news_button_form_expired'))) }}@endif">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group featureForm">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-9">
+                                    <div class="col-md-3">
+                                    <label class="control-label">Success Msg</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                    <input type="text" class="form-control field_event" name="news_form_success_message" value="{{ old('news_form_success_message') }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group featureForm">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-9">
+                                    <div class="col-md-12">
+                                        <div class="form-group mt-repeater">
+                                            <div data-repeater-list="customform" id="sortable">
+                                                <div data-repeater-item class="mt-repeater-item mt-overflow" style="border-bottom: 1px #ddd;">
+                                                    <div class="mt-repeater-cell" style="position: relative;">
+                            <div class="sort-icon">
+                                <i class="fa fa-arrows"></i>
+                            </div>
+                                                        <div class="col-md-12">
+                                <div class="col-md-2">
+                                                                <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
+                                                                    <i class="fa fa-close"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="input-icon right">
+                                                                <div class="col-md-4" style="padding-top: 5px;">
+                                                                    Input Name
+                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Nama Input pada Form" data-container="body"></i>
+                                    <span class="required" aria-required="true"> * </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6" >
+                                                                <div class="input-icon right">
+                                                                    <input type="text" name="form_input_label" class="form-control demo featureFormForm">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12" style="margin-top:20px">
+                                                            <div class="input-icon right">
+                                                                <div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
+                                                                    Input Types
+                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Tipe inputan user" data-container="body"></i>
+                                    <span class="required" aria-required="true"> * </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6" >
+                                                                <select class="form-control form_input_types featureFormForm" name="form_input_types">
+                                                                    <option value="Short Text">Short Text</option>
+                                                                    <option value="Long Text">Long Text</option>
+                                                                    <option value="Number Input">Number Input</option>
+                                                                    <option value="Date">Date</option>
+                                                                    <option value="Date & Time">Date & Time</option>
+                                                                    <option value="Dropdown Choice">Dropdown Choice</option>
+                                                                    <option value="Radio Button Choice">Radio Button Choice</option>
+                                                                    <option value="Multiple Choice">Multiple Choice</option>
+                                                                    <option value="File Upload">File Upload</option>
+                                                                    <option value="Image Upload">Image Upload</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 form_input_options" style="margin-top:20px; display: none;">
+                                                            <div class="input-icon right">
+                                                                <div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
+                                                                    Input Options
+                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Warna teks nama level pada aplikasi" data-container="body"></i>
+                                    <span class="required" aria-required="true"> * </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6" >
+                                                                <div class="input-icon right">
+                                                                    <input type="text" name="form_input_options" class="form-control demo tagsinput" data-role="tagsinput" placeholder="comma (,) separated">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            <div class="col-md-12 form_input_autofill" style="margin-top:20px;">
+                                <div class="input-icon right">
+                                <div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
+                                    Input Autofill
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Isian otomatis dari data profil user" data-container="body"></i>
+                                </div>
+                                </div>
+                                <div class="col-md-6" >
+                                <div class="input-icon right">
+                                    <select class="form-control" name="form_input_autofill">
+                                    <option value="">--None--</option>
+                                    <option value="Name">Name</option>
+                                    <option value="Phone">Phone</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Gender">Gender</option>
+                                    <option value="City">City</option>
+                                    <option value="Birthday">Birthday</option>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="margin-top:20px;">
+                                <div class="input-icon right">
+                                <div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
+                                    Is Required
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Apakah wajib diisi?" data-container="body"></i>
+                                </div>
+                                </div>
+                                <div class="col-md-6" >
+                                <div class="input-icon right">
+                                    <div class="mt-checkbox-list">
+                                    <label class="mt-checkbox mt-checkbox-outline">
+                                        <input type="checkbox" name="is_required" value="1">
+                                        <span></span>
+                                    </label>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 is_unique" style="margin-top:20px;">
+                                <div class="input-icon right">
+                                <div class="col-md-offset-2 col-md-4" style="padding-top: 5px;">
+                                    Is Unique
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Apakah data unik?" data-container="body"></i>
+                                </div>
+                                </div>
+                                <div class="col-md-6" >
+                                <div class="input-icon right">
+                                    <div class="mt-checkbox-list">
+                                    <label class="mt-checkbox mt-checkbox-outline">
+                                        <input type="checkbox" name="is_unique" value="1">
+                                        <span></span>
+                                    </label>
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-action col-md-12">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-10">
+                                                    @if(MyHelper::hasAccess([12], $grantedFeature))
+                                                        <a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add">
+                                                        <i class="fa fa-plus"></i> Add New Input</a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     </div>
                 </div>

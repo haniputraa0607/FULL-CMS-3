@@ -180,6 +180,8 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         TimeHunter\LaravelGoogleReCaptchaV3\Providers\GoogleReCaptchaV3ServiceProvider::class,
         //Vinelab\Cdn\CdnServiceProvider::class,
+        Bogardo\Mailgun\MailgunServiceProvider::class,
+        Stevebauman\Location\LocationServiceProvider::class,
     ],
 
     /*
@@ -230,8 +232,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'GoogleReCaptchaV3'=> TimeHunter\LaravelGoogleReCaptchaV3\Facades\GoogleReCaptchaV3::class
-        
+        'GoogleReCaptchaV3'=> TimeHunter\LaravelGoogleReCaptchaV3\Facades\GoogleReCaptchaV3::class,
+        'Mailgun' => Bogardo\Mailgun\Facades\Mailgun::class,
+        'Location' => Stevebauman\Location\LocationServiceProvider::class,
     ],
 
 ];

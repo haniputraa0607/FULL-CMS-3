@@ -46,7 +46,7 @@ class Controller extends BaseController
 					'access_token'  => 'Bearer '.$postLoginClient['access_token']
 				]);
 			}
-			$checkpin = MyHelper::post('users/pin/check', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
+			$checkpin = MyHelper::post('users/pin/check/be', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
 
 			// if(isset($checkpin['status']) && $checkpin['status'] != "success")
 				return redirect('login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
@@ -61,12 +61,12 @@ class Controller extends BaseController
 					]);
 				}
 
-				$checkpin = MyHelper::post('users/pin/check', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
+				$checkpin = MyHelper::post('users/pin/check/be', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
 				return redirect('login')->withErrors($postLogin['messages'])->withInput();
         	}
         	else {
 
-				$checkpin = MyHelper::post('users/pin/check', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
+				$checkpin = MyHelper::post('users/pin/check/be', array('phone' => $request->input('username'), 'pin' => $request->input('password')));
 				session([
 					'access_token'  => 'Bearer '.$postLogin['access_token'],
 					'username'      => $request->input('username'),

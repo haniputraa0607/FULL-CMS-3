@@ -1,39 +1,96 @@
-@extends('layouts.main')
-
+@php
+	if($deals_type == 'Promotion'){
+        $rpage = 'promotion/deals';
+	}elseif($deals_type == 'WelcomeVoucher'){
+        $rpage = 'welcome-voucher';
+    }else{
+        $rpage = $deals_type=='Deals'?'deals':'inject-voucher';
+    }
+@endphp
+@extends('layouts.main-closed')
+@include('deals::deals.detail-info')
+@include('deals::deals.detail-info-content')
+@include('deals::deals.participate')
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <!-- <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" /> -->
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <!-- <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" /> -->
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <style type="text/css">
+		.d-none {
+			display: none;
+		}
+		.width-60-percent {
+			width: 60%;
+		}
+		.width-100-percent {
+			width: 100%;
+		}
+		.width-voucher-img {
+			max-width: 200px;
+			width: 100%;
+		}
+		.v-align-top {
+			vertical-align: top;
+		}
+		.p-t-10px {
+			padding-top: 10px;
+		}
+		.page-container-bg-solid .page-content {
+			background: #fff!important;
+		}
+		.text-decoration-none {
+			text-decoration: none!important;
+		}
+		.p-l-0{
+			padding-left: 0px;
+		}
+		.p-r-0{
+			padding-right: 0px;
+		}
+		.p-l-r-0{
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+		.font-custom-dark-grey {
+			color: #95A5A6!important;
+		}
+		.font-custom-green {
+			color: #26C281!important;
+		}
+	</style>
+@yield('detail-style')	
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <!-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <!-- <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/prices.js')}}"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js') }}" type="text/javascript"></script>
 
-<!--     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+<!--     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 -->
     <script>
     $('.datepicker').datepicker({
@@ -50,11 +107,11 @@
     });
 
     </script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#sample_1').dataTable({
@@ -146,6 +203,43 @@
                 "paging": false,
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
+        $('#participate_tables').dataTable({
+            language: {
+                aria: {
+                    sortAscending: ": activate to sort column ascending",
+                    sortDescending: ": activate to sort column descending"
+                },
+                emptyTable: "No data available in table",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                infoEmpty: "No entries found",
+                infoFiltered: "(filtered1 from _MAX_ total entries)",
+                lengthMenu: "_MENU_ entries",
+                search: "Search:",
+                zeroRecords: "No matching records found"
+            },
+            buttons: [{
+                extend: "print",
+                className: "btn dark btn-outline"
+            }, {
+                extend: "pdf",
+                className: "btn green btn-outline"
+            }, {
+                extend: "csv",
+                className: "btn purple btn-outline "
+            }],
+            deferRender: !0,
+            scroller: !0,
+            deferRender: !0,
+            scrollX: !0,
+            scrollCollapse: !0,
+            stateSave: !0,
+            lengthMenu: [
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"]
+            ],
+            pageLength: 10,
+            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+        });
     </script>
 
     <script type="text/javascript">
@@ -168,6 +262,33 @@
         $(document).ready(function() {
             token = '<?php echo csrf_token();?>';
 
+            $('#is_offline').change(function() {
+		        if(this.checked) {
+		            $('#promo-type-form').show().find('input').prop('required', true).prop('checked', false);
+		        }else{
+		            $('#promo-type-form').hide().find('input').prop('required', false).prop('checked', false);
+
+                    $('.dealsPromoTypeValuePrice').val('');
+                    $('.dealsPromoTypeValuePrice').hide();
+                    $('.dealsPromoTypeValuePrice').removeAttr('required', true);
+                    $('.dealsPromoTypeValuePromo').val('');
+                    $('.dealsPromoTypeValuePromo').hide();
+                    $('.dealsPromoTypeValuePromo').removeAttr('required', true);
+
+		        	$('.dealsPromoTypeShow').hide();
+		        }
+		    });
+
+		    $('#is_online').change(function() {
+		        if(this.checked) {
+		            $('#step-online').show();
+		            $('#step-offline').hide();
+		        }else{
+		            $('#step-online').hide();
+		            $('#step-offline').show();
+		        }
+		    });
+		    
             /* TYPE VOUCHER */
             $('.voucherType').click(function() {
                 // tampil duluk
@@ -266,13 +387,14 @@
                 tabsize: 2,
                 height: 120,
                 toolbar: [
-                  ['style', ['style']],
-                  ['style', ['bold', 'underline', 'clear']],
-                  ['color', ['color']],
-                  ['para', ['ul', 'ol', 'paragraph']],
-                  ['insert', ['table']],
-                  ['insert', ['link', 'picture', 'video']],
-                  ['misc', ['fullscreen', 'codeview', 'help']]
+                    ['style', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
                 ],
                 callbacks: {
                     onInit: function(e) {
@@ -355,9 +477,9 @@
                 ko.src        = cariImage
                 // load image
                 ko.onload     = function(){
-                    if (this.naturalHeight === 450 && this.naturalWidth === 600) {
+                    if (this.naturalHeight === 500 && this.naturalWidth === 500) {
                     } else {
-                        mentah.attr('src', "")
+                        mentah.attr('src', "{{ $deals['url_deals_image']??'https://www.placehold.it/500x500/EFEFEF/AAAAAA&text=no+image' }}")
                         $('#file').val("");
                         toastr.warning("Please check dimension of your photo.");
                     }
@@ -422,6 +544,10 @@
             $('select[name="id_brand"]').change();
         });
     </script>
+	@yield('child-script')
+	@yield('child-script2')
+	@yield('detail-script')
+	@yield('participate-script')
 @endsection
 
 @section('content')
@@ -447,6 +573,7 @@
 
     @include('layouts.notifications')
 
+@if($deals_type != 'Promotion')
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <a class="dashboard-stat dashboard-stat-v2 blue">
@@ -455,7 +582,15 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_voucher'] }}">{{ $deals[0]['deals_total_voucher'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_total_voucher'] }}">
+                        @if (!empty($deals['deals_voucher_type']))
+                        	@if ( $deals['deals_voucher_type'] == "Unlimited")
+                        		{{ 'Unlimited' }}
+                        	@else
+                        		{{ number_format(($deals['deals_total_voucher']??0)-($deals['deals_total_claimed']??0)) }}
+                        	@endif
+                        @endif
+                        </span>
                     </div>
                     <div class="desc"> Total Voucher </div>
                 </div>
@@ -468,7 +603,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_claimed'] }}">{{ $deals[0]['deals_total_claimed'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_total_claimed'] }}">{{ $deals['deals_total_claimed'] }}</span>
                     </div>
                     <div class="desc"> Total Claimed </div>
                 </div>
@@ -481,7 +616,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_redeemed'] }}">{{ $deals[0]['deals_total_redeemed'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_total_redeemed'] }}">{{ $deals['deals_total_redeemed'] }}</span>
                     </div>
                     <div class="desc"> Total Redeem </div>
                 </div>
@@ -494,18 +629,18 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals[0]['deals_total_used'] }}">{{ $deals[0]['deals_total_used'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_total_used'] }}">{{ $deals['deals_total_used'] }}</span>
                     </div>
                     <div class="desc"> Total Used </div>
                 </div>
             </a>
         </div>
     </div>
-
+@endif
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">
             <div class="caption">
-                <span class="caption-subject font-blue bold uppercase">{{ $deals[0]['deals_title'] }}</span>
+                <span class="caption-subject font-blue bold uppercase">{{ $deals['deals_title'] }}</span>
             </div>
             <ul class="nav nav-tabs">
 
@@ -524,17 +659,96 @@
 
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                    @include('deals::deals.info')
+                	@if ($deals['step_complete'] != 1)
+                    <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Deals</a>
+                    @endif
+                	<ul class="nav nav-tabs" id="tab-header">
+                        <li class="active" id="infoOutlet">
+                            <a href="#basic" data-toggle="tab" > Basic Info </a>
+                        </li>
+                        <li>
+                            <a href="#content" data-toggle="tab"> Content Info </a>
+                        </li>
+                        <li>
+                            <a href="#outlet" data-toggle="tab"> Outlet Info </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="basic">
+                			@yield('detail-info')
+                        </div>
+                        <div class="tab-pane " id="content">
+                			@yield('detail-info-content')
+                        </div>
+                        <div class="tab-pane" id="outlet">
+                            @if($deals['is_all_outlet'] == 1)
+                                <div class="alert alert-warning">
+                                    This deals applied to <strong>All Outlet</strong>.
+                                </div>
+                            @else
+                                <!-- BEGIN: Comments -->
+                                <div class="mt-comments">
+                                    <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
+                                        <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach(($promotion_outlets??$deals['outlets']) as $res)
+                                            <tr>
+                                                <td>{{ $res['outlet_code'] }}</td>
+                                                <td>{{ $res['outlet_name'] }}</td>
+                                                <td>{{ $res['outlet_address'] }}</td>
+                                                <td>{{ $res['outlet_phone'] }}</td>
+                                                <td>{{ $res['outlet_email'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END: Comments -->
+                            @endif
+                        </div>
+                    </div>
                 </div>
+                @if($deals_type != 'Promotion')
                 <div class="tab-pane" id="voucher">
                     @include('deals::deals.voucher')
                 </div>
                 <div class="tab-pane" id="participate">
-                    @include('deals::deals.participate')
+                    @yield('detail-participate')
                 </div>
+                @endif
             </div>
         </div>
     </div>
-
+    @if ($deals['step_complete'] != 1)
+    <div class="modal fade bs-modal-sm" id="small" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Start Deals?</h4>
+                </div>
+                <form action="{{url('deals/update-complete')}}" method="post">
+                	@csrf
+                	<input type="hidden" name="id_deals" value="{{$deals['id_deals']}}">
+                	<input type="hidden" name="deals_type" value="{{$deals['deals_type']??$deals_type}}">
+	                <div class="modal-footer">
+	                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button>
+	                    <button type="submit" class="btn green">Confirm</button>
+	                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    @endif
 
 @endsection

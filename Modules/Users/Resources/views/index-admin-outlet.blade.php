@@ -6,20 +6,20 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 language: {
@@ -215,7 +215,7 @@
                                 <td>{{ $key+1 }}</td>
                                 <td class="noExport">
 									@if(MyHelper::hasAccess([2], $grantedFeature))
-									<a class="btn btn-block yellow btn-xs" href="{{ url('user/adminoutlet')}}/{{$value['phone']}}/{{$value['id_outlet']}}"><i class="icon-pencil"></i> Update </a>
+									<a class="btn btn-block yellow btn-xs" href="{{ url('user/adminoutlet')}}/{{$value['phone']}}"><i class="icon-pencil"></i> Update </a>
 									@endif
 									@if(MyHelper::hasAccess([5], $grantedFeature))
 										<a class="btn btn-block red btn-xs" href="{{ url('user/adminoutlet/delete')}}/{{$value['phone']}}/{{$value['id_outlet']}}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a>
@@ -224,7 +224,13 @@
                                 <td>{{ $value['name'] }}</td>
                                 <td>{{ $value['phone'] }}</td>
                                 <td>{{ $value['email'] }}</td>
-                                <td>{{ $value['outlet_name'] }}</td>
+                                <td>
+                                    <ul style="padding:10px">
+                                        @foreach($value['outlets'] as $outlet)
+                                        <li>{{$outlet['outlet_name']}}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
                                 {{-- cek config enquiry dulu baru cek admin enquiry --}}
                                 @if(MyHelper::hasAccess([56], $configs))
                                     @if(MyHelper::hasAccess([9], $configs))

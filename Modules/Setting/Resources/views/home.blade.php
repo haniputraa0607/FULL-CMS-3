@@ -6,20 +6,20 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 
 	<style type="text/css">
 		.click-to{
@@ -36,27 +36,30 @@
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 	<script>
 	function hapus1(value){
 		swal({
@@ -142,6 +145,9 @@
     // featured deals
     $( "#sortable2" ).sortable();
     $( "#sortable2" ).disableSelection();
+    // featured subscription
+    $( "#sortable3" ).sortable();
+    $( "#sortable3" ).disableSelection();
 
     $(document).ready(function() {
     	$('#txt_greeting').on('keyup',function(){
@@ -157,15 +163,16 @@
 	        placeholder: 'Success Page Content',
 	        tabsize: 2,
 	        height: 180,
-	        toolbar: [
-	          ['style', ['style']],
-	          ['style', ['bold', 'underline', 'clear']],
-	          ['color', ['color']],
-	          ['para', ['ul', 'ol', 'paragraph']],
-	          ['insert', ['table']],
-	          ['insert', ['link', 'picture', 'video']],
-	          ['misc', ['fullscreen', 'codeview', 'help']]
-	        ],
+			toolbar: [
+				['style', ['style']],
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['insert', ['table']],
+				['insert', ['link', 'picture', 'video']],
+				['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+			],
 	        callbacks: {
 	            onImageUpload: function(files){
 	                sendFile(files[0]);
@@ -245,6 +252,9 @@
 				$('#modalBannerUpdate .click-to-radio[value="news"]').prop("checked", true);
 	            $('.click-to-type').find('.select2-container').show();
 			}
+			else if(type == "order") {
+				$('#modalBannerUpdate .click-to-radio[value="order"]').prop("checked", true);
+			}
 			else {
 				$('#modalBannerUpdate .click-to-radio[value="none"]').prop("checked", true);
 			}
@@ -280,6 +290,31 @@
 		$('#id_deals').select2().trigger('change');
     });
 
+    $('#featured_subscription .btn-edit').click(function() {
+		var id         = $(this).data('id');
+		var end_date   = $(this).data('end-date');
+		var start_date = $(this).data('start-date');
+		var id_subscription   = $(this).data('id-subscription');
+		var subscription_title   = $(this).data('subscription-title');
+
+		// assign value to form
+		$('#id_featured_subscription').val(id);
+		$('#end_date_subs').val(end_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#start_date_subs').val(start_date).datetimepicker({
+	        format: "dd M yyyy hh:ii",
+	        autoclose: true,
+	        todayBtn: true,
+	        minuteStep:1
+	    });
+		$('#id_subscription').find('option').first().attr('value',id_subscription).text(subscription_title);
+		$('#id_subscription').select2().trigger('change');
+    });
+
 	$('.datetime').datetimepicker({
         format: "dd M yyyy hh:ii",
         autoclose: true,
@@ -289,7 +324,7 @@
 
     // clear banner edit form when modal close
     $('#modalBannerUpdate').on('hide.bs.modal', function () {
-		$('#id_banner').val('');
+		// $('#id_banner').val('');
 		$('#modalBannerUpdate .click-to-news').val('').trigger('change');
 		$('#modalBannerUpdate .click-to-url').val('');
 		$('#edit-banner-img').attr('src', '');
@@ -320,6 +355,23 @@
 		var link 	= "{{ url('setting/featured_deal/delete') }}/" + id;
 		swal({
 		  title: "Are you sure want to delete this featured deals ? ",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "Yes, delete it",
+		  closeOnConfirm: false
+		},
+		function(){
+			window.location = link;
+		});
+    });
+
+    // subscription: delete
+    $('#featured_subscription .btn-delete').click(function() {
+		var id 		= $(this).data('id');
+		var link 	= "{{ url('setting/featured_subscription/delete') }}/" + id;
+		swal({
+		  title: "Are you sure want to delete this featured subscription ? ",
 		  type: "warning",
 		  showCancelButton: true,
 		  confirmButtonClass: "btn-danger",
@@ -389,34 +441,6 @@
 </div>
 <br>
 @include('layouts.notifications')
-
-@if(MyHelper::hasAccess([30], $configs))
-	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalTimeSetting"> Time Setting
-		<i class="fa fa-question-circle tooltips" data-original-title="Konfigurasi waktu dalam empat kategori, yaitu Morning, Afternoon, Evening, dan Late Night" data-container="body"></i>
-	</a>
-	@if(MyHelper::hasAccess([16], $grantedFeature))
-		@if(MyHelper::hasAccess([31], $configs))
-			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalGreeting"> New Greeting
-				<i class="fa fa-question-circle tooltips" data-original-title="Membuat kalimat greeting baru" data-container="body"></i>
-			</a>
-		@endif
-		@if(MyHelper::hasAccess([32], $configs))
-<!-- 			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background
-				<i class="fa fa-question-circle tooltips" data-original-title="Background home dapat disesuaikan dengan teks greeting" data-container="body"></i>
-			</a> -->
-		@endif
-	@endif
-@endif
-@if(MyHelper::hasAccess([145], $grantedFeature))
-	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBanner"> New Banner
-		<i class="fa fa-question-circle tooltips" data-original-title="Membuat banner di halaman home aplikasi mobile" data-container="body"></i>
-	</a>
-@endif
-<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalFeaturedDeals"> New Featured Deals
-	<i class="fa fa-question-circle tooltips" data-original-title="Membuat featured deals di halaman home aplikasi mobile" data-container="body"></i>
-</a>
-<br>
-<br>
 <div class="tabbable-line">
 	<ul class="nav nav-tabs">
 	@if(MyHelper::hasAccess([30], $configs))
@@ -437,15 +461,25 @@
             <a href="#banner" data-toggle="tab">Banner</a>
         </li>
 		@endif
-        <li>
+        {{-- <li>
             <a href="#featured_deals" data-toggle="tab">Featured Deals</a>
-        </li>
+        </li> --}}
         <!-- <li>
             <a href="#app-logo" data-toggle="tab">Application Logo</a>
         </li> -->
         <!-- <li>
             <a href="#app-navigation" data-toggle="tab">App Navigation Text</a>
         </li> -->
+        @if(MyHelper::hasAccess([241], $grantedFeature))
+        <li>
+            <a href="#featured_subscription" data-toggle="tab">Featured Subscription</a>
+        </li>
+		@endif
+        @if(MyHelper::hasAccess([246], $grantedFeature))
+        <li>
+            <a href="#user_inbox" data-toggle="tab">User Inbox</a>
+        </li>
+		@endif
     </ul>
 </div>
 
@@ -454,6 +488,27 @@
 	{{-- greeting --}}
         <div class="tab-pane" id="greeting">
 			@if(MyHelper::hasAccess([31], $configs))
+
+                @if(MyHelper::hasAccess([30], $configs))
+			        <div style="margin:20px 0">
+                    	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalTimeSetting"> Time Setting
+                    		<i class="fa fa-question-circle tooltips" data-original-title="Konfigurasi waktu dalam empat kategori, yaitu Morning, Afternoon, Evening, dan Late Night" data-container="body"></i>
+                    	</a>
+                    	@if(MyHelper::hasAccess([16], $grantedFeature))
+                    		@if(MyHelper::hasAccess([31], $configs))
+                    			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalGreeting"> New Greeting
+                    				<i class="fa fa-question-circle tooltips" data-original-title="Membuat kalimat greeting baru" data-container="body"></i>
+                    			</a>
+                    		@endif
+                    		@if(MyHelper::hasAccess([32], $configs))
+                    <!-- 			<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBackground"> New Background
+                    				<i class="fa fa-question-circle tooltips" data-original-title="Background home dapat disesuaikan dengan teks greeting" data-container="body"></i>
+                    			</a> -->
+                    		@endif
+                    	@endif
+                	</div>
+                @endif
+
 				<div class="row" style="margin-top:20px">
 					<div class="col-md-12">
 						<div class="portlet light bordered">
@@ -596,7 +651,7 @@
 											<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 												<div class="fileinput-new thumbnail">
 													@if(isset($default_home['default_home_image']))
-														<img src="{{ env('S3_URL_API')}}{{$default_home['default_home_image']}}" alt="">
+														<img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_image']}}" alt="">
 													@else
 														<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 													@endif
@@ -660,7 +715,7 @@
 										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 											<div class="fileinput-new thumbnail">
 												@if(isset($default_home['default_home_splash_screen']))
-													<img src="{{ env('S3_URL_API')}}{{$default_home['default_home_splash_screen']}}?" alt="">
+													<img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_splash_screen']}}?" alt="">
 												@else
 													<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 												@endif
@@ -691,6 +746,14 @@
 	{{-- banner --}}
 	@if(MyHelper::hasAccess([144], $grantedFeature))
     <div class="tab-pane" id="banner">
+        @if(MyHelper::hasAccess([145], $grantedFeature))
+        <div style="margin:20px 0">
+        	<a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalBanner"> New Banner
+        		<i class="fa fa-question-circle tooltips" data-original-title="Membuat banner di halaman home aplikasi mobile" data-container="body"></i>
+        	</a>
+    	</div>
+        @endif
+
     	<div class="row" style="margin-top:20px">
 			<div class="col-md-12">
 				<div class="portlet light bordered">
@@ -716,7 +779,7 @@
 											</div>
 											<div class="col-md-10 text-right">
 												@if(MyHelper::hasAccess([146], $grantedFeature))
-												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ date("d F Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))) }}" data-end="{{ date("d F Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]])))}}"><i class="fa fa-pencil"></i> </a>
+												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ ($banner['banner_start']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'' }}" data-end="{{ ($banner['banner_end']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):''}}"><i class="fa fa-pencil"></i> </a>
 												@endif
 												@if(MyHelper::hasAccess([147], $grantedFeature))
 												<a class="btn red-mint btn-circle btn-delete" data-id="{{ $banner['id_banner'] }}"><i class="fa fa-trash-o"></i> </a>
@@ -731,12 +794,16 @@
 					 			 	<div class="click-to">
 					 			 		@php
 					 			 			if ($banner['news_title'] != null) {
-					 			 				$click_to = str_limit($banner['news_title'], 20);
+					 			 				$click_to = str_limit($banner['news_title'], 18);
 					 			 			}
 					 			 			elseif ($banner['url'] != null) {
 					 			 				if ($banner['type'] == 'general') {
-					 			 					$click_to = str_limit($banner['url'], 20);
-					 			 				} else {
+					 			 					$click_to = str_limit($banner['url'], 18);
+					 			 				} 
+					 			 				elseif ($banner['type'] == 'order') {
+					 			 					$click_to = "Order";
+					 			 				} 
+					 			 				else {
 					 			 					$click_to = "GO-FOOD";
 					 			 				}
 					 			 			}
@@ -748,9 +815,9 @@
 					 			 		<div>Click to:</div>
 										<div>{{ $click_to }}</div><br>
 										<div>Date Start:</div>
-										<div>{{ date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))) }}</div><br>
+										<div>{{ ($banner['banner_start']??false)?date("d M Y H:i", strtotime($banner['banner_start'])):'-' }}</div><br>
 										<div>Date End:</div>
-					 			 		<div>{{ date("d F Y H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))) }}</div>
+					 			 		<div>{{ ($banner['banner_end']??false)?date("d M Y H:i", strtotime($banner['banner_end'])):'-' }}</div>
 					 			 	</div>
 					 			</div>
 					 			@endforeach
@@ -770,6 +837,14 @@
     </div>
 	@endif
 	@include('setting::featured_deals')
+
+	@if(MyHelper::hasAccess([241], $grantedFeature))
+	@include('setting::featured_subscription')
+	@endif
+
+	@if(MyHelper::hasAccess([246], $grantedFeature))
+	@include('setting::user_inbox')
+	@endif
 
 	{{-- app logo --}}
     <div class="tab-pane" id="app-logo">
@@ -793,7 +868,7 @@
 									<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 										<div class="fileinput-new thumbnail">
 											@if(isset($app_logo['app_logo_3x']))
-												<img src="{{ env('S3_URL_API')}}{{$app_logo['app_logo_3x']}}" alt="">
+												<img src="{{ env('STORAGE_URL_API')}}{{$app_logo['app_logo_3x']}}" alt="">
 											@else
 												<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 											@endif
@@ -1080,14 +1155,19 @@
 	                            </div>
 	                            <div class="col-md-2">
                                     <label class="radio-inline">
+										<input class="click-to-radio" type="radio" name="click_to" value="order"> Order
+									</label>
+	                            </div>
+	                            <div class="col-md-2">
+                                    <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
 									</label>
 	                            </div>
-	                            <div class="col-md-4">
+	                            <!--<div class="col-md-4">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
-	                            </div>
+	                            </div>-->
                             </div>
 
                             <div class="col-md-12 click-to-type" style="margin-top: 10px;">
@@ -1192,14 +1272,19 @@
 	                            </div>
 	                            <div class="col-md-2">
                                     <label class="radio-inline">
+										<input class="click-to-radio" type="radio" name="click_to" value="order"> Order
+									</label>
+	                            </div>
+	                            <div class="col-md-2">
+                                    <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
 									</label>
 	                            </div>
-	                            <div class="col-md-4">
+	                            <!--<div class="col-md-4">
                                     <label class="radio-inline">
 										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
 									</label>
-	                            </div>
+	                            </div>-->
                             </div>
 
                             <div class="col-md-12 click-to-type" style="margin-top: 10px;">

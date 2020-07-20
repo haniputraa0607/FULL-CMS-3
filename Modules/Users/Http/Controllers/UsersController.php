@@ -11,6 +11,7 @@ use App\Lib\MyHelper;
 use Session;
 use Excel;
 use App\Exports\ArrayExport;
+use Illuminate\Support\Facades\Cookie;
 
 class UsersController extends Controller
 {
@@ -52,6 +53,19 @@ class UsersController extends Controller
             $data = [];
         }
 		return response()->json($data);
+	}
+	
+	public function listAddressUser(Request $request,$phone){
+		$post = $request->except('_token');
+		$post['phone'] = $phone;
+		$raw_data = MyHelper::post('users/list/address', $post)['result']??[];
+		$data['data'] = $raw_data['data'];
+        $data['total'] = $raw_data['total']??0;
+        $data['from'] = $raw_data['from']??0;
+        $data['order_by'] = $raw_data['order_by']??0;
+        $data['order_sorting'] = $raw_data['order_sorting']??0;
+        $data['last_page'] = !($raw_data['next_page_url']??false);
+        return $data;
 	}
 	
     public function autoResponse(Request $request, $subject){
@@ -134,6 +148,12 @@ class UsersController extends Controller
 		}
 		
 		$data['custom'] = $custom;
+        $data['click_inbox'] = [
+            ['value' => "No Action",'title' => 'No Action']
+        ];
+        $data['click_notification'] = [
+            ['value' => 'Home','title' => 'Home']
+        ];
 		// print_r($data);exit;
         return view('users::response', $data);
 	}
@@ -145,8 +165,13 @@ class UsersController extends Controller
 			if(isset($post['relationship']) && $post['relationship']=="-"){
 				$post['relationship'] = null;
 			}
+
+			if(isset($post['id_card_image']) && !empty($post['id_card_image'])){
+                $post['id_card_image'] = MyHelper::encodeImage($post['id_card_image']);
+            }
+
 			$query = MyHelper::post('users/create', $post);
-			
+
 			if(isset($query['status']) && $query['status'] == 'success'){
 				return back()->withSuccess(['User Create Success']);
 			} else{
@@ -166,13 +191,13 @@ class UsersController extends Controller
 			$getProvince = MyHelper::get('province/list');
 			if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
 			
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/be/list');
 			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
 
-			$getCelebrate = MyHelper::get('setting/celebrate_list');
+			$getCelebrate = MyHelper::get('setting/be/celebrate_list');
 			if($getCelebrate['status'] == 'success') $data['celebrate'] = $getCelebrate['result']; else $data['celebrate'] = null;
 
-			$getJob = MyHelper::get('setting/jobs_list');
+			$getJob = MyHelper::get('setting/be/jobs_list');
 			if($getJob['status'] == 'success') $data['job'] = $getJob['result']; else $data['job'] = null;
 			
 			return view('users::create', $data);
@@ -212,18 +237,18 @@ class UsersController extends Controller
 					  'submenu_active'    => 'admin-outlet-create'
 					];
 					
-			$getOutlet = MyHelper::get('outlet/list');
+			$getOutlet = MyHelper::get('outlet/be/list');
 			// print_r($getOutlet);exit;
 			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
 			return view('users::create_admin_outlet', $data);
 		}
 	}
 	
-	public function updateAdminOutlet(Request $request, $phone, $id_outlet){
+	public function updateAdminOutlet(Request $request, $phone){
 		$post = $request->except('_token');
 		if(isset($post) && !empty($post)){
 			$post['phone'] = $phone;
-			$post['id_outlet'][0] = $id_outlet;
+			$post['delete'] = true;
 
 			$query = MyHelper::post('users/adminoutlet/create', $post);
 
@@ -239,9 +264,17 @@ class UsersController extends Controller
 					  'submenu_active'    => 'admin-outlet-list'
 					];
 
-			$query = MyHelper::post('users/adminoutlet/detail', ['phone' => $phone, 'id_outlet' => $id_outlet]);
+			$query = MyHelper::post('users/adminoutlet/detail', ['phone' => $phone]);
 			
 			if($query['status'] == 'success') $data['details'] = $query['result']; else $data['details'] = null;
+
+			if($data['details']) {
+				$data['details']['outlets'] = explode(',', $data['details']['outlets']);
+			}
+
+			$getOutlet = MyHelper::get('outlet/be/list');
+			// print_r($getOutlet);exit;
+			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
 
 			return view('users::update_admin_outlet', $data);
 		}
@@ -371,8 +404,14 @@ class UsersController extends Controller
 		// print_r($post);exit;
 		$getUser = MyHelper::post('users/list', $post);
 		// print_r($getUser);exit;
-		if($getUser['status'] == 'success') $data['content'] = $getUser['result']; else $data['content'] = null;
-		if($getUser['status'] == 'success') $data['total'] = $getUser['total']; else $data['total'] = null;
+        if ($getUser['status'] == 'success') {
+            $data['content'] = $getUser['result'];
+            $data['total'] = $getUser['total'];
+        }
+        else {
+            $data['content'] = null;
+            $data['total'] = null;
+        }
 		
 		$data['begin'] = $post['skip'] + 1;
 		$data['last'] = $post['take'] + $post['skip'];
@@ -395,22 +434,23 @@ class UsersController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 		
-		$getOutlet = MyHelper::get('outlet/list?log_save=0');
+		$getOutlet = MyHelper::get('outlet/be/list?log_save=0');
 		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
 			
-		$getProduct = MyHelper::get('product/list?log_save=0');
+		$getProduct = MyHelper::get('product/be/list?log_save=0');
 		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 		
 		$getTag = MyHelper::get('product/tag/list?log_save=0');
 		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
-		$getMembership = MyHelper::post('membership/list?log_save=0',[]);
+		$getMembership = MyHelper::post('membership/be/list?log_save=0',[]);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 		
 		$data['table_title'] = "User list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']." data)";
 		
 		// print_r($data);exit;
 		// print_r(Session::get('form'));exit;
+        $data['show'] = 1;
 		return view('users::index', $data);
     }
 	
@@ -505,14 +545,14 @@ class UsersController extends Controller
 				return back()->withErrors(['Delete Failed']);
 			}
 		}
+
 		if(isset($post['password'])){
-			$checkpin = MyHelper::post('users/pin/check', array('phone' => Session::get('phone'), 'pin' => $post['password']));
-			/* print_r($checkpin);exit;
+			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
 			if($checkpin['status'] != "success")
-				return redirect('login')->withErrors(['invalid_credentials' => 'Invalid username / password'])->withInput();
-			else */
-				Session::put('secure','yes');
-		} 
+				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+			else
+				Session::put('secure','yes');Session::put('secure_last_activity',time());
+		}
 		
 		if(isset($post['phone'])){
 			if(isset($post['birthday'])){
@@ -521,6 +561,11 @@ class UsersController extends Controller
 			if(isset($post['relationship']) && $post['relationship']=="-"){
 				$post['relationship'] = null;
 			}
+
+            if(isset($post['id_card_image']) && !empty($post['id_card_image'])){
+                $post['id_card_image'] = MyHelper::encodeImage($post['id_card_image']);
+            }
+
 			$update = MyHelper::post('users/update', ['phone' => $phone, 'update' => $post]);
 			return parent::redirect($update, 'Profile has been updated');
 		}
@@ -542,28 +587,19 @@ class UsersController extends Controller
 			// print_r($post);exit;
 			$update = MyHelper::post('users/update/level', $post);
 			// print_r($update);exit;
-			return parent::redirect($update, 'Account Level has been changed.');
+			return parent::redirect($update, 'Account Level has been changed.',url()->current().'#permission');
         }
 		
 		if (isset($post['password_permission'])) {
 			$post['phone'] = $phone;
 			$update = MyHelper::post('users/update/permission', $post);
-			return parent::redirect($update, 'Account Permission has been changed.');
+			return parent::redirect($update, 'Account Permission has been changed.',url()->current().'#permission');
 		}
 		if (isset($post['is_suspended'])) {
 			$post['phone'] = $phone;
 			$update = MyHelper::post('users/update/suspend', $post);
 			return parent::redirect($update, 'Suspend Status has been changed.');
         }
-		
-		if(empty(Session::get('secure'))){
-			$data = [ 'title'             => 'User',
-					  'menu_active'       => 'user',
-					  'submenu_active'    => 'user-list',
-					  'phone'    		  => $phone
-					];
-			return view('users::password', $data);
-		}
 		
 		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
 		// return $getUser;exit;
@@ -578,7 +614,7 @@ class UsersController extends Controller
 		$getVoucher = MyHelper::post('deals/voucher/user?log_save=0', ['phone' => $phone]);
 // 		return $getVoucher;
 		
-		$getInbox = MyHelper::post('inbox/user',['phone'=>$phone]);
+		$getInbox = MyHelper::post('inbox/be/user',['phone'=>$phone]);
 
 		$data = [ 'title'             => 'User',
 				  'menu_active'       => 'user',
@@ -591,7 +627,8 @@ class UsersController extends Controller
 		$data['featuresall'] = null;
 		$data['featuresmodule'] = null;
 		$data['voucher'] = null;
-
+		$data['celebrates'] = MyHelper::get('setting/be/celebrate_list ')['result']??[];
+		$data['jobs'] = MyHelper::get('setting/be/jobs_list')['result']??[];
 		if(isset($getUser['result'])){
 			$data['profile'] = $getUser['result'];
 // 			$data['trx'] = $getUser['trx'];
@@ -613,8 +650,17 @@ class UsersController extends Controller
 		
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
-		// print_r($data);exit;
-        return view('users::detail', $data);
+
+        if (empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)) {
+            $data = [ 'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-list',
+                'phone'    		  => $phone
+            ];
+            return view('users::password', $data);
+        } else {
+            return view('users::detail', $data);
+        }
     }
     
     public function showAllLog($phone, Request $request)
@@ -725,7 +771,7 @@ class UsersController extends Controller
     {
 		$getLog = MyHelper::get('users/log/detail/'.$id.'/'.$log_type);
 		$data = [];
-		
+
 		if(isset($getLog['result'])) $data = $getLog['result'];
 
         return $data;
@@ -747,17 +793,37 @@ class UsersController extends Controller
     public function delete($phone)
     {
 		$deleteUser = MyHelper::post('users/delete', ['phone' => $phone]);
-		// print_r($deleteUser);exit;
 		if($deleteUser['status'] == 'success'){
 			return back()->withSuccess($deleteUser['result']);
 		} else{
 			return back()->withErrors($deleteUser['messages']);
 		}
+	}
+
+	public function deleteLogApp($id)
+    {
+		$deleteUserLog = MyHelper::post('users/delete/log', ['id_log_activities_apps' => $id]);
+		if($deleteUserLog['status'] == 'success'){
+			return back()->withSuccess($deleteUserLog['result']);
+		} else{
+			return back()->withErrors($deleteUserLog['messages']);
+		}
+	}
+	
+	public function deleteLogBE($id)
+    {
+		$deleteUserLog = MyHelper::post('users/delete/log', ['id_log_activities_be' => $id]);
+		if($deleteUserLog['status'] == 'success'){
+			return back()->withSuccess($deleteUserLog['result']);
+		} else{
+			return back()->withErrors($deleteUserLog['messages']);
+		}
     }
 	
 	public function activity(Request $request, $page = 1){
+        $input = $request->input();
 		$post = $request->except('_token');
-
+		
 		if(!empty(Session::get('form'))){
 			if(isset($post['take'])) $takes = $post['take'];
 			if(isset($post['order_field'])) $order_fields = $post['order_field'];
@@ -775,19 +841,26 @@ class UsersController extends Controller
 			Session::put('form',$post);
 		}
 		
+		if(isset($post['password'])){
+			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+			if($checkpin['status'] != "success")
+				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+			else
+				Session::put('secure','yes');Session::put('secure_last_activity',time());
+		}
+		
 		$data = [ 'title'             => 'User',
 				  'menu_active'       => 'user',
 				  'submenu_active'    => 'user-log'
 				];
-				
-		if(!isset($post['order_field'])) $post['order_field'] = '';
+
+        if(!isset($post['order_field'])) $post['order_field'] = '';
 		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
 		if(!isset($post['take'])) $post['take'] = 10;
 		$post['skip'] = 0 + (($page-1) * $post['take']);
 		
-		// print_r($post);exit;
 		$getLog = MyHelper::post('users/activity', $post);
-
+		
 		if(isset($getLog['status']) && $getLog['status'] == 'success') {
             $data['content']['mobile'] = $getLog['result']['mobile']['data'];
             $data['content']['be'] = $getLog['result']['be']['data'];
@@ -820,8 +893,46 @@ class UsersController extends Controller
 		}
 		
 		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
-		
-		// print_r($data);exit;
-		return view('users::log', $data);
+
+        if (empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)) {
+            $data = [
+                'title'             => 'User',
+                'menu_active'       => 'user',
+                'submenu_active'    => 'user-log'
+            ];
+            return view('users::password', $data);
+        } else {
+            return view('users::log', $data);
+        }
 	}
+	
+    public function favorite(Request $request, $phone){
+        $post = $request->post();
+        $data = [ 'title'             => 'User',
+            'subtitle'		  => 'Favorite',
+            'menu_active'       => 'user',
+            'submenu_active'    => 'user-list'
+		];
+		
+        if(isset($post['password'])){
+			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+			if($checkpin['status'] != "success")
+				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+			else
+				Session::put('secure','yes');Session::put('secure_last_activity',time());
+		}
+		
+		$data['favorites'] = MyHelper::post('users/favorite?page='.($request->page?:1),['phone'=>$phone])['result']??[];
+
+		if(empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)){
+			$data = [ 'title'             => 'User',
+					  'menu_active'       => 'user',
+					  'submenu_active'    => 'user-list',
+					  'phone'    		  => $phone
+					];
+			return view('users::password', $data);
+		} else {
+            return view('users::favorite', $data);
+        }
+    }
 }

@@ -1,25 +1,31 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            $('select2').select2();
           $('.summernote').summernote({
         placeholder: 'Setting',
         tabsize: 2,
         height: 120,
         toolbar: [
-          ['style', ['style']],
-          ['style', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['insert', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['misc', ['fullscreen', 'codeview', 'help']]
+            ['style', ['style']],
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
         ],
         callbacks: {
             onImageUpload: function(files){
@@ -99,7 +105,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class=" icon-layers font-green"></i>
-                <span class="caption-subject font-green bold uppercase">{{ $subTitle }}</span>
+                <span class="caption-subject font-green bold uppercase">{{ $sub_title }}</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -110,11 +116,16 @@
                     	<input type="hidden" name="key" value="{{ $key }}">
                         <label class="control-label col-md-{{$colLabel}}">
                             {{ $label }}
-                            <i class="fa fa-question-circle tooltips" data-original-title="@if($label == 'TOS') kebijakan TOS dari perusahaan @elseif($label == 'About') dapat diisi dengan profil perusahaan @elseif($label == 'Contact Us') dapat diisi dengan contact perusahaan @elseif($label == 'QR Code expires in') batas waktu qrcode valid @elseif($label == 'Time') waktu minimum yang dibutuhkan untuk menyiapkan pesanan @elseif($span == 'times') notifikasi gagal login akan dikirimkan ke user setelah berapa kali user gagal login @endif" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="@if($label == 'Ketentuan Layanan') ketentuan layanan penggunaan aplikasi dari perusahaan @elseif($label == 'About') dapat diisi dengan profil perusahaan @elseif($label == 'Contact Us') dapat diisi dengan contact perusahaan @elseif($label == 'QR Code expires in') batas waktu qrcode valid @elseif($label == 'Time') waktu minimum yang dibutuhkan untuk menyiapkan pesanan @elseif($span == 'times') notifikasi gagal login akan dikirimkan ke user setelah berapa kali user gagal login @elseif($span == 'item') Default jumlah order maksimal untuk produk jika per produk atau per outlet tidak diatur @elseif($submenu_active == 'credit_card_payment_gateway') Payment gateway yang akan digunakan untuk memproses pembayaran dengan credit card @endif" data-container="body"></i>
                         </label>
                         <div class="col-md-{{$colInput}}">
                             @if($key == 'value_text')
                                 <textarea class="form-control summernote" id="id_text" name="value">{!! $value !!}</textarea>
+                            @elseif($submenu_active == 'credit_card_payment_gateway')
+                                <select class="select2" name="value">
+                                    <option value="Ipay88" {{ $value=='Ipay88' ? 'selected' : '' }}>IPay88</option>
+                                    <option value="Midtrans" {{ $value=='Midtrans' ? 'selected' : '' }}>Midtrans</option>
+                                </select>
                             @else
 
                                 @if(isset($span))

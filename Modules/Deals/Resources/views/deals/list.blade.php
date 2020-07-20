@@ -1,27 +1,34 @@
 @include('deals::deals.list_filter')
 <?php
 use App\Lib\MyHelper;
+$configs    		= session('configs');
 $grantedFeature     = session('granted_features');
 ?>
-@extends('layouts.main')
+@extends('layouts.main-closed')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    	.middle-center {
+            vertical-align: middle!important;
+            text-align: center;
+        }
+    </style>
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 language: {
@@ -80,6 +87,7 @@ $grantedFeature     = session('granted_features');
                         target: "tr"
                     }
                 },
+                ordering: false,
                 order: [0, "asc"],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
@@ -147,27 +155,52 @@ $grantedFeature     = session('granted_features');
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
-
-                        <th> No</th>
-                        <th> Promo ID </th>
+                        <th> Type </th>
                         <th> Title </th>
+                        @if(MyHelper::hasAccess([95], $configs))
                         <th> Brand </th>
-                        @if($deals_type != "Hidden")
-                        <th> Date Publish </th>
                         @endif
-                        <th> Date Start </th>
+                        <th> Price </th>
+                        @if($deals_type != "Hidden" && $deals_type !='WelcomeVoucher')
+                            <th> Date Publish </th>
+                            <th> Date Start </th>
+                        @endif
+                        <th> Status </th>
                         <th> Action </th>
                     </tr>
                 </thead>
                 <tbody>
+                	@php $now = date("Y-m-d H:i:s"); @endphp
                     @if (!empty($deals))
                         @foreach($deals as $key => $value)
+	                        @php
+	                            if( isset($value['deals_start']) )
+	                            {
+	                                $date_start = $value['deals_start'];
+	                                $date_end = $value['deals_end'];
+	                            }
+	                        @endphp
                             <tr>
-                                <td>{{ $key+1 }}</td>
-                                <td>{{ $value['deals_promo_id'] }}</td>
+                                <td nowrap>
+                                	<ul>
+                                		<li>{{ $value['promo_type']??'' }}</li>
+                                	</ul>
+                            	</td>
                                 <td>{{ $value['deals_title'] }}</td>
+                                @if(MyHelper::hasAccess([95], $configs))
                                 <td>{{ $value['brand']['name_brand']??'Not Set' }}</td>
-                                @if($deals_type != "Hidden")
+                                @endif
+                                <td>
+                                	@if($value['deals_voucher_price_type'] == 'free')
+                                		{{ $value['deals_voucher_price_type'] }}
+                                	@elseif(!empty($value['deals_voucher_price_point']))
+                                		{{ number_format($value['deals_voucher_price_point']).' Points' }}
+                                	@elseif(!empty($value['deals_voucher_price_cash']))
+                                		{{ 'IDR'.number_format($value['deals_voucher_price_cash']) }}
+                                	@endif
+                                </td>
+
+                                @if($deals_type != "Hidden" && $deals_type !='WelcomeVoucher')
                                 <td>
                                     @php
                                         $bulan   = date('m', strtotime($value['deals_publish_start']));
@@ -179,7 +212,6 @@ $grantedFeature     = session('granted_features');
                                         {{ date('d M Y', strtotime($value['deals_publish_start'])) }} - {{ date('d M Y', strtotime($value['deals_publish_end'])) }}
                                     @endif
                                 </td>
-                                @endif
                                 <td>
                                     @php
                                         $bulan   = date('m', strtotime($value['deals_start']));
@@ -191,20 +223,37 @@ $grantedFeature     = session('granted_features');
                                         {{ date('d M Y', strtotime($value['deals_start'])) }} - {{ date('d M Y', strtotime($value['deals_end'])) }}
                                     @endif
                                 </td>
+                                @endif
+                                <td class="middle-center">
+	                                @if ( empty($value['step_complete']) )
+	                                    <a href="{{url('deals/step2', $value['id_deals'])??'#'}}"><span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #F4D03F;padding: 5px 12px;color: #fff;">Not Complete</span></a>
+	                                @elseif( !empty($date_end) && $date_end < $now )
+	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Ended</span>
+	                                @elseif( empty($date_start) || $date_start <= $now )
+	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
+	                                @elseif($date_start > $now)
+	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
+	                                @endif
+	                            </td>
                                 <td style="width: 80px;">
-                                    @if($deals_type == "Deals" && MyHelper::hasAccess([76], $grantedFeature))
+                                    @if($deals_type == "Deals" && MyHelper::hasAccess([76], $grantedFeature) && $value['deals_total_claimed'] == 0)
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
-                                    @if($deals_type == "Hidden" && MyHelper::hasAccess([81], $grantedFeature))
+                                    @if($deals_type == "Hidden" && MyHelper::hasAccess([81], $grantedFeature) && $value['deals_total_claimed'] == 0)
+                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
+                                    @endif
+                                    @if($deals_type == "WelcomeVoucher" && MyHelper::hasAccess([191], $grantedFeature) && $value['deals_total_claimed'] == 0)
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
                                     @if ($deals_type == "Deals" && MyHelper::hasAccess([73], $grantedFeature))
-                                    <a href="{{ url('deals/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                    <a href="{{ url('deals/detail') }}/{{ $value['id_deals'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @elseif ($deals_type == "Point" && MyHelper::hasAccess([73], $grantedFeature))
-                                    <a href="{{ url('deals-point/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                    <a href="{{ url('deals-point/detail') }}/{{ $value['id_deals'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                    @elseif ($deals_type == "WelcomeVoucher" && MyHelper::hasAccess([188], $grantedFeature))
+                                        <a href="{{ url('welcome-voucher/detail') }}/{{ $value['id_deals'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @else
                                         @if(MyHelper::hasAccess([78], $grantedFeature))
-                                            <a href="{{ url('hidden-deals/detail') }}/{{ $value['id_deals'] }}/{{ $value['deals_promo_id'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                            <a href="{{ url('inject-voucher/detail') }}/{{ $value['id_deals'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                         @endif
                                     @endif
                                 </td>

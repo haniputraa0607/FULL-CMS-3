@@ -54,9 +54,7 @@ class MyHelper
 
   // Example = 03 October 2019 - 10:35
   public static function convertDateTime2($date, $decode = null) {
-    $date    = explode(' ', $date);
-    $tanggal = $date[2].'-'.$date[1].'-'.$date[0];
-    $tanggal = $tanggal.' '.$date[4];
+    $tanggal    = str_replace(' - ', ' ', $date);
     $date    = date('Y-m-d H:i:s', strtotime($tanggal));
     return $date;
   }
@@ -72,7 +70,42 @@ class MyHelper
               'client_id'     => env('PASSWORD_CREDENTIAL_ID'),
               'client_secret' => env('PASSWORD_CREDENTIAL_SECRET'),
               'username'      => $request->input('username'),
-              'password'      => $request->input('password')
+              'password'      => $request->input('password'),
+              'scope'        => 'be'
+          ],
+      ]);
+      return json_decode($response->getBody(), true);
+    }catch (\GuzzleHttp\Exception\RequestException $e) {
+      try{
+        if($e->getResponse()){
+          $response = $e->getResponse()->getBody()->getContents();
+          return json_decode($response, true);
+        }
+        else{
+          return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+        }
+
+      }
+      catch(Exception $e){
+        return ['status' => 'fail', 'messages' => [0 => 'Check your internet connection.']];
+      }
+    }
+  }
+
+  public static function postLoginUserFranchise($request){
+    $api = env('APP_API_URL');
+
+    $client = new Client;
+    try {
+      $response = $client->request('POST',$api.'oauth/token', [
+          'form_params' => [
+              'grant_type'    => 'password',
+              'client_id'     => env('PASSWORD_CREDENTIAL_ID'),
+              'client_secret' => env('PASSWORD_CREDENTIAL_SECRET'),
+              'username'      => $request->input('username'),
+              'password'      => $request->input('password'),
+              'scope'        => 'be',
+              'user-franchise' => 1
           ],
       ]);
       return json_decode($response->getBody(), true);
@@ -103,7 +136,7 @@ class MyHelper
               'grant_type'    => 'client_credentials',
               'client_id'     => env('CLIENT_CREDENTIAL_ID'),
               'client_secret' => env('CLIENT_CREDENTIAL_SECRET'),
-              'scope'      		=> '*'
+              'scope'      		=> 'be'
           ],
       ]);
 
@@ -248,12 +281,16 @@ class MyHelper
     }
   }
 
-  public static function postFile($url, $name_field, $path){ 
+  public static function postFile($url, $name_field, $path,$postData=null){ 
     $api = env('APP_API_URL'); 
     $client = new Client(); 
 
     $ses = session('access_token');
-
+    if($path){
+      $content=fopen($path, 'r');
+    }else{
+      $content='';
+    }
     $content = array( 
       'headers' => [ 
         'Authorization' => $ses, 
@@ -263,12 +300,17 @@ class MyHelper
       'multipart' => [ 
           [ 
               'name'     => $name_field, 
-              'contents' => fopen($path, 'r'), 
+              'contents' => $content, 
               // 'filename' => $name 
           ] 
       ] 
     ); 
-
+    if(is_array($postData)){
+      $postData=array_map(function($val,$key){
+        return array('name'=>$key,'contents'=>json_encode($val));
+      }, $postData,array_keys($postData));
+      array_push($content['multipart'],...$postData);
+    }
     try {
       $response = $client->post($api.'api/'.$url,$content);
       if(!is_array(json_decode($response->getBody(), true)));
@@ -460,6 +502,7 @@ class MyHelper
     $key = md5("esemestester".$id_user."644", true);
     return $key;
   }
+  
   public static function  getkey() {
     $depan = MyHelper::createrandom(1);
     $belakang = MyHelper::createrandom(1);
@@ -641,6 +684,74 @@ class MyHelper
     else {
       return $string;
     }
+  }
+
+  // terbaru, cuma nambah serialize + unserialize sih biar support array
+  public static function encrypt2019($value) {
+    if(!$value){return false;}
+    // biar support array
+    $text = serialize($value);
+    $skey = self::getkey();
+    $depan = substr($skey, 0, env('ENC_DD'));
+    $belakang = substr($skey, -env('ENC_DB'), env('ENC_DB'));
+    $ivlen = openssl_cipher_iv_length(env('ENC_CM'));
+    $iv = substr(hash('sha256', env('ENC_SI')), 0, $ivlen);
+    $crypttext = openssl_encrypt($text, env('ENC_CM'), $skey, 0, $iv);
+    return trim($depan . self::safe_b64encode($crypttext) . $belakang);
+  }
+
+  public static function decrypt2019($value) {
+    if(!$value){return false;}
+    $skey = self::parsekey($value);
+    $jumlah = strlen($value);
+    $value = substr($value, env('ENC_DD'), $jumlah-env('ENC_DD')-env('ENC_DB'));
+    $crypttext = self::safe_b64decode($value);
+    $ivlen = openssl_cipher_iv_length(env('ENC_CM'));
+    $iv = substr(hash('sha256', env('ENC_SI')), 0, $ivlen);
+    $decrypttext = openssl_decrypt($crypttext, env('ENC_CM'), $skey, 0, $iv);
+    // dikembalikan ke format array sewaktu return
+    return unserialize(trim($decrypttext));
+  }
+  
+  /**
+   * Create slug for resource based on id and created_at parameter
+   * @param  String $id         id of resource
+   * @param  String $created_at created_at value of item
+   * @return String             slug result
+   */
+  public static function createSlug($id,$created_at){
+    $combined = $id.'.'.$created_at;
+    $result = self::encrypt2019($combined);
+    return $result;
+  }
+
+  /**
+   * get id and created at from slug
+   * @param  String $slug given slug
+   * @return Array       id and created at or empty array if invalid slug
+   */
+  public static function explodeSlug($slug) {
+    $decripted = self::decrypt2019($slug);
+    $result = explode('.',$decripted);
+    if(!$result || (count($result) == 1 && empty($result[0]))){
+      return [];
+    }
+    return $result;
+  }
+  /**
+   * get Excel coumn name from number
+   * @param Integer number of column (ex. 1)
+   * @return String Excel column name (ex. A)
+   */
+  public static function getNameFromNumber($num) {
+      $numeric = ($num - 1) % 26;
+      $letter = chr(65 + $numeric);
+      $num2 = intval($num / 26);
+      if ($num2 > 0) {
+          return getNameFromNumber($num2 - 1) . $letter;
+      } else {
+          return $letter;
+      }
   }
 }
 

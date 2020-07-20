@@ -7,18 +7,18 @@
 @section('page-style')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
 
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet" type="text/css" />
-   <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.css')}}" rel="stylesheet" type="text/css" />
-	 <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet" type="text/css" />
+   <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.css')}}" rel="stylesheet" type="text/css" />
+	 <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
 
    <style type="text/css">
      .sort-icon{
@@ -42,20 +42,19 @@
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/handlebars.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
-     <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/typeahead/handlebars.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
+     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
     <script>
 
      $('.datepicker').datepicker({
@@ -205,14 +204,23 @@
             token = '<?php echo csrf_token()?>';
 
             $('.summernote').summernote({
-                placeholder: 'News Content Long',
+                placeholder: 'Content',
                 tabsize: 2,
                 height: 120,
-                fontNames: ['Open Sans'],
+                toolbar: [
+                    ['style', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                ],
                 callbacks: {
                     onFocus: function() {
-                        $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-                        $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/content-long.png')}}")
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/content-long.png')}}")
                     },
                     onImageUpload: function(files){
                         sendFile(files[0], $(this).attr('id'));
@@ -435,55 +443,56 @@
             /* OUTLET */
             $('#featureOutlet').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureOutlet', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.png')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/outlet.png')}}")
             });
 
             /* VIDEO */
             $('#featureVideo').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureVideo', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/video.png')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/video.png')}}")
             });
 
             /* LOCATION */
             $('#featureLocation').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureLocation', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.png')}}")
             });
 
             /* PRODUCT */
             $('#featureProduct').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureProduct', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.png')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/product.png')}}")
             });
 
             /* BUTTON */
             $('#featureButton').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureButton', state);
+                $('#custom_page_button_form').val('Call').trigger('change')
             });
 
             /* DATE */
             $('#featureDate').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureDate', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.png')}}")
             });
 
             /* TIME */
             $('#featureTime').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureTime', state);
-                $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-                $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.png')}}")
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.png')}}")
             });
 
 			 /* IMAGE HEADER */
             $('#featureImage').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureImage', state);
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/image-landscape.png')}}")
             });
 
             /* PUBLISH DATE */
@@ -538,7 +547,6 @@
                             }
                         }
                     };
-
                     image.src = _URL.createObjectURL(file);
                 }
 
@@ -564,63 +572,70 @@
         }
 
         $('#field_title').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/title.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/title2.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/title.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/title2.png')}}")
         })
         $('#field_post_date').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/post-date.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/post-date2.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/post-date.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/post-date2.png')}}")
         })
         $('#field_content_short').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/content-short.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/content-short.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news4.png')}}")
         })
         $('#field_image_square').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-square.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news4.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/image-square.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news4.png')}}")
         })
         $('#field_image_landscape').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/image-landscape.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/image-landscape.png')}}")
         })
         $('.field_event').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/event.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.png')}}")
         })
         $('.featureVideoForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/video.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/video.png')}}")
         })
         $('.featureProductForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/product.png')}}")
         })
         $('.featureOutletForm').focus(function(){
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/outlet.png')}}")
         })
         $("input[name='publish_type']").change(function(){
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.png')}}")
         })
         $(".field_publish_date").focus(function(){
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.png')}}")
         })
         $(document).on('focus', '#selectOutlet .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/outlet.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/outlet.png')}}")
         })
         $(document).on('focus', '#selectProduct .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/news3.png')}}")
-            $('#tutorial2').attr('src', "{{env('S3_URL_VIEW') }}{{('img/news/product.png')}}")
+            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.png')}}")
+            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/product.png')}}")
         })
 
         $(document).on('change', '#custom_page_button_form', function (e) {
             if (this.value == "Open Page") {
                 $('#inputValue').hide().prop('required',false);
                 $('#selectValue').show().prop('required',true);
-            } else {
+            } else if (this.value == "Call") {
                 $('#inputValue').show().prop('required',true);
                 $('#selectValue').hide().prop('required',false);
+                $('input[name="custom_page_button_form_text_value"]').attr("placeholder", "Example: 0811223344");
+                $('#lable_button_form').replaceWith('<label class="control-label" id="lable_button_form">Number<span class="required" aria-required=""> * </span> </label>')
+            } else if (this.value == "Link") {
+                $('#inputValue').show().prop('required',true);
+                $('#selectValue').hide().prop('required',false);
+                $('input[name="custom_page_button_form_text_value"]').attr("placeholder", "Example: https://www.youtube.com/watch?v=u9_2wWSOQ");
+                $('#lable_button_form').replaceWith('<label class="control-label" id="lable_button_form">Link<span class="required" aria-required=""> * </span> </label>')
             }
         })
     </script>
@@ -658,7 +673,7 @@
         <div class="portlet-body m-form__group row">
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                     <div class="col-md-4">
-                        <img src="{{env('S3_URL_VIEW') }}{{('img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
+                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.png')}}" style="width:100%" alt="tutorial" id="tutorial2">
                     </div>
                     <div class="col-md-8">
                     <div class="form-body">
@@ -702,7 +717,7 @@
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                                    <img @if (isset($detail['custom_page_icon_image'])) src="{{env('S3_URL_API')}}{{$detail['custom_page_icon_image']}}" disabled @elseif (isset($result['custom_page_icon_image'])) src="{{env('S3_URL_API')}}{{$result['custom_page_icon_image']}}" @else src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" @endif alt="">
+                                    <img @if (isset($detail['custom_page_icon_image'])) src="{{env('STORAGE_URL_API')}}{{$detail['custom_page_icon_image']}}" disabled @elseif (isset($result['custom_page_icon_image'])) src="{{env('STORAGE_URL_API')}}{{$result['custom_page_icon_image']}}" @else src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" @endif alt="">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" id="image_icon" style="max-width: 200px; max-height: 200px;"></div>
                                     <div>
@@ -775,7 +790,7 @@
                                                         <div class="col-md-6">
                                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                                                <img class='previewImage' src="{{env('S3_URL_API')}}{{$item['custom_page_image']}}" alt="">
+                                                                <img class='previewImage' src="{{env('STORAGE_URL_API')}}{{$item['custom_page_image']}}" alt="">
                                                                 </div>
                                                                 <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
                                                                 <div class='btnImage' hidden>
@@ -884,7 +899,7 @@
                         <div class="form-group featureDate">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Date Start <span class="required" aria-required="true"> * </span> </label>
                                 </div>
                                 <div class="col-md-5">
@@ -903,7 +918,7 @@
                         <div class="form-group featureDate">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Date End <span class="required" aria-required="true"> * </span> </label>
                                 </div>
                                 <div class="col-md-5">
@@ -940,7 +955,7 @@
                         <div class="form-group featureTime">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Time Start <span class="required" aria-required="true"> * </span> </label>
                                 </div>
                                 <div class="col-md-4">
@@ -959,7 +974,7 @@
                         <div class="form-group featureTime">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Time End <span class="required" aria-required="true"> * </span> </label>
                                 </div>
                                 <div class="col-md-4">
@@ -996,10 +1011,10 @@
                         <div class="form-group featureLocation">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Location Name <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <input type="text" id="field_event_location" class="form-control featureLocationForm field_event" name="custom_page_event_location_name" @if (isset($detail['custom_page_event_location_name'])) value="{{$detail['custom_page_event_location_name']}}" disabled @elseif (isset($result['custom_page_event_location_name'])) value="{{$result['custom_page_event_location_name']}}" @else value="{{ old('custom_page_event_location_name') }}" @endif placeholder="Location name or name of a place">
                                 </div>
                             </div>
@@ -1008,10 +1023,10 @@
                         <div class="form-group featureLocation">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Contact Person</label>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <input type="text" id="field_event_contact" class="form-control field_event" name="custom_page_event_location_phone" @if (isset($detail['custom_page_event_location_phone'])) value="{{$detail['custom_page_event_location_phone']}}" disabled @elseif (isset($result['custom_page_event_location_phone'])) value="{{$result['custom_page_event_location_phone']}}" @else value="{{ old('custom_page_event_location_phone') }}" @endif placeholder="Contact Person in location">
                                 </div>
                             </div>
@@ -1020,10 +1035,10 @@
                         <div class="form-group featureLocation">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Address </label>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <textarea type="text" id="field_event_address" class="form-control field_event" name="custom_page_event_location_address" placeholder="Event's Address">@if (isset($detail['custom_page_event_location_address'])) {{$detail['custom_page_event_location_address']}} @elseif (isset($result['custom_page_event_location_address'])) {{$result['custom_page_event_location_address']}} @else {{ old('custom_page_event_location_address') }} @endif</textarea>
                                 </div>
                             </div>
@@ -1032,10 +1047,10 @@
                         <div class="form-group featureLocation">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Maps
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <input id="pac-input"  id="field_event_map" class="controls field_event" type="text" placeholder="Enter a location" style="padding:10px;width:50%" onkeydown="if (event.keyCode == 13) return false;" name="custom_page_event_location_map" @if (isset($detail['custom_page_event_location_map'])) value="{{$detail['custom_page_event_location_map']}}" disabled @elseif (isset($result['custom_page_event_location_map'])) value="{{$result['custom_page_event_location_map']}}" @else value="{{ old('custom_page_event_location_map') }}" @endif>
                                     <div id="map-canvas" style="width:900;height:380px;"></div>
                                 </div>
@@ -1045,10 +1060,10 @@
                         <div class="form-group featureLocation">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label"></label>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <div class="col-md-6">
                                         <input type="text" id="field_event_latitude" class="form-control" name="custom_page_event_latitude" @if (isset($detail['custom_page_event_latitude'])) value="{{$detail['custom_page_event_latitude']}}" disabled @elseif (isset($result['custom_page_event_latitude'])) value="{{$result['custom_page_event_latitude']}}" @else value="{{ old('custom_page_event_latitude') }}" @endif id="lat" readonly>
                                     </div>
@@ -1080,10 +1095,10 @@
                         <div class="form-group featureVideo">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Title <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <input type="text" id="field_video_text" class="form-control featureVideoForm" name="custom_page_video_text" @if (isset($detail['custom_page_video_text'])) value="{{$detail['custom_page_video_text']}}" disabled @elseif (isset($result['custom_page_video_text'])) value="{{$result['custom_page_video_text']}}" @else value="{{ old('custom_page_video_text') }}" @endif placeholder="Featured Video Title">
                                 </div>
                             </div>
@@ -1092,10 +1107,10 @@
                         <div class="form-group featureVideo">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Link Video <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <input name="custom_page_video" id="field_video_link" type="url" class="form-control featureVideoForm" @if (isset($detail['custom_page_video'])) value="{{$detail['custom_page_video']}}" disabled @elseif (isset($result['custom_page_video'])) value="{{$result['custom_page_video']}}" @else value="{{ old('custom_page_video') }}" @endif placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ">
                                 </div>
                             </div>
@@ -1122,10 +1137,10 @@
                         <div class="form-group featureOutlet">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Title <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <input type="text" id="field_outlte_title" class="form-control featureOutletForm" name="custom_page_outlet_text" @if (isset($detail['custom_page_outlet_text'])) value="{{$detail['custom_page_outlet_text']}}" disabled @elseif (isset($result['custom_page_outlet_text'])) value="{{$result['custom_page_outlet_text']}}" @else value="{{ old('custom_page_outlet_text') }}" @endif placeholder="Featured Outlet Title">
                                 </div>
                             </div>
@@ -1134,10 +1149,10 @@
                         <div class="form-group featureOutlet">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Outlet <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9" id="selectOutlet">
+                                <div class="col-md-8" id="selectOutlet">
                                     <select id="outlet"  id="field_outlet_select" class="form-control select2-multiple featureOutletForm" multiple data-placeholder="Select Outlet" name="id_outlet[]">
                                         <optgroup label="Outlet List">
                                             @php
@@ -1182,10 +1197,10 @@
                         <div class="form-group featureProduct">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Title <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <input type="text" id="field_product_title" class="form-control featureProductForm" name="custom_page_product_text" @if (isset($detail['custom_page_product_text'])) value="{{$detail['custom_page_product_text']}}" disabled @elseif (isset($result['custom_page_product_text'])) value="{{$result['custom_page_product_text']}}" @else value="{{ old('custom_page_product_text') }}" @endif placeholder="Featured Product Title">
                                 </div>
                             </div>
@@ -1194,10 +1209,10 @@
                         <div class="form-group featureProduct">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Product <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9" id="selectProduct">
+                                <div class="col-md-8" id="selectProduct">
                                     <select id="field_product_select" class="form-control select2-multiple featureProductForm" multiple data-placeholder="Select Product" name="id_product[]">
                                         <optgroup label="Product List">
                                             @php
@@ -1241,14 +1256,14 @@
                         <div class="form-group featureButton">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="control-label">Button Form <span class="required" aria-required="true"> * </span> </label>
                                 </div>
-                                <div class="col-md-9" id="selectProduct">
+                                <div class="col-md-8" id="selectProduct">
                                     <select class="form-control" id="custom_page_button_form" name="custom_page_button_form" @if (isset($detail)) disabled @endif>
                                         <option value="Call" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Call") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Call") selected @else @endif>Call</option>
                                         <option value="Link" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Link") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Link") selected @else @endif>Link</option>
-                                        <option value="Open Page" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Open Page") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Open Page") selected @else @endif>Open Page</option>
+                                        {{-- <option value="Open Page" @if (isset($detail['custom_page_button_form']) && $detail['custom_page_button_form'] == "Open Page") selected @elseif (isset($result['custom_page_button_form']) && $result['custom_page_button_form'] == "Open Page") selected @else @endif>Open Page</option> --}}
                                     </select>
                                 </div>
                             </div>
@@ -1257,13 +1272,13 @@
                         <div class="form-group featureButton">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
-                                <div class="col-md-3">
-                                    <label class="control-label">Value<span class="required" aria-required=""> * </span> </label>
+                                <div class="col-md-4">
+                                    <label class="control-label" id="lable_button_form">Value<span class="required" aria-required=""> * </span> </label>
                                 </div>
-                                <div id="inputValue" class="col-md-9">
-                                    <input type="text" class="form-control" name="custom_page_button_form_text" @if (isset($detail['custom_page_button_form_text'])) value="{{$detail['custom_page_button_form_text']}}" disabled @elseif (isset($result['custom_page_button_form_text'])) value="{{$result['custom_page_button_form_text']}}" @else value="{{ old('custom_page_button_form_text') }}" @endif placeholder="Featured Button Value">
+                                <div id="inputValue" class="col-md-8">
+                                    <input type="text" class="form-control" name="custom_page_button_form_text_value" @if (isset($detail['custom_page_button_form_text_value'])) value="{{$detail['custom_page_button_form_text_value']}}" disabled @elseif (isset($result['custom_page_button_form_text_value'])) value="{{$result['custom_page_button_form_text_value']}}" @else value="{{ old('custom_page_button_form_text_value') }}" @endif placeholder="Featured Button Value">
                                 </div>
-                                <div hidden id="selectValue" class="col-md-9">
+                                {{-- <div hidden id="selectValue" class="col-md-9">
                                     <select class="form-control" id="custom_page_button_form_text" name="custom_page_button_form_text" @if (isset($detail)) disabled @endif>
                                         <option value="Home" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Home") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Home") selected @else @endif>Home</option>
                                         <option value="News" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "News") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "News") selected @else @endif>News</option>
@@ -1275,6 +1290,18 @@
                                         <option value="Link" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Link") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Link") selected @else @endif>Link</option>
                                         <option value="Logout" @if (isset($detail['custom_page_button_form_text']) && $detail['custom_page_button_form_text'] == "Logout") selected @elseif (isset($result['custom_page_button_form_text']) && $result['custom_page_button_form_text'] == "Logout") selected @else @endif>Logout</option>
                                     </select>
+                                </div> --}}
+                            </div>
+                        </div>
+
+                        <div class="form-group featureButton">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <div class="col-md-4">
+                                    <label class="control-label">Text Button<span class="required" aria-required=""> * </span> </label>
+                                </div>
+                                <div id="inputValue" class="col-md-8">
+                                    <input type="text" class="form-control" name="custom_page_button_form_text_button" @if (isset($detail['custom_page_button_form_text_button'])) value="{{$detail['custom_page_button_form_text_button']}}" disabled @elseif (isset($result['custom_page_button_form_text_button'])) value="{{$result['custom_page_button_form_text_button']}}" @else value="{{ old('custom_page_button_form_text_button') }}" @endif placeholder="Featured Button Value">
                                 </div>
                             </div>
                         </div>

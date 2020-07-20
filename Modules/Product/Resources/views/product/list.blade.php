@@ -7,26 +7,27 @@
  @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
 
 
     @endsection
 
     @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
+                stateSave: true,
                 language: {
                     aria: {
                         sortAscending: ": activate to sort column ascending",
@@ -232,7 +233,7 @@
                         <th> Code </th>
                         <th> Category </th>
                         <th> Name </th>
-                        <th> Allow Sync </th>
+                        <!-- <th> Allow Sync </th> -->
                         <th >Default Visibility Product</th>
                         <th> Override Visible </th>
                         <th> Override Hidden </th>
@@ -250,17 +251,17 @@
                                 @if (empty($value['category']))
                                     <td>Uncategorize</td>
                                 @else
-                                    <td>{{ $value['category']['product_category_name'] }}</td>
+                                    <td>{{ $value['category'][0]['product_category_name']??'Uncategories' }}</td>
                                 @endif
                                 <td>{{ $value['product_name'] }}</td>
-                                <td>
+                                {{-- <td>
                                     <div class="bootstrap-switch-container">
                                         <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>
                                         <span class="bootstrap-switch-label" style="width: 35px;">&nbsp;</span>
                                         <span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 35px;"></span>
                                         <input type="checkbox" name="allow_sync" @if($value['product_allow_sync'] == '1') checked @endif data-id="{{ $value['id_product'] }}" class="make-switch switch-large switch-change" data-label-icon="fa fa-fullscreen" data-on-text="<i class='fa fa-check'></i>" data-off-text="<i class='fa fa-times'></i>">
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <div class="bootstrap-switch-container">
                                         <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>
@@ -269,8 +270,8 @@
                                         <input type="checkbox" name="product_visibility" @if($value['product_visibility'] == 'Visible') checked @endif data-id="{{ $value['id_product'] }}" class="make-switch switch-large switch-change" data-on-text="Visible" data-off-text="Hidden">
                                     </div>
                                 </td>
-                                <td><a href="{{ url('product/detail') }}/{{ $value['product_code'] }}#visibility">{{ $value['product_prices_count'] }}</a></td>
-                                <td><a href="{{ url('product/detail') }}/{{ $value['product_code'] }}#visibility">{{ $value['product_price_hiddens_count'] }}</td>
+                                <td><a href="{{ url('product/detail') }}/{{ $value['product_code'] }}#visibility">{{ $value['product_detail_count'] }}</a></td>
+                                <td><a href="{{ url('product/detail') }}/{{ $value['product_code'] }}#visibility">{{ $value['product_detail_hiddens_count'] }}</td>
                                 @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
                                     <td style="width: 80px;">
                                         @if(MyHelper::hasAccess([52], $grantedFeature))
