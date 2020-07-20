@@ -77,6 +77,7 @@
               <tr>
                   <th>Date</th>
                   <th>Outlet</th>
+                  <th>Transaction Type</th>
                   <th>Receipt Number</th>
                   <th>Customer Name</th>
                   <th>Phone</th>
@@ -94,6 +95,7 @@
                         <tr>
                             <td>{{ date('d M Y H:i:s', strtotime($res['transaction_date'])) }}</td>
                             <td>{{ $res['outlet_code'] }} - {{ $res['outlet_name'] }}</td>
+                            <td><span class="badge bg-{{$res['pickup_by'] == 'Customer' ? 'green-jungle':'blue'}}">{{$res['pickup_by'] == 'Customer' ? 'Pickup Order':'Delivery'}}</span></td>
                             <td>{{ $res['transaction_receipt_number'] }}</td>
                             @if (isset($res['name']))
                               <td>{{ $res['name'] }}</td>
