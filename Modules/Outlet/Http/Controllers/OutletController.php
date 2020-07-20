@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+use App\Exports\ArrayExport;
 use App\Lib\MyHelper;
 use Excel;
 use Validator;
@@ -1228,5 +1229,29 @@ class OutletController extends Controller
         }else{
             return redirect('outlet/list/user-franchise')->withErrors($update['messages']);
         }
+    }
+    public function exportPin(Request $request) {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Export Outlet Pin',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'export-outlet-pin',
+        ];
+        return view('outlet::export_outlet_pin', $data);
+    }
+
+    public function doExportPin(Request $request) {
+        $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $request->password, 'admin_panel' => 1));
+        if($checkpin['status'] != "success") return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+        
+        $dataOutlet = MyHelper::get('outlet/export-pin')['result']??[];
+        $dataOutlet = array_map(function ($i) {
+            return [
+                'Outlet Code' => $i['outlet_code'],
+                'Outlet Name' => $i['outlet_name'],
+                'Outlet PIN' => (string) $i['pin']
+            ];
+        },$dataOutlet);
+        return Excel::download(new ArrayExport($dataOutlet,'Outlet PIN'),date('YmdHis').'_Outlet_PIN.xlsx');
     }
 }
