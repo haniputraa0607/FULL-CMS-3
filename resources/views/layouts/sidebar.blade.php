@@ -335,7 +335,7 @@
 			@endif
 			@endif
 
-			@if(MyHelper::hasAccess([24,26,32,33,34], $grantedFeature))
+			@if(MyHelper::hasAccess([24,26,32,33,34,261], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'outlet') ? 'active' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
 					<i class="icon-pointer"></i>
@@ -406,6 +406,13 @@
 								</a>
 							</li>
 						@endif
+					@endif
+					@if(MyHelper::hasAccess([261], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'export-outlet-pin') ? 'active open' : ''}}">
+							<a href="{{url('outlet/export-outlet-pin')}}" class="nav-link ">
+								<span class="title">Export Outlet PIN</span>
+							</a>
+						</li>
 					@endif
 					@if(MyHelper::hasAccess([5], $configs) && MyHelper::hasAccess([101], $configs))
 						@if(MyHelper::hasAccess([24], $grantedFeature) && MyHelper::hasAccess([40], $grantedFeature))
@@ -642,14 +649,14 @@
 					<span class="arrow {{($menu_active == 'transaction') ? 'open' : ''}}"></span>
 				</a>
 				<ul class="sub-menu">
-					@if(MyHelper::hasAccess([13], $configs))
-					<li class="nav-item {{($submenu_active == 'transaction-delivery') ? 'active open' : ''}}">
-						<a href="{{url('transaction/delivery/'.date('YmdHis'))}}" class="nav-link ">
-							<span class="title">Delivery</span>
+					@if(MyHelper::hasAccess([13,12], $configs))
+					<li class="nav-item {{($submenu_active == 'transaction-all') ? 'active open' : ''}}">
+						<a href="{{url('transaction/all/'.date('YmdHis'))}}" class="nav-link ">
+							<span class="title">All Transaction</span>
 						</a>
 					</li>
 					@endif
-					<!-- <li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
+					{{-- <!-- <li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
 						<a href="{{url('transaction/offline/'.date('YmdHis'))}}" class="nav-link ">
 							<span class="title">Offline</span>
 						</a>
@@ -916,7 +923,7 @@
 					<span class="title">Outlet Product Price</span>
 				</a>
 			</li>
-			<li class="nav-item {{($menu_active == 'product-detail') ? 'active open' : ''}}">
+			<li class="nav-item {{($submenu_active == 'product-detail') ? 'active open' : ''}}">
 				<a href="{{url('product/outlet-detail')}}" class="nav-link ">
 					<i class="fa fa-tag"></i>
 					<span class="title">Outlet Product Detail</span>

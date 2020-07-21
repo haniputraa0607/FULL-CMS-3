@@ -12,7 +12,7 @@
 		var index = temp1.replace("][subject]", "");
 		var subject_value = document.getElementsByName(val)[0].value;
 
-		if(subject_value == 'receipt' || subject_value == 'name' || subject_value == 'phone' || subject_value == 'email' || subject_value == 'product_name' || subject_value == 'product_code' || subject_value == 'product_category'){
+		if(['receipt', 'name', 'phone', 'email', 'product_name', 'product_code', 'outlet_name', 'outlet_code', 'product_category'].includes(subject_value)){
 			var operator = "conditions["+index+"][operator]";
 			var operator_value = document.getElementsByName(operator)[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -91,6 +91,41 @@
 			var parameter = "conditions["+index+"][parameter]";
 			document.getElementsByName(parameter)[0].type = 'hidden';
 		}
+
+		if(subject_value == 'pickup_by'){
+			var operator = "conditions["+index+"][operator]";
+			var operator_value = document.getElementsByName(operator)[0];
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			operator_value.options[operator_value.options.length] = new Option('Pickup Order', 'Customer');
+			operator_value.options[operator_value.options.length] = new Option('Delivery', 'GO-SEND');
+			
+			var parameter = "conditions["+index+"][parameter]";
+			document.getElementsByName(parameter)[0].type = 'hidden';
+		}
+
+		if(subject_value == 'id_product'){
+			var operator = "conditions["+index+"][operator]";
+			var operator_value = document.getElementsByName(operator)[0];
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			@foreach($products as $product)
+			operator_value.options[operator_value.options.length] = new Option("{{$product['product_code']}} - {{$product['product_name']}}", "{{$product['id_product']}}");
+			@endforeach
+			
+			var parameter = "conditions["+index+"][parameter]";
+			document.getElementsByName(parameter)[0].type = 'hidden';
+		}
+		if(subject_value == 'id_outlet'){
+			var operator = "conditions["+index+"][operator]";
+			var operator_value = document.getElementsByName(operator)[0];
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			@foreach($outlets as $outlet)
+			operator_value.options[operator_value.options.length] = new Option("{{$outlet['outlet_code']}} - {{$outlet['outlet_name']}}", "{{$outlet['id_outlet']}}");
+			@endforeach
+
+			
+			var parameter = "conditions["+index+"][parameter]";
+			document.getElementsByName(parameter)[0].type = 'hidden';
+		}
 	}
 
 </script>
@@ -149,12 +184,15 @@
 										<div class="col-md-4">
 											<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 												<option value="receipt" @if ($con['subject'] == 'receipt') selected @endif>Receipt Number</option>
+												<option value="pickup_by" @if ($con['subject'] == 'pickup_by') selected @endif>Transaction Type</option>
 												<option value="name"  @if ($con['subject'] == 'name') selected @endif>Customer Name</option>
 												<option value="phone" @if ($con['subject'] == 'phone') selected @endif>Customer Phone</option>
 												<option value="email" @if ($con['subject'] == 'email') selected @endif>Customer Email</option>
 												<option value="gender" @if ($con['subject'] == 'gender') selected @endif>Customer Gender</option>
+												<option value="id_outlet" @if ($con['subject'] == 'id_outlet') selected @endif>Outlet</option>
 												<option value="outlet_code" @if ($con['subject'] == 'outlet_code') selected @endif>Outlet Code</option>
 												<option value="outlet_name" @if ($con['subject'] == 'outlet_name') selected @endif>Outlet Name</option>
+												<option value="id_product" @if ($con['subject'] == 'id_product') selected @endif>Product</option>
 												<option value="product_name" @if ($con['subject'] == 'product_name') selected @endif>Product Name</option>
 												<option value="product_code" @if ($con['subject'] == 'product_code') selected @endif>Product Code</option>
 												<option value="product_category" @if ($con['subject'] == 'product_category') selected @endif>Product Category</option>
@@ -177,6 +215,9 @@
 												<option value="Pending" @if ($con['operator'] == 'Pending') selected @endif>Pending</option>
 												<option value="Cancel" @if ($con['operator'] == 'Cancel') selected @endif>Cancel</option>
 												<option value="Expired" @if ($con['operator'] == 'Expired') selected @endif>Expired</option>
+											@elseif ($con['subject'] == 'pickup_by')
+												<option value="Customer" @if ($con['operator'] == 'Customer') selected @endif>Pickup Order</option>
+												<option value="GO-SEND" @if ($con['operator'] == 'GO-SEND') selected @endif>Delivery</option>
 											@elseif ($con['subject'] == 'courier')
 												<option value="psc" @if ($con['operator'] == 'psc') selected @endif>psc</option>
 												<option value="jne" @if ($con['operator'] == 'jne') selected @endif>jne</option>
@@ -205,6 +246,14 @@
 												<option value=">" @if ($con['operator'] == '>') selected @endif>></option>
 												<option value="<=" @if ($con['operator'] == '<=') selected @endif><=</option>
 												<option value="<" @if ($con['operator'] == '<') selected @endif><</option>
+											@elseif ($con['subject'] == 'id_outlet')
+												@foreach($outlets as $outlet)
+												<option value="{{$outlet['id_outlet']}}" @if ($con['operator'] == $outlet['id_outlet']) selected @endif>{{$outlet['outlet_code']}} - {{$outlet['outlet_name']}}</option>
+												@endforeach
+											@elseif ($con['subject'] == 'id_product')
+												@foreach($products as $product)
+												<option value="{{$product['id_product']}}" @if ($con['operator'] == $product['id_product']) selected @endif>{{$product['product_code']}} - {{$product['product_name']}}</option>
+												@endforeach
 											@else
 												<option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
 												<option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>
@@ -212,7 +261,7 @@
 										</select>
 										</div>
 
-										@if ($con['subject'] == 'gender' || $con['subject'] == 'status' || $con['subject'] == 'courier')
+										@if (in_array($con['subject'], ['gender', 'status', 'courier', 'id_outlet', 'id_product', 'pickup_by']))
 											<div class="col-md-3">
 												<input type="hidden" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
 											</div>
@@ -241,8 +290,10 @@
 											<option value="phone">Customer Phone</option>
 											<option value="email">Customer Email</option>
 											<option value="gender">Customer Gender</option>
+											<option value="id_outlet">Outlet</option>
 											<option value="outlet_code">Outlet Code</option>
 											<option value="outlet_name">Outlet Name</option>
+											<option value="id_product">Product</option>
 											<option value="product_name">Product Name</option>
 											<option value="product_code">Product Code</option>
 											<option value="product_category">Product Category</option>
@@ -281,12 +332,15 @@
 										<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 											<option value="" selected disabled>Search Subject</option>
 											<option value="receipt">Receipt Number</option>
+											<option value="pickup_by">Transaction Type</option>
 											<option value="name">Customer Name</option>
 											<option value="phone">Customer Phone</option>
 											<option value="email">Customer Email</option>
 											<option value="gender">Customer Gender</option>
+											<option value="id_outlet">Outlet</option>
 											<option value="outlet_code">Outlet Code</option>
 											<option value="outlet_name">Outlet Name</option>
+											<option value="id_product">Product</option>
 											<option value="product_name">Product Name</option>
 											<option value="product_code">Product Code</option>
 											<option value="product_category">Product Category</option>
