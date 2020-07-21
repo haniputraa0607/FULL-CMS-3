@@ -836,10 +836,12 @@
 										<div>{{ ($banner['banner_start']??false)?date("d M Y H:i", strtotime($banner['banner_start'])):'-' }}</div><br>
 										<div>Date End:</div>
 					 			 		<div>{{ ($banner['banner_end']??false)?date("d M Y H:i", strtotime($banner['banner_end'])):'-' }}</div>
-										<div>Time Start:</div>
-										<div>{{ ($banner['time_start']??false) ? date("H:i", strtotime($banner['time_start'])):'-' }}</div><br>
-										<div>Time End:</div>
-					 			 		<div>{{ ($banner['time_end']) ? date("H:i", strtotime($banner['time_end'])):'-' }}</div>
+										@if(MyHelper::hasAccess([117], $configs))
+											<div>Time Start:</div>
+											<div>{{ ($banner['time_start']??false) ? date("H:i", strtotime($banner['time_start'])):'-' }}</div><br>
+											<div>Time End:</div>
+						 			 		<div>{{ ($banner['time_end']) ? date("H:i", strtotime($banner['time_end'])):'-' }}</div>
+					 			 		@endif
 					 			 	</div>
 					 			</div>
 					 			@endforeach
@@ -1234,35 +1236,36 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="form-group clearfix">
-						<label class="col-md-3 control-label">Time Start</label>
-						<div class="col-md-6">
-							<div class="input-group  bs-datetime">
-								<input type="time" autocomplete="off" name="time_start" size="16" class="form-control">
-								<span class="input-group-addon">
-									<button class="btn default" type="button">
-										<i class="fa fa-clock-o"></i>
-									</button>
-								</span>
+        			
+        			@if(MyHelper::hasAccess([117], $configs))
+						<div class="form-group clearfix">
+							<label class="col-md-3 control-label">Time Start</label>
+							<div class="col-md-6">
+								<div class="input-group  bs-datetime">
+									<input type="time" autocomplete="off" name="time_start" size="16" class="form-control">
+									<span class="input-group-addon">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="form-group clearfix">
-						<label class="col-md-3 control-label">Time End</label>
-						<div class="col-md-6">
-							<div class="input-group bs-datetime">
-								<input type="time" autocomplete="off" name="time_end" size="16" class="form-control">
-								<span class="input-group-addon">
-									<button class="btn default" type="button">
-										<i class="fa fa-clock-o"></i>
-									</button>
-								</span>
+						<div class="form-group clearfix">
+							<label class="col-md-3 control-label">Time End</label>
+							<div class="col-md-6">
+								<div class="input-group bs-datetime">
+									<input type="time" autocomplete="off" name="time_end" size="16" class="form-control">
+									<span class="input-group-addon">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
-					</div>
-
+					@endif
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
 						<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
@@ -1380,34 +1383,36 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="form-group clearfix">
-						<label class="col-md-3 control-label">Time Start</label>
-						<div class="col-md-6">
-							<div class="input-group  bs-datetime">
-								<input type="time" autocomplete="off" id="time_start"  name="time_start" size="16" class="form-control">
-								<span class="input-group-addon">
-									<button class="btn default" type="button">
-										<i class="fa fa-clock-o"></i>
-									</button>
-								</span>
+					
+        			@if(MyHelper::hasAccess([117], $configs))
+						<div class="form-group clearfix">
+							<label class="col-md-3 control-label">Time Start</label>
+							<div class="col-md-6">
+								<div class="input-group  bs-datetime">
+									<input type="time" autocomplete="off" id="time_start"  name="time_start" size="16" class="form-control">
+									<span class="input-group-addon">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="form-group clearfix">
-						<label class="col-md-3 control-label">Time End</label>
-						<div class="col-md-6">
-							<div class="input-group bs-datetime">
-								<input type="time" autocomplete="off" id="time_end" name="time_end" size="16" class="form-control">
-								<span class="input-group-addon">
-									<button class="btn default" type="button">
-										<i class="fa fa-clock-o"></i>
-									</button>
-								</span>
+						<div class="form-group clearfix">
+							<label class="col-md-3 control-label">Time End</label>
+							<div class="col-md-6">
+								<div class="input-group bs-datetime">
+									<input type="time" autocomplete="off" id="time_end" name="time_end" size="16" class="form-control">
+									<span class="input-group-addon">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
 							</div>
 						</div>
-					</div>
+					@endif
 
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
