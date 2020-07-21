@@ -16,17 +16,24 @@
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
             for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-            operator_value.options[operator_value.options.length] = new Option('Booking is received', 'confirmed');
-            operator_value.options[operator_value.options.length] = new Option('Driver is found', 'allocated');
-            operator_value.options[operator_value.options.length] = new Option('Driver is on their way to pick-up location', 'out_for_pickup');
-            operator_value.options[operator_value.options.length] = new Option('Driver is enroute to deliver the item', 'out_for_delivery');
-            operator_value.options[operator_value.options.length] = new Option('Booking is cancelled by CS', 'cancelled');
-            operator_value.options[operator_value.options.length] = new Option('Delivered', 'delivered');
-            operator_value.options[operator_value.options.length] = new Option('Driver not found', 'no_driver');
+            operator_value.options[operator_value.options.length] = new Option('Pending', 'Pending');
+            operator_value.options[operator_value.options.length] = new Option('Paid', 'Paid');
+            operator_value.options[operator_value.options.length] = new Option('Completed', 'Completed');
+            operator_value.options[operator_value.options.length] = new Option('Cancelled', 'Cancelled');
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
-        }else if(subject_value == 'transaction_shipment_go_send' || subject_value == 'transaction_grandtotal'){
+        }else if(subject_value == 'type'){
+            var operator = "conditions["+index+"][operator]";
+            var operator_value = document.getElementsByName(operator)[0];
+            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+            operator_value.options[operator_value.options.length] = new Option('Deals', 'Deals');
+            operator_value.options[operator_value.options.length] = new Option('Subscription', 'Subscription');
+            operator_value.options[operator_value.options.length] = new Option('Transaction', 'Transaction');
+
+            var parameter = "conditions["+index+"][parameter]";
+            document.getElementsByName(parameter)[0].type = 'hidden';
+        }else if(subject_value == 'grandtotal' || subject_value == 'amount'){
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
             for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -66,7 +73,7 @@
                 <label class="col-md-2 control-label">Date Start :</label>
                 <div class="col-md-4">
                     <div class="input-group">
-                        <input type="date" class="form-control" name="date_start" value="{{ $date_start }}">
+                        <input type="date" class="form-control date-picker" name="date_start" value="{{ $date_start }}">
                         <span class="input-group-btn">
                             <button class="btn default" type="button">
                                 <i class="fa fa-calendar"></i>
@@ -78,7 +85,7 @@
                 <label class="col-md-2 control-label">Date End :</label>
                 <div class="col-md-4">
                     <div class="input-group">
-                        <input type="date" class="form-control" name="date_end" value="{{ $date_end }}">
+                        <input type="date" class="form-control date-picker" name="date_end" value="{{ $date_end }}">
                         <span class="input-group-btn">
                             <button class="btn default" type="button">
                                 <i class="fa fa-calendar"></i>
@@ -105,30 +112,27 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
-                                                    <option value="outlet_code" @if ($con['subject'] == 'outlet_code') selected @endif>Outlet Code</option>
-                                                    <option value="outlet_name" @if ($con['subject'] == 'outlet_name') selected @endif>Outlet Name</option>
+                                                    <option value="type" @if ($con['subject'] == 'type') selected @endif>Type</option>
+                                                    <option value="name" @if ($con['subject'] == 'name') selected @endif>Customer Name</option>
+                                                    <option value="phone" @if ($con['subject'] == 'phone') selected @endif>Customer Phone</option>
                                                     <option value="transaction_receipt_number" @if ($con['subject'] == 'transaction_receipt_number') selected @endif>Receipt Number</option>
-                                                    <option value="order_id" @if ($con['subject'] == 'order_id') selected @endif>Order ID Number</option>
-                                                    <option value="transaction_grandtotal" @if ($con['subject'] == 'transaction_grandtotal') selected @endif>Grand Total</option>
-                                                    <option value="transaction_shipment_go_send" @if ($con['subject'] == 'transaction_shipment_go_send') selected @endif>Price GoSend</option>
-                                                    <option value="destination_name" @if ($con['subject'] == 'destination_name') selected @endif>Receiver Name</option>
-                                                    <option value="destination_phone" @if ($con['subject'] == 'destination_phone') selected @endif>Receiver Phone</option>
-                                                    <option value="driver_name" @if ($con['subject'] == 'driver_name') selected @endif>Driver Name</option>
-                                                    <option value="driver_phone" @if ($con['subject'] == 'driver_phone') selected @endif>Driver Phone</option>
+                                                    <option value="grandtotal" @if ($con['subject'] == 'grandtotal') selected @endif>Grand Total</option>
+                                                    <option value="amount" @if ($con['subject'] == 'amount') selected @endif>Amount</option>
                                                     <option value="status" @if ($con['subject'] == 'status') selected @endif>Status</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
                                                 <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
-                                                   @if($con['subject'] == 'status')
-                                                        <option value="confirmed" @if ($con['operator']  == 'confirmed') selected @endif>Booking is received</option>
-                                                        <option value="allocated" @if ($con['operator']  == 'allocated') selected @endif>Driver is found</option>
-                                                        <option value="out_for_pickup" @if ($con['operator']  == 'out_for_pickup') selected @endif>Driver is on their way to pick-up location</option>
-                                                        <option value="out_for_delivery" @if ($con['operator']  == 'out_for_delivery') selected @endif>Driver is enroute to deliver the item</option>
-                                                        <option value="cancelled" @if ($con['operator']  == 'cancelled') selected @endif>Booking is cancelled by CS</option>
-                                                        <option value="delivered" @if ($con['operator']  == 'delivered') selected @endif>Delivered</option>
-                                                        <option value="no_driver" @if ($con['operator']  == 'no_driver') selected @endif>Driver not found</option>
-                                                    @elseif($con['subject'] == 'transaction_shipment_go_send' || $con['subject'] == 'transaction_grandtotal')
+                                                    @if($con['subject'] == 'status')
+                                                        <option value="Pending" @if ($con['operator']  == 'Pending') selected @endif>Pending</option>
+                                                        <option value="Paid" @if ($con['operator']  == 'Paid') selected @endif>Paid</option>
+                                                        <option value="Completed" @if ($con['operator']  == 'Completed') selected @endif>Completed</option>
+                                                        <option value="Cancelled" @if ($con['operator']  == 'Cancelled') selected @endif>Cancelled</option>
+                                                    @elseif($con['subject'] == 'type')
+                                                        <option value="Deals" @if ($con['operator']  == 'Deals') selected @endif>Deals</option>
+                                                        <option value="Subscription" @if ($con['operator']  == 'Subscription') selected @endif>Subscription</option>
+                                                        <option value="Transaction" @if ($con['operator']  == 'Transaction') selected @endif>Transaction</option>
+                                                    @elseif($con['subject'] == 'amount' || $con['subject'] == 'grandtotal')
                                                         <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                                         <option value=">" @if ($con['operator']  == '>') selected @endif>></option>
                                                         <option value=">=" @if ($con['operator'] == '>=') selected @endif>>=</option>
@@ -141,7 +145,7 @@
                                                 </select>
                                             </div>
 
-                                            @if ($con['subject'] == 'status')
+                                            @if ($con['subject'] == 'status' || $con['subject'] == 'type')
                                                 <div class="col-md-3">
                                                     <input type="hidden" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
                                                 </div>
@@ -165,16 +169,12 @@
                                             <div class="col-md-4">
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                                     <option value="" selected disabled>Search Subject</option>
-                                                    <option value="outlet_code">Outlet Code</option>
-                                                    <option value="outlet_name">Outlet Name</option>
-                                                    <option value="transaction_grandtotal">Grand Total</option>
+                                                    <option value="type">Type</option>
+                                                    <option value="name">Customer Name</option>
+                                                    <option value="phone">Customer Phone</option>
                                                     <option value="transaction_receipt_number">Receipt Number</option>
-                                                    <option value="order_id">Order ID Number</option>
-                                                    <option value="transaction_shipment_go_send">Price GoSend</option>
-                                                    <option value="destination_name">Receiver Name</option>
-                                                    <option value="destination_phone">Receiver Phone</option>
-                                                    <option value="driver_name">Driver Name</option>
-                                                    <option value="driver_phone">Driver Phone</option>
+                                                    <option value="grandtotal">Grand Total</option>
+                                                    <option value="amount">Amount</option>
                                                     <option value="status">Status</option>
                                                 </select>
                                             </div>
@@ -204,16 +204,12 @@
                                     <div class="col-md-4">
                                         <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                             <option value="" selected disabled>Search Subject</option>
-                                            <option value="outlet_code">Outlet Code</option>
-                                            <option value="outlet_name">Outlet Name</option>
+                                            <option value="type">Type</option>
+                                            <option value="name">Customer Name</option>
+                                            <option value="phone">Customer Phone</option>
                                             <option value="transaction_receipt_number">Receipt Number</option>
-                                            <option value="order_id">Order ID Number</option>
-                                            <option value="transaction_grandtotal">Grand Total</option>
-                                            <option value="transaction_shipment_go_send">Price GoSend</option>
-                                            <option value="destination_name">Receiver Name</option>
-                                            <option value="destination_phone">Receiver Phone</option>
-                                            <option value="driver_name">Driver Name</option>
-                                            <option value="driver_phone">Driver Phone</option>
+                                            <option value="grandtotal">Grand Total</option>
+                                            <option value="amount">Amount</option>
                                             <option value="status">Status</option>
                                         </select>
                                     </div>
@@ -249,8 +245,8 @@
                         {{ csrf_field() }}
                         <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
                         <a class="btn green" href="{{url()->current()}}">Reset</a>
-                        @if(!empty($trx))
-                        <a class="btn green-jungle" id="btn-export" href="{{url()->current()}}/export">Export</a>
+                        @if(!empty($data))
+                        <a class="btn green-jungle" id="btn-export" href="{{url('report/payment/export')}}/{{$type}}">Export</a>
                         @endif
                     </div>
                 </div>
