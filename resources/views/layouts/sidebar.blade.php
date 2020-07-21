@@ -1054,7 +1054,7 @@
 					</a>
 				</li>
 			@endif
-			@if(MyHelper::hasAccess([262], $grantedFeature))
+			@if(MyHelper::hasAccess([263], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'report-payment') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="fa fa-credit-card"></i>
