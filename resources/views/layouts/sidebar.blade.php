@@ -865,6 +865,13 @@
 							</a>
 						</li>
 					@endif
+					@if(MyHelper::hasAccess([262], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'auto-reject-time') ? 'active' : ''}}">
+						<a href="{{url('transaction/setting/auto-reject')}}" class="nav-link nav-toggle">
+							<span class="title">Setting Auto Reject Time</span>
+						</a>
+					</li>
+					@endif
 				</ul>
 			</li>
 			@endif

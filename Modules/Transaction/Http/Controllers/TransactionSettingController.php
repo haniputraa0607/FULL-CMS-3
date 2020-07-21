@@ -76,4 +76,31 @@ class TransactionSettingController extends Controller
         }
     }
 
+    public function autoReject(Request $request)
+    {
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Auto Reject time',
+            'submenu_active' => 'auto-reject-time'
+        ];
+
+        $data['auto_reject_time'] = MyHelper::post('setting', ['key' => 'auto_reject_time'])['result']['value']??900;
+
+        return view('transaction::setting.auto_reject', $data);
+    }
+
+    public function updateAutoReject(Request $request)
+    {
+        $sendData = [
+            'auto_reject_time' => ['value', $request->auto_reject_time?:900]
+        ];
+        $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
+        if ($data['status']??false == 'success') {
+            return back()->withSuccess(['Success update']);
+        } else{
+            return back()->withErrors(['Update failed']);
+        }
+    }
+
 }
