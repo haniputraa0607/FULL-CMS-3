@@ -20,9 +20,97 @@ class SubscriptionController extends Controller
         }
     }
 
+    function getSubscriptionType($request) 
+    {
+    	$subs_type = $request->route()->getAction('subscription_type');
+    	return $subs_type;
+    }
+
+    function getTitleMenu($subs_type, $menu)
+    {
+    	switch ($subs_type) {
+
+    		case 'welcome':
+
+    			switch ($menu) {
+
+    				case 'create':
+    					
+    					$data = [
+			                'title'          => 'Welcome Subscription',
+			                'sub_title'      => 'Welcome Subscription Create',
+			                'menu_active'    => 'welcome-subscription',
+			                'submenu_active' => 'welcome-subscription-create'
+			            ];
+    					break;
+
+    				case 'detail':
+    					
+    					$data = [
+			                'title'          => 'Welcome Subscription',
+			                'sub_title'      => 'Welcome Subscription Detail',
+			                'menu_active'    => 'welcome-subscription',
+			                'submenu_active' => 'welcome-subscription-List'
+			            ];
+    					break;
+    				
+    				default:
+    				
+    					$data = [
+				            'title'          => 'Welcome Subscription',
+				            'sub_title'      => 'Welcome Subscription List',
+				            'menu_active'    => 'welcome-subscription',
+				            'submenu_active' => 'welcome-subscription-list'
+				        ];
+    					break;
+    			}
+    			break;
+    		
+    		default:
+
+    			switch ($menu) {
+
+    				case 'create':
+    					
+    					$data = [
+			                'title'          => 'Subscription',
+			                'sub_title'      => 'Subscription Create',
+			                'menu_active'    => 'subscription',
+			                'submenu_active' => 'subscription-create'
+			            ];
+    					break;
+
+    				case 'detail':
+    					
+    					$data = [
+			                'title'          => 'Subscription',
+			                'sub_title'      => 'Subscription Detail',
+			                'menu_active'    => 'subscription',
+			                'submenu_active' => 'subscription-List'
+			            ];
+    					break;
+    				
+    				default:
+    				
+    					$data = [
+				            'title'          => 'subscription',
+				            'sub_title'      => 'subscription List',
+				            'menu_active'    => 'subscription',
+				            'submenu_active' => 'subscription-list'
+				        ];
+    					break;
+    			}
+    			break;
+    	}
+
+    	return $data;
+    }
+
     public function index(Request $request)
     {
-        $post=$request->except('_token');
+        $post 		= $request->except('_token');
+		$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getTitleMenu($subs_type, 'list');
 
         if($post){
             if(($post['clear']??false)=='session'){
@@ -33,18 +121,13 @@ class SubscriptionController extends Controller
             return back();
         }
 
-        $data = [
-            'title'          => 'subscription',
-            'sub_title'      => 'subscription List',
-            'menu_active'    => 'subscription',
-            'submenu_active' => 'subscription-list'
-        ];
-
         $post['newest'] = 1;
         $post['web'] = 1;
-        $post['admin']=1;
-        $post['created_at']=1;
+        $post['admin'] = 1;
+        $post['created_at'] = 1;
+        $post['subscription_type'] = $subs_type??'subscription';
 
+// dd(MyHelper::post('subscription/be/list', $post));
         if(($filter=session('subs_filter'))&&is_array($filter))
         {
             $post=array_merge($filter,$post);
@@ -65,7 +148,6 @@ class SubscriptionController extends Controller
 
         $post['select'] = ['id_outlet','outlet_code','outlet_name'];
         $data['outlets'] = $this->getData(MyHelper::post('outlet/ajax_handler', $post));
-        // return $data;
 
 
         return view('subscription::list', $data);
@@ -144,6 +226,9 @@ class SubscriptionController extends Controller
 
     public function create(Request $request, $slug=null)
     {
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getTitleMenu($subs_type, 'create');
+
         if($slug){
             $exploded = MyHelper::explodeSlug($slug);
             $id_subscription = $exploded[0];
@@ -182,13 +267,6 @@ class SubscriptionController extends Controller
             }
         }
         else {
-
-            $data = [
-                'title'          => 'Subscription',
-                'sub_title'      => 'Subscription Create',
-                'menu_active'    => 'subscription',
-                'submenu_active' => 'subscription-create'
-            ];
             
             if (isset($id_subscription)) {
                 $data['subscription'] = MyHelper::post('subscription/show-step1', ['id_subscription' => $id_subscription])['result']??'';
@@ -206,6 +284,9 @@ class SubscriptionController extends Controller
 
     public function step2(Request $request, $slug = null)
     {
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getTitleMenu($subs_type, 'create');
+
         if($slug){
             $exploded = MyHelper::explodeSlug($slug);
             $id_subscription = $exploded[0];
@@ -262,6 +343,9 @@ class SubscriptionController extends Controller
 
     public function step3(Request $request, $slug)
     {
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getTitleMenu($subs_type, 'create');
+
         if($slug){
             $exploded = MyHelper::explodeSlug($slug);
             $id_subscription = $exploded[0];
@@ -287,13 +371,6 @@ class SubscriptionController extends Controller
         }
         else {
 
-            $data = [
-                'title'          => 'Subscription',
-                'sub_title'      => 'Subscription Create',
-                'menu_active'    => 'subscription',
-                'submenu_active' => 'subscription-create'
-            ];
-
             $post['select'] = ['id_outlet','outlet_code','outlet_name'];
             $outlets = MyHelper::post('outlet/ajax_handler', $post);
             
@@ -315,6 +392,8 @@ class SubscriptionController extends Controller
 
     public function detail(Request $request, $slug, $subs_receipt=null)
     {
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getTitleMenu($subs_type, 'detail');
         $exploded = MyHelper::explodeSlug($slug);
         $id_subscription = $exploded[0];
         $created_at = $exploded[1];
@@ -342,14 +421,6 @@ class SubscriptionController extends Controller
             }
         }
         else {
-
-            $data = [
-                'title'          => 'Subscription',
-                'sub_title'      => 'Subscription Detail',
-                'menu_active'    => 'subscription',
-                'submenu_active' => 'subscription-List'
-            ];
-
 
             $data['subscription'] = MyHelper::post('subscription/show-detail', ['id_subscription' => $id_subscription])['result']??'';
             if ($data['subscription'] == '') {
@@ -379,6 +450,8 @@ class SubscriptionController extends Controller
         $exploded = MyHelper::explodeSlug($slug);
         $id_subscription = $exploded[0];
         $created_at = $exploded[1];
+        $subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getTitleMenu($subs_type, 'detail');
 
         if (isset($subs_receipt)) {
             return $this->transaction($id_subscription, $subs_receipt);
@@ -398,13 +471,6 @@ class SubscriptionController extends Controller
         {
             return $this->participateAjax($post, $slug);
         }
-
-        $data = [
-            'title'          => 'Subscription',
-            'sub_title'      => 'Subscription Detail',
-            'menu_active'    => 'subscription',
-            'submenu_active' => 'subscription-List'
-        ];
 
         $data['subscription'] = MyHelper::post('subscription/show-detail', $post)['result']??'';
         if ($data['subscription'] == '') {

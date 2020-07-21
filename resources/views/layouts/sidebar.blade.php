@@ -1505,6 +1505,56 @@
 				@endif
 			@endif
 
+			@if(MyHelper::hasAccess([264,265,266,267,268], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'welcome-subscription') ? 'active open' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-ticket"></i>
+						<span class="title">Welcome Subscription</span>
+						<span class="arrow {{($menu_active == 'welcome-subscription') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([266], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'welcome-subscription-create') ? 'active open' : ''}}">
+								<a href="{{url('welcome-subscription/create')}}" class="nav-link ">
+									<span class="title">New Welcome Subscription</span>
+								</a>
+							</li>
+						@endif
+						@if(MyHelper::hasAccess([264], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'welcome-subscription-list') ? 'active open' : ''}}">
+								<a href="{{url('welcome-subscription')}}" class="nav-link ">
+									<span class="title">Welcome Subscription List</span>
+								</a>
+							</li>
+						@endif
+						@if(MyHelper::hasAccess([264,267], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'welcome-subscription-setting') ? 'active open' : ''}}">
+								<a href="{{url('welcome-subscription/setting')}}" class="nav-link ">
+									<span class="title">Welcome Subscription Setting</span>
+								</a>
+							</li>
+						@endif
+						<li class="nav-item {{($submenu_active == 'deals-autoresponse-welcome-subscription') ? 'active open' : ''}}">
+							<a href="{{url('transaction/autoresponse/receive-welcome-subscription')}}" class="nav-link ">
+								<span class="title">[Response] Welcome Subscription</span>
+							</a>
+						</li>
+						@if(MyHelper::hasAccess([120,122], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'welcome-subscription-autoresponse-create-welcome-subscription') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/welcome-subscription/create-welcome-subscription')}}" class="nav-link ">
+								<span class="title">[Forward] Create Welcome Subscription</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'welcome-subscription-autoresponse-update-welcome-subscription') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/welcome-subscription/update-welcome-subscription')}}" class="nav-link ">
+								<span class="title">[Forward] Update Welcome Subscription</span>
+							</a>
+						</li>
+						@endif
+					</ul>
+				</li>
+			@endif
+
 			@if(MyHelper::hasAccess([99], $configs))
 				@if(MyHelper::hasAccess([221,222,223,224,225,226], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'achievement') ? 'active open' : ''}}">
