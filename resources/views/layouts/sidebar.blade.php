@@ -1,12 +1,10 @@
 <?php
 	use App\Lib\MyHelper;
-    $grantedFeature     = session('granted_features');
-    $configs    		= session('configs');
-    $level    			= session('level');
-
-    (session('advert')) ? $advert = session('advert') : $advert = null;
-
- ?>
+	$grantedFeature     = session('granted_features');
+	$configs    		= session('configs');
+	$level    			= session('level');
+	(session('advert')) ? $advert = session('advert') : $advert = null;
+?>
 		<li class="sidebar-toggler-wrapper hide">
 			<div class="sidebar-toggler">
 				<span></span>
@@ -655,34 +653,32 @@
 							<span class="title">All Transaction</span>
 						</a>
 					</li>
-					@endif
-					{{-- <!-- <li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
-						<a href="{{url('transaction/offline/'.date('YmdHis'))}}" class="nav-link ">
-							<span class="title">Offline</span>
-						</a>
-					</li> -->
-					@if(MyHelper::hasAccess([12], $configs))
-					<li class="nav-item {{($submenu_active == 'transaction-pickup order') ? 'active open' : ''}}">
-						<a href="{{url('transaction/pickup order/'.date('YmdHis'))}}" class="nav-link ">
-							<span class="title">Pickup Order</span>
-						</a>
-					</li>
-					@endif
-					@if(MyHelper::hasAccess([92], $configs))
-					<li class="nav-item {{($submenu_active == 'transaction-advance order') ? 'active open' : ''}}">
-						<a href="{{url('transaction/advance order/'.date('YmdHis'))}}" class="nav-link ">
-							<span class="title">Catering Order</span>
-						</a>
-					</li>
-					@endif
-					@if(MyHelper::hasAccess([12,92], $configs))
 					<li class="nav-item {{($submenu_active == 'transactions-export') ? 'active open' : ''}}">
 						<a href="{{url('transaction/list-export')}}" class="nav-link ">
 							<span class="title">List Export</span>
 						</a>
 					</li>
 					@endif
-					@if(MyHelper::hasAccess([12, 13], $configs))
+				{{-- <!-- <li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
+                    <a href="{{url('transaction/offline/'.date('YmdHis'))}}" class="nav-link ">
+                        <span class="title">Offline</span>
+                    </a>
+                </li> -->
+                @if(MyHelper::hasAccess([12], $configs))
+                <li class="nav-item {{($submenu_active == 'transaction-pickup order') ? 'active open' : ''}}">
+                    <a href="{{url('transaction/pickup order/'.date('YmdHis'))}}" class="nav-link ">
+                        <span class="title">Pickup Order</span>
+                    </a>
+                </li>
+                @endif
+                @if(MyHelper::hasAccess([92], $configs))
+                <li class="nav-item {{($submenu_active == 'transaction-advance order') ? 'active open' : ''}}">
+                    <a href="{{url('transaction/advance order/'.date('YmdHis'))}}" class="nav-link ">
+                        <span class="title">Catering Order</span>
+                    </a>
+                </li>
+                @endif --}}
+				@if(MyHelper::hasAccess([12, 13], $configs))
 					<li class="nav-item {{($submenu_active == 'transaction-autoresponse-transaction-success') ? 'active open' : ''}}">
 						<a href="{{url('transaction/autoresponse/transaction-success')}}" class="nav-link ">
 							<span class="title">[Response] Transaction Success</span>
@@ -923,7 +919,7 @@
 					<span class="title">Outlet Product Price</span>
 				</a>
 			</li>
-			<li class="nav-item {{($submenu_active == 'product-detail') ? 'active open' : ''}}">
+			<li class="nav-item {{($menu_active == 'product-detail') ? 'active open' : ''}}">
 				<a href="{{url('product/outlet-detail')}}" class="nav-link ">
 					<i class="fa fa-tag"></i>
 					<span class="title">Outlet Product Detail</span>
@@ -935,7 +931,7 @@
 					<span class="title">Outlet Different Price</span>
 				</a>
 			</li>
-			@endif
+		@endif
 
 			@if(MyHelper::hasAccess([197,198], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'default-max-order') ? 'active' : ''}}">
@@ -1011,9 +1007,9 @@
 						@endif
 					</ul>
 				</li>
-				@endif
 			@endif
-			@if(MyHelper::hasAccess([90], $configs) && MyHelper::hasAccess([179,212], $grantedFeature) )
+		@endif
+		@if(MyHelper::hasAccess([90], $configs) && MyHelper::hasAccess([179,212], $grantedFeature) )
 			<li class="nav-item {{($menu_active == 'user-feedback') ? 'active' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
 					<i class="fa fa-thumbs-o-up"></i>
@@ -1049,7 +1045,7 @@
 					</li>
 				</ul>
 			</li>
-			@endif
+		@endif
 			@if(MyHelper::hasAccess([249], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'report-gosend') ? 'active open' : ''}}">
 					<a href="{{url('report/gosend')}}" class="nav-link nav-toggle">
@@ -1058,7 +1054,7 @@
 					</a>
 				</li>
 			@endif
-			@if(MyHelper::hasAccess([261], $grantedFeature))
+			@if(MyHelper::hasAccess([262], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'report-payment') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="fa fa-credit-card"></i>

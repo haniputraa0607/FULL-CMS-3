@@ -384,7 +384,7 @@
 						{{ csrf_field() }}
 						 <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
 						@if(isset($trx) && !empty($trx))
-							<a class="btn purple" id="btn-export" href="{{url()->current()}}?export=1">Export</a>
+							<a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1">Export</a>
 						@endif
 					</div>
 				</div>

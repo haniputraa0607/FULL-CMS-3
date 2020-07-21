@@ -125,11 +125,7 @@
                         <td>{{$val['payment_type']}}</td>
                         <td>{{number_format($val['grand_total'])}}</td>
                         <td>
-                            @if($type == "ipay88")
-                                {{number_format($val['gross_amount']/100)}}
-                            @else
-                                {{number_format($val['gross_amount'])}}
-                            @endif
+                            {{number_format((int)$val['gross_amount'])}}
                         </td>
                         <td>{{$val['name']}}</td>
                         <td><a target="_blank" href="{{ url('user/detail', $val['phone']) }}">{{$val['phone']}} </a></td>

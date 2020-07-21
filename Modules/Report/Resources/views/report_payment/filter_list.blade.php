@@ -246,7 +246,7 @@
                         <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
                         <a class="btn green" href="{{url()->current()}}">Reset</a>
                         @if(!empty($data))
-                        <a class="btn purple" id="btn-export" href="{{url('report/payment/export')}}/{{$type}}">Export</a>
+                        <a class="btn green-jungle" id="btn-export" href="{{url('report/payment/export')}}/{{$type}}">Export</a>
                         @endif
                     </div>
                 </div>
