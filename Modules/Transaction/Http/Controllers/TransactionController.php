@@ -1290,7 +1290,22 @@ class TransactionController extends Controller
             'date_end'       => date('Y-m-d')
         ];
 
-        $getList = MyHelper::get('transaction/be/'.$key.'?page='.$request->get('page'));
+        if($request->get('export') && $request->get('export') == 1){
+            $post['export'] = 1;
+            $post['report_type'] = 'Transaction';
+            $post['date_start'] = date('Y-m-01 00:00:00');
+            $post['date_end'] = date('Y-m-d 23:59:59');
+            $post['id_user'] = Session::get('id_user');
+            $post['key'] = $key;
+            $report = MyHelper::post('report/export/create', $post);
+
+            if (isset($report['status']) && $report['status'] == "success") {
+                return redirect('transaction/list-export')->withSuccess(['Success create export to queue']);
+            }else{
+                return redirect('transaction/list-export')->withErrors(['Failed create export to queue']);
+            }
+        }else{
+            $getList = MyHelper::get('transaction/be/'.$key.'?page='.$request->get('page'));
 
             if (isset($getList['result']['data']) && !empty($getList['result']['data'])) {
                 $data['trx']          = $getList['result']['data'];
@@ -1307,18 +1322,22 @@ class TransactionController extends Controller
                 $data['trxPaginator'] = false;
             }
 
-        if($getList['status'] == 'success') $data['list'] = $getList['result']; else $data['list'] = null;
+            if($getList['status'] == 'success') $data['list'] = $getList['result']; else $data['list'] = null;
 
-        $getCity = MyHelper::get('city/list?log_save=0');
-        if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
+            $getCity = MyHelper::get('city/list?log_save=0');
+            if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
 
-        $getProvince = MyHelper::get('province/list?log_save=0');
-        if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
-		
-		$getCourier = MyHelper::get('courier/list?log_save=0');
-		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
-			
-        return view('transaction::transaction.transaction_delivery', $data);
+            $getProvince = MyHelper::get('province/list?log_save=0');
+            if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
+
+            $getCourier = MyHelper::get('courier/list?log_save=0');
+            if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
+
+            $data['outlets'] = MyHelper::get('outlet/be/list?log_save=0')['result'] ?? [];
+            $data['products'] = MyHelper::get('product/be/list?log_save=0')['result'] ?? [];
+
+            return view('transaction::transaction.transaction_delivery', $data);
+        }
     }
 
     public function transactionFilter(Request $request, $key) {
@@ -1327,7 +1346,7 @@ class TransactionController extends Controller
             return redirect('transaction/point');
         }
 
-        if ($request->get('page') == null) {
+        if ($request->get('page') == null && !isset($post['export'])) {
             session(['date_start' => $post['date_start']]);
             session(['date_end'   => $post['date_end']]);
             if (isset($post['conditions'])) {
@@ -1358,44 +1377,62 @@ class TransactionController extends Controller
         if(!isset($post['rule'])){
             $post['rule'] = 'and';
         }
-        $filter = MyHelper::post('transaction/be/filter', $post);
 
-        if (isset($filter['status']) && $filter['status'] == 'success') {
-            if (!empty($filter['data']['data'])) {
+        if($request->get('export') && $request->get('export') == 1){
+            $post['export'] = 1;
+            $post['report_type'] = 'Transaction';
+            $post['id_user'] = Session::get('id_user');
+            $post['key'] = $key;
+            $report = MyHelper::post('report/export/create', $post);
 
-                $data['trx']          = $filter['data']['data'];
-                $data['trxTotal']     = $filter['data']['total'];
-                $data['trxPerPage']   = $filter['data']['from'];
-                $data['trxUpTo']      = $filter['data']['from'] + count($filter['data']['data'])-1;
-                $data['trxPaginator'] = new LengthAwarePaginator($filter['data']['data'], $filter['data']['total'], $filter['data']['per_page'], $filter['data']['current_page'], ['path' => url()->current()]);
+            if (isset($report['status']) && $report['status'] == "success") {
+                return redirect('transaction/list-export')->withSuccess(['Success create export to queue']);
+            }else{
+                return redirect('transaction/list-export')->withErrors(['Failed create export to queue']);
             }
-            else {
-                $data['trx']          = [];
-                $data['trxTotal']     = 0;
-                $data['trxPerPage']   = 0;
-                $data['trxUpTo']      = 0;
-                $data['trxPaginator'] = false;
+        }else{
+            $filter = MyHelper::post('transaction/be/filter', $post);
+
+            $data['outlets'] = MyHelper::get('outlet/be/list?log_save=0')['result'] ?? [];
+            $data['products'] = MyHelper::get('product/be/list?log_save=0')['result'] ?? [];
+
+            if (isset($filter['status']) && $filter['status'] == 'success') {
+                if (!empty($filter['data']['data'])) {
+
+                    $data['trx']          = $filter['data']['data'];
+                    $data['trxTotal']     = $filter['data']['total'];
+                    $data['trxPerPage']   = $filter['data']['from'];
+                    $data['trxUpTo']      = $filter['data']['from'] + count($filter['data']['data'])-1;
+                    $data['trxPaginator'] = new LengthAwarePaginator($filter['data']['data'], $filter['data']['total'], $filter['data']['per_page'], $filter['data']['current_page'], ['path' => url()->current()]);
+                }
+                else {
+                    $data['trx']          = [];
+                    $data['trxTotal']     = 0;
+                    $data['trxPerPage']   = 0;
+                    $data['trxUpTo']      = 0;
+                    $data['trxPaginator'] = false;
+                }
+
+                $data['list']       = $filter['data'];
+                $data['conditions'] = $filter['conditions'];
+                $data['count']      = $filter['count'];
+                $data['rule']       = $filter['rule'];
+                $data['search']     = $filter['search'];
+
+                return view('transaction::transaction.transaction_delivery', $data);
+
+            } elseif (isset($filter['status']) && $filter['status'] == 'fail' && isset($filter['messages'])) {
+                return redirect('transaction/'.$key.'/'.date('Ymdhis'))->withErrors([$filter['messages']]);
+            } else {
+                $data['list']       = $filter['data'];
+                $data['conditions'] = $filter['conditions'];
+                $data['count']      = $filter['count'];
+                $data['rule']       = $filter['rule'];
+                $data['search']     = $filter['search'];
+
+                return view('transaction::transaction.transaction_delivery', $data);
+
             }
-
-            $data['list']       = $filter['data'];
-            $data['conditions'] = $filter['conditions'];
-            $data['count']      = $filter['count'];
-            $data['rule']       = $filter['rule'];
-            $data['search']     = $filter['search'];
-
-            return view('transaction::transaction.transaction_delivery', $data);
-
-        } elseif (isset($filter['status']) && $filter['status'] == 'fail' && isset($filter['messages'])) {
-            return redirect('transaction/'.$key.'/'.date('Ymdhis'))->withErrors([$filter['messages']]);
-        } else {
-            $data['list']       = $filter['data'];
-            $data['conditions'] = $filter['conditions'];
-            $data['count']      = $filter['count'];
-            $data['rule']       = $filter['rule'];
-            $data['search']     = $filter['search'];
-
-            return view('transaction::transaction.transaction_delivery', $data);
-            
         }
 
     }
@@ -1558,4 +1595,62 @@ class TransactionController extends Controller
             return back()->withErrors(['Failed update setting']);
         }
     }
+
+    /*================= Export with queue =================*/
+    function listExport(Request $request){
+        $data = [
+            'title'          => 'Transaction',
+            'menu_active'    => 'transaction',
+            'sub_title'      => 'Export Transaction',
+            'submenu_active' => 'transactions-export'
+        ];
+
+        $id_user = Session::get('id_user');
+        $report = MyHelper::post('report/export/list', ['id_user' => $id_user, 'report_type' => ' Transaction']);
+        if (isset($report['status']) && $report['status'] == "success") {
+            $data['data']          = $report['result']['data'];
+            $data['dataTotal']     = $report['result']['total'];
+            $data['dataPerPage']   = $report['result']['from'];
+            $data['dataUpTo']      = $report['result']['from'] + count($report['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($report['result']['data'], $report['result']['total'], $report['result']['per_page'], $report['result']['current_page'], ['path' => url()->current()]);
+            $data['sum'] = 0;
+        } else {
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+            $data['sum'] = 0;
+        }
+
+        return view('report::export.list_export', $data);
+    }
+
+    function actionExport(Request $request, $action, $id){
+        $post = $request->except('_token');
+
+        $post['action'] = $action;
+        $post['id_export_queue'] = $id;
+        $actions = MyHelper::post('report/export/action', $post);
+        if($action == 'deleted'){
+            if (isset($actions['status']) && $actions['status'] == "success") {
+                return redirect('transaction/list-export')->withSuccess(['Success to Remove file']);
+            } else {
+                return redirect('transaction/list-export')->withErrors(['Failed to Remove file']);
+            }
+        }else{
+            if (isset($actions['status']) && $actions['status'] == "success") {
+                $link = $actions['result']['url_export'];
+                $filename = "Report Transaction_".strtotime(date('Ymdhis')).'.xlsx';
+                $tempImage = tempnam(sys_get_temp_dir(), $filename);
+                copy($link, $tempImage);
+
+                return response()->download($tempImage, $filename)->deleteFileAfterSend(true);
+            } else {
+                return redirect('transaction/list-export')->withErrors(['Failed to Download file']);
+            }
+        }
+
+    }
+    /*================= End Export with queue =================*/
 }

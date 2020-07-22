@@ -633,9 +633,9 @@ $configs = session('configs');
         <div class="portlet-body form">
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                    {{-- @if ($subscription['subscription_step_complete'] != 1)
-                    <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Mark as Complete</a>
-                    @endif --}}
+                    @if ($subscription['subscription_step_complete'] != 1)
+                    <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Subscription</a>
+                    @endif
                 	<ul class="nav nav-tabs" id="tab-header">
                         <li class="active" id="infoOutlet">
                             <a href="#basic" data-toggle="tab" > Basic Info </a>
@@ -695,4 +695,27 @@ $configs = session('configs');
             </div>
         </div>
     </div>
+
+    @if ($subscription['subscription_step_complete'] != 1)
+    <div class="modal fade bs-modal-sm" id="small" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Start Subscription?</h4>
+                </div>
+                <form action="{{url('subscription/update-complete')}}" method="post">
+                	@csrf
+                	<input type="hidden" name="id_subscription" value="{{$subscription['id_subscription']}}">                	
+	                <div class="modal-footer">
+	                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button>
+	                    <button type="submit" class="btn green">Confirm</button>
+	                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    @endif
 @endsection

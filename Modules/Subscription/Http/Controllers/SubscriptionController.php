@@ -451,4 +451,34 @@ class SubscriptionController extends Controller
             return "fail";
         }
     }
+
+    public function updateComplete(Request $request)
+    {
+    	$post = $request->except('_token');
+    	$slug = $post['id_subscription'];
+        $post['id_subscription'] = MyHelper::explodeSlug($post['id_subscription'])[0]??'';
+		$update = MyHelper::post('subscription/update-complete', $post);
+
+        $rpage = 'subscription';
+
+		if ( ($update['status']??false) == 'success' ) 
+		{
+			return redirect($rpage.'/detail/'.$slug)->withSuccess(['Subscription has been started']);
+		}
+		elseif ( ($update['status']??false) == 'fail' ) 
+		{
+			if ( !empty($update['step']) ) 
+			{
+				return redirect($rpage.'/step'.$update['step'].'/'.$slug)->withErrors($update['messages']);
+			}
+			else
+			{
+				return redirect()->back()->withErrors($update['messages']);
+			}
+		}
+		else
+		{
+			return ['status' => 'fail', 'messages' => 'Something went wrong'];	
+		}
+    }
 }
