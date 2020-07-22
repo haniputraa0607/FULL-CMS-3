@@ -156,9 +156,12 @@ $grantedFeature     = session('granted_features');
 
                         <th> No</th>
                         <th> Title </th>
+                    @if ($subscription_type == 'subscription')
                         <th> Date Publish </th>
                         <th> Date Start </th>
                         <th> Price </th>
+                    @endif
+                    	<th> Brand </th>
                         <th> Status </th>
                         <th> Action </th>
                     </tr>
@@ -169,6 +172,8 @@ $grantedFeature     = session('granted_features');
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $value['subscription_title'] }}</td>
+
+                                @if ($subscription_type == 'subscription')
                                 <td>
                                     @php
                                         $bulan   = date('m', strtotime($value['subscription_publish_start']));
@@ -207,14 +212,21 @@ $grantedFeature     = session('granted_features');
                                         echo $price;
                                     @endphp
                                 </td>
+                                @endif
+                                <td class="middle-center" >{{ $value['brand']['name_brand']??'' }}</td>
                                 <td class="middle-center">
+                                	@php
+                                		$date_start = $value['subscription_start'];
+                                		$date_end 	= $value['subscription_end'];
+                                		$now 		= date("Y-m-d H:i:s");
+                                	@endphp
                                 	@if ( empty($value['subscription_step_complete']) )
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #F4D03F;padding: 5px 12px;color: #fff;">Not Complete</span>
-	                                @elseif( $value['subscription_status'] == 'expired' )
+	                                @elseif( !empty($date_end) && $date_end < $now )
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Ended</span>
-	                                @elseif( $value['subscription_status'] == 'available' )
+	                                @elseif( empty($date_start) || $date_start <= $now )
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-	                                @elseif( $value['subscription_status'] == 'soon' )
+	                                @else
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
 	                                @endif
 	                            </td>
@@ -223,7 +235,7 @@ $grantedFeature     = session('granted_features');
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_subscription'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
                                     @if(MyHelper::hasAccess([174], $grantedFeature))
-                                    <a href="{{ url('subscription/detail') }}/{{ $value['id_subscription'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                    <a href="{{ url($rpage.'/detail') }}/{{ $value['id_subscription'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @endif
                                 </td>
                             </tr>
