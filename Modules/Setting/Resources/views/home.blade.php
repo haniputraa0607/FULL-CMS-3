@@ -61,6 +61,16 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 	<script>
+
+	$(function () {
+        $('.time_picker').datetimepicker({
+            format: 'HH:mm',
+            autoclose: true,
+            pickDate:false
+        });
+    });
+
+
 	function hapus1(value){
 		swal({
 		  title: "Are you sure want to delete greeting ? ",
@@ -227,6 +237,8 @@
 		var type    = $(this).data('type');
 		var banner_start	= $(this).data('start');
 		var banner_end		= $(this).data('end');
+		var time_start		= $(this).data('time_start');
+		var time_end		= $(this).data('time_end');
 
     	$('#modalBannerUpdate').on('shown.bs.modal', function () {
     		// on chrome
@@ -239,6 +251,8 @@
 			$('#edit-banner-img').attr('src', image);
 			$('#banner_start').val(banner_start);
 			$('#banner_end').val(banner_end);
+			$('#time_start').val(time_start);
+			$('#time_end').val(time_end);
 
 			if (url != "") {
 				if (type == 'general') {
@@ -321,6 +335,10 @@
         todayBtn: true,
         minuteStep:1
     });
+
+	
+
+
 
     // clear banner edit form when modal close
     $('#modalBannerUpdate').on('hide.bs.modal', function () {
@@ -779,7 +797,7 @@
 											</div>
 											<div class="col-md-10 text-right">
 												@if(MyHelper::hasAccess([146], $grantedFeature))
-												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ ($banner['banner_start']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'' }}" data-end="{{ ($banner['banner_end']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):''}}"><i class="fa fa-pencil"></i> </a>
+												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-time_start="{{$banner['time_start']}}" data-time_end="{{$banner['time_end']}}" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ ($banner['banner_start']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'' }}" data-end="{{ ($banner['banner_end']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):''}}"><i class="fa fa-pencil"></i> </a>
 												@endif
 												@if(MyHelper::hasAccess([147], $grantedFeature))
 												<a class="btn red-mint btn-circle btn-delete" data-id="{{ $banner['id_banner'] }}"><i class="fa fa-trash-o"></i> </a>
@@ -818,6 +836,12 @@
 										<div>{{ ($banner['banner_start']??false)?date("d M Y H:i", strtotime($banner['banner_start'])):'-' }}</div><br>
 										<div>Date End:</div>
 					 			 		<div>{{ ($banner['banner_end']??false)?date("d M Y H:i", strtotime($banner['banner_end'])):'-' }}</div>
+										@if(MyHelper::hasAccess([117], $configs))
+											<div>Time Start:</div>
+											<div>{{ ($banner['time_start']??false) ? date("H:i", strtotime($banner['time_start'])):'-' }}</div><br>
+											<div>Time End:</div>
+						 			 		<div>{{ ($banner['time_end']) ? date("H:i", strtotime($banner['time_end'])):'-' }}</div>
+					 			 		@endif
 					 			 	</div>
 					 			</div>
 					 			@endforeach
@@ -1189,7 +1213,7 @@
 						<label class="col-md-3 control-label">Date Start</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" name="banner_start" size="16" class="form-control">
+								<input type="text" autocomplete="off" name="time_start" size="16" class="form-control">
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>
@@ -1203,7 +1227,7 @@
 						<label class="col-md-3 control-label">Date End</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" name="banner_end" size="16" class="form-control">
+								<input type="text" autocomplete="off" name="time_end" size="16" class="form-control">
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>
@@ -1212,7 +1236,36 @@
 							</div>
 						</div>
 					</div>
+        			
+        			@if(MyHelper::hasAccess([117], $configs))
+						<div class="form-group clearfix">
+							<label class="col-md-3 control-label">Time Start</label>
+							<div class="col-md-6">
+								<div class="input-group  bs-datetime">
+									<input type="time" autocomplete="off" name="time_start" size="16" class="form-control">
+									<span class="input-group-addon">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
 
+						<div class="form-group clearfix">
+							<label class="col-md-3 control-label">Time End</label>
+							<div class="col-md-6">
+								<div class="input-group bs-datetime">
+									<input type="time" autocomplete="off" name="time_end" size="16" class="form-control">
+									<span class="input-group-addon">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					@endif
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
 						<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
@@ -1330,6 +1383,36 @@
 							</div>
 						</div>
 					</div>
+					
+        			@if(MyHelper::hasAccess([117], $configs))
+						<div class="form-group clearfix">
+							<label class="col-md-3 control-label">Time Start</label>
+							<div class="col-md-6">
+								<div class="input-group  bs-datetime">
+									<input type="time" autocomplete="off" id="time_start"  name="time_start" size="16" class="form-control">
+									<span class="input-group-addon">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group clearfix">
+							<label class="col-md-3 control-label">Time End</label>
+							<div class="col-md-6">
+								<div class="input-group bs-datetime">
+									<input type="time" autocomplete="off" id="time_end" name="time_end" size="16" class="form-control">
+									<span class="input-group-addon">
+										<button class="btn default" type="button">
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					@endif
 
 					<div class="form-actions" style="text-align:center">
 						{{ csrf_field() }}
