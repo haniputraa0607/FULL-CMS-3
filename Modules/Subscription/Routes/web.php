@@ -36,8 +36,8 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 
     Route::any('step2/{id}', ['middleware' => 'feature_control:267', 'uses' => 'SubscriptionController@step2']);
     Route::any('step3/{id}', ['middleware' => 'feature_control:267', 'uses' => 'SubscriptionController@step3']);
     Route::post('update-complete', ['middleware' => 'feature_control:267', 'uses' => 'SubscriptionController@updateComplete']);
-    Route::any('detail/{id}', ['middleware' => 'feature_control:265', 'uses' => 'SubscriptionController@detail']);
+    Route::any('detail/{id}', ['middleware' => 'feature_control:265', 'uses' => 'SubscriptionController@detailv2']);
     Route::any('update', ['middleware' => 'feature_control:267', 'uses' => 'SubscriptionController@updateReq']);
-    Route::any('setting', 'SubscriptionController@welcomeVoucherSetting');
-    Route::any('update/status', 'SubscriptionController@welcomeVoucherUpdateStatus');
+    Route::any('setting', 'SubscriptionController@welcomeSubscriptionSetting');
+    Route::any('update/status', 'SubscriptionController@welcomeSubscriptionUpdateStatus');
 });

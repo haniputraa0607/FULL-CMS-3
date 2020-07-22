@@ -557,16 +557,16 @@ class SubscriptionController extends Controller
         $data 		= $this->getSubscriptionMenu($subs_type, 'setting');
 
         if($post){
-            $updateSetting =  MyHelper::post('subscription/welcome-subscription/setting/update', $post);
+            $updateSetting =  MyHelper::post('welcome-subscription/setting/update', $post);
+
             if($updateSetting){
                 return redirect($data['rpage'].'/setting')->withSuccess(['Setting Welcome Subscription has been updated.']);
             }else{
                 return redirect($data['rpage'].'/setting')->withErrors(['Setting Welcome Subscription failed.']);
             }
         }
-        $setting 	= MyHelper::post('subscription/welcome-subscription/setting', $post);
-        $list_subs 	= MyHelper::post('subscription/welcome-subscription/list/subscription', ['subscription_type' => 'welcome', 'web' => 1]);
-dd($setting, $list_subs);
+        $setting 	= MyHelper::post('welcome-subscription/setting', $post);
+        $list_subs 	= MyHelper::post('welcome-subscription/list', ['subscription_type' => 'welcome', 'web' => 1]);
         if(isset($setting['status']) && $setting['status'] == 'success'){
             $data['setting'] = $setting['data']['setting'];
             $data['subscription'] = $setting['data']['subscription'];
@@ -575,12 +575,25 @@ dd($setting, $list_subs);
             $data['subscription'] = [];
         }
 
-        if(isset($listDeals['status']) && $listDeals['status'] == 'success'){
-            $data['all'] = $listDeals['result'];
+        if(isset($list_subs['status']) && $list_subs['status'] == 'success'){
+            $data['list_subs'] = $list_subs['result'];
         }else{
-            $data['all'] = [];
+            $data['list_subs'] = [];
         }
 
         return view('subscription::welcome-subscription.setting', $data);
+    }
+
+    function welcomeSubscriptionUpdateStatus(Request $request){
+        $post = $request->except('_token');
+        $update = MyHelper::post('welcome-subscription/setting/update/status', $post);
+
+        if (isset($update['status']) && $update['status'] == "success") {
+            return ['status' => 'success'];
+        }elseif (isset($update['status']) && $update['status'] == 'fail') {
+            return ['status' => 'fail', 'messages' => $update['messages']];
+        } else {
+            return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update status welcome pack'];
+        }
     }
 }
