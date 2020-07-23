@@ -12,33 +12,39 @@
         var index = temp1.replace("][subject]", "");
         var subject_value = document.getElementsByName(val)[0].value;
 
-        if(subject_value == 'bank_name'){
+        if(subject_value == 'status'){
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
             for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-            <?php
-                foreach($banks as $row){
-                ?>
-                operator_value.options[operator_value.options.length] = new Option('<?php echo $row['bank_name']; ?>', '<?php echo $row['id_bank_name']; ?>');
-            <?php
-                }
-                ?>
-            var parameter = "conditions["+index+"][parameter]";
-            document.getElementsByName(parameter)[0].type = 'hidden';
-        }else if(subject_value == 'status'){
-            var operator = "conditions["+index+"][operator]";
-            var operator_value = document.getElementsByName(operator)[0];
-            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-            operator_value.options[operator_value.options.length] = new Option('Success', 'Success');
-            operator_value.options[operator_value.options.length] = new Option('Queued', 'Queued');
-            operator_value.options[operator_value.options.length] = new Option('Processed', 'Processed');
-            operator_value.options[operator_value.options.length] = new Option('Fail', 'Fail');
-            operator_value.options[operator_value.options.length] = new Option('Rejected', 'Rejected');
-            operator_value.options[operator_value.options.length] = new Option('Approved', 'Approved');
-            operator_value.options[operator_value.options.length] = new Option('Retry From Failed', 'Retry From Failed');
+            operator_value.options[operator_value.options.length] = new Option('Pending', 'Pending');
+            operator_value.options[operator_value.options.length] = new Option('Paid', 'Paid');
+            operator_value.options[operator_value.options.length] = new Option('Completed', 'Completed');
+            operator_value.options[operator_value.options.length] = new Option('Cancelled', 'Cancelled');
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
+        }else if(subject_value == 'type'){
+            var operator = "conditions["+index+"][operator]";
+            var operator_value = document.getElementsByName(operator)[0];
+            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+            operator_value.options[operator_value.options.length] = new Option('Deals', 'Deals');
+            operator_value.options[operator_value.options.length] = new Option('Subscription', 'Subscription');
+            operator_value.options[operator_value.options.length] = new Option('Transaction', 'Transaction');
+
+            var parameter = "conditions["+index+"][parameter]";
+            document.getElementsByName(parameter)[0].type = 'hidden';
+        }else if(subject_value == 'grandtotal' || subject_value == 'amount'){
+            var operator = "conditions["+index+"][operator]";
+            var operator_value = document.getElementsByName(operator)[0];
+            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+            operator_value.options[operator_value.options.length] = new Option('=', '=');
+            operator_value.options[operator_value.options.length] = new Option('>', '>');
+            operator_value.options[operator_value.options.length] = new Option('>=', '>=');
+            operator_value.options[operator_value.options.length] = new Option('<', '<');
+            operator_value.options[operator_value.options.length] = new Option('<=', '<=');
+
+            var parameter = "conditions["+index+"][parameter]";
+            document.getElementsByName(parameter)[0].type = 'text';
         }else{
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
@@ -67,7 +73,7 @@
                 <label class="col-md-2 control-label">Date Start :</label>
                 <div class="col-md-4">
                     <div class="input-group">
-                        <input type="date" class="form-control" name="date_start" value="{{ $date_start }}">
+                        <input type="date" class="form-control date-picker" name="date_start" value="{{ $date_start }}">
                         <span class="input-group-btn">
                             <button class="btn default" type="button">
                                 <i class="fa fa-calendar"></i>
@@ -79,7 +85,7 @@
                 <label class="col-md-2 control-label">Date End :</label>
                 <div class="col-md-4">
                     <div class="input-group">
-                        <input type="date" class="form-control" name="date_end" value="{{ $date_end }}">
+                        <input type="date" class="form-control date-picker" name="date_end" value="{{ $date_end }}">
                         <span class="input-group-btn">
                             <button class="btn default" type="button">
                                 <i class="fa fa-calendar"></i>
@@ -106,30 +112,32 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
-                                                    <option value="outlet_code" @if ($con['subject'] == 'outlet_code') selected @endif>Outlet Code</option>
-                                                    <option value="outlet_name" @if ($con['subject'] == 'outlet_name') selected @endif>Outlet Name</option>
-                                                    <option value="bank_name" @if ($con['subject'] == 'bank_name') selected @endif>Bank</option>
-                                                    <option value="account_number" @if ($con['subject'] == 'account_number') selected @endif>Account Number</option>
-                                                    <option value="recipient_name" @if ($con['subject'] == 'recipient_name') selected @endif>Recipient Name</option>
-                                                    @if($status == 'all')
+                                                    <option value="type" @if ($con['subject'] == 'type') selected @endif>Type</option>
+                                                    <option value="name" @if ($con['subject'] == 'name') selected @endif>Customer Name</option>
+                                                    <option value="phone" @if ($con['subject'] == 'phone') selected @endif>Customer Phone</option>
+                                                    <option value="transaction_receipt_number" @if ($con['subject'] == 'transaction_receipt_number') selected @endif>Receipt Number</option>
+                                                    <option value="grandtotal" @if ($con['subject'] == 'grandtotal') selected @endif>Grand Total</option>
+                                                    <option value="amount" @if ($con['subject'] == 'amount') selected @endif>Amount</option>
                                                     <option value="status" @if ($con['subject'] == 'status') selected @endif>Status</option>
-                                                    @endif
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
                                                 <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
-                                                    @if($con['subject'] == 'bank_name')
-                                                        @foreach($banks as $val)
-                                                            <option value="{{$val['id_bank_name']}}" @if ($con['operator'] == $val['id_bank_name']) selected @endif>{{$val['bank_name']}}</option>
-                                                        @endforeach
-                                                    @elseif($con['subject'] == 'status')
-                                                        <option value="Success" @if ($con['operator']  == 'Success') selected @endif>Success</option>
-                                                        <option value="Queued" @if ($con['operator']  == 'Queued') selected @endif>Queued</option>
-                                                        <option value="Processed" @if ($con['operator']  == 'Processed') selected @endif>Processed</option>
-                                                        <option value="Fail" @if ($con['operator']  == 'Fail') selected @endif>Fail</option>
-                                                        <option value="Rejected" @if ($con['operator']  == 'Rejected') selected @endif>Rejected</option>
-                                                        <option value="Approved" @if ($con['operator']  == 'Approved') selected @endif>Approved</option>
-                                                        <option value="Approved" @if ($con['operator']  == 'Retry From Failed') selected @endif>Retry From Failed</option>
+                                                    @if($con['subject'] == 'status')
+                                                        <option value="Pending" @if ($con['operator']  == 'Pending') selected @endif>Pending</option>
+                                                        <option value="Paid" @if ($con['operator']  == 'Paid') selected @endif>Paid</option>
+                                                        <option value="Completed" @if ($con['operator']  == 'Completed') selected @endif>Completed</option>
+                                                        <option value="Cancelled" @if ($con['operator']  == 'Cancelled') selected @endif>Cancelled</option>
+                                                    @elseif($con['subject'] == 'type')
+                                                        <option value="Deals" @if ($con['operator']  == 'Deals') selected @endif>Deals</option>
+                                                        <option value="Subscription" @if ($con['operator']  == 'Subscription') selected @endif>Subscription</option>
+                                                        <option value="Transaction" @if ($con['operator']  == 'Transaction') selected @endif>Transaction</option>
+                                                    @elseif($con['subject'] == 'amount' || $con['subject'] == 'grandtotal')
+                                                        <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
+                                                        <option value=">" @if ($con['operator']  == '>') selected @endif>></option>
+                                                        <option value=">=" @if ($con['operator'] == '>=') selected @endif>>=</option>
+                                                        <option value="<" @if ($con['operator'] == '<') selected @endif><</option>
+                                                        <option value="<=" @if ($con['operator'] == '<=') selected @endif><=</option>
                                                     @else
                                                         <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                                         <option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>
@@ -137,7 +145,7 @@
                                                 </select>
                                             </div>
 
-                                            @if ($con['subject'] == 'bank_name' || $con['subject'] == 'status')
+                                            @if ($con['subject'] == 'status' || $con['subject'] == 'type')
                                                 <div class="col-md-3">
                                                     <input type="hidden" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
                                                 </div>
@@ -161,12 +169,13 @@
                                             <div class="col-md-4">
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                                     <option value="" selected disabled>Search Subject</option>
-                                                    <option value="outlet_code">Outlet Code</option>
-                                                    <option value="outlet_name">Outlet Name</option>
-                                                    <option value="bank_name">Bank</option>
-                                                    <option value="account_number">Account Number</option>
-                                                    <option value="recipient_name">Recipient Name</option>
-                                                    @if($status == 'all')<option value="status">Status</option>@endif
+                                                    <option value="type">Type</option>
+                                                    <option value="name">Customer Name</option>
+                                                    <option value="phone">Customer Phone</option>
+                                                    <option value="transaction_receipt_number">Receipt Number</option>
+                                                    <option value="grandtotal">Grand Total</option>
+                                                    <option value="amount">Amount</option>
+                                                    <option value="status">Status</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -195,12 +204,13 @@
                                     <div class="col-md-4">
                                         <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                             <option value="" selected disabled>Search Subject</option>
-                                            <option value="outlet_code">Outlet Code</option>
-                                            <option value="outlet_name">Outlet Name</option>
-                                            <option value="bank_name">Bank</option>
-                                            <option value="account_number">Account Number</option>
-                                            <option value="recipient_name">Recipient Name</option>
-                                            @if($status == 'all')<option value="status">Status</option>@endif
+                                            <option value="type">Type</option>
+                                            <option value="name">Customer Name</option>
+                                            <option value="phone">Customer Phone</option>
+                                            <option value="transaction_receipt_number">Receipt Number</option>
+                                            <option value="grandtotal">Grand Total</option>
+                                            <option value="amount">Amount</option>
+                                            <option value="status">Status</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4">
@@ -235,8 +245,8 @@
                         {{ csrf_field() }}
                         <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
                         <a class="btn green" href="{{url()->current()}}">Reset</a>
-                        @if(!empty($disburse) && $status == 'success')
-                            <a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1">Export</a>
+                        @if(!empty($data))
+                        <a class="btn green-jungle" id="btn-export" href="{{url('report/payment/export')}}/{{$type}}">Export</a>
                         @endif
                     </div>
                 </div>
