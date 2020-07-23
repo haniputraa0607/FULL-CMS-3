@@ -50,7 +50,7 @@ class SubscriptionController extends Controller
 			                'title'          => 'Welcome Subscription',
 			                'sub_title'      => 'Welcome Subscription Detail',
 			                'menu_active'    => 'welcome-subscription',
-			                'submenu_active' => 'welcome-subscription-List'
+			                'submenu_active' => 'welcome-subscription-list'
 			            ];
     					break;
     				
@@ -59,8 +59,8 @@ class SubscriptionController extends Controller
     					$data = [
 	                        'title'          => 'Welcome Subscription',
 	                        'sub_title'      => 'Welcome Subscription Setting',
-	                        'menu_active'    => 'welcome-Subscription',
-	                        'submenu_active' => 'welcome-Subscription-setting'
+	                        'menu_active'    => 'welcome-subscription',
+	                        'submenu_active' => 'welcome-subscription-setting'
 	                    ];
     					break;
     				
@@ -98,7 +98,7 @@ class SubscriptionController extends Controller
 			                'title'          => 'Subscription',
 			                'sub_title'      => 'Subscription Detail',
 			                'menu_active'    => 'subscription',
-			                'submenu_active' => 'subscription-List'
+			                'submenu_active' => 'subscription-list'
 			            ];
     					break;
     				
@@ -143,7 +143,6 @@ class SubscriptionController extends Controller
         $post['with_brand'] = 1;
         $post['subscription_type'] = $subs_type??'subscription';
 
-// dd(MyHelper::post('subscription/be/list', $post));
         if(($filter=session('subs_filter'))&&is_array($filter))
         {
             $post=array_merge($filter,$post);
@@ -366,7 +365,7 @@ class SubscriptionController extends Controller
             if($post['id_subscription']){
                 $post['id_subscription'] = MyHelper::explodeSlug($post['id_subscription'])[0];
             }
-// dd($post);
+
             $save = MyHelper::post('subscription/step3', $post);
 
             if ( ($save['status']??false) == "success") {

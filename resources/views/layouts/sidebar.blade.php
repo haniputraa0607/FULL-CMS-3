@@ -1534,9 +1534,9 @@
 								</a>
 							</li>
 						@endif
-						<li class="nav-item {{($submenu_active == 'deals-autoresponse-welcome-subscription') ? 'active open' : ''}}">
-							<a href="{{url('transaction/autoresponse/receive-welcome-subscription')}}" class="nav-link ">
-								<span class="title">[Response] Welcome Subscription</span>
+						<li class="nav-item {{($submenu_active == 'welcome-subscription-autoresponse-receive-welcome-subscription') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/welcome-subscription/receive-welcome-subscription')}}" class="nav-link ">
+								<span class="title">[Response] Receive Welcome Subscription</span>
 							</a>
 						</li>
 						@if(MyHelper::hasAccess([120,122], $grantedFeature))
