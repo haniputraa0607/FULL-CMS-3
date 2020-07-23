@@ -704,7 +704,7 @@ $configs = session('configs');
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Start Subscription?</h4>
                 </div>
-                <form action="{{url('subscription/update-complete')}}" method="post">
+                <form action="{{url($rpage.'/update-complete')}}" method="post">
                 	@csrf
                 	<input type="hidden" name="id_subscription" value="{{$subscription['id_subscription']}}">                	
 	                <div class="modal-footer">

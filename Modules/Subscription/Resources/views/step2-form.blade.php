@@ -3,6 +3,7 @@ use App\Lib\MyHelper;
 $configs = session('configs');
 ?>
 @section('step2')
+					@if ($subscription_type == 'subscription')
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -94,6 +95,7 @@ $configs = session('configs');
                             </div>
                         </div>
                     </div>
+                    @endif
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -553,6 +555,7 @@ $configs = session('configs');
                         </div>
                     </div>
 
+                    @if ($subscription_type == 'subscription')
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -653,4 +656,5 @@ $configs = session('configs');
                             </div>
                         </div>
                     </div>
+                    @endif
 @endsection

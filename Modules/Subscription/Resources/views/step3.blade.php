@@ -433,6 +433,7 @@ $configs = session('configs');
                     <div class="row">
                         <div class="col-md-offset-4 col-md-8">
                             <input type="hidden" name="id_subscription" value="{{ $subscription['id_subscription']??'' }}">
+                            <input type="hidden" name="subscription_type" value="{{ $subscription_type??'' }}">
                             <a href="{{ ($subscription['id_subscription']??'') ? url('subscription/step2/'.$subscription['id_subscription']) : '' }}" class="btn green">Previous Step</a>
                             <button type="submit" class="btn green">Save</button>
                             <!-- <button type="button" class="btn default">Cancel</button> -->
