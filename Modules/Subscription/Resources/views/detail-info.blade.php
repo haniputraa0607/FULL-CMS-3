@@ -1,7 +1,6 @@
 @section('detail-info')
 @php
     $datenow = date("Y-m-d H:i:s");
-    $rpage = 'subscription';
 @endphp
 <div class="row">
     <div class="col-md-6">
@@ -13,16 +12,19 @@
                             <span class="sale-info"> Status 
                                 <i class="fa fa-img-up"></i>
                             </span>
+                            @php
+                        		$date_start = $subscription['subscription_start'];
+                        		$date_end 	= $subscription['subscription_end'];
+                        		$now 		= date("Y-m-d H:i:s");
+                        	@endphp
                             @if( empty($subscription['subscription_step_complete']) )
                                 <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #F4D03F;padding: 5px 12px;color: #fff;">Not Complete</span>
-                            @elseif( $subscription['subscription_status'] == 'expired' )
+                            @elseif( !empty($date_end) && $date_end < $now )
                                 <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Ended</span>
-                            @elseif( $subscription['subscription_status'] == 'available' )
+                            @elseif( empty($date_start) || $date_start <= $now )
                                 <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                            @elseif( $subscription['subscription_status'] == 'soon' )
-                                <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
                             @else
-                                <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
+                                <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
                             @endif
                         </li>
                     </ul>

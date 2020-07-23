@@ -105,6 +105,7 @@
             <thead>
             <tr>
                 <th scope="col" width="10%"> Date </th>
+                <th scope="col" width="10%"> Reject Type </th>
                 <th scope="col" width="10%">Status</th>
                 <th scope="col" width="10%"> Type </th>
                 <th scope="col" width="10%"> Payment Type </th>
@@ -120,12 +121,23 @@
                 @foreach($data as $val)
                     <tr>
                         <td>{{date('d M Y H:i', strtotime($val['created_at']))}}</td>
+                        <td>
+                            @if($val['reject_type'] == 'Not Reject')
+                                <span class="badge bg-green-jungle">{{$val['reject_type']}}</span>
+                            @elseif($val['reject_type'] == 'Reject To Point')
+                                <span class="badge bg-red">{{$val['reject_type']}}</span>
+                            @endif
+                        </td>
                         <td>{{$val['payment_status']}}</td>
                         <td>{{$val['type']}}</td>
                         <td>{{$val['payment_type']}}</td>
                         <td>{{number_format($val['grand_total'])}}</td>
                         <td>
-                            {{number_format((int)$val['gross_amount'])}}
+                            @if(isset($val['gross_amount']))
+                                {{number_format((int)$val['gross_amount'])}}
+                            @elseif(isset($val['amount']))
+                                {{number_format((int)$val['amount'])}}
+                            @endif
                         </td>
                         <td>{{$val['name']}}</td>
                         <td><a target="_blank" href="{{ url('user/detail', $val['phone']) }}">{{$val['phone']}} </a></td>
