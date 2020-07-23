@@ -28,3 +28,16 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 
     Route::any('list-ajax', 'SubscriptionController@listSubcriptionAjax');
     Route::post('update-complete', ['uses' => 'SubscriptionController@updateComplete']);
 });
+
+Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 'prefix' => 'welcome-subscription', 'subscription_type' => 'welcome'], function () {
+    Route::any('/', ['middleware' => 'feature_control:264', 'uses' => 'SubscriptionController@index'])->defaults('subs_type', 'welcome');
+    Route::any('create', ['middleware' => 'feature_control:266', 'uses' => 'SubscriptionController@create']);
+    Route::any('step1/{id}', ['middleware' => 'feature_control:267', 'uses' => 'SubscriptionController@create']);
+    Route::any('step2/{id}', ['middleware' => 'feature_control:267', 'uses' => 'SubscriptionController@step2']);
+    Route::any('step3/{id}', ['middleware' => 'feature_control:267', 'uses' => 'SubscriptionController@step3']);
+    Route::post('update-complete', ['middleware' => 'feature_control:267', 'uses' => 'SubscriptionController@updateComplete']);
+    Route::any('detail/{id}', ['middleware' => 'feature_control:265', 'uses' => 'SubscriptionController@detailv2']);
+    Route::any('update', ['middleware' => 'feature_control:267', 'uses' => 'SubscriptionController@updateReq']);
+    Route::any('setting', 'SubscriptionController@welcomeSubscriptionSetting');
+    Route::any('update/status', 'SubscriptionController@welcomeSubscriptionUpdateStatus');
+});
