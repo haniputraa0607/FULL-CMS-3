@@ -90,6 +90,15 @@ $idUserFrenchisee = session('id_user_franchise');
             </div>
         </div>
     @endif
+
+    @if(!empty($trx))
+        <div class="row" style="text-align: right;margin-bottom: 2%;">
+            <div class="col-md-12">
+                <a class="btn green-jungle" style="text-align: right" id="btn-export" href="{{url()->current()}}?export=1"><i class="fa fa-download"></i> Export</a>
+            </div>
+        </div>
+    @endif
+
     <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
         <table class="table table-striped table-bordered table-hover" id="tableReport">
             <thead>
