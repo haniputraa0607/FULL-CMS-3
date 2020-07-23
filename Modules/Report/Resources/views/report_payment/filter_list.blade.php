@@ -23,6 +23,15 @@
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
+        }else if(subject_value == 'reject_type'){
+            var operator = "conditions["+index+"][operator]";
+            var operator_value = document.getElementsByName(operator)[0];
+            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+            operator_value.options[operator_value.options.length] = new Option('No Reject', '0');
+            operator_value.options[operator_value.options.length] = new Option('Reject To Point', '1');
+
+            var parameter = "conditions["+index+"][parameter]";
+            document.getElementsByName(parameter)[0].type = 'hidden';
         }else if(subject_value == 'type'){
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
@@ -113,6 +122,7 @@
                                             <div class="col-md-4">
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                                     <option value="type" @if ($con['subject'] == 'type') selected @endif>Type</option>
+                                                    <option value="reject_type" @if ($con['subject'] == 'reject_type') selected @endif>Reject Type</option>
                                                     <option value="name" @if ($con['subject'] == 'name') selected @endif>Customer Name</option>
                                                     <option value="phone" @if ($con['subject'] == 'phone') selected @endif>Customer Phone</option>
                                                     <option value="transaction_receipt_number" @if ($con['subject'] == 'transaction_receipt_number') selected @endif>Receipt Number</option>
@@ -128,6 +138,9 @@
                                                         <option value="Paid" @if ($con['operator']  == 'Paid') selected @endif>Paid</option>
                                                         <option value="Completed" @if ($con['operator']  == 'Completed') selected @endif>Completed</option>
                                                         <option value="Cancelled" @if ($con['operator']  == 'Cancelled') selected @endif>Cancelled</option>
+                                                    @elseif($con['subject'] == 'reject_type')
+                                                        <option value="0" @if ($con['operator']  == '0') selected @endif>No Reject</option>
+                                                        <option value="1" @if ($con['operator']  == '1') selected @endif>Reject To Point</option>
                                                     @elseif($con['subject'] == 'type')
                                                         <option value="Deals" @if ($con['operator']  == 'Deals') selected @endif>Deals</option>
                                                         <option value="Subscription" @if ($con['operator']  == 'Subscription') selected @endif>Subscription</option>
@@ -145,7 +158,7 @@
                                                 </select>
                                             </div>
 
-                                            @if ($con['subject'] == 'status' || $con['subject'] == 'type')
+                                            @if ($con['subject'] == 'status' || $con['subject'] == 'type' || $con['subject'] == 'reject_type')
                                                 <div class="col-md-3">
                                                     <input type="hidden" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
                                                 </div>
@@ -170,6 +183,7 @@
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                                     <option value="" selected disabled>Search Subject</option>
                                                     <option value="type">Type</option>
+                                                    <option value="reject_type">Reject Type</option>
                                                     <option value="name">Customer Name</option>
                                                     <option value="phone">Customer Phone</option>
                                                     <option value="transaction_receipt_number">Receipt Number</option>
@@ -205,6 +219,7 @@
                                         <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                             <option value="" selected disabled>Search Subject</option>
                                             <option value="type">Type</option>
+                                            <option value="reject_type">Reject Type</option>
                                             <option value="name">Customer Name</option>
                                             <option value="phone">Customer Phone</option>
                                             <option value="transaction_receipt_number">Receipt Number</option>
