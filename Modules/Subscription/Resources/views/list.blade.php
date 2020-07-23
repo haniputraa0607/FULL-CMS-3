@@ -110,7 +110,14 @@ $grantedFeature     = session('granted_features');
                         toastr.info("Subscription has been deleted.");
                     }
                     else {
-                        toastr.warning("Something went wrong. Failed to delete subscription.");
+                    	let messages;
+                    	if (result['messages']??false){
+                    		messages = result['messages'];
+                    	}
+                    	else{
+                    		messages = "Something went wrong. Failed to delete subscription.";
+                    	}
+                        toastr.warning(messages);
                     }
                 }
             });
@@ -231,7 +238,7 @@ $grantedFeature     = session('granted_features');
 	                                @endif
 	                            </td>
                                 <td style="width: 80px;">
-                                    @if(MyHelper::hasAccess([176], $grantedFeature))
+                                    @if(MyHelper::hasAccess([176], $grantedFeature) && empty($value['subscription_bought']))
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_subscription'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
                                     @if(MyHelper::hasAccess([174], $grantedFeature))

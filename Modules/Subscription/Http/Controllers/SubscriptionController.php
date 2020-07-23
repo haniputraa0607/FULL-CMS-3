@@ -513,7 +513,7 @@ class SubscriptionController extends Controller
             return "success";
         }
         else {
-            return "fail";
+            return $delete;
         }
     }
 
