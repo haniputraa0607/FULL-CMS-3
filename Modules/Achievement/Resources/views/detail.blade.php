@@ -1009,7 +1009,7 @@
                             <div class="profile-info portlet light bordered">
                                 <div class="portlet-title"> 
                                     <span class="caption font-blue sbold uppercase">{{$data['group']['name']}} Badge </span>
-                                    <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Badge</a>
+                                    {{-- <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Badge</a> --}}
                                 </div>
                                 <div class="portlet-body row">
                                     @foreach ($data['detail'] as $item)
@@ -1023,7 +1023,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="btn-group btn-group-solid pull-right">
+                                                    {{-- <div class="btn-group btn-group-solid pull-right">
                                                         <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                                             <div id="loadingBtn" hidden>
                                                                 <i class="fa fa-spinner fa-spin"></i> Loading
@@ -1041,7 +1041,7 @@
                                                                 <a href="javascript:;" onclick="removeBadge(this, {{$item['id_achievement_detail']}})"> Remove </a>
                                                             </li>
                                                         </ul>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <div class="portlet-body">
@@ -1088,7 +1088,7 @@
                                                                 @endif
                                                                 @if (!is_null($item['different_province']))
                                                                     <div class="col-md-5 name">Province Different ?</div>
-                                                                    <div class="col-md-7 value">: {{$item['different_province']}} Provice</div>
+                                                                    <div class="col-md-7 value">: {{$item['different_province']}} Province</div>
                                                                 @endif
                                                             </div>
                                                         @endif
