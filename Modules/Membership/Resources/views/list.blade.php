@@ -608,7 +608,7 @@
 										<div class="col-md-4" >
 											<div class="input-icon right">
 												<div class="fileinput fileinput-new" data-provides="fileinput">
-													<div class="fileinput-new thumbnail" style="width: 75px;">
+													<div class="fileinput-new thumbnail" style="width: 200px;">
 														@if($membership['membership_card'] != "")
 															<img src="{{env('STORAGE_URL_API')}}{{$membership['membership_card']}}" alt="" />
 														@else
@@ -616,7 +616,7 @@
 														@endif
 													</div>
 
-													<div class="fileinput-preview fileinput-exists thumbnail" style="width: 75px;"> </div>
+													<div class="fileinput-preview fileinput-exists thumbnail" style="width: 200px;"> </div>
 													<div class="aa">
 														<span class="btn default btn-file">
 															<span class="fileinput-new"> Select image </span>
