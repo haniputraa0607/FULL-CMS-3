@@ -149,7 +149,7 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" name="detail[`+nomer+`][name]" placeholder="Detail Achievement" required maxlength="20">
+                                                    <input type="text" class="form-control" name="detail[`+nomer+`][name]" placeholder="Detail Achievement" required maxlength="30">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -436,7 +436,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="group[name]" value="{{ old('group.name') }}" placeholder="Achievement" required maxlength="20">
+                                        <input type="text" class="form-control" name="group[name]" value="{{ old('group.name') }}" placeholder="Achievement" required maxlength="30">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -794,7 +794,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Achievement" required maxlength="20">
+                                                <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Achievement" required maxlength="30">
                                             </div>
                                         </div>
                                         <div class="form-group">
