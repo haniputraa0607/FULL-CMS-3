@@ -24,6 +24,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::any('qrcode', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@qrcodeView']);
     Route::get('qrcode/print', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@qrcodePrint']);
     Route::get('export-import', ['middleware' => ['feature_control:32,33', 'config_control:2,3,or'], 'uses' => 'OutletController@exportImport']);
+    Route::get('export-outlet-pin', ['middleware' => ['feature_control:261'], 'uses' => 'OutletController@exportPin']);
+    Route::post('export-outlet-pin', ['middleware' => ['feature_control:261'], 'uses' => 'OutletController@doExportPin']);
     Route::post('import-brand', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@importBrand']);
     Route::get('export/brand-outlet', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@exportBrandOutle']);
     Route::get('export-city', 'OutletController@exportDataCity');
@@ -58,8 +60,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     });
 
     //user franchise
-    Route::get('list/user-franchise', ['middleware' => 'feature_control:247', 'uses' => 'OutletController@listUserFranchise']);
+    Route::any('list/user-franchise', ['middleware' => 'feature_control:247', 'uses' => 'OutletController@listUserFranchise']);
     Route::any('detail/user-franchise/{phone}', ['middleware' => 'feature_control:248', 'uses' => 'OutletController@detailUserFranchise']);
+    Route::post('user-franchise/set-password-default', ['middleware' => 'feature_control:248', 'uses' => 'OutletController@setPasswordDefaultUserFranchise']);
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet', 'namespace' => 'Modules\Advert\Http\Controllers'], function()

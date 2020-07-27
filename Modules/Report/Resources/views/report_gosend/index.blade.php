@@ -1,42 +1,33 @@
-<?php
-use App\Lib\MyHelper;
-$grantedFeature     = session('granted_features');
-$idUserFrenchisee = session('id_user_franchise');
-$baseUri = 'disburse';
-if(!is_null($idUserFrenchisee)){
-    $baseUri = 'disburse/user-franchise';
-}
-?>
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 @endsection
 
-@extends(($idUserFrenchisee == NULL ? 'layouts.main' : 'disburse::layouts.main'))
+@extends('layouts.main')
 
 @section('content')
     <div class="page-bar">
@@ -93,6 +84,22 @@ if(!is_null($idUserFrenchisee)){
         @include('report::report_gosend.filter_list')
     </form>
 
+    <div class="m-heading-1 border-green m-bordered">
+        <p>Default data yang ditampilkan adalah data dengan status <b>"Delivered"</b>. Untuk mencari data dengan status selain <b>"Delivered"</b>, Anda bisa menggunakan filter diatas dengan memilih subject "Status". Export akan menghasilkan data sesuai dengan list data yang tampil saat ini.</p>
+        <p>Tombol export akan muncul jika list dibawah tersedia.</p>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5" style="text-align: center;">
+            <div style="border: solid 1px black;">
+                <h4><b>Total Price GoSend : {{number_format($sum)}}</b></h4>
+            </div>
+        </div>
+    </div>
+    <br>
+
     <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
         <table class="table table-striped table-bordered table-hover" id="tableReport">
             <thead>
@@ -135,22 +142,23 @@ if(!is_null($idUserFrenchisee)){
                         </td>
                         <td>
                             <?php
-                                $latest_status = $val['latest_status'];
-                                $arrStatus = [
-                                    'confirmed' => 'Booking is received',
-                                    'allocated' => 'Driver is found',
-                                    'out_for_pickup' => 'Driver is on their way to pick-up location',
-                                    'out_for_delivery' => 'Driver is enroute to deliver the item',
-                                    'cancelled' => 'Booking is cancelled by CS',
-                                    'delivered' => 'Delivered',
-                                    'no_driver' => 'Driver not found',
-                                ];
+                            $latest_status = $val['latest_status'];
+                            $arrStatus = [
+                                'confirmed' => 'Booking is received',
+                                'allocated' => 'Driver is found',
+                                'out_for_pickup' => 'Driver is on their way to pick-up location',
+                                'out_for_delivery' => 'Driver is enroute to deliver the item',
+                                'cancelled' => 'Booking is cancelled by CS',
+                                'delivered' => 'Delivered',
+                                'no_driver' => 'Driver not found',
+                                'Finding Driver' => 'Finding Driver'
+                            ];
 
-                                if(is_null($latest_status)){
-                                    echo '-';
-                                }else{
-                                    echo $arrStatus[$latest_status];
-                                }
+                            if(isset($arrStatus[$latest_status]) &&  !is_null($val['latest_status'])){
+                                echo $arrStatus[$latest_status];
+                            }else{
+                                echo '-';
+                            }
                             ?>
                         </td>
                     </tr>

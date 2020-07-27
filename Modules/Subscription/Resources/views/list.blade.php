@@ -6,11 +6,11 @@ $grantedFeature     = session('granted_features');
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
     <style type="text/css">
     	.middle-center {
             vertical-align: middle!important;
@@ -20,14 +20,14 @@ $grantedFeature     = session('granted_features');
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 language: {
@@ -110,7 +110,14 @@ $grantedFeature     = session('granted_features');
                         toastr.info("Subscription has been deleted.");
                     }
                     else {
-                        toastr.warning("Something went wrong. Failed to delete subscription.");
+                    	let messages;
+                    	if (result['messages']??false){
+                    		messages = result['messages'];
+                    	}
+                    	else{
+                    		messages = "Something went wrong. Failed to delete subscription.";
+                    	}
+                        toastr.warning(messages);
                     }
                 }
             });
@@ -156,9 +163,12 @@ $grantedFeature     = session('granted_features');
 
                         <th> No</th>
                         <th> Title </th>
+                    @if ($subscription_type == 'subscription')
                         <th> Date Publish </th>
                         <th> Date Start </th>
                         <th> Price </th>
+                    @endif
+                    	<th> Brand </th>
                         <th> Status </th>
                         <th> Action </th>
                     </tr>
@@ -169,6 +179,8 @@ $grantedFeature     = session('granted_features');
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $value['subscription_title'] }}</td>
+
+                                @if ($subscription_type == 'subscription')
                                 <td>
                                     @php
                                         $bulan   = date('m', strtotime($value['subscription_publish_start']));
@@ -207,23 +219,30 @@ $grantedFeature     = session('granted_features');
                                         echo $price;
                                     @endphp
                                 </td>
+                                @endif
+                                <td class="middle-center" >{{ $value['brand']['name_brand']??'' }}</td>
                                 <td class="middle-center">
+                                	@php
+                                		$date_start = $value['subscription_start'];
+                                		$date_end 	= $value['subscription_end'];
+                                		$now 		= date("Y-m-d H:i:s");
+                                	@endphp
                                 	@if ( empty($value['subscription_step_complete']) )
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #F4D03F;padding: 5px 12px;color: #fff;">Not Complete</span>
-	                                @elseif( $value['subscription_status'] == 'expired' )
+	                                @elseif( !empty($date_end) && $date_end < $now )
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Ended</span>
-	                                @elseif( $value['subscription_status'] == 'available' )
+	                                @elseif( empty($date_start) || $date_start <= $now )
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-	                                @elseif( $value['subscription_status'] == 'soon' )
+	                                @else
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
 	                                @endif
 	                            </td>
                                 <td style="width: 80px;">
-                                    @if(MyHelper::hasAccess([176], $grantedFeature))
+                                    @if(MyHelper::hasAccess([176], $grantedFeature) && empty($value['subscription_bought']))
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_subscription'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
                                     @if(MyHelper::hasAccess([174], $grantedFeature))
-                                    <a href="{{ url('subscription/detail') }}/{{ $value['id_subscription'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                    <a href="{{ url($rpage.'/detail') }}/{{ $value['id_subscription'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @endif
                                 </td>
                             </tr>

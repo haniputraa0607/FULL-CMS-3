@@ -26,6 +26,9 @@ class TransactionSettingController extends Controller
 
             return view('transaction::setting.cashback_list', $data);
         } elseif (isset($lists['status']) && $lists['status'] == 'fail') {
+            if(isset($lists['messages'][0]) && $lists['messages'][0] == 'empty'){
+                return view('transaction::setting.cashback_list', $data);
+            }
             return view('transaction::setting.cashback_list', $data)->withErrors($lists['messages']);
         } else {
             return view('transaction::setting.cashback_list', $data)->withErrors(['Data not found']);
@@ -45,4 +48,59 @@ class TransactionSettingController extends Controller
             return back()->withErrors(['Something went wrong']);
         }
     }
+
+    public function refundRejectOrder(Request $request)
+    {
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Refund Reject Order',
+            'submenu_active' => 'refund-reject-order'
+        ];
+
+        $data['status'] = ['refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value']??0];
+
+        return view('transaction::setting.refund_reject_order', $data);
+    }
+
+    public function updateRefundRejectOrder(Request $request)
+    {
+        $sendData = [
+            'refund_midtrans' => ['value', $request->refund_midtrans?1:0]
+        ];
+        $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
+        if ($data['status']??false == 'success') {
+            return back()->withSuccess(['Success update']);
+        } else{
+            return back()->withErrors(['Update failed']);
+        }
+    }
+
+    public function autoReject(Request $request)
+    {
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Auto Reject time',
+            'submenu_active' => 'auto-reject-time'
+        ];
+
+        $data['auto_reject_time'] = MyHelper::post('setting', ['key' => 'auto_reject_time'])['result']['value']??15;
+
+        return view('transaction::setting.auto_reject', $data);
+    }
+
+    public function updateAutoReject(Request $request)
+    {
+        $sendData = [
+            'auto_reject_time' => ['value', $request->auto_reject_time?:15]
+        ];
+        $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
+        if ($data['status']??false == 'success') {
+            return back()->withSuccess(['Success update']);
+        } else{
+            return back()->withErrors(['Update failed']);
+        }
+    }
+
 }

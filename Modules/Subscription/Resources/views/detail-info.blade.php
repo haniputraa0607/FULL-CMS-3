@@ -1,7 +1,6 @@
 @section('detail-info')
 @php
     $datenow = date("Y-m-d H:i:s");
-    $rpage = 'subscription';
 @endphp
 <div class="row">
     <div class="col-md-6">
@@ -13,22 +12,33 @@
                             <span class="sale-info"> Status 
                                 <i class="fa fa-img-up"></i>
                             </span>
+                            @php
+                        		$date_start = $subscription['subscription_start'];
+                        		$date_end 	= $subscription['subscription_end'];
+                        		$now 		= date("Y-m-d H:i:s");
+                        	@endphp
                             @if( empty($subscription['subscription_step_complete']) )
                                 <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #F4D03F;padding: 5px 12px;color: #fff;">Not Complete</span>
-                            @elseif( $subscription['subscription_status'] == 'expired' )
+                            @elseif( !empty($date_end) && $date_end < $now )
                                 <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Ended</span>
-                            @elseif( $subscription['subscription_status'] == 'available' )
+                            @elseif( empty($date_start) || $date_start <= $now )
                                 <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                            @elseif( $subscription['subscription_status'] == 'soon' )
-                                <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
                             @else
-                                <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
+                                <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
                             @endif
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="portlet-body">
+                <div class="row static-info">
+                    <div class="col-md-4 name">Charged Central</div>
+                    <div class="col-md-8 value">: {{$subscription['charged_central']}} %</div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-4 name">Charged Outlet</div>
+                    <div class="col-md-8 value">: {{$subscription['charged_outlet']}} %</div>
+                </div>
                 @if(isset($subscription['subscription_start']))
                 <div class="row static-info">
                     <div class="col-md-4 name">Start</div>
@@ -57,7 +67,7 @@
                     <div class="col-md-4 name">Image</div>
                     <div class="col-md-8 value">
                     	<span style="float: left;margin-right: 5px">:</span> 
-                    	<div><img src="{{ env('S3_URL_api').$subscription['subscription_image'] }}" style="width: 250px"></div>
+                    	<div><img src="{{ env('STORAGE_URL_API').$subscription['subscription_image'] }}" style="width: 250px"></div>
                     </div>
                 </div>
                 
@@ -170,7 +180,7 @@
                 @endif
                 <div class="row static-info">
                     <div class="col-md-4 name">Minimal Transaction (Subtotal)</div>
-                    <div class="col-md-8 value">: {{ !empty($subscription['transaction_minimal_transaction']) ? number_format($subscription['transaction_minimal_transaction']) : '' }}</div>
+                    <div class="col-md-8 value">: {{ !empty($subscription['subscription_minimal_transaction']) ? number_format($subscription['subscription_minimal_transaction']) : '' }}</div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Daily Usage Limit</div>

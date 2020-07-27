@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'validate_session', 'config_control:92'], 'prefix' => 'promo-campaign'], function () {
+Route::group(['middleware' => ['web', 'validate_session', 'config_control:93'], 'prefix' => 'promo-campaign'], function () {
     Route::any('/', 'PromoCampaignController@index');
     Route::any('list', 'PromoCampaignController@index');
     Route::any('list/filter', 'PromoCampaignController@index');
@@ -32,7 +32,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:92'], 
 
 });
 
-Route::group(['middleware' => ['web', 'validate_session', 'config_control:92'], 'prefix' => 'referral'], function () {
+Route::group(['middleware' => ['web', 'validate_session', 'config_control:93'], 'prefix' => 'referral'], function () {
     Route::get('setting', 'ReferralController@setting');
     Route::post('setting', 'ReferralController@settingUpdate');
     Route::get('report', 'ReferralController@report');

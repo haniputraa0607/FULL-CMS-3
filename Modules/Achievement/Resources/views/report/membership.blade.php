@@ -2,10 +2,10 @@
 @include('infinitescroll')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @yield('is-style')
     <style>
         .dropleft .dropdown-menu{
@@ -23,28 +23,49 @@
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @yield('is-script')
 <script>
     template = {
         differentprice: function(item){
+            console.log(item)
             const publish_start = item.publish_start?(new Date(item.publish_start).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric"})):'Not set';
             const publish_end = item.publish_end?(new Date(item.publish_end).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric"})):'Not set';
             const date_start = item.date_start?(new Date(item.date_start).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric"})):'Not set';
             const date_end = item.date_end?(new Date(item.date_end).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric"})):'Not set';
+            const image = '{{ env('STORAGE_URL_API') }}'+item.membership_image
             return `
             <tr class="page${item.page}">
                 <td class="text-center">${item.increment}</td>
-                <td>${item.name}</td>
-                <td>${item.phone}</td>
-                <td>${item.total}</td>
                 <td>${item.membership_name}</td>
+                <td><img src="${image}" alt=""></td>
+                <td>${item.min_total_achievement}</td>
+                <td>${item.total_user}</td>
                 <td>
                     <div class="btn-group btn-group-solid pull-right dropleft">
-                        <a class="btn blue dropdown-toggle" href="{{url('achievement/detail/${item.id_achievement_group}')}}/"> Detail </a>
+                        <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <div id="loadingBtn" hidden>
+                                <i class="fa fa-spinner fa-spin"></i> Loading
+                            </div>
+                            <div id="moreBtn">
+                                <i class="fa fa-ellipsis-horizontal"></i> More
+                                <i class="fa fa-angle-down"></i>
+                            </div>
+                        </button>
+                        <ul class="dropdown-menu dropdown">
+                            <li style="margin: 0px;">
+                                <a href="#editBadge" data-toggle="modal" onclick="editBadge(${item})"> Edit </a>
+                            </li>
+                            <li style="margin: 0px;">
+                                <a href="{{url('achievement/detail/${item.id_achievement_group}')}}/"> Detail </a>
+                            </li>
+                            <li style="margin: 0px;">
+                                <a href="javascript:;" onclick="removeAchievement(this, ${item.id_achievement_group})"> Remove </a>
+                            </li>
+                        </ul>
                     </div>
                 </td>
             </tr>
@@ -171,10 +192,10 @@
                         <thead>
                             <tr>
                                 <th style="width: 1%" class="text-center">No</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Achievement Total</th>
-                                <th>Membership Now</th>
+                                <th>Membership Name</th>
+                                <th>Membership Image</th>
+                                <th>Achievement Minimal</th>
+                                <th>Total User</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

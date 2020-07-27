@@ -148,6 +148,12 @@ class UsersController extends Controller
 		}
 		
 		$data['custom'] = $custom;
+        $data['click_inbox'] = [
+            ['value' => "No Action",'title' => 'No Action']
+        ];
+        $data['click_notification'] = [
+            ['value' => 'Home','title' => 'Home']
+        ];
 		// print_r($data);exit;
         return view('users::response', $data);
 	}
@@ -238,11 +244,11 @@ class UsersController extends Controller
 		}
 	}
 	
-	public function updateAdminOutlet(Request $request, $phone, $id_outlet){
+	public function updateAdminOutlet(Request $request, $phone){
 		$post = $request->except('_token');
 		if(isset($post) && !empty($post)){
 			$post['phone'] = $phone;
-			$post['id_outlet'][0] = $id_outlet;
+			$post['delete'] = true;
 
 			$query = MyHelper::post('users/adminoutlet/create', $post);
 
@@ -258,9 +264,17 @@ class UsersController extends Controller
 					  'submenu_active'    => 'admin-outlet-list'
 					];
 
-			$query = MyHelper::post('users/adminoutlet/detail', ['phone' => $phone, 'id_outlet' => $id_outlet]);
+			$query = MyHelper::post('users/adminoutlet/detail', ['phone' => $phone]);
 			
 			if($query['status'] == 'success') $data['details'] = $query['result']; else $data['details'] = null;
+
+			if($data['details']) {
+				$data['details']['outlets'] = explode(',', $data['details']['outlets']);
+			}
+
+			$getOutlet = MyHelper::get('outlet/be/list');
+			// print_r($getOutlet);exit;
+			if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = null;
 
 			return view('users::update_admin_outlet', $data);
 		}
@@ -808,7 +822,7 @@ class UsersController extends Controller
 	
 	public function activity(Request $request, $page = 1){
         $input = $request->input();
-		$post = $request->except('_token', 'password');
+		$post = $request->except('_token');
 		
 		if(!empty(Session::get('form'))){
 			if(isset($post['take'])) $takes = $post['take'];

@@ -4,32 +4,32 @@ $grantedFeature     = session('granted_features');
 $idUserFrenchisee = session('id_user_franchise');
 ?>
 @section('page-style')
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
 	<script>
 		$(document).ready(function () {
@@ -73,7 +73,12 @@ $idUserFrenchisee = session('id_user_franchise');
 			$("#tbodyListFail").empty();
 			var data_display = 25;
 			var token  = "{{ csrf_token() }}";
-			var url = "{{url('disburse/list-datatable/fail')}}";
+			@if(is_null($idUserFrenchisee))
+			    var url = "{{url('disburse/list-datatable/fail')}}";
+			@else
+				var url = "{{url('disburse/user-franchise/list-datatable/fail')}}";
+			@endif
+
 			var dt = 0;
 			var tab = $.fn.dataTable.isDataTable( '#tableListFail' );
 			if(tab){
@@ -115,7 +120,7 @@ $idUserFrenchisee = session('id_user_franchise');
 					{
 						targets: 0,
 						render: function ( data, type, row, meta ) {
-							var detailUrl = "{{ url('disburse/detail') }}/"+data;
+							var detailUrl = "{{ url('disburse/detail-trx') }}/"+data;
 							var data = '<a href="' + detailUrl + '" target="_blank" class="btn btn-block green btn-xs">Detail</a>';
 							return data;
 						}
@@ -126,7 +131,11 @@ $idUserFrenchisee = session('id_user_franchise');
 
 		function dataDashboard(){
 			var token  = "{{ csrf_token() }}";
+			@if(is_null($idUserFrenchisee))
 			var url = "{{url('disburse/dashboard')}}";
+			@else
+			var url = "{{url('disburse/user-franchise/dashboard')}}";
+			@endif
 			var outlet = $("#fitler_outlet").val();
 			var fitler_date = $("#fitler_date").val();
 			var start_date = $("#date_start").val();
@@ -257,13 +266,13 @@ $idUserFrenchisee = session('id_user_franchise');
 	<div class="row" style="margin-top: 3%;">
 		@if(MyHelper::hasAccess([235], $grantedFeature))
 			<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-				<a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+				<a class="dashboard-stat dashboard-stat-v2 purple" target="_blank" href="{{url('disburse/list/all')}}">
 					<div class="visual">
 						<i class="fa fa-shopping-cart"></i>
 					</div>
 					<div class="details">
 						<div class="number" id="nom_income">
-							<span data-counter="counterup" data-value="{{$total_income_central}}" style="font-size: 25px">Rp {{number_format($total_income_central)}}</span>
+							<span data-counter="counterup" data-value="{{$total_income_central}}" style="font-size: 22px">Rp {{number_format($total_income_central, 2)}}</span>
 						</div>
 						<div class="desc"> Income Central </div>
 					</div>
@@ -271,39 +280,39 @@ $idUserFrenchisee = session('id_user_franchise');
 			</div>
 		@endif
 		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
-			<a class="dashboard-stat dashboard-stat-v2 green" href="#">
+			<a class="dashboard-stat dashboard-stat-v2 green" target="_blank" href="{{url('disburse/list/success')}}">
 				<div class="visual">
 					<i class="fa fa-shopping-cart"></i>
 				</div>
 				<div class="details">
 					<div class="number" id="nom_success">
-						<span data-counter="counterup" data-value="{{$nominal_success}}" style="font-size: 25px">Rp {{number_format($nominal_success)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_success}}" style="font-size: 22px">Rp {{number_format($nominal_success, 2)}}</span>
 					</div>
 					<div class="desc"> Total Success Disburse</div>
 				</div>
 			</a>
 		</div>
 		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
-			<a class="dashboard-stat dashboard-stat-v2 red" href="#">
+			<a class="dashboard-stat dashboard-stat-v2 red" target="_blank" href="{{url('disburse/list/fail-action')}}">
 				<div class="visual">
 					<i class="fa fa-bar-chart-o"></i>
 				</div>
 				<div class="details">
 					<div class="number" id="nom_fail">
-						<span data-counter="counterup" data-value="{{$nominal_fail}}" style="font-size: 25px">Rp {{number_format($nominal_fail)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_fail}}" style="font-size: 22px">Rp {{number_format($nominal_fail, 2)}}</span>
 					</div>
 					<div class="desc"> Total Failed Disburse</div>
 				</div>
 			</a>
 		</div>
 		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
-			<a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+			<a class="dashboard-stat dashboard-stat-v2 blue" target="_blank" href="{{url('disburse/list/trx')}}">
 				<div class="visual">
 					<i class="fa fa-comments"></i>
 				</div>
 				<div class="details">
 					<div class="number" id="nom_trx">
-						<span data-counter="counterup" data-value="{{$nominal_trx}}" style="font-size: 25px">Rp {{number_format($nominal_trx)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_trx}}" style="font-size: 22px">Rp {{number_format($nominal_trx, 2)}}</span>
 					</div>
 					<div class="desc"> Nominal Transaction </div>
 				</div>

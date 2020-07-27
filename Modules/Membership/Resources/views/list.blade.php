@@ -6,53 +6,53 @@
 @extends('layouts.main')
 
 @section('page-style')
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-color-pickers.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-	 <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-editors.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-color-pickers.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	 <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/prices.js')}}"></script>
 	<script>
 	function typeChange(varnya){
 		if(varnya == 'count'){
@@ -362,7 +362,7 @@
         });
 	});
 
-		$(".file").change(function(e) {
+		$(".membership-image").change(function(e) {
                 var _URL = window.URL || window.webkitURL;
                 var image, file;
                 var input = $(this);
@@ -385,6 +385,35 @@
 							cancelBtn.click();
                     	}else if(file.size > (50 * 1024)){
                             toastr.warning("Max uploaded file is 50 KB");
+                            $(this).val("");
+                            // $('#remove_square').click()
+                            // image.src = _URL.createObjectURL();
+							cancelBtn.click();
+                    	}
+                    };
+
+                    image.src = _URL.createObjectURL(file);
+                }
+
+        });
+
+		$(".membership-card").change(function(e) {
+                var _URL = window.URL || window.webkitURL;
+                var image, file;
+                var input = $(this);
+                var cancelBtn = $(this).closest('.btn-file').closest('.aa').find('.btn.red.fileinput-exists');
+                if ((file = this.files[0])) {
+                    image = new Image();
+
+                    image.onload = function() {
+                    	if(this.width != 750 || this.height != 375){
+                            toastr.warning("Please check dimension of your photo.");
+                            $(this).val("");
+                            // $('#remove_square').click()
+                            // image.src = _URL.createObjectURL();
+							cancelBtn.click();
+                    	}else if(input.val().split('.').pop().toLowerCase() != 'png'){
+                            toastr.warning("Only PNG image allowed");
                             $(this).val("");
                             // $('#remove_square').click()
                             // image.src = _URL.createObjectURL();
@@ -490,7 +519,7 @@
 
 									<input type="hidden" name="id_membership" value="{{$membership['id_membership']}}">
 
-									@if(MyHelper::hasAccess([14], $grantedFeature))
+									@if(MyHelper::hasAccess([13], $grantedFeature))
 									<div class="col-md-1 col-md-offset-1">
 										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
 											<i class="fa fa-close"></i>
@@ -540,7 +569,7 @@
 												<div class="fileinput fileinput-new" data-provides="fileinput">
 													<div class="fileinput-new thumbnail" style="width: 75px;">
 														@if($membership['membership_image'] != "")
-															<img src="{{env('S3_URL_API')}}{{$membership['membership_image']}}" alt="" />
+															<img src="{{env('STORAGE_URL_API')}}{{$membership['membership_image']}}" alt="" />
 														@else
 															<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 														@endif
@@ -551,7 +580,7 @@
 														<span class="btn default btn-file">
 															<span class="fileinput-new"> Select image </span>
 															<span class="fileinput-exists"> Change </span>
-															<input class="file" accept="image/png" type="file" name="membership_image">
+															<input class="file membership-image" accept="image/png" type="file" name="membership_image">
 														</span>
 														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 													</div>
@@ -563,19 +592,55 @@
 									<div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
 											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-												Next Level Image
-												<i class="fa fa-question-circle tooltips next_level_preview_trigger" data-original-title="Ikon next level membership yang akan ditampilkan di samping progress bar membership" data-container="body"></i>
+												Level Card Background
+												<i class="fa fa-question-circle tooltips" data-original-title="background membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
 												<br>
-												<span class="required" aria-required="true"> (75 x 75, Max 50 KB, Only PNG) </span>
+												<span class="required" aria-required="true"> (750 x 375, Only PNG) </span>
 											</div>
 										</div>
 
 										<div class="col-md-4" >
 											<div class="input-icon right">
 												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-new thumbnail" style="width: 200px;">
+														@if($membership['membership_card'] != "")
+															<img src="{{env('STORAGE_URL_API')}}{{$membership['membership_card']}}" alt="" />
+														@else
+															<img src="https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+														@endif
+													</div>
+
+													<div class="fileinput-preview fileinput-exists thumbnail" style="width: 200px;"> </div>
+													<div class="aa">
+														<span class="btn default btn-file">
+															<span class="fileinput-new"> Select image </span>
+															<span class="fileinput-exists"> Change </span>
+															<input class="file membership-card" accept="image/png" type="file" name="membership_card">
+														</span>
+														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									{{-- 
+									<div class="col-md-12" style="margin-top:20px">
+									<div class="input-icon right">
+											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+												Next Level Image
+												<i class="fa fa-question-circle tooltips next_level_preview_trigger" data-original-title="Ikon next level membership yang akan ditampilkan di samping progress bar membership" data-container="body"></i>
+												<br>
+												<span class="required" aria-required="true"> (75 x 75, Max 50 KB, Only PNG) </span>
+											</div>
+										</div> 
+
+										<div class="col-md-4" >
+											<div class="input-icon right">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
 													<div class="fileinput-new thumbnail" style="width: 75px;">
 														@if($membership['membership_next_image'] != "")
-															<img src="{{env('S3_URL_API')}}{{$membership['membership_next_image']}}" alt="" />
+															<img src="{{env('STORAGE_URL_API')}}{{$membership['membership_next_image']}}" alt="" />
 														@else
 															<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 														@endif
@@ -586,7 +651,7 @@
 														<span class="btn default btn-file">
 															<span class="fileinput-new"> Select image </span>
 															<span class="fileinput-exists"> Change </span>
-															<input class="file" accept="image/png" type="file" name="membership_next_image">
+															<input class="file membership-image" accept="image/png" type="file" name="membership_next_image">
 														</span>
 														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 													</div>
@@ -594,9 +659,10 @@
 											</div>
 										</div>
 										<div class="col-md-3 next_level_preview" style="height: 0;overflow-y: all; transition-duration: .5s;opacity: 0">
-											<img src="{{env('S3_URL_VIEW')}}img/membership/preview_next_level_image.jpg" class="img-responsive"></img>
+											<img src="{{env('STORAGE_URL_VIEW')}}img/membership/preview_next_level_image.jpg" class="img-responsive"></img>
 										</div>
 									</div>
+									--}}
 
 									<div class="col-md-12" style="margin-top:20px">
 										<div class="input-icon right">
@@ -846,7 +912,7 @@
 
 									<input type="hidden" name="id_membership" value="">
 
-									@if(MyHelper::hasAccess([14], $grantedFeature))
+									@if(MyHelper::hasAccess([13], $grantedFeature))
 									<div class="col-md-1 col-md-offset-1">
 										<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline">
 											<i class="fa fa-close"></i>
@@ -885,7 +951,7 @@
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Image
-											<i class="fa fa-question-circle tooltips" data-original-title="Image background untuk info membership di aplikasi." data-container="body"></i>
+											<i class="fa fa-question-circle tooltips" data-original-title="Image untuk info membership di aplikasi." data-container="body"></i>
 										</div>
 									</div>
 									<div class="col-md-4" >
@@ -901,6 +967,33 @@
 														<span class="fileinput-new"> Select image </span>
 														<span class="fileinput-exists"> Change </span>
 														<input type="file" name="membership_image"> </span>
+													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+
+									<div class="col-md-12" style="margin-top:20px">
+									<div class="input-icon right">
+										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+											Level Card Background
+											<i class="fa fa-question-circle tooltips" data-original-title="Image background untuk info membership di aplikasi." data-container="body"></i>
+										</div>
+									</div>
+									<div class="col-md-4" >
+										<div class="input-icon right">
+											<div class="fileinput fileinput-new" data-provides="fileinput">
+												<div class="fileinput-new thumbnail" style="width: 200px;">
+													<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+												</div>
+
+												<div class="fileinput-preview fileinput-exists thumbnail" style="width: 750px; height: 375px;"> </div>
+												<div>
+													<span class="btn default btn-file">
+														<span class="fileinput-new"> Select image </span>
+														<span class="fileinput-exists"> Change </span>
+														<input class="file membership-card" type="file" name="membership_card"> </span>
 													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 												</div>
 											</div>
@@ -1116,14 +1209,14 @@
 				{{ csrf_field() }}
 				<div class="row">
 					<div class="col-12">
-						@if(MyHelper::hasAccess([12,13,14], $grantedFeature))
+						@if(MyHelper::hasAccess([12,13], $grantedFeature))
 							<div class="alert alert-warning" role="alert">
 							If you click submit, it may take a long time because the system will recalculate the user's membership
 							</div>
 						@endif
 					</div>
 					<div class="col-md-offset-5 col-md-7">
-						@if(MyHelper::hasAccess([12,13,14], $grantedFeature))
+						@if(MyHelper::hasAccess([12,13], $grantedFeature))
 							<button type="submit" class="btn green">Submit</button>
 						@endif
 						<!-- <button type="button" class="btn default">Cancel</button> -->

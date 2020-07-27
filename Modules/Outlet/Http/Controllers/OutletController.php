@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+use App\Exports\ArrayExport;
 use App\Lib\MyHelper;
 use Excel;
 use Validator;
@@ -912,9 +913,15 @@ class OutletController extends Controller
 
             if($createFolder){
                 foreach ($outlet['result'] as $val){
-                    $urlImage = $val['qrcode'];
                     $newFilename = $val['outlet_name'].'.jpg';
-                    $putToStorange = Storage::put('QRCODE/'.$folderName.'/'.$newFilename, file_get_contents($urlImage));
+                    $urlImage = $val['qrcode'];
+                    $file_headers = @get_headers($urlImage);
+
+                    if(isset($file_headers[0]) && strpos($file_headers[0], '200 OK') !== false) {
+                        $putToStorange = Storage::put('QRCODE/'.$folderName.'/'.$newFilename, file_get_contents($urlImage));
+                    }else{
+                        continue;
+                    }
                 }
 
                 $files = glob(storage_path('app/QRCODE/'.$folderName.'/*.jpg'));
@@ -1032,9 +1039,17 @@ class OutletController extends Controller
             $count = count($codeOutlet['result']);
             $result = $codeOutlet['result'];
             for($i=0;$i<$count;$i++){
-                $data[$i]['code_outlet'] = $result[$i];
+                $data[$i]['code_outlet'] = $result[$i]['outlet_code'];
+                $brands = $result[$i]['brands'];
                 foreach ($brand['result'] as $value){
-                    $data[$i][$value['name_brand']] = '';
+                    $check = array_search($value['name_brand'], array_column($brands, 'name_brand'));
+
+                    if($check !== false){
+                        $data[$i][$value['name_brand']] = 'YES';
+                    }else{
+                        $data[$i][$value['name_brand']] = 'NO';
+                    }
+
                 }
             }
         }
@@ -1067,6 +1082,8 @@ class OutletController extends Controller
     public function autoresponse(Request $request, $type='') {
         $post = $request->except('_token');
         if(!empty($post)){
+            $outlet_apps_access_feature = $post['outlet_apps_access_feature'];
+            unset($post['outlet_apps_access_feature']);
             if (isset($post['whatsapp_content'])) {
                 foreach($post['whatsapp_content'] as $key => $content){
                     if($content['content'] || isset($content['content_file']) && $content['content_file']){
@@ -1084,8 +1101,9 @@ class OutletController extends Controller
             }
 
             $query = MyHelper::post('autocrm/update', $post);
+            MyHelper::post('setting/update2',['update' => ['outlet_apps_access_feature' => ['value',$outlet_apps_access_feature]]]);
             // print_r($query);exit;
-            return back()->withSuccess(['Response updated']);
+            return back()->withSuccess(['Setting updated']);
         }
         $data = [ 'title'             => 'Setting Messages Outlet App OTP',
                   'menu_active'       => 'outlet',
@@ -1111,6 +1129,7 @@ class OutletController extends Controller
             $view = 'users::response';
         }
         $data['data'] = MyHelper::post('autocrm/list',['autocrm_title'=>ucfirst(str_replace('-',' ',$type))])['result']??[];
+        $data['data']['outlet_apps_access_feature'] = MyHelper::post('setting',['key'=>'outlet_apps_access_feature'])['result']['value']??'otp';
         $data['custom'] = explode(';',$data['data']['custom_text_replace']);
         return view($view,$data);
     }
@@ -1118,6 +1137,7 @@ class OutletController extends Controller
 
     /*=========== User Franchise ===========*/
    public function listUserFranchise(Request $request) {
+        $post = $request->all();
         $data = [
             'title'          => 'Outlet',
             'sub_title'      => 'User Franchise',
@@ -1125,7 +1145,18 @@ class OutletController extends Controller
             'submenu_active' => 'outlet-list-user-franchise',
         ];
 
-        $list = MyHelper::post('outlet/list/user-franchise', []);
+       if(Session::has('filter-list-user-franchise') && !empty($post) && !isset($post['filter'])){
+           $page = 1;
+           if(isset($post['page'])){
+               $page = $post['page'];
+           }
+           $post = Session::get('filter-list-user-franchise');
+           $post['page'] = $page;
+       }else{
+           Session::forget('filter-list-user-franchise');
+       }
+
+        $list = MyHelper::post('outlet/list/user-franchise', $post);
 
        if (isset($list['status']) && $list['status'] == "success") {
            $data['paginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
@@ -1142,7 +1173,11 @@ class OutletController extends Controller
            $data['total'] = [];
        }
 
-        return view('outlet::users_franchise.list', $data);
+       if($post){
+           Session::put('filter-list-user-franchise',$post);
+       }
+
+       return view('outlet::users_franchise.list', $data);
    }
 
     public function detailUserFranchise(Request $request, $phone) {
@@ -1183,5 +1218,40 @@ class OutletController extends Controller
         }
 
         return view('outlet::users_franchise.detail', $data);
+    }
+
+    function setPasswordDefaultUserFranchise(Request $request) {
+        $post = $request->except('_token');
+        $update = MyHelper::post('outlet/user-franchise/set-password-default', $post);
+
+        if (isset($update['status']) && $update['status'] == "success") {
+            return redirect('outlet/list/user-franchise')->with('success',['Set up password success']);
+        }else{
+            return redirect('outlet/list/user-franchise')->withErrors($update['messages']);
+        }
+    }
+    public function exportPin(Request $request) {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Export Outlet Pin',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'export-outlet-pin',
+        ];
+        return view('outlet::export_outlet_pin', $data);
+    }
+
+    public function doExportPin(Request $request) {
+        $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $request->password, 'admin_panel' => 1));
+        if($checkpin['status'] != "success") return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+        
+        $dataOutlet = MyHelper::get('outlet/export-pin')['result']??[];
+        $dataOutlet = array_map(function ($i) {
+            return [
+                'Outlet Code' => $i['outlet_code'],
+                'Outlet Name' => $i['outlet_name'],
+                'Outlet PIN' => (string) $i['pin']
+            ];
+        },$dataOutlet);
+        return Excel::download(new ArrayExport($dataOutlet,'Outlet PIN'),date('YmdHis').'_Outlet_PIN.xlsx');
     }
 }

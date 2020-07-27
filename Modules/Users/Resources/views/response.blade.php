@@ -6,26 +6,26 @@ $configs = session('configs');
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 language: {
@@ -147,7 +147,7 @@ $configs = session('configs');
 			$('#autocrm_push_clickto').val(clickto).trigger('change');
 
 			document.getElementById('autocrm_push_link').value = link;
-			document.getElementById('autocrm_push_image').src = "{{ env('S3_URL_API') }}"+image;
+			document.getElementById('autocrm_push_image').src = "{{ env('STORAGE_URL_API') }}"+image;
 			document.getElementById('id_autocrm_push').value = id;
 			setTimeout(function(){
 				$('#autocrm_push_id_reference').val(idreference).trigger('change');
@@ -706,7 +706,7 @@ $configs = session('configs');
 									</label>
 								</div>
 								<div class="col-md-9">
-									<textarea name="autocrm_sms_content" id="autocrm_sms_content" class="form-control" placeholder="SMS Content @if($subject == 'pin-sent') maximum 120 character @endif" @if($subject == 'pin-sent') maxlength="120" @endif><?php echo $data['autocrm_sms_content'];?></textarea>
+									<textarea name="autocrm_sms_content" id="autocrm_sms_content" class="form-control" placeholder="SMS Content @if($subject == 'pin-sent') maximum 120 character @endif" @if($subject == 'pin-sent') maxlength="135" @endif><?php echo $data['autocrm_sms_content'];?></textarea>
 									<br>
 									You can use this variables to display user personalized information:
 									<br><br>
@@ -820,7 +820,7 @@ $configs = session('configs');
 											@if($data['autocrm_push_image'] == null)
 											<img src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png/revision/latest?cb=20170219125728" id="autocrm_push_image" />
 											@else
-											<img src="{{ env('S3_URL_API')}}{{$data['autocrm_push_image']}}" id="autocrm_push_image" />
+											<img src="{{ env('STORAGE_URL_API')}}{{$data['autocrm_push_image']}}" id="autocrm_push_image" />
 											@endif
 										</div>
 
@@ -845,31 +845,9 @@ $configs = session('configs');
 								</div>
 								<div class="col-md-9">
 									<select name="autocrm_push_clickto" id="autocrm_push_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'push')">
-										<option value="Home" @if($data['autocrm_push_clickto'] == 'Home') selected @endif>Home</option>
-										<option value="News" @if($data['autocrm_push_clickto'] == 'News') selected @endif>News</option>
-										<option value="Order" @if($data['autocrm_push_clickto'] == 'Order') selected @endif>Order</option>
-										<option value="History On Going" @if($data['autocrm_push_clickto'] == 'History On Going') selected @endif>History On Going</option>
-										<option value="History Transaksi" @if($data['autocrm_push_clickto'] == 'History Transaksi') selected @endif>History Transaksi</option>
-										<option value="History Point" @if($data['autocrm_push_clickto'] == 'History Point') selected @endif>History Point</option>
-										<option value="Outlet" @if($data['autocrm_push_clickto'] == 'Outlet') selected @endif>Outlet</option>
-										<option value="Profil" @if($data['autocrm_push_clickto'] == 'Profil') selected @endif>Profil</option>
-										<option value="Inbox" @if($data['autocrm_push_clickto'] == 'Inbox') selected @endif>Inbox</option>
-										<option value="About" @if($data['autocrm_push_clickto'] == 'About') selected @endif>About</option>
-										<option value="FAQ" @if($data['autocrm_push_clickto'] == 'FAQ') selected @endif>FAQ</option>
-										<option value="TOS" @if($data['autocrm_push_clickto'] == 'TOS') selected @endif>TOS</option>
-										<option value="Contact Us" @if($data['autocrm_push_clickto'] == 'Contact Us') selected @endif>Contact Us</option>
-										<option value="Link" @if($data['autocrm_push_clickto'] == 'Link') selected @endif>Link</option>
-										<option value="Logout" @if($data['autocrm_push_clickto'] == 'Logout') selected @endif>Logout</option>
-										@if(isset($deals))
-										<option value="Voucher" @if($data['autocrm_push_clickto'] == 'Voucher') selected @endif>Voucher</option>
-										<option value="Voucher Detail" @if($data['autocrm_push_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
-										<option value="Deals" @if($data['autocrm_push_clickto'] == 'Deals') selected @endif>Deals</option>
-										<option value="Deals Detail" @if($data['autocrm_push_clickto'] == 'Deals Detail') selected @endif>Deals Detail</option>
-										@endif
-										@if(isset($type) && $type == 'trx')
-										<option value="Transaction" @if(isset($data['autocrm_push_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
-										<option value="Transaction Detail" @if(isset($data['autocrm_push_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
-										@endif
+										@foreach($click_notification as $val)
+											<option value="{{$val['value']}}" @if(isset($result['autocrm_push_clickto']) && $result['autocrm_push_clickto'] == $val['value']) selected @endif>{{$val['title']}}</option>
+										@endforeach
 									</select>
 								</div>
 							</div>
@@ -952,32 +930,9 @@ $configs = session('configs');
 								<label for="autocrm_inbox_clickto" class="control-label col-md-3">Click Action</label>
 								<div class="col-md-9">
 									<select name="autocrm_inbox_clickto" id="autocrm_inbox_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
-										<option value="Home" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Home") selected @endif>Home</option>
-										{{-- <option value="Content" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Content") selected @endif>Content</option> --}}
-										<option value="News" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "News") selected @endif>News</option>
-										<option value="Order" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Order") selected @endif>Order</option>
-										<option value="History On Going" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "History On Going") selected @endif>History On Going</option>
-										<option value="History Transaksi" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "History Transaksi") selected @endif>History Transaksi</option>
-										<option value="History Point" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "History Point") selected @endif>History Point</option>
-										<option value="Outlet" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
-										<option value="Profil" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Profil") selected @endif>Profil</option>
-										<option value="Inbox" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Inbox") selected @endif>Inbox</option>
-										<option value="About" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "About") selected @endif>About</option>
-										<option value="FAQ" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
-										<option value="TOS" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "TOS") selected @endif>TOS</option>
-										<option value="Contact Us" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
-										<option value="Link" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Link") selected @endif>Link</option>
-										<option value="Logout" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == "Logout") selected @endif>Logout</option>
-										@if(isset($deals))
-										<option value="Voucher" @if($data['autocrm_inbox_clickto'] == 'Voucher') selected @endif>Voucher</option>
-										<option value="Voucher Detail" @if($data['autocrm_inbox_clickto'] == 'Voucher Detail') selected @endif>Voucher Detail</option>
-										<option value="Deals" @if($data['autocrm_inbox_clickto'] == 'Deals') selected @endif>Deals</option>
-										<option value="Deals Detail" @if($data['autocrm_inbox_clickto'] == 'Deals Detail') selected @endif>Deals Detail</option>
-										@endif
-										@if(isset($type) && $type == 'trx')
-										<option value="Transaction" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction') selected @endif>Transaction</option>
-										<option value="Transaction Detail" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == 'Transaction Detail') selected @endif>Transaction Detail</option>
-										@endif
+										@foreach($click_inbox as $val)
+											<option value="{{$val['value']}}" @if(isset($result['autocrm_inbox_clickto']) && $result['autocrm_inbox_clickto'] == $val['value']) selected @endif>{{$val['title']}}</option>
+										@endforeach
 									</select>
 								</div>
 							</div>

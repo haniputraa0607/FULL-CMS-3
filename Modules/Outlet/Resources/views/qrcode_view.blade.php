@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/css/invoice-2.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/css/invoice-2.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('page-script')
@@ -64,10 +64,12 @@
                     <span class="caption-subject bold uppercase">List QRCode Outlet</span>
 				</div>
                 <div class="actions">
+                    @if(!empty($outlet))
                     <div class="btn-group">
                         <a class="btn btn-sm green" href="{{url('outlet/qrcode/print')}}" target="_blank"><i class="fa fa-print"></i> Print </a>
                     </div>
                     <a class="btn btn-sm green" id="export" onclick="exportQRCode()"><i class="fa fa-download"></i> Export QR Code </a>
+                    @endif
                 </div>
 			</div>
 			<div class="portlet-body">

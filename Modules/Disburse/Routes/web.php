@@ -37,6 +37,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('user-franchise/list/trx', 'DisburseController@listTrx');
         Route::any('user-franchise/list/{status}', 'DisburseController@listDisburse');
         Route::any('user-franchise/list-datatable/{status}', 'DisburseController@listDisburseDataTable');
+        Route::any('user-franchise/detail-trx/{id}', 'DisburseController@detailDisburseTrx');
         Route::any('user-franchise/detail/{id}', 'DisburseController@detailDisburse');
 
         Route::any('user-franchise/reset-password', 'DisburseController@resetPassword');
@@ -60,15 +61,17 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('setting/fee-outlet-special/update', 'DisburseSettingController@settingFeeOutletSpecial');
         Route::any('setting/outlet-special', 'DisburseSettingController@settingSpecialOutlet');
         Route::any('setting/approver', 'DisburseSettingController@settingApprover');
+        Route::any('setting/time-to-sent', 'DisburseSettingController@settingTimeToSent');
         Route::any('setting/export-list-bank', 'DisburseSettingController@exportListBank');
         Route::any('setting/export-bank-account-outlet', 'DisburseSettingController@exportBankAccoutOutlet');
         Route::post('setting/import-bank-account-outlet', 'DisburseSettingController@importBankAccoutOutlet');
 
         //Disburse
         Route::any('list/trx', 'DisburseController@listTrx');
-        Route::any('list/{status}', 'DisburseController@listDisburse');
+        Route::any('list/fail-action', 'DisburseController@listDisburseFailAction');
+        Route::any('list/{status}/{id_disburse??}', 'DisburseController@listDisburse');
         Route::any('list-datatable/{status}', 'DisburseController@listDisburseDataTable');
-        Route::any('detail/{id}', 'DisburseController@detailDisburse');
+        Route::any('detail-trx/{id}', 'DisburseController@detailDisburseTrx');
         Route::any('update-status/{id}', 'DisburseController@updateStatusDisburse');
     });
 });

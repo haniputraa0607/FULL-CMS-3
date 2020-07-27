@@ -46,28 +46,28 @@ class DisburseSettingController extends Controller
         }else{
             $post['page'] = 1;
         }
-        $outlets = MyHelper::post('disburse/outlets',$post);
-        if(isset($outlets['status']) && $outlets['status'] == 'success'){
-            if (!empty($outlets['result']['data'])) {
-                $data['outlets']          = $outlets['result']['data'];
-                $data['outletTotal']     = $outlets['result']['total'];
-                $data['outletPerPage']   = $outlets['result']['from'];
-                $data['outletUpTo']      = $outlets['result']['from'] + count($outlets['result']['data'])-1;
-                $data['outletPaginator'] = new LengthAwarePaginator($outlets['result']['data'], $outlets['result']['total'], $outlets['result']['per_page'], $outlets['result']['current_page'], ['path' => url()->current()]);
+        $dataBank = MyHelper::post('disburse/setting/list-bank-account',$post);
+        if(isset($dataBank['status']) && $dataBank['status'] == 'success'){
+            if (!empty($dataBank['result']['data'])) {
+                $data['bankAccount']          = $dataBank['result']['data'];
+                $data['bankAccountTotal']     = $dataBank['result']['total'];
+                $data['bankAccountPerPage']   = $dataBank['result']['from'];
+                $data['bankAccountUpTo']      = $dataBank['result']['from'] + count($dataBank['result']['data'])-1;
+                $data['bankAccountPaginator'] = new LengthAwarePaginator($dataBank['result']['data'], $dataBank['result']['total'], $dataBank['result']['per_page'], $dataBank['result']['current_page'], ['path' => url()->current()]);
             }
             else {
-                $data['outlets']          = [];
-                $data['outletTotal']     = 0;
-                $data['outletPerPage']   = 0;
-                $data['outletUpTo']      = 0;
-                $data['outletPaginator'] = false;
+                $data['bankAccount']          = [];
+                $data['bankAccountTotal']     = 0;
+                $data['bankAccountPerPage']   = 0;
+                $data['bankAccountUpTo']      = 0;
+                $data['bankAccountPaginator'] = false;
             }
         }else{
-            $data['outlets']          = [];
-            $data['outletTotal']     = 0;
-            $data['outletPerPage']   = 0;
-            $data['outletUpTo']      = 0;
-            $data['outletPaginator'] = false;
+            $data['bankAccount']          = [];
+            $data['bankAccountTotal']     = 0;
+            $data['bankAccountPerPage']   = 0;
+            $data['bankAccountUpTo']      = 0;
+            $data['bankAccountPaginator'] = false;
         }
 
         $bank = MyHelper::post('disburse/bank',$post);
@@ -75,6 +75,14 @@ class DisburseSettingController extends Controller
             $data['bank'] = $bank['result'];
         }else{
             $data['bank'] = [];
+        }
+
+        $outlets = MyHelper::post('disburse/outlets',['for' => 'select2']);
+
+        if(isset($outlets['status']) && $outlets['status'] == 'success'){
+            $data['outlets'] = $outlets['result'];
+        }else{
+            $data['outlets'] = [];
         }
 
         if($post){
@@ -87,11 +95,11 @@ class DisburseSettingController extends Controller
         $post = $request->all();
 
         if($post){
-            $udpateSetting = MyHelper::post('disburse/setting/bank-account',$post);
+            $udpateSetting = MyHelper::post('disburse/setting/edit-bank-account',$post);
             if(isset($udpateSetting['status']) && $udpateSetting['status'] == 'success'){
                 return redirect('disburse/setting/edit-bank-account')->withSuccess(['Success Update Data']);
             }else{
-                return redirect('disburse/setting/edit-bank-account')->withErrors(['Failed Update Data']);
+                return redirect('disburse/setting/edit-bank-account')->withErrors([$udpateSetting['message']]);
             }
         }
     }
@@ -108,9 +116,9 @@ class DisburseSettingController extends Controller
         if($post){
             $storeSetting = MyHelper::post('disburse/setting/bank-account',$post);
             if(isset($storeSetting['status']) && $storeSetting['status'] == 'success'){
-                return redirect('disburse/setting/bank-account#add')->withSuccess(['Success Update Data']);
+                return redirect('disburse/setting/bank-account#add')->withSuccess(['Success Add Bank Account Data']);
             }else{
-                return redirect('disburse/setting/bank-account#add')->withErrors(['Failed Update Data']);
+                return redirect('disburse/setting/bank-account#add')->withErrors([$storeSetting['message']]);
             }
         }else{
             $bank = MyHelper::post('disburse/bank',$post);
@@ -215,9 +223,6 @@ class DisburseSettingController extends Controller
         ];
 
         if($post){
-            if(!empty($post['days_to_sent'])){
-                $post['days_to_sent'] = implode(",",$post['days_to_sent']);
-            }
 
             $storeSetting = MyHelper::post('disburse/setting/mdr',$post);
             if(isset($storeSetting['status']) && $storeSetting['status'] == 'success'){
@@ -281,6 +286,13 @@ class DisburseSettingController extends Controller
             $data['approver'] = $approver['result'];
         }else{
             $data['approver'] = [];
+        }
+
+        $timeToSent = MyHelper::get('disburse/setting/time-to-sent');
+        if(isset($timeToSent['status']) && $timeToSent['status'] == 'success'){
+            $data['time_to_sent'] = $timeToSent['result'];
+        }else{
+            $data['time_to_sent'] = [];
         }
 
         return view('disburse::setting_global.setting', $data);
@@ -387,6 +399,17 @@ class DisburseSettingController extends Controller
             return redirect('disburse/setting/global#approver')->withSuccess(['Success Update Data']);
         }else{
             return redirect('disburse/setting/global#approver')->withErrors(['Failed Update Data']);
+        }
+    }
+
+    function settingTimeToSent(Request $request){
+        $post = $request->except('_token');
+
+        $save = MyHelper::post('disburse/setting/time-to-sent', $post);
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('disburse/setting/global#time-to-sent')->withSuccess(['Success Update Data']);
+        }else{
+            return redirect('disburse/setting/global#time-to-sent')->withErrors(['Failed Update Data']);
         }
     }
 }

@@ -20,9 +20,112 @@ class SubscriptionController extends Controller
         }
     }
 
+    function getSubscriptionType($request) 
+    {
+    	$subs_type = $request->route()->getAction('subscription_type');
+    	return $subs_type;
+    }
+
+    function getSubscriptionMenu($subs_type, $menu)
+    {
+    	switch ($subs_type) {
+
+    		case 'welcome':
+
+    			switch ($menu) {
+
+    				case 'create':
+    					
+    					$data = [
+			                'title'          => 'Welcome Subscription',
+			                'sub_title'      => 'Welcome Subscription Create',
+			                'menu_active'    => 'welcome-subscription',
+			                'submenu_active' => 'welcome-subscription-create'
+			            ];
+    					break;
+
+    				case 'detail':
+    					
+    					$data = [
+			                'title'          => 'Welcome Subscription',
+			                'sub_title'      => 'Welcome Subscription Detail',
+			                'menu_active'    => 'welcome-subscription',
+			                'submenu_active' => 'welcome-subscription-list'
+			            ];
+    					break;
+    				
+    				case 'setting':
+    					
+    					$data = [
+	                        'title'          => 'Welcome Subscription',
+	                        'sub_title'      => 'Welcome Subscription Setting',
+	                        'menu_active'    => 'welcome-subscription',
+	                        'submenu_active' => 'welcome-subscription-setting'
+	                    ];
+    					break;
+    				
+    				default:
+    				
+    					$data = [
+				            'title'          => 'Welcome Subscription',
+				            'sub_title'      => 'Welcome Subscription List',
+				            'menu_active'    => 'welcome-subscription',
+				            'submenu_active' => 'welcome-subscription-list'
+				        ];
+    					break;
+    			}
+    			$data['subscription_type'] = 'welcome';
+				$data['rpage'] = 'welcome-subscription';
+    			break;
+    		
+    		default:
+
+    			switch ($menu) {
+
+    				case 'create':
+    					
+    					$data = [
+			                'title'          => 'Subscription',
+			                'sub_title'      => 'Subscription Create',
+			                'menu_active'    => 'subscription',
+			                'submenu_active' => 'subscription-create'
+			            ];
+    					break;
+
+    				case 'detail':
+    					
+    					$data = [
+			                'title'          => 'Subscription',
+			                'sub_title'      => 'Subscription Detail',
+			                'menu_active'    => 'subscription',
+			                'submenu_active' => 'subscription-list'
+			            ];
+    					break;
+    				
+    				default:
+    				
+    					$data = [
+				            'title'          => 'subscription',
+				            'sub_title'      => 'subscription List',
+				            'menu_active'    => 'subscription',
+				            'submenu_active' => 'subscription-list'
+				        ];
+    					break;
+    			}
+
+    			$data['subscription_type'] = 'subscription';
+    			$data['rpage'] = 'subscription';
+    			break;
+    	}
+
+    	return $data;
+    }
+
     public function index(Request $request)
     {
-        $post=$request->except('_token');
+        $post 		= $request->except('_token');
+		$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getSubscriptionMenu($subs_type, 'list');
 
         if($post){
             if(($post['clear']??false)=='session'){
@@ -33,17 +136,12 @@ class SubscriptionController extends Controller
             return back();
         }
 
-        $data = [
-            'title'          => 'subscription',
-            'sub_title'      => 'subscription List',
-            'menu_active'    => 'subscription',
-            'submenu_active' => 'subscription-list'
-        ];
-
         $post['newest'] = 1;
         $post['web'] = 1;
-        $post['admin']=1;
-        $post['created_at']=1;
+        $post['admin'] = 1;
+        $post['created_at'] = 1;
+        $post['with_brand'] = 1;
+        $post['subscription_type'] = $subs_type??'subscription';
 
         if(($filter=session('subs_filter'))&&is_array($filter))
         {
@@ -65,7 +163,6 @@ class SubscriptionController extends Controller
 
         $post['select'] = ['id_outlet','outlet_code','outlet_name'];
         $data['outlets'] = $this->getData(MyHelper::post('outlet/ajax_handler', $post));
-        // return $data;
 
 
         return view('subscription::list', $data);
@@ -144,6 +241,9 @@ class SubscriptionController extends Controller
 
     public function create(Request $request, $slug=null)
     {
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getSubscriptionMenu($subs_type, 'create');
+
         if($slug){
             $exploded = MyHelper::explodeSlug($slug);
             $id_subscription = $exploded[0];
@@ -154,6 +254,12 @@ class SubscriptionController extends Controller
         }
         $post = $request->except('_token');
         if (!empty($post)) {
+            if(isset($post['charged_central']) && isset($post['charged_outlet'])){
+                $check = $post['charged_central'] + $post['charged_outlet'];
+                if((int)$check !== 100){
+                    return back()->withErrors(['Value charged central and outlet not valid. Value charged central and outlet must be 100 %.'])->withInput();
+                }
+            }
             if($post['id_subscription']){
                 $post['id_subscription'] = MyHelper::explodeSlug($post['id_subscription'])[0];
             }
@@ -170,24 +276,17 @@ class SubscriptionController extends Controller
 
             if ( ($save['status']??false) == "success") {
                 isset($id_subscription) ? $message = ['Subscription has been Updated'] : $message = ['Subscription has been created'];
-                return redirect('subscription/step2/'.MyHelper::createSlug($save['result']['id_subscription'],$save['result']['created_at']??''))->with('success', $message);
+                return redirect($data['rpage'].'/step2/'.MyHelper::createSlug($save['result']['id_subscription'],$save['result']['created_at']??''))->with('success', $message);
             }else{
                 return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
             }
         }
         else {
-
-            $data = [
-                'title'          => 'Subscription',
-                'sub_title'      => 'Subscription Create',
-                'menu_active'    => 'subscription',
-                'submenu_active' => 'subscription-create'
-            ];
             
             if (isset($id_subscription)) {
                 $data['subscription'] = MyHelper::post('subscription/show-step1', ['id_subscription' => $id_subscription])['result']??'';
                 if ($data['subscription'] == '') {
-                    return redirect('subscription')->withErrors('Subscription not found');
+                    return redirect($data['rpage'])->withErrors('Subscription not found');
                 }
                 if(isset($data['subscription']['id_subscription'])) {
                     $data['subscription']['id_subscription'] = MyHelper::createSlug($data['subscription']['id_subscription'],$data['subscription']['id_subscription']??'');
@@ -200,6 +299,9 @@ class SubscriptionController extends Controller
 
     public function step2(Request $request, $slug = null)
     {
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getSubscriptionMenu($subs_type, 'create');
+
         if($slug){
             $exploded = MyHelper::explodeSlug($slug);
             $id_subscription = $exploded[0];
@@ -217,19 +319,12 @@ class SubscriptionController extends Controller
             $save = MyHelper::post('subscription/step2', $post);
 
             if ( ($save['status']??false) == "success") {
-                return redirect('subscription/step3/'.$slug)->with('success', ['Subscription has been updated']);
+                return redirect($data['rpage'].'/step3/'.$slug)->with('success', ['Subscription has been updated']);
             }else{
                 return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
             }
         }
         else {
-
-            $data = [
-                'title'          => 'Subscription',
-                'sub_title'      => 'Subscription Create',
-                'menu_active'    => 'subscription',
-                'submenu_active' => 'subscription-create'
-            ];
 
             $post['select'] = ['id_outlet','outlet_code','outlet_name'];
             $outlets = MyHelper::post('outlet/ajax_handler', $post);
@@ -238,17 +333,15 @@ class SubscriptionController extends Controller
                 $data['outlets'] = $outlets['result'];
             }
             if (isset($id_subscription)) {
-                $data['subscription'] = MyHelper::post('subscription/show-step2', ['id_subscription' => $id_subscription])['result']??'';
-// return                $data['subscription'] = MyHelper::post('subscription/show-step2', ['id_subscription' => $id_subscription]);
-                if ($data['subscription'] == '') {
-                    return redirect('subscription')->withErrors('Subscription not found');
+                $data['subscription'] = $this->getData(MyHelper::post('subscription/show-step2', ['id_subscription' => $id_subscription]));
+                if (empty($data['subscription'])) {
+                    return redirect($data['rpage'])->withErrors('Subscription not found');
                 }
                 $data['subscription']['id_subscription'] = MyHelper::createSlug($data['subscription']['id_subscription'],$data['subscription']['id_subscription']??'');
             }
 
             // DATA BRAND
         	$data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-// return $data;
 
             return view('subscription::step2', $data);
         }
@@ -256,6 +349,9 @@ class SubscriptionController extends Controller
 
     public function step3(Request $request, $slug)
     {
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getSubscriptionMenu($subs_type, 'create');
+
         if($slug){
             $exploded = MyHelper::explodeSlug($slug);
             $id_subscription = $exploded[0];
@@ -273,7 +369,7 @@ class SubscriptionController extends Controller
             $save = MyHelper::post('subscription/step3', $post);
 
             if ( ($save['status']??false) == "success") {
-                return redirect('subscription/detail/'.$slug)->with('success', ['Subscription has been updated']);
+                return redirect($data['rpage'].'/detail/'.$slug)->with('success', ['Subscription has been updated']);
             }else{
                 return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
             }
@@ -281,24 +377,10 @@ class SubscriptionController extends Controller
         }
         else {
 
-            $data = [
-                'title'          => 'Subscription',
-                'sub_title'      => 'Subscription Create',
-                'menu_active'    => 'subscription',
-                'submenu_active' => 'subscription-create'
-            ];
-
-            $post['select'] = ['id_outlet','outlet_code','outlet_name'];
-            $outlets = MyHelper::post('outlet/ajax_handler', $post);
-            
-            if (!empty($outlets['result'])) {
-                $data['outlets'] = $outlets['result'];
-            }
-
             if (isset($id_subscription)) {
                 $data['subscription'] = MyHelper::post('subscription/show-step3', ['id_subscription' => $id_subscription])['result']??'';
                 if ($data['subscription'] == '') {
-                    return redirect('subscription')->withErrors('Subscription not found');
+                    return redirect($data['rpage'])->withErrors('Subscription not found');
                 }
                 $data['subscription']['id_subscription'] = MyHelper::createSlug($data['subscription']['id_subscription'],$data['subscription']['id_subscription']??'');
             }
@@ -309,6 +391,8 @@ class SubscriptionController extends Controller
 
     public function detail(Request $request, $slug, $subs_receipt=null)
     {
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getSubscriptionMenu($subs_type, 'detail');
         $exploded = MyHelper::explodeSlug($slug);
         $id_subscription = $exploded[0];
         $created_at = $exploded[1];
@@ -336,14 +420,6 @@ class SubscriptionController extends Controller
             }
         }
         else {
-
-            $data = [
-                'title'          => 'Subscription',
-                'sub_title'      => 'Subscription Detail',
-                'menu_active'    => 'subscription',
-                'submenu_active' => 'subscription-List'
-            ];
-
 
             $data['subscription'] = MyHelper::post('subscription/show-detail', ['id_subscription' => $id_subscription])['result']??'';
             if ($data['subscription'] == '') {
@@ -373,6 +449,8 @@ class SubscriptionController extends Controller
         $exploded = MyHelper::explodeSlug($slug);
         $id_subscription = $exploded[0];
         $created_at = $exploded[1];
+        $subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getSubscriptionMenu($subs_type, 'detail');
 
         if (isset($subs_receipt)) {
             return $this->transaction($id_subscription, $subs_receipt);
@@ -392,13 +470,6 @@ class SubscriptionController extends Controller
         {
             return $this->participateAjax($post, $slug);
         }
-
-        $data = [
-            'title'          => 'Subscription',
-            'sub_title'      => 'Subscription Detail',
-            'menu_active'    => 'subscription',
-            'submenu_active' => 'subscription-List'
-        ];
 
         $data['subscription'] = MyHelper::post('subscription/show-detail', $post)['result']??'';
         if ($data['subscription'] == '') {
@@ -426,5 +497,102 @@ class SubscriptionController extends Controller
         $session = is_array($session) ? $session : array();
         $post = array_merge($session, $post);
         session([$sess => $post]);
+    }
+
+    function listSubcriptionAjax(Request $request){
+        $get = MyHelper::get('subscription/be/list/ajax');
+        return response()->json($get);
+    }
+
+    function deleteSubscription(Request $request) {
+        $post    = $request->except('_token');
+        $post['id_subscription'] = MyHelper::explodeSlug($post['id_subscription'])[0]??'';
+        $delete = MyHelper::post('subscription/delete', ['id_subscription' => $post['id_subscription']]);
+
+        if (isset($delete['status']) && $delete['status'] == "success") {
+            return "success";
+        }
+        else {
+            return $delete;
+        }
+    }
+
+    public function updateComplete(Request $request)
+    {
+    	$post = $request->except('_token');
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getSubscriptionMenu($subs_type, 'create');
+        
+    	$slug = $post['id_subscription'];
+        $post['id_subscription'] = MyHelper::explodeSlug($post['id_subscription'])[0]??'';
+		$update = MyHelper::post('subscription/update-complete', $post);
+
+        $rpage = $data['rpage'];
+
+		if ( ($update['status']??false) == 'success' ) 
+		{
+			return redirect($rpage.'/detail/'.$slug)->withSuccess(['Subscription has been started']);
+		}
+		elseif ( ($update['status']??false) == 'fail' ) 
+		{
+			if ( !empty($update['step']) ) 
+			{
+				return redirect($rpage.'/step'.$update['step'].'/'.$slug)->withErrors($update['messages']);
+			}
+			else
+			{
+				return redirect()->back()->withErrors($update['messages']);
+			}
+		}
+		else
+		{
+			return ['status' => 'fail', 'messages' => 'Something went wrong'];	
+		}
+    }
+
+    function welcomeSubscriptionSetting(Request $request){
+        $post = $request->except('_token');
+    	$subs_type 	= $this->getSubscriptionType($request);
+        $data 		= $this->getSubscriptionMenu($subs_type, 'setting');
+
+        if($post){
+            $updateSetting =  MyHelper::post('welcome-subscription/setting/update', $post);
+
+            if($updateSetting){
+                return redirect($data['rpage'].'/setting')->withSuccess(['Setting Welcome Subscription has been updated.']);
+            }else{
+                return redirect($data['rpage'].'/setting')->withErrors(['Setting Welcome Subscription failed.']);
+            }
+        }
+        $setting 	= MyHelper::post('welcome-subscription/setting', $post);
+        $list_subs 	= MyHelper::post('welcome-subscription/list', ['subscription_type' => 'welcome', 'web' => 1]);
+        if(isset($setting['status']) && $setting['status'] == 'success'){
+            $data['setting'] = $setting['data']['setting'];
+            $data['subscription'] = $setting['data']['subscription'];
+        }else{
+            $data['setting'] = [];
+            $data['subscription'] = [];
+        }
+
+        if(isset($list_subs['status']) && $list_subs['status'] == 'success'){
+            $data['list_subs'] = $list_subs['result'];
+        }else{
+            $data['list_subs'] = [];
+        }
+
+        return view('subscription::welcome-subscription.setting', $data);
+    }
+
+    function welcomeSubscriptionUpdateStatus(Request $request){
+        $post = $request->except('_token');
+        $update = MyHelper::post('welcome-subscription/setting/update/status', $post);
+
+        if (isset($update['status']) && $update['status'] == "success") {
+            return ['status' => 'success'];
+        }elseif (isset($update['status']) && $update['status'] == 'fail') {
+            return ['status' => 'fail', 'messages' => $update['messages']];
+        } else {
+            return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update status welcome pack'];
+        }
     }
 }

@@ -11,11 +11,11 @@ $configs = session('configs');
         </div>
     </div>
     <div class="portlet-body">
-        <p>Admin bisa memberikan action kepada user yang melakukan transaksi dalam waktu yang tidak wajar.</p>
-        <p>Anda bisa memberikan action untuk setiap tipe, action dibagi menjadi 2 yaitu :</p>
+        <p>Admin can provide action to users who make transactions in abnormal time.</p>
+        <p>You can provide actions for each type, actions are divided into 2 :</p>
         <ul>
-            <li>Auto Suspend : jika user melakukan pelanggaran sesuai dengan aturan yang ada maka account tersebut akan secara otomatis disuspend</li>
-            <li>Forward Admin : jika user melakukan pelanggaran sesuai dengan aturan yang ada maka akan mengirimkan notifikasi keadmin  </li>
+            <li>Auto Suspend : if the user violates the rules, the account will be automatically suspended </li>
+            <li>Forward Admin : send notification to admin if user is exposed to fraud </li>
         </ul>
     </div>
 </div>
@@ -243,7 +243,7 @@ $configs = session('configs');
                                             </label>
                                         </div>
                                         <div class="col-md-9">
-                                            <textarea name="sms_content" id="sms_content_transaction_in_between" class="form-control field_sms_transaction_in_between" placeholder="SMS Content">@if(!empty(old('sms_content'))) {{old('sms_content')}} @else @if(isset($result[3]['sms_content']) && $result[3]['sms_content'] != '') {{$result[3]['sms_content']}} @endif @endif</textarea>
+                                            <textarea name="sms_content" id="sms_content_transaction_in_between" class="form-control field_sms_transaction_in_between" placeholder="SMS Content" maxlength="135">@if(!empty(old('sms_content'))) {{old('sms_content')}} @else @if(isset($result[3]['sms_content']) && $result[3]['sms_content'] != '') {{$result[3]['sms_content']}} @endif @endif</textarea>
                                             <br>
                                             You can use this variables to display user personalized information:
                                             <br><br>

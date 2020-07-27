@@ -3,6 +3,7 @@ use App\Lib\MyHelper;
 $configs = session('configs');
 ?>
 @section('step2')
+					@if ($subscription_type == 'subscription')
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -94,18 +95,18 @@ $configs = session('configs');
                             </div>
                         </div>
                     </div>
+                    @endif
 
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Brand
-                            <span class="required" aria-required="true"> * </span>  
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk subscription ini" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand" required>
+                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand">
                                     <option></option>
                                 @if (!empty($brands))
                                     @foreach($brands as $brand)
@@ -138,7 +139,7 @@ $configs = session('configs');
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" >
+                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" required>
                             </select>
                         </div>
                     </div>
@@ -161,7 +162,7 @@ $configs = session('configs');
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_product[]" multiple data-value="{{json_encode($productselected)}}" data-all="{{ $subscription['is_all_product']??0 }}" >
+                            <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_product[]" multiple data-value="{{json_encode($productselected)}}" data-all="{{ $subscription['is_all_product']??0 }}" required>
                             </select>
                         </div>
                     </div>
@@ -554,6 +555,7 @@ $configs = session('configs');
                         </div>
                     </div>
 
+                    @if ($subscription_type == 'subscription')
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -654,4 +656,5 @@ $configs = session('configs');
                             </div>
                         </div>
                     </div>
+                    @endif
 @endsection

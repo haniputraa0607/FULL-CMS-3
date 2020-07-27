@@ -4,18 +4,18 @@ $grantedFeature     = session('granted_features');
 $idUserFrenchisee = session('id_user_franchise');
 ?>
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/prices.js')}}"></script>
 @endsection
 
 @extends(($idUserFrenchisee == NULL ? 'layouts.main' : 'disburse::layouts.main'))
@@ -71,10 +71,6 @@ $idUserFrenchisee = session('id_user_franchise');
                         @endif
                     </tr>
                     <tr>
-                        <td width="60%">Nominal</td>
-                        <td>: {{number_format($disburse['disburse_nominal'])}}</td>
-                    </tr>
-                    <tr>
                         <td width="60%">Bank Name</td>
                         <td>: {{$disburse['bank_name']}}</td>
                     </tr>
@@ -86,10 +82,23 @@ $idUserFrenchisee = session('id_user_franchise');
                         <td width="60%">Recipient Name</td>
                         <td>: {{$disburse['beneficiary_name']}}</td>
                     </tr>
+                    <tr>
+                        <td width="60%" style="font-size: 22px"><b>Nominal</b></td>
+                        <td style="font-size: 22px"><b>: {{number_format($disburse['disburse_nominal'], 2)}}</b></td>
+                    </tr>
                 </table>
             </div>
         </div>
     @endif
+
+    @if(!empty($trx))
+        <div class="row" style="text-align: right;margin-bottom: 2%;">
+            <div class="col-md-12">
+                <a class="btn green-jungle" style="text-align: right" id="btn-export" href="{{url()->current()}}?export=1"><i class="fa fa-download"></i> Export</a>
+            </div>
+        </div>
+    @endif
+
     <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
         <table class="table table-striped table-bordered table-hover" id="tableReport">
             <thead>
@@ -100,6 +109,7 @@ $idUserFrenchisee = session('id_user_franchise');
                 <th scope="col" width="10%"> Income Outlet</th>
                 @if(MyHelper::hasAccess([235], $grantedFeature))
                     <th scope="col" width="10%"> Income Central</th>
+                    <th scope="col" width="10%"> Expense Central</th>
                 @endif
                 <th scope="col" width="10%"> Detail Setting </th>
             </tr>
@@ -108,17 +118,22 @@ $idUserFrenchisee = session('id_user_franchise');
             @if(!empty($trx))
                 @foreach($trx as $val)
                     <tr>
-                        <td>{{$val['transaction_receipt_number']}}</td>
+                        <td>
+                            <a target="_blank" href="{{ url('transaction/detail/'.$val['id_transaction'].'/'.($val['trasaction_type']??'')) }}">{{ $val['transaction_receipt_number']??'' }}</a>
+                        </td>
                         <td>{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
                         <td>
-                            Subtotal = {{number_format($val['transaction_subtotal'])}}<br>
-                            Grandtotal = {{number_format($val['transaction_grandtotal'])}}<br>
-                            Discount = {{number_format($val['transaction_discount'])}}<br>
-                            Gosend Price = {{number_format($val['transaction_shipment_go_send'])}}<br>
-                            Point Use = {{number_format($val['balance_nominal'])}}<br>
+                            Subtotal = {{number_format($val['transaction_subtotal'], 2)}}<br>
+                            Grandtotal = {{number_format($val['transaction_grandtotal'], 2)}}<br>
+                            Discount = {{number_format($val['transaction_discount'], 2)}}<br>
+                            Gosend Price = {{number_format($val['transaction_shipment_go_send'], 2)}}<br>
+                            Point Use = {{number_format($val['balance_nominal'], 2)}}<br>
                         </td>
-                        <td>{{number_format($val['income_outlet'])}}</td>
-                        <td>{{number_format($val['income_central'])}}</td>
+                        <td>{{number_format($val['income_outlet'], 2)}}</td>
+                        @if(MyHelper::hasAccess([235], $grantedFeature))
+                            <td>{{number_format($val['income_central'], 2)}}</td>
+                            <td>{{number_format($val['expense_central'], 2)}}</td>
+                        @endif
                         <td>
                             <?php
                                 $mdr_type = '<br>';
@@ -136,6 +151,8 @@ $idUserFrenchisee = session('id_user_franchise');
                                     $html .= 'Charged Point Outlet: '.$val['charged_point_outlet'].' %<br>';
                                     $html .= 'Charged Promo Central: '.$val['charged_promo_central'].' %<br>';
                                     $html .= 'Charged Promo Outlet: '.$val['charged_promo_outlet'].' %<br>';
+                                    $html .= 'Charged Subscription Central: '.$val['charged_subscription_central'].' %<br>';
+                                    $html .= 'Charged Subscription Outlet: '.$val['charged_subscription_outlet'].' %<br>';
                                 }else{
                                     $mdr = $val['mdr'] + $val['mdr_central'];
                                     $html = '';
@@ -145,6 +162,8 @@ $idUserFrenchisee = session('id_user_franchise');
                                     $html .= 'Charged Point Outlet: '.$val['charged_point_outlet'].' %<br>';
                                     $html .= 'Charged Promo Central: '.$val['charged_promo_central'].' %<br>';
                                     $html .= 'Charged Promo Outlet: '.$val['charged_promo_outlet'].' %<br>';
+                                    $html .= 'Charged Subscription Central: '.$val['charged_subscription_central'].' %<br>';
+                                    $html .= 'Charged Subscription Outlet: '.$val['charged_subscription_outlet'].' %<br>';
                                 }
 
                                 echo $html;

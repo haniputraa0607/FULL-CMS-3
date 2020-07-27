@@ -1,11 +1,11 @@
 @extends('layouts.main')
-@include('infinitescroll')
+@include('filter-list-achievement')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @yield('is-style')
     <style>
         .dropleft .dropdown-menu{
@@ -23,10 +23,10 @@
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @yield('is-script')
 <script>
     template = {
@@ -137,6 +137,18 @@
                 });
             }
         });
+        function categoryClick() {
+            $('#filter_by').val('category')
+            $('#user_filter').val('')
+            $('#btnAchievementFilter').replaceWith( '<span id="btnAchievementFilter">Category</span>' );
+            console.log('name');
+        }
+        function achievementClick() {
+            $('#filter_by').val('achievement')
+            $('#user_filter').val('')
+            $('#btnAchievementFilter').replaceWith( '<span id="btnAchievementFilter">Achievement</span>' );
+            console.log('name');
+        }
     });
 </script>
 @endsection
@@ -172,21 +184,190 @@
         </div>
         <div class="portlet-body form">
             <div class=" table-responsive is-container">
-                <div class="row">
-                    <div class="col-md-offset-9 col-md-3">
-                        <form class="filter-form">
+                <form class="filter-form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <span id="btnAchievementFilter">Category</span>
+                                        <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="javascript:;" onclick="categoryClick()"> Category </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" onclick="achievementClick()"> Achievement </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" class="form-control" id="filter_by" name="filter_by" value="category">
+                                <input type="text" class="form-control" id="user_filter" name="user_filter">
+                            </div>
+                        </div>
+                        {{-- <div class="col-md-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control daterange" name="date_range">
+                                <span class="input-group-btn">
+                                    <button class="btn default date-range-toggle" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div> --}}
+                        {{-- <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                        Achievement Rule
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Detail Achievement Name" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-9">
+                                    <div class="mt-checkbox-inline">
+                                        <label class="mt-checkbox" style="margin-left: 15px;">
+                                            <input type="checkbox" class="rule_trx"> Transaction
+                                            <span></span>
+                                        </label>
+                                        <label class="mt-checkbox">
+                                            <input type="checkbox" class="rule_product"> Product
+                                            <span></span>
+                                        </label>
+                                        <label class="mt-checkbox">
+                                            <input type="checkbox" class="rule_total"> Total
+                                            <span></span>
+                                        </label>
+                                        <label class="mt-checkbox">
+                                            <input type="checkbox" class="rule_additional"> Additional
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group trx_rule_form" hidden>
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Achievement Transaction Rule
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the achievement is not based on the transaction" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control digit_mask" name="detail[0][trx_nominal]" placeholder="Transaction Nominal">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group product_rule_form" hidden>
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Achievement Product Rule
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the achievement is not based on the product" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[0][id_product]">
+                                            <option></option>
+                                            @foreach ($product as $item)
+                                                <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="detail[0][product_total]" placeholder="Total Product">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group total_rule_form" hidden>
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Achievement Total Rule
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the achievement is not based on the transaction" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <select class="form-control select2-multiple" name="detail[0][rule_total]" id="total_rule" data-placeholder="Select Total Rule By">
+                                                <option></option>
+                                                <option value="total_transaction">Transaction</option>
+                                                <option value="total_outlet">Outlet Different</option>
+                                                <option value="total_province">Province Different</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control digit_mask" name="detail[0][value_total]" placeholder="Value Total">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if achievement reward by product" data-container="body"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group additional_rule_form" hidden>
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Achievement Additional Rule
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the achievement is not based on the product" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-4" id="select_outlet">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="detail[0][id_outlet]">
+                                            <option></option>
+                                            @foreach ($outlet as $item)
+                                                <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" id="select_province">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2-multiple" data-placeholder="Select Province" name="detail[0][id_province]">
+                                            <option></option>
+                                            @foreach ($province as $item)
+                                                <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control search-field" name="keyword" placeholder="Search">
                                     <div class="input-group-btn">
                                         <button class="btn blue search-btn" type="submit"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
-                <div class="table-infinite">
+                </form>
+                <div class="table-achievement">
                     <table class="table table-striped" id="tableTrx" data-template="differentprice"  data-page="0" data-is-loading="0" data-is-last="0" data-url="{{url()->current()}}" data-callback="updater" data-order="promo_campaign_referral_transactions.created_at" data-sort="asc">
                         <thead>
                             <tr>

@@ -4,14 +4,14 @@
         <title>Behave | Print QRCode Outlet</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport">
-        <meta content="Technopartner Indonesia CRM System" name="description">
+        <meta content="Technopartner Indonesia - BEHAVE Loyalty Platform" name="description">
         <meta content="" name="author">
 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
         <link href="{{ url('/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-	    <link href="{{ env('S3_URL_VIEW') }}{{('assets/pages/css/invoice-2.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css">
-        <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css">
+	    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/css/invoice-2.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css">
+        <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css">
 
         <style>
         .page-break {

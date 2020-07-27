@@ -1,4 +1,4 @@
-<div class="page-footer-inner"> Copyright © 2019
+<div class="page-footer-inner"> Copyright © 2020
 	<a target="_blank" href="http://technopatner.id">Technopartner Indonesia</a>
 </div>
 <div class="scroll-to-top">

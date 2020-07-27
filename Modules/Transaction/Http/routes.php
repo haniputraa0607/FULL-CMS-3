@@ -11,7 +11,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
 
     Route::get('/point', 'TransactionController@pointUser');
     Route::get('/balance', 'TransactionController@balanceUser');
-	Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:17', 'uses' =>'TransactionController@autoResponse']);
+	Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:93', 'uses' =>'TransactionController@autoResponse']);
     Route::group(['prefix' => 'manualpayment', 'middleware' => 'config_control:17'], function()
     {
 		Route::any('/banks', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@banksList']);
@@ -46,6 +46,12 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::post('/setting/cashback/update', 'TransactionSettingController@update');
     Route::any('/setting/free-delivery', 'TransactionController@freeDelivery');
     Route::any('/setting/go-send-package-detail', 'TransactionController@goSendPackageDetail');
+    Route::get('/setting/available-payment', 'TransactionController@availablePayment');
+    Route::post('/setting/available-payment', 'TransactionController@availablePaymentUpdate');
+    Route::get('/setting/refund-reject-order', 'TransactionSettingController@refundRejectOrder');
+    Route::post('/setting/refund-reject-order', 'TransactionSettingController@updateRefundRejectOrder');
+    Route::get('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@autoReject']);
+    Route::post('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@updateAutoReject']);
 });
 
 Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
@@ -71,5 +77,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::any('/point/filter/{date}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@pointUserFilter']);
     Route::any('/balance/filter/{date}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@balanceUserFilter']);
     // Route::any('/{key}/{slug}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transaction']);
+
+    Route::any('list-export', [ 'uses' => 'TransactionController@listExport']);
+    Route::any('export-action/{action}/{id}', [ 'uses' => 'TransactionController@actionExport']);
 });
 

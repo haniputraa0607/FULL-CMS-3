@@ -4,32 +4,32 @@
     $idUserFrenchisee = session('id_user_franchise');
  ?>
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script>
         $(document).ready(function() {
@@ -39,10 +39,13 @@
             $("body").tooltip({selector:'[data-toggle=tooltip]'});
         });
 
-        function showModal(outlet_code, outlet_name, bank_code){
+        function showModal(beneficiary_account, bank_code){
             var arrBank = <?php echo json_encode($bank); ?>;
+            var arrOutlets = <?php echo json_encode($outlets); ?>;
             $("#detail_bank").empty();
             $("#detail_bank").append('<option></option>');
+            $("#outlets").empty();
+            $("#outlets").append('<option></option>');
 
             for(var i=0; i<arrBank.length;i++){
                 if(bank_code == arrBank[i].bank_code){
@@ -52,12 +55,22 @@
                 }
             }
 
-            $('#detail_outlet_code').val(outlet_code);
-            $('#detail_outlet').val(outlet_code +' - '+ outlet_name);
-            $('#detail_beneficiary_name').val(document.getElementById ( outlet_code+'_beneficiary_name' ).innerText);
-            $('#detail_beneficiary_alias').val(document.getElementById ( outlet_code+'_beneficiary_alias' ).innerText);
-            $('#detail_beneficiary_account').val(document.getElementById ( outlet_code+'_beneficiary_account' ).innerText);
-            $('#detail_beneficiary_email').val(document.getElementById ( outlet_code+'_beneficiary_email' ).innerText);
+            var dataOutlets = JSON.parse($('#'+beneficiary_account+'_outlets').val());
+            for(var i=0; i<arrOutlets.length;i++){
+                var check = dataOutlets.indexOf(arrOutlets[i].id_outlet);
+                if(check < 0){
+                    $("#outlets").append('<option value="'+arrOutlets[i].id_outlet+'">'+arrOutlets[i].outlet_code+'-'+arrOutlets[i].outlet_name+'</option>');
+                }else{
+                    $("#outlets").append('<option value="'+arrOutlets[i].id_outlet+'" selected>'+arrOutlets[i].outlet_code+'-'+arrOutlets[i].outlet_name+'</option>');
+                }
+            }
+
+            $('#detail_beneficiary_name').val(document.getElementById ( beneficiary_account+'_beneficiary_name' ).innerText);
+            $('#detail_beneficiary_alias').val(document.getElementById ( beneficiary_account+'_beneficiary_alias' ).innerText);
+            $('#detail_beneficiary_account').val(document.getElementById ( beneficiary_account+'_beneficiary_account' ).innerText);
+            $('#detail_beneficiary_email').val(document.getElementById ( beneficiary_account+'_beneficiary_email' ).innerText);
+            $('#detail_account_bank').val(beneficiary_account);
+
             $('#editBank').modal('show');
         }
     </script>
@@ -94,6 +107,9 @@
         if(isset($search_param['conditions'])){
             $conditions = $search_param['conditions'];
         }
+        if(isset($search_param['rule'])){
+            $rule = $search_param['rule'];
+        }
     }
     ?>
     <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
@@ -104,7 +120,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase ">List Outlet</span>
+                <span class="caption-subject font-blue sbold uppercase ">List Bank Account</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -122,29 +138,40 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @if(!empty($outlets))
-                            @foreach($outlets as $data)
+                        @if(!empty($bankAccount))
+                            @foreach($bankAccount as $data)
                                 <tr>
                                     <td>
-                                        <a class="btn btn-xs green" onClick="showModal('{{$data['outlet_code']}}', '{{$data['outlet_name']}}', '{{$data['bank_code']}}')"><i class="fa fa-edit"></i> Edit</a>
+                                        <a class="btn btn-xs green" onClick="showModal('{{$data['beneficiary_account']}}','{{$data['bank_code']}}')"><i class="fa fa-edit"></i> Edit</a>
                                     </td>
-                                    <td>{{$data['outlet_code']}} - {{$data['outlet_name']}}</td>
+                                    <td>
+                                        <?php $id=[];?>
+                                        @if(!empty($data['bank_account_outlet']))
+                                            <ul>
+                                                @foreach($data['bank_account_outlet'] as $outlet)
+                                                    <li>{{$outlet['outlet_code']}} - {{$outlet['outlet_name']}}</li>
+                                                        <?php $id[]=$outlet['id_outlet'];?>
+                                                @endforeach
+                                            </ul>
+                                        @else - @endif
+                                        <input type="hidden" id="{{$data['beneficiary_account']}}_outlets" value="{{json_encode($id)}}">
+                                    </td>
                                     <td>{{$data['bank_code']}} - {{$data['bank_name']}}</td>
-                                    <td id="{{$data['outlet_code']}}_beneficiary_name">{{$data['beneficiary_name']}}</td>
-                                    <td id="{{$data['outlet_code']}}_beneficiary_alias">{{$data['beneficiary_alias']}}</td>
-                                    <td id="{{$data['outlet_code']}}_beneficiary_account">{{$data['beneficiary_account']}}</td>
-                                    <td id="{{$data['outlet_code']}}_beneficiary_email">{{$data['beneficiary_email']}}</td>
+                                    <td id="{{$data['beneficiary_account']}}_beneficiary_name">{{$data['beneficiary_name']}}</td>
+                                    <td id="{{$data['beneficiary_account']}}_beneficiary_alias">{{$data['beneficiary_alias']}}</td>
+                                    <td id="{{$data['beneficiary_account']}}_beneficiary_account">{{$data['beneficiary_account']}}</td>
+                                    <td id="{{$data['beneficiary_account']}}_beneficiary_email">{{$data['beneficiary_email']}}</td>
                                 </tr>
                             @endforeach
                         @else
-                            <tr><td colspan="5" style="text-align: center">Data Not Available</td></tr>
+                            <tr><td colspan="9" style="text-align: center">Data Not Available</td></tr>
                         @endif
                     </tbody>
                 </table>
             </div>
             <br>
-            @if ($outletPaginator)
-                {{ $outletPaginator->links() }}
+            @if ($bankAccountPaginator)
+                {{ $bankAccountPaginator->links() }}
             @endif
         </div>
     </div>
@@ -159,11 +186,6 @@
                 <form role="form" role="form" action="{{ url('disburse/setting/bank-account-update') }}" method="post">
                     <div class="modal-body form">
                         <div class="form-body">
-                            <div class="form-group">
-                                <label>Outlet</label>
-                                <input type="text" class="form-control" disabled id="detail_outlet">
-                            </div>
-
                             <div class="form-group">
                                 <label>Bank Name
                                     <i class="fa fa-question-circle tooltips" title="Nama Bank yang dituju" data-toggle="tooltip" data-placement="top"></i>
@@ -199,7 +221,15 @@
                                 <input type="text" placeholder="email@example.com" class="form-control" name="beneficiary_email" id="detail_beneficiary_email">
                             </div>
 
-                            <input type="hidden" id="detail_outlet_code" name="outlet_code">
+                            <div class="form-group">
+                                <label>Outlets
+                                    <i class="fa fa-question-circle tooltips" title="Outlet yang akan di setting" data-toggle="tooltip" data-placement="top"></i>
+                                </label>
+                                <select class="form-control select2" data-placeholder="Outlets" name="id_outlet[]" id="outlets" style="width: 100%" multiple>
+                                </select>
+                            </div>
+
+                            <input type="hidden" id="detail_account_bank" name="beneficiary_account_number">
                         </div>
                     </div>
                     <div class="modal-footer">

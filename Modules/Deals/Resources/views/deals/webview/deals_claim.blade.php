@@ -148,7 +148,7 @@
 							<div class="pull-right" style="width: 40%;">
 							    <svg height="100px" width="150px" class="pull-right" style="border-bottom-right-radius: 10px; border-top-right-radius: 10px;">
                                     <pattern id="pattern" height="100%" width="100%" patternUnits="userSpaceOnUse" viewBox="0 0 1 1" preserveAspectRatio="xMidYMid slice">
-                                      <image height="1" width="1" xlink:href="{{ env('S3_URL_API').$deals['deals_voucher']['deal']['deals_image'] }}"  preserveAspectRatio="xMidYMid meet"></image>
+                                      <image height="1" width="1" xlink:href="{{ env('STORAGE_URL_API').$deals['deals_voucher']['deal']['deals_image'] }}"  preserveAspectRatio="xMidYMid meet"></image>
                                     </pattern>
                                   <polygon points="30 0, 200 0, 200 100, 0 100" fill="url(#pattern)"></polygon>
                                 </svg>

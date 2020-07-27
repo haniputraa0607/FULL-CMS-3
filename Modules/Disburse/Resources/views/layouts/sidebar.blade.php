@@ -21,6 +21,13 @@ $level    			= session('level');
 	</a>
 </li>
 
+<li class="nav-item {{($menu_active == 'disburse-list-all') ? 'active' : ''}}">
+	<a href="{{url('disburse/user-franchise/list/all')}}" class="nav-link nav-toggle">
+		<i class="fa fa-list"></i>
+		<span class="title">List All</span>
+	</a>
+</li>
+
 <li class="nav-item {{($menu_active == 'disburse-list-success') ? 'active' : ''}}">
 	<a href="{{url('disburse/user-franchise/list/success')}}" class="nav-link nav-toggle">
 		<i class="fa fa-list"></i>

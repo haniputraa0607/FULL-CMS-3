@@ -6,12 +6,12 @@ $configs    		= session('configs');
 @extends('layouts.main-closed')
 
 @section('page-style')
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/icheck/skins/all.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/skins/all.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <style>
         body {
             font-family: "Montserrat", "Lato", "Open Sans", "Helvetica Neue", Helvetica, Calibri, Arial, sans-serif;
@@ -429,16 +429,16 @@ $configs    		= session('configs');
 @endsection
 
 @section('page-plugin')
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
-    <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
-    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/prices.js')}}"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -450,13 +450,12 @@ $configs    		= session('configs');
                 height: 120,
                 toolbar: [
                     ['style', ['style']],
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontsize', ['fontsize']],
+                    ['style', ['bold', 'underline', 'clear']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['insert', ['table']],
                     ['insert', ['link', 'picture', 'video']],
-                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                    ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
                 callbacks: {
                     onImageUpload: function(files){
@@ -646,6 +645,25 @@ $configs    		= session('configs');
 
             @if (isset($result[5]['whatsapp_toogle']))
             visibleDiv('whatsapp', "{{$result[5]['whatsapp_toogle']}}",'check_promo_code')
+            @endif
+
+            //For check referral
+            divMain('referral','{{$result[6]['fraud_settings_status']}}')
+            @if (isset($result[6]['auto_suspend_status']))
+            checkboxAction('checkbox_auto_suspend-referral')
+            @endif
+            @if (isset($result[6]['forward_admin_status']))
+            checkboxAction('checkbox_forward_admin-referral')
+            @endif
+            @if (isset($result[6]['email_toogle']))
+            visibleDiv('email', "{{$result[6]['email_toogle']}}",'referral')
+            $('#email_toogle_transaction_in_between').val("{{$result[6]['email_toogle']}}")
+            @endif
+            @if (isset($result[6]['sms_toogle']))
+            visibleDiv('sms', "{{$result[6]['sms_toogle']}}",'referral')
+            @endif
+            @if (isset($result[6]['whatsapp_toogle']))
+            visibleDiv('whatsapp', "{{$result[6]['whatsapp_toogle']}}",'referral')
             @endif
 
             //For check referral user
@@ -910,12 +928,18 @@ $configs    		= session('configs');
                         <li class=" @if(isset($tipe) && $tipe == 'fraud_check_promo_code') active @endif">
                             <a data-toggle="tab" href="#fraud_check_promo_code"><i class="fa fa-cog"></i> Check Promo Code </a>
                         </li>
+                        @if(MyHelper::hasAccess([216], $grantedFeature) || MyHelper::hasAccess([217], $grantedFeature))
                         <li class=" @if(isset($tipe) && $tipe == 'fraud_check_referral_user') active @endif">
                             <a data-toggle="tab" href="#fraud_check_referral_user"><i class="fa fa-cog"></i> Check Referral User </a>
                         </li>
-                        <li class=" @if(isset($tipe) && $tipe == 'fraud_referral') active @endif">
-                            <a data-toggle="tab" href="#fraud_referral"><i class="fa fa-cog"></i> Check Referral </a>
-                        </li>
+                        @endif
+                        @if(MyHelper::hasAccess([115], $configs))
+                            @if(MyHelper::hasAccess([216], $grantedFeature) || MyHelper::hasAccess([218], $grantedFeature))
+                            <li class=" @if(isset($tipe) && $tipe == 'fraud_referral') active @endif">
+                                <a data-toggle="tab" href="#fraud_referral"><i class="fa fa-cog"></i> Check Referral </a>
+                            </li>
+                            @endif
+                        @endif
                     </ul>
                 </div>
                 <div class="col-md-9">

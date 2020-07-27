@@ -1,36 +1,36 @@
 @extends('body')
 
 @section('page-plugin-styles')
-<link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/cubeportfolio/css/cubeportfolio.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-  <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/cubeportfolio/css/cubeportfolio.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 
 @endsection
 
 @section('page-plugin-js')
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js')}}" type="text/javascript"></script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js')}}" type="text/javascript"></script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js')}}" type="text/javascript"></script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js')}}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js')}}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js')}}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js')}}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js')}}" type="text/javascript"></script>
 @endsection
 
 @section('page-scripts')
   <script type="text/javascript">var something = "Greetings";</script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
-  <script type="text/javascript" src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/delete.js')}}"></script>
-  <script type="text/javascript" src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/app.min.js')}}"></script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/portlet-draggable.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/portfolio-1.min.js')}}" type="text/javascript"></script>
-  <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js')}}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
+  <script type="text/javascript" src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/delete.js')}}"></script>
+  <script type="text/javascript" src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/app.min.js')}}"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/portlet-draggable.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/portfolio-1.min.js')}}" type="text/javascript"></script>
+  <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js')}}" type="text/javascript"></script>
   <script>
 	function hapus(value){
 		swal({
@@ -141,7 +141,7 @@ if(isset($data)){
     width:100%;
     height:100%;
     background-color:rgba(0, 0, 0, 0.1);
-    background-image:url('{{ env('S3_URL_VIEW') }}{{('assets/pages/img/gears.gif')}}');
+    background-image:url('{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/img/gears.gif')}}');
     background-repeat:no-repeat;
     background-position:center;
     z-index:10000000;
@@ -356,7 +356,7 @@ if(isset($data)){
 									<div class="col-md-9">
 										<div class="fileinput fileinput-new" data-provides="fileinput">
 											<div class="fileinput-new thumbnail" style="width: 300px; height: 180px;">
-												<img src="{{ env('S3_URL_API')}}assets/pages/img/noimg-500-375.png" alt="">
+												<img src="{{ env('STORAGE_URL_API')}}assets/pages/img/noimg-500-375.png" alt="">
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
 											<div>
@@ -408,9 +408,9 @@ if(isset($data)){
 									@foreach($data['background'] as $row)
 										@if($row['when'] == 'morning')
 										<div class="col-md-3 ui-state-default" id="photo-{{$row['id_home_background']}}" style="text-align:center;padding: 20px;margin-top:20px;background-color: #dedede;margin-right:30px" draggable="true">
-											<img src="{{ env('S3_URL_API')}}{{$row['picture']}}" alt="Category Image" width="150">
+											<img src="{{ env('STORAGE_URL_API')}}{{$row['picture']}}" alt="Category Image" width="150">
 											<br><br>
-											<a href="{{env('S3_URL_API')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
+											<a href="{{env('STORAGE_URL_API')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
 
 											<a onClick="hapus('{{$row['id_home_background']}}')" class="btn red uppercase" >Delete</a>
 										</div>
@@ -421,9 +421,9 @@ if(isset($data)){
 									@foreach($data['background'] as $row)
 										@if($row['when'] == 'afternoon')
 										<div class="col-md-3 ui-state-default" id="photo-{{$row['id_home_background']}}" style="text-align:center;padding: 20px;margin-top:20px;background-color: #dedede;margin-right:30px" draggable="true">
-											<img src="{{ env('S3_URL_API')}}{{$row['picture']}}" alt="Category Image" width="150">
+											<img src="{{ env('STORAGE_URL_API')}}{{$row['picture']}}" alt="Category Image" width="150">
 											<br><br>
-											<a href="{{env('S3_URL_API')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
+											<a href="{{env('STORAGE_URL_API')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
 
 											<a onClick="hapus('{{$row['id_home_background']}}')" class="btn red uppercase" >Delete</a>
 										</div>
@@ -434,9 +434,9 @@ if(isset($data)){
 									@foreach($data['background'] as $row)
 										@if($row['when'] == 'evening')
 										<div class="col-md-3 ui-state-default" id="photo-{{$row['id_home_background']}}" style="text-align:center;padding: 20px;margin-top:20px;background-color: #dedede;margin-right:30px" draggable="true">
-											<img src="{{ env('S3_URL_API')}}{{$row['picture']}}" alt="Category Image" width="150">
+											<img src="{{ env('STORAGE_URL_API')}}{{$row['picture']}}" alt="Category Image" width="150">
 											<br><br>
-											<a href="{{env('S3_URL_API')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
+											<a href="{{env('STORAGE_URL_API')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
 
 											<a onClick="hapus('{{$row['id_home_background']}}')" class="btn red uppercase" >Delete</a>
 										</div>
@@ -447,9 +447,9 @@ if(isset($data)){
 									@foreach($data['background'] as $row)
 										@if($row['when'] == 'late_night')
 										<div class="col-md-3 ui-state-default" id="photo-{{$row['id_home_background']}}" style="text-align:center;padding: 20px;margin-top:20px;background-color: #dedede;margin-right:30px" draggable="true">
-											<img src="{{ env('S3_URL_API')}}{{$row['picture']}}" alt="Category Image" width="150">
+											<img src="{{ env('STORAGE_URL_API')}}{{$row['picture']}}" alt="Category Image" width="150">
 											<br><br>
-											<a href="{{env('S3_URL_API')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
+											<a href="{{env('STORAGE_URL_API')}}{{$row['picture']}}" class="cbp-lightbox cbp-l-caption-buttonRight btn blue uppercase btn blue uppercase" style="font-size: 14px;padding: 6px;">View</a>
 
 											<a onClick="hapus('{{$row['id_home_background']}}')" class="btn red uppercase" >Delete</a>
 										</div>
