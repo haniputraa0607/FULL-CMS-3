@@ -418,12 +418,6 @@
                             // $('#remove_square').click()
                             // image.src = _URL.createObjectURL();
 							cancelBtn.click();
-                    	}else if(file.size > (50 * 1024)){
-                            toastr.warning("Max uploaded file is 50 KB");
-                            $(this).val("");
-                            // $('#remove_square').click()
-                            // image.src = _URL.createObjectURL();
-							cancelBtn.click();
                     	}
                     };
 
@@ -601,7 +595,7 @@
 												Level Card Background
 												<i class="fa fa-question-circle tooltips" data-original-title="background membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
 												<br>
-												<span class="required" aria-required="true"> (750 x 375, Max 50 KB, Only PNG) </span>
+												<span class="required" aria-required="true"> (750 x 375, Only PNG) </span>
 											</div>
 										</div>
 
@@ -990,7 +984,7 @@
 									<div class="col-md-4" >
 										<div class="input-icon right">
 											<div class="fileinput fileinput-new" data-provides="fileinput">
-												<div class="fileinput-new thumbnail" style="width: 75px;">
+												<div class="fileinput-new thumbnail" style="width: 200px;">
 													<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
 												</div>
 
