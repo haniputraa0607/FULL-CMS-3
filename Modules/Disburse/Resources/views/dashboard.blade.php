@@ -157,20 +157,32 @@ $idUserFrenchisee = session('id_user_franchise');
 					$("#nom_fail").empty();
 					$("#nom_trx").empty();
 					$("#nom_income").empty();
-					nom_income
+
+					$("#nom_item").empty();
+					$("#nom_delivery").empty();
+					$("#nom_expense_central").empty();
 					if (result.status === "success") {
-						$("#nom_success").append('<span data-counter="counterup" data-value="'+result.nominal_success+'">Rp '+result.format_nominal_success+'</span>');
-						$("#nom_fail").append('<span data-counter="counterup" data-value="'+result.nominal_fail+'">Rp '+result.format_nominal_fail+'</span>');
-						$("#nom_trx").append('<span data-counter="counterup" data-value="'+result.nominal_trx+'">Rp '+result.format_nominal_trx+'</span>');
-						$("#nom_income").append('<span data-counter="counterup" data-value="'+result.total_income_central+'">Rp '+result.format_total_income_central+'</span>');
+						$("#nom_success").append('<span data-counter="counterup" data-value="'+result.nominal_success+'" style="font-size: 22px">Rp '+result.format_nominal_success+'</span>');
+						$("#nom_fail").append('<span data-counter="counterup" data-value="'+result.nominal_fail+'" style="font-size: 22px">Rp '+result.format_nominal_fail+'</span>');
+						$("#nom_trx").append('<span data-counter="counterup" data-value="'+result.nom_grandtotal+'" style="font-size: 22px">Rp '+result.format_nominal_grandtotal+'</span>');
+						$("#nom_income").append('<span data-counter="counterup" data-value="'+result.total_income_central+'" style="font-size: 22px">Rp '+result.format_total_income_central+'</span>');
+
+						$("#nom_item").append('<span data-counter="counterup" data-value="'+result.nominal_item+'" style="font-size: 22px">Rp '+result.format_nominal_item+'</span>');
+						$("#nom_delivery").append('<span data-counter="counterup" data-value="'+result.nominal_delivery+'" style="font-size: 22px">Rp '+result.format_nominal_delivery+'</span>');
+						$("#nom_expense_central").append('<span data-counter="counterup" data-value="'+result.nominal_expense_central+'" style="font-size: 22px">Rp '+result.format_nominal_expense_central+'</span>');
 					}else{
-						$("#nom_success").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
-						$("#nom_fail").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
-						$("#nom_trx").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
-						$("#nom_income").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
+						$("#nom_success").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_fail").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_trx").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_income").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+
+						$("#nom_item").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_delivery").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_expense_central").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
 					}
 				},
 				error: function (jqXHR, exception) {
+					console.log(jqXHR);
 					toastr.warning('Failed get data dashboard');
 				}
 			});
@@ -312,9 +324,48 @@ $idUserFrenchisee = session('id_user_franchise');
 				</div>
 				<div class="details">
 					<div class="number" id="nom_trx">
-						<span data-counter="counterup" data-value="{{$nominal_trx}}" style="font-size: 22px">Rp {{number_format($nominal_trx, 2)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_grandtotal}}" style="font-size: 22px">Rp {{number_format($nominal_grandtotal, 2)}}</span>
 					</div>
-					<div class="desc"> Nominal Transaction </div>
+					<div class="desc"> Grand Total </div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green-seagreen" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="nom_item">
+						<span data-counter="counterup" data-value="{{$nominal_item}}" style="font-size: 22px">Rp {{number_format($nominal_item, 2)}}</span>
+					</div>
+					<div class="desc"> Total Fee Item (Subtotal)</div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green-jungle" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="nom_delivery">
+						<span data-counter="counterup" data-value="{{$nominal_delivery}}" style="font-size: 22px">Rp {{number_format($nominal_delivery, 2)}}</span>
+					</div>
+					<div class="desc"> Total Delivery </div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 yellow-crusta" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="nom_expense_central">
+						<span data-counter="counterup" data-value="{{$nominal_expense_central}}" style="font-size: 22px">Rp {{number_format($nominal_expense_central, 2)}}</span>
+					</div>
+					<div class="desc"> Total Expense Central </div>
 				</div>
 			</a>
 		</div>
