@@ -29,11 +29,10 @@
                 </label>
             </div>
             <div class="col-md-9">
-                @if($val['status_franchise'] == 1)
-                    <input type="text" class="form-control" value="This outlet is franchise" required placeholder="Franchise Status" readonly>
-                @else
-                    <input type="text" class="form-control" value="This outlet is not franchise" required placeholder="Franchise Status" readonly>
-                @endif
+                <select class="select2 form-control" name="status_franchise">
+                    <option value="1" @if($val['status_franchise'] == 1) selected @endif>Franchise</option>
+                    <option value="0" @if($val['status_franchise'] == 0) selected @endif>Not Franchise</option>
+                </select>
             </div>
         </div>
 
