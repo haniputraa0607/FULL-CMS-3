@@ -4,6 +4,7 @@
 <?php
 use App\Lib\MyHelper;
 $configs = session('configs');
+$grantedFeature     = session('granted_features');
 ?>
 @extends('layouts.main-closed')
 
@@ -633,8 +634,10 @@ $configs = session('configs');
         <div class="portlet-body form">
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                    @if ($subscription['subscription_step_complete'] != 1)
-                    <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Subscription</a>
+                	@if(MyHelper::hasAccess([270], $grantedFeature))
+	                    @if ($subscription['subscription_step_complete'] != 1)
+	                    	<a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Subscription</a>
+	                    @endif
                     @endif
                 	<ul class="nav nav-tabs" id="tab-header">
                         <li class="active" id="infoOutlet">
