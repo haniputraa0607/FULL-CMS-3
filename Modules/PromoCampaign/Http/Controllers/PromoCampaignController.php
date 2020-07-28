@@ -275,17 +275,21 @@ class PromoCampaignController extends Controller
             {
                 $get_data = MyHelper::post('promo-campaign/show-step1', ['id_promo_campaign' => $id_promo_campaign]);
 
-                $data['result'] = $get_data['result']??'';
-                $data['result']['id_promo_campaign'] = $slug;
+                if ( ($get_data['status']??false) == 'success' ) {
+	                $data['result'] = $get_data['result']??'';
+	                $data['result']['id_promo_campaign'] = $slug;
+                }
+                else{
+             		return redirect('promo-campaign')->withErrors($get_data['messages']??['Something went wrong']);
+                }
             }
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-
             return view('promocampaign::create-promo-campaign-step-1', $data);
 
         }
         else
         {
-            if(isset($post['charged_central']) || isset($post['charged_outlet']) ){
+            if((isset($post['charged_central']) || isset($post['charged_outlet']) && !isset($post['used_code_update'])) ){
                 $check = $post['charged_central'] + $post['charged_outlet'];
                 if($check != 100){
                     return back()->withErrors(['Value charged central and charged outlet not valid'])->withInput();
@@ -294,13 +298,13 @@ class PromoCampaignController extends Controller
 
             if(!empty($id_promo_campaign)){
                 $post['id_promo_campaign'] = $id_promo_campaign;
+                $messages = ['Promo Campaign has been updated'];
             }
-
             $action = MyHelper::post('promo-campaign/step1', $post);
 
             if (isset($action['status']) && $action['status'] == 'success') 
             {
-                return redirect('promo-campaign/step2/' . ($slug?:MyHelper::createSlug($action['promo-campaign']['id_promo_campaign'],'')));
+                return redirect('promo-campaign/step2/' . ($slug?:MyHelper::createSlug($action['promo-campaign']['id_promo_campaign'],'')))->withSuccess($messages??['Promo Campaign has been created']);
             } 
             else 
             {
@@ -344,12 +348,11 @@ class PromoCampaignController extends Controller
         }else{
 
             $post['id_promo_campaign'] = $id_promo_campaign;
-            
             $action = MyHelper::post('promo-campaign/step2', $post);
 
             if (isset($action['status']) && $action['status'] == 'success') {
 
-                return redirect('promo-campaign/detail/' . $slug);
+                return redirect('promo-campaign/detail/' . $slug)->withSuccess(['Promo Campaign has been updated']);
             } 
             elseif($action['messages']??false) {
                 return back()->withErrors($action['messages'])->withInput();
