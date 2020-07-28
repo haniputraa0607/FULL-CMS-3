@@ -1,4 +1,6 @@
 @php
+	use App\Lib\MyHelper;
+    $grantedFeature     = session('granted_features');
 	if($deals_type == 'Promotion'){
         $rpage = 'promotion/deals';
 	}elseif($deals_type == 'WelcomeVoucher'){
@@ -659,9 +661,11 @@
 
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                	@if ($deals['step_complete'] != 1)
-                    <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Deals</a>
-                    @endif
+                	@if(MyHelper::hasAccess([269], $grantedFeature))
+	                	@if ($deals['step_complete'] != 1)
+	                    	<a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Deals</a>
+	                    @endif
+	                @endif
                 	<ul class="nav nav-tabs" id="tab-header">
                         <li class="active" id="infoOutlet">
                             <a href="#basic" data-toggle="tab" > Basic Info </a>
