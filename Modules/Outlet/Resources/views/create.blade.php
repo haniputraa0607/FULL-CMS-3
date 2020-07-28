@@ -577,12 +577,12 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Delivery Service
-                            <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman outlet akan menampilkan ketersediaan delivery service untuk outlet" data-container="body"></i>
+                            Delivery Order
+                            <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman outlet akan menampilkan ketersediaan delivery order untuk outlet" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="checkbox" name="big_order" @if(old('big_order') == '1') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="1">
+                            <input type="checkbox" name="delivery_order" @if(old('delivery_order') == '1') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="1">
                         </div>
                     </div>
 
