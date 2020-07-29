@@ -48,10 +48,10 @@
         <th style="background-color: #dcdcdc;" width="20"> Grand Total </th>
         <th style="background-color: #dcdcdc;" width="20"> Fee Item </th>
         <th style="background-color: #dcdcdc;" width="20"> Discount </th>
-        <th style="background-color: #dcdcdc;" width="20"> Delivery </th>
         <th style="background-color: #dcdcdc;" width="20"> Payment Charge </th>
         <th style="background-color: #dcdcdc;" width="20"> Point Use Charge </th>
         <th style="background-color: #dcdcdc;" width="20"> Subcriptions Charge </th>
+        <th style="background-color: #dcdcdc;" width="20"> Delivery </th>
     </tr>
     </thead>
     <tbody>
@@ -67,10 +67,10 @@
                 <td style="text-align: left">{{$val['transaction_grandtotal']}}</td>
                 <td style="text-align: left">{{$val['fee_item']}}</td>
                 <td style="text-align: left">{{$val['discount']}}</td>
-                <td style="text-align: left">{{$val['transaction_shipment_go_send']}}</td>
                 <td style="text-align: left">{{$val['payment_charge']}}</td>
                 <td style="text-align: left">{{$val['point_use_expense']}}</td>
                 <td style="text-align: left">{{$val['subscription']}}</td>
+                <td style="text-align: left">{{$val['transaction_shipment_go_send']}}</td>
             </tr>
         @endforeach
     @else
