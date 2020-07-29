@@ -379,6 +379,7 @@ class SubscriptionController extends Controller
 
             if (isset($id_subscription)) {
                 $data['subscription'] = MyHelper::post('subscription/show-step3', ['id_subscription' => $id_subscription])['result']??'';
+                $data['text_replaces'] = $this->getData(MyHelper::post('subscription/text-replace', ['id_subscription' => $id_subscription]));                
                 if ($data['subscription'] == '') {
                     return redirect($data['rpage'])->withErrors('Subscription not found');
                 }
