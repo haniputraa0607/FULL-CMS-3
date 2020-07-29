@@ -383,9 +383,6 @@
 					<div class="col-md-4">
 						{{ csrf_field() }}
 						 <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
-						@if(isset($trx) && !empty($trx))
-							<a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1">Export</a>
-						@endif
 					</div>
 				</div>
 			</div>

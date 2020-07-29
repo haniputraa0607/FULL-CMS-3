@@ -195,9 +195,9 @@
                             <tr>
                                 <td>
                                     @if($value['status_franchise'] == 1)
-                                        <p style="color: green">This outlet is franchise</p>
+                                        <p style="color: green">Franchise</p>
                                     @else
-                                        This outlet is not franchise
+                                        Not franchise
                                     @endif
                                 </td>
                                 <td>{{ $value['outlet_code'] }}</td>

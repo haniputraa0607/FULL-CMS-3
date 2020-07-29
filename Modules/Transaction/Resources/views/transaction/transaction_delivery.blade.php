@@ -69,6 +69,12 @@
             <div class="caption">
                 <span class="caption-subject font-red sbold uppercase">List Transaction {{ strtolower($key) == 'all' ? '' : $key }}</span>
             </div>
+            <div class="actions">
+                @if(isset($trx) && !empty($trx))
+                    <a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1"><i class="fa fa-download"></i> Export</a>
+                    <a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1&detail=1"><i class="fa fa-download"></i> Export Detail</a>
+                @endif
+            </div>
         </div>
         <div class="portlet-body">
             <div style="overflow-x:auto;">
