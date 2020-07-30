@@ -33,7 +33,7 @@
     </tr>
     <tr>
         <td width="30" style="font-size: 22px"><b>Nominal</b></td>
-        <td style="font-size: 22px"><b>: {{number_format($disburse['disburse_nominal'], 2)}}</b></td>
+        <td style="font-size: 22px"><b>: {{$disburse['disburse_nominal']}}</b></td>
     </tr>
 </table>
 <br>
@@ -48,10 +48,10 @@
         <th style="background-color: #dcdcdc;" width="20"> Grand Total </th>
         <th style="background-color: #dcdcdc;" width="20"> Fee Item </th>
         <th style="background-color: #dcdcdc;" width="20"> Discount </th>
-        <th style="background-color: #dcdcdc;" width="20"> Delivery </th>
         <th style="background-color: #dcdcdc;" width="20"> Payment Charge </th>
         <th style="background-color: #dcdcdc;" width="20"> Point Use Charge </th>
         <th style="background-color: #dcdcdc;" width="20"> Subcriptions Charge </th>
+        <th style="background-color: #dcdcdc;" width="20"> Delivery </th>
     </tr>
     </thead>
     <tbody>
@@ -62,15 +62,15 @@
                     {{ $val['transaction_receipt_number']??'' }}
                 </td>
                 <td style="text-align: left">{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
-                <td style="text-align: left">{{number_format($val['income_outlet'], 2)}}</td>
-                <td style="text-align: left">{{number_format($val['transaction_subtotal'], 2)}}</td>
-                <td style="text-align: left">{{number_format($val['transaction_grandtotal'], 2)}}</td>
-                <td style="text-align: left">{{number_format($val['fee_item'], 2)}}</td>
-                <td style="text-align: left">{{number_format($val['discount'], 2)}}</td>
-                <td style="text-align: left">{{number_format($val['transaction_shipment_go_send'], 2)}}</td>
-                <td style="text-align: left">{{number_format($val['payment_charge'], 2)}}</td>
-                <td style="text-align: left">{{number_format($val['point_use_expense'], 2)}}</td>
-                <td style="text-align: left">{{number_format($val['subscription'], 2)}}</td>
+                <td style="text-align: left">{{$val['income_outlet']}}</td>
+                <td style="text-align: left">{{$val['transaction_subtotal']}}</td>
+                <td style="text-align: left">{{$val['transaction_grandtotal']}}</td>
+                <td style="text-align: left">{{$val['fee_item']}}</td>
+                <td style="text-align: left">{{$val['discount']}}</td>
+                <td style="text-align: left">{{$val['payment_charge']}}</td>
+                <td style="text-align: left">{{$val['point_use_expense']}}</td>
+                <td style="text-align: left">{{$val['subscription']}}</td>
+                <td style="text-align: left">{{$val['transaction_shipment_go_send']}}</td>
             </tr>
         @endforeach
     @else

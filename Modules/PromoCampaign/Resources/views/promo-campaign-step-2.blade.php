@@ -422,7 +422,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			console.log('ok');
-			$('#promotype-form').find('input, textarea').prop('disabled', true);
+			$('#promotype-form').find('input, textarea, select').prop('disabled', true);
 			$('#user-search-form').find('input, textarea').prop('disabled', true);
 		});
 	</script>
@@ -492,6 +492,9 @@
 		</div>
 	</div>
 	<form role="form" action="" method="POST" enctype="multipart/form-data">
+		@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
+		<input type="hidden" name="used_code_update" value="1">
+		@endif
 		<div class="col-md-12">
 			{{-- DETAIL CAMPAIGN INFORMATION --}}
 			<div class="col-md-7">
@@ -764,20 +767,12 @@
 					</div>
 				</div>
 			</div>
-			@if( empty($result['promo_campaign_reports']) || empty($result['step_complete']) )
 			<div class="col-md-12" style="text-align:center;">
 				<div class="form-actions">
 					{{ csrf_field() }}
 					<button type="submit" class="btn blue"> Save </button>
 				</div>
 			</div>
-			@else
-			<div class="col-md-12" style="text-align:center;">
-				<div class="form-actions">
-					<a href="{{ ($result['id_promo_campaign'] ?? false) ? url('promo-campaign/detail/'.$result['id_promo_campaign']) : '' }}" class="btn blue">Detail</a>
-				</div>
-			</div>
-			@endif
 		</div>
 	</form>
 </div>

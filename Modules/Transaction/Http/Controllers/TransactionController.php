@@ -1291,7 +1291,7 @@ class TransactionController extends Controller
         ];
 
         if($request->get('export') && $request->get('export') == 1){
-            $post['export'] = 1;
+            $post = $request->all();
             $post['report_type'] = 'Transaction';
             $post['date_start'] = date('Y-m-01 00:00:00');
             $post['date_end'] = date('Y-m-d 23:59:59');
@@ -1641,7 +1641,14 @@ class TransactionController extends Controller
         }else{
             if (isset($actions['status']) && $actions['status'] == "success") {
                 $link = $actions['result']['url_export'];
-                $filename = "Report Transaction_".strtotime(date('Ymdhis')).'.xlsx';
+                $filter = (array)json_decode($actions['result']['filter']);
+
+                if(isset($filter['detail'])){
+                    $filename = "Report Transaction Detail_".strtotime(date('Ymdhis')).'.xlsx';
+                }else{
+                    $filename = "Report Transaction_".strtotime(date('Ymdhis')).'.xlsx';
+                }
+
                 $tempImage = tempnam(sys_get_temp_dir(), $filename);
                 copy($link, $tempImage);
 
