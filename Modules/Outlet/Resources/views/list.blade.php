@@ -131,6 +131,8 @@
                 success : function(result) {
                     if (result.status == "success") {
                         document.getElementById('atr-'+id).innerHTML = state;
+                        $('#sample_1').DataTable().rows().invalidate()
+                            .draw();
                         toastr.info("Outlet status has been updated.");
                     }
                     else {
