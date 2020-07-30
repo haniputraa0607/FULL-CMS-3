@@ -88,7 +88,7 @@ $configs = session('configs');
                                         <div id="accordion2">
                                             <div class="col-md-6 content-title">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="content_title[]"  placeholder="Content Title" required maxlength="20" value="{{ $subscription['subscription_content'][1]['title']??'Cara Pakai' }}">
+                                                    <input type="text" class="form-control" name="content_title[]"  placeholder="Content Title" required maxlength="20" value="{{ $subscription['subscription_content'][1]['title']??'Cara Penggunaan' }}">
                                                     <input type="hidden" name="id_subscription_content[]" value="0">
                                                     <input type="hidden" name="content_order[]" value="0">
                                                     <a class="accordion-toggle input-group-addon" data-toggle="collapse" data-parent="#accordion2" aria-expanded="true" href="#collapse_2">
