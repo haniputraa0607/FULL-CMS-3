@@ -130,6 +130,7 @@
                 data : "_token="+token+"&id_outlet="+id+"&outlet_status="+state,
                 success : function(result) {
                     if (result.status == "success") {
+                        document.getElementById('atr-'+id).innerHTML = state;
                         toastr.info("Outlet status has been updated.");
                     }
                     else {
@@ -223,6 +224,7 @@
                                 </td>
                                 <td>
                                     <input type="checkbox" name="outlet_status" @if($value['outlet_status'] == 'Active') checked @endif data-id="{{ $value['id_outlet'] }}" class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive">
+                                    <p style="display: none" id="atr-{{$value['id_outlet']}}">{{$value['outlet_status']}}</p>
                                 </td>
                                 @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                     <td style="width: 90px;">
