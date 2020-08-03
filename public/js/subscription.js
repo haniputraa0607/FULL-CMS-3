@@ -73,7 +73,7 @@ function addDetail(no) {
                     <a href="javascript:;" class="btn btn-grey "><i class="fa fa-arrows-v"></i></a>\
                 </div>\
                 <div class="col-md-9 p-l-30px">\
-                    <textarea type="text" placeholder="Content Detail" class="form-control" name="content_detail['+no+'][]" required style="resize:vertical;"/></textarea>\
+                    <textarea type="text" placeholder="Content Detail" class="form-control focused-input" name="content_detail['+no+'][]" required style="resize:vertical;"/></textarea>\
                     <input type="hidden" name="content_detail_order['+no+'][]" value="0">\
                     <input type="hidden" name="id_content_detail['+no+'][]" value="0">\
                 </div>\

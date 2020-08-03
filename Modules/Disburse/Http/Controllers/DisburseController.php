@@ -120,14 +120,21 @@ class DisburseController extends Controller
             $getData = MyHelper::post($this->baseuri.'/dashboard', $post);
             if(isset($getData['status']) && $getData['status'] == 'success'){
                 $data['status'] = 'success';
-                $data['nominal_success'] = $getData['result']['nominal_success'];
+                $data['nominal_success'] = $getData['result']['nominal']['nom_success'];
                 $data['nominal_fail'] = $getData['result']['nominal_fail'];
-                $data['nominal_trx'] = $getData['result']['nominal_trx'];
                 $data['total_income_central'] = $getData['result']['income_central'];
 
-                $data['format_nominal_success'] = number_format($getData['result']['nominal_success'], 2);
+                $data['nominal_item'] = $getData['result']['nominal']['nominal']['nom_item']??0;
+                $data['nominal_grandtotal'] = $getData['result']['nominal']['nominal']['nom_grandtotal']??0;
+                $data['nominal_expense_central'] = $getData['result']['nominal']['nominal']['nom_expense_central']??0;
+                $data['nominal_delivery'] = $getData['result']['nominal']['nominal']['nom_delivery']??0;
+
+                $data['format_nominal_item'] = number_format($getData['result']['nominal']['nom_item'], 2);
+                $data['format_nominal_grandtotal'] = number_format($getData['result']['nominal']['nom_grandtotal'], 2);
+                $data['format_nominal_expense_central'] = number_format($getData['result']['nominal']['nom_expense_central'], 2);
+                $data['format_nominal_delivery'] = number_format($getData['result']['nominal']['nom_delivery'], 2);
+                $data['format_nominal_success'] = number_format($getData['result']['nominal']['nom_success'], 2);
                 $data['format_nominal_fail'] = number_format($getData['result']['nominal_fail'], 2);
-                $data['format_nominal_trx'] = number_format($getData['result']['nominal_trx'], 2);
                 $data['format_total_income_central'] = number_format($getData['result']['income_central'], 2);
             }else{
                 $data['status'] = 'fail';
@@ -143,14 +150,21 @@ class DisburseController extends Controller
 
             $getData = MyHelper::post($this->baseuri.'/dashboard', ['id_user_franchise' => session('id_user_franchise')]);
             if(isset($getData['status']) && $getData['status'] == 'success'){
-                $data['nominal_success'] = $getData['result']['nominal_success'];
+                $data['nominal_success'] = $getData['result']['nominal']['nom_success']??0;
+                $data['nominal_item'] = $getData['result']['nominal']['nom_item']??0;
+                $data['nominal_grandtotal'] = $getData['result']['nominal']['nom_grandtotal']??0;
+                $data['nominal_expense_central'] = $getData['result']['nominal']['nom_expense_central']??0;
+                $data['nominal_delivery'] = $getData['result']['nominal']['nom_delivery']??0;
+
                 $data['nominal_fail'] = $getData['result']['nominal_fail'];
-                $data['nominal_trx'] = $getData['result']['nominal_trx'];
                 $data['total_income_central'] = $getData['result']['income_central'];
             }else{
                 $data['nominal_success'] = 0;
+                $data['nominal_item'] = 0;
+                $data['nominal_grandtotal'] = 0;
+                $data['nominal_expense_central'] = 0;
+                $data['nominal_delivery'] = 0;
                 $data['nominal_fail'] = 0;
-                $data['nominal_trx'] = 0;
                 $data['total_income_central'] = 0;
             }
 

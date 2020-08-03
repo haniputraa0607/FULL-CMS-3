@@ -255,7 +255,14 @@ class OutletController extends Controller
                 if(!empty($post['outlet_open_hours'])) $post['outlet_open_hours']  = date('H:i:s', strtotime($post['outlet_open_hours']));
                 if(!empty($post['outlet_open_hours'])) $post['outlet_close_hours'] = date('H:i:s', strtotime($post['outlet_close_hours']));
 
+                $status_franchise = 0;
+
+                if(isset($post['status_franchise'])){
+                    $status_franchise = $post['status_franchise'];
+                }
                 $post = array_filter($post);
+                $post['status_franchise'] = $status_franchise;
+
                 $save = MyHelper::post('outlet/update', $post);
 
                 if (isset($save['status']) && $save['status'] == "success") {

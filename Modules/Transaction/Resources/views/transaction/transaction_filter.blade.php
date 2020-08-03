@@ -82,12 +82,24 @@
 			var operator = "conditions["+index+"][operator]";
 			var operator_value = document.getElementsByName(operator)[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-			operator_value.options[operator_value.options.length] = new Option('Success', 'Success');
-			operator_value.options[operator_value.options.length] = new Option('Settlement', 'Settlement');
+			operator_value.options[operator_value.options.length] = new Option('Cancelled', 'Cancelled');
 			operator_value.options[operator_value.options.length] = new Option('Pending', 'Pending');
-			operator_value.options[operator_value.options.length] = new Option('Cancel', 'Cancel');
-			operator_value.options[operator_value.options.length] = new Option('Expired', 'Expired');
+			operator_value.options[operator_value.options.length] = new Option('Cancelled', 'Cancelled');
 			
+			var parameter = "conditions["+index+"][parameter]";
+			document.getElementsByName(parameter)[0].type = 'hidden';
+		}
+
+		if(subject_value == 'transaction_status'){
+			var operator = "conditions["+index+"][operator]";
+			var operator_value = document.getElementsByName(operator)[0];
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			operator_value.options[operator_value.options.length] = new Option('Received', 'receive_at');
+			operator_value.options[operator_value.options.length] = new Option('Ready', 'ready_at');
+			operator_value.options[operator_value.options.length] = new Option('Taken by driver', 'taken_by_driver');
+			operator_value.options[operator_value.options.length] = new Option('Taken  customer', 'taken_by_customer');
+			operator_value.options[operator_value.options.length] = new Option('Reject', 'reject_at');
+
 			var parameter = "conditions["+index+"][parameter]";
 			document.getElementsByName(parameter)[0].type = 'hidden';
 		}
@@ -200,7 +212,8 @@
 												<option value="product_price" @if ($con['subject'] == 'product_price') selected @endif>Product Price</option>
 												<option value="product_tax" @if ($con['subject'] == 'product_tax') selected @endif>Product Tax</option>
 												<option value="grand_total" @if ($con['subject'] == 'grand_total') selected @endif>Grand Total</option>
-												<option value="status" @if ($con['subject'] == 'status') selected @endif>Transaction Status</option>
+												<option value="status" @if ($con['subject'] == 'status') selected @endif>Payment Status</option>
+												<option value="transaction_status" @if ($con['subject'] == 'transaction_status') selected @endif>Transaction Status</option>
 												<option value="courier" @if ($con['subject'] == 'courier') selected @endif>Courier</option>
 											</select>
 										</div>
@@ -210,11 +223,15 @@
 												<option value="Male" @if ($con['operator'] == 'Male') selected @endif>Male</option>
 												<option value="Female" @if ($con['operator']  == 'Female') selected @endif>Female</option>
 											@elseif ($con['subject'] == 'status')
-												<option value="Success" @if ($con['operator'] == 'Success') selected @endif>Success</option>
-												<option value="Settlement" @if ($con['operator'] == 'Settlement') selected @endif>Settlement</option>
+												<option value="Completed" @if ($con['operator'] == 'Completed') selected @endif>Completed</option>
 												<option value="Pending" @if ($con['operator'] == 'Pending') selected @endif>Pending</option>
-												<option value="Cancel" @if ($con['operator'] == 'Cancel') selected @endif>Cancel</option>
-												<option value="Expired" @if ($con['operator'] == 'Expired') selected @endif>Expired</option>
+												<option value="Cancelled" @if ($con['operator'] == 'Cancelled') selected @endif>Cancelled</option>
+											@elseif ($con['subject'] == 'transaction_status')
+												<option value="receive_at" @if ($con['operator'] == 'receive_at') selected @endif>Received</option>
+												<option value="ready_at" @if ($con['operator'] == 'ready_at') selected @endif>Ready</option>
+												<option value="taken_by_driver" @if ($con['operator'] == 'taken_by_driver') selected @endif>Taken by driver</option>
+												<option value="taken_by_customer" @if ($con['operator'] == 'taken_by_customer') selected @endif>Taken  customer</option>
+												<option value="reject_at" @if ($con['operator'] == 'reject_at') selected @endif>Reject</option>
 											@elseif ($con['subject'] == 'pickup_by')
 												<option value="Customer" @if ($con['operator'] == 'Customer') selected @endif>Pickup Order</option>
 												<option value="GO-SEND" @if ($con['operator'] == 'GO-SEND') selected @endif>Delivery</option>
@@ -261,7 +278,7 @@
 										</select>
 										</div>
 
-										@if (in_array($con['subject'], ['gender', 'status', 'courier', 'id_outlet', 'id_product', 'pickup_by']))
+										@if (in_array($con['subject'], ['gender', 'status', 'courier', 'id_outlet', 'id_product', 'pickup_by', 'transaction_status']))
 											<div class="col-md-3">
 												<input type="hidden" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
 											</div>
@@ -301,7 +318,8 @@
 											<option value="product_price">Product Price</option>
 											<option value="product_tax">Product Tax</option>
 											<option value="grand_total">Grand Total</option>
-											<option value="status">Transaction Status</option>
+											<option value="status">Payment Status</option>
+											<option value="transaction_status">Transaction Status</option>
 											<option value="courier">Courier</option>
 										</select>
 									</div>
@@ -348,7 +366,8 @@
 											<option value="product_price">Product Price</option>
 											<option value="product_tax">Product Tax</option>
 											<option value="grand_total">Grand Total</option>
-											<option value="status">Transaction Status</option>
+											<option value="status">Payment Status</option>
+											<option value="transaction_status">Transaction Status</option>
 											<option value="courier">Courier</option>
 										</select>
 									</div>
@@ -383,9 +402,6 @@
 					<div class="col-md-4">
 						{{ csrf_field() }}
 						 <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
-						@if(isset($trx) && !empty($trx))
-							<a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1">Export</a>
-						@endif
 					</div>
 				</div>
 			</div>
