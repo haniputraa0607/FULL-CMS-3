@@ -18,6 +18,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'promotio
 	Route::get('voucher/trx/{id_promotion_content}/{page?}', ['middleware' => 'feature_control:110', 'uses' => 'PromotionController@voucherTrx']);
 	Route::get('linkclicked/list/{id_promotion_content}/{page?}/{type?}', ['middleware' => 'feature_control:110', 'uses' => 'PromotionController@linkClickedList']);
 	Route::post('delete', ['middleware' => 'feature_control:113', 'uses' => 'PromotionController@delete']);
+	Route::get('recipient/{id_promotion}', ['middleware' => 'config_control:110', 'uses' => 'PromotionController@showRecipient']);
 
 	Route::group(['prefix' => 'deals'], function()
 	{
