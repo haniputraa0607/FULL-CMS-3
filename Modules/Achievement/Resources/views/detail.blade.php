@@ -170,7 +170,7 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" name="detail[`+nomer+`][name]" placeholder="Detail Achievement" required maxlength="20">
+                                                    <input type="text" class="form-control" name="detail[`+nomer+`][name]" placeholder="Detail Achievement" required maxlength="30">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -493,7 +493,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Add Badge</h4>
             </div>
-            <div class="modal-body box-repeat" style="padding: 20ox;display: table;width: 100%;">
+            <div class="modal-body box-repeat" style="padding: 20px;display: table;width: 100%;">
                 <div class="box">
                     <div class="col-md-2 text-right" style="text-align: -webkit-right;">
                         <a href="javascript:;" onclick="removeBox(this)" class="remove-box btn btn-danger">
@@ -510,7 +510,7 @@
                                 </label>
                             </div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Achievement" required maxlength="20">
+                                <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Achievement" required maxlength="30">
                             </div>
                         </div>
                         <div class="form-group">
@@ -707,7 +707,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Modal Title</h4>
             </div>
-            <div class="modal-body" style="padding: 20ox;display: table;width: 100%;">
+            <div class="modal-body" style="padding: 20x;display: table;width: 100%;">
                 <div class="col-md-12">
                     <div class="form-group">
                         <div class="input-icon right">
@@ -718,7 +718,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" placeholder="Detail Achievement" required maxlength="20">
+                            <input type="text" class="form-control" name="name" placeholder="Detail Achievement" required maxlength="30">
                         </div>
                     </div>
                     <div class="form-group">
