@@ -67,6 +67,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring_date_month').style.display = 'none';
 			document.getElementById('recurring_day_week').style.display = 'none';
 			document.getElementById('recurring_week_month').style.display = 'none';
+			$('.form_datetime').prop('required',false);
 		}
 		if(type == 'scheduled'){
 			document.getElementById('scheduled_date').style.display = 'block';
@@ -82,6 +83,7 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring_date_year').style.display = 'none';
 			document.getElementById('recurring_day_week').style.display = 'none';
 			document.getElementById('recurring_week_month').style.display = 'none';
+			$('.form_datetime').prop('required',false);
 		}
 		if(type == 'recurring'){
 			document.getElementById('scheduled_date').style.display = 'none';
@@ -90,6 +92,9 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring-periode').style.display = 'block';
 			document.getElementById('series').style.display = 'none';
 			document.getElementById('mask_number').value = 0;
+			document.getElementById('date-periode').style.display = 'none';
+			$('.form_datetime').prop('required',false);
+			$("#checkbox-periode").prop("checked", false);
 		}
 		if(type == 'series'){
 			document.getElementById('scheduled_date').style.display = 'none';
@@ -103,6 +108,9 @@ $grantedFeature     = session('granted_features');
 			document.getElementById('recurring_date_year').style.display = 'none';
 			document.getElementById('recurring_day_week').style.display = 'none';
 			document.getElementById('recurring_week_month').style.display = 'none';
+			document.getElementById('date-periode').style.display = 'none';
+			$('.form_datetime').prop('required',false);
+			$("#checkbox-periode").prop("checked", false);
 
 			document.getElementById('user_limit').style.display = 'none';
 		}else{
@@ -146,9 +154,11 @@ $grantedFeature     = session('granted_features');
 	function showPeriode(status){
 		if(status.checked){
 			document.getElementById('date-periode').style.display = 'block';
+			$('.form_datetime').prop('required',true);
 		} 
 		else {
 			document.getElementById('date-periode').style.display = 'none';
+			$('.form_datetime').prop('required',false);
 		}
 	}
 
