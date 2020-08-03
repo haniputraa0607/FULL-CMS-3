@@ -537,6 +537,7 @@ $grantedFeature     = session('granted_features');
 		$('#modalSentList').modal('show');
 	}
 	</script>
+	{{--
 	<script type="text/javascript">
 
 		$(function() {
@@ -560,7 +561,7 @@ $grantedFeature     = session('granted_features');
 		});
 
 		</script>
-
+		--}}
 @endsection
 
 @section('content')
@@ -733,6 +734,22 @@ $grantedFeature     = session('granted_features');
 										</div>
 									</div>
 								</div>
+								@if ($result['promotion_type'] == 'Recurring Campaign' || $result['promotion_type'] == 'Campaign Series')
+								<div class="col-md-6">
+									<div class="form-group">
+										<div class="col-md-12">
+											<p class="form-control-static">Promotion Periode</p>
+										</div>
+										<div class="col-md-12">
+											@if( isset($result['schedules'][0]['date_start']) && isset($result['schedules'][0]['date_end']) )
+												<p class="form-control-static"><b>{{ date('d M Y H:i', strtotime($result['schedules'][0]['date_start'])) }} - {{ date('d M Y H:i', strtotime($result['schedules'][0]['date_end'])) }}</b></p>
+											@else
+												<p class="form-control-static"><b>-</b></p>
+											@endif
+										</div>
+									</div>
+								</div>
+								@endif
 							</div>
 						</div>
 					</form>
@@ -845,6 +862,8 @@ $grantedFeature     = session('granted_features');
 										All User
 									@endif
 								</div>
+
+								<a href="{{url('promotion/recipient/'.$result['id_promotion'])}}" target="_blank" class="btn blue" style="margin-left: 15px;">Show Recipient List</a>
 							</div>
 						</div>
 					</form>
@@ -1274,6 +1293,26 @@ $grantedFeature     = session('granted_features');
 												</div>
 												<div class="portlet-body">
 													<div class="row">
+														<div class="col-md-3 " style="margin-bottom:30px">Deals Title</div>
+														<div class="col-md-9" style="margin-bottom:30px">
+															{{$result['contents'][$x-1]['deals']['deals_title']}}
+														</div>
+
+														<div class="col-md-3 " style="margin-bottom:30px">Deals Type</div>
+														<div class="col-md-9" style="margin-bottom:30px">
+															@php
+																$deals['is_offline'] = $result['contents'][$x-1]['deals']['is_offline'];
+																$deals['is_online'] = $result['contents'][$x-1]['deals']['is_online'];
+															@endphp
+															@if (!empty($deals['is_online']) && !empty($deals['is_offline']))
+							                        			{{'Online, Offline'}}
+							                        		@elseif (!empty($deals['is_online']))
+							                        			{{'Online'}}
+							                        		@elseif (!empty($deals['is_offline']))
+							                        			{{'Offline'}}
+							                        		@endif
+														</div>
+
 														<div class="col-md-3 " style="margin-bottom:30px">Promo Type</div>
 														<div class="col-md-9" style="margin-bottom:30px">
 															@if($result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'promoid')Promo ID @else Nominal @endif
@@ -1287,7 +1326,7 @@ $grantedFeature     = session('granted_features');
 															{{number_format($result['contents'][$x-1]['voucher_value'])}}
 														</div>
 
-														<div class="col-md-3 " style="margin-bottom:30px"> Deals Periode </div>
+														{{-- <div class="col-md-3 " style="margin-bottom:30px"> Deals Periode </div>
 														<div class="col-md-9" style="margin-bottom:30px">
 															@if(isset($result['contents'][$x-1]['deals']['deals_start']))
 																@if($result['contents'][$x-1]['deals']['deals_start'] != '')
@@ -1300,29 +1339,33 @@ $grantedFeature     = session('granted_features');
 																	-  {{date('d M Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_end']))}}
 																@endif
 															@endif
-														</div>
+														</div> --}}
 
 														<div class="col-md-3 "style="margin-bottom:30px"> Outlet Available </div>
 														<div class="col-md-9" style="margin-bottom:30px">
 															@if (!empty($outlets))
-																<?php $ou = array(); $jmlOutlet = count($outlets); $jmlOutletSelected = 0?>
-																@if(isset($result['contents'][$x-1]['deals']['outlets']))
-																	@foreach($result['contents'][$x-1]['deals']['outlets'] as $o)
-																		<?php
-																		array_push($ou, $o['id_outlet']);
-																		?>
-																	@endforeach
-																	@php
-																		$jmlOutletSelected = count($ou);
-																	@endphp
-																@endif
-
-																@if ($jmlOutlet == $jmlOutletSelected)
+																@if($result['contents'][$x-1]['deals']['is_all_outlet'])
 																	All Outlets
 																@else
-																	@foreach($outlets as $suw)
-																		@if(in_array($suw['id_outlet'], $ou)) {{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }} <br> @endif
-																	@endforeach
+																	<?php $ou = array(); $jmlOutlet = count($outlets); $jmlOutletSelected = 0?>
+																	@if(isset($result['contents'][$x-1]['deals']['outlets']))
+																		@foreach($result['contents'][$x-1]['deals']['outlets'] as $o)
+																			<?php
+																			array_push($ou, $o['id_outlet']);
+																			?>
+																		@endforeach
+																		@php
+																			$jmlOutletSelected = count($ou);
+																		@endphp
+																	@endif
+
+																	@if ($jmlOutlet == $jmlOutletSelected)
+																		All Outlets
+																	@else
+																		@foreach($outlets as $suw)
+																			@if(in_array($suw['id_outlet'], $ou)) {{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }} <br> @endif
+																		@endforeach
+																	@endif
 																@endif
 															@endif
 														</div>
@@ -1333,12 +1376,12 @@ $grantedFeature     = session('granted_features');
 																@if($result['contents'][$x-1]['deals']['deals_voucher_expired'] != '')
 																	By Date: {{date('d M Y H:i',strtotime($result['contents'][$x-1]['deals']['deals_voucher_expired']))}}
 																@endif
-															@endif
-
-															@if(isset($result['contents'][$x-1]['deals']['deals_voucher_duration']))
+															@elseif(isset($result['contents'][$x-1]['deals']['deals_voucher_duration']))
 																@if($result['contents'][$x-1]['deals']['deals_voucher_duration'] != '')
 																	By Duration: {{$result['contents'][$x-1]['deals']['deals_voucher_duration']}} days
 																@endif
+															@else
+															-
 															@endif
 														</div>
 
@@ -1368,7 +1411,12 @@ $grantedFeature     = session('granted_features');
 														<div class="col-md-9" style="margin-bottom:30px">
 															{{number_format($result['contents'][$x-1]['voucher_given'])}} @if($result['contents'][$x-1]['voucher_given'] > 1) Vouchers @else Voucher @endif
 														</div>
-
+														@php
+															$deals_slug = MyHelper::createSlug($result['contents'][$x-1]['deals']['id_deals'], $result['contents'][$x-1]['deals']['created_at']);
+														@endphp
+														<div class="col-md-3" style="margin-bottom:30px">
+															<a href="{{ url('promotion-deals/'.$deals_slug) }}" class="btn blue">detail</i></a>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -1843,7 +1891,7 @@ $grantedFeature     = session('granted_features');
 											{{number_format($result['contents'][0]['voucher_value'])}}
 										</div>
 
-										<div class="col-md-3" style="margin-bottom:30px"> Deals Periode </div>
+										{{-- <div class="col-md-3" style="margin-bottom:30px"> Deals Periode </div>
 										<div class="col-md-9" style="margin-bottom:30px">
 											@if(isset($result['contents'][0]['deals']['deals_start']))
 												@if($result['contents'][0]['deals']['deals_start'] != '')
@@ -1856,31 +1904,43 @@ $grantedFeature     = session('granted_features');
 													-  {{date('d M Y H:i',strtotime($result['contents'][0]['deals']['deals_end']))}}
 												@endif
 											@endif
-										</div>
+										</div> --}}
 										<div class="col-md-3" style="margin-bottom:30px"> Outlet Available </div>
 										<div class="col-md-9" style="margin-bottom:30px">
 											@if (!empty($outlets))
-												<?php $ou = array(); $jmlOutlet = count($outlets); $jmlOutletSelected = 0?>
-												@if(isset($result['contents'][0]['deals']['outlets']))
-													@foreach($result['contents'][0]['deals']['outlets'] as $o)
-														<?php
-														array_push($ou, $o['id_outlet']);
-														?>
-													@endforeach
-													@php
-														$jmlOutletSelected = count($ou);
-													@endphp
-												@endif
-
-												@if ($jmlOutlet == $jmlOutletSelected)
+												@if($result['contents'][0]['deals']['is_all_outlet'])
 													All Outlets
 												@else
-													@foreach($outlets as $suw)
-														@if(in_array($suw['id_outlet'], $ou)) {{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }} <br> @endif
-													@endforeach
+													<?php $ou = array(); $jmlOutlet = count($outlets); $jmlOutletSelected = 0?>
+													@if(isset($result['contents'][0]['deals']['outlets']))
+														@foreach($result['contents'][0]['deals']['outlets'] as $o)
+															<?php
+															array_push($ou, $o['id_outlet']);
+															?>
+														@endforeach
+														@php
+															$jmlOutletSelected = count($ou);
+														@endphp
+													@endif
+
+													@if ($jmlOutlet == $jmlOutletSelected)
+														All Outlets
+													@else
+														@foreach($outlets as $suw)
+															@if(in_array($suw['id_outlet'], $ou)) {{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }} <br> @endif
+														@endforeach
+													@endif
 												@endif
 											@endif
 										</div>
+
+										@if(!empty($result['contents'][0]['deals']['deals_voucher_start']))
+										<div class="col-md-3" style="margin-bottom:30px"> Voucher Start  </div>
+										<div class="col-md-9" style="margin-bottom:30px">
+												By Date: {{date('d M Y H:i',strtotime($result['contents'][0]['deals']['deals_voucher_start']))}}
+										</div>
+										@endif
+
 										<div class="col-md-3" style="margin-bottom:30px"> Voucher Expiry  </div>
 										<div class="col-md-9" style="margin-bottom:30px">
 											@if(isset($result['contents'][0]['deals']['deals_voucher_expired']))
@@ -1920,6 +1980,13 @@ $grantedFeature     = session('granted_features');
 										<div class="col-md-3" style="margin-bottom:30px">Every User Receives</div>
 										<div class="col-md-9" style="margin-bottom:30px">
 											{{number_format($result['contents'][0]['voucher_given'])}} @if($result['contents'][0]['voucher_given'] > 1) Vouchers @else Voucher @endif
+										</div>
+
+										@php
+											$deals_slug = MyHelper::createSlug($result['contents'][0]['deals']['id_deals'],$result['contents'][0]['deals']['created_at']);
+										@endphp
+										<div class="col-md-3" style="margin-bottom:30px">
+											<a href="{{ url('promotion-deals/'.$deals_slug) }}" class="btn blue">Detail</i></a>
 										</div>
 									</div>
 								</div>
@@ -1974,9 +2041,11 @@ $grantedFeature     = session('granted_features');
 		</div>
 		@endif
 
+	{{--
 		<div class="recipient">
 			@include('promotion::recipient')
 		</div>
+	--}}
 
 	</div>
 	<div class="col-md-12" style="padding-left: 30px;padding-right: 30px;">
