@@ -55,15 +55,27 @@
                 </div>
             </div>
             <div class="portlet-body">
+            	<div class="row static-info">
+                    <div class="col-md-4 name">Brand</div>
+                    <div class="col-md-8 value">: {{ $deals['brand']['name_brand']??'' }}</div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-4 name">Charged Central</div>
+                    <div class="col-md-8 value">: {{$deals['charged_central']}} %</div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-4 name">Charged Outlet</div>
+                    <div class="col-md-8 value">: {{$deals['charged_outlet']}} %</div>
+                </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Created</div>
                     <div class="col-md-8 value">: {{date("d M Y", strtotime($deals['created_at']))}}&nbsp;{{date("H:i", strtotime($deals['created_at']))}}</div>
                 </div>
+            {{--    
                 <div class="row static-info">
                     <div class="col-md-4 name">Product Type</div>
                     <div class="col-md-8 value">: {{ $deals['product_type']??'' }}</div>
                 </div>
-            {{--    
                 <div class="row static-info">
                     <div class="col-md-4 name">Total Voucher</div>
                     <div class="col-md-8 value">: {{ !empty($deals['deals_total_voucher']) ? number_format($deals['deals_total_voucher']).' Vouchers' : (isset($deals['deals_total_voucher']) ? 'unlimited' : '') }}</div>
