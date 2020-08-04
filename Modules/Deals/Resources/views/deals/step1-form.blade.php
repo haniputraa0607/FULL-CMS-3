@@ -3,7 +3,10 @@
     $configs    		= session('configs');
  ?>
             @if (empty($deals['deals_type']) || $deals['deals_type'] != "Point")
+
                 <div class="form-body">
+
+            		{{-- Deals Type --}}
                 	@if(MyHelper::hasAccess([97], $configs) && MyHelper::hasAccess([98], $configs))
                 	<div class="form-group">
                         <div class="input-icon right">
@@ -54,6 +57,7 @@
                     <input type="hidden" name="is_online" value="1">
                     @endif
                     
+                    {{-- Brand --}}
                     @if(MyHelper::hasAccess([95], $configs))
                     <div class="form-group">
                         <div class="input-icon right">
@@ -78,6 +82,7 @@
                     </div>
                     @endif
 
+                    {{-- Title --}}
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -91,6 +96,7 @@
                         </div>
                     </div>
 
+                    {{-- Second Title --}}
                     @if(MyHelper::hasAccess([105], $configs))
                     <div class="form-group">
                         <div class="input-icon right">
@@ -105,6 +111,8 @@
                     </div>
                     @endif
 
+
+                    {{-- Deals Periode --}}
                     @if ( $deals_type == "Deals" )
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Deals Periode <span class="required" aria-required="true"> * </span> </label>
@@ -141,6 +149,7 @@
                     </div>
                     @endif
 
+                    {{-- Deals Publish Periode --}}
                     @if ($deals_type == "Deals")
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Publish Periode <span class="required" aria-required="true"> * </span> </label>
@@ -177,6 +186,7 @@
                     </div>
                     @endif
 
+                    {{-- Image --}}
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -207,6 +217,7 @@
                         </div>
                     </div>
 
+                    {{-- Outlet --}}
                     @php
                         if (!empty($deals['outlets'])) {
                             $outletselected = array_pluck($deals['outlets'],'id_outlet');
@@ -215,7 +226,6 @@
                             $outletselected = [];
                         }
                     @endphp
-
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -237,6 +247,7 @@
                         </div>
                     </div>
 
+                    {{-- Custom Outlet Text --}}
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -251,6 +262,7 @@
                         </div>
                     </div>
 
+                    {{-- Charged --}}
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Charged Central
                             <span class="required" aria-required="true"> * </span>
@@ -283,6 +295,7 @@
                         </div>
                     </div>
 
+                    {{-- Voucher Price --}}
                     @if ( $deals_type == "Deals" )
                     <div class="form-group">
                         <div class="input-icon right">
@@ -379,150 +392,153 @@
                     </div>
                     @endif
 
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Voucher Type
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Tipe pembuatan voucher, di list secara manual, auto generate atau unlimited" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="">
-                            <div class="input-icon right">
-                                <div class="col-md-3">
-                                    <div class="md-radio-inline">
-                                        <div class="md-radio">
-                                            <input type="radio" name="deals_voucher_type" id="radio1" value="Auto generated" class="voucherType" 
-                                            	@if ( old('deals_voucher_type') ) 
-                                            		@if ( old('deals_voucher_type') == 'Auto generated' ) checked 
-                                            		@endif
-                                            	@elseif ( 	
-                                            			($deals['deals_voucher_type']??false) == "Auto generated" || 
-                                            			($deals['deals_voucher_type']??false) == "Unlimited"
-                                            		) checked 
-                                            	@endif>
-                                            <label for="radio1">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> Auto Generated </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="md-radio-inline">
-                                        <div class="md-radio">
-                                            <input type="radio" name="deals_voucher_type" id="radio2" value="List Vouchers" class="voucherType" 
-                                            @if ( old('deals_voucher_type') ) 
-                                            	@if ( old('deals_voucher_type') == 'List Vouchers' ) checked 
-                                            	@endif
-                                            @elseif ( ($deals['deals_voucher_type']??false) == "List Vouchers") checked 
-                                            @endif required>
-                                            <label for="radio2">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> List Voucher </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{-- Voucher Type --}}
+	                @if($deals_type != 'Promotion')
+	                    <div class="form-group">
+	                        <div class="input-icon right">
+	                            <label class="col-md-3 control-label">
+	                            Voucher Type
+	                            <span class="required" aria-required="true"> * </span>
+	                            <i class="fa fa-question-circle tooltips" data-original-title="Tipe pembuatan voucher, di list secara manual, auto generate atau unlimited" data-container="body"></i>
+	                            </label>
+	                        </div>
+	                        <div class="">
+	                            <div class="input-icon right">
+	                                <div class="col-md-3">
+	                                    <div class="md-radio-inline">
+	                                        <div class="md-radio">
+	                                            <input type="radio" name="deals_voucher_type" id="radio1" value="Auto generated" class="voucherType" 
+	                                            	@if ( old('deals_voucher_type') ) 
+	                                            		@if ( old('deals_voucher_type') == 'Auto generated' ) checked 
+	                                            		@endif
+	                                            	@elseif ( 	
+	                                            			($deals['deals_voucher_type']??false) == "Auto generated" || 
+	                                            			($deals['deals_voucher_type']??false) == "Unlimited"
+	                                            		) checked 
+	                                            	@endif>
+	                                            <label for="radio1">
+	                                                <span></span>
+	                                                <span class="check"></span>
+	                                                <span class="box"></span> Auto Generated </label>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="col-md-3">
+	                                    <div class="md-radio-inline">
+	                                        <div class="md-radio">
+	                                            <input type="radio" name="deals_voucher_type" id="radio2" value="List Vouchers" class="voucherType" 
+	                                            @if ( old('deals_voucher_type') ) 
+	                                            	@if ( old('deals_voucher_type') == 'List Vouchers' ) checked 
+	                                            	@endif
+	                                            @elseif ( ($deals['deals_voucher_type']??false) == "List Vouchers") checked 
+	                                            @endif required>
+	                                            <label for="radio2">
+	                                                <span></span>
+	                                                <span class="check"></span>
+	                                                <span class="box"></span> List Voucher </label>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
 
-                    <div class="form-group" id="total-voucher-form" 
-                    @if( old('deals_voucher_type') == 'Auto generated' || old('deals_voucher_type') == 'Unlimited' || ($deals['deals_voucher_type']??false) == 'Unlimited' || ($deals['deals_voucher_type']??false) == 'Auto generated' )
-                    @elseif( old('deals_voucher_type') != 'Auto generated' || empty($deals['deals_voucher_type']) || ($deals['deals_voucher_type'] != 'Auto generated') )
-                    	style="display: none;" 
-                    @endif>
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Total Voucher Type
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Total voucher yang dibuat, limited atau unlimited" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="">
-                            <div class="input-icon right">
-                                <div class="col-md-3">
-                                    <div class="md-radio-inline">
-                                        <div class="md-radio">
-                                            <input type="radio" name="total_voucher_type" id="radio-total-limited" value="Auto generated" class="voucherType" @if ( old('total_voucher_type') == 'Auto generated' || ($deals['deals_voucher_type']??false) == "Auto generated") checked @endif>
-                                            <label for="radio-total-limited">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> Limited </label>
-                                        </div>
-                                    </div>
-                                </div>
+	                    <div class="form-group" id="total-voucher-form" 
+	                    @if( old('deals_voucher_type') == 'Auto generated' || old('deals_voucher_type') == 'Unlimited' || ($deals['deals_voucher_type']??false) == 'Unlimited' || ($deals['deals_voucher_type']??false) == 'Auto generated' )
+	                    @elseif( old('deals_voucher_type') != 'Auto generated' || empty($deals['deals_voucher_type']) || ($deals['deals_voucher_type'] != 'Auto generated') )
+	                    	style="display: none;" 
+	                    @endif>
+	                        <div class="input-icon right">
+	                            <label class="col-md-3 control-label">
+	                            Total Voucher Type
+	                            <span class="required" aria-required="true"> * </span>
+	                            <i class="fa fa-question-circle tooltips" data-original-title="Total voucher yang dibuat, limited atau unlimited" data-container="body"></i>
+	                            </label>
+	                        </div>
+	                        <div class="">
+	                            <div class="input-icon right">
+	                                <div class="col-md-3">
+	                                    <div class="md-radio-inline">
+	                                        <div class="md-radio">
+	                                            <input type="radio" name="total_voucher_type" id="radio-total-limited" value="Auto generated" class="voucherType" @if ( old('total_voucher_type') == 'Auto generated' || ($deals['deals_voucher_type']??false) == "Auto generated") checked @endif>
+	                                            <label for="radio-total-limited">
+	                                                <span></span>
+	                                                <span class="check"></span>
+	                                                <span class="box"></span> Limited </label>
+	                                        </div>
+	                                    </div>
+	                                </div>
 
-                                <div class="col-md-3">
-                                    <div class="md-radio-inline">
-                                        <div class="md-radio">
-                                            <input type="radio" name="total_voucher_type" id="radio-total-unlimited" value="Unlimited" class="voucherType" @if ( old('total_voucher_type') == 'Unlimited' || ($deals['deals_voucher_type']??false) == "Unlimited") checked @endif>
-                                            <label for="radio-total-unlimited">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> Unlimited </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-{{-- 
-                    @if ($deals['deals_voucher_type'] == "Auto generated" || $deals['deals_voucher_type'] == "List Vouchers")
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Voucher Total <span class="required" aria-required="true"> * </span></label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="deals_total_voucher" value="{{ $deals['deals_total_voucher'] }}" placeholder="Total Voucher" required="">
+	                                <div class="col-md-3">
+	                                    <div class="md-radio-inline">
+	                                        <div class="md-radio">
+	                                            <input type="radio" name="total_voucher_type" id="radio-total-unlimited" value="Unlimited" class="voucherType" @if ( old('total_voucher_type') == 'Unlimited' || ($deals['deals_voucher_type']??false) == "Unlimited") checked @endif>
+	                                            <label for="radio-total-unlimited">
+	                                                <span></span>
+	                                                <span class="check"></span>
+	                                                <span class="box"></span> Unlimited </label>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+					{{-- 
+	                    @if ($deals['deals_voucher_type'] == "Auto generated" || $deals['deals_voucher_type'] == "List Vouchers")
+	                    <div class="form-group">
+	                        <label class="col-md-3 control-label">Voucher Total <span class="required" aria-required="true"> * </span></label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control" name="deals_total_voucher" value="{{ $deals['deals_total_voucher'] }}" placeholder="Total Voucher" required="">
 
-                        </div>
-                    </div>
-                    @endif
- --}}
-					<div class="form-group" id="listVoucher" 
-						@if (old('voucher_code')||old('deals_voucher_type',($deals['deals_voucher_type']??false)) == "List Vouchers") style="display: block;" 
-						@else 
-							style="display: none;" 
-						@endif>
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-9">
-                        	@php 
-                        		$voucher_code = old('voucher_code')??"";
+	                        </div>
+	                    </div>
+	                    @endif
+	 				--}}
+						<div class="form-group" id="listVoucher" 
+							@if (old('voucher_code')||old('deals_voucher_type',($deals['deals_voucher_type']??false)) == "List Vouchers") style="display: block;" 
+							@else 
+								style="display: none;" 
+							@endif>
+	                        <label class="col-md-3 control-label"></label>
+	                        <div class="col-md-9">
+	                        	@php 
+	                        		$voucher_code = old('voucher_code')??"";
 
-                        		if(!empty($voucher))
-                        		{
-                        			$voucher_code = "";
-                        			foreach($voucher??[] as $row)
-									{
-										$voucher_code .= $row['voucher_code']."\n";
-									}
-									// dd($voucher_code);
-                        		}
-                        	@endphp
-                            <textarea name="voucher_code" class="form-control listVoucher" rows="10">@php 
-                            	if(old('voucher_code'))
-                            	{
-                            		echo old('voucher_code');
-                            	}
-                            	else
-                            	{
-									echo $voucher_code;
-                            	}@endphp</textarea>
-                        </div>
-                    </div>
+	                        		if(!empty($voucher))
+	                        		{
+	                        			$voucher_code = "";
+	                        			foreach($voucher??[] as $row)
+										{
+											$voucher_code .= $row['voucher_code']."\n";
+										}
+										// dd($voucher_code);
+	                        		}
+	                        	@endphp
+	                            <textarea name="voucher_code" class="form-control listVoucher" rows="10">@php 
+	                            	if(old('voucher_code'))
+	                            	{
+	                            		echo old('voucher_code');
+	                            	}
+	                            	else
+	                            	{
+										echo $voucher_code;
+	                            	}@endphp</textarea>
+	                        </div>
+	                    </div>
 
-                    <div class="form-group" id="generateVoucher" @if (!(old('voucher_code')||old('deals_voucher_type',($deals['deals_voucher_type']??false)) == "List Vouchers")&&old('deals_total_voucher',($deals['deals_total_voucher']??false))) style="display: block;" @else style="display: none;" @endif>
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-9">
-                            <div class="col-md-3">
-                                <label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control generateVoucher digit-mask" name="deals_total_voucher" value="{{ old('deals_total_voucher',($deals['deals_total_voucher']??false)) }}" min="0" placeholder="Total Voucher" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
+	                    <div class="form-group" id="generateVoucher" @if (!(old('voucher_code')||old('deals_voucher_type',($deals['deals_voucher_type']??false)) == "List Vouchers")&&old('deals_total_voucher',($deals['deals_total_voucher']??false))) style="display: block;" @else style="display: none;" @endif>
+	                        <label class="col-md-3 control-label"></label>
+	                        <div class="col-md-9">
+	                            <div class="col-md-3">
+	                                <label class="control-label">Total Voucher <span class="required" aria-required="true"> * </span> </label>
+	                            </div>
+	                            <div class="col-md-9">
+	                                <input type="text" class="form-control generateVoucher digit-mask" name="deals_total_voucher" value="{{ old('deals_total_voucher',($deals['deals_total_voucher']??false)) }}" min="0" placeholder="Total Voucher" autocomplete="off">
+	                            </div>
+	                        </div>
+	                    </div>
 
+                    {{-- Voucher Start Date --}}
                     <br>
                     <div class="form-group">
                         <div class="input-icon right">
@@ -548,6 +564,7 @@
                         </div>
                     </div>
 
+                    {{-- Voucher Expiry --}}
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -627,7 +644,9 @@
                             </div>
                         </div>
                     </div>
+	                @endif
 
+                    {{-- User Limit --}}
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
