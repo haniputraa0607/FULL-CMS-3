@@ -346,7 +346,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="group[name]" value="{{ old('group.name') }}" placeholder="Achievement" required maxlength="20">
+                                    <input type="text" class="form-control" name="group[name]" value="{{ old('group.name') }}" placeholder="Achievement" required maxlength="30">
                                 </div>
                             </div>
                             <div class="form-group">
