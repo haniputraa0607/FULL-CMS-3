@@ -70,19 +70,19 @@ $idUserFrenchisee = session('id_user_franchise');
 		});
 
 		function datatables(){
-			$("#tbodyListFail").empty();
+			$("#tbodyListCalculation").empty();
 			var data_display = 25;
 			var token  = "{{ csrf_token() }}";
 			@if(is_null($idUserFrenchisee))
-			    var url = "{{url('disburse/list-datatable/fail')}}";
+			    var url = "{{url('disburse/list-datatable/calculation')}}";
 			@else
-				var url = "{{url('disburse/user-franchise/list-datatable/fail')}}";
+				var url = "{{url('disburse/user-franchise/list-datatable/calculation')}}";
 			@endif
 
 			var dt = 0;
-			var tab = $.fn.dataTable.isDataTable( '#tableListFail' );
+			var tab = $.fn.dataTable.isDataTable( '#tableListCalculation' );
 			if(tab){
-				$('#tableListFail').DataTable().destroy();
+				$('#tableListCalculation').DataTable().destroy();
 			}
 
 			var outlet = $("#fitler_outlet").val();
@@ -97,7 +97,7 @@ $idUserFrenchisee = session('id_user_franchise');
 				end_date : end_date
 			};
 
-			$('#tableListFail').DataTable( {
+			$('#tableListCalculation').DataTable( {
 				"bPaginate": true,
 				"bLengthChange": false,
 				"bFilter": false,
@@ -120,9 +120,14 @@ $idUserFrenchisee = session('id_user_franchise');
 					{
 						targets: 0,
 						render: function ( data, type, row, meta ) {
-							var detailUrl = "{{ url('disburse/detail-trx') }}/"+data;
-							var data = '<a href="' + detailUrl + '" target="_blank" class="btn btn-block green btn-xs">Detail</a>';
-							return data;
+							var color = '#bfbfbf';
+							if(data === 'Fail'){
+								color = '#f54842';
+							}else if(data === 'Success'){
+								color = '#26C281';
+							}
+							var html = '<span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: '+color+';padding: 5px 12px;color: #fff;">'+data+'</span>';
+							return html;
 						}
 					}
 				]
@@ -182,7 +187,6 @@ $idUserFrenchisee = session('id_user_franchise');
 					}
 				},
 				error: function (jqXHR, exception) {
-					console.log(jqXHR);
 					toastr.warning('Failed get data dashboard');
 				}
 			});
@@ -374,23 +378,29 @@ $idUserFrenchisee = session('id_user_franchise');
 	<div class="portlet light bordered">
 		<div class="portlet-title">
 			<div class="caption">
-				<span class="caption-subject font-red sbold uppercase">List Failed</span>
+				<span class="caption-subject font-red sbold uppercase">List Calculation Transaction</span>
 			</div>
 		</div>
 		<div class="portlet-body form">
-			<table class="table table-striped table-bordered table-hover" id="tableListFail">
+			<table class="table table-striped table-bordered table-hover" id="tableListCalculation">
 				<thead>
 				<tr>
-					<th scope="col" width="10%"> Action </th>
+					<th scope="col" width="25%"> Status Disburse </th>
 					<th scope="col" width="30%"> Outlet </th>
-					<th scope="col" width="30%"> Date </th>
-					<th scope="col" width="10%"> Nominal </th>
-					<th scope="col" width="25%"> Bank Name </th>
-					<th scope="col" width="25%"> Account Number </th>
-					<th scope="col" width="25%"> Recipient Name </th>
+					<th scope="col" width="30%"> Disburse Date </th>
+					<th scope="col" width="30%"> Transaction Date </th>
+					<th scope="col" width="25%"> Receipt Number </th>
+					<th scope="col" width="25%"> Income Central </th>
+					<th scope="col" width="25%"> Expense Central </th>
+					<th scope="col" width="25%"> Income Outlet </th>
+					<th scope="col" width="25%"> Fee Item </th>
+					<th scope="col" width="25%"> Payment Charged </th>
+					<th scope="col" width="25%"> Discount Charged </th>
+					<th scope="col" width="25%"> Subscription Charged </th>
+					<th scope="col" width="25%"> Delivery Price </th>
 				</tr>
 				</thead>
-				<tbody id="tbodyListFail"></tbody>
+				<tbody id="tbodyListCalculation"></tbody>
 			</table>
 		</div>
 	</div>
