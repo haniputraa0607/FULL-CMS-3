@@ -82,7 +82,7 @@
 			var operator = "conditions["+index+"][operator]";
 			var operator_value = document.getElementsByName(operator)[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-			operator_value.options[operator_value.options.length] = new Option('Cancelled', 'Cancelled');
+			operator_value.options[operator_value.options.length] = new Option('Completed', 'Completed');
 			operator_value.options[operator_value.options.length] = new Option('Pending', 'Pending');
 			operator_value.options[operator_value.options.length] = new Option('Cancelled', 'Cancelled');
 			
