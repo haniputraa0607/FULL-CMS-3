@@ -436,4 +436,25 @@ class DisburseController extends Controller
             return redirect('disburse/list/fail')->withErrors(['Failed update status']);
         }
     }
+
+    function listCalculationDataTable(Request $request){
+        $post = $request->all();
+        $draw = $post["draw"];
+        $post['id_user_franchise'] = session('id_user_franchise');
+
+        $getDisburse = MyHelper::post($this->baseuri.'/list-datatable/calculation',$post);
+        if(isset($getDisburse['status']) && isset($getDisburse['status']) == 'success'){
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = $getDisburse['total'];
+            $arr_result['recordsFiltered'] = $getDisburse['total'];
+            $arr_result['data'] = $getDisburse['result'];
+        }else{
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = 0;
+            $arr_result['recordsFiltered'] = 0;
+            $arr_result['data'] = array();
+        }
+
+        return response()->json($arr_result);
+    }
 }
