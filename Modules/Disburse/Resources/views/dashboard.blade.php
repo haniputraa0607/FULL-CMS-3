@@ -126,7 +126,12 @@ $idUserFrenchisee = session('id_user_franchise');
 							}else if(data === 'Success'){
 								color = '#26C281';
 							}
-							var html = '<span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: '+color+';padding: 5px 12px;color: #fff;">'+data+'</span>';
+
+							var status = data;
+							if(data == null){
+								status = 'Unprocessed';
+							}
+							var html = '<span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: '+color+';padding: 5px 12px;color: #fff;">'+status+'</span>';
 							return html;
 						}
 					}
@@ -390,6 +395,8 @@ $idUserFrenchisee = session('id_user_franchise');
 					<th scope="col" width="30%"> Disburse Date </th>
 					<th scope="col" width="30%"> Transaction Date </th>
 					<th scope="col" width="25%"> Receipt Number </th>
+					<th scope="col" width="25%"> Subtotal </th>
+					<th scope="col" width="25%"> Grand Total </th>
 					<th scope="col" width="25%"> Income Central </th>
 					<th scope="col" width="25%"> Expense Central </th>
 					<th scope="col" width="25%"> Income Outlet </th>
