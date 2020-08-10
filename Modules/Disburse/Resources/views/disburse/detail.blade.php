@@ -91,7 +91,7 @@ $idUserFrenchisee = session('id_user_franchise');
         </div>
     @endif
 
-    @if(!empty($trx))
+    @if(!empty($trx) && $disburse['disburse_status'] == 'Success')
         <div class="row" style="text-align: right;margin-bottom: 2%;">
             <div class="col-md-12">
                 <a class="btn green-jungle" style="text-align: right" id="btn-export" href="{{url()->current()}}?export=1"><i class="fa fa-download"></i> Export</a>
