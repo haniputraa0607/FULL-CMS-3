@@ -395,16 +395,18 @@ $idUserFrenchisee = session('id_user_franchise');
 					<th scope="col" width="30%"> Disburse Date </th>
 					<th scope="col" width="30%"> Transaction Date </th>
 					<th scope="col" width="25%"> Receipt Number </th>
-					<th scope="col" width="25%"> Subtotal </th>
-					<th scope="col" width="25%"> Grand Total </th>
+					<th scope="col" width="25%"> Gross Sales </th>
+					<th scope="col" width="25%"> Discount </th>
+					<th scope="col" width="25%"> Delivery </th>
+					<th scope="col" width="25%"> Sub Total </th>
+					<th scope="col" width="25%"> Fee Item </th>
+					<th scope="col" width="25%"> Fee Payment </th>
+					<th scope="col" width="25%"> Fee Promo </th>
+					<th scope="col" width="25%"> Fee Subscription </th>
+					<th scope="col" width="25%"> Fee Point Use </th>
+					<th scope="col" width="25%"> Net Sale (Income Outlet) </th>
 					<th scope="col" width="25%"> Income Central </th>
 					<th scope="col" width="25%"> Expense Central </th>
-					<th scope="col" width="25%"> Income Outlet </th>
-					<th scope="col" width="25%"> Fee Item </th>
-					<th scope="col" width="25%"> Payment Charged </th>
-					<th scope="col" width="25%"> Discount Charged </th>
-					<th scope="col" width="25%"> Subscription Charged </th>
-					<th scope="col" width="25%"> Delivery Price </th>
 				</tr>
 				</thead>
 				<tbody id="tbodyListCalculation"></tbody>
