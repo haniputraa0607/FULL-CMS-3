@@ -1213,7 +1213,7 @@
 						<label class="col-md-3 control-label">Date Start</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" name="time_start" size="16" class="form-control">
+								<input type="text" autocomplete="off" name="banner_start" size="16" class="form-control">
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>
@@ -1227,7 +1227,7 @@
 						<label class="col-md-3 control-label">Date End</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" name="time_end" size="16" class="form-control">
+								<input type="text" autocomplete="off" name="banner_end" size="16" class="form-control">
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>

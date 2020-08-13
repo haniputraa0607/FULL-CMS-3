@@ -116,17 +116,6 @@
             }
         });
 
-        function submit(){
-            var outlet = $('#outlet').val();
-            var central = $('#central').val();
-
-            var check = Number(outlet) + Number(central);
-            if(check !== 100){
-                confirm('Input is invalid, please check description.');
-            }else{
-                $( "#form_point" ).submit();
-            }
-        }
 
         function outlets() {
             $("#tableListOutletBody").empty();
@@ -368,9 +357,6 @@
                 <a data-toggle="tab" href="#fee-special-outlet">Fee Special Outlet</a>
             </li>
             <li>
-                <a data-toggle="tab" href="#point">Point</a>
-            </li>
-            <li>
                 <a data-toggle="tab" href="#approver">Approver Payouts</a>
             </li>
             <li>
@@ -445,80 +431,6 @@
             </div>
             <br>
             @include('disburse::setting_global.setting_fee_special_outlet')
-        </div>
-        <div id="point" class="tab-pane">
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <span class="caption-subject font-yellow sbold uppercase">Setting Point Charged</span>
-                    </div>
-                </div>
-                <div class="portlet-body form">
-                    <div class="m-heading-1 border-green m-bordered">
-                        <p>Setting ini digunakan untuk pembayaran menggunakan point akan dibebankan pada pihak Outlet, Janji Jiwa, atau ditanggung oleh kedua pihak.</p>
-                        <br>
-                        <p>
-                            Contoh : <br>
-                        <div class="row">
-                            <div class="col-md-3">Case 1 ==> </div>
-                            <div class="col-md-3">Janji Jiwa = 30%</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3">Outlet = 70%</div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-3">Case 2 ==> </div>
-                            <div class="col-md-3">Janji Jiwa = 100%</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3">Outlet = 0%</div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-3">Case 3 ==> </div>
-                            <div class="col-md-3">Janji Jiwa = 0%</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3">Outlet = 100%</div>
-                        </div>
-                        </p>
-                        <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
-                    </div>
-                    <form class="form-horizontal" role="form" action="{{url('disburse/setting/point-charged-global')}}" method="post" id="form_point">
-                        <div class="form-body">
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Charged Central <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah point yang akan di bebankan ke pusat" data-container="body"></i></label></label>
-                                <div class="col-md-2">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="central" maxlength="3" name="central" required value="{{$point['central']}}"><span class="input-group-addon">%</span>
-                                    </div>
-                                    <p style="color: red;display: none" id="label_central">Invalid value, please check description</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Charged Outlet <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah point yang akan di bebankan ke outlet" data-container="body"></i></label>
-                                </label>
-                                <div class="col-md-2">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="outlet" maxlength="3" name="outlet" required value="{{$point['outlet']}}"><span class="input-group-addon">%</span>
-                                    </div>
-                                    <p style="color: red;display: none" id="label_outlet">Invalid value, please check description</p>
-                                </div>
-                            </div>
-                            <div class="form-actions" style="text-align: center">
-                                {{ csrf_field() }}
-                                <a  id="export_btn" onclick="submit()" class="btn green">Submit</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
         <div id="time-to-sent" class="tab-pane">
             <div class="m-heading-1 border-green m-bordered">
