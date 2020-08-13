@@ -33,25 +33,31 @@
     </tr>
     <tr>
         <td width="30" style="font-size: 22px"><b>Nominal</b></td>
-        <td style="font-size: 22px"><b>: {{$disburse['disburse_nominal']}}</b></td>
+        <td style="font-size: 22px"><b>: {{number_format((float)$disburse['disburse_nominal'], 2)}}</b></td>
     </tr>
 </table>
 <br>
 
 <table style="border: 1px solid black">
     <thead>
+    @if(!empty($config) && $config['is_active'] == 1)
+        <tr><td style="background-color: #ff9933;" colspan="4">Sub Total = Gross Sales + Discount - Delivery</td></tr>
+        <tr><td style="background-color: #ff9933;" colspan="4">Net Sale (Income Outlet) = Sub Total - Fee Item - Fee Payment - Fee Promo - Fee Subscription</td></tr>
+        <tr></tr>
+    @endif
     <tr>
         <th style="background-color: #dcdcdc;"> Recipient Number </th>
         <th style="background-color: #dcdcdc;" width="20"> Transaction Date </th>
-        <th style="background-color: #dcdcdc;" width="20"> Income Outlet </th>
-        <th style="background-color: #dcdcdc;" width="20"> Sub Total </th>
-        <th style="background-color: #dcdcdc;" width="20"> Grand Total </th>
-        <th style="background-color: #dcdcdc;" width="20"> Fee Item </th>
+        <th style="background-color: #dcdcdc;" width="20"> Gross Sales </th>
         <th style="background-color: #dcdcdc;" width="20"> Discount </th>
-        <th style="background-color: #dcdcdc;" width="20"> Payment Charge </th>
-        <th style="background-color: #dcdcdc;" width="20"> Point Use Charge </th>
-        <th style="background-color: #dcdcdc;" width="20"> Subcriptions Charge </th>
         <th style="background-color: #dcdcdc;" width="20"> Delivery </th>
+        <th style="background-color: #dcdcdc;" width="20"> Sub Total </th>
+        <th style="background-color: #dcdcdc;" width="20"> Fee Item </th>
+        <th style="background-color: #dcdcdc;" width="20"> Fee Payment </th>
+        <th style="background-color: #dcdcdc;" width="20"> Fee Promo </th>
+        <th style="background-color: #dcdcdc;" width="20"> Fee Subcription </th>
+        <th style="background-color: #dcdcdc;" width="20"> Fee Point Use </th>
+        <th style="background-color: #dcdcdc;" width="20"> Net Sale (Income Outlet) </th>
     </tr>
     </thead>
     <tbody>
@@ -62,15 +68,16 @@
                     {{ $val['transaction_receipt_number']??'' }}
                 </td>
                 <td style="text-align: left">{{ date('d M Y H:i', strtotime($val['transaction_date'])) }}</td>
-                <td style="text-align: left">{{$val['income_outlet']}}</td>
-                <td style="text-align: left">{{$val['transaction_subtotal']}}</td>
                 <td style="text-align: left">{{$val['transaction_grandtotal']}}</td>
-                <td style="text-align: left">{{$val['fee_item']}}</td>
-                <td style="text-align: left">{{$val['discount']}}</td>
-                <td style="text-align: left">{{$val['payment_charge']}}</td>
-                <td style="text-align: left">{{$val['point_use_expense']}}</td>
-                <td style="text-align: left">{{$val['subscription']}}</td>
+                <td style="text-align: left">{{abs($val['transaction_discount'])}}</td>
                 <td style="text-align: left">{{$val['transaction_shipment_go_send']}}</td>
+                <td style="text-align: left">{{$val['transaction_subtotal']}}</td>
+                <td style="text-align: left">{{$val['fee_item']}}</td>
+                <td style="text-align: left">{{$val['payment_charge']}}</td>
+                <td style="text-align: left">{{$val['discount']}}</td>
+                <td style="text-align: left">{{$val['subscription']}}</td>
+                <td style="text-align: left">{{$val['point_use_expense']}}</td>
+                <td style="text-align: left">{{$val['income_outlet']}}</td>
             </tr>
         @endforeach
     @else

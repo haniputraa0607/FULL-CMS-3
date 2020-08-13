@@ -235,9 +235,6 @@
                         {{ csrf_field() }}
                         <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
                         <a class="btn green" href="{{url()->current()}}">Reset</a>
-                        @if(!empty($disburse) && $status == 'success')
-                            <a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1">Export</a>
-                        @endif
                     </div>
                 </div>
             </div>
