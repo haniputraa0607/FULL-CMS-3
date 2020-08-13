@@ -167,6 +167,18 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                Email
+                <i class="fa fa-question-circle tooltips" data-original-title="Alamat email outlet" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="outlet_email" value="{{ $val['outlet_email'] }}" placeholder="Outlet Email">
+            </div>
+        </div>
+
         <!--<div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">

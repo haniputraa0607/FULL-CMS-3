@@ -267,12 +267,6 @@ class DisburseSettingController extends Controller
             $data['fee'] = [];
         }
 
-        $point = MyHelper::get('disburse/setting/point-charged-global');
-        if(isset($point['status']) && $point['status'] == 'success'){
-            $data['point'] = $point['result'];
-        }else{
-            $data['point'] = [];
-        }
 
         $outlets = MyHelper::post($this->baseuri.'/outlets',[]);
         if(isset($outlets['status']) && $outlets['status'] == 'success'){

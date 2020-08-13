@@ -350,6 +350,7 @@
 						</li>
 						@endif
 					@endif
+					{{--
 					@if(MyHelper::hasAccess([247], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'outlet-list-user-franchise') ? 'active open' : ''}}">
 							<a href="{{url('outlet/list/user-franchise')}}" class="nav-link ">
@@ -357,6 +358,7 @@
 							</a>
 						</li>
 					@endif
+					--}}
 					@if(MyHelper::hasAccess([24], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'outlet-list') ? 'active open' : ''}}">
 						<a href="{{url('outlet/list')}}" class="nav-link ">
@@ -371,13 +373,13 @@
 						</a>
 					</li>
 					@endif
-					@if(MyHelper::hasAccess([24], $grantedFeature))
+					{{-- @if(MyHelper::hasAccess([24], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'outlet-qrcode') ? 'active open' : ''}}">
 						<a href="{{url('outlet/qrcode')}}" class="nav-link ">
 							<span class="title">QRCode Outlet</span>
 						</a>
 					</li>
-					@endif
+					@endif --}}
 					@if(MyHelper::hasAccess([4], $configs))
 						@if(MyHelper::hasAccess([34], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'outlet-holiday') ? 'active open' : ''}}">
