@@ -253,7 +253,7 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="20">{{ number_format($result['count']??0) }}</span>
+                                <span data-counter="counterup" data-value="20">{{ number_format($result['used_code']??0) }}</span>
                             </div>
                             <div class="desc"> Total Used </div>
                         </div>
