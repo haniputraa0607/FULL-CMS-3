@@ -92,6 +92,15 @@
         {{ csrf_field() }}
         @include('disburse::disburse.filter_list')
     </form>
+    <div class="row" style="text-align: right">
+        <div class="col-md-12">
+            @if(!empty($disburse))
+                <a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1">Export</a>
+            @endif
+        </div>
+    </div>
+
+    <br>
     <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
         <table class="table table-striped table-bordered table-hover" id="tableReport">
             <thead>

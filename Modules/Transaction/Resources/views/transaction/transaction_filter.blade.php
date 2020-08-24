@@ -82,7 +82,7 @@
 			var operator = "conditions["+index+"][operator]";
 			var operator_value = document.getElementsByName(operator)[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-			operator_value.options[operator_value.options.length] = new Option('Cancelled', 'Cancelled');
+			operator_value.options[operator_value.options.length] = new Option('Completed', 'Completed');
 			operator_value.options[operator_value.options.length] = new Option('Pending', 'Pending');
 			operator_value.options[operator_value.options.length] = new Option('Cancelled', 'Cancelled');
 			
@@ -214,7 +214,8 @@
 												<option value="grand_total" @if ($con['subject'] == 'grand_total') selected @endif>Grand Total</option>
 												<option value="status" @if ($con['subject'] == 'status') selected @endif>Payment Status</option>
 												<option value="transaction_status" @if ($con['subject'] == 'transaction_status') selected @endif>Transaction Status</option>
-												<option value="courier" @if ($con['subject'] == 'courier') selected @endif>Courier</option>
+												<!-- <option value="courier" @if ($con['subject'] == 'courier') selected @endif>Courier</option> -->
+												<option value="order_id" @if ($con['subject'] == 'order_id') selected @endif>Order ID</option>
 											</select>
 										</div>
 										<div class="col-md-4">
@@ -320,7 +321,8 @@
 											<option value="grand_total">Grand Total</option>
 											<option value="status">Payment Status</option>
 											<option value="transaction_status">Transaction Status</option>
-											<option value="courier">Courier</option>
+											<!-- <option value="courier">Courier</option> -->
+											<option value="order_id">Order ID</option>
 										</select>
 									</div>
 									<div class="col-md-4">
@@ -368,7 +370,8 @@
 											<option value="grand_total">Grand Total</option>
 											<option value="status">Payment Status</option>
 											<option value="transaction_status">Transaction Status</option>
-											<option value="courier">Courier</option>
+											<!-- <option value="courier">Courier</option> -->
+											<option value="order_id">Order ID</option>
 										</select>
 									</div>
 									<div class="col-md-4">

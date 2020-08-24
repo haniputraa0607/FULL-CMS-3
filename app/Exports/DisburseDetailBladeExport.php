@@ -19,7 +19,8 @@ class DisburseDetailBladeExport implements FromView
     {
         return view('disburse::disburse.detail_export', [
             'disburse' => $this->data['data_disburse'],
-            'list_trx' => $this->data['list_trx']
+            'list_trx' => $this->data['list_trx'],
+            'config' => $this->data['config']
         ]);
     }
 }
