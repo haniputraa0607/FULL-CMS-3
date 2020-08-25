@@ -58,7 +58,10 @@ class TransactionSettingController extends Controller
             'submenu_active' => 'refund-reject-order'
         ];
 
-        $data['status'] = ['refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value']??0];
+        $data['status'] = [
+            'refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value']??0,
+            'refund_ipay88' => MyHelper::post('setting', ['key' => 'refund_ipay88'])['result']['value']??0,
+        ];
 
         return view('transaction::setting.refund_reject_order', $data);
     }
@@ -66,7 +69,8 @@ class TransactionSettingController extends Controller
     public function updateRefundRejectOrder(Request $request)
     {
         $sendData = [
-            'refund_midtrans' => ['value', $request->refund_midtrans?1:0]
+            'refund_midtrans' => ['value', $request->refund_midtrans?1:0],
+            'refund_ipay88' => ['value', $request->refund_ipay88?1:0],
         ];
         $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
         if ($data['status']??false == 'success') {
