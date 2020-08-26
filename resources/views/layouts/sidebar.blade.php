@@ -424,6 +424,11 @@
 						@endif
 					@endif
 					@if(MyHelper::hasAccess([120,122], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'outlet-autoresponse-outlet-pin-sent') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/outlet/outlet-pin-sent')}}" class="nav-link ">
+								<span class="title">[Response] Outlet Pin Sent</span>
+							</a>
+						</li>
 						<li class="nav-item {{($submenu_active == 'outlet-incomplete-response') ? 'active open' : ''}}">
 							<a href="{{url('outlet/autoresponse/incomplete-outlet-data')}}" class="nav-link ">
 								<span class="title">[Forward] Incomplete Outlet Data</span>
