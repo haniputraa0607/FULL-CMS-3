@@ -411,7 +411,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             PIN
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pin outlet berupa 6 digit angka" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pin outlet berupa 6 digit angka. Jika pin kosong maka akan otomatis dibuatkan oleh sistem." data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
@@ -524,11 +524,12 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Email
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Alamat email outlet" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="outlet_email" value="{{ old('outlet_email') }}" placeholder="Outlet Email">
+                            <input type="text" class="form-control" name="outlet_email" value="{{ old('outlet_email') }}" placeholder="Outlet Email" required>
                         </div>
                     </div>
 
