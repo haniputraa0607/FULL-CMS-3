@@ -198,26 +198,32 @@ class OutletController extends Controller
             return view('outlet::detail', $data);
         }
         else {
-
             //change pin
             // return $post;
-            if(isset($post['outlet_pin'])){
-                $validator = Validator::make($request->all(), [
-                    'outlet_pin' => 'required|confirmed|min:6|max:6',
-                ],[
-                    'confirmed' => 'Re-type PIN does not match',
-                    'min'       => 'PIN must 6 digit',
-                    'max'       => 'PIN must 6 digit'
-                ]);
+            if(isset($post['outlet_pin']) || isset($post['generate_pin_outlet'])){
+				if (!isset($post['generate_pin_outlet'])) {
+	                $validator = Validator::make($request->all(), [
+	                    'outlet_pin' => 'required|confirmed|min:6|max:6',
+	                ],[
+	                    'confirmed' => 'Re-type PIN does not match',
+	                    'min'       => 'PIN must 6 digit',
+	                    'max'       => 'PIN must 6 digit'
+	                ]);
 
-                if ($validator->fails()) {
-                    return redirect('outlet/detail/'.$code.'#pin')
-                                ->withErrors($validator)
-                                ->withInput();
-                }else{
-                    $save = MyHelper::post('outlet/update/pin', $post);
-                    return parent::redirect($save, 'Outlet pin has been changed.', 'outlet/detail/'.$code.'#pin');
+	                if ($validator->fails()) {
+	                    return redirect('outlet/detail/'.$code.'#pin')
+	                                ->withErrors($validator)
+	                                ->withInput();
+					}
                 }
+
+                $save = MyHelper::post('outlet/update/pin', $post);
+                return parent::redirect($save, 'Outlet pin has been changed.', 'outlet/detail/'.$code.'#pin');
+            }
+
+            if (isset($post['generate_pin_outlet'])) {
+            	$save          = MyHelper::post('outlet/update/pin', $post);
+                return parent::redirect($save, 'Outlet photo has been added.', 'outlet/detail/'.$code.'#photo');
             }
 
             // photo
