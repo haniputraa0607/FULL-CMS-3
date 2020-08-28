@@ -183,7 +183,7 @@
                         </label>
                         <div class="col-md-9">
                             <div class="col-md-12">
-                                <div class="mt-repeater" data-limit="6">
+                                <div class="mt-repeater" data-limit="8">
                                     <div data-repeater-list="value_text" id="sortable">
                                         @if (isset($value_text) && $value_text != null)
                                         @foreach ($value_text as $item)

@@ -106,7 +106,7 @@ $configs = session('configs');
                                                         <div id="contentDetail2" class="sortable-detail-2">
                                                             @if( !empty($subscription['subscription_content'][1]['subscription_content_details']) )
                                                             @foreach( $subscription['subscription_content'][1]['subscription_content_details'] as $key => $value )
-                                                            <div class="detail{{$key+1}}2 focused-div">
+                                                            <div class="detail{{$key+1}}2">
                                                                 <div data-repeater-item class="mt-overflow content-detail">
                                                                     <div class="mt-repeater-cell">
                                                                         <div class="col-md-1 sortable-detail-handle-2">
@@ -215,7 +215,7 @@ $configs = session('configs');
                                 @if (!empty($text_replaces))
 	                                <br>
 									
-									You can use this variables to display subscription information to the content:
+									You can use this variables to display subscription information to the content detail:
 									<br><br>
 									<div class="row">
 										@foreach($text_replaces as $key=>$row)
