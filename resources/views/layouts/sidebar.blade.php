@@ -1705,30 +1705,23 @@
 						@if(MyHelper::hasAccess([40], $configs))
 							@if(MyHelper::hasAccess([94], $grantedFeature))
 								@if(MyHelper::hasAccess([46], $configs))
-								<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-customer-feedback') ? 'active open' : ''}}">
-									<a href="{{url('about/autoresponse/enquiry-customer-feedback')}}" class="nav-link ">
-										<span class="title">[Response] Enquiry Customer Feedback</span>
+								<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-kritik,-saran-&-keluhan') ? 'active open' : ''}}">
+									<a href="{{url('about/autoresponse/enquiry-kritik,-saran-&-keluhan')}}" class="nav-link ">
+										<span class="title">[Response] Kritik, Saran & Keluhan</span>
 									</a>
 								</li>
 								@endif
 								@if(MyHelper::hasAccess([47], $configs))
-									<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-marketing-partnership') ? 'active open' : ''}}">
-										<a href="{{url('about/autoresponse/enquiry-marketing-partnership')}}" class="nav-link ">
-											<span class="title">[Response] Enquiry Marketing Partnership</span>
+									<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-pengubahan-data-diri') ? 'active open' : ''}}">
+										<a href="{{url('about/autoresponse/enquiry-pengubahan-data-diri')}}" class="nav-link ">
+											<span class="title">[Response] Pengubahan Data Diri</span>
 										</a>
 									</li>
 								@endif
 								@if(MyHelper::hasAccess([48], $configs))
-									<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-business-development') ? 'active open' : ''}}">
-										<a href="{{url('about/autoresponse/enquiry-business-development')}}" class="nav-link ">
-											<span class="title">[Response] Enquiry Business Development</span>
-										</a>
-									</li>
-								@endif
-								@if(MyHelper::hasAccess([47], $configs))
-									<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-career') ? 'active open' : ''}}">
-										<a href="{{url('about/autoresponse/enquiry-career')}}" class="nav-link ">
-											<span class="title">[Response] Enquiry Career</span>
+									<li class="nav-item {{($submenu_active == 'autoresponse-enquiry-lain-_-lain') ? 'active open' : ''}}">
+										<a href="{{url('about/autoresponse/enquiry-lain-_-lain')}}" class="nav-link ">
+											<span class="title">[Response] Lain - Lain</span>
 										</a>
 									</li>
 								@endif
