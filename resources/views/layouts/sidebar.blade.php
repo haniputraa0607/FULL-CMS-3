@@ -1485,6 +1485,13 @@
 							</a>
 						</li>
 						@endif
+						@if(MyHelper::hasAccess([173], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'subscription-report') ? 'active open' : ''}}">
+							<a href="{{url('subscription/report')}}" class="nav-link ">
+								<span class="title">Subscription Report</span>
+							</a>
+						</li>
+						@endif
 						@if(MyHelper::hasAccess([113], $configs))
 							@if(MyHelper::hasAccess([97], $grantedFeature))
 								<li class="nav-item {{($submenu_active == 'subscription-autoresponse-get-free-subscription-success') ? 'active open' : ''}}">

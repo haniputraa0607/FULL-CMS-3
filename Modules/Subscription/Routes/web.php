@@ -27,6 +27,9 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 
 
     Route::any('list-ajax', 'SubscriptionController@listSubcriptionAjax');
     Route::post('update-complete', ['uses' => 'SubscriptionController@updateComplete']);
+
+    /* Report */
+    Route::any('transaction-report', 'SubscriptionController@report');
 });
 
 Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 'prefix' => 'welcome-subscription', 'subscription_type' => 'welcome'], function () {

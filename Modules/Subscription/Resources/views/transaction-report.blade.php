@@ -1,28 +1,28 @@
 @extends('layouts.main')
 
 @section('page-style')
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/prices.js')}}"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script>
     $('.datepicker').datepicker({
         'format' : 'd-M-yyyy',
@@ -41,7 +41,7 @@
                 },
                 emptyTable: "No data available in table",
                 // info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                info: "Showing "+{{ $dealsPerPage??0 }}+" to "+ {{ $dealsUpTo??0 }} +" of "+{{ $dealsTotal??0 }}+" entries",
+                info: "Showing "+{{ $subsFrom }}+" to "+ {{ $subsUpTo }} +" of "+{{ $subsTotal }}+" entries",
                 infoEmpty: "No entries found",
                 infoFiltered: "(filtered1 from _MAX_ total entries)",
                 lengthMenu: "_MENU_ entries",
@@ -49,12 +49,6 @@
                 zeroRecords: "No matching records found"
             },
             buttons: [],
-            responsive: {
-                details: {
-                    type: "column",
-                    target: "tr"
-                }
-            },
             order: [2, "asc"],
             lengthMenu: [
                 [5, 10, 15, 20, -1],
@@ -128,7 +122,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control" name="date_start" value="{{ date('d-M-Y', strtotime($date_start)) }}" required>
+                                    <input type="text" class="datepicker form-control" name="date_start" value="{{ date('d-M-Y', strtotime($date_start??null)) }}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -143,7 +137,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control" name="date_end" value="{{ date('d-M-Y', strtotime($date_end)) }}" required>
+                                    <input type="text" class="datepicker form-control" name="date_end" value="{{ date('d-M-Y', strtotime($date_end??null)) }}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -182,7 +176,7 @@
                         <div class="col-md-8">
                             <div class="input-icon right">
                                 <!-- <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i> -->
-                                <select class="form-control select2-multiple" data-placeholder="Select Deals" name="id_deals">
+                                <select class="form-control select2-multiple" data-placeholder="Select Deals" name="id_deals" required>
                                 <optgroup label="Deals List">
                                     <!-- <option value="">Select Outlet</option> -->
                                     @if (!empty($dealsType))
@@ -218,43 +212,65 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
-                <thead>
-                    <tr>
-                        <th> Subscription Name </th>
-                        <th> Voucher Code </th>
-                        <th> User </th>
-                        <th> Subscription Price </th>
-                        <th> Bought at </th>
-                        <th> Expired at </th>
-                        <th> Used at </th>
-                        <th> Receipt Number </th>
-                        <th> Transaction Grandtotal </th>
-                        <th> Outlet </th>
-                        <th> Subscription Nominal </th>
-                        <th> Charged Central </th>
-                        <th> Charged Outlet </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!empty($deals))
-                        @foreach($deals??[] as $value)
-                            <tr>
-                                <td>{{ $value['deal_voucher']['deal']['deals_title'] }}</td>
-                                <td>{{ $value['deal_voucher']['voucher_code'] }}</td>
-                                <td>{{ $value['user']['name'] }}</td>
-                                <td>{{ $value['user']['phone'] }}</td>
-                                <td>@if (empty($value['claimed_at'])) - @else {{ date('d-M-y', strtotime($value['claimed_at'])) }} @endif</td>
-                                <td>@if (empty($value['redeemed_at'])) - @else {{ date('d-M-y', strtotime($value['redeemed_at'])) }} @endif</td>
-                                <td>@if (empty($value['used_at'])) - @else {{ date('d-M-y', strtotime($value['used_at'])) }} @endif</td>
-                                <td>@if (empty($value['voucher_expired_at'])) - @else {{ date('d-M-y', strtotime($value['voucher_expired_at'])) }} @endif</td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-            </table>
-            @if ($dealsPaginator)
-                {{ $dealsPaginator->links() }}
+        	<div class="">
+	            <table class="table table-striped table-bordered table-hover" id="sample_1">
+	                <thead>
+	                    <tr>
+	                        <th> Subscription Name </th>
+	                        <th> Voucher Code </th>
+	                        <th> User </th>
+	                        <th> Subscription Price </th>
+	                        <th> Bought at </th>
+	                        <th> Expired at </th>
+	                        <th> Used at </th>
+	                        <th> Receipt Number </th>
+	                        <th> Transaction Grandtotal </th>
+	                        <th> Outlet </th>
+	                        <th> Subscription Nominal </th>
+	                        <th> Charge Central </th>
+	                        <th> Charge Outlet </th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    @if (!empty($subs))
+	                        @foreach($subs as $value)
+	                        	@php
+	                        		$subs_price = 'Free';
+	                        		if(!empty($value['subscription_user']['subscription_price_point'])){
+	                        			$subs_price = number_format($value['subscription_user']['subscription_price_point']).' Point';
+	                        		}
+	                        		if(!empty($value['subscription_user']['subscription_price_cash'])){
+	                        			$subs_price = 'IDR '.number_format($value['subscription_user']['subscription_price_point']);
+	                        		}
+	                        		$subs_nominal 	= $value['transaction']['transaction_payment_subscription']['subscription_nominal'];
+	                        		$charge_outlet 	= $value['transaction']['disburse_outlet_transaction']['subscription'];
+	                        		$charge_central = $subs_nominal - $charge_outlet;
+	                        		$bought_at 		= $value['subscription_user']['bought_at'];
+	                        		$expired_at 	= $value['subscription_user']['subscription_expired_at'];
+	                        		$used_at 		= $value['used_at'];
+	                        	@endphp
+	                            <tr>
+	                                <td>{{ $value['subscription_user']['subscription']['subscription_title'] }}</td>
+	                                <td>{{ $value['voucher_code'] }}</td>
+	                                <td>{{ $value['subscription_user']['user']['name'].' - '.$value['subscription_user']['user']['phone'] }}</td>
+	                                <td>{{ $subs_price }}</td>
+	                                <td>{{ !empty($bought_at) ? date('d-M-y', strtotime($bought_at)) : '-' }}</td>
+	                                <td>{{ !empty($expired_at) ? date('d-M-y', strtotime($expired_at)) : '-' }}</td>
+	                                <td>{{ !empty($used_at) ? date('d-M-y', strtotime($used_at)) : '-' }}</td>
+	                                <td>{{ $value['transaction']['transaction_receipt_number'] }}</td>
+	                                <td>{{ !empty($value['transaction']['transaction_grandtotal']) ? 'IDR '.number_format($value['transaction']['transaction_grandtotal']) : '' }}</td>
+	                                <td>{{ $value['transaction']['outlet']['outlet_code'].' - '.$value['transaction']['outlet']['outlet_name'] }}</td>
+	                                <td>{{ !empty($subs_nominal) ? 'IDR '.number_format($subs_nominal) : '' }}</td>
+	                                <td>{{ !empty($charge_central) ? 'IDR '.number_format($charge_central) : '' }}</td>
+	                                <td>{{ !empty($charge_outlet) ? 'IDR '.number_format($charge_outlet) : '' }}</td>
+	                            </tr>
+	                        @endforeach
+	                    @endif
+	                </tbody>
+	            </table>
+        	</div>
+            @if ($subsPaginator)
+                {{ $subsPaginator->links() }}
             @endif
         </div>
     </div>

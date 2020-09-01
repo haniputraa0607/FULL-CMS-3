@@ -10,6 +10,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class SubscriptionController extends Controller
 {
+	function __construct() {
+        $this->promo_campaign       = "Modules\PromoCampaign\Http\Controllers\PromoCampaignController";
+    }
 
     function getData($access) {
         if (isset($access['status']) && $access['status'] == "success") {
@@ -595,5 +598,78 @@ class SubscriptionController extends Controller
         } else {
             return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update status welcome pack'];
         }
+    }
+
+    function report(Request $request) {
+        $post=$request->except('_token', 'page');
+        unset($post['page']);
+        $data = [
+            'title'          => 'Subscription',
+            'sub_title'      => 'Subscription Report',
+            'menu_active'    => 'subscription-report',
+            'submenu_active' => ''
+        ];
+
+        if ($request->post('clear') == 'session') 
+        {
+            session(['subs_report_filter' => '']);
+        }
+
+        app($this->promo_campaign)->session_mixer($request, $post, 'subs_report_filter');
+        if(($filter=session('subs_report_filter'))&&is_array($filter)){
+
+            if($filter['rule']??false){
+                $data['rule']=array_map('array_values', $filter['rule']);
+            }
+            if($filter['operator']??false){
+                $data['operator']=$filter['operator'];
+            }
+            session(['deals_filter' => $post]);
+        }
+
+
+        if (!empty($request->except('_token','page'))) {
+        	return redirect($rpage);
+        	dd($request->except('_token','page'));
+        }
+        $get_data = MyHelper::post('subscription/transaction-report?page='.$request->get('page'), $post);
+
+		if(!empty($get_data['result']['data']) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
+
+            $data['subs']            = $get_data['result']['data'];
+            $data['subsTotal']       = $get_data['result']['total'];
+            $data['subsPerPage']     = $get_data['result']['per_page'];
+            $data['subsUpTo']        = $get_data['result']['to'];
+            $data['subsFrom']        = $get_data['result']['from'];
+            $data['subsPaginator']   = new LengthAwarePaginator($get_data['result']['data'], $get_data['result']['total'], $get_data['result']['per_page'], $get_data['result']['current_page'], ['path' => url()->current()]);
+            $data['total']            = $get_data['result']['total'];
+            
+        }else{
+            $data['subs']          = [];
+            $data['subsTotal']     = 0;
+            $data['subsPerPage']   = 0;
+            $data['subsUpTo']      = 0;
+            $data['subsPaginator'] = false;
+            $data['total']         = 0;
+            $data['subsFrom']      = 0;
+        }
+
+        $outlets = MyHelper::get('outlet/be/list')['result']??[];
+        $brands = MyHelper::get('brand/be/list')['result']??[];
+        if (!empty($data['subs'])) {
+        	foreach ($data['subs'] as $key => $value) {
+        		$data['subs'][$key]['id_subs_decrypt'] = $value['subscription_user']['id_subscription'];
+        		$data['subs'][$key]['subscription_user']['id_subscription'] = MyHelper::createSlug($value['subscription_user']['id_subscription'], $value['created_at']);
+        	}
+        }
+
+        $data['outlets']=array_map(function($var){
+            return [$var['id_outlet'],$var['outlet_name']];
+        }, $outlets);
+        $data['brands']=array_map(function($var){
+            return [$var['id_brand'],$var['name_brand']];
+        }, $brands);
+
+        return view('subscription::transaction-report', $data);
     }
 }
