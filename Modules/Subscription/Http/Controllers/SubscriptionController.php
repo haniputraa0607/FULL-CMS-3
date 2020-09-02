@@ -610,6 +610,10 @@ class SubscriptionController extends Controller
             'submenu_active' => ''
         ];
 
+        if (!empty($post)) {
+        	# code...
+// dd($post);
+        }
         if ($request->post('clear') == 'session') 
         {
             session(['subs_report_filter' => '']);
@@ -626,14 +630,12 @@ class SubscriptionController extends Controller
             }
             session(['deals_filter' => $post]);
         }
-
-
         if (!empty($request->except('_token','page'))) {
-        	return redirect($rpage);
-        	dd($request->except('_token','page'));
+        	return redirect('subscription/transaction-report');
         }
         $get_data = MyHelper::post('subscription/transaction-report?page='.$request->get('page'), $post);
-
+// dd($request->all());
+// return($get_data);
 		if(!empty($get_data['result']['data']) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
 
             $data['subs']            = $get_data['result']['data'];
@@ -654,21 +656,33 @@ class SubscriptionController extends Controller
             $data['subsFrom']      = 0;
         }
 
-        $outlets = MyHelper::get('outlet/be/list')['result']??[];
-        $brands = MyHelper::get('brand/be/list')['result']??[];
+        $outlets 	= MyHelper::get('outlet/be/list')['result']??[];
+        $brands 	= MyHelper::get('brand/be/list')['result']??[];
+        $subs 		= MyHelper::get('subscription/be/list-started')['result']??[];
+
         if (!empty($data['subs'])) {
-        	foreach ($data['subs'] as $key => $value) {
-        		$data['subs'][$key]['id_subs_decrypt'] = $value['subscription_user']['id_subscription'];
-        		$data['subs'][$key]['subscription_user']['id_subscription'] = MyHelper::createSlug($value['subscription_user']['id_subscription'], $value['created_at']);
+        	foreach ($data['subs'] as $key => $val) {
+        		$id_subs_decrypt = $val['subscription_user']['id_subscription'];
+        		$id_subs_encrypt = MyHelper::createSlug($id_subs_decrypt, $val['created_at']);
+        		$redirect_subs = 'subscription';
+        		if ($val['subscription_user']['subscription']['subscription_type'] == 'welcome') $redirect_subs = 'welcome-subscription';
+        		elseif ($val['subscription_user']['subscription']['subscription_type'] == 'inject') $redirect_subs = 'inject-subscription';
+
+        		$data['subs'][$key]['redirect_subs'] 	= url($redirect_subs.'/detail/'.$id_subs_encrypt);
+        		$data['subs'][$key]['redirect_user'] 	= url('user/detail/'.$val['subscription_user']['user']['phone']);
+        		$data['subs'][$key]['redirect_trx'] 	= url('transaction/detail/'.$val['transaction']['id_transaction'].'/all');
         	}
         }
 
         $data['outlets']=array_map(function($var){
-            return [$var['id_outlet'],$var['outlet_name']];
+            return [$var['id_outlet'],$var['outlet_code'].' - '.$var['outlet_name']];
         }, $outlets);
         $data['brands']=array_map(function($var){
             return [$var['id_brand'],$var['name_brand']];
         }, $brands);
+        $data['subscription']=array_map(function($var){
+            return [$var['id_subscription'],$var['subscription_title']];
+        }, $subs);
 
         return view('subscription::transaction-report', $data);
     }

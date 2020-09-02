@@ -41,7 +41,7 @@
                 },
                 emptyTable: "No data available in table",
                 // info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                info: "Showing "+{{ $dealsPerPage??0 }}+" to "+ {{ $dealsUpTo??0 }} +" of "+{{ $dealsTotal??0 }}+" entries",
+                info: "Showing "+{{ $dealsPerPage }}+" to "+ {{ $dealsUpTo }} +" of "+{{ $dealsTotal }}+" entries",
                 infoEmpty: "No entries found",
                 infoFiltered: "(filtered1 from _MAX_ total entries)",
                 lengthMenu: "_MENU_ entries",
@@ -221,24 +221,19 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
-                        <th> Subscription Name </th>
-                        <th> Voucher Code </th>
+                        <th> Deals </th>
+                        <th> Code </th>
                         <th> User </th>
-                        <th> Subscription Price </th>
-                        <th> Bought at </th>
-                        <th> Expired at </th>
-                        <th> Used at </th>
-                        <th> Receipt Number </th>
-                        <th> Transaction Grandtotal </th>
-                        <th> Outlet </th>
-                        <th> Subscription Nominal </th>
-                        <th> Charged Central </th>
-                        <th> Charged Outlet </th>
+                        <th> Phone </th>
+                        <th> Claim </th>
+                        <th> Redeem </th>
+                        <th> Used </th>
+                        <th> Expiry </th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (!empty($deals))
-                        @foreach($deals??[] as $value)
+                         @foreach($deals as $value)
                             <tr>
                                 <td>{{ $value['deal_voucher']['deal']['deals_title'] }}</td>
                                 <td>{{ $value['deal_voucher']['voucher_code'] }}</td>

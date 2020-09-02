@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+@include('subscription::transaction-report-filter')
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -9,6 +9,24 @@
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    	.middle-center, .header-table th, .content-middle-center td {
+            vertical-align: middle!important;
+            text-align: center;
+        }
+        .content-middle-center td {
+            white-space: nowrap;
+        }
+        .middle-left {
+            vertical-align: middle!important;
+            text-align: left;
+        }
+        .paginator-right {
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+    @yield('filter-style')
 @endsection
 
 @section('page-script')
@@ -57,6 +75,7 @@
             pageLength: 10,
             "searching": false,
             "paging": false,
+            "ordering": false,
             dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
 
@@ -80,7 +99,10 @@
                 }
             });
         });
+
     </script>
+
+    @yield('filter-script')
 
 @endsection
 
@@ -107,103 +129,7 @@
 
     @include('layouts.notifications')
 
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase ">Filter</span>
-            </div>
-        </div>
-        <div class="portlet-body form">
-            <form class="form-horizontal" role="form" action="{{ url('deals/transaction/filter') }}" method="post" id="form">
-                <div class="form-body">
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label"> Date Range <span class="required" aria-required="true"> * </span> </label>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <input type="text" class="datepicker form-control" name="date_start" value="{{ date('d-M-Y', strtotime($date_start??null)) }}" required>
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-calendar"></i>
-                                        </button>
-                                        <!-- <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode deals" data-container="body"></i>
-                                        </button> -->
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <input type="text" class="datepicker form-control" name="date_end" value="{{ date('d-M-Y', strtotime($date_end??null)) }}" required>
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-calendar"></i>
-                                        </button>
-                                        <!-- <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode deals" data-container="body"></i>
-                                        </button> -->
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3">Outlet Available <span class="required" aria-required="true"> * </span> </label>
-                        <div class="col-md-8">
-                            <div class="input-icon right">
-                                <!-- <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i> -->
-                                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet">
-                                <optgroup label="Outlet List">
-                                    <!-- <option value="">Select Outlet</option> -->
-                                    @if (!empty($outlet))
-                                        <option value="all" @if(isset($id_outlet)) @if($id_outlet == "all") selected @endif  @endif>All Outlets</option>
-                                        @foreach($outlet as $suw)
-                                            <option value="{{ $suw['id_outlet'] }}" @if(isset($id_outlet)) @if($id_outlet == $suw['id_outlet']) selected @endif  @endif>{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
-                                        @endforeach
-                                    @endif
-                                </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3">Deals <span class="required" aria-required="true"> * </span> </label>
-                        <div class="col-md-8">
-                            <div class="input-icon right">
-                                <!-- <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan deals tersebut" data-container="body"></i> -->
-                                <select class="form-control select2-multiple" data-placeholder="Select Deals" name="id_deals" required>
-                                <optgroup label="Deals List">
-                                    <!-- <option value="">Select Outlet</option> -->
-                                    @if (!empty($dealsType))
-                                        <option value="all" @if(isset($id_outlet)) @if($id_deals == "all") selected @endif  @endif>All Deals</option>
-                                        @foreach($dealsType as $suw)
-                                            <option value="{{ $suw['id_deals'] }}" @if(isset($id_deals)) @if($id_deals == $suw['id_deals']) selected @endif  @endif>{{ $suw['deals_title'] }}</option>
-                                        @endforeach
-                                    @endif
-                                </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="form-actions">
-                    {{ csrf_field() }}
-                    <div class="row">
-                        <div class="col-md-offset-3 col-md-9">
-                            <button type="submit" class="btn green">Submit</button>
-                            <!-- <button type="button" class="btn default">Cancel</button> -->
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    @yield('filter')
 
     <div class="portlet light bordered">
         <div class="portlet-title">
@@ -212,9 +138,9 @@
             </div>
         </div>
         <div class="portlet-body form">
-        	<div class="">
+        	<div class="content-middle-center">
 	            <table class="table table-striped table-bordered table-hover" id="sample_1">
-	                <thead>
+	                <thead class="header-table">
 	                    <tr>
 	                        <th> Subscription Name </th>
 	                        <th> Voucher Code </th>
@@ -233,33 +159,45 @@
 	                </thead>
 	                <tbody>
 	                    @if (!empty($subs))
-	                        @foreach($subs as $value)
+	                        @foreach($subs as $val)
 	                        	@php
 	                        		$subs_price = 'Free';
-	                        		if(!empty($value['subscription_user']['subscription_price_point'])){
-	                        			$subs_price = number_format($value['subscription_user']['subscription_price_point']).' Point';
+	                        		if(!empty($val['subscription_user']['subscription_price_point'])){
+	                        			$subs_price = number_format($val['subscription_user']['subscription_price_point']).' Point';
 	                        		}
-	                        		if(!empty($value['subscription_user']['subscription_price_cash'])){
-	                        			$subs_price = 'IDR '.number_format($value['subscription_user']['subscription_price_point']);
+	                        		if(!empty($val['subscription_user']['subscription_price_cash'])){
+	                        			$subs_price = 'IDR '.number_format($val['subscription_user']['subscription_price_point']);
 	                        		}
-	                        		$subs_nominal 	= $value['transaction']['transaction_payment_subscription']['subscription_nominal'];
-	                        		$charge_outlet 	= $value['transaction']['disburse_outlet_transaction']['subscription'];
+	                        		$subs_nominal 	= $val['transaction']['transaction_payment_subscription']['subscription_nominal'];
+	                        		$charge_outlet 	= $val['transaction']['disburse_outlet_transaction']['subscription'];
 	                        		$charge_central = $subs_nominal - $charge_outlet;
-	                        		$bought_at 		= $value['subscription_user']['bought_at'];
-	                        		$expired_at 	= $value['subscription_user']['subscription_expired_at'];
-	                        		$used_at 		= $value['used_at'];
+	                        		$bought_at 		= $val['subscription_user']['bought_at'];
+	                        		$expired_at 	= $val['subscription_user']['subscription_expired_at'];
+	                        		$used_at 		= $val['used_at'];
 	                        	@endphp
 	                            <tr>
-	                                <td>{{ $value['subscription_user']['subscription']['subscription_title'] }}</td>
-	                                <td>{{ $value['voucher_code'] }}</td>
-	                                <td>{{ $value['subscription_user']['user']['name'].' - '.$value['subscription_user']['user']['phone'] }}</td>
+	                                <td>
+	                                	<a href="{{ $val['redirect_subs'] }}" target=”_blank”>
+	                                		{{ $val['subscription_user']['subscription']['subscription_title'] }}
+	                                	</a>
+	                                </td>
+	                                <td>{{ $val['voucher_code'] }}</td>
+	                                <td>
+	                                	<a href="{{ $val['redirect_user'] }}" target=”_blank”>
+	                                		{{ $val['subscription_user']['user']['name'].' - '.$val['subscription_user']['user']['phone'] }}
+	                                	</a>
+	                                </td>
 	                                <td>{{ $subs_price }}</td>
 	                                <td>{{ !empty($bought_at) ? date('d-M-y', strtotime($bought_at)) : '-' }}</td>
 	                                <td>{{ !empty($expired_at) ? date('d-M-y', strtotime($expired_at)) : '-' }}</td>
 	                                <td>{{ !empty($used_at) ? date('d-M-y', strtotime($used_at)) : '-' }}</td>
-	                                <td>{{ $value['transaction']['transaction_receipt_number'] }}</td>
-	                                <td>{{ !empty($value['transaction']['transaction_grandtotal']) ? 'IDR '.number_format($value['transaction']['transaction_grandtotal']) : '' }}</td>
-	                                <td>{{ $value['transaction']['outlet']['outlet_code'].' - '.$value['transaction']['outlet']['outlet_name'] }}</td>
+	                                <td>
+	                                	<a href="{{ $val['redirect_trx'] }}" target=”_blank”>
+	                                		{{ $val['transaction']['transaction_receipt_number'] }}
+	                                	</a>
+	                                </td>
+	                                <td>{{ !empty($val['transaction']['transaction_grandtotal']) ? 'IDR '.number_format($val['transaction']['transaction_grandtotal']) : '' }}</td>
+	                                <td>{{ $val['transaction']['outlet']['outlet_code'].' - '.$val['transaction']['outlet']['outlet_name'] }}</td>
 	                                <td>{{ !empty($subs_nominal) ? 'IDR '.number_format($subs_nominal) : '' }}</td>
 	                                <td>{{ !empty($charge_central) ? 'IDR '.number_format($charge_central) : '' }}</td>
 	                                <td>{{ !empty($charge_outlet) ? 'IDR '.number_format($charge_outlet) : '' }}</td>
@@ -269,9 +207,11 @@
 	                </tbody>
 	            </table>
         	</div>
-            @if ($subsPaginator)
-                {{ $subsPaginator->links() }}
-            @endif
+        	<div class="paginator-right">
+	            @if ($subsPaginator)
+	                {{ $subsPaginator->links() }}
+	            @endif
+            </div>
         </div>
     </div>
 @endsection
