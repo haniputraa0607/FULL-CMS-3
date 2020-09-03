@@ -88,6 +88,26 @@
             return false;
         });
 
+        $('#input-fee-disburse').keypress(function (e) {
+            var regex = new RegExp("^[0-9]+$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+            var check_browser = navigator.userAgent.search("Firefox");
+
+            if(check_browser == -1){
+                if (regex.test(str) || e.which == 8) {
+                    return true;
+                }
+            }else{
+                if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+                    return true;
+                }
+            }
+
+            e.preventDefault();
+            return false;
+        });
+
         $('input[name=central]').keyup(function () {
             var outlet = $('input[name=outlet]').val();
             var central = $('input[name=central]').val();
@@ -362,6 +382,9 @@
             <li>
                 <a data-toggle="tab" href="#time-to-sent">Time To Sent Disburse</a>
             </li>
+            <li>
+                <a data-toggle="tab" href="#fee-disburse">Fee Disburse</a>
+            </li>
         </ul>
     </div>
     <br>
@@ -439,6 +462,13 @@
             </div>
             <br>
             @include('disburse::setting_global.setting_time_to_sent')
+        </div>
+        <div id="fee-disburse" class="tab-pane">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur biaya disburse untuk tiap pengiriman dana.</p>
+            </div>
+            <br>
+            @include('disburse::setting_global.setting_disburse_fee_transafer')
         </div>
     </div>
 @endsection
