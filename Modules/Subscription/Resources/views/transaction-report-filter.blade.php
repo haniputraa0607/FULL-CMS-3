@@ -47,7 +47,7 @@ $configs  = session('configs');
 			opsi:[],
 			type:'date'
 		},
-		expired_at:{
+		subscription_expired_at:{
 			display:'Expired Date',
 			operator:[
 				['=','='],
@@ -203,7 +203,6 @@ $configs  = session('configs');
 	function selectOpsiBuilder(rules,selected='',id='::n::', type=''){
 		add_attribute = '';	
 		add_name = 'rule['+id+'][parameter]';
-
 		if (type == 'multiple') {
 			add_attribute = 'multiple';
 			add_name = 'rule['+id+'][parameter][]';
@@ -211,7 +210,8 @@ $configs  = session('configs');
 
 		var html='<select name="'+add_name+'" class="form-control input-sm select2 inputOpsi" '+add_attribute+' placeholder="Search Operator" id="test" style="width:100%" required>';
 		rules.forEach(function(x){
-			if(selected==x[0]){
+			let check = '' + x[0];
+			if(selected.includes(check)){
 				html+=optionWriter(x[0],x[1],'selected');
 			}else{
 				html+=optionWriter(x[0],x[1]);

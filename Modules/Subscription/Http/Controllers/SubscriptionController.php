@@ -662,15 +662,15 @@ class SubscriptionController extends Controller
 
         if (!empty($data['subs'])) {
         	foreach ($data['subs'] as $key => $val) {
-        		$id_subs_decrypt = $val['subscription_user']['id_subscription'];
+        		$id_subs_decrypt = $val['id_subscription'];
         		$id_subs_encrypt = MyHelper::createSlug($id_subs_decrypt, $val['created_at']);
         		$redirect_subs = 'subscription';
-        		if ($val['subscription_user']['subscription']['subscription_type'] == 'welcome') $redirect_subs = 'welcome-subscription';
-        		elseif ($val['subscription_user']['subscription']['subscription_type'] == 'inject') $redirect_subs = 'inject-subscription';
+        		if ($val['subscription_type'] == 'welcome') $redirect_subs = 'welcome-subscription';
+        		elseif ($val['subscription_type'] == 'inject') $redirect_subs = 'inject-subscription';
 
         		$data['subs'][$key]['redirect_subs'] 	= url($redirect_subs.'/detail/'.$id_subs_encrypt);
-        		$data['subs'][$key]['redirect_user'] 	= url('user/detail/'.$val['subscription_user']['user']['phone']);
-        		$data['subs'][$key]['redirect_trx'] 	= url('transaction/detail/'.$val['transaction']['id_transaction'].'/all');
+        		$data['subs'][$key]['redirect_user'] 	= url('user/detail/'.$val['phone']);
+        		$data['subs'][$key]['redirect_trx'] 	= url('transaction/detail/'.$val['id_transaction'].'/all');
         	}
         }
 

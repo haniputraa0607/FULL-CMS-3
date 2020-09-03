@@ -153,8 +153,8 @@
 	                        <th> Transaction Grandtotal </th>
 	                        <th> Outlet </th>
 	                        <th> Subscription Nominal </th>
-	                        <th> Charge Central </th>
-	                        <th> Charge Outlet </th>
+	                        <th> Charged Central </th>
+	                        <th> Charged Outlet </th>
 	                    </tr>
 	                </thead>
 	                <tbody>
@@ -162,45 +162,32 @@
 	                        @foreach($subs as $val)
 	                        	@php
 	                        		$subs_price = 'Free';
-	                        		if(!empty($val['subscription_user']['subscription_price_point'])){
-	                        			$subs_price = number_format($val['subscription_user']['subscription_price_point']).' Point';
+	                        		if( !empty($val['subscription_price_point']) ){
+	                        			$subs_price = number_format($val['subscription_price_point']).' Point';
+	                        		}elseif( !empty($val['subscription_price_cash']) ){
+	                        			$subs_price = 'IDR '.number_format($val['subscription_price_cash']);
 	                        		}
-	                        		if(!empty($val['subscription_user']['subscription_price_cash'])){
-	                        			$subs_price = 'IDR '.number_format($val['subscription_user']['subscription_price_point']);
-	                        		}
-	                        		$subs_nominal 	= $val['transaction']['transaction_payment_subscription']['subscription_nominal'];
-	                        		$charge_outlet 	= $val['transaction']['disburse_outlet_transaction']['subscription'];
-	                        		$charge_central = $subs_nominal - $charge_outlet;
-	                        		$bought_at 		= $val['subscription_user']['bought_at'];
-	                        		$expired_at 	= $val['subscription_user']['subscription_expired_at'];
-	                        		$used_at 		= $val['used_at'];
 	                        	@endphp
 	                            <tr>
 	                                <td>
-	                                	<a href="{{ $val['redirect_subs'] }}" target=”_blank”>
-	                                		{{ $val['subscription_user']['subscription']['subscription_title'] }}
-	                                	</a>
+	                                	<a href="{{ $val['redirect_subs'] }}" target=”_blank”>{{ $val['subscription_title'] }}</a>
 	                                </td>
 	                                <td>{{ $val['voucher_code'] }}</td>
 	                                <td>
-	                                	<a href="{{ $val['redirect_user'] }}" target=”_blank”>
-	                                		{{ $val['subscription_user']['user']['name'].' - '.$val['subscription_user']['user']['phone'] }}
-	                                	</a>
+	                                	<a href="{{ $val['redirect_user'] }}" target=”_blank”>{{ $val['user'] }}</a>
 	                                </td>
 	                                <td>{{ $subs_price }}</td>
-	                                <td>{{ !empty($bought_at) ? date('d-M-y', strtotime($bought_at)) : '-' }}</td>
-	                                <td>{{ !empty($expired_at) ? date('d-M-y', strtotime($expired_at)) : '-' }}</td>
-	                                <td>{{ !empty($used_at) ? date('d-M-y', strtotime($used_at)) : '-' }}</td>
+	                                <td>{{ !empty($val['bought_at']) ? date('d-M-y', strtotime($val['bought_at'])) : '-' }}</td>
+	                                <td>{{ !empty($val['subscription_expired_at']) ? date('d-M-y', strtotime($val['subscription_expired_at'])) : '-' }}</td>
+	                                <td>{{ !empty($val['used_at']) ? date('d-M-y', strtotime($val['used_at'])) : '-' }}</td>
 	                                <td>
-	                                	<a href="{{ $val['redirect_trx'] }}" target=”_blank”>
-	                                		{{ $val['transaction']['transaction_receipt_number'] }}
-	                                	</a>
+	                                	<a href="{{ $val['redirect_trx'] }}" target=”_blank”>{{ $val['transaction_receipt_number'] }}</a>
 	                                </td>
-	                                <td>{{ !empty($val['transaction']['transaction_grandtotal']) ? 'IDR '.number_format($val['transaction']['transaction_grandtotal']) : '' }}</td>
-	                                <td>{{ $val['transaction']['outlet']['outlet_code'].' - '.$val['transaction']['outlet']['outlet_name'] }}</td>
-	                                <td>{{ !empty($subs_nominal) ? 'IDR '.number_format($subs_nominal) : '' }}</td>
-	                                <td>{{ !empty($charge_central) ? 'IDR '.number_format($charge_central) : '' }}</td>
-	                                <td>{{ !empty($charge_outlet) ? 'IDR '.number_format($charge_outlet) : '' }}</td>
+	                                <td>{{ !empty($val['transaction_grandtotal']) ? 'IDR '.number_format($val['transaction_grandtotal']) : '' }}</td>
+	                                <td>{{ $val['outlet'] }}</td>
+	                                <td>{{ !empty($val['subscription_nominal']) ? 'IDR '.number_format($val['subscription_nominal']) : '' }}</td>
+	                                <td>{{ !empty($val['charged_central']) ? 'IDR '.number_format($val['charged_central']) : '' }}</td>
+	                                <td>{{ !empty($val['charged_outlet']) ? 'IDR '.number_format($val['charged_outlet']) : '' }}</td>
 	                            </tr>
 	                        @endforeach
 	                    @endif
