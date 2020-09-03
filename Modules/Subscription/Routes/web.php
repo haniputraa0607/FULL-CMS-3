@@ -30,6 +30,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 
 
     /* Report */
     Route::any('transaction-report', 'SubscriptionController@report');
+    // Route::any('list-export', [ 'uses' => 'SubscriptionController@listExport']);
 });
 
 Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 'prefix' => 'welcome-subscription', 'subscription_type' => 'welcome'], function () {

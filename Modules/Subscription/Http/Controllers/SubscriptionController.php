@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use App\Lib\MyHelper;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Session;
 
 class SubscriptionController extends Controller
 {
@@ -610,10 +611,6 @@ class SubscriptionController extends Controller
             'submenu_active' => ''
         ];
 
-        if (!empty($post)) {
-        	# code...
-// dd($post);
-        }
         if ($request->post('clear') == 'session') 
         {
             session(['subs_report_filter' => '']);
@@ -630,9 +627,24 @@ class SubscriptionController extends Controller
             }
             session(['deals_filter' => $post]);
         }
-        if (!empty($request->except('_token','page'))) {
-        	return redirect('subscription/transaction-report');
+        // if (!empty($request->except('_token','page'))) {
+        // 	return redirect('subscription/transaction-report');
+        // }
+		
+		if($request->get('export') && $request->get('export') == 1){
+            $post['export'] = 1;
+            $post['report_type'] = 'Subscription';
+            $post['id_user'] = Session::get('id_user');
+            // dd($post);
+            $report = MyHelper::post('report/export/create', $post);
+
+            if (isset($report['status']) && $report['status'] == "success") {
+                return redirect('transaction/list-export')->withSuccess(['Success create export to queue']);
+            }else{
+                return redirect('transaction/list-export')->withErrors(['Failed create export to queue']);
+            }
         }
+
         $get_data = MyHelper::post('subscription/transaction-report?page='.$request->get('page'), $post);
 // dd($request->all());
 // return($get_data);
@@ -685,5 +697,61 @@ class SubscriptionController extends Controller
         }, $subs);
 
         return view('subscription::transaction-report', $data);
+    }
+
+    function listExport(Request $request){
+        $data = [
+            'title'          => 'Subscription',
+            'sub_title'      => 'Subscription Report',
+            'menu_active'    => 'subscription-report',
+            'submenu_active' => ''
+        ];
+
+        $id_user = Session::get('id_user');
+        $report = MyHelper::post('report/export/list', ['id_user' => $id_user, 'report_type' => 'Subscription']);
+        if (isset($report['status']) && $report['status'] == "success") {
+            $data['data']          = $report['result']['data'];
+            $data['dataTotal']     = $report['result']['total'];
+            $data['dataPerPage']   = $report['result']['from'];
+            $data['dataUpTo']      = $report['result']['from'] + count($report['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($report['result']['data'], $report['result']['total'], $report['result']['per_page'], $report['result']['current_page'], ['path' => url()->current()]);
+            $data['sum'] = 0;
+        } else {
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+            $data['sum'] = 0;
+        }
+
+        return view('report::export.list_export', $data);
+    }
+
+    function actionExport(Request $request, $action, $id){
+        $post = $request->except('_token');
+
+        $post['action'] = $action;
+        $post['id_export_queue'] = $id;
+        $actions = MyHelper::post('report/export/action', $post);
+        if($action == 'deleted'){
+            if (isset($actions['status']) && $actions['status'] == "success") {
+                return redirect('report/subscription/list-export')->withSuccess(['Success to Remove file']);
+            } else {
+                return redirect('report/subscription/list-export')->withErrors(['Failed to Remove file']);
+            }
+        }else{
+            if (isset($actions['status']) && $actions['status'] == "success") {
+                $link = $actions['result']['url_export'];
+                $filename = "Report Subscription_".strtotime(date('Ymdhis')).'.xlsx';
+                $tempImage = tempnam(sys_get_temp_dir(), $filename);
+                copy($link, $tempImage);
+
+                return response()->download($tempImage, $filename)->deleteFileAfterSend(true);
+            } else {
+                return redirect('report/subscription/list-export')->withErrors(['Failed to Download file']);
+            }
+        }
+
     }
 }
