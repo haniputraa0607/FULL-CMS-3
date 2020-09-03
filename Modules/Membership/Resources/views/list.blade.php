@@ -362,7 +362,7 @@
         });
 	});
 
-		$(".file").change(function(e) {
+		$(".membership-image").change(function(e) {
                 var _URL = window.URL || window.webkitURL;
                 var image, file;
                 var input = $(this);
@@ -385,6 +385,35 @@
 							cancelBtn.click();
                     	}else if(file.size > (50 * 1024)){
                             toastr.warning("Max uploaded file is 50 KB");
+                            $(this).val("");
+                            // $('#remove_square').click()
+                            // image.src = _URL.createObjectURL();
+							cancelBtn.click();
+                    	}
+                    };
+
+                    image.src = _URL.createObjectURL(file);
+                }
+
+        });
+
+		$(".membership-card").change(function(e) {
+                var _URL = window.URL || window.webkitURL;
+                var image, file;
+                var input = $(this);
+                var cancelBtn = $(this).closest('.btn-file').closest('.aa').find('.btn.red.fileinput-exists');
+                if ((file = this.files[0])) {
+                    image = new Image();
+
+                    image.onload = function() {
+                    	if(this.width != 750 || this.height != 375){
+                            toastr.warning("Please check dimension of your photo.");
+                            $(this).val("");
+                            // $('#remove_square').click()
+                            // image.src = _URL.createObjectURL();
+							cancelBtn.click();
+                    	}else if(input.val().split('.').pop().toLowerCase() != 'png'){
+                            toastr.warning("Only PNG image allowed");
                             $(this).val("");
                             // $('#remove_square').click()
                             // image.src = _URL.createObjectURL();
@@ -551,7 +580,42 @@
 														<span class="btn default btn-file">
 															<span class="fileinput-new"> Select image </span>
 															<span class="fileinput-exists"> Change </span>
-															<input class="file" accept="image/png" type="file" name="membership_image">
+															<input class="file membership-image" accept="image/png" type="file" name="membership_image">
+														</span>
+														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-12" style="margin-top:20px">
+										<div class="input-icon right">
+											<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+												Level Card Background
+												<i class="fa fa-question-circle tooltips" data-original-title="background membership untuk ditampilkan pada aplikasi ketika membuka halaman detail membership." data-container="body"></i>
+												<br>
+												<span class="required" aria-required="true"> (750 x 375, Only PNG) </span>
+											</div>
+										</div>
+
+										<div class="col-md-4" >
+											<div class="input-icon right">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-new thumbnail" style="width: 200px;">
+														@if($membership['membership_card'] != "")
+															<img src="{{env('STORAGE_URL_API')}}{{$membership['membership_card']}}" alt="" />
+														@else
+															<img src="https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+														@endif
+													</div>
+
+													<div class="fileinput-preview fileinput-exists thumbnail" style="width: 200px;"> </div>
+													<div class="aa">
+														<span class="btn default btn-file">
+															<span class="fileinput-new"> Select image </span>
+															<span class="fileinput-exists"> Change </span>
+															<input class="file membership-card" accept="image/png" type="file" name="membership_card">
 														</span>
 														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 													</div>
@@ -587,7 +651,7 @@
 														<span class="btn default btn-file">
 															<span class="fileinput-new"> Select image </span>
 															<span class="fileinput-exists"> Change </span>
-															<input class="file" accept="image/png" type="file" name="membership_next_image">
+															<input class="file membership-image" accept="image/png" type="file" name="membership_next_image">
 														</span>
 														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 													</div>
@@ -887,7 +951,7 @@
 									<div class="input-icon right">
 										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
 											Level Image
-											<i class="fa fa-question-circle tooltips" data-original-title="Image background untuk info membership di aplikasi." data-container="body"></i>
+											<i class="fa fa-question-circle tooltips" data-original-title="Image untuk info membership di aplikasi." data-container="body"></i>
 										</div>
 									</div>
 									<div class="col-md-4" >
@@ -903,6 +967,33 @@
 														<span class="fileinput-new"> Select image </span>
 														<span class="fileinput-exists"> Change </span>
 														<input type="file" name="membership_image"> </span>
+													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+
+									<div class="col-md-12" style="margin-top:20px">
+									<div class="input-icon right">
+										<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
+											Level Card Background
+											<i class="fa fa-question-circle tooltips" data-original-title="Image background untuk info membership di aplikasi." data-container="body"></i>
+										</div>
+									</div>
+									<div class="col-md-4" >
+										<div class="input-icon right">
+											<div class="fileinput fileinput-new" data-provides="fileinput">
+												<div class="fileinput-new thumbnail" style="width: 200px;">
+													<img src="https://www.placehold.it/75x75/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+												</div>
+
+												<div class="fileinput-preview fileinput-exists thumbnail" style="width: 750px; height: 375px;"> </div>
+												<div>
+													<span class="btn default btn-file">
+														<span class="fileinput-new"> Select image </span>
+														<span class="fileinput-exists"> Change </span>
+														<input class="file membership-card" type="file" name="membership_card"> </span>
 													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 												</div>
 											</div>

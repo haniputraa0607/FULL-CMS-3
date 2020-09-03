@@ -84,7 +84,7 @@
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "All"]
                 ],
-                pageLength: -1,
+                pageLength: 20,
                 dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         });
 
@@ -130,6 +130,9 @@
                 data : "_token="+token+"&id_outlet="+id+"&outlet_status="+state,
                 success : function(result) {
                     if (result.status == "success") {
+                        document.getElementById('atr-'+id).innerHTML = state;
+                        $('#sample_1').DataTable().rows().invalidate()
+                            .draw();
                         toastr.info("Outlet status has been updated.");
                     }
                     else {
@@ -195,9 +198,9 @@
                             <tr>
                                 <td>
                                     @if($value['status_franchise'] == 1)
-                                        <p style="color: green">This outlet is franchise</p>
+                                        <p style="color: green">Franchise</p>
                                     @else
-                                        This outlet is not franchise
+                                        Not franchise
                                     @endif
                                 </td>
                                 <td>{{ $value['outlet_code'] }}</td>
@@ -223,6 +226,7 @@
                                 </td>
                                 <td>
                                     <input type="checkbox" name="outlet_status" @if($value['outlet_status'] == 'Active') checked @endif data-id="{{ $value['id_outlet'] }}" class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive">
+                                    <p style="display: none" id="atr-{{$value['id_outlet']}}">{{$value['outlet_status']}}</p>
                                 </td>
                                 @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                     <td style="width: 90px;">

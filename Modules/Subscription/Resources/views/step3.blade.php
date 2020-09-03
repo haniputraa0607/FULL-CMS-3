@@ -1,4 +1,3 @@
-@include('subscription::step3-form')
 <?php
 use App\Lib\MyHelper;
 $configs = session('configs');
@@ -95,150 +94,37 @@ $configs = session('configs');
 
     <script type="text/javascript">        
         var oldOutlet=[];
-        function redrawOutlets(list,selected,convertAll){
-            var html="";
-            if(list.length){
-                html+="<option value=\"all\">All Outlets</option>";
-            }
-            list.forEach(function(outlet){
-                html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet_code+" - "+outlet.outlet_name+"</option>";
-            });
-            $('select[name="id_outlet[]"]').html(html);
-            $('select[name="id_outlet[]"]').val(selected);
-            if(convertAll&&$('select[name="id_outlet[]"]').val().length==list.length){
-                $('select[name="id_outlet[]"]').val(['all']);
-            }
-            oldOutlet=list;
-        }
-        $(document).ready(function() {
+        var focused_input=null;
+        var focused_div=null;
+        
+        function textReplace(param){
+        	if (focused_div) {
+        		let text_value = $('#contentTarget').find('.'+focused_div).find('textarea.focused-input').val();
+        		let new_text_value = text_value+' '+param;
+        		$('#contentTarget').find('.'+focused_div).find('textarea.focused-input').val(new_text_value);
+        	}
+	    }
 
+        $(document).ready(function() {
             var _URL = window.URL || window.webkitURL;
 
-            $('.price').each(function() {
-                var input = $(this).val();
-                var input = input.replace(/[\D\s\._\-]+/g, "");
-                input = input ? parseInt( input, 10 ) : 0;
+            // $('.price').each(function() {
+            //     var input = $(this).val();
+            //     var input = input.replace(/[\D\s\._\-]+/g, "");
+            //     input = input ? parseInt( input, 10 ) : 0;
 
-                $(this).val( function() {
-                    return ( input === 0 ) ? "" : input.toLocaleString( "id" );
-                });
-            });
+            //     $(this).val( function() {
+            //         return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+            //     });
+            // });
             token = '<?php echo csrf_token();?>';
 
-            /* PRICES */
-            $('.prices').click(function() {
-                var nilai = $(this).val();
 
-                if (nilai != "free") {
-                    $('#prices').show();
+	    	$("#contentTarget").on('click', '.focused-input', function(){
+		    	focused_input = $(this).attr('name');
+		    	focused_div = $(this).parent().parent().parent().parent().attr('class');
+		    });
 
-                    $('.payment').hide();
-
-                    $('#'+nilai).show();
-                    $('.'+nilai).prop('required', true);
-                    $('.'+nilai+'Opp').removeAttr('required');
-                    $('.'+nilai+'Opp').val('');
-                }
-                else {
-                    $('#prices').hide();
-                    $('.freeOpp').removeAttr('required');
-                    $('.freeOpp').val('');
-                }
-            });
-
-            /* VOUCHER TYPE */
-            $("input[name='voucher_type']").click(function() {
-                var nilai = $(this).val();
-
-                $('#voucher-value').show();
-                $('#discount-max-form, #discount-max-value').hide();
-                $("input[name='percent_max']").prop('checked', false);
-                $("input[name='subscription_voucher_percent_max']").prop('required', false);
-
-                if (nilai == "percent") {
-
-                    $('#voucher-percent, #discount-max').show();
-                    $('#voucher-cash').hide();
-                    $("input[name='subscription_voucher_percent'], input[name='percent_max']").prop('required', true);
-                    $("input[name='subscription_voucher_nominal']").prop('required', false);
-                }
-                else {
-                    $('#voucher-percent, #discount-max').hide();
-                    $('#voucher-cash').show();
-                    $("input[name='subscription_voucher_percent'], input[name='percent_max']").prop('required', false);
-                    $("input[name='subscription_voucher_nominal']").prop('required', true);
-
-                }
-            });
-
-            /* DISCOUNT MAX */
-            $("input[name='percent_max']").click(function() {
-                var nilai = $(this).val();
-
-                $('#voucher-percent').show();
-
-                if (nilai == "true") {
-
-                    $('#discount-max-form, #discount-max-value').show();
-                    $("input[name='subscription_voucher_percent_max']").prop('required', true);
-                }
-                else {
-
-                    $('#discount-max-form, #discount-max-value').hide();
-                    $("input[name='subscription_voucher_percent_max']").prop('required', false);
-                }
-            });
-
-            /* SUBSCRIPTION TOTAL */
-            $("input[name='subscription_total_type']").click(function() {
-                var nilai = $(this).val();
-
-                if (nilai == "limited") {
-
-                    $('#subscription-total-form, #subscription-total-value').show();
-                    $("input[name='subscription_total']").prop('required', true);
-                }
-                else {
-                    $('#subscription-total-form, #subscription-total-value').hide();
-                    $("input[name='subscription_total']").prop('required', false);
-                }
-            });
-
-            /* EXPIRY */
-            $('.expiry').click(function() {
-                var nilai = $(this).val();
-
-                $('#times').show();
-
-                $('.voucherTime').hide();
-
-                $('#'+nilai).show();
-                $('.'+nilai).prop('required', true);
-                $('.'+nilai+'Opp').removeAttr('required');
-                $('.'+nilai+'Opp').val('');
-            });
-
-            $('.subscriptionPromoType').click(function() {
-                $('.subscriptionPromoTypeShow').show();
-                var nilai = $(this).val();
-
-                if (nilai == "promoid") {
-                    $('.subscriptionPromoTypeValuePromo').show();
-                    $('.subscriptionPromoTypeValuePromo').prop('required', true);
-
-                    $('.subscriptionPromoTypeValuePrice').val('');
-                    $('.subscriptionPromoTypeValuePrice').hide();
-                    $('.subscriptionPromoTypeValuePrice').removeAttr('required', true);
-                }
-                else {
-                    $('.subscriptionPromoTypeValuePrice').show();
-                    $('.subscriptionPromoTypeValuePrice').prop('required', true);
-
-                    $('.subscriptionPromoTypeValuePromo').val('');
-                    $('.subscriptionPromoTypeValuePromo').hide();
-                    $('.subscriptionPromoTypeValuePromo').removeAttr('required', true);
-                }
-            });
 
             // upload & delete image on summernote
             $('.summernote').summernote({
@@ -424,7 +310,7 @@ $configs = session('configs');
 
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data" id="form">
                 <div class="form-body">
-                    
+                    @include('subscription::step3-form')
                     @yield('step3')
 
                 </div>
@@ -433,6 +319,7 @@ $configs = session('configs');
                     <div class="row">
                         <div class="col-md-offset-4 col-md-8">
                             <input type="hidden" name="id_subscription" value="{{ $subscription['id_subscription']??'' }}">
+                            <input type="hidden" name="subscription_type" value="{{ $subscription_type??'' }}">
                             <a href="{{ ($subscription['id_subscription']??'') ? url('subscription/step2/'.$subscription['id_subscription']) : '' }}" class="btn green">Previous Step</a>
                             <button type="submit" class="btn green">Save</button>
                             <!-- <button type="button" class="btn default">Cancel</button> -->

@@ -268,7 +268,7 @@
 	   	</div>
   	</div>
 
-    <div class="kotak1" @if($data[0]['big_order'] == 0) style='margin-bottom: 220px;' @endif>
+    <div class="kotak1" @if($data[0]['delivery_order'] == 0) style='margin-bottom: 220px;' @endif>
   		<div class="container">
   		    <div class="ProductSans space-text" style="color: rgb(74, 0, 0); font-size: 12.7px; padding-bottom: 5px;">Jam Operasional</div>
   			@php
@@ -346,7 +346,7 @@
 	   	</div>
   	</div>
 
-	@if($data[0]['big_order'] == 1)
+	@if($data[0]['delivery_order'] == 1)
 	<div class="kotak1" style='margin-bottom: 220px'>
   		<div class="container">
   		    <div class="ProductSans text-center space-text" style="color: rgb(0, 0, 0); font-size: 15px; padding-bottom: 5px;">Big Order Delivery Service</div>

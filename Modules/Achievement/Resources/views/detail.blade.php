@@ -170,7 +170,7 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" name="detail[`+nomer+`][name]" placeholder="Detail Achievement" required maxlength="20">
+                                                    <input type="text" class="form-control" name="detail[`+nomer+`][name]" placeholder="Detail Achievement" required maxlength="30">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -493,7 +493,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Add Badge</h4>
             </div>
-            <div class="modal-body box-repeat" style="padding: 20ox;display: table;width: 100%;">
+            <div class="modal-body box-repeat" style="padding: 20px;display: table;width: 100%;">
                 <div class="box">
                     <div class="col-md-2 text-right" style="text-align: -webkit-right;">
                         <a href="javascript:;" onclick="removeBox(this)" class="remove-box btn btn-danger">
@@ -510,7 +510,7 @@
                                 </label>
                             </div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Achievement" required maxlength="20">
+                                <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Achievement" required maxlength="30">
                             </div>
                         </div>
                         <div class="form-group">
@@ -707,7 +707,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Modal Title</h4>
             </div>
-            <div class="modal-body" style="padding: 20ox;display: table;width: 100%;">
+            <div class="modal-body" style="padding: 20x;display: table;width: 100%;">
                 <div class="col-md-12">
                     <div class="form-group">
                         <div class="input-icon right">
@@ -718,7 +718,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" placeholder="Detail Achievement" required maxlength="20">
+                            <input type="text" class="form-control" name="name" placeholder="Detail Achievement" required maxlength="30">
                         </div>
                     </div>
                     <div class="form-group">
@@ -1009,7 +1009,7 @@
                             <div class="profile-info portlet light bordered">
                                 <div class="portlet-title"> 
                                     <span class="caption font-blue sbold uppercase">{{$data['group']['name']}} Badge </span>
-                                    <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Badge</a>
+                                    {{-- <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Badge</a> --}}
                                 </div>
                                 <div class="portlet-body row">
                                     @foreach ($data['detail'] as $item)
@@ -1023,7 +1023,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="btn-group btn-group-solid pull-right">
+                                                    {{-- <div class="btn-group btn-group-solid pull-right">
                                                         <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                                             <div id="loadingBtn" hidden>
                                                                 <i class="fa fa-spinner fa-spin"></i> Loading
@@ -1041,7 +1041,7 @@
                                                                 <a href="javascript:;" onclick="removeBadge(this, {{$item['id_achievement_detail']}})"> Remove </a>
                                                             </li>
                                                         </ul>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <div class="portlet-body">
@@ -1088,7 +1088,7 @@
                                                                 @endif
                                                                 @if (!is_null($item['different_province']))
                                                                     <div class="col-md-5 name">Province Different ?</div>
-                                                                    <div class="col-md-7 value">: {{$item['different_province']}} Provice</div>
+                                                                    <div class="col-md-7 value">: {{$item['different_province']}} Province</div>
                                                                 @endif
                                                             </div>
                                                         @endif

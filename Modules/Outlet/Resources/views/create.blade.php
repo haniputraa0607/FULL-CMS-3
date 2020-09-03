@@ -1,3 +1,8 @@
+<?php
+    use App\Lib\MyHelper;
+    $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
+ ?>
 @extends('layouts.main')
 
 @section('page-style')
@@ -347,12 +352,27 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
+                                Franchise Status
+                                <i class="fa fa-question-circle tooltips" data-original-title="Keterangan outlet ini adalah franchise atau bukan franchise" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="select2 form-control" name="status_franchise">
+                                <option value="1" @if(old('status_franchise') == 1) selected @endif>Franchise</option>
+                                <option value="0" @if(old('status_franchise') == 0) selected @endif>Not Franchise</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
                             Code
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Kode outlet bersifat unik" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="outlet_code" value="{{ old('outlet_code') }}" placeholder="Outlet Code">
+                            <input type="text" class="form-control" name="outlet_code" value="{{ old('outlet_code') }}" placeholder="Outlet Code" required>
                         </div>
                     </div>
 
@@ -391,7 +411,7 @@
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             PIN
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pin outlet berupa 6 digit angka" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pin outlet berupa 6 digit angka. Jika pin kosong maka akan otomatis dibuatkan oleh sistem." data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
@@ -503,6 +523,19 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
+                            Email
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Alamat email outlet" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="outlet_email" value="{{ old('outlet_email') }}" placeholder="Outlet Email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
                             Schedule Open & Close Hour
                             <i class="fa fa-question-circle tooltips" data-original-title="Jadwal jam buka dan jam tutup outlet" data-container="body"></i>
                             </label>
@@ -532,15 +565,22 @@
                                     <div class="col-md-1">
                                         <label style="margin-top: 5px;margin-left: 15px;">:</label>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open timepicker timepicker-no-seconds" name="open[]" @if (old('open') != '') value="{{ old('open') }}" @else value="07:00" @endif data-show-meridian="false" readonly>
                                     </div>
-                                    <div class="col-md-4" style="padding-bottom: 5px">
+                                    <div class="col-md-3" style="padding-bottom: 5px">
                                         <input type="text" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close timepicker timepicker-no-seconds" name="close[]" @if (old('close') != '') value="{{ old('close') }}" @else value="22:00" @endif data-show-meridian="false" readonly>
                                     </div>
                                     <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
                                         <label class="mt-checkbox mt-checkbox-outline"> Same all
                                             <input type="checkbox" name="ampas[]" class="same" data-check="ampas"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
+                                        <label class="mt-checkbox mt-checkbox-outline"> Closed
+                                            <input type="checkbox" class="is_closed" data-id="is_closed"/>
+                                            <input type="hidden" name="is_closed[]" id="is_closed" value="0"/>
                                             <span></span>
                                         </label>
                                     </div>
@@ -550,7 +590,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Deep Link Gojek
@@ -572,19 +612,21 @@
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="deep_link_grab" value="{{ old('deep_link_grab') }}" placeholder="Deep link grab">
                         </div>
-                    </div>
+                    </div> -->
 
+                    @if(MyHelper::hasAccess([96], $configs))
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Delivery Service
-                            <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman outlet akan menampilkan ketersediaan delivery service untuk outlet" data-container="body"></i>
+                            Delivery Order
+                            <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman outlet akan menampilkan ketersediaan delivery order untuk outlet" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="checkbox" name="big_order" @if(old('big_order') == '1') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="1">
+                            <input type="checkbox" name="delivery_order" @if(old('delivery_order') == '1') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="1">
                         </div>
                     </div>
+                    @endif
 
                     <hr>
                     <h4>Maps</h4>

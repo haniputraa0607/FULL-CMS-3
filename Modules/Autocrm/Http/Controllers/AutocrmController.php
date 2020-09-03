@@ -113,15 +113,17 @@ class AutocrmController extends Controller
     {
     }
     public function autoResponse(Request $request, $type, $subject=null){
-		$data = [ 'title'             => 'About Auto Response '.ucfirst(str_replace('-',' ',$subject)),
+		$autocrmSubject = ucwords(str_replace('-',' ',$subject));
+		$data = [ 'title'             => 'About Auto Response '.$autocrmSubject,
 				  'menu_active'       => 'about-autoresponse',
 				  'submenu_active'    => 'about-autoresponse-'.$subject
 				];
 		if($subject == null){
 			$subject = $type;
+			$autocrmSubject = ucwords(str_replace('-',' ',$subject));
 		}else{
 			$data = [ 'title'             => ucfirst($type),
-					  'sub_title'         => ' Auto Response '.ucwords(str_replace('-',' ',$subject)),
+					  'sub_title'         => ' Auto Response '.$autocrmSubject,
 					  'menu_active'       => $type,
 					  'submenu_active'    => $type.'-autoresponse-'.$subject,
 					  'type' 			  => $type
@@ -130,9 +132,10 @@ class AutocrmController extends Controller
 		if(stristr($subject, 'enquiry')){
 			$data['menu_active'] = 'enquiries';
 			$data['submenu_active'] = 'autoresponse-'.$subject;
-			$data['title'] = 'Auto Response '.ucfirst(str_replace('-',' ',$subject));
+			$autocrmSubject = str_replace('_','-',$autocrmSubject);
+			$data['title'] = 'Auto Response '.$autocrmSubject;
 		}
-		$query = MyHelper::get('autocrm/list');
+		$query = MyHelper::post('autocrm/list', ['autocrm_title' => $autocrmSubject]);
 		$test = MyHelper::get('autocrm/textreplace');
 		$auto = null;
 		$post = $request->except('_token');
@@ -145,10 +148,10 @@ class AutocrmController extends Controller
 			// print_r($query);exit;
 			return back()->withSuccess(['Response updated']);
 		}
-		foreach($query['result'] as $autonya){
-			if($autonya['autocrm_title'] == ucwords(str_replace('-',' ',$subject))){
-				$auto = $autonya;
-			}
+		if(isset($query['result'])){
+			$auto = $query['result'];
+		}else{
+			return back()->withErrors(['No such response']);
 		}
 
 		switch ($subject){
@@ -167,6 +170,10 @@ class AutocrmController extends Controller
 			case 'create-news':
 				$data['forwardOnly'] = true;
 				break;
+			case 'outlet-pin-sent':
+				$data['active_response'] = ['email'];
+				$test['result'] = [];
+					break;
 		}
 
         $data['click_inbox'] = [

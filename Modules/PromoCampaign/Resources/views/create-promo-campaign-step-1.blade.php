@@ -2,10 +2,9 @@
     use App\Lib\MyHelper;
     $configs  = session('configs');
  ?>
- @extends('layouts.main-closed')
+@extends('layouts.main-closed')
 
-
- @section('page-style')
+@section('page-style')
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
@@ -290,6 +289,14 @@
 	}
 	</style>
 	
+	@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.disable-form').find('input, textarea').prop('disabled', true);
+			$('.disable-input').prop('disabled', true);
+		});
+	</script>
+	@endif
 @endsection
 
 @section('content')
@@ -321,9 +328,10 @@
 			</div>
 		</div>
 	</div>
-	
 	<form role="form" action="" method="POST">
 		<div class="col-md-1"></div>
+		
+		{{-- info --}}
 		<div class="col-md-5">
 			<div class="portlet light bordered">
 				<div class="portlet-title">
@@ -332,6 +340,9 @@
 						<span class="caption-subject bold uppercase">Campaign Info</span>
 					</div>
 				</div>
+				@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
+				<input type="hidden" name="used_code_update" value="1">
+				@endif
 				<div class="portlet-body">
 					<div class="form-group">
 						<label class="control-label">Name</label>
@@ -361,7 +372,7 @@
 						<i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak pusat" data-container="body"></i>
 						<div class="input-group col-md-12">
 							<div class="input-group">
-								<input required type="text" class="form-control" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
+								<input required type="text" class="form-control disable-input" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
 							<p style="color: red;display: none" id="label_central">Invalid value, charged central and outlet must be 100</p>
@@ -374,7 +385,7 @@
 						<i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak outlet" data-container="body"></i>
 						<div class="input-group col-md-12">
 							<div class="input-group">
-								<input required type="text" class="form-control" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
+								<input required type="text" class="form-control disable-input" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
 							<p style="color: red;display: none" id="label_outlet">Invalid value, charged central and outlet must be 100</p>
@@ -390,7 +401,7 @@
                         </div>
                         <div class="">
                             <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand" required>
+                                <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand" required>
                                     <option></option>
                                 @if (!empty($brands))
                                     @foreach($brands as $brand)
@@ -406,7 +417,7 @@
 						<span class="required" aria-required="true"> * </span>
                         <i class="fa fa-question-circle tooltips" data-original-title="Waktu dimulai berlakunya promo" data-container="body"></i>
 						<div class="input-group date bs-datetime">
-							<input required autocomplete="off" id="start_date" type="text" class="form-control" name="date_start" placeholder="Start Date" @if(isset($result['date_start']) && $result['date_start'] != "") value="{{date('d F Y - H:i', strtotime($result['date_start']))}}" @elseif(old('date_start') != "") value="{{old('date_start')}}" @endif>
+							<input required autocomplete="off" id="start_date" type="text" class="form-control disable-input" name="date_start" placeholder="Start Date" @if(isset($result['date_start']) && $result['date_start'] != "") value="{{date('d F Y - H:i', strtotime($result['date_start']))}}" @elseif(old('date_start') != "") value="{{old('date_start')}}" @endif>
 							<span class="input-group-addon">
 								<button class="btn default date-set" type="button">
 									<i class="fa fa-calendar"></i>
@@ -430,94 +441,102 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-5">
-			<div class="portlet light bordered">
-				<div class="portlet-title">
-					<div class="caption font-blue ">
-						<i class="icon-settings font-blue "></i>
-						<span class="caption-subject bold uppercase">Generate Code</span>
-					</div>
-				</div>
-				<div class="portlet-body">
-					<div class="form-group" style="height: 90px;">
-						<label class="control-label">Code Type</label>
-						<span class="required" aria-required="true"> * </span>
-						<i class="fa fa-question-circle tooltips" data-original-title="Tipe kode promo yang dibuat" data-container="body"></i>
-						<div class="mt-radio-list">
-							<label class="mt-radio mt-radio-outline"> Single
-								<input type="radio" value="Single" name="code_type" @if(isset($result['code_type']) && $result['code_type'] == "Single") checked @elseif(old('code_type') == "Single") checked @endif required/>
-								<span></span>
-							</label>
-							<label class="mt-radio mt-radio-outline"> Multiple
-								<input type="radio" value="Multiple" name="code_type" @if(isset($result['code_type']) && $result['code_type'] == "Multiple") checked  @elseif(old('code_type') == "Multiple") checked @endif required/>
-								<span></span>
-							</label>
+
+		{{-- Code --}}
+		@if ( !empty($result['promo_campaign_reports']) )
+			@include('promocampaign::step1-code')
+			@yield('code-info')
+		@else	
+			<div class="col-md-5">
+				<div class="portlet light bordered">
+					<div class="portlet-title">
+						<div class="caption font-blue ">
+							<i class="icon-settings font-blue "></i>
+							<span class="caption-subject bold uppercase">Generate Code</span>
 						</div>
 					</div>
-					<div id="singleCode">
+					<div class="portlet-body">
+						<div class="form-group" style="height: 90px;">
+							<label class="control-label">Code Type</label>
+							<span class="required" aria-required="true"> * </span>
+							<i class="fa fa-question-circle tooltips" data-original-title="Tipe kode promo yang dibuat" data-container="body"></i>
+							<div class="mt-radio-list">
+								<label class="mt-radio mt-radio-outline"> Single
+									<input type="radio" value="Single" name="code_type" @if(isset($result['code_type']) && $result['code_type'] == "Single") checked @elseif(old('code_type') == "Single") checked @endif required/>
+									<span></span>
+								</label>
+								<label class="mt-radio mt-radio-outline"> Multiple
+									<input type="radio" value="Multiple" name="code_type" @if(isset($result['code_type']) && $result['code_type'] == "Multiple") checked  @elseif(old('code_type') == "Multiple") checked @endif required/>
+									<span></span>
+								</label>
+							</div>
+						</div>
+						<div id="singleCode">
+							<div class="form-group">
+								<label class="control-label">Promo Code</label>
+								<span class="required" aria-required="true"> * </span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Kode promo yang dibuat" data-container="body"></i>
+								<div class="input-group col-md-12">
+									<input id="singlePromoCode" maxlength="15" type="text" class="form-control" name="promo_code" onkeyup="this.value=this.value.replace(/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]/g,'');" placeholder="Promo Code"  value="{{ old('promo_code')??$result['promo_campaign_promo_codes'][0]['promo_code']??null }}" autocomplete="off">
+									<p id="alertSinglePromoCode" style="display: none;" class="help-block">Kode sudah pernah dibuat!</p>
+								</div>
+							</div>
+						</div>
+						<div id="multipleCode">
+							<div class="form-group" id="alertMultipleCode">
+								<label class="control-label">Prefix Code</label>
+								<span class="required" aria-required="true"> * </span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Kode prefix untuk judul kode. Maksimal 9 karakter. Prefix Code + Digit Random tidak boleh lebih dari 15 karakter" data-container="body"></i>
+								<div class="input-group col-md-12">
+									<input id="multiplePrefixCode" maxlength="9" type="text" class="form-control" name="prefix_code" onkeyup="this.value=this.value.replace(/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]/g,'');" placeholder="Prefix Code" @if(isset($result['prefix_code']) && $result['prefix_code'] != "") value="{{$result['prefix_code']}}" @elseif(old('prefix_code') != "") value="{{old('prefix_code')}}" @endif autocomplete="off">
+									<p id="alertMultiplePromoCode" style="display: none;" class="help-block">Kode prefix sudah pernah dibuat, lebih disarankan untuk membuat kode baru!</p>
+								</div>
+							</div>
+							<div class="form-group" id="number_last_code">
+								<label class="control-label">Digit Random</label>
+								<span class="required" aria-required="true"> * </span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Jumlah digit yang digenerate secara otomatis untuk akhiran kode. Prefix Code + Digit Random tidak boleh lebih dari 15 karakter" data-container="body"></i>
+								<div class="input-group col-md-12">
+									<input id="multipleNumberLastCode" type="number" class="form-control" name="number_last_code" placeholder="Total Digit Random Last Code" @if(isset($result['number_last_code']) && $result['number_last_code'] != "") value="{{$result['number_last_code']}}" @elseif(old('number_last_code') != "") value="{{old('number_last_code')}}" @endif autocomplete="off" oninput="validity.valid||(value='');" min="6" max="15">
+								</div>
+								<span class="help-block" id="subscription-false"> Min : <span id="digit-random-min" class="font-weight-bold" style="padding-right: 12px">6</span> Max : <span id="digit-random-max" class="font-weight-bold">15</span></span>
+							</div>
+							<div class="form-group">
+								<label class="control-label">Example Code 
+								<i class="fa fa-question-circle tooltips" data-original-title="Contoh Kode yang digenerate secara otomatis" data-container="body"></i></label>
+								<div class="input-group col-md-12">
+									<span id="exampleCode"></span>
+								</div>
+								<div class="input-group col-md-12">
+									<span id="exampleCode1"></span>
+								</div>
+								<div class="input-group col-md-12">
+									<span id="exampleCode2"></span>
+								</div>
+							</div>
+						</div>
 						<div class="form-group">
-							<label class="control-label">Promo Code</label>
+							<label class="control-label">Limit Usage</label>
 							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Kode promo yang dibuat" data-container="body"></i>
+							<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo" data-container="body"></i>
 							<div class="input-group col-md-12">
-								<input id="singlePromoCode" maxlength="15" type="text" class="form-control" name="promo_code" onkeyup="this.value=this.value.replace(/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]/g,'');" placeholder="Promo Code" @if(isset($result['promo_code']) && $result['promo_campaign_promo_code']['promo_code'] != "") value="{{$result['promo_campaign_promo_code']['promo_code']}}" @elseif(old('promo_code') != "") value="{{old('promo_code')}}" @endif autocomplete="off">
-								<p id="alertSinglePromoCode" style="display: none;" class="help-block">Kode sudah pernah dibuat!</p>
+								<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" @if(isset($result['limitation_usage']) && $result['limitation_usage'] != "") value="{{$result['limitation_usage']}}" @elseif(old('limitation_usage') != "") value="{{old('limitation_usage')}}" @endif autocomplete="off">
 							</div>
 						</div>
-					</div>
-					<div id="multipleCode">
-						<div class="form-group" id="alertMultipleCode">
-							<label class="control-label">Prefix Code</label>
+						<div class="form-group" id="totalCoupon">
+							<label class="control-label">Total Coupon</label>
 							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Kode prefix untuk judul kode. Maksimal 9 karakter. Prefix Code + Digit Random tidak boleh lebih dari 15 karakter" data-container="body"></i>
+							<i class="fa fa-question-circle tooltips" data-original-title="Total kode kupon yang dibuat" data-container="body"></i>
 							<div class="input-group col-md-12">
-								<input id="multiplePrefixCode" maxlength="9" type="text" class="form-control" name="prefix_code" onkeyup="this.value=this.value.replace(/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]/g,'');" placeholder="Prefix Code" @if(isset($result['prefix_code']) && $result['prefix_code'] != "") value="{{$result['prefix_code']}}" @elseif(old('prefix_code') != "") value="{{old('prefix_code')}}" @endif autocomplete="off">
-								<p id="alertMultiplePromoCode" style="display: none;" class="help-block">Kode prefix sudah pernah dibuat, lebih disarankan untuk membuat kode baru!</p>
+								<input required type="text" class="form-control digit_mask" name="total_coupon" placeholder="Total Coupon" @if(isset($result['total_coupon']) && $result['total_coupon'] != "") value="{{$result['total_coupon']}}" @elseif(old('total_coupon') != "") value="{{old('total_coupon')}}" @endif autocomplete="off">
+								<p id="alertTotalCoupon" style="display: none;" class="help-block">Generate Random Total Coupon sangat tidak memungkinkan!</p>
 							</div>
-						</div>
-						<div class="form-group" id="number_last_code">
-							<label class="control-label">Digit Random</label>
-							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Jumlah digit yang digenerate secara otomatis untuk akhiran kode. Prefix Code + Digit Random tidak boleh lebih dari 15 karakter" data-container="body"></i>
-							<div class="input-group col-md-12">
-								<input id="multipleNumberLastCode" type="number" class="form-control" name="number_last_code" placeholder="Total Digit Random Last Code" @if(isset($result['number_last_code']) && $result['number_last_code'] != "") value="{{$result['number_last_code']}}" @elseif(old('number_last_code') != "") value="{{old('number_last_code')}}" @endif autocomplete="off" oninput="validity.valid||(value='');" min="6" max="15">
-							</div>
-							<span class="help-block" id="subscription-false"> Min : <span id="digit-random-min" class="font-weight-bold" style="padding-right: 12px">6</span> Max : <span id="digit-random-max" class="font-weight-bold">15</span></span>
-						</div>
-						<div class="form-group">
-							<label class="control-label">Example Code 
-							<i class="fa fa-question-circle tooltips" data-original-title="Contoh Kode yang digenerate secara otomatis" data-container="body"></i></label>
-							<div class="input-group col-md-12">
-								<span id="exampleCode"></span>
-							</div>
-							<div class="input-group col-md-12">
-								<span id="exampleCode1"></span>
-							</div>
-							<div class="input-group col-md-12">
-								<span id="exampleCode2"></span>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label">Limit Usage</label>
-						<span class="required" aria-required="true"> * </span>
-						<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo" data-container="body"></i>
-						<div class="input-group col-md-12">
-							<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" @if(isset($result['limitation_usage']) && $result['limitation_usage'] != "") value="{{$result['limitation_usage']}}" @elseif(old('limitation_usage') != "") value="{{old('limitation_usage')}}" @endif autocomplete="off">
-						</div>
-					</div>
-					<div class="form-group" id="totalCoupon">
-						<label class="control-label">Total Coupon</label>
-						<span class="required" aria-required="true"> * </span>
-						<i class="fa fa-question-circle tooltips" data-original-title="Total kode kupon yang dibuat" data-container="body"></i>
-						<div class="input-group col-md-12">
-							<input required type="text" class="form-control digit_mask" name="total_coupon" placeholder="Total Coupon" @if(isset($result['total_coupon']) && $result['total_coupon'] != "") value="{{$result['total_coupon']}}" @elseif(old('total_coupon') != "") value="{{old('total_coupon')}}" @endif autocomplete="off">
-							<p id="alertTotalCoupon" style="display: none;" class="help-block">Generate Random Total Coupon sangat tidak memungkinkan!</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		@endif
+		
 		<div class="col-md-1"></div>
 		<div class="col-md-12" style="text-align:center;">
 			<div class="form-actions">

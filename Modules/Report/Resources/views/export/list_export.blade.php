@@ -48,13 +48,18 @@
                         $filter = (array)json_decode($val['filter']);
 
                         $html = '';
-                        if(isset($filter['type'])){
-                            $html .= 'Export Report Payment: '.$filter['type'].'<br>';
-                        }
 
                         if(isset($filter['date_start']) && isset($filter['date_end'])){
                             $html .= 'Date Start : '. $filter['date_start'].'<br>';
                             $html .= 'Date End : '. $filter['date_end'].'<br>';
+                        }
+
+                        if(isset($filter['type'])){
+                            $html .= 'Export Report Payment: '.$filter['type'].'<br>';
+                        }
+
+                        if($val['report_type'] == 'Transaction' && isset($filter['detail'])){
+                            $html .= 'Export : Transaction Detail <br>';
                         }
 
                         if(isset($filter['rule'])){

@@ -2,6 +2,7 @@
 <?php
 use App\Lib\MyHelper;
 $configs = session('configs');
+$active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp', 'forward'];
 ?>
 @extends('layouts.main')
 
@@ -591,14 +592,14 @@ $configs = session('configs');
 	<div class="portlet-title">
 		<div class="caption">
 			@if($subject == 'enquiry-partnership') @php $subject = 'enquiry-karir'; @endphp @endif
-			<span class="caption-subject font-dark sbold uppercase font-blue">Auto Response {{ucfirst(str_replace('-',' ',$subject))}}</span>
+			<span class="caption-subject font-dark sbold uppercase font-blue">Auto Response {{str_replace('_','-',str_replace('-',' ',$subject))}}</span>
 		</div>
 	</div>
 	<div class="portlet-body form">
 		<form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
 			<div class="form-body">
 				@if ($subject != 'cron-transaction' && !($forwardOnly??false))
-					@if(MyHelper::hasAccess([38], $configs))
+					@if(MyHelper::hasAccess([38], $configs) && in_array('email', $active_response))
 						<h4>Email</h4>
 						<div class="form-group">
 							<div class="input-icon right">
@@ -679,7 +680,7 @@ $configs = session('configs');
 
 					@if($subject != 'email-verify')
 						<hr>
-						@if(MyHelper::hasAccess([39], $configs))
+						@if(MyHelper::hasAccess([39], $configs) && in_array('sms', $active_response))
 							<h4>SMS</h4>
 							<div class="form-group" >
 								<div class="input-icon right">
@@ -730,7 +731,7 @@ $configs = session('configs');
 						@else
 							<input hidden name="autocrm_sms_toogle" value="0">
 						@endif
-						@if(MyHelper::hasAccess([36], $configs))
+						@if(MyHelper::hasAccess([36], $configs) && in_array('push', $active_response))
 							<h4>Push Notification</h4>
 							<div class="form-group">
 								<div class="input-icon right">
@@ -878,7 +879,7 @@ $configs = session('configs');
 						@else
 							<input hidden name="autocrm_push_toogle" value="0">
 						@endif
-						@if(MyHelper::hasAccess([37], $configs))
+						@if(MyHelper::hasAccess([37], $configs) && in_array('inbox', $active_response))
 							<h4>Inbox</h4>
 							<div class="form-group">
 								<div class="input-icon right">
@@ -976,7 +977,7 @@ $configs = session('configs');
 							<input hidden name="autocrm_inbox_toogle" value="0">
 						@endif
 
-						@if(MyHelper::hasAccess([74], $configs))
+						@if(MyHelper::hasAccess([74], $configs) && in_array('whatsapp', $active_response))
 
 							@if(!$api_key_whatsapp)
 								<div class="alert alert-warning deteksi-trigger">
@@ -1223,7 +1224,7 @@ $configs = session('configs');
 					@endif
 				@endif
 
-				@if($subject != 'email-verify')
+				@if($subject != 'email-verify'  && in_array('forward', $active_response))
 					<h4>Forward</h4>
 					<div class="form-group">
 						<div class="input-icon right">

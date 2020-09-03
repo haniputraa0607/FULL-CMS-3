@@ -6,7 +6,7 @@
 				<label for="multipleProduct2" class="control-label">Select Product <span class="required" aria-required="true"> * </span>
 				<i class="fa fa-question-circle tooltips" data-original-title="Pilih produk yang akan diberikan diskon" data-container="body"></i></label>
 				<select id="multipleProduct2" name="product" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" data-value="{{
-					($result['deals_promotion_tier_discount_product']??$result['deals_tier_discount_product'])
+					($result['deals_promotion_tier_discount_product']??$result['deals_tier_discount_product']??null)
 					?
 					json_encode(
 					[
@@ -76,7 +76,7 @@
 				<label>Max. Qty <i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal pembelian produk untuk mendapatkan diskon" data-container="body"></i></label>
 			</div>
 			<div class="{{ (($result['deals_tier_discount_rules'][0]['discount_type']??$result['deals_promotion_tier_discount_rules'][0]['discount_type']??'') == 'Percent') ? 'col-md-3' : 'col-md-5'}}  text-center" id="bulk-label-div">
-				<label id="bulk-label" class="control-label"> {{ (($result['deals_tier_discount_rules'][0]['discount_type']??$result['deals_promotion_tier_discount_rules'][0]['discount_type']??'') == 'Percent') ? 'Percent value' : 'Nominal value'}} </label><span class="required" aria-required="true">  </span><i class="fa fa-question-circle tooltips" data-original-title="Besar diskon yang diberikan" data-container="body"></i><br>
+				<label id="bulk-label" class="control-label"> {{ (($result['deals_tier_discount_rules'][0]['discount_type']??$result['deals_promotion_tier_discount_rules'][0]['discount_type']??'') == 'Percent') ? 'Percent value' : 'Nominal value'}} </label><span class="required" aria-required="true">  </span><i class="fa fa-question-circle tooltips" data-original-title="Besar diskon yang diberikan. Persentase akan dihitung dari harga produk + harga modifier" data-container="body"></i><br>
 				<div class="form-group">
 				</div>
 			</div>

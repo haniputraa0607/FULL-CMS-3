@@ -58,7 +58,10 @@ class TransactionSettingController extends Controller
             'submenu_active' => 'refund-reject-order'
         ];
 
-        $data['status'] = ['refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value']??0];
+        $data['status'] = [
+            'refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value']??0,
+            'refund_ipay88' => MyHelper::post('setting', ['key' => 'refund_ipay88'])['result']['value']??0,
+        ];
 
         return view('transaction::setting.refund_reject_order', $data);
     }
@@ -66,7 +69,8 @@ class TransactionSettingController extends Controller
     public function updateRefundRejectOrder(Request $request)
     {
         $sendData = [
-            'refund_midtrans' => ['value', $request->refund_midtrans?1:0]
+            'refund_midtrans' => ['value', $request->refund_midtrans?1:0],
+            'refund_ipay88' => ['value', $request->refund_ipay88?1:0],
         ];
         $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
         if ($data['status']??false == 'success') {
@@ -85,7 +89,7 @@ class TransactionSettingController extends Controller
             'submenu_active' => 'auto-reject-time'
         ];
 
-        $data['auto_reject_time'] = MyHelper::post('setting', ['key' => 'auto_reject_time'])['result']['value']??900;
+        $data['auto_reject_time'] = MyHelper::post('setting', ['key' => 'auto_reject_time'])['result']['value']??15;
 
         return view('transaction::setting.auto_reject', $data);
     }
@@ -93,7 +97,7 @@ class TransactionSettingController extends Controller
     public function updateAutoReject(Request $request)
     {
         $sendData = [
-            'auto_reject_time' => ['value', $request->auto_reject_time?:900]
+            'auto_reject_time' => ['value', $request->auto_reject_time?:15]
         ];
         $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
         if ($data['status']??false == 'success') {

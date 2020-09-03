@@ -422,7 +422,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			console.log('ok');
-			$('#promotype-form').find('input, textarea').prop('disabled', true);
+			$('#promotype-form').find('input, textarea, select').prop('disabled', true);
 			$('#user-search-form').find('input, textarea').prop('disabled', true);
 		});
 	</script>
@@ -492,6 +492,9 @@
 		</div>
 	</div>
 	<form role="form" action="" method="POST" enctype="multipart/form-data">
+		@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
+		<input type="hidden" name="used_code_update" value="1">
+		@endif
 		<div class="col-md-12">
 			{{-- DETAIL CAMPAIGN INFORMATION --}}
 			<div class="col-md-7">
@@ -730,7 +733,7 @@
 										<div class="col-md-3">
 											<label class="control-label" id="product-discount-value">Discount Value</label>
 											<span class="required" aria-required="true"> * </span>
-											<i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon yang diberikan" data-container="body"></i>
+											<i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon yang diberikan. Persentase akan dihitung dari harga produk + harga modifier" data-container="body"></i>
 											<div class="input-group @if(isset($result['promo_campaign_product_discount_rules']['discount_type']) && $result['promo_campaign_product_discount_rules']['discount_type'] == "Percent") col-md-5 @else col-md-12 @endif" id="product-discount-group">
 												<div class="input-group-addon" id="product-addon-rp" @if(isset($result['promo_campaign_product_discount_rules']['discount_type']) && $result['promo_campaign_product_discount_rules']['discount_type'] == "Percent") style="display: none;" @endif>IDR</div>
 												<input required type="text" class="form-control text-center" name="discount_value" placeholder="" @if(isset($result['promo_campaign_product_discount_rules']['discount_value']) && $result['promo_campaign_product_discount_rules']['discount_value'] != "") value="{{$result['promo_campaign_product_discount_rules']['discount_value']}}" @elseif(old('discount_value') != "") value="{{old('discount_value')}}" @endif min="0" oninput="validity.valid||(value='');" autocomplete="off">
@@ -764,20 +767,12 @@
 					</div>
 				</div>
 			</div>
-			@if( empty($result['promo_campaign_reports']) || empty($result['step_complete']) )
 			<div class="col-md-12" style="text-align:center;">
 				<div class="form-actions">
 					{{ csrf_field() }}
 					<button type="submit" class="btn blue"> Save </button>
 				</div>
 			</div>
-			@else
-			<div class="col-md-12" style="text-align:center;">
-				<div class="form-actions">
-					<a href="{{ ($result['id_promo_campaign'] ?? false) ? url('promo-campaign/detail/'.$result['id_promo_campaign']) : '' }}" class="btn blue">Detail</a>
-				</div>
-			</div>
-			@endif
 		</div>
 	</form>
 </div>

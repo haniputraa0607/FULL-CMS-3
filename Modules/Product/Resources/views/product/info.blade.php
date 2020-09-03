@@ -91,8 +91,7 @@
                 </label>
             </div>
             <div class="col-md-8">
-                <select class="select2 form-control" multiple="multiple" name="product_brands[]">
-                    <option value="*">All Brands</option>
+                <select class="select2 form-control" name="product_brands[]">
                     @foreach($brands as $brand)
                     <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],old('product_brands',array_column($syu['brands'],'id_brand')))) selected="selected" @endif>{{$brand['name_brand']}}</option>
                     @endforeach

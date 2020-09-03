@@ -4,20 +4,18 @@
 @endphp
 <div class="row">
 	<div class="col-md-12">
-		@if( $subscription['subscription_bought'] == 0 )
 	    <div class="row static-info">
 	        <div class="col-md-11 value">
-	            <a class="btn blue" href="{{ url('/'.$rpage)}}/step3/{{$subscription['id_subscription']}}">Edit Content</a>
+	            <a class="btn blue" href="{{ url('/'.$rpage)}}/step3/{{$deals['id_deals_promotion_template']}}">Edit Content</a>
 	        </div>
 	    </div>
-	    @endif
 		<div class="profile-info portlet light bordered">
 		    <div class="row static-info">
 	            <div class="col-md-4 name"> Description :</div>
 	            <div class="col-md-8 value"></div>
 	        </div>
 	        <div class="row static-info">
-	            <div class="col-md-6 value">{!! $subscription['subscription_description'] !!}</div>
+	            <div class="col-md-6 value">{!! $deals['deals_description'] !!}</div>
 	        </div>
 	    </div>
 
@@ -28,24 +26,28 @@
 	        </div>
 			@php 
 				$i = 1; 
-				$count_content = count($subscription['subscription_content']); 
+				$count_content = count($deals['deals_promotion_content']); 
 			@endphp
-			@foreach (($subscription['subscription_content']) as $content)
+			@foreach (($deals['deals_promotion_content']) as $content)
 				@if ($i == 1 || $i%3 == 1)
 					<div class="row">
 				@endif
 				    <div class="col-md-4">
 				        <div class="portlet portlet light bordered">
-				        	<div class="portlet-title"> 
-					        <span class="caption font-blue sbold uppercase">{{$content['title']}}</span>
-					        @if ($content['is_active'] == 1)
-					        	<span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;float: right;">Visible</span>
-					        @else
-					        	<span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;float: right;">Hidden</span>
-					        @endif
-					        </div>
+				        	<div class="portlet-title row"> 
+				        		<div class="col-md-8">
+					        		<span class="caption font-blue sbold uppercase">{{$content['title']}}</span>
+				        		</div>
+				        		<div class="col-md-4">	
+						        @if ($content['is_active'] == 1)
+						        	<span class="sale-num sbold badge badge-pill" style="background-color: #26C281;color: #fff;font-size: 14px!important;padding: 5px 12px;height: 25px!important;">Visible</span>
+						        @else
+						        	<span class="sale-num sbold badge badge-pill" style="background-color: #ACB5C3;color: #fff;font-size: 14px!important;padding: 5px 12px;height: 25px!important;">Hidden</span>
+						        @endif
+						        </div>
+				        		</div>
 				            <div class="portlet-body">
-				            	@foreach (($content['subscription_content_details']) as $content_detail)
+				            	@foreach (($content['deals_content_details']??$content['deals_promotion_content_details']) as $content_detail)
 					                <div class="row static-info">
 					                    <div class="col-md-2 name">{{$content_detail['order']}}</div>
 					                    <div class="col-md-10 value">{{$content_detail['content']}}</div>

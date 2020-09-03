@@ -1,34 +1,31 @@
 @php
-	use App\Lib\MyHelper;
-    $grantedFeature     = session('granted_features');
-	if($deals_type == 'Promotion'){
-        $rpage = 'promotion/deals';
-	}elseif($deals_type == 'WelcomeVoucher'){
-        $rpage = 'welcome-voucher';
-    }else{
-        $rpage = $deals_type=='Deals'?'deals':'inject-voucher';
-    }
+use App\Lib\MyHelper;
+// dd($deals);
+$configs    		= session('configs');
+$grantedFeature     = session('granted_features');
+	$deals_type = 'deals_promotion';
+    $rpage = 'promotion/deals';
 @endphp
 @extends('layouts.main-closed')
-@include('deals::deals.detail-info')
-@include('deals::deals.detail-info-content')
-@include('deals::deals.participate')
+@include('promotion::deals.detail-info')
+@include('promotion::deals.detail-info-content')
+@include('promotion::deals.participate')
 @section('page-style')
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
-    <!-- <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" /> -->
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <!-- <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css')}}" rel="stylesheet" type="text/css" /> -->
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
     <style type="text/css">
 		.d-none {
 			display: none;
@@ -76,23 +73,23 @@
 @endsection
 
 @section('page-script')
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <!-- <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/prices.js')}}"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+    <!-- <script src="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('js/prices.js')}}"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js') }}" type="text/javascript"></script>
 
-<!--     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+<!--     <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 -->
     <script>
     $('.datepicker').datepicker({
@@ -109,13 +106,19 @@
     });
 
     </script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
+
+    	$('.list-deals').on('click', function() {
+            id = $(this).data('deals');
+            $('#modal-id-deals').val(id);
+        });
+
         $('#sample_1').dataTable({
                 language: {
                     aria: {
@@ -389,14 +392,13 @@
                 tabsize: 2,
                 height: 120,
                 toolbar: [
-                    ['style', ['style']],
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                  ['style', ['style']],
+                  ['style', ['bold', 'underline', 'clear']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  ['insert', ['table']],
+                  ['insert', ['link', 'picture', 'video']],
+                  ['misc', ['fullscreen', 'codeview', 'help']]
                 ],
                 callbacks: {
                     onInit: function(e) {
@@ -575,7 +577,7 @@
 
     @include('layouts.notifications')
 
-@if($deals_type != 'Promotion')
+{{--@if($deals_type != 'Promotion')
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <a class="dashboard-stat dashboard-stat-v2 blue">
@@ -584,12 +586,12 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals['deals_total_voucher'] }}">
+                        <span data-counter="counterup" data-value="{{ $deals['deals_promotion_total_voucher'] }}">
                         @if (!empty($deals['deals_voucher_type']))
                         	@if ( $deals['deals_voucher_type'] == "Unlimited")
                         		{{ 'Unlimited' }}
                         	@else
-                        		{{ number_format(($deals['deals_total_voucher']??0)-($deals['deals_total_claimed']??0)) }}
+                        		{{ number_format(($deals['deals_promotion_total_voucher']??0)-($deals['deals_promotion_total_claimed']??0)) }}
                         	@endif
                         @endif
                         </span>
@@ -605,7 +607,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals['deals_total_claimed'] }}">{{ $deals['deals_total_claimed'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_promotion_total_claimed']??'' }}">{{ $deals['deals_promotion_total_claimed']??'' }}</span>
                     </div>
                     <div class="desc"> Total Claimed </div>
                 </div>
@@ -618,7 +620,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals['deals_total_redeemed'] }}">{{ $deals['deals_total_redeemed'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_promotion_total_redeemed']??'' }}">{{ $deals['deals_promotion_total_redeemed']??'' }}</span>
                     </div>
                     <div class="desc"> Total Redeem </div>
                 </div>
@@ -631,18 +633,19 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ $deals['deals_total_used'] }}">{{ $deals['deals_total_used'] }}</span>
+                        <span data-counter="counterup" data-value="{{ $deals['deals_promotion_total_used']??'' }}">{{ $deals['deals_promotion_total_used']??'' }}</span>
                     </div>
                     <div class="desc"> Total Used </div>
                 </div>
             </a>
         </div>
     </div>
-@endif
+@endif--}}
+
     <div class="portlet light bordered">
         <div class="portlet-title tabbable-line">
             <div class="caption">
-                <span class="caption-subject font-blue bold uppercase">{{ $deals['deals_title'] }}</span>
+                <span class="caption-subject font-blue bold uppercase">{{ $deals['deals_title']??'' }}</span>
             </div>
             <ul class="nav nav-tabs">
 
@@ -650,10 +653,7 @@
                     <a href="#info" data-toggle="tab" > Info </a>
                 </li>
                 <li>
-                    <a href="#voucher" data-toggle="tab"> Voucher </a>
-                </li>
-                <li>
-                    <a href="#participate" data-toggle="tab"> Participate </a>
+                    <a href="#promotion" data-toggle="tab"> Promotion </a>
                 </li>
             </ul>
         </div>
@@ -661,11 +661,20 @@
 
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                	@if(MyHelper::hasAccess([269], $grantedFeature))
-	                	@if ($deals['step_complete'] != 1)
-	                    	<a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Deals</a>
-	                    @endif
-	                @endif
+                {{--	@if ($deals['deals_voucher_type']!='List Vouchers')
+                	<form action="{{ url('deals/export') }}" method="post" style="display: inline;">
+                		{{ csrf_field() }}
+					    <input type="hidden" value="{{ $deals['id_deals_promotion_template']??'' }}" name="id_deals_promotion_template" />
+					    <input type="hidden" value="{{ $deals_type??'' }}"  name="deals_type" />
+					    <button type="submit" class="btn green-jungle" style="float: right;"><i class="fa fa-download"></i> Export</button>
+					</form>
+					@else
+					<a data-toggle="modal" href="#export-modal" class="btn green-jungle list-deals" data-deals="{{ $deals['id_deals_promotion_template']??'' }}" style="float: right;"><i class="fa fa-download"></i> Export</a>
+                    @endif
+                --}}
+                	@if ($deals['step_complete'] != 1)
+                    <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; margin-right: 5px">Start Deals Template</a>
+                    @endif
                 	<ul class="nav nav-tabs" id="tab-header">
                         <li class="active" id="infoOutlet">
                             <a href="#basic" data-toggle="tab" > Basic Info </a>
@@ -685,7 +694,7 @@
                 			@yield('detail-info-content')
                         </div>
                         <div class="tab-pane" id="outlet">
-                            @if($deals['is_all_outlet'] == 1)
+                            @if(in_array("all", explode(',',$deals['deals_list_outlet'])))
                                 <div class="alert alert-warning">
                                     This deals applied to <strong>All Outlet</strong>.
                                 </div>
@@ -694,24 +703,24 @@
                                 <div class="mt-comments">
                                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
                                         <thead>
-                                        <tr>
-                                            <th>Code</th>
-                                            <th>Name</th>
-                                            <th>Address</th>
-                                            <th>Phone</th>
-                                            <th>Email</th>
-                                        </tr>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Address</th>
+                                                <th>Phone</th>
+                                                <th>Email</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach(($promotion_outlets??$deals['outlets']) as $res)
-                                            <tr>
-                                                <td>{{ $res['outlet_code'] }}</td>
-                                                <td>{{ $res['outlet_name'] }}</td>
-                                                <td>{{ $res['outlet_address'] }}</td>
-                                                <td>{{ $res['outlet_phone'] }}</td>
-                                                <td>{{ $res['outlet_email'] }}</td>
-                                            </tr>
-                                        @endforeach
+                                            @foreach(($promotion_outlets??$deals['outlets']) as $res)
+                                                <tr>
+                                                    <td>{{ $res['outlet_code'] }}</td>
+                                                    <td>{{ $res['outlet_name'] }}</td>
+                                                    <td>{{ $res['outlet_address'] }}</td>
+                                                    <td>{{ $res['outlet_phone'] }}</td>
+                                                    <td>{{ $res['outlet_email'] }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -720,28 +729,25 @@
                         </div>
                     </div>
                 </div>
-                @if($deals_type != 'Promotion')
-                <div class="tab-pane" id="voucher">
-                    @include('deals::deals.voucher')
-                </div>
-                <div class="tab-pane" id="participate">
+                @if($deals_type != 'Promotion')                
+                <div class="tab-pane" id="promotion">
                     @yield('detail-participate')
                 </div>
                 @endif
             </div>
         </div>
     </div>
-    @if ($deals['step_complete'] != 1)
+    @if (($deals['step_complete']??false) != 1)
     <div class="modal fade bs-modal-sm" id="small" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Start Deals?</h4>
+                    <h4 class="modal-title">Start Deals Template?</h4>
                 </div>
                 <form action="{{url('deals/update-complete')}}" method="post">
                 	@csrf
-                	<input type="hidden" name="id_deals" value="{{$deals['id_deals']}}">
+                	<input type="hidden" name="id_deals_promotion_template" value="{{$deals['id_deals_promotion_template']??''}}">
                 	<input type="hidden" name="deals_type" value="{{$deals['deals_type']??$deals_type}}">
 	                <div class="modal-footer">
 	                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button>
@@ -754,5 +760,27 @@
         <!-- /.modal-dialog -->
     </div>
     @endif
+
+    <div class="modal fade bs-modal-sm" id="export-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Export List Voucher</h4>
+                </div>
+                <div class="modal-body row">
+	                <form action="{{url('deals/export')}}" method="post">
+	                	{{ csrf_field() }}
+					    <input type="hidden" value="" name="id_deals_promotion_template" id="modal-id-deals" />
+					    <input type="hidden" value="{{ $deals_type??'' }}"  name="deals_type" />
+			    		<button type="submit" class="btn green-jungle col-md-12" value="1" name="list_voucher"><i class="fa fa-download"></i> With Voucher</button>
+			    		<button type="submit" class="btn green-jungle col-md-12" value="0" name="list_voucher" style="margin-top: 15px"><i class="fa fa-download"></i> Without Voucher</button>
+	                </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 @endsection

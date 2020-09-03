@@ -70,7 +70,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('list/trx', 'DisburseController@listTrx');
         Route::any('list/fail-action', 'DisburseController@listDisburseFailAction');
         Route::any('list/{status}/{id_disburse??}', 'DisburseController@listDisburse');
-        Route::any('list-datatable/{status}', 'DisburseController@listDisburseDataTable');
+        Route::any('list-datatable/calculation', 'DisburseController@listCalculationDataTable');
         Route::any('detail-trx/{id}', 'DisburseController@detailDisburseTrx');
         Route::any('update-status/{id}', 'DisburseController@updateStatusDisburse');
     });

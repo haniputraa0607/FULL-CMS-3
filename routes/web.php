@@ -16,9 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('logout', function(){
-  $a = session('success')['s'];
   session()->flush();
-  if($a) session(['success' => ['s' => $a]]);
   return redirect('login');
 });
 

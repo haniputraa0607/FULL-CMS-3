@@ -233,6 +233,7 @@
                         <th> Code </th>
                         <th> Category </th>
                         <th> Name </th>
+                        <th> Brand </th>
                         <!-- <th> Allow Sync </th> -->
                         <th >Default Visibility Product</th>
                         <th> Override Visible </th>
@@ -254,6 +255,11 @@
                                     <td>{{ $value['category'][0]['product_category_name']??'Uncategories' }}</td>
                                 @endif
                                 <td>{{ $value['product_name'] }}</td>
+                                <td>
+                                    @foreach ($value['brands'] as $item)
+                                        {{$item['name_brand']}}
+                                    @endforeach
+                                </td>
                                 {{-- <td>
                                     <div class="bootstrap-switch-container">
                                         <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>

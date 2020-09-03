@@ -70,19 +70,19 @@ $idUserFrenchisee = session('id_user_franchise');
 		});
 
 		function datatables(){
-			$("#tbodyListFail").empty();
+			$("#tbodyListCalculation").empty();
 			var data_display = 25;
 			var token  = "{{ csrf_token() }}";
 			@if(is_null($idUserFrenchisee))
-			    var url = "{{url('disburse/list-datatable/fail')}}";
+			    var url = "{{url('disburse/list-datatable/calculation')}}";
 			@else
-				var url = "{{url('disburse/user-franchise/list-datatable/fail')}}";
+				var url = "{{url('disburse/user-franchise/list-datatable/calculation')}}";
 			@endif
 
 			var dt = 0;
-			var tab = $.fn.dataTable.isDataTable( '#tableListFail' );
+			var tab = $.fn.dataTable.isDataTable( '#tableListCalculation' );
 			if(tab){
-				$('#tableListFail').DataTable().destroy();
+				$('#tableListCalculation').DataTable().destroy();
 			}
 
 			var outlet = $("#fitler_outlet").val();
@@ -97,7 +97,7 @@ $idUserFrenchisee = session('id_user_franchise');
 				end_date : end_date
 			};
 
-			$('#tableListFail').DataTable( {
+			$('#tableListCalculation').DataTable( {
 				"bPaginate": true,
 				"bLengthChange": false,
 				"bFilter": false,
@@ -120,9 +120,19 @@ $idUserFrenchisee = session('id_user_franchise');
 					{
 						targets: 0,
 						render: function ( data, type, row, meta ) {
-							var detailUrl = "{{ url('disburse/detail-trx') }}/"+data;
-							var data = '<a href="' + detailUrl + '" target="_blank" class="btn btn-block green btn-xs">Detail</a>';
-							return data;
+							var color = '#bfbfbf';
+							if(data === 'Fail'){
+								color = '#f54842';
+							}else if(data === 'Success'){
+								color = '#26C281';
+							}
+
+							var status = data;
+							if(data == null){
+								status = 'Unprocessed';
+							}
+							var html = '<span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: '+color+';padding: 5px 12px;color: #fff;">'+status+'</span>';
+							return html;
 						}
 					}
 				]
@@ -157,17 +167,28 @@ $idUserFrenchisee = session('id_user_franchise');
 					$("#nom_fail").empty();
 					$("#nom_trx").empty();
 					$("#nom_income").empty();
-					nom_income
+
+					$("#nom_item").empty();
+					$("#nom_delivery").empty();
+					$("#nom_expense_central").empty();
 					if (result.status === "success") {
-						$("#nom_success").append('<span data-counter="counterup" data-value="'+result.nominal_success+'">Rp '+result.format_nominal_success+'</span>');
-						$("#nom_fail").append('<span data-counter="counterup" data-value="'+result.nominal_fail+'">Rp '+result.format_nominal_fail+'</span>');
-						$("#nom_trx").append('<span data-counter="counterup" data-value="'+result.nominal_trx+'">Rp '+result.format_nominal_trx+'</span>');
-						$("#nom_income").append('<span data-counter="counterup" data-value="'+result.total_income_central+'">Rp '+result.format_total_income_central+'</span>');
+						$("#nom_success").append('<span data-counter="counterup" data-value="'+result.nominal_success+'" style="font-size: 22px">Rp '+result.format_nominal_success+'</span>');
+						$("#nom_fail").append('<span data-counter="counterup" data-value="'+result.nominal_fail+'" style="font-size: 22px">Rp '+result.format_nominal_fail+'</span>');
+						$("#nom_trx").append('<span data-counter="counterup" data-value="'+result.nom_grandtotal+'" style="font-size: 22px">Rp '+result.format_nominal_grandtotal+'</span>');
+						$("#nom_income").append('<span data-counter="counterup" data-value="'+result.total_income_central+'" style="font-size: 22px">Rp '+result.format_total_income_central+'</span>');
+
+						$("#nom_item").append('<span data-counter="counterup" data-value="'+result.nominal_item+'" style="font-size: 22px">Rp '+result.format_nominal_item+'</span>');
+						$("#nom_delivery").append('<span data-counter="counterup" data-value="'+result.nominal_delivery+'" style="font-size: 22px">Rp '+result.format_nominal_delivery+'</span>');
+						$("#nom_expense_central").append('<span data-counter="counterup" data-value="'+result.nominal_expense_central+'" style="font-size: 22px">Rp '+result.format_nominal_expense_central+'</span>');
 					}else{
-						$("#nom_success").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
-						$("#nom_fail").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
-						$("#nom_trx").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
-						$("#nom_income").append('<span data-counter="counterup" data-value="0">Rp 0</span>');
+						$("#nom_success").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_fail").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_trx").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_income").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+
+						$("#nom_item").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_delivery").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_expense_central").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
 					}
 				},
 				error: function (jqXHR, exception) {
@@ -312,9 +333,48 @@ $idUserFrenchisee = session('id_user_franchise');
 				</div>
 				<div class="details">
 					<div class="number" id="nom_trx">
-						<span data-counter="counterup" data-value="{{$nominal_trx}}" style="font-size: 22px">Rp {{number_format($nominal_trx, 2)}}</span>
+						<span data-counter="counterup" data-value="{{$nominal_grandtotal}}" style="font-size: 22px">Rp {{number_format($nominal_grandtotal, 2)}}</span>
 					</div>
-					<div class="desc"> Nominal Transaction </div>
+					<div class="desc"> Grand Total </div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green-seagreen" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="nom_item">
+						<span data-counter="counterup" data-value="{{$nominal_item}}" style="font-size: 22px">Rp {{number_format($nominal_item, 2)}}</span>
+					</div>
+					<div class="desc"> Total Fee Item (Subtotal)</div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green-jungle" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="nom_delivery">
+						<span data-counter="counterup" data-value="{{$nominal_delivery}}" style="font-size: 22px">Rp {{number_format($nominal_delivery, 2)}}</span>
+					</div>
+					<div class="desc"> Total Delivery </div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 yellow-crusta" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="nom_expense_central">
+						<span data-counter="counterup" data-value="{{$nominal_expense_central}}" style="font-size: 22px">Rp {{number_format($nominal_expense_central, 2)}}</span>
+					</div>
+					<div class="desc"> Total Expense Central </div>
 				</div>
 			</a>
 		</div>
@@ -323,23 +383,33 @@ $idUserFrenchisee = session('id_user_franchise');
 	<div class="portlet light bordered">
 		<div class="portlet-title">
 			<div class="caption">
-				<span class="caption-subject font-red sbold uppercase">List Failed</span>
+				<span class="caption-subject font-red sbold uppercase">List Calculation Transaction</span>
 			</div>
 		</div>
 		<div class="portlet-body form">
-			<table class="table table-striped table-bordered table-hover" id="tableListFail">
+			<table class="table table-striped table-bordered table-hover" id="tableListCalculation">
 				<thead>
 				<tr>
-					<th scope="col" width="10%"> Action </th>
+					<th scope="col" width="25%"> Status Disburse </th>
 					<th scope="col" width="30%"> Outlet </th>
-					<th scope="col" width="30%"> Date </th>
-					<th scope="col" width="10%"> Nominal </th>
-					<th scope="col" width="25%"> Bank Name </th>
-					<th scope="col" width="25%"> Account Number </th>
-					<th scope="col" width="25%"> Recipient Name </th>
+					<th scope="col" width="30%"> Disburse Date </th>
+					<th scope="col" width="30%"> Transaction Date </th>
+					<th scope="col" width="25%"> Receipt Number </th>
+					<th scope="col" width="25%"> Gross Sales </th>
+					<th scope="col" width="25%"> Discount </th>
+					<th scope="col" width="25%"> Delivery </th>
+					<th scope="col" width="25%"> Sub Total </th>
+					<th scope="col" width="25%"> Fee Item </th>
+					<th scope="col" width="25%"> Fee Payment </th>
+					<th scope="col" width="25%"> Fee Promo </th>
+					<th scope="col" width="25%"> Fee Subscription </th>
+					<th scope="col" width="25%"> Fee Point Use </th>
+					<th scope="col" width="25%"> Net Sale (Income Outlet) </th>
+					<th scope="col" width="25%"> Income Central </th>
+					<th scope="col" width="25%"> Expense Central </th>
 				</tr>
 				</thead>
-				<tbody id="tbodyListFail"></tbody>
+				<tbody id="tbodyListCalculation"></tbody>
 			</table>
 		</div>
 	</div>

@@ -568,22 +568,17 @@ $configs = session('configs');
     	      <ul class="nav nav-tabs ">
 				@if(MyHelper::hasAccess([58], $configs))
 					<li class="active">
-					<a href="#feedback" data-toggle="tab"> Customer Feedback </a>
+					<a href="#feedback" data-toggle="tab"> Kritik, Saran & Keluhan </a>
 					</li>
 				@endif
 				@if(MyHelper::hasAccess([60], $configs))
 					<li>
-					<a href="#marketing" data-toggle="tab"> Marketing Partnership </a>
+					<a href="#marketing" data-toggle="tab"> Pengubahan Data Diri </a>
 					</li>
 				@endif
 				@if(MyHelper::hasAccess([59], $configs))
 					<li>
-					<a href="#development" data-toggle="tab"> Business Development </a>
-					</li>
-				@endif
-				@if(MyHelper::hasAccess([59], $configs))
-					<li>
-					<a href="#career" data-toggle="tab"> Career </a>
+					<a href="#development" data-toggle="tab"> Lain - Lain </a>
 					</li>
 				@endif
     	      </ul>
@@ -612,7 +607,7 @@ $configs = session('configs');
 		    	        	       @if (!empty($enquiries))
 									<?php $no = 1; ?>
    		    	        	            @foreach($enquiries as $key=>$value)
-   		    	        	            	@if ($value['enquiry_subject'] == "Customer Feedback")
+   		    	        	            	@if ($value['enquiry_subject'] == "Kritik, Saran & Keluhan")
    		    	        	                <tr>
    		    	        	                    <td>{{ $no }}</td>
    		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
@@ -743,7 +738,7 @@ $configs = session('configs');
 		    	        	        @if (!empty($enquiries))
 										<?php $no = 1; ?>
 		    	        	            @foreach($enquiries as $key => $value)
-		    	        	            	@if ($value['enquiry_subject'] == "Marketing Partnership")
+		    	        	            	@if ($value['enquiry_subject'] == "Pengubahan Data Diri")
 		    	        	                 <tr>
 												<td>{{ $no }}</td>
    		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
@@ -855,7 +850,7 @@ $configs = session('configs');
 		    	        	        @if (!empty($enquiries))
 										<?php $no = 1; ?>
 		    	        	            @foreach($enquiries as $key => $value)
-		    	        	            	@if ($value['enquiry_subject'] == "Business Development")
+		    	        	            	@if ($value['enquiry_subject'] == "Lain - Lain")
 		    	        	                 <tr>
 												<td>{{ $no }}</td>
    		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>

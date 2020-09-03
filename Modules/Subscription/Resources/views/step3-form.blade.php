@@ -28,6 +28,7 @@ $configs = session('configs');
                         <div class="input-icon right">
                             <div class="col-md-9">
                                 <div id="contentTarget" class="sortable">
+                                	{{-- default 1 --}}
                                     <div class="form-group content-count bottom-border unsortable">
                                         <div id="accordion1">
                                             <div class="col-md-6 content-title">
@@ -57,7 +58,7 @@ $configs = session('configs');
                                                                             <a href="javascript:;" class="btn btn-grey "><i class="fa fa-arrows-v"></i></a>
                                                                         </div>
                                                                         <div class="col-md-9 p-l-30px">
-                                                                            <textarea type="text" placeholder="Content Detail" class="form-control" name="content_detail[1][]" required style="resize:vertical;"/>{{$value['content']}}</textarea>
+                                                                            <textarea type="text" placeholder="Content Detail" class="form-control focused-input" name="content_detail[1][]" required style="resize:vertical;"  />{{$value['content']}}</textarea>
                                                                             <input type="hidden" name="content_detail_order[1][]" value="0">
                                                                             <input type="hidden" name="id_content_detail[1][]" value="0">
                                                                         </div>
@@ -82,11 +83,12 @@ $configs = session('configs');
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- default 2 --}}
                                     <div class="form-group content-count bottom-border unsortable">
                                         <div id="accordion2">
                                             <div class="col-md-6 content-title">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="content_title[]"  placeholder="Content Title" required maxlength="20" value="{{ $subscription['subscription_content'][1]['title']??'Cara Pakai' }}">
+                                                    <input type="text" class="form-control" name="content_title[]"  placeholder="Content Title" required maxlength="20" value="{{ $subscription['subscription_content'][1]['title']??'Cara Penggunaan' }}">
                                                     <input type="hidden" name="id_subscription_content[]" value="0">
                                                     <input type="hidden" name="content_order[]" value="0">
                                                     <a class="accordion-toggle input-group-addon" data-toggle="collapse" data-parent="#accordion2" aria-expanded="true" href="#collapse_2">
@@ -111,7 +113,7 @@ $configs = session('configs');
                                                                             <a href="javascript:;" class="btn btn-grey "><i class="fa fa-arrows-v"></i></a>
                                                                         </div>
                                                                         <div class="col-md-9 p-l-30px">
-                                                                            <textarea type="text" placeholder="Content Detail" class="form-control" name="content_detail[2][]" required style="resize:vertical;"/>{{$value['content']}}</textarea>
+                                                                            <textarea type="text" placeholder="Content Detail" class="form-control focused-input" name="content_detail[2][]" required style="resize:vertical;" />{{$value['content']}}</textarea>
                                                                             <input type="hidden" name="content_detail_order[2][]" value="0">
                                                                             <input type="hidden" name="id_content_detail[2][]" value="0">
                                                                         </div>
@@ -136,6 +138,7 @@ $configs = session('configs');
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- other content --}}
                                     @if( isset($subscription['subscription_content']) )
                                         @foreach($subscription['subscription_content'] as $key => $val)
                                             @if($key > 1)
@@ -177,7 +180,7 @@ $configs = session('configs');
                                                                                         <a href="javascript:;" class="btn btn-grey "><i class="fa fa-arrows-v"></i></a>
                                                                                     </div>
                                                                                     <div class="col-md-9 p-l-30px">
-                                                                                        <textarea type="text" placeholder="Content Detail" class="form-control" name="content_detail[{{$key}}][]" required style="resize:vertical;"/>{{$value2['content']}}</textarea>
+                                                                                        <textarea type="text" placeholder="Content Detail" class="form-control focused-input" name="content_detail[{{$key}}][]" required style="resize:vertical;" />{{$value2['content']}}</textarea>
                                                                                         <input type="hidden" name="content_detail_order[{{$key}}][]" value="0">
                                                                                         <input type="hidden" name="id_content_detail[{{$key}}][]" value="0">
                                                                                     </div>
@@ -209,6 +212,20 @@ $configs = session('configs');
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"><a href="javascript:;" class="btn btn-info content"><i class="fa fa-plus"></i> Add Content </a></label>
                                 </div>
+                                @if (!empty($text_replaces))
+	                                <br>
+									
+									You can use this variables to display subscription information to the content detail:
+									<br><br>
+									<div class="row">
+										@foreach($text_replaces as $key=>$row)
+											<div class="col-md-3" style="margin-bottom:5px;">
+												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="textReplace('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+											</div>
+										@endforeach
+									</div>
+									<br><br>
+                                @endif
                             </div>
                         </div>
                     </div>
