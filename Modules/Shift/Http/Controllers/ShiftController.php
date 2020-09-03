@@ -64,6 +64,7 @@ class ShiftController extends Controller
 
         $shifts = MyHelper::post('report/shift/summary', $data['post']);
         $outlets = MyHelper::get('outlet/be/list');
+        $user_outletapps = MyHelper::get('outlet/be/user_outletapp/list');
 
         if (isset($shifts['status']) && $shifts['status'] == "success") {
             $data['shifts'] = $shifts['result'];
@@ -75,6 +76,12 @@ class ShiftController extends Controller
             $data['outlets'] = $outlets['result'];
         }else{
             $data['outlets'] = [];
+        }
+
+        if(isset($user_outletapps['status']) && $user_outletapps['status'] == 'success'){
+            $data['user_outletapps'] = $user_outletapps['result'];
+        }else{
+            $data['user_outletapps'] = [];
         }
 
         return view('shift::index', $data);

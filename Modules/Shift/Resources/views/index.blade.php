@@ -169,11 +169,11 @@ $configs     		= session('configs');
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Outlet App User</label>
-                                <select class="form-control input-sm select2" name="id_user_outlet_app">
+                                <select class="form-control input-sm select2" name="id_user_outletapp">
                                     <option value="">All</option>
-                                    @if (isset($outlets))
-                                        @foreach ($outlets as $key => $outlet)
-                                            <option value="{{ $outlet['id_outlet'] }}" @if (isset($post['id_outlet']) && $post['id_outlet'] == $outlet['id_outlet']) selected @elseif (old('id_outlet') == $outlet['id_outlet']) selected @endif>{{ $outlet['outlet_code'] }} - {{ $outlet['outlet_name'] }}</option>
+                                    @if (isset($user_outletapps))
+                                        @foreach ($user_outletapps as $key => $user_outletapp)
+                                            <option value="{{ $user_outletapp['id_user_outletapp'] }}" @if (isset($post['id_user_outletapp']) && $post['id_user_outletapp'] == $user_outletapp['id_user_outletapp']) selected @elseif (old('id_user_outletapp') == $user_outletapp['id_user_outletapp']) selected @endif>{{ $user_outletapp['username'] }} - {{ $user_outletapp['level'] }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -278,7 +278,7 @@ $configs     		= session('configs');
                                             <td> {{date('d F Y', strtotime($shift['created_at']))}}</td>
 											<td> {{$shift['outlet']['outlet_code']}} </td>
                                             <td> {{$shift['outlet']['outlet_name']}} </td>
-                                            <td> {{$shift['id_user_outletapp']}} </td>
+                                            <td> {{$shift['user_outletapp']['username']}} </td>
                                             <td> {{$shift['open_time']}} </td>
                                             <td> {{$shift['close_time']}} </td>
                                             <td> {{$shift['cash_start']}} </td>
