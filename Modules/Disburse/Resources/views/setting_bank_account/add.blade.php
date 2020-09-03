@@ -183,6 +183,29 @@
                                         </div>
 
                                         <div class="form-group">
+                                            <label class="col-md-3 control-label">Send Email To
+                                                <i class="fa fa-question-circle tooltips" data-original-title="ketika diburse sukses, informasi detail akan dikirim ke email bank atau email outlet" data-container="body"></i></label>
+                                            <div class="col-md-3" style="margin-top: 1%">
+                                                <div class="md-radio">
+                                                    <input type="radio" id="optionsRadios2" name="send_email_to" class="md-radiobtn publishType" value="Email Bank">
+                                                    <label for="optionsRadios2">
+                                                        <span></span>
+                                                        <span class="check"></span>
+                                                        <span class="box"></span> Email Bank </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" style="margin-top: 1%">
+                                                <div class="md-radio">
+                                                    <input type="radio" id="optionsRadios1" name="send_email_to" class="md-radiobtn publishType" value="Email Outlet" checked>
+                                                    <label for="optionsRadios1">
+                                                        <span></span>
+                                                        <span class="check"></span>
+                                                        <span class="box"></span> Email Outlet </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label class="col-md-3 control-label"></label>
                                             <div class="col-md-4">
                                                 <div class="md-radio-inline">

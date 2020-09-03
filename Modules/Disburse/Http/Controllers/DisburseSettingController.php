@@ -191,11 +191,7 @@ class DisburseSettingController extends Controller
             $dataimport = array_map(function($x){return (Object)$x;}, $dataimport[0]??[]);
             $save = MyHelper::post('disburse/setting/import-bank-account-outlet', ['data_import' => $dataimport]);
             if (isset($save['status']) && $save['status'] == "success") {
-                if(count($save['data_failed']) == 0){
-                    $message = ['Success import '.count($save['data_success'])];
-                }else{
-                    $message = ['Success import '.count($save['data_success']),'Failed import ('.implode(",",$save['data_failed']).')'];
-                }
+                $message = ['Success import '.count($save['data_success'])];
                 return redirect('disburse/setting/bank-account#export-import')->withSuccess($message);
             }else {
                 if (isset($save['errors'])) {
@@ -287,6 +283,13 @@ class DisburseSettingController extends Controller
             $data['time_to_sent'] = $timeToSent['result'];
         }else{
             $data['time_to_sent'] = [];
+        }
+
+        $feeDisburse = MyHelper::get('disburse/setting/fee-disburse');
+        if(isset($feeDisburse['status']) && $feeDisburse['status'] == 'success'){
+            $data['fee_disburse'] = $feeDisburse['result'];
+        }else{
+            $data['fee_disburse'] = [];
         }
 
         return view('disburse::setting_global.setting', $data);
@@ -404,6 +407,17 @@ class DisburseSettingController extends Controller
             return redirect('disburse/setting/global#time-to-sent')->withSuccess(['Success Update Data']);
         }else{
             return redirect('disburse/setting/global#time-to-sent')->withErrors(['Failed Update Data']);
+        }
+    }
+
+    function settingFeeDisburse(Request $request){
+        $post = $request->except('_token');
+
+        $save = MyHelper::post('disburse/setting/fee-disburse', $post);
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('disburse/setting/global#fee-disburse')->withSuccess(['Success Update Data']);
+        }else{
+            return redirect('disburse/setting/global#fee-disburse')->withErrors(['Failed Update Data']);
         }
     }
 }
