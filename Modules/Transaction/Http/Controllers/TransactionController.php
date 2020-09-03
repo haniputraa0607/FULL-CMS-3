@@ -79,8 +79,8 @@ class TransactionController extends Controller
     }
 	
 	public function autoResponse(Request $request, $subject){
-        // return $subject;
-		$data = [ 'title'             => 'Transaction Auto Response '.ucfirst(str_replace('-',' ',$subject)),
+        $autocrmSubject = ucwords(str_replace('-',' ',$subject));
+		$data = [ 'title'             => 'Transaction Auto Response '.$autocrmSubject,
 				  'menu_active'       => 'transaction',
                   'submenu_active'    => 'transaction-autoresponse-'.$subject,
                   'type'              => 'trx'  
@@ -247,7 +247,7 @@ class TransactionController extends Controller
                 ];
                 break;
         }
-        $query = MyHelper::get('autocrm/list');
+        $query = MyHelper::post('autocrm/list', ['autocrm_title' => $autocrmSubject]);
 		$test = MyHelper::get('autocrm/textreplace');
 		$auto = null;
 		$post = $request->except('_token');
@@ -271,13 +271,12 @@ class TransactionController extends Controller
 			$data['api_key_whatsapp'] = null;
 		}
         
-		foreach($query['result'] as $autonya){
-			if($autonya['autocrm_title'] == ucwords(str_replace('-',' ',$subject))){
-				$auto = $autonya;
-			}
-		}
-		
-		if($auto == null) return back()->withErrors(['No such response']);
+		if(isset($query['result'])){
+			$auto = $query['result'];
+		}else{
+			return back()->withErrors(['No such response']);
+        }
+        
 		$data['data'] = $auto;
 		if($test['status'] == 'success'){
 			$data['textreplaces'] = $test['result'];
