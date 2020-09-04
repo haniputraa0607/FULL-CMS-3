@@ -97,10 +97,15 @@ class ModifierController extends Controller
             session(['product_modifier_filter' => null]);
             return redirect('product/modifier');
         }
-        $post['type'] = $post['type_dropdown'];
-        if ($post['type'] == '0') {
-            $post['type'] = $post['type_textbox'];
+        if(isset($post['type_dropdown'])){
+            $post['type'] = $post['type_dropdown'];
+            if ($post['type'] == '0') {
+                $post['type'] = $post['type_textbox'];
+            }
+        }else{
+            $post['type'] = "Topping";
         }
+
         $result = MyHelper::post('product/modifier/create', $post);
         if (($result['status'] ?? false) == 'success') {
             return redirect('product/modifier/create')->with('success', ['Success create modifier']);
@@ -173,7 +178,11 @@ class ModifierController extends Controller
             $result        = MyHelper::post('product/modifier/update', $post);
             return $result;
         }
-        $post['type']                = $post['type_dropdown'];
+        if(isset($post['type_dropdown'])){
+            $post['type'] = $post['type_dropdown'];
+        }else{
+            $post['type'] = "Topping";
+        }
         $post['id_product_modifier'] = $id;
         if ($post['type'] == '0') {
             $post['type'] = $post['type_textbox'];
