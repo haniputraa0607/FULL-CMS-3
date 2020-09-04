@@ -229,7 +229,7 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
-                        <th> Franchise Status </th>
+                        <th> Status Mitra</th>
                         <th> Code </th>
                         <th> Name </th>
                         @if(MyHelper::hasAccess([95], $configs))
@@ -249,9 +249,9 @@
                             <tr>
                                 <td>
                                     @if($value['status_franchise'] == 1)
-                                        <p style="color: green">Franchise</p>
+                                        <p style="color: green">Mitra</p>
                                     @else
-                                        Not franchise
+                                        Pusat
                                     @endif
                                 </td>
                                 <td>{{ $value['outlet_code'] }}</td>

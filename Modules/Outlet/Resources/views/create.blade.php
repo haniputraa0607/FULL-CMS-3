@@ -352,14 +352,14 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                                Franchise Status
+                                Status Mitra
                                 <i class="fa fa-question-circle tooltips" data-original-title="Keterangan outlet ini adalah franchise atau bukan franchise" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">
                             <select class="select2 form-control" name="status_franchise">
-                                <option value="1" @if(old('status_franchise') == 1) selected @endif>Franchise</option>
-                                <option value="0" @if(old('status_franchise') == 0) selected @endif>Not Franchise</option>
+                                <option value="1" @if(old('status_franchise') == 1) selected @endif>Mitra</option>
+                                <option value="0" @if(old('status_franchise') == 0) selected @endif>Pusat</option>
                             </select>
                         </div>
                     </div>

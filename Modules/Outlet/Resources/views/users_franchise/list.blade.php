@@ -165,9 +165,9 @@
                                 </td>
                                 <td>
                                     @if($value['user_franchise_type'] == 'Franchise')
-                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Franchise</span>
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Mitra</span>
                                     @else
-                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Not franchise</span>
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Pusat</span>
                                     @endif
                                 </td>
                                 <td>{{$value['phone']}}</td>
