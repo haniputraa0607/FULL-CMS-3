@@ -138,7 +138,7 @@
             </div>
             <div class="actions">
                 @if(isset($subs) && !empty($subs))
-                    <a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1"><i class="fa fa-download"></i> Export</a>
+                    <a class="btn green-jungle" id="btn-export" href="{{url()->current()}}?export=1" target="_blank"><i class="fa fa-download"></i> Export</a>
                 @endif
             </div>
         </div>

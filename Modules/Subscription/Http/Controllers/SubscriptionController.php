@@ -606,9 +606,9 @@ class SubscriptionController extends Controller
         unset($post['page']);
         $data = [
             'title'          => 'Subscription',
-            'sub_title'      => 'Subscription Report',
-            'menu_active'    => 'subscription-report',
-            'submenu_active' => ''
+            'sub_title'      => 'Transaction Report',
+            'menu_active'    => 'subscription',
+            'submenu_active' => 'subscription-report'
         ];
 
         if ($request->post('clear') == 'session') 
@@ -639,15 +639,14 @@ class SubscriptionController extends Controller
             $report = MyHelper::post('report/export/create', $post);
 
             if (isset($report['status']) && $report['status'] == "success") {
-                return redirect('transaction/list-export')->withSuccess(['Success create export to queue']);
+                return redirect('subscription/list-export')->withSuccess(['Success create export to queue']);
             }else{
-                return redirect('transaction/list-export')->withErrors(['Failed create export to queue']);
+                return redirect('subscription/list-export')->withErrors(['Failed create export to queue']);
             }
         }
 
         $get_data = MyHelper::post('subscription/transaction-report?page='.$request->get('page'), $post);
-// dd($request->all());
-// return($get_data);
+
 		if(!empty($get_data['result']['data']) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
 
             $data['subs']            = $get_data['result']['data'];
@@ -702,9 +701,9 @@ class SubscriptionController extends Controller
     function listExport(Request $request){
         $data = [
             'title'          => 'Subscription',
-            'sub_title'      => 'Subscription Report',
-            'menu_active'    => 'subscription-report',
-            'submenu_active' => ''
+            'sub_title'      => 'Export Subscription Report',
+            'menu_active'    => 'subscription',
+            'submenu_active' => 'subscription-list-export'
         ];
 
         $id_user = Session::get('id_user');
@@ -725,7 +724,7 @@ class SubscriptionController extends Controller
             $data['sum'] = 0;
         }
 
-        return view('report::export.list_export', $data);
+        return view('subscription::transaction-report-export-list', $data);
     }
 
     function actionExport(Request $request, $action, $id){
@@ -736,9 +735,9 @@ class SubscriptionController extends Controller
         $actions = MyHelper::post('report/export/action', $post);
         if($action == 'deleted'){
             if (isset($actions['status']) && $actions['status'] == "success") {
-                return redirect('report/subscription/list-export')->withSuccess(['Success to Remove file']);
+                return redirect('subscription/list-export')->withSuccess(['Success to Remove file']);
             } else {
-                return redirect('report/subscription/list-export')->withErrors(['Failed to Remove file']);
+                return redirect('subscription/list-export')->withErrors(['Failed to Remove file']);
             }
         }else{
             if (isset($actions['status']) && $actions['status'] == "success") {
@@ -749,7 +748,7 @@ class SubscriptionController extends Controller
 
                 return response()->download($tempImage, $filename)->deleteFileAfterSend(true);
             } else {
-                return redirect('report/subscription/list-export')->withErrors(['Failed to Download file']);
+                return redirect('subscription/list-export')->withErrors(['Failed to Download file']);
             }
         }
 
