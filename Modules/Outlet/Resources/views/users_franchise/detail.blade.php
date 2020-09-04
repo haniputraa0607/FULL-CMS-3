@@ -49,7 +49,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">Detail User Franchise</span>
+                <span class="caption-subject font-blue sbold uppercase">Detail User Mitra</span>
             </div>
         </div>
         <div class="portlet-body form">

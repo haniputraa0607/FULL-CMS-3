@@ -1153,7 +1153,7 @@ class OutletController extends Controller
         $post = $request->all();
         $data = [
             'title'          => 'Outlet',
-            'sub_title'      => 'User Franchise',
+            'sub_title'      => 'User Mitra',
             'menu_active'    => 'outlet',
             'submenu_active' => 'outlet-list-user-franchise',
         ];
@@ -1197,7 +1197,7 @@ class OutletController extends Controller
         $post = $request->except('_token');
         $data = [
             'title'          => 'Outlet',
-            'sub_title'      => 'Detail User Franchise',
+            'sub_title'      => 'Detail User Mitra',
             'menu_active'    => 'outlet',
             'submenu_active' => 'outlet-list-user-franchise',
         ];

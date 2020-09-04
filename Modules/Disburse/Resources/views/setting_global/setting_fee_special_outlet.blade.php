@@ -17,7 +17,7 @@
                             <tr>
                                 <th>Checkbox</th>
                                 <th>Outlet</th>
-                                <th>Franchise Status</th>
+                                <th>Status Mitra</th>
                                 <th>Special Outlet Fee </th>
                             </tr>
                             </thead>

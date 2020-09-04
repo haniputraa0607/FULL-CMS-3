@@ -182,9 +182,9 @@
                         targets: 2,
                         render: function ( data, type, row, meta ) {
                             if(data == 1){
-                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;\">Franchise</span>";
+                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;\">Mitra</span>";
                             }else{
-                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;\">Not franchise</span>";
+                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;\">Pusat</span>";
                             }
                             return html;
                         }
@@ -398,7 +398,7 @@
                 </div>
                 <div class="portlet-body form">
                     <div class="m-heading-1 border-green m-bordered">
-                        <p>Setting ini digunakan untuk mengatur fee untuk outlet pusat dan outlet franchise.</p>
+                        <p>Setting ini digunakan untuk mengatur fee untuk outlet pusat dan outlet mitra.</p>
                         <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
                     </div>
                     <form class="form-horizontal" role="form" action="{{url('disburse/setting/fee-global')}}" method="post">
@@ -413,8 +413,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Percent Fee Outlet Franchise<span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah  fee yang akan di bebankan ke outlet milik franchise" data-container="body"></i></label></label>
+                                <label class="col-md-4 control-label">Percent Fee Outlet Mitra<span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah  fee yang akan di bebankan ke outlet milik mitra" data-container="body"></i></label></label>
                                 <div class="col-md-4">
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="fee_outlet" required value="{{$fee['fee_outlet']}}"><span class="input-group-addon">%</span>
