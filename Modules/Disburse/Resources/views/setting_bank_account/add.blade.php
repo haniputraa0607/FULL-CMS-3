@@ -45,7 +45,7 @@
                             for (var i=0; i<len;i++){
                                 var status_franchise = 'Outlet Central';
                                 if(data[i].status_franchise == 1){
-                                    status_franchise = 'Outlet Franchise';
+                                    status_franchise = 'Outlet Mitra';
                                 }
                                 $("#outlet").append('<option value=' + data[i].id_outlet + '>' + data[i].outlet_code +' - '+ data[i].outlet_name + ' - ' +status_franchise + '</option>');
                             }
