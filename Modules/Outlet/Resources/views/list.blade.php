@@ -10,6 +10,7 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
@@ -20,6 +21,7 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $('#sample_1').dataTable({
                 stateSave: true,
@@ -141,6 +143,55 @@
                 }
             });
         });
+
+        var SweetAlert = function() {
+        	return {
+	        	init: function() {
+			    	$(".sweetalert-delete").each(function() {
+			    		var token  	= "{{ csrf_token() }}";
+			    		let column 	= $(this).parents('tr');
+			            let id     	= $(this).data('id');
+			            let code 	= $(this).data('code');
+			            let name    = $(this).data('name');
+			            $(this).click(function() {
+			                swal({
+								title: code+" - "+name+"\n\nAre you sure want to delete this outlet?",
+								text: "Your will not be able to recover this data!",
+								type: "warning",
+								showCancelButton: true,
+								confirmButtonClass: "btn-danger",
+								confirmButtonText: "Yes, delete it!",
+								closeOnConfirm: false
+							},
+							function(){
+								$.ajax({
+					                type : "POST",
+					                url : "{{ url('outlet/delete') }}",
+					                data : "_token="+token+"&id_outlet="+id,
+					                success : function(result) {
+					                    if (result == "success") {
+					                        $('#sample_1').DataTable().row(column).remove().draw();
+											swal("Deleted!", "Outlet has been deleted.", "success")
+											SweetAlert.init()
+					                    }
+					                    else if(result == "fail"){
+											swal("Error!", "Failed to delete outlet. Outlet has been used.", "error")
+					                    }
+					                    else {
+											swal("Error!", "Something went wrong. Failed to delete outlet.", "error")
+					                    }
+					                }
+					            });
+							});
+			            })
+			        })
+		    	}
+		    }
+		}();
+
+        jQuery(document).ready(function() {
+		    SweetAlert.init()
+		});
     </script>
 
 @endsection
@@ -231,7 +282,10 @@
                                 @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                                     <td style="width: 90px;">
                                         @if(MyHelper::hasAccess([28], $grantedFeature))
-                                            <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_outlet'] }}"><i class="fa fa-trash-o"></i></a>
+                                        	<a class="btn btn-sm red sweetalert-delete btn-primary" data-id="{{ $value['id_outlet'] }}" data-name="{{ $value['outlet_name'] }}" data-code="{{ $value['outlet_code'] }}"><i class="fa fa-trash-o"></i></a>
+                                            {{-- commented because delete button replaced with sweetalert
+                                            	<a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_outlet'] }}"><i class="fa fa-trash-o"></i></a> 
+                                            --}}
                                         @endif
                                         @if(MyHelper::hasAccess([25,27], $grantedFeature))
                                             <a href="{{ url('outlet/detail') }}/{{ $value['outlet_code'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
