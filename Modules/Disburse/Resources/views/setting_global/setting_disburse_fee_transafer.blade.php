@@ -1,7 +1,7 @@
 <div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption">
-            <span class="caption-subject font-yellow sbold uppercase">Setting Time To Sent Disburse</span>
+            <span class="caption-subject font-yellow sbold uppercase">Setting Fee Disburse</span>
         </div>
     </div>
     <div class="portlet-body form">
@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <div class="input-icon right">
                         <label class="col-md-3 control-label">
-                            Fee Transfer
+                            Fee Disburse
                             <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="jumlah biaya transfer" data-container="body"></i>
                         </label>
