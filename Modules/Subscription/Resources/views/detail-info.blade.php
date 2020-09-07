@@ -49,7 +49,7 @@
                     <div class="col-md-8 value">: {{date("d M Y", strtotime($subscription['subscription_end']))}}&nbsp;{{date("H:i", strtotime($subscription['subscription_end']))}}</div>
                 </div>
                 @endif
-            	@if(isset($subscription['subscription_end']))
+            	@if(isset($subscription['subscription_publish_start']))
                 <div class="row static-info">
                     <div class="col-md-4 name">Publish Start</div>
                     <div class="col-md-8 value">: {{date("d M Y", strtotime($subscription['subscription_publish_start']))}}&nbsp;{{date("H:i", strtotime($subscription['subscription_publish_start']))}}</div>

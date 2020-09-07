@@ -221,7 +221,6 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
-
                         <th> Deals </th>
                         <th> Code </th>
                         <th> User </th>
@@ -234,7 +233,7 @@
                 </thead>
                 <tbody>
                     @if (!empty($deals))
-                        @foreach($deals as $value)
+                         @foreach($deals as $value)
                             <tr>
                                 <td>{{ $value['deal_voucher']['deal']['deals_title'] }}</td>
                                 <td>{{ $value['deal_voucher']['voucher_code'] }}</td>
