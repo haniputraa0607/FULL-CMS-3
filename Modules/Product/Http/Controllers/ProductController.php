@@ -667,14 +667,52 @@ class ProductController extends Controller
 
         $post = $request->except('_token');
 
-        if (empty($post)) {
+        if (empty($post) || (!isset($post['product_detail_visibility']) && !isset($post['product_price']) && isset($post['page']))) {
             $data['parent'] = $this->category();
             $tags = MyHelper::get('product/tag/list');
             $data['tags'] = parent::getData($tags);
-			$outlet = MyHelper::post('outlet/be/list', ['admin' => 1, 'id_product' => $data['product'][0]['id_product']]);
-            // return $outlet;
-			if (isset($outlet['status']) && $outlet['status'] == 'success') {
-				$data['outlet'] = $outlet['result'];
+            $data['page'] = $post['page']??1;
+            $dtDetail['id_product'] = $data['product'][0]['id_product'];
+            $dtDetail['page'] = 1;
+            $dtPrice['id_product'] = $data['product'][0]['id_product'];
+            $dtPrice['page'] = 1;
+
+            if(isset($post['type']) && $post['type'] == 'product_detail'){
+                $dtDetail['page'] = $post['page'];
+            }
+            if(isset($post['type']) && $post['type'] == 'product_special_price'){
+                $dtPrice['page'] = $post['page'];
+            }
+
+			$outlet = MyHelper::post('outlet/be/list/product-detail', $dtDetail);
+
+            if (isset($outlet['status']) && $outlet['status'] == "success") {
+                $data['outlet']          = $outlet['result']['data'];
+                $data['outletTotal']     = $outlet['result']['total'];
+                $data['outletPerPage']   = $outlet['result']['from'];
+                $data['outletUpTo']      = $outlet['result']['from'] + count($outlet['result']['data'])-1;
+                $data['outletPaginator'] = new LengthAwarePaginator($outlet['result']['data'], $outlet['result']['total'], $outlet['result']['per_page'], $outlet['result']['current_page'], ['path' => url()->current()]);
+            }else{
+                $data['outlet']          = [];
+                $data['outletTotal']     = 0;
+                $data['outletPerPage']   = 0;
+                $data['trxUpTo']      = 0;
+                $data['trxPaginator'] = false;
+            }
+
+            $outletsSpecialPrice = MyHelper::post('outlet/be/list/product-special-price', $dtPrice);
+            if (isset($outletsSpecialPrice['status']) && $outletsSpecialPrice['status'] == "success") {
+                $data['outletSpecialPrice']          = $outletsSpecialPrice['result']['data'];
+                $data['outletSpecialPriceTotal']     = $outletsSpecialPrice['result']['total'];
+                $data['outletSpecialPricePerPage']   = $outletsSpecialPrice['result']['from'];
+                $data['outletSpecialPriceUpTo']      = $outletsSpecialPrice['result']['from'] + count($outletsSpecialPrice['result']['data'])-1;
+                $data['outletSpecialPricePaginator'] = new LengthAwarePaginator($outletsSpecialPrice['result']['data'], $outletsSpecialPrice['result']['total'], $outletsSpecialPrice['result']['per_page'], $outletsSpecialPrice['result']['current_page'], ['path' => url()->current()]);
+            }else{
+                $data['outlet']          = [];
+                $data['outletTotal']     = 0;
+                $data['outletPerPage']   = 0;
+                $data['trxUpTo']      = 0;
+                $data['trxPaginator'] = false;
             }
 
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
@@ -733,7 +771,7 @@ class ProductController extends Controller
 			if (isset($post['product_detail_visibility'])) {
 				$save = MyHelper::post('product/detail/update', $post);
 				// print_r($save);exit;
-                return parent::redirect($save, 'Visibility setting has been updated.', 'product/detail/'.$code.'#outletsetting');
+                return parent::redirect($save, 'Visibility setting has been updated.', 'product/detail/'.$code.'?page='.$post['page'].'&type='.$post['type'].'#outletsetting');
 			}
 
             /**
@@ -743,7 +781,7 @@ class ProductController extends Controller
             if (isset($post['product_price'])) {
                 $save = MyHelper::post('product/detail/update/price', $post);
                 // print_r($save);exit;
-                return parent::redirect($save, 'Product price setting has been updated.', 'product/detail/'.$code.'#outletpricesetting');
+                return parent::redirect($save, 'Product price setting has been updated.', 'product/detail/'.$code.'?page='.$post['page'].'&type='.$post['type'].'#outletpricesetting');
             }
 
 			/**

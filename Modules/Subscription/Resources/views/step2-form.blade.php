@@ -126,7 +126,7 @@ $configs = session('configs');
                             $outletselected = array_pluck($subscription['outlets'],'id_outlet');
                         }
                         else {
-                            $outletselected = [];
+                            $outletselected = old('id_outlet',[]);
                         }
                     @endphp
 
@@ -149,7 +149,7 @@ $configs = session('configs');
                             $productselected = array_pluck($subscription['products'],'id_product');
                         }
                         else {
-                            $productselected = [];
+                            $productselected = old('id_product',[]);
                         }
                     @endphp
 
@@ -226,25 +226,26 @@ $configs = session('configs');
                         </div>
                     </div>
 
+                    @if ($subscription_type == 'subscription')
+	                    <div class="form-group">
+	                        <div class="input-icon right">
+	                            <label class="col-md-3 control-label">
+	                            User Limit
+	                            <span class="required" aria-required="true"> * </span>
+	                            <i class="fa fa-question-circle tooltips" data-original-title="Batasan berapa kali pengguna dapat membeli lagi subscription yang sama, input 0 untuk unlimited" data-container="body"></i>
+	                            </label>
+	                        </div>
 
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            User Limit
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Batasan berapa kali pengguna dapat membeli lagi subscription yang sama, input 0 untuk unlimited" data-container="body"></i>
-                            </label>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <input type="text" class="digit_mask form-control" name="user_limit" value="{{ old('user_limit')??$subscription['user_limit']??'' }}" placeholder="User limit" min="0" autocomplete="off">
-                                    <div class="input-group-addon">User</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+	                        <div class="col-md-4">
+	                            <div class="input-icon right">
+	                                <div class="input-group">
+	                                    <input type="text" class="digit_mask form-control" name="user_limit" value="{{ old('user_limit')??$subscription['user_limit']??'' }}" placeholder="User limit" min="0" autocomplete="off">
+	                                    <div class="input-group-addon">User</div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                @endif
 
                     <div class="form-group">
                         <div class="input-icon right">

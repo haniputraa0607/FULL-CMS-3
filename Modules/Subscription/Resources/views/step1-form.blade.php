@@ -65,7 +65,6 @@ $configs = session('configs');
                         </div>
                     </div>
 
-                    @if ($subscription_type == 'subscription')
                     <div class="form-group">
                         <label class="col-md-3 control-label"> subscription Periode <span class="required" aria-required="true"> * </span> </label>
                         <div class="col-md-4">
@@ -100,6 +99,7 @@ $configs = session('configs');
                         </div>
                     </div>
 
+                    @if ($subscription_type == 'subscription')
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Publish Periode <span class="required" aria-required="true"> * </span> </label>
                         <div class="col-md-4">

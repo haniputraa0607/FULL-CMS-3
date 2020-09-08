@@ -70,13 +70,6 @@
             $('#detail_beneficiary_account').val(document.getElementById ( beneficiary_account+'_beneficiary_account' ).innerText);
             $('#detail_beneficiary_email').val(document.getElementById ( beneficiary_account+'_beneficiary_email' ).innerText);
             $('#detail_account_bank').val(beneficiary_account);
-            var sendEmailTo = document.getElementById ( beneficiary_account+'_send_email_to' ).innerText;
-            if(sendEmailTo == 'Email Bank'){
-                $("#optionsRadios2").prop("checked", true);
-            }else if(sendEmailTo == 'Email Outlet'){
-                $("#optionsRadios1").prop("checked", true);
-            }
-
             $('#editBank').modal('show');
         }
     </script>
@@ -141,7 +134,6 @@
                         <th scope="col" width="25%"> Beneficiary Alias </th>
                         <th scope="col" width="25%"> Beneficiary Account </th>
                         <th scope="col" width="25%"> Beneficiary Email </th>
-                        <th scope="col" width="25%"> Send Email To </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -168,7 +160,6 @@
                                     <td id="{{$data['beneficiary_account']}}_beneficiary_alias">{{$data['beneficiary_alias']}}</td>
                                     <td id="{{$data['beneficiary_account']}}_beneficiary_account">{{$data['beneficiary_account']}}</td>
                                     <td id="{{$data['beneficiary_account']}}_beneficiary_email">{{$data['beneficiary_email']}}</td>
-                                    <td id="{{$data['beneficiary_account']}}_send_email_to">{{$data['send_email_to']}}</td>
                                 </tr>
                             @endforeach
                         @else
@@ -230,32 +221,6 @@
                                     <i class="fa fa-question-circle tooltips" title="alamat email penerima" data-toggle="tooltip" data-placement="top"></i>
                                 </label>
                                 <input type="text" placeholder="email@example.com" class="form-control" name="beneficiary_email" id="detail_beneficiary_email">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">Send Email To
-                                    <i class="fa fa-question-circle tooltips" data-original-title="ketika diburse sukses, informasi detail akan dikirim ke email bank atau email outlet" data-container="body"></i>
-                                </label>
-                                <div class="row">
-                                    <div class="col-md-3" style="margin-top: 1%">
-                                        <div class="md-radio">
-                                            <input type="radio" id="optionsRadios2" name="send_email_to" class="md-radiobtn publishType" value="Email Bank">
-                                            <label for="optionsRadios2">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> Email Bank </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4" style="margin-top: 1%">
-                                        <div class="md-radio">
-                                            <input type="radio" id="optionsRadios1" name="send_email_to" class="md-radiobtn publishType" value="Email Outlet">
-                                            <label for="optionsRadios1">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> Email Outlet </label>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="form-group">

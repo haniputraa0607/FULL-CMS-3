@@ -59,7 +59,7 @@
                         <th> User </th>
                         <th> Bought At </th>
                         <th> Expired At </th>
-                        <th> Status </th>
+                        <th> Payment Status </th>
                         <th> Price </th>
                         <th> Kuota | Used | Available </th>
                         <th> History </th>
