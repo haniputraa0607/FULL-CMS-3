@@ -62,7 +62,7 @@ $id_product = $product[0]['id_product'];
 				</div>
 			@endif
 			<div style="width:15%; display:inline-block; vertical-align: text-top;">
-				<label class="mt-checkbox mt-checkbox-outline"> Same for all Outlet
+				<label class="mt-checkbox mt-checkbox-outline"> Same for all
 					<input type="checkbox" name="sameall[]" class="same checkbox-outlet" data-check="ampas"/>
 					<span></span>
 				</label>
@@ -79,4 +79,9 @@ $id_product = $product[0]['id_product'];
           </div>
       </div>
   </div>
+  <input type="hidden" name="page" value="{{$page}}">
+	<input type="hidden" name="type" value="product_detail">
 </form>
+@if ($outletPaginator)
+	{{ $outletPaginator->fragment('outletsetting')->appends(['type' => 'product_detail'])->links() }}
+@endif
