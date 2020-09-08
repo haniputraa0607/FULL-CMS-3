@@ -292,6 +292,13 @@ class DisburseSettingController extends Controller
             $data['fee_disburse'] = [];
         }
 
+        $sendEmailTo = MyHelper::get('disburse/setting/send-email-to');
+        if(isset($sendEmailTo['status']) && $sendEmailTo['status'] == 'success'){
+            $data['send_email_to'] = (array)json_decode($sendEmailTo['result']['value_text']);
+        }else{
+            $data['send_email_to'] = [];
+        }
+
         return view('disburse::setting_global.setting', $data);
     }
     function feeGlobal(Request $request){
@@ -418,6 +425,19 @@ class DisburseSettingController extends Controller
             return redirect('disburse/setting/global#fee-disburse')->withSuccess(['Success Update Data']);
         }else{
             return redirect('disburse/setting/global#fee-disburse')->withErrors(['Failed Update Data']);
+        }
+    }
+
+    function settingSendEmailTo(Request $request){
+        $post = $request->except('_token');
+
+        if(!empty($post)) $update['value_text'] = json_encode($post);
+
+        $save = MyHelper::post('disburse/setting/send-email-to', $update);
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('disburse/setting/global#send-email-to')->withSuccess(['Success Update Data']);
+        }else{
+            return redirect('disburse/setting/global#send-email-to')->withErrors(['Failed Update Data']);
         }
     }
 }

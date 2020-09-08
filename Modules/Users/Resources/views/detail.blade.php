@@ -1307,11 +1307,27 @@
 													</label>
 												</div>
 											</div>
+                                            <div class="form-group">
+                                                <label class="control-label">OTP Request Status</label>
+                                                <select name="otp_request_status" class="form-control input-sm select2" placeholder="Search Status">
+                                                    <option value="Can Request" @if($profile['otp_request_status'] == 'Can Request') selected @endif>Can Request</option>
+                                                    <option value="Can Not Request" @if($profile['otp_request_status'] == 'Can Not Request') selected @endif>Can Not Request</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Verify Email Request Status</label>
+                                                <select name="email_verify_request_status" class="form-control input-sm select2" placeholder="Search Status">
+                                                    <option value="Can Request" @if($profile['email_verify_request_status'] == 'Can Request') selected @endif>Can Request</option>
+                                                    <option value="Can Not Request" @if($profile['email_verify_request_status'] == 'Can Not Request') selected @endif>Can Not Request</option>
+                                                </select>
+                                            </div>
 											<div class="form-group">
 												<div class="fileinput fileinput-new" data-provides="fileinput">
-													<div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-														<img src="{{env('STORAGE_URL_API').$profile['id_card_image']}}">
-													</div>
+                                                    @if(!empty($profile['id_card_image']))
+                                                        <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
+                                                            <img src="{{env('STORAGE_URL_API').$profile['id_card_image']}}">
+                                                        </div>
+                                                    @endif
 													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
 													<div>
 															<span class="btn default btn-file">

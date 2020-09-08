@@ -337,7 +337,7 @@
     </script>
 @endsection
 
-@extends(($idUserFrenchisee == NULL ? 'layouts.main' : 'disburse::layouts.main'))
+@extends(($idUserFrenchisee == NULL ? 'layouts.main-closed' : 'disburse::layouts.main-closed'))
 
 @section('content')
     <div class="page-bar">
@@ -385,11 +385,19 @@
             <li>
                 <a data-toggle="tab" href="#fee-disburse">Fee Disburse</a>
             </li>
+            <li>
+                <a data-toggle="tab" href="#send-email-to">Send Email To</a>
+            </li>
         </ul>
     </div>
     <br>
     <div class="tab-content">
         <div id="fee" class="tab-pane active">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur fee untuk outlet pusat dan outlet mitra.</p>
+                <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
+            </div>
+            <br>
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
@@ -397,10 +405,6 @@
                     </div>
                 </div>
                 <div class="portlet-body form">
-                    <div class="m-heading-1 border-green m-bordered">
-                        <p>Setting ini digunakan untuk mengatur fee untuk outlet pusat dan outlet mitra.</p>
-                        <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
-                    </div>
                     <form class="form-horizontal" role="form" action="{{url('disburse/setting/fee-global')}}" method="post">
                         <div class="form-body">
                             <div class="form-group">
@@ -469,6 +473,13 @@
             </div>
             <br>
             @include('disburse::setting_global.setting_disburse_fee_transafer')
+        </div>
+        <div id="send-email-to" class="tab-pane">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur hasil laporan income outlet akan di kirim ke email bank atau email outlet.</p>
+            </div>
+            <br>
+            @include('disburse::setting_global.setting_disburse_send_email_to')
         </div>
     </div>
 @endsection
