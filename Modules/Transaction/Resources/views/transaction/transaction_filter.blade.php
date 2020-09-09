@@ -94,10 +94,12 @@
 			var operator = "conditions["+index+"][operator]";
 			var operator_value = document.getElementsByName(operator)[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			operator_value.options[operator_value.options.length] = new Option('Pending', 'pending');
 			operator_value.options[operator_value.options.length] = new Option('Received', 'receive_at');
 			operator_value.options[operator_value.options.length] = new Option('Ready', 'ready_at');
 			operator_value.options[operator_value.options.length] = new Option('Taken by driver', 'taken_by_driver');
-			operator_value.options[operator_value.options.length] = new Option('Taken  customer', 'taken_by_customer');
+			operator_value.options[operator_value.options.length] = new Option('Taken by customer', 'taken_by_customer');
+			operator_value.options[operator_value.options.length] = new Option('Taken by system', 'taken_by_system');
 			operator_value.options[operator_value.options.length] = new Option('Reject', 'reject_at');
 
 			var parameter = "conditions["+index+"][parameter]";
@@ -228,10 +230,12 @@
 												<option value="Pending" @if ($con['operator'] == 'Pending') selected @endif>Pending</option>
 												<option value="Cancelled" @if ($con['operator'] == 'Cancelled') selected @endif>Cancelled</option>
 											@elseif ($con['subject'] == 'transaction_status')
+												<option value="pending" @if ($con['operator'] == 'pending') selected @endif>Pending</option>
 												<option value="receive_at" @if ($con['operator'] == 'receive_at') selected @endif>Received</option>
 												<option value="ready_at" @if ($con['operator'] == 'ready_at') selected @endif>Ready</option>
 												<option value="taken_by_driver" @if ($con['operator'] == 'taken_by_driver') selected @endif>Taken by driver</option>
-												<option value="taken_by_customer" @if ($con['operator'] == 'taken_by_customer') selected @endif>Taken  customer</option>
+												<option value="taken_by_customer" @if ($con['operator'] == 'taken_by_customer') selected @endif>Taken by customer</option>
+												<option value="taken_by_system" @if ($con['operator'] == 'taken_by_system') selected @endif>Taken  by system</option>
 												<option value="reject_at" @if ($con['operator'] == 'reject_at') selected @endif>Reject</option>
 											@elseif ($con['subject'] == 'pickup_by')
 												<option value="Customer" @if ($con['operator'] == 'Customer') selected @endif>Pickup Order</option>

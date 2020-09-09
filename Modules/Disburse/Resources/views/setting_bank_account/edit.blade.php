@@ -116,6 +116,36 @@
         @include('disburse::setting_bank_account.filter_list_outlet')
     </form>
 
+    @if(!empty($outlet_dont_have_account))
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <span class="caption-subject font-blue sbold uppercase ">List Outlet Don't  Have Account</span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="row">
+                <?php
+                $division = count($outlet_dont_have_account)/3;
+                $datas = array_chunk($outlet_dont_have_account, $division);
+                $html = '';
+                foreach($datas as $i){
+                    $html .='<div class="col-md-4">';
+                    $html .='<ul>';
+                    foreach($i as $j){
+                        $html .='<li>'.$j['outlet_code'].'-'.$j['outlet_name'].'</li>';
+                    }
+                    $html .='<ul>';
+                    $html .='</div>';
+                }
+
+                echo $html;
+                ?>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">

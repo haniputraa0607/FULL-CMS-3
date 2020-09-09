@@ -48,12 +48,17 @@ class DisburseSettingController extends Controller
         }
         $dataBank = MyHelper::post('disburse/setting/list-bank-account',$post);
         if(isset($dataBank['status']) && $dataBank['status'] == 'success'){
-            if (!empty($dataBank['result']['data'])) {
-                $data['bankAccount']          = $dataBank['result']['data'];
-                $data['bankAccountTotal']     = $dataBank['result']['total'];
-                $data['bankAccountPerPage']   = $dataBank['result']['from'];
-                $data['bankAccountUpTo']      = $dataBank['result']['from'] + count($dataBank['result']['data'])-1;
-                $data['bankAccountPaginator'] = new LengthAwarePaginator($dataBank['result']['data'], $dataBank['result']['total'], $dataBank['result']['per_page'], $dataBank['result']['current_page'], ['path' => url()->current()]);
+            $data['outlet_dont_have_account'] = [];
+            if(!empty($dataBank['result']['list_outlet_dont_have_account'])){
+                $data['outlet_dont_have_account'] = $dataBank['result']['list_outlet_dont_have_account'];
+            }
+
+            if (!empty($dataBank['result']['list_bank']['data'])) {
+                $data['bankAccount']          = $dataBank['result']['list_bank']['data'];
+                $data['bankAccountTotal']     = $dataBank['result']['list_bank']['total'];
+                $data['bankAccountPerPage']   = $dataBank['result']['list_bank']['from'];
+                $data['bankAccountUpTo']      = $dataBank['result']['list_bank']['from'] + count($dataBank['result']['list_bank']['data'])-1;
+                $data['bankAccountPaginator'] = new LengthAwarePaginator($dataBank['result']['list_bank']['data'], $dataBank['result']['list_bank']['total'], $dataBank['result']['list_bank']['per_page'], $dataBank['result']['list_bank']['current_page'], ['path' => url()->current()]);
             }
             else {
                 $data['bankAccount']          = [];
