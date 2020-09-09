@@ -12,14 +12,30 @@
         var index = temp1.replace("][subject]", "");
         var subject_value = document.getElementsByName(val)[0].value;
 
-        var operator = "conditions["+index+"][operator]";
-        var operator_value = document.getElementsByName(operator)[0];
-        for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-        operator_value.options[operator_value.options.length] = new Option('=', '=');
-        operator_value.options[operator_value.options.length] = new Option('like', 'like');
+        if(subject_value == 'outlet_dont_have_account') {
+            var parameter = "conditions["+index+"][parameter]";
+            var operator = "conditions["+index+"][operator]";
+            document.getElementsByName(parameter)[0].required = false;
+            document.getElementsByName(operator)[0].required = false;
+            $('[name="' + parameter + '"]').closest('.param').hide();
+            $('[name="' + operator + '"]').closest('.oper').hide();
+        }else{
+            var operator = "conditions["+index+"][operator]";
+            var operator_value = document.getElementsByName(operator)[0];
+            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+            operator_value.options[operator_value.options.length] = new Option('=', '=');
+            operator_value.options[operator_value.options.length] = new Option('like', 'like');
 
-        var parameter = "conditions["+index+"][parameter]";
-        document.getElementsByName(parameter)[0].type = 'text';
+            var parameter = "conditions["+index+"][parameter]";
+            console.log(operator);
+            console.log(parameter);
+            document.getElementsByName(parameter)[0].required = true;
+            document.getElementsByName(operator)[0].required = true;
+            $('[name="' + parameter + '"]').closest('.param').show();
+            $('[name="' + operator + '"]').closest('.oper').show();
+
+            document.getElementsByName(parameter)[0].type = 'text';
+        }
     }
 
 </script>
@@ -51,21 +67,27 @@
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                                     <option value="outlet_code" @if ($con['subject'] == 'outlet_code') selected @endif>Outlet Code</option>
                                                     <option value="outlet_name" @if ($con['subject'] == 'outlet_name') selected @endif>Outlet Name</option>
+                                                    <option value="outlet_dont_have_account" @if ($con['subject'] == 'outlet_dont_have_account') selected @endif>Outlet don't Have Account</option>
                                                     <option value="beneficiary_name" @if ($con['subject'] == 'beneficiary_name') selected @endif>Beneficiary Name</option>
                                                     <option value="beneficiary_alias" @if ($con['subject'] == 'beneficiary_alias') selected @endif>Beneficiary Alias</option>
                                                     <option value="beneficiary_account" @if ($con['subject'] == 'beneficiary_account') selected @endif>Beneficiary Account</option>
                                                     <option value="beneficiary_email" @if ($con['subject'] == 'beneficiary_email') selected @endif>Beneficiary Email</option>
                                                 </select>
                                             </div>
+
                                             <div class="col-md-4">
-                                                <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
-                                                    <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
-                                                    <option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>
-                                                </select>
+                                                <div class="oper" @if($con['subject'] === 'outlet_dont_have_account') style="display: none" @endif>
+                                                    <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
+                                                        <option value="=" @if (isset($con['operator']) && $con['operator'] == '=') selected @endif>=</option>
+                                                        <option value="like" @if (isset($con['operator']) && $con['operator']  == 'like') selected @endif>Like</option>
+                                                    </select>
+                                                </div>
                                             </div>
 
                                             <div class="col-md-3">
-                                                <input type="text" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
+                                                <div class="param" @if($con['subject'] === 'outlet_dont_have_account') style="display: none" @endif>
+                                                    <input type="text" placeholder="Keyword" class="form-control" name="parameter" @if($con['subject'] !== 'outlet_dont_have_account') required @endif  @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -83,6 +105,7 @@
                                                 <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                                     <option value="" selected disabled>Search Subject</option>
                                                     <option value="outlet_code">Outlet Code</option>
+                                                    <option value="outlet_dont_have_account">Outlet don't Have Account</option>
                                                     <option value="outlet_name">Outlet Name</option>
                                                     <option value="beneficiary_name">Beneficiary Name</option>
                                                     <option value="beneficiary_alias">Beneficiary Alias</option>
@@ -91,13 +114,17 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
-                                                <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
-                                                    <option value="=" selected>=</option>
-                                                    <option value="like">Like</option>
-                                                </select>
+                                                <div class="oper">
+                                                    <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
+                                                        <option value="=" selected>=</option>
+                                                        <option value="like">Like</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="text" placeholder="Keyword" class="form-control" name="parameter" />
+                                                <div class="param">
+                                                    <input type="text" placeholder="Keyword" class="form-control" name="parameter" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -118,6 +145,7 @@
                                             <option value="" selected disabled>Search Subject</option>
                                             <option value="outlet_code">Outlet Code</option>
                                             <option value="outlet_name">Outlet Name</option>
+                                            <option value="outlet_dont_have_account">Outlet don't Have Account</option>
                                             <option value="beneficiary_name">Beneficiary Name</option>
                                             <option value="beneficiary_alias">Beneficiary Alias</option>
                                             <option value="beneficiary_account">Beneficiary Account</option>
@@ -125,13 +153,17 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
-                                            <option value="=" selected>=</option>
-                                            <option value="like">Like</option>
-                                        </select>
+                                        <div class="oper">
+                                            <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
+                                                <option value="=" selected>=</option>
+                                                <option value="like">Like</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" placeholder="Keyword" class="form-control" name="parameter" />
+                                        <div class="param">
+                                            <input type="text" placeholder="Keyword" class="form-control" name="parameter" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
