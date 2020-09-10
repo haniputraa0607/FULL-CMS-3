@@ -44,7 +44,7 @@
 
     @if(MyHelper::hasAccess([95], $configs))
     <script type="text/javascript">
-    	$("#form-outlet, #form-product, #form-promo, #form-select-product, #form-payment").hide();
+    	$("#form-outlet, #form-product, #form-promo, #form-select-product, #form-payment, #form-transaction-type").hide();
     </script>
     @endif
 
@@ -223,10 +223,10 @@
 				$('#selectOutlet, #form-product').show();
 				$('#select-outlet').attr('required', true);
 				$("#use-product").prop("checked", false).change();
-				$("#form-payment").hide();
+				$("#form-payment, #form-transaction-type").hide();
 			}
 			else if(outlet_type == 'near me') {
-				$('#selectOutlet, #form-payment').hide();
+				$('#selectOutlet, #form-payment, #form-transaction-type').hide();
 				$('#select-outlet').removeAttr('required');
 				$('#form-product').show();
 				$("#use-product").prop("checked", false).change();
@@ -235,7 +235,7 @@
 			else {
 				$('#select-outlet').removeAttr('required');
 				$("#use-product").prop("checked", false).change();
-				$('#selectOutlet, #form-product, #form-payment, #form-select-product').hide();
+				$('#selectOutlet, #form-product, #form-payment, #form-select-product, #form-transaction-type').hide();
 				outlet = null;
 			}
 		}
@@ -260,7 +260,7 @@
 					$("#form-outlet, #form-promo").show();
 				}
 				else {
-					$("#form-outlet, #form-product, #form-promo, #form-select-product, #form-payment").hide();
+					$("#form-outlet, #form-product, #form-promo, #form-select-product, #form-payment, #form-transaction-type").hide();
 					$("#use-product").prop("checked", false).change();
 				}
 			});
@@ -269,10 +269,10 @@
 	    		let check = document.getElementById("use-product").checked;
 	    		if (check) {
 	    			$("#form-select-product").show().attr('required',true);
-	    			$("#form-payment").show();
+	    			$("#form-payment, #form-transaction-type").show();
 	    		}else{
 	    			$("#form-select-product").hide().attr('required',true);
-	    			$("#form-payment").hide();
+	    			$("#form-payment, #form-transaction-type").hide();
 	    		}
 	    	});
 
@@ -455,6 +455,35 @@
 							</select>
 						</div>
 					</div>
+
+					{{-- Transaction type --}}
+	                <div class="form-group" id="form-transaction-type" >
+                        <label class="col-md-3 control-label">Transaction Type
+                            <i class="fa fa-question-circle tooltips" data-original-title="Select Transaction Type" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+							<select id="select-transaction-type" name="transaction_type" class="form-control select2">
+								<option value="0">No Transaction Type</option>
+								@php
+									$selected_transaction_type = old('transaction_type') ?? $data['transaction_type'] ?? null;
+									$transaction_type_list = [
+										'Pickup Order',
+										'GO-SEND'
+									];
+								@endphp
+                                @if (!empty($transaction_type_list))
+                                    @foreach($transaction_type_list as $transaction_type)
+                                        <option value="{{ $transaction_type }}" 
+                                        	@if ( $selected_transaction_type??false ) 
+                                        		@if( $transaction_type == $selected_transaction_type ) selected 
+                                        		@endif 
+                                        	@endif
+                                        >{{ $transaction_type }}</option>
+                                    @endforeach
+                                @endif
+							</select>
+                        </div>
+                    </div>
 
 					{{-- Payment --}}
 	                <div class="form-group" id="form-payment" >
