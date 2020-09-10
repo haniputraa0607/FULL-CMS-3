@@ -2308,6 +2308,11 @@
 						<span class="arrow {{($menu_active == 'disburse-settings') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
+						<li class="nav-item {{($submenu_active == 'autoresponse-disburse-balance-is-not-enough') ? 'active open' : ''}}">
+							<a href="{{url('disburse/autoresponse/disburse-balance-is-not-enough')}}" class="nav-link ">
+								<span class="title">[Response] Blance is Not Enough</span>
+							</a>
+						</li>
 						<li class="nav-item {{($submenu_active == 'disburse-setting-add-bank-account') ? 'active open' : ''}}">
 							<a href="{{url('disburse/setting/bank-account')}}" class="nav-link ">
 								<span class="title">Add Bank Account</span>
