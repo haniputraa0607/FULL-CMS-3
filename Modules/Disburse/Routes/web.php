@@ -67,6 +67,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('setting/export-list-bank', 'DisburseSettingController@exportListBank');
         Route::any('setting/export-bank-account-outlet', 'DisburseSettingController@exportBankAccoutOutlet');
         Route::post('setting/import-bank-account-outlet', 'DisburseSettingController@importBankAccoutOutlet');
+        Route::any('autoresponse/{subject}', 'DisburseSettingController@autoResponse');
 
         //Disburse
         Route::any('list/trx', 'DisburseController@listTrx');
