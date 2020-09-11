@@ -39,6 +39,28 @@
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
+        }else if(subject_value == 'error_status'){
+            var operator = "conditions["+index+"][operator]";
+            var operator_value = document.getElementsByName(operator)[0];
+            for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+            operator_value.options[operator_value.options.length] = new Option('Invalid beneficiary name', '001');
+            operator_value.options[operator_value.options.length] = new Option('Invalid destination account number', '002');
+            operator_value.options[operator_value.options.length] = new Option('Invalid destination account or beneficiary name', '003');
+            operator_value.options[operator_value.options.length] = new Option('General error', '004');
+            operator_value.options[operator_value.options.length] = new Option('Timeout error by bank', '005');
+            operator_value.options[operator_value.options.length] = new Option('Unique reference number violation', '006');
+            operator_value.options[operator_value.options.length] = new Option('Identical request already processed before', '007');
+            operator_value.options[operator_value.options.length] = new Option('Bank cannot authenticated request', '008');
+            operator_value.options[operator_value.options.length] = new Option('Bank balance is not enough', '009');
+            operator_value.options[operator_value.options.length] = new Option('Payload validation failed', '010');
+            operator_value.options[operator_value.options.length] = new Option('Otp code expired / blocked', '011');
+            operator_value.options[operator_value.options.length] = new Option('Beneficiary account is blocked', '012');
+            operator_value.options[operator_value.options.length] = new Option('Sender and receiver account are the same', '013');
+            operator_value.options[operator_value.options.length] = new Option('Monthly account balance limit exceeded', '014');
+            operator_value.options[operator_value.options.length] = new Option('Account balance limit exceeded', '015');
+
+            var parameter = "conditions["+index+"][parameter]";
+            document.getElementsByName(parameter)[0].type = 'hidden';
         }else{
             var operator = "conditions["+index+"][operator]";
             var operator_value = document.getElementsByName(operator)[0];
@@ -111,6 +133,9 @@
                                                     <option value="bank_name" @if ($con['subject'] == 'bank_name') selected @endif>Bank</option>
                                                     <option value="account_number" @if ($con['subject'] == 'account_number') selected @endif>Account Number</option>
                                                     <option value="recipient_name" @if ($con['subject'] == 'recipient_name') selected @endif>Recipient Name</option>
+                                                    @if($status == 'all' || $status == 'fail-action')
+                                                    <option value="error_status" @if ($con['subject'] == 'error_status') selected @endif>Error Status</option>
+                                                    @endif
                                                     @if($status == 'all')
                                                     <option value="status" @if ($con['subject'] == 'status') selected @endif>Status</option>
                                                     @endif
@@ -130,6 +155,22 @@
                                                         <option value="Rejected" @if ($con['operator']  == 'Rejected') selected @endif>Rejected</option>
                                                         <option value="Approved" @if ($con['operator']  == 'Approved') selected @endif>Approved</option>
                                                         <option value="Approved" @if ($con['operator']  == 'Retry From Failed') selected @endif>Retry From Failed</option>
+                                                    @elseif($con['subject'] == 'error_status')
+                                                        <option value="001" @if ($con['operator']  == '001') selected @endif>Invalid beneficiary name</option>
+                                                        <option value="002" @if ($con['operator']  == '002') selected @endif>Invalid destination account number</option>
+                                                        <option value="003" @if ($con['operator']  == '003') selected @endif>Invalid destination account or beneficiary name</option>
+                                                        <option value="004" @if ($con['operator']  == '004') selected @endif>General error</option>
+                                                        <option value="005" @if ($con['operator']  == '005') selected @endif>Timeout error by bank</option>
+                                                        <option value="006" @if ($con['operator']  == '006') selected @endif>Unique reference number violation</option>
+                                                        <option value="007" @if ($con['operator']  == '007') selected @endif>Identical request already processed before</option>
+                                                        <option value="008" @if ($con['operator']  == '008') selected @endif>Bank cannot authenticated request</option>
+                                                        <option value="009" @if ($con['operator']  == '009') selected @endif>Bank balance is not enough</option>
+                                                        <option value="010" @if ($con['operator']  == '010') selected @endif>Payload validation failed</option>
+                                                        <option value="011" @if ($con['operator']  == '011') selected @endif>Otp code expired / blocked</option>
+                                                        <option value="012" @if ($con['operator']  == '012') selected @endif>Beneficiary account is blocked</option>
+                                                        <option value="013" @if ($con['operator']  == '013') selected @endif>Sender and receiver account are the same</option>
+                                                        <option value="014" @if ($con['operator']  == '014') selected @endif>Monthly account balance limit exceeded</option>
+                                                        <option value="015" @if ($con['operator']  == '015') selected @endif>Account balance limit exceeded</option>
                                                     @else
                                                         <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                                         <option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>
@@ -137,7 +178,7 @@
                                                 </select>
                                             </div>
 
-                                            @if ($con['subject'] == 'bank_name' || $con['subject'] == 'status')
+                                            @if ($con['subject'] == 'bank_name' || $con['subject'] == 'status' || $con['subject'] == 'error_status')
                                                 <div class="col-md-3">
                                                     <input type="hidden" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
                                                 </div>
@@ -166,6 +207,9 @@
                                                     <option value="bank_name">Bank</option>
                                                     <option value="account_number">Account Number</option>
                                                     <option value="recipient_name">Recipient Name</option>
+                                                    @if($status == 'all' || $status == 'fail-action')
+                                                        <option value="error_status">Error Status</option>
+                                                    @endif
                                                     @if($status == 'all')<option value="status">Status</option>@endif
                                                 </select>
                                             </div>
@@ -200,6 +244,9 @@
                                             <option value="bank_name">Bank</option>
                                             <option value="account_number">Account Number</option>
                                             <option value="recipient_name">Recipient Name</option>
+                                            @if($status == 'all' || $status == 'fail-action')
+                                                <option value="error_status">Error Status</option>
+                                            @endif
                                             @if($status == 'all')<option value="status">Status</option>@endif
                                         </select>
                                     </div>

@@ -445,4 +445,63 @@ class DisburseSettingController extends Controller
             return redirect('disburse/setting/global#send-email-to')->withErrors(['Failed Update Data']);
         }
     }
+
+    function autoResponse(Request $request, $subject){
+        $autocrmSubject = ucwords(str_replace('-',' ',$subject));
+        $data = [
+            'title'             => 'Disburse Auto Response '.$autocrmSubject,
+            'menu_active'       => 'disburse-settings',
+            'submenu_active'    => 'autoresponse-'.$subject
+        ];
+
+        $data['click_notification'] = [];
+        $data['click_inbox'] = [];
+        $query = MyHelper::post('autocrm/list', ['autocrm_title' => $autocrmSubject]);
+        $test = MyHelper::get('autocrm/textreplace');
+        $auto = null;
+        $post = $request->except('_token');
+        if(!empty($post)){
+            if (isset($post['autocrm_push_image'])) {
+                $post['autocrm_push_image'] = MyHelper::encodeImage($post['autocrm_push_image']);
+            }
+
+            if(isset($post['files'])){
+                unset($post['files']);
+            }
+
+            $query = MyHelper::post('autocrm/update', $post);
+            return back()->withSuccess(['Response updated']);
+        }
+
+        $getApiKey = MyHelper::get('setting/whatsapp');
+        if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+            $data['api_key_whatsapp'] = $getApiKey['result']['value'];
+        }else{
+            $data['api_key_whatsapp'] = null;
+        }
+
+        if(isset($query['result'])){
+            $auto = $query['result'];
+        }else{
+            return back()->withErrors(['No such response']);
+        }
+
+        $data['data'] = $auto;
+        if($test['status'] == 'success'){
+            $data['textreplaces'] = $test['result'];
+            $data['subject'] = $subject;
+        }
+
+        $custom = [];
+        if (isset($data['data']['custom_text_replace'])) {
+            $custom = explode(';', $data['data']['custom_text_replace']);
+
+            unset($custom[count($custom) - 1]);
+        }
+
+        $data['custom'] = $custom;
+        $data['active_response'] = ['forward'];
+
+        return view('users::response', $data);
+    }
 }

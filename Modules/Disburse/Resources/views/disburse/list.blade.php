@@ -107,7 +107,7 @@
             <tr>
                 <th scope="col" width="10%"> Action </th>
                 <th scope="col" width="10%"> Count Retry </th>
-                @if($status == 'fail') <th scope="col" width="10%"> Error Message </th>@endif
+                @if($status == 'fail-action' || $status == 'all') <th scope="col" width="10%"> Error Message </th>@endif
                 @if($status == 'all') <th scope="col" width="10%"> Status </th>@endif
                 <th scope="col" width="30%"> Outlet </th>
                 <th scope="col" width="30%"> Date </th>
@@ -125,7 +125,13 @@
                             <a class="btn btn-xs green" target="_blank" href="{{url($baseUri.'/detail-trx', $val['id_disburse_outlet'])}}">Detail</a>
                         </td>
                         <td>{{$val['count_retry']}}</td>
-                        @if($status == 'fail') <td>{{$val['error_message']}}</td>@endif
+                        @if($status == 'fail-action' || $status == 'all')
+                            @if($val['disburse_status'] == 'Fail')
+                                <td style="color: red">{{$val['error_message']}}</td>
+                            @else
+                                <td>-</td>
+                            @endif
+                        @endif
                         @if($status == 'all') <td>{{$val['disburse_status']}}</td>@endif
                         <td>{{$val['outlet_code']}} - {{$val['outlet_name']}}</td>
                         <td>{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>

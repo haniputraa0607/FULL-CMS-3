@@ -42,6 +42,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     /*Setting Expired time OTP and Email*/
     Route::any('time-expired', 'SettingController@timeExpired');
 
+    Route::any('outletapp', 'SettingController@outletAppSetting');
+    Route::post('outletapp/splash-screen', 'SettingController@splashScreenOutletApps');
+
     Route::any('home', 'SettingController@homeSetting');
 	Route::any('date', 'SettingController@dateSetting');
     Route::get('{key}', 'SettingController@settingList');

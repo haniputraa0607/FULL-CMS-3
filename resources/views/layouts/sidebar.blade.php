@@ -1949,7 +1949,7 @@
 
 		@endif
 
-		@if(MyHelper::hasAccess([15,16,17,18,144,145,146,147,148], $grantedFeature))
+		@if(MyHelper::hasAccess([15,16,17,18,144,145,146,147,148,273], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #0F444C;font-weight: 600;">Settings</h3>
 			</li>
@@ -1957,6 +1957,15 @@
 				<a href="{{url('setting/home')}}" class="nav-link">
 					<i class="icon-screen-tablet "></i>
 					<span class="title">Mobile Apps Home</span>
+				</a>
+			</li>
+		@endif
+
+		@if(MyHelper::hasAccess([273], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'setting-outlet-apps') ? 'active' : ''}}">
+				<a href="{{url('setting/outletapp')}}" class="nav-link">
+					<i class="fa fa-tablet"></i>
+					<span class="title">Setting Outlet Apps</span>
 				</a>
 			</li>
 		@endif
@@ -2308,6 +2317,11 @@
 						<span class="arrow {{($menu_active == 'disburse-settings') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
+						<li class="nav-item {{($submenu_active == 'autoresponse-disburse-balance-is-not-enough') ? 'active open' : ''}}">
+							<a href="{{url('disburse/autoresponse/disburse-balance-is-not-enough')}}" class="nav-link ">
+								<span class="title">[Response] Blance is Not Enough</span>
+							</a>
+						</li>
 						<li class="nav-item {{($submenu_active == 'disburse-setting-add-bank-account') ? 'active open' : ''}}">
 							<a href="{{url('disburse/setting/bank-account')}}" class="nav-link ">
 								<span class="title">Add Bank Account</span>
