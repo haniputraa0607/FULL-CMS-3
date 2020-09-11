@@ -1385,4 +1385,37 @@ class SettingController extends Controller
 
         return view('setting::time-expired', $data);
     }
+
+    public function outletAppSetting(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'   		=> 'Outlet App Setting',
+            'menu_active'    => 'setting-outlet-apps',
+            'submenu_active' => 'setting-outlet-apps'
+        ];
+
+        $get = MyHelper::get('setting/outletapp/splash-screen');
+        $data['result_splash_screen'] = [];
+        if(isset($get['status']) &&  $get['status']=='success'){
+            $data['result_splash_screen'] = $get['result'];
+        }
+
+        return view('setting::outletapp', $data);
+    }
+
+    public function splashScreenOutletApps(Request $request){
+        $post = $request->except('_token');
+        if(isset($post['default_splash_screen_outlet_apps'])){
+            $post['default_splash_screen_outlet_apps'] = MyHelper::encodeImage($post['default_splash_screen_outlet_apps']);
+        }
+
+        if(isset($post['default_splash_screen_outlet_apps_duration'])){
+            if($post['default_splash_screen_outlet_apps_duration']<1){
+                $post['default_splash_screen_outlet_apps_duration']=1;
+            }
+        }
+
+        $result = MyHelper::post('setting/outletapp/splash-screen', $post);
+        return parent::redirect($result, 'Splash Screen has been updated.');
+    }
 }
