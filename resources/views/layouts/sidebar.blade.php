@@ -868,6 +868,13 @@
 							</a>
 						</li>
 					@endif
+					@if(MyHelper::hasAccess([120], $configs) && MyHelper::hasAccess([272], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'setting-timer-payment-gateway') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/timer-payment-gateway')}}" class="nav-link ">
+								<span class="title">Setting Timer Payment Gateway</span>
+							</a>
+						</li>
+					@endif
 					@if(MyHelper::hasAccess([250], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'refund-reject-order') ? 'active open' : ''}}">
 							<a href="{{url('transaction/setting/refund-reject-order')}}" class="nav-link ">
@@ -1898,6 +1905,27 @@
 				</li>
 			@endif
 
+			@if(MyHelper::hasAccess([119], $configs))
+				<li class="nav-item {{($menu_active == 'redirect-complex') ? 'active' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-external-link"></i>
+						<span class="title">Redirect Complex</span>
+						<span class="arrow {{($menu_active == 'redirect-complex') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						<li class="nav-item {{($submenu_active == 'redirect-complex-create') ? 'active' : ''}}">
+							<a href="{{url('redirect-complex/create')}}" class="nav-link ">
+								<span class="title">New Redirect Complex</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'redirect-complex-list') ? 'active' : ''}}">
+							<a href="{{url('redirect-complex')}}" class="nav-link ">
+								<span class="title">Redirect Complex List</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+			@endif
 			<!-- @if(MyHelper::hasAccess([55], $configs))
 				@if(MyHelper::hasAccess([119,120,121,122,123], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'autocrm') ? 'active' : ''}}">
@@ -1928,7 +1956,7 @@
 
 		@endif
 
-		@if(MyHelper::hasAccess([15,16,17,18,144,145,146,147,148], $grantedFeature))
+		@if(MyHelper::hasAccess([15,16,17,18,144,145,146,147,148,273], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #0F444C;font-weight: 600;">Settings</h3>
 			</li>
@@ -1936,6 +1964,15 @@
 				<a href="{{url('setting/home')}}" class="nav-link">
 					<i class="icon-screen-tablet "></i>
 					<span class="title">Mobile Apps Home</span>
+				</a>
+			</li>
+		@endif
+
+		@if(MyHelper::hasAccess([273], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'setting-outlet-apps') ? 'active' : ''}}">
+				<a href="{{url('setting/outletapp')}}" class="nav-link">
+					<i class="fa fa-tablet"></i>
+					<span class="title">Setting Outlet Apps</span>
 				</a>
 			</li>
 		@endif
@@ -2287,6 +2324,11 @@
 						<span class="arrow {{($menu_active == 'disburse-settings') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
+						<li class="nav-item {{($submenu_active == 'autoresponse-failed-send-disburse') ? 'active open' : ''}}">
+							<a href="{{url('disburse/autoresponse/failed-send-disburse')}}" class="nav-link ">
+								<span class="title">[Response] Failed Send Disburse</span>
+							</a>
+						</li>
 						<li class="nav-item {{($submenu_active == 'disburse-setting-add-bank-account') ? 'active open' : ''}}">
 							<a href="{{url('disburse/setting/bank-account')}}" class="nav-link ">
 								<span class="title">Add Bank Account</span>

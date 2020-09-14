@@ -1659,4 +1659,34 @@ class TransactionController extends Controller
 
     }
     /*================= End Export with queue =================*/
+
+    /*================ Start Setting Timer Payment Gateway ================*/
+    function timerPaymentGateway(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Transaction',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Timer Payment Gateway',
+            'submenu_active' => 'setting-timer-payment-gateway'
+        ];
+
+        if($post){
+            $dataUpdate = [];
+            if($post['timer_shopeepay'] ?? false){
+                $dataUpdate['shopeepay_validity_period'] = ['value', $post['timer_shopeepay']];
+            }
+            $update = MyHelper::post('setting/update2',[
+                'update' => $dataUpdate
+            ]);
+            if(isset($update['status']) && $update['status'] == 'success'){
+                return redirect('transaction/setting/timer-payment-gateway')->withSuccess(['Success update']);
+            }else{
+                return redirect('transaction/setting/timer-payment-gateway')->withErrors(['Failed update']);
+            }
+        }else{
+            $data['timer_shopeepay'] = MyHelper::post('setting',['key'=>'shopeepay_validity_period'])['result']['value']??'';
+            return view('transaction::setting.timer_payment', $data);
+        }
+    }
+    /*================ End Setting Timer Payment Gateway ================*/
 }
