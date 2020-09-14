@@ -868,6 +868,13 @@
 							</a>
 						</li>
 					@endif
+					@if(MyHelper::hasAccess([120], $configs) && MyHelper::hasAccess([272], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'setting-timer-payment-gateway') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/timer-payment-gateway')}}" class="nav-link ">
+								<span class="title">Setting Timer Payment Gateway</span>
+							</a>
+						</li>
+					@endif
 					@if(MyHelper::hasAccess([250], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'refund-reject-order') ? 'active open' : ''}}">
 							<a href="{{url('transaction/setting/refund-reject-order')}}" class="nav-link ">
@@ -1901,7 +1908,7 @@
 			@if(MyHelper::hasAccess([119], $configs))
 				<li class="nav-item {{($menu_active == 'redirect-complex') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
-						<i class="icon-feed"></i>
+						<i class="fa fa-external-link"></i>
 						<span class="title">Redirect Complex</span>
 						<span class="arrow {{($menu_active == 'redirect-complex') ? 'open' : ''}}"></span>
 					</a>
@@ -2317,9 +2324,9 @@
 						<span class="arrow {{($menu_active == 'disburse-settings') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
-						<li class="nav-item {{($submenu_active == 'autoresponse-disburse-balance-is-not-enough') ? 'active open' : ''}}">
-							<a href="{{url('disburse/autoresponse/disburse-balance-is-not-enough')}}" class="nav-link ">
-								<span class="title">[Response] Blance is Not Enough</span>
+						<li class="nav-item {{($submenu_active == 'autoresponse-failed-send-disburse') ? 'active open' : ''}}">
+							<a href="{{url('disburse/autoresponse/failed-send-disburse')}}" class="nav-link ">
+								<span class="title">[Response] Failed Send Disburse</span>
 							</a>
 						</li>
 						<li class="nav-item {{($submenu_active == 'disburse-setting-add-bank-account') ? 'active open' : ''}}">

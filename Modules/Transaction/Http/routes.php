@@ -52,6 +52,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::post('/setting/refund-reject-order', 'TransactionSettingController@updateRefundRejectOrder');
     Route::get('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@autoReject']);
     Route::post('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@updateAutoReject']);
+    Route::any('/setting/timer-payment-gateway', 'TransactionController@timerPaymentGateway');
 });
 
 Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
