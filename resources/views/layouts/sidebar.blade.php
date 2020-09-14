@@ -868,6 +868,13 @@
 							</a>
 						</li>
 					@endif
+					@if(MyHelper::hasAccess([120], $configs) && MyHelper::hasAccess([272], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'setting-timer-payment-gateway') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/timer-payment-gateway')}}" class="nav-link ">
+								<span class="title">Setting Timer Payment Gateway</span>
+							</a>
+						</li>
+					@endif
 					@if(MyHelper::hasAccess([250], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'refund-reject-order') ? 'active open' : ''}}">
 							<a href="{{url('transaction/setting/refund-reject-order')}}" class="nav-link ">
