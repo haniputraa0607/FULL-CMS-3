@@ -1,11 +1,26 @@
 @section('buyXgetYForm')
 <div class="row">
-		<div class="col-md-6">
-	<div id="selectProduct2" class="form-group" style="width: 100%!important">
+	<div class="col-md-6">
+		<div id="selectProduct2" class="form-group" style="width: 100%!important">
 			<label for="multipleProduct2" class="control-label">Product Utama<span class="required" aria-required="true"> * </span>
 			<i class="fa fa-question-circle tooltips" data-original-title="Pilih produk X yang akan menjadi syarat untuk mendapatkan promo </br></br>X : Produk utama </br>Y : Produk benefit" data-container="body" data-html="true"></i></label>
 			<select id="multipleProduct3" name="product" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" data-value="{{ ($result['promo_campaign_buyxgety_product_requirement']??false) ? json_encode( ([$result['promo_campaign_buyxgety_product_requirement']['id_product']] ?? ([$result['promo_campaign_buyxgety_product_requirement'][0]['id_product']]??'') ) ) :''}}" style="width: 100%!important">
 			</select>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label">Min basket size</label>
+	<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="input-group" >
+				<div class="input-group-addon">IDR</div>
+				<input type="text" class="form-control text-center digit_mask" name="min_basket_size" placeholder="" 
+					@if(old('min_basket_size') != "") value="{{old('min_basket_size')}}" 
+					@elseif(isset($result['min_basket_size'])) value="{{$result['min_basket_size']}}" 
+					@endif min="0" oninput="validity.valid||(value='');" autocomplete="off">
+			</div>
 		</div>
 	</div>
 </div>
