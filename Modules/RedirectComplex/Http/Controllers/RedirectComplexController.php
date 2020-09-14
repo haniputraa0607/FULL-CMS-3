@@ -184,6 +184,11 @@ class RedirectComplexController extends Controller
     	$post = $request->except('_token');
         $action = MyHelper::post('redirect-complex/getData', $post);
 
+        if (($post['get']??false) == 'promo-detail' && ($action['promo_id']??false) && ($action['promo_created']??false)) {
+        	$promo_slug = MyHelper::createSlug($action['promo_id'],$action['promo_created']);
+        	$action['promo_url'] = url('promo-campaign/detail/'.$promo_slug);
+        }
+
         return $action;
     }
 }
