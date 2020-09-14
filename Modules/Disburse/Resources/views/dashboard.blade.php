@@ -37,35 +37,9 @@ $idUserFrenchisee = session('id_user_franchise');
 
 			$("#date_end").datepicker({
 				dateFormat: 'dd-mm-yy',
-			}).on("change", function(e) {
-				var startDate = $('#date_start').val();
-				startDate = startDate.split("-").reverse().join("-");
-				startDate = startDate.replace(/\s/g, '');
-				startDate = new Date(startDate);
-				var endDate = e.target.value;
-				endDate = new Date(endDate.split("-").reverse().join("-"));
-				if(endDate.getTime() < startDate.getTime()){
-					$('#date_start').val(e.target.value);
-				}
-
-				datatables();
-				dataDashboard();
 			});
 			$("#date_start").datepicker({
 				dateFormat: 'dd-mm-yy',
-			}).on("change", function(e) {
-				var endDate = $('#date_end').val();
-				endDate = endDate.split("-").reverse().join("-");
-				endDate = endDate.replace(/\s/g, '');
-				endDate = new Date(endDate);
-				var startDate = e.target.value;
-				startDate = new Date(startDate.split("-").reverse().join("-"));
-				if(endDate.getTime() < startDate.getTime()){
-					$('#date_end').val(e.target.value);
-				}
-
-				datatables();
-				dataDashboard();
 			});
 		});
 
@@ -171,6 +145,8 @@ $idUserFrenchisee = session('id_user_franchise');
 					$("#nom_item").empty();
 					$("#nom_delivery").empty();
 					$("#nom_expense_central").empty();
+					$("#nom_disburse").empty();
+
 					if (result.status === "success") {
 						$("#nom_success").append('<span data-counter="counterup" data-value="'+result.nominal_success+'" style="font-size: 22px">Rp '+result.format_nominal_success+'</span>');
 						$("#nom_fail").append('<span data-counter="counterup" data-value="'+result.nominal_fail+'" style="font-size: 22px">Rp '+result.format_nominal_fail+'</span>');
@@ -180,6 +156,7 @@ $idUserFrenchisee = session('id_user_franchise');
 						$("#nom_item").append('<span data-counter="counterup" data-value="'+result.nominal_item+'" style="font-size: 22px">Rp '+result.format_nominal_item+'</span>');
 						$("#nom_delivery").append('<span data-counter="counterup" data-value="'+result.nominal_delivery+'" style="font-size: 22px">Rp '+result.format_nominal_delivery+'</span>');
 						$("#nom_expense_central").append('<span data-counter="counterup" data-value="'+result.nominal_expense_central+'" style="font-size: 22px">Rp '+result.format_nominal_expense_central+'</span>');
+						$("#nom_disburse").append('<span data-counter="counterup" data-value="'+result.total_disburse+'" style="font-size: 22px">Rp '+result.format_total_disburse+'</span>');
 					}else{
 						$("#nom_success").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
 						$("#nom_fail").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
@@ -189,6 +166,7 @@ $idUserFrenchisee = session('id_user_franchise');
 						$("#nom_item").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
 						$("#nom_delivery").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
 						$("#nom_expense_central").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						$("#nom_disburse").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">0</span>');
 					}
 				},
 				error: function (jqXHR, exception) {
@@ -204,15 +182,12 @@ $idUserFrenchisee = session('id_user_franchise');
 			}else{
 				document.getElementById('div_specific_date').style.display = 'none';
 			}
-
+		});
+		
+		function search() {
 			datatables();
 			dataDashboard();
-		});
-
-		$('#fitler_outlet').change(function(){
-			datatables();
-			dataDashboard();
-		});
+		}
 	</script>
 @endsection
 
@@ -258,6 +233,9 @@ $idUserFrenchisee = session('id_user_franchise');
 				<option value="today">Today</option>
 				<option value="specific_date">Specific Date</option>
 			</select>
+		</div>
+		<div class="col-md-4" style="margin-top: 0.3%">
+			<button class="btn btn-sm btn-primary" onclick="search()">Search</button>
 		</div>
 	</div>
 
@@ -336,6 +314,19 @@ $idUserFrenchisee = session('id_user_franchise');
 						<span data-counter="counterup" data-value="{{$nominal_grandtotal}}" style="font-size: 22px">Rp {{number_format($nominal_grandtotal, 2)}}</span>
 					</div>
 					<div class="desc"> Grand Total </div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green" target="_blank" href="{{url('disburse/list/all')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="nom_disburse">
+						<span data-counter="counterup" data-value="{{$total_disburse}}" style="font-size: 22px">Rp {{number_format($total_disburse, 2)}}</span>
+					</div>
+					<div class="desc"> Total Disburse</div>
 				</div>
 			</a>
 		</div>

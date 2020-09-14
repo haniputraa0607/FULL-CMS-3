@@ -123,6 +123,7 @@ class DisburseController extends Controller
                 $data['nominal_success'] = $getData['result']['nominal']['nom_success'];
                 $data['nominal_fail'] = $getData['result']['nominal_fail'];
                 $data['total_income_central'] = $getData['result']['income_central'];
+                $data['total_disburse'] = $getData['result']['total_disburse'];
 
                 $data['nominal_item'] = $getData['result']['nominal']['nominal']['nom_item']??0;
                 $data['nominal_grandtotal'] = $getData['result']['nominal']['nominal']['nom_grandtotal']??0;
@@ -136,6 +137,7 @@ class DisburseController extends Controller
                 $data['format_nominal_success'] = number_format($getData['result']['nominal']['nom_success'], 2);
                 $data['format_nominal_fail'] = number_format($getData['result']['nominal_fail'], 2);
                 $data['format_total_income_central'] = number_format($getData['result']['income_central'], 2);
+                $data['format_total_disburse'] = number_format($getData['result']['total_disburse'], 2);
             }else{
                 $data['status'] = 'fail';
             }
@@ -158,6 +160,7 @@ class DisburseController extends Controller
 
                 $data['nominal_fail'] = $getData['result']['nominal_fail'];
                 $data['total_income_central'] = $getData['result']['income_central'];
+                $data['total_disburse'] = $getData['result']['total_disburse'];
             }else{
                 $data['nominal_success'] = 0;
                 $data['nominal_item'] = 0;
@@ -166,6 +169,7 @@ class DisburseController extends Controller
                 $data['nominal_delivery'] = 0;
                 $data['nominal_fail'] = 0;
                 $data['total_income_central'] = 0;
+                $data['total_disburse'] = 0;
             }
 
             $outlets = MyHelper::post($this->baseuri.'/outlets',$post);
