@@ -231,8 +231,11 @@
                             </div>
                             <div class="portlet-body form">
                                 <div class="m-heading-1 border-green m-bordered">
-                                    <p>Anda bisa menambahkan dan mengubah data bank account dengan menggunakan hasil  export.</p>
-                                    <p style="color: red">Untuk nama bank silahkan menggunakan kode bank(bank_code) yang ada di "List Bank Name" dibawah ini, jika memasukkan kode bank yang tidak ada pada list maka data bank account outlet tersebut akan gagal disimpan.</p>
+                                    <p>Anda bisa menambahkan dan mengubah data bank account dengan menggunakan hasil  export.</p><br>
+                                    <p style="color: red">Note:</p>
+                                    <p style="color: red">1. Silahkan memasukan alamat email yang valid. Alamat email boleh kosong.</p>
+                                    <p style="color: red">2. Penulisan "Beneficiary Name" tidak boleh menggunakan latin letter dan latin numeric</p>
+                                    <p style="color: red">3. Untuk nama bank silahkan menggunakan kode bank(bank_code) yang ada di "List Bank Name" dibawah ini, jika memasukkan kode bank yang tidak ada pada list maka data bank account outlet tersebut akan gagal disimpan.</p>
                                 </div>
                                 <form class="form-horizontal" role="form" action="{{url('disburse/setting/import-bank-account-outlet')}}" method="post" enctype="multipart/form-data">
                                     <div class="form-body">
