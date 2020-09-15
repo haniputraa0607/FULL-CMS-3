@@ -453,6 +453,7 @@
                                 <span class="caption font-blue sbold uppercase">{{ $result['promo_type']??'' }} Rules </span>
                                 </div>
                                 @if ( !empty($result['step_complete']) )
+                                	{{-- Product Discount --}}
                                     @if (isset($result['promo_campaign_product_discount_rules']) && $result['promo_campaign_product_discount_rules'] != null)
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Product Requirement</div>
@@ -522,6 +523,7 @@
                                                 @endif
                                             @endif
                                         </div>
+                                    {{-- Tier Discount --}}
                                     @elseif (isset($result['promo_campaign_tier_discount_rules']) && $result['promo_campaign_tier_discount_rules'] != null)
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Product Requirement</div>
@@ -555,6 +557,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                    {{-- Buy x Get Y Discount --}}
                                     @elseif (isset($result['promo_campaign_buyxgety_rules']) && $result['promo_campaign_buyxgety_rules'] != null)
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Product Requirement</div>
@@ -604,21 +607,29 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                    @elseif (isset($result['promo_campaign_discount_global_rule']) && $result['promo_campaign_discount_global_rule'] != null) 
-                                        @if ($result['promo_campaign_discount_global_rule'] != null)
+                                    {{-- Bill Discount --}}
+                                    @elseif (!empty($result['promo_campaign_discount_bill_rules'])) 
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Discount</div>
                                             <div class="col-md-8 value">: 
-                                                @if ($result['promo_campaign_discount_global_rule']['discount_type'] == 'Percent')
-                                                    {{ $result['promo_campaign_discount_global_rule']['discount_value'] }} %
-                                                @elseif ($result['promo_campaign_discount_global_rule']['discount_type'] == 'Nominal')
-                                                    {{ 'IDR '.number_format($result['promo_campaign_discount_global_rule']['discount_value']) }}
+                                                @if ($result['promo_campaign_discount_bill_rules']['discount_type'] == 'Percent')
+                                                    {{ $result['promo_campaign_discount_bill_rules']['discount_value'] }} % 
+                                                    @if (!empty($result['promo_campaign_discount_bill_rules']['max_percent_discount']))
+                                                    	(max: IDR {{ number_format($result['promo_campaign_discount_bill_rules']['max_percent_discount']) }})
+                                                    @endif
+                                                @elseif ($result['promo_campaign_discount_bill_rules']['discount_type'] == 'Nominal')
+                                                    {{ 'IDR '.number_format($result['promo_campaign_discount_bill_rules']['discount_value']) }}
                                                 @else
                                                     No discount
                                                 @endif
                                             </div>
                                         </div>
-                                        @endif
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
+                                            </div>
+                                        </div>
                                     @endif
                                     @if( empty($result['promo_campaign_reports']) || empty($result['step_complete']))
                                     <div class="row static-info">
