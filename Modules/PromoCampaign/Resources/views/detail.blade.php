@@ -486,6 +486,12 @@
                                             </div>
                                         </div>
                                         <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
                                             <div class="col-md-4 name">Max Product</div>
                                             <div class="col-md-8 value">: 
                                                     {{ ($result['promo_campaign_product_discount_rules']['max_product'] == 0) ? 'no limit' : number_format($result['promo_campaign_product_discount_rules']['max_product']).' item' }}
@@ -525,6 +531,12 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
+                                            </div>
+                                        </div>
                                         <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_6">
                                             <thead>
                                                 <tr>
@@ -550,6 +562,12 @@
                                                 @if ( isset($result['promo_campaign_buyxgety_product_requirement']) )
                                                 <a href="{{ url('product/detail/'.$result['promo_campaign_buyxgety_product_requirement']['product']['product_code']??'') }}">{{ ($result['promo_campaign_buyxgety_product_requirement']['product']['product_code']??'').' - '.$result['promo_campaign_buyxgety_product_requirement']['product']['product_name']??'' }}</a>
                                                 @endif
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
                                             </div>
                                         </div>
                                         <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_7">
