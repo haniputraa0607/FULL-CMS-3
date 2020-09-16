@@ -121,7 +121,7 @@ class DisburseController extends Controller
             if(isset($getData['status']) && $getData['status'] == 'success'){
                 $data['status'] = 'success';
                 $data['nominal_success'] = $getData['result']['nominal']['nom_success'];
-                $data['nominal_fail'] = $getData['result']['nominal_fail'];
+                $data['nominal_fail'] = $getData['result']['nominal_fail']['disburse_nominal']??0;
                 $data['total_income_central'] = $getData['result']['income_central'];
                 $data['total_disburse'] = $getData['result']['total_disburse'];
 
@@ -135,7 +135,7 @@ class DisburseController extends Controller
                 $data['format_nominal_expense_central'] = number_format($getData['result']['nominal']['nom_expense_central'], 2);
                 $data['format_nominal_delivery'] = number_format($getData['result']['nominal']['nom_delivery'], 2);
                 $data['format_nominal_success'] = number_format($getData['result']['nominal']['nom_success'], 2);
-                $data['format_nominal_fail'] = number_format($getData['result']['nominal_fail'], 2);
+                $data['format_nominal_fail'] = number_format($getData['result']['nominal_fail']['disburse_nominal']??0, 2);
                 $data['format_total_income_central'] = number_format($getData['result']['income_central'], 2);
                 $data['format_total_disburse'] = number_format($getData['result']['total_disburse'], 2);
             }else{
@@ -158,7 +158,7 @@ class DisburseController extends Controller
                 $data['nominal_expense_central'] = $getData['result']['nominal']['nom_expense_central']??0;
                 $data['nominal_delivery'] = $getData['result']['nominal']['nom_delivery']??0;
 
-                $data['nominal_fail'] = $getData['result']['nominal_fail'];
+                $data['nominal_fail'] = $getData['result']['nominal_fail']['disburse_nominal']??0;
                 $data['total_income_central'] = $getData['result']['income_central'];
                 $data['total_disburse'] = $getData['result']['total_disburse'];
             }else{
