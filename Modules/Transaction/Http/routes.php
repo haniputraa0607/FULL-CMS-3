@@ -68,8 +68,13 @@ Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Htt
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
     Route::group(['prefix' => 'log-invalid-flag'], function(){
-        Route::any('list', ['middleware' => 'feature_control:275', 'uses' => 'TransactionController@listLogInvalidFlag']);
-        Route::any('detail', ['middleware' => 'feature_control:276', 'uses' => 'TransactionController@detailLogInvalidFlag']);
+        Route::any('list', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@listLogInvalidFlag']);
+        Route::any('detail', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@detailLogInvalidFlag']);
+    });
+
+    Route::group(['prefix' => 'invalid-flag'], function(){
+        Route::any('mark-as-valid', ['middleware' => 'feature_control:275', 'uses' => 'InvalidFlagController@markAsValid']);
+        Route::any('mark-as-invalid', ['middleware' => 'feature_control:274', 'uses' => 'InvalidFlagController@markAsInvalid']);
     });
 
     Route::any('/create/fake', 'TransactionController@fakeTransaction');
@@ -86,8 +91,5 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
 
     Route::any('list-export', [ 'uses' => 'TransactionController@listExport']);
     Route::any('export-action/{action}/{id}', [ 'uses' => 'TransactionController@actionExport']);
-
-    Route::post('update-invalid-flag', ['middleware' => 'feature_control:274', 'uses' => 'TransactionController@updateStatusInvalidTrx']);
-
 });
 

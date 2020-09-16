@@ -1737,7 +1737,7 @@ class TransactionController extends Controller
             Session::put('filter-list-flag-invalid',$post);
         }
 
-        return view('transaction::log_invalid_flag.list', $data);
+        return view('transaction::flag_invalid.list', $data);
     }
 
     public function detailLogInvalidFlag(Request $request){
