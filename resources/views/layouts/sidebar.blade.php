@@ -666,6 +666,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([275,276], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'log-invalid-flag') ? 'active open' : ''}}">
+							<a href="{{url('transaction/log-invalid-flag/list')}}" class="nav-link ">
+								<span class="title">Log Invalid Flag</span>
+							</a>
+						</li>
+					@endif
 				{{-- <!-- <li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
                     <a href="{{url('transaction/offline/'.date('YmdHis'))}}" class="nav-link ">
                         <span class="title">Offline</span>

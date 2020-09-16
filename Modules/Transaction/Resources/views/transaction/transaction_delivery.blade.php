@@ -1,3 +1,7 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 @extends('layouts.main')
 
 @section('page-style')
@@ -6,6 +10,7 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 	  <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
@@ -17,6 +22,7 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
@@ -25,6 +31,41 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+
+    <script>
+        $('#list-trx').dataTable({
+            "paging":   false,
+            "ordering": false,
+            "info":     false,
+            "searching": false,
+            responsive: false
+        });
+
+        $('#list-trx').on('switchChange.bootstrapSwitch', 'input[name="transaction_flag_invalid"]', function(event, state) {
+            var id     = $(this).data('id');
+            var token  = "{{ csrf_token() }}";
+            if(state == true){
+                state = 'Invalid'
+            }
+            else if(state == false){
+                state = 'Valid'
+            }
+
+            $.ajax({
+                type : "POST",
+                url : "{{ url('transaction/update-invalid-flag') }}",
+                data : "_token="+token+"&id_transaction="+id+"&transaction_flag_invalid="+state,
+                success : function(result) {
+                    if (result.status == "success") {
+                        toastr.info("Transaction has been updated.");
+                    }
+                    else {
+                        toastr.warning(result.messages);
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -77,10 +118,12 @@
             </div>
         </div>
         <div class="portlet-body">
-            <div style="overflow-x:auto;">
-            <table class="table table-striped table-bordered table-hover dt-responsive">
+            <table class="table table-striped table-bordered table-hover dt-responsive" id="list-trx">
             <thead>
               <tr>
+                  @if(MyHelper::hasAccess([274], $grantedFeature))
+                  <th>Valid/Invalid Transaction</th>
+                  @endif
                   <th>Date</th>
                   <th>Outlet</th>
                   <th>Transaction Type</th>
@@ -100,6 +143,15 @@
                 @if(!empty($trx))
                     @foreach($trx as $res)
                         <tr>
+                            @if(MyHelper::hasAccess([274], $grantedFeature))
+                            <td>
+                                @if($res['transaction_payment_status'] == 'Completed' && (!empty($res['taken_at']) || !empty($res['taken_by_system_at'])))
+                                <input type="checkbox" name="transaction_flag_invalid" @if($res['transaction_flag_invalid'] == 'Invalid') checked @endif data-id="{{ $res['id_transaction'] }}" class="make-switch switch-large switch-change" data-on-text="Invalid" data-off-text="Valid">
+                                @else
+                                    Can't Change Status
+                                @endif
+                            </td>
+                            @endif
                             <td>{{ date('d M Y H:i:s', strtotime($res['transaction_date'])) }}</td>
                             <td>{{ $res['outlet_code'] }} - {{ $res['outlet_name'] }}</td>
                             <td><span class="badge bg-{{$res['pickup_by'] == 'Customer' ? 'green-jungle':'blue'}}">{{$res['pickup_by'] == 'Customer' ? 'Pickup Order':'Delivery'}}</span></td>
@@ -179,7 +231,6 @@
                 @endif
             </tbody>
             </table>
-            </div>
             @if(isset($trxPerPage) && isset($trxUpTo) && isset($trxTotal))
                 Showing {{$trxPerPage}} to {{$trxUpTo}} of {{ $trxTotal }} entries<br>
             @endif
