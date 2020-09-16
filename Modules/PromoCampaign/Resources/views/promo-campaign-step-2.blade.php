@@ -248,7 +248,7 @@
 			// $('#tabContainer input:not(input[name="promo_type"]),#tabContainer select').prop('disabled',true);
 			$('#productDiscount, #bulkProduct, #buyXgetYProduct, #discount-bill').hide().find('input, textarea, select').prop('disabled', true);
 
-			if (promo_type == 'Product Discount') {
+			if (promo_type == 'Product discount') {
 				product = $('select[name=filter_product] option:selected').val();
 				$('#productDiscount').show().find('input, textarea, select').prop('disabled', false);
 				if (product == 'All Product') {
@@ -678,9 +678,6 @@
 									</br>
 									</br> Discount Bill : Promo berupa potongan harga untuk total transaksi / bill
 									" data-container="body" data-html="true"></i>
-									@php
-										// dd($result)
-									@endphp
 									<select class="form-control" name="promo_type" required>
 										<option value="" disabled 
 											@if (empty($result['promo_campaign_product_discount_rules'])
@@ -690,8 +687,8 @@
 											) selected 
 											@endif
 											> Select Promo Type </option>
-										<option value="Product Discount" 
-											@if ( old('promo_type') && old('promo_type') == 'Product Discount' ) selected 
+										<option value="Product discount" 
+											@if ( old('promo_type') && old('promo_type') == 'Product discount' ) selected 
 											@elseif ( !empty($result['promo_campaign_product_discount_rules']) ) selected 
 											@endif
 											title="Promo berlaku untuk semua product atau product tertentu tanpa jumlah minimum"

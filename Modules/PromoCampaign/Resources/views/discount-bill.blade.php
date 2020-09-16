@@ -54,7 +54,7 @@
 		</div>
 	</div>
 </div>
-</div>@endSection
+@endSection
 
 @section('discount-bill-script')
 <script type="text/javascript">
