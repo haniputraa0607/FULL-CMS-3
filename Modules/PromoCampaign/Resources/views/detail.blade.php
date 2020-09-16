@@ -630,6 +630,29 @@
                                                     {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
                                             </div>
                                         </div>
+                                    {{-- Delivery Discount --}}
+                                    @elseif (!empty($result['promo_campaign_discount_delivery_rules'])) 
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Discount</div>
+                                            <div class="col-md-8 value">: 
+                                                @if ($result['promo_campaign_discount_delivery_rules']['discount_type'] == 'Percent')
+                                                    {{ $result['promo_campaign_discount_delivery_rules']['discount_value'] }} % 
+                                                    @if (!empty($result['promo_campaign_discount_delivery_rules']['max_percent_discount']))
+                                                    	(max: IDR {{ number_format($result['promo_campaign_discount_delivery_rules']['max_percent_discount']) }})
+                                                    @endif
+                                                @elseif ($result['promo_campaign_discount_delivery_rules']['discount_type'] == 'Nominal')
+                                                    {{ 'IDR '.number_format($result['promo_campaign_discount_delivery_rules']['discount_value']) }}
+                                                @else
+                                                    No discount
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
+                                            </div>
+                                        </div>
                                     @endif
                                     @if( empty($result['promo_campaign_reports']) || empty($result['step_complete']))
                                     <div class="row static-info">
