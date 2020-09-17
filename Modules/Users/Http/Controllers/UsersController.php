@@ -154,6 +154,14 @@ class UsersController extends Controller
         $data['click_notification'] = [
             ['value' => 'Home','title' => 'Home']
         ];
+
+        if ($subject == 'pin-create') {
+	        $data['click_notification'] = [
+	            ['value' => "No Action",'title' => 'No Action']
+	        ];
+	        return view('users::response_push', $data);
+        }
+
 		// print_r($data);exit;
         return view('users::response', $data);
 	}
