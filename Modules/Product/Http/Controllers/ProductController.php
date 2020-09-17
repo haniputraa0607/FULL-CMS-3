@@ -726,8 +726,11 @@ class ProductController extends Controller
                 $data['next_id'] = null;
             }
 
-			// dd($outlet);exit;
-
+            $outletAll = MyHelper::post('outlet/be/list', ['admin' => 1, 'id_product' => $data['product'][0]['id_product']]);
+            $data['outlet_all'] = [];
+            if (isset($outletAll['status']) && $outletAll['status'] == 'success') {
+                $data['outlet_all'] = $outletAll['result'];
+            }
             return view('product::product.detail', $data);
         }
         else {
