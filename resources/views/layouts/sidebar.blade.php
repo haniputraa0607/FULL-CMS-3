@@ -60,13 +60,6 @@
 						</a>
 					</li>
 					@endif
-					@if(MyHelper::hasAccess([162,163], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'setting-popup-messages') ? 'active open' : ''}}">
-						<a href="{{url('setting/popup-messages')}}" class="nav-link ">
-							<span class="title">Setting Popup Message</span>
-						</a>
-					</li>
-					@endif
 					@if(MyHelper::hasAccess([40], $configs))
 						@if(MyHelper::hasAccess([91], $grantedFeature))
 							@if(MyHelper::hasAccess([41], $configs))
@@ -2201,6 +2194,11 @@
 				<a href="{{url('setting/time-expired')}}" class="nav-link">
 					<i class="fa fa-envelope"></i>
 					<span class="title">Time Expired OTP and Email</span>
+				</a>
+			</li>
+			<li class="nav-item {{($submenu_active == 'setting-popup-messages') ? 'active open' : ''}}">
+				<a href="{{url('setting/otp-messages')}}" class="nav-link ">
+					<span class="title">OTP Message</span>
 				</a>
 			</li>
 		@endif
