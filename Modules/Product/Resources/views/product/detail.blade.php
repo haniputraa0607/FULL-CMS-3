@@ -145,7 +145,7 @@
                 }
             });
 
-            @foreach($outlet as $key => $ou)
+            @foreach($outlet_all as $key => $ou)
             <?php $marker = 0; ?>
                 @foreach($ou['product_detail'] as $keyPrice => $price)
                     @if($price['id_product'] == $product[0]['id_product'])
