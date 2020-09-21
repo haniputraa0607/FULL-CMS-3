@@ -113,7 +113,7 @@
 
 
                     {{-- Deals Periode --}}
-                    @if ( $deals_type == "Deals" )
+                    @if ( $deals_type == "Deals" || $deals_type == "WelcomeVoucher" )
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Deals Periode <span class="required" aria-required="true"> * </span> </label>
                         <div class="col-md-4">
