@@ -166,6 +166,12 @@
 		/* on chrome */
     	$('#modalBanner').on('shown.bs.modal', function () {
     		$('#modalBanner .select2').select2({ dropdownParent: $("#modalBanner .modal-body") });
+    		$('#modalBanner [name="click_to"]').change();
+    	});
+
+    	$('#modalBanner [name="click_to"]').on('change', function() {
+    		$('#modalBanner [data-visible]').addClass('hidden');
+    		$('#modalBanner [data-visible="' + $(this).val() + '"').removeClass('hidden');
     	});
 
     	// upload & delete image on summernote
@@ -231,7 +237,7 @@
     // banner: edit
     $('#banner .btn-edit').click(function() {
 		var id      = $(this).data('id');
-		var id_news = $(this).data('news');
+		var id_reference = $(this).data('news');
 		var url     = $(this).data('url');
 		var image   = $(this).data('img');
 		var type    = $(this).data('type');
@@ -797,7 +803,7 @@
 											</div>
 											<div class="col-md-10 text-right">
 												@if(MyHelper::hasAccess([146], $grantedFeature))
-												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-time_start="{{$banner['time_start']}}" data-time_end="{{$banner['time_end']}}" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_news']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ ($banner['banner_start']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'' }}" data-end="{{ ($banner['banner_end']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):''}}"><i class="fa fa-pencil"></i> </a>
+												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-time_start="{{$banner['time_start']}}" data-time_end="{{$banner['time_end']}}" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_reference']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ ($banner['banner_start']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'' }}" data-end="{{ ($banner['banner_end']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):''}}" data-type="{{$banner['type']}}"><i class="fa fa-pencil"></i> </a>
 												@endif
 												@if(MyHelper::hasAccess([147], $grantedFeature))
 												<a class="btn red-mint btn-circle btn-delete" data-id="{{ $banner['id_banner'] }}"><i class="fa fa-trash-o"></i> </a>
@@ -810,28 +816,8 @@
 					 			   		<center><img src="{{ $banner['image_url'] }}" alt="Banner Image" width="150"></center>
 					 			 	</div>
 					 			 	<div class="click-to">
-					 			 		@php
-					 			 			if ($banner['news_title'] != null) {
-					 			 				$click_to = str_limit($banner['news_title'], 18);
-					 			 			}
-					 			 			elseif ($banner['url'] != null) {
-					 			 				if ($banner['type'] == 'general') {
-					 			 					$click_to = str_limit($banner['url'], 18);
-					 			 				} 
-					 			 				elseif ($banner['type'] == 'order') {
-					 			 					$click_to = "Order";
-					 			 				} 
-					 			 				else {
-					 			 					$click_to = "GO-FOOD";
-					 			 				}
-					 			 			}
-					 			 			else {
-				 			 					$click_to = "-";
-					 			 			}
-					 			 		@endphp
-
 					 			 		<div>Click to:</div>
-										<div>{{ $click_to }}</div><br>
+										<div>{{ str_limit($banner['reference_title'], 18) }}</div><br>
 										<div>Date Start:</div>
 										<div>{{ ($banner['banner_start']??false)?date("d M Y H:i", strtotime($banner['banner_start'])):'-' }}</div><br>
 										<div>Date End:</div>
@@ -1161,54 +1147,76 @@
 								</div>
 							</div>
 						</div>
-
-						<div class="form-group clearfix">
-                            <label class="control-label">
-                                Click To
-                            </label>
-							<div class="row" style="padding-left: 20px;">
-	                            <div class="col-md-2">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="news"> News
-									</label>
-	                            </div>
-	                            <div class="col-md-2">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="url"> Link
-									</label>
-	                            </div>
-	                            <div class="col-md-2">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="order"> Order
-									</label>
-	                            </div>
-	                            <div class="col-md-2">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
-									</label>
-	                            </div>
-	                            <!--<div class="col-md-4">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
-									</label>
-	                            </div>-->
-                            </div>
-
-                            <div class="col-md-12 click-to-type" style="margin-top: 10px;">
-                            	<select class="form-control select2 click-to-news" name="id_news" data-placeholder="Select News">
-                            		<option></option>
-                                    @if (!empty($news))
-                                        @foreach ($news as $item)
-                                        <option value="{{ $item['id_news'] }}">{{ $item['news_title'] }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-
-								<input class="form-control click-to-url" type="text" name="url" placeholder="https://www.google.com">
-                            </div>
-						</div>
 					</div>
 
+					<div class="form-group clearfix">
+                        <label class="col-md-3 control-label">
+                            Click To
+                        </label>
+						<div class="col-md-5">
+							<select class="select2 form-control" name="click_to">
+								<option value="none">None</option>
+								<option value="news">News</option>
+								<option value="url">Link</option>
+								<option value="order">Order</option>
+								<option value="deals_list">Deals List</option>
+								<option value="deals_detail">Deals Detail</option>
+								<option value="subscription_list">Subscription List</option>
+								<option value="subscription_detail">Subscription Detail</option>
+							</select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="news">
+                        <label class="col-md-3 control-label">
+                            News
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2 click-to-news" name="id_reference" data-placeholder="Select News">
+                        		<option></option>
+                                @if (!empty($news))
+                                    @foreach ($news as $item)
+                                    <option value="{{ $item['id_news'] }}">{{ $item['news_title'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="url">
+                        <label class="col-md-3 control-label">
+                            URL
+                        </label>
+                        <div class="col-md-5">
+							<input class="form-control" type="text" name="url" placeholder="https://www.google.com">
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="deals_detail">
+                        <label class="col-md-3 control-label">
+                            Deals
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Deals">
+                                @if (!empty($deals))
+                                    @foreach ($deals as $item)
+                                    <option value="{{ $item['id_deals'] }}">{{ $item['deals_title'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="subscription_detail">
+                        <label class="col-md-3 control-label">
+                            Subscription
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Subscription">
+                                @if (!empty($news))
+                                    @foreach ($subscriptions as $item)
+                                    <option value="{{ $item['id_subscription'] }}">{{ $item['subscription_title'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
 					<div class="form-group clearfix">
 						<label class="col-md-3 control-label">Date Start</label>
 						<div class="col-md-6">
@@ -1307,55 +1315,76 @@
 								</div>
 							</div>
 						</div>
-
-						<div class="form-group clearfix">
-                            <label class="control-label">
-                                Click To
-                            </label>
-							<div class="row" style="padding-left: 20px;">
-	                            <div class="col-md-2">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="news"> News
-									</label>
-	                            </div>
-	                            <div class="col-md-2">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="url"> Link
-									</label>
-	                            </div>
-	                            <div class="col-md-2">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="order"> Order
-									</label>
-	                            </div>
-	                            <div class="col-md-2">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="none" checked> None
-									</label>
-	                            </div>
-	                            <!--<div class="col-md-4">
-                                    <label class="radio-inline">
-										<input class="click-to-radio" type="radio" name="click_to" value="gofood"> GO-FOOD
-									</label>
-	                            </div>-->
-                            </div>
-
-                            <div class="col-md-12 click-to-type" style="margin-top: 10px;">
-                            	<select class="form-control select2 click-to-news" name="id_news" data-placeholder="Select News">
-                            		<option></option>
-                                    @if (!empty($news))
-                                        @foreach ($news as $item)
-                                        <option value="{{ $item['id_news'] }}">{{ $item['news_title'] }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-
-								<input class="form-control click-to-url" type="text" name="url" placeholder="https://www.google.com">
-                            </div>
-						</div>
-
 					</div>
 
+					<div class="form-group clearfix">
+                        <label class="col-md-3 control-label">
+                            Click To
+                        </label>
+						<div class="col-md-5">
+							<select class="select2 form-control" name="click_to">
+								<option value="none">None</option>
+								<option value="news">News</option>
+								<option value="url">Link</option>
+								<option value="order">Order</option>
+								<option value="deals_list">Deals List</option>
+								<option value="deals_detail">Deals Detail</option>
+								<option value="subscription_list">Subscription List</option>
+								<option value="subscription_detail">Subscription Detail</option>
+							</select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="news">
+                        <label class="col-md-3 control-label">
+                            News
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2 click-to-news" name="id_reference" data-placeholder="Select News">
+                        		<option></option>
+                                @if (!empty($news))
+                                    @foreach ($news as $item)
+                                    <option value="{{ $item['id_news'] }}">{{ $item['news_title'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="url">
+                        <label class="col-md-3 control-label">
+                            URL
+                        </label>
+                        <div class="col-md-5">
+							<input class="form-control" type="text" name="url" placeholder="https://www.google.com">
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="deals_detail">
+                        <label class="col-md-3 control-label">
+                            Deals
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Deals">
+                                @if (!empty($deals))
+                                    @foreach ($deals as $item)
+                                    <option value="{{ $item['id_deals'] }}">{{ $item['deals_title'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="subscription_detail">
+                        <label class="col-md-3 control-label">
+                            Subscription
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Subscription">
+                                @if (!empty($news))
+                                    @foreach ($subscriptions as $item)
+                                    <option value="{{ $item['id_subscription'] }}">{{ $item['subscription_title'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
 					<div class="form-group clearfix">
 						<label class="col-md-3 control-label">Date Start</label>
 						<div class="col-md-6">
