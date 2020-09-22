@@ -113,7 +113,7 @@
 
 
                     {{-- Deals Periode --}}
-                    @if ( $deals_type == "Deals" )
+                    @if ( $deals_type == "Deals" || $deals_type == "WelcomeVoucher" )
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Deals Periode <span class="required" aria-required="true"> * </span> </label>
                         <div class="col-md-4">
@@ -257,7 +257,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="custom_outlet_text" id="field_tos" class="form-control summernote" placeholder="Custom Outlet Available Text">{{ old('custom_outlet_text') }}</textarea>
+                                <textarea name="custom_outlet_text" id="field_tos" class="form-control summernote" placeholder="Custom Outlet Available Text">{{ old('custom_outlet_text')??$deals['custom_outlet_text']??null }}</textarea>
                             </div>
                         </div>
                     </div>
