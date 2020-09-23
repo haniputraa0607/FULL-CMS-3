@@ -186,7 +186,7 @@ class OutletController extends Controller
                 }
             }
             else {
-                $e = ['e' => 'Data outlet not found.d'];
+                $e = ['e' => 'Data outlet not found'];
                 return back()->witherrors($e);
             }
 
