@@ -992,28 +992,7 @@ class SettingController extends Controller
         $post['type'] = 'general';
 
         if (isset($post['click_to'])) {
-            if ($post['click_to'] == 'news') {
-                $post['type'] = 'news';
-            }
-            elseif ($post['click_to'] == 'gofood') {
-                $post['type'] = 'gofood';
-            }
-            elseif ($post['click_to'] == 'order') {
-                $post['type'] = 'order';
-            }
-            elseif ($post['click_to'] == 'deals_list') {
-                $post['type'] = 'deals';
-            }
-            elseif ($post['click_to'] == 'deals_detail') {
-                $post['type'] = 'deals';
-            }
-            elseif ($post['click_to'] == 'subscription_list') {
-                $post['type'] = 'subscription';
-            }
-            elseif ($post['click_to'] == 'subscription_detail') {
-                $post['type'] = 'subscription';
-            }
-
+            $post['type'] = $post['click_to'];
             // remove click_to index
             unset($post['click_to']);
         }
@@ -1048,13 +1027,7 @@ class SettingController extends Controller
         $post['type'] = 'general';
 
         if (isset($post['click_to'])) {
-            if ($post['click_to'] == 'gofood') {
-                $post['type'] = 'gofood';
-            }
-            elseif ($post['click_to'] == 'order') {
-                $post['type'] = 'order';
-            }
-
+            $post['type'] = $post['click_to'];
             // remove click_to index
             unset($post['click_to']);
         }

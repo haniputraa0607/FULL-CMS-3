@@ -171,7 +171,9 @@
 
     	$('#modalBanner [name="click_to"]').on('change', function() {
     		$('#modalBanner [data-visible]').addClass('hidden');
-    		$('#modalBanner [data-visible="' + $(this).val() + '"').removeClass('hidden');
+    		$('#modalBanner [data-visible] select').attr('disabled', 'disabled');
+    		$('#modalBanner [data-visible="' + $(this).val() + '"]').removeClass('hidden');
+    		$('#modalBanner [data-visible="' + $(this).val() + '"] select').removeAttr('disabled');
     	});
 
     	// upload & delete image on summernote
@@ -245,6 +247,7 @@
 		var banner_end		= $(this).data('end');
 		var time_start		= $(this).data('time_start');
 		var time_end		= $(this).data('time_end');
+		var reference  		= $(this).data('reference');
 
     	$('#modalBannerUpdate').on('shown.bs.modal', function () {
     		// on chrome
@@ -252,37 +255,31 @@
 
     		// assign value to form
     		$('#id_banner').val(id);
-			$('#modalBannerUpdate .click-to-news').val(id_news).trigger('change');
 			$('#modalBannerUpdate .click-to-url').val(url);
 			$('#edit-banner-img').attr('src', image);
 			$('#banner_start').val(banner_start);
 			$('#banner_end').val(banner_end);
 			$('#time_start').val(time_start);
 			$('#time_end').val(time_end);
-
-			if (url != "") {
-				if (type == 'general') {
-					$('#modalBannerUpdate .click-to-radio[value="url"]').prop("checked", true);
-	            	$('.click-to-url').show();
-				} else {
-					$('#modalBannerUpdate .click-to-radio[value="gofood"]').prop("checked", true);
-				}
-			}
-			else if(id_news != "") {
-				$('#modalBannerUpdate .click-to-radio[value="news"]').prop("checked", true);
-	            $('.click-to-type').find('.select2-container').show();
-			}
-			else if(type == "order") {
-				$('#modalBannerUpdate .click-to-radio[value="order"]').prop("checked", true);
-			}
-			else {
-				$('#modalBannerUpdate .click-to-radio[value="none"]').prop("checked", true);
-			}
+			$('#click-to-type').val(type);
+			$('#modalBannerUpdate [name="id_reference"]').val(reference);
 
 			// reset var
 			url = "";
     	});
 
+		/* on chrome */
+    	$('#modalBannerUpdate').on('shown.bs.modal', function () {
+    		$('#modalBannerUpdate .select2').select2({ dropdownParent: $("#modalBannerUpdate .modal-body") });
+    		$('#modalBannerUpdate [name="click_to"]').change();
+    	});
+
+    	$('#modalBannerUpdate [name="click_to"]').on('change', function() {
+    		$('#modalBannerUpdate [data-visible]').addClass('hidden');
+    		$('#modalBannerUpdate [data-visible] select').attr('disabled', 'disabled');
+    		$('#modalBannerUpdate [data-visible="' + $(this).val() + '"]').removeClass('hidden');
+    		$('#modalBannerUpdate [data-visible="' + $(this).val() + '"] select').removeAttr('disabled');
+    	});
     });
 
     $('#featured_deals .btn-edit').click(function() {
@@ -803,7 +800,7 @@
 											</div>
 											<div class="col-md-10 text-right">
 												@if(MyHelper::hasAccess([146], $grantedFeature))
-												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-time_start="{{$banner['time_start']}}" data-time_end="{{$banner['time_end']}}" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-news="{{$banner['id_reference']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ ($banner['banner_start']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'' }}" data-end="{{ ($banner['banner_end']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):''}}" data-type="{{$banner['type']}}"><i class="fa fa-pencil"></i> </a>
+												<a class="btn blue btn-circle btn-edit" href="#modalBannerUpdate" data-toggle="modal" data-time_start="{{$banner['time_start']}}" data-time_end="{{$banner['time_end']}}" data-id="{{ $banner['id_banner'] }}" data-img="{{$banner['image_url']}}" data-reference="{{$banner['id_reference']}}" data-url="{{$banner['url']}}" data-type="{{ $banner['type'] }}" data-start="{{ ($banner['banner_start']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_start'])[0], explode(' ', $banner['banner_start'])[1]]))):'' }}" data-end="{{ ($banner['banner_end']??false)?date("d M Y - H:i", strtotime(implode(' ',[explode(' ', $banner['banner_end'])[0], explode(' ', $banner['banner_end'])[1]]))):''}}" data-type="{{$banner['type']}}"><i class="fa fa-pencil"></i> </a>
 												@endif
 												@if(MyHelper::hasAccess([147], $grantedFeature))
 												<a class="btn red-mint btn-circle btn-delete" data-id="{{ $banner['id_banner'] }}"><i class="fa fa-trash-o"></i> </a>
@@ -1322,7 +1319,7 @@
                             Click To
                         </label>
 						<div class="col-md-5">
-							<select class="select2 form-control" name="click_to">
+							<select class="select2 form-control" name="click_to" id="click-to-type">
 								<option value="none">None</option>
 								<option value="news">News</option>
 								<option value="url">Link</option>
