@@ -102,6 +102,15 @@ class OutletController extends Controller
             return view('outlet::create', $data);
         }
         else {
+
+            if(!empty($post['outlet_latitude']) && (strpos($post['outlet_latitude'], ',') !== false || $post['outlet_latitude'] == 'NaN')){
+                return back()->withErrors(['Please input invalid latitude']);
+            }
+
+            if(!empty($post['outlet_longitude']) && (strpos($post['outlet_longitude'], ',') !== false || $post['outlet_longitude'] == 'NaN')){
+                return back()->withErrors(['Please input invalid longitude']);
+            }
+
             if(isset($post['ampas'])){
                 unset($post['ampas']);
             }
@@ -198,6 +207,14 @@ class OutletController extends Controller
             return view('outlet::detail', $data);
         }
         else {
+            if(!empty($post['outlet_latitude']) && (strpos($post['outlet_latitude'], ',') !== false || $post['outlet_latitude'] == 'NaN')){
+                return back()->withErrors(['Please input invalid latitude'])->withInput();
+            }
+
+            if(!empty($post['outlet_longitude']) && (strpos($post['outlet_longitude'], ',') !== false || $post['outlet_longitude'] == 'NaN')){
+                return back()->withErrors(['Please input invalid longitude'])->withInput();
+            }
+
             //change pin
             // return $post;
             if(isset($post['outlet_pin']) || isset($post['generate_pin_outlet'])){
@@ -690,7 +707,18 @@ class OutletController extends Controller
         $post=$request->except('_token');
         $outlet = MyHelper::post('outlet/export',$post);
         if (isset($outlet['status']) && $outlet['status'] == "success") {
-            $data = new MultisheetExport($outlet['result']);
+            if(isset($outlet['result']['All Type'])){
+                $ex = $outlet['result']['All Type'];
+                //change long lat to float
+                foreach ($ex as $key=>$dt){
+                    $ex[$key]['latitude'] = ' '.$dt['latitude'];
+                    $ex[$key]['longitude'] = ' '.$dt['longitude'];
+                }
+                $res = ['All Type' => $ex];
+            }else{
+                $res = $outlet['result'];
+            }
+            $data = new MultisheetExport($res);
             return Excel::download($data,'Data_Outlets_'.date('Ymdhis').'.xls');
 
         }else {
