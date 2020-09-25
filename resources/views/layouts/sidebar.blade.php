@@ -1114,7 +1114,7 @@
 			</li>
 
 			@if(MyHelper::hasAccess([274], $grantedFeature))
-				<li class="nav-item {{($submenu_active == 'mark-as-invalid') ? 'active open' : ''}}">
+				<li class="nav-item {{($menu_active == 'mark-as-invalid') ? 'active open' : ''}}">
 					<a href="{{url('transaction/invalid-flag/mark-as-invalid')}}" class="nav-link ">
 						<i class="fa fa-list-ul"></i>
 						<span class="title">Mark as Invalid</span>
@@ -1123,7 +1123,7 @@
 			@endif
 
 			@if(MyHelper::hasAccess([275], $grantedFeature))
-				<li class="nav-item {{($submenu_active == 'mark-as-valid') ? 'active open' : ''}}">
+				<li class="nav-item {{($menu_active == 'mark-as-valid') ? 'active open' : ''}}">
 					<a href="{{url('transaction/invalid-flag/mark-as-valid')}}" class="nav-link ">
 						<i class="fa fa-list-ul"></i>
 						<span class="title">Mark as Valid</span>
@@ -1132,7 +1132,7 @@
 			@endif
 
 			@if(MyHelper::hasAccess([276], $grantedFeature))
-				<li class="nav-item {{($submenu_active == 'log-invalid-flag') ? 'active open' : ''}}">
+				<li class="nav-item {{($menu_active == 'log-invalid-flag') ? 'active open' : ''}}">
 					<a href="{{url('transaction/log-invalid-flag/list')}}" class="nav-link ">
 						<i class="fa fa-list-ul"></i>
 						<span class="title">Log Invalid Flag</span>

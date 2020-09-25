@@ -55,11 +55,8 @@ $grantedFeature     = session('granted_features');
     </div><br>
 
     <?php
-    if(Session::has('filter-list-flag-invalid')){
-        $search_param = Session::get('filter-list-flag-invalid');
-        if(isset($search_param['rule'])){
-            $rule = $search_param['rule'];
-        }
+    if(Session::has('filter-mark-as-invalid')){
+        $search_param = Session::get('filter-mark-as-invalid');
 
         if(isset($search_param['conditions'])){
             $conditions = $search_param['conditions'];
@@ -69,80 +66,49 @@ $grantedFeature     = session('granted_features');
 
     @include('layouts.notifications')
 
-    <form role="form" action="{{ url('transaction/log-invalid-flag/list')}}?filter=1" method="post">
-        @include('transaction::flag_invalid.filter_mark')
+    <form role="form" action="{{url()->current()}}?filter=1" method="post">
+        @include('transaction::flag_invalid.filter_mark_as_invalid')
     </form>
 
-    <div class="portlet light portlet-fit bordered" style="display: none;">
+    <br>
+    <div class="portlet light portlet-fit bordered">
         <div class="portlet-title">
             <div class="caption">
                 <span class="caption-subject font-red sbold uppercase">List Transaction</span>
             </div>
         </div>
         <div class="portlet-body">
-            <table class="table table-striped table-bordered table-hover dt-responsive" id="list-data">
+            <table class="table table-striped table-bordered table-hover dt-responsive">
                 <thead>
                 <tr>
+                    <th>Transaction Date</th>
                     <th>Receipt Number</th>
-                    <th>Outlet Name</th>
+                    <th>Order ID</th>
+                    <th>Outlet</th>
+                    <th>Transaction Type</th>
                 </tr>
                 </thead>
                 <tbody>
-                @if(!empty($data))
-                    @foreach($data as $res)
+                @if(!empty($list_trx))
+                    @foreach($list_trx as $res)
                         <tr>
-                            <td>
-                                <a href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/{{ $res['trasaction_type'] }}">{{$res['transaction_receipt_number']}}</a>
-                            </td>
-                            <td>
-                                {{$res['transaction_flag_invalid']}}
-                            </td>
-                            <td>
-                                @if(MyHelper::hasAccess([276], $grantedFeature))
-                                    <a class="btn btn-xs green" onClick="showDetail('{{$res['id_transaction']}}')">Detail</a>
-                                @endif
-                            </td>
+                            <td>{{date('d M Y H:i', strtotime($res['transaction_date']))}}</td>
+                            <td>{{$res['transaction_receipt_number']}}</td>
+                            <td>{{$res['order_id']}}</td>
+                            <td>{{$res['outlet_code']}}-{{$res['outlet_name']}}</td>
+                            <td>{{$res['trasaction_type']}}</td>
                         </tr>
                     @endforeach
+                @else
+                    <tr><td colspan="10" style="text-align: center">Data Not Available</td></tr>
                 @endif
                 </tbody>
             </table>
-            @if(isset($dataPerPage) && isset($dataUpTo) && isset($dataTotal))
-                Showing {{$dataPerPage}} to {{$dataUpTo}} of {{ $dataTotal }} entries<br>
-            @endif
-            @if ($dataPaginator)
-                {{ $dataPaginator->links() }}
-            @endif
-        </div>
-    </div>
-
-    <div class="modal fade" id="detailLog" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Detail</h4>
-                </div>
-                <div class="modal-body form">
-                    <div class="form-body">
-                        <div class="form-group row">
-                            <div class="col-md-3">
-                                Recipt Number
-                            </div>
-                            <div class="col-md-8" id="detail_receipt_number"></div>
-                        </div>
-                        <br>
-                        <table class="table table-striped table-bordered table-hover dt-responsive">
-                            <thead>
-                            <th>Updated By</th>
-                            <th>Updated Date</th>
-                            <th>Status</th>
-                            </thead>
-                            <tbody id="bodyDeatil"></tbody>
-                        </table>
-                    </div>
-                </div>
+            @if(!empty($list_trx))
+            <div style="text-align: right">
+                <button class="btn yellow-lemon">Mark as Invalid</button>
             </div>
+            @endif
         </div>
     </div>
 @endsection

@@ -83,107 +83,108 @@ $grantedFeature     = session('granted_features');
             </div>
         </div>
         <div class="portlet-body">
-            <table class="table table-striped table-bordered table-hover dt-responsive" id="list-trx">
-            <thead>
-              <tr>
-                  <th>Date</th>
-                  <th>Outlet</th>
-                  <th>Transaction Type</th>
-                  <th>Receipt Number</th>
-                  <th>Customer Name</th>
-                  <th>Phone</th>
-                  <th>Total Price</th>
-                  <th>Payment Status</th>
-                  <th>Transaction Status</th>
-                  @if(strtolower($key) == 'delivery')
-                  <th>Shipment Status</th>
-                  @endif
-                  <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-                @if(!empty($trx))
-                    @foreach($trx as $res)
-                        <tr>
-                            <td>{{ date('d M Y H:i:s', strtotime($res['transaction_date'])) }}</td>
-                            <td>{{ $res['outlet_code'] }} - {{ $res['outlet_name'] }}</td>
-                            <td><span class="badge bg-{{$res['pickup_by'] == 'Customer' ? 'green-jungle':'blue'}}">{{$res['pickup_by'] == 'Customer' ? 'Pickup Order':'Delivery'}}</span></td>
-                            <td>{{ $res['transaction_receipt_number'] }}</td>
-                            @if (isset($res['name']))
-                              <td>{{ $res['name'] }}</td>
-                            @else
-                              <td>{{ $res['user']['name'] }}</td>
-                            @endif
-
-                            @if (isset($res['phone']))
-                              <td>{{ $res['phone'] }}</td>
-                            @else
-                              <td>{{ $res['user']['phone'] }}</td>
-                            @endif
-
-                            <td>Rp {{ number_format($res['transaction_grandtotal'], 2) }}</td>
-                            <td>
-                                @if($res['transaction_payment_status'] == 'Completed')
-                                    <span class="badge" style="background-color: #A6BA35;">Completed</span>
-                                @elseif($res['transaction_payment_status'] == 'Pending')
-                                    <span class="badge" style="background-color: #FD6437">Pending</span>
-                                @elseif($res['transaction_payment_status'] == 'Cancelled')
-                                    <span class="badge" style="background-color: #EF1E31">Cancelled</span>
+            <div style="overflow-x:auto;">
+                <table class="table table-striped table-bordered table-hover dt-responsive">
+                  <tr>
+                      <th>Date</th>
+                      <th>Outlet</th>
+                      <th>Transaction Type</th>
+                      <th>Receipt Number</th>
+                      <th>Customer Name</th>
+                      <th>Phone</th>
+                      <th>Total Price</th>
+                      <th>Payment Status</th>
+                      <th>Transaction Status</th>
+                      @if(strtolower($key) == 'delivery')
+                      <th>Shipment Status</th>
+                      @endif
+                      <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @if(!empty($trx))
+                        @foreach($trx as $res)
+                            <tr>
+                                <td>{{ date('d M Y H:i:s', strtotime($res['transaction_date'])) }}</td>
+                                <td>{{ $res['outlet_code'] }} - {{ $res['outlet_name'] }}</td>
+                                <td><span class="badge bg-{{$res['pickup_by'] == 'Customer' ? 'green-jungle':'blue'}}">{{$res['pickup_by'] == 'Customer' ? 'Pickup Order':'Delivery'}}</span></td>
+                                <td>{{ $res['transaction_receipt_number'] }}</td>
+                                @if (isset($res['name']))
+                                  <td>{{ $res['name'] }}</td>
+                                @else
+                                  <td>{{ $res['user']['name'] }}</td>
                                 @endif
-                            </td>
-                            <td>
-                                @if(empty($res['receive_at']))
-                                    <span class="badge" style="background-color: #FD6437">Pending</span>
-                                @elseif(!empty($res['receive_at']) && empty($res['ready_at']))
-                                    <span class="badge" style="background-color: #006451">Received</span>
-                                @elseif(!empty($res['ready_at']) && empty($res['taken_at']) && empty($res['taken_by_system_at']))
-                                    <span class="badge" style="background-color: #7DB8B2">Ready</span>
-                                @elseif(!empty($res['taken_at']) && $res['pickup_by'] == 'Customer')
-                                    <span class="badge bg-green-jungle">Taken by Customer</span>
-                                @elseif(!empty($res['taken_at']) && $res['pickup_by'] != 'Customer')
-                                    <span class="badge bg-green-jungle">Taken by Driver</span>
-                                @elseif(!empty($res['taken_by_system_at']))
-                                    <span class="badge bg-green-jungle">Taken by System</span>
-                                @elseif(!empty($res['reject_at']))
-                                    <span class="badge" style="background-color: #EF1E31">Reject</span>
+
+                                @if (isset($res['phone']))
+                                  <td>{{ $res['phone'] }}</td>
+                                @else
+                                  <td>{{ $res['user']['phone'] }}</td>
                                 @endif
-                            </td>
-                            @if(strtolower($key) == 'delivery')
-                            @php 
-                            $bg = 'default';
-                            switch(strtolower($res['latest_status'])){
-                                case 'finding driver':
-                                case 'driver found':
-                                    $bg = 'yellow-crusta';
-                                    break;
-                                case 'enroute pickup':
-                                case 'item picked by driver':
-                                    $bg = 'yellow-gold';
-                                    break;
-                                case 'enroute drop':
-                                    $bg = 'green-jungle';
-                                    break;
-                                case 'completed':
-                                    $bg = 'blue-sharp';
-                                    break;
-                                case 'driver not found':
-                                case 'rejected':
-                                case 'cancelled':
-                                    $bg = 'red';
-                                    break;
-                            }
-                            @endphp
-                            <td><span class="badge bg-{{$bg}}">{{$res['latest_status']??''}}</span></td>
-                            @endif
-                            <td>
-                                <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/{{ $key }}"><i class="icon-pencil"></i> Detail </a>
-                                {{-- <a class="btn btn-block red btn-xs" href="{{ url('transaction/delete', $res['transaction_receipt_number']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a> --}}
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-            </table>
+
+                                <td>Rp {{ number_format($res['transaction_grandtotal'], 2) }}</td>
+                                <td>
+                                    @if($res['transaction_payment_status'] == 'Completed')
+                                        <span class="badge" style="background-color: #A6BA35;">Completed</span>
+                                    @elseif($res['transaction_payment_status'] == 'Pending')
+                                        <span class="badge" style="background-color: #FD6437">Pending</span>
+                                    @elseif($res['transaction_payment_status'] == 'Cancelled')
+                                        <span class="badge" style="background-color: #EF1E31">Cancelled</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(empty($res['receive_at']))
+                                        <span class="badge" style="background-color: #FD6437">Pending</span>
+                                    @elseif(!empty($res['receive_at']) && empty($res['ready_at']))
+                                        <span class="badge" style="background-color: #006451">Received</span>
+                                    @elseif(!empty($res['ready_at']) && empty($res['taken_at']) && empty($res['taken_by_system_at']))
+                                        <span class="badge" style="background-color: #7DB8B2">Ready</span>
+                                    @elseif(!empty($res['taken_at']) && $res['pickup_by'] == 'Customer')
+                                        <span class="badge bg-green-jungle">Taken by Customer</span>
+                                    @elseif(!empty($res['taken_at']) && $res['pickup_by'] != 'Customer')
+                                        <span class="badge bg-green-jungle">Taken by Driver</span>
+                                    @elseif(!empty($res['taken_by_system_at']))
+                                        <span class="badge bg-green-jungle">Taken by System</span>
+                                    @elseif(!empty($res['reject_at']))
+                                        <span class="badge" style="background-color: #EF1E31">Reject</span>
+                                    @endif
+                                </td>
+                                @if(strtolower($key) == 'delivery')
+                                @php
+                                $bg = 'default';
+                                switch(strtolower($res['latest_status'])){
+                                    case 'finding driver':
+                                    case 'driver found':
+                                        $bg = 'yellow-crusta';
+                                        break;
+                                    case 'enroute pickup':
+                                    case 'item picked by driver':
+                                        $bg = 'yellow-gold';
+                                        break;
+                                    case 'enroute drop':
+                                        $bg = 'green-jungle';
+                                        break;
+                                    case 'completed':
+                                        $bg = 'blue-sharp';
+                                        break;
+                                    case 'driver not found':
+                                    case 'rejected':
+                                    case 'cancelled':
+                                        $bg = 'red';
+                                        break;
+                                }
+                                @endphp
+                                <td><span class="badge bg-{{$bg}}">{{$res['latest_status']??''}}</span></td>
+                                @endif
+                                <td>
+                                    <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/{{ $key }}"><i class="icon-pencil"></i> Detail </a>
+                                    {{-- <a class="btn btn-block red btn-xs" href="{{ url('transaction/delete', $res['transaction_receipt_number']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a> --}}
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+                </table>
+            </div>
             @if(isset($trxPerPage) && isset($trxUpTo) && isset($trxTotal))
                 Showing {{$trxPerPage}} to {{$trxUpTo}} of {{ $trxTotal }} entries<br>
             @endif

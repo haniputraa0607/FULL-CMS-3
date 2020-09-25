@@ -15,6 +15,35 @@ class InvalidFlagController extends Controller
 {
     public function markAsInvalid(Request $request){
         $post = $request->except('_token');
+
+        $data = [
+            'title'          => 'Invalid Flag',
+            'menu_active'    => 'mark-as-invalid',
+            'sub_title'      => 'Mark as Invalid',
+            'submenu_active' => 'mark-as-invalid'
+        ];
+
+        if(Session::has('filter-mark-as-invalid') && !empty($post) && !isset($post['filter'])){
+            $post = Session::get('filter-mark-as-invalid');
+        }else{
+            Session::forget('filter-mark-as-invalid');
+        }
+
+        $data['list_trx'] = [];
+        if(!empty($post)){
+            $list = MyHelper::post('transaction/invalid-flag/mark-as-invalid', $post);
+            if(isset($list['status']) && $list['status'] == 'success'){
+                $data['list_trx']  = $list['result'];
+            }else{
+                return redirect('transaction/invalid-flag/mark-as-invalid')->withErrors($list['messages']);
+            }
+        }
+
+        if($post){
+            Session::put('filter-mark-as-invalid',$post);
+        }
+
+        return view('transaction::flag_invalid.mark_as_invalid', $data);
     }
 
     public function listLogInvalidFlag(Request $request){
@@ -65,9 +94,5 @@ class InvalidFlagController extends Controller
         $data = MyHelper::post('transaction/log-invalid-flag/detail',$post);
 
         return $data;
-    }
-
-    public function markAsValid(Request $request){
-
     }
 }

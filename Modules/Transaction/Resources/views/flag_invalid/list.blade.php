@@ -115,34 +115,34 @@ $grantedFeature     = session('granted_features');
         </div>
         <div class="portlet-body">
             <table class="table table-striped table-bordered table-hover dt-responsive" id="list-data">
-            <thead>
-              <tr>
+                <thead>
+                <tr>
                     <th>Receipt Number</th>
                     <th>Current Status</th>
                     @if(MyHelper::hasAccess([276], $grantedFeature))
-                      <th>Detail</th>
+                        <th>Detail</th>
                     @endif
-              </tr>
-            </thead>
-            <tbody>
+                </tr>
+                </thead>
+                <tbody>
                 @if(!empty($data))
                     @foreach($data as $res)
                         <tr>
-                           <td>
-                               <a href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/{{ $res['trasaction_type'] }}">{{$res['transaction_receipt_number']}}</a>
-                           </td>
-                           <td>
-                               {{$res['transaction_flag_invalid']}}
-                           </td>
-                           <td>
-                               @if(MyHelper::hasAccess([276], $grantedFeature))
-                                   <a class="btn btn-xs green" onClick="showDetail('{{$res['id_transaction']}}')">Detail</a>
-                               @endif
-                           </td>
+                            <td>
+                                <a href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/{{ $res['trasaction_type'] }}">{{$res['transaction_receipt_number']}}</a>
+                            </td>
+                            <td>
+                                {{$res['transaction_flag_invalid']}}
+                            </td>
+                            <td>
+                                @if(MyHelper::hasAccess([276], $grantedFeature))
+                                    <a class="btn btn-xs green" onClick="showDetail('{{$res['id_transaction']}}')">Detail</a>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 @endif
-            </tbody>
+                </tbody>
             </table>
             @if(isset($dataPerPage) && isset($dataUpTo) && isset($dataTotal))
                 Showing {{$dataPerPage}} to {{$dataUpTo}} of {{ $dataTotal }} entries<br>
