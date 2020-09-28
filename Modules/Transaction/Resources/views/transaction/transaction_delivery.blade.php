@@ -131,7 +131,7 @@
                                     <span class="badge" style="background-color: #FD6437">Pending</span>
                                 @elseif(!empty($res['receive_at']) && empty($res['ready_at']))
                                     <span class="badge" style="background-color: #006451">Received</span>
-                                @elseif(!empty($res['ready_at']) && empty($res['taken_at']) && empty($res['taken_by_system_at']))
+                                @elseif(!empty($res['ready_at']) && empty($res['taken_at']))
                                     <span class="badge" style="background-color: #7DB8B2">Ready</span>
                                 @elseif(!empty($res['taken_at']) && $res['pickup_by'] == 'Customer')
                                     <span class="badge bg-green-jungle">Taken by Customer</span>
