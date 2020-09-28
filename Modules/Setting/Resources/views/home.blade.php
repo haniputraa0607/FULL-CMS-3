@@ -255,7 +255,7 @@
 
     		// assign value to form
     		$('#id_banner').val(id);
-			$('#modalBannerUpdate .click-to-url').val(url);
+			$('#modalBannerUpdate [name="url"]').val(url);
 			$('#edit-banner-img').attr('src', image);
 			$('#banner_start').val(banner_start);
 			$('#banner_end').val(banner_end);
