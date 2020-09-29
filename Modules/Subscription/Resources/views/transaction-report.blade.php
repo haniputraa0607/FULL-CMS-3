@@ -153,13 +153,15 @@
 	                        <th> Subscription Price </th>
 	                        <th> Bought at </th>
 	                        <th> Expired at </th>
-	                        <th> Used at </th>
-	                        <th> Receipt Number </th>
-	                        <th> Transaction Grandtotal </th>
-	                        <th> Outlet </th>
-	                        <th> Subscription Nominal </th>
-	                        <th> Charged Central </th>
-	                        <th> Charged Outlet </th>
+	                        @if ($report_type == 'transaction')
+	                        	<th> Used at </th>
+		                        <th> Receipt Number </th>
+		                        <th> Transaction Grandtotal </th>
+		                        <th> Outlet </th>
+		                        <th> Subscription Nominal </th>
+		                        {{-- <th> Charged Central </th>
+		                        <th> Charged Outlet </th> --}}
+	                        @endif
 	                    </tr>
 	                </thead>
 	                <tbody>
@@ -184,15 +186,17 @@
 	                                <td>{{ $subs_price }}</td>
 	                                <td>{{ !empty($val['bought_at']) ? date('d-M-y', strtotime($val['bought_at'])) : '-' }}</td>
 	                                <td>{{ !empty($val['subscription_expired_at']) ? date('d-M-y', strtotime($val['subscription_expired_at'])) : '-' }}</td>
-	                                <td>{{ !empty($val['used_at']) ? date('d-M-y', strtotime($val['used_at'])) : '-' }}</td>
-	                                <td>
-	                                	<a href="{{ $val['redirect_trx'] }}" target=”_blank”>{{ $val['transaction_receipt_number'] }}</a>
-	                                </td>
-	                                <td>{{ !empty($val['transaction_grandtotal']) ? 'IDR '.number_format($val['transaction_grandtotal']) : '' }}</td>
-	                                <td>{{ $val['outlet'] }}</td>
-	                                <td>{{ !empty($val['subscription_nominal']) ? 'IDR '.number_format($val['subscription_nominal']) : '' }}</td>
-	                                <td>{{ !empty($val['charged_central']) ? 'IDR '.number_format($val['charged_central']) : '' }}</td>
-	                                <td>{{ !empty($val['charged_outlet']) ? 'IDR '.number_format($val['charged_outlet']) : '' }}</td>
+	                                @if ($report_type == 'transaction')
+		                                <td>{{ !empty($val['used_at']) ? date('d-M-y', strtotime($val['used_at'])) : '-' }}</td>
+		                                <td>
+		                                	<a href="{{ $val['redirect_trx'] }}" target=”_blank”>{{ $val['transaction_receipt_number'] }}</a>
+		                                </td>
+		                                <td>{{ !empty($val['transaction_grandtotal']) ? 'IDR '.number_format($val['transaction_grandtotal']) : '' }}</td>
+		                                <td>{{ $val['outlet'] }}</td>
+		                                <td>{{ !empty($val['subscription_nominal']) ? 'IDR '.number_format($val['subscription_nominal']) : '' }}</td>
+		                                {{-- <td>{{ !empty($val['charged_central']) ? 'IDR '.number_format($val['charged_central']) : '' }}</td>
+		                                <td>{{ !empty($val['charged_outlet']) ? 'IDR '.number_format($val['charged_outlet']) : '' }}</td> --}}
+	                                @endif
 	                            </tr>
 	                        @endforeach
 	                    @endif

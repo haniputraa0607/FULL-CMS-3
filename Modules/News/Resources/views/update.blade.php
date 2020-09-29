@@ -660,7 +660,7 @@
                         </div>
 						<div class="col-md-3">
 							<div class="input-group">
-								<input type="time" class="form-control" name="news_post_time" value="{{ date('h:i', strtotime($value['news_post_date'])) }}">
+								<input type="time" class="form-control" name="news_post_time" value="{{ date('H:i', strtotime($value['news_post_date'])) }}" required>
 								<span class="input-group-btn">
 									<button class="btn default" type="button">
 										<i class="fa fa-clock-o"></i>
@@ -917,7 +917,7 @@
                             <div class="col-md-9">
                                 <span class="m-switch">
                                     <label>
-                                    <input type="checkbox" class="make-switch" id="featureTime" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty($value['news_event_time_start'])) checked @endif>
+                                    <input type="checkbox" class="make-switch" id="featureTime" data-size="small" data-on-color="info" name="toggle_time" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty($value['news_event_time_start'])) checked @endif>
                                     <span></span>
                                     </label>
                                 </span>
@@ -973,7 +973,7 @@
                         <div class="col-md-9">
                             <span class="m-switch">
                                 <label>
-                                <input type="checkbox" class="make-switch" id="featureLocation" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty($value['news_event_location_name'])) checked @endif>
+                                <input type="checkbox" class="make-switch" name="toggle_location" id="featureLocation" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF" @if (!empty($value['news_event_location_name'])) checked @endif>
                                 <span></span>
                                 </label>
                             </span>
