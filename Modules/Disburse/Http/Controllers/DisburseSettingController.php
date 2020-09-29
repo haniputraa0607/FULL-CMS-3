@@ -144,6 +144,16 @@ class DisburseSettingController extends Controller
         }
     }
 
+    function deleteBankAccount(Request $request){
+        $post = $request->all();
+        $delete = MyHelper::post('disburse/setting/delete-bank-account',$post);
+        if (isset($delete['status']) && $delete['status'] == "success") {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+
     function exportListBank(Request $request){
         $bank = MyHelper::get('disburse/bank');
         if(isset($bank['status']) && $bank['status'] == 'success'){
