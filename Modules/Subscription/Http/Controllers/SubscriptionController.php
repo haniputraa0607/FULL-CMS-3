@@ -570,7 +570,8 @@ class SubscriptionController extends Controller
             }
         }
         $setting 	= MyHelper::post('welcome-subscription/setting', $post);
-        $list_subs 	= MyHelper::post('welcome-subscription/list', ['subscription_type' => 'welcome', 'web' => 1]);
+        $list_subs 	= MyHelper::post('welcome-subscription/list', ['subscription_type' => 'welcome', 'active' => 1]);
+
         if(isset($setting['status']) && $setting['status'] == 'success'){
             $data['setting'] = $setting['data']['setting'];
             $data['subscription'] = $setting['data']['subscription'];
@@ -602,30 +603,56 @@ class SubscriptionController extends Controller
     }
 
     function report(Request $request) {
-        $post=$request->except('_token', 'page');
+        $post = $request->except('_token', 'page');
+        $report_type = $request->route()->getAction('report_type');
+        $post['report_type'] = $report_type;
         unset($post['page']);
         $data = [
             'title'          => 'Subscription',
-            'sub_title'      => 'Transaction Report',
             'menu_active'    => 'subscription',
-            'submenu_active' => 'subscription-report'
         ];
+
+        switch ($report_type) {
+        	case 'claim':
+        		$data = $data+[
+        			'sub_title'      => 'Claim Report',
+            		'submenu_active' => 'subscription-claim-report',
+            		'report_type'	 => 'claim'
+        		];
+        		$report_session = 'subs_report_claim_filter';
+        		break;
+        	
+        	default:
+        		$data = $data+[
+        			'sub_title'      => 'Transaction Report',
+            		'submenu_active' => 'subscription-transaction-report',
+            		'report_type'	 => 'transaction'
+        		];
+        		$report_session = 'subs_report_trx_filter';
+        		break;
+        }
 
         if ($request->post('clear') == 'session') 
         {
-            session(['subs_report_filter' => '']);
+            session([$report_session => '']);
         }
 
-        app($this->promo_campaign)->session_mixer($request, $post, 'subs_report_filter');
-        if(($filter=session('subs_report_filter'))&&is_array($filter)){
+		if (!empty($post['search']) || $request->post('clear') == 'session') {
+			unset($post['search']);
+			$page = 1;
+		}else{
+			$page = $request->get('page');
+		}
 
+        app($this->promo_campaign)->session_mixer($request, $post, $report_session);
+        if(($filter=session($report_session))&&is_array($filter)){
             if($filter['rule']??false){
                 $data['rule']=array_map('array_values', $filter['rule']);
             }
             if($filter['operator']??false){
                 $data['operator']=$filter['operator'];
             }
-            session(['deals_filter' => $post]);
+            // session(['deals_filter' => $post]);
         }
         // if (!empty($request->except('_token','page'))) {
         // 	return redirect('subscription/transaction-report');
@@ -635,6 +662,7 @@ class SubscriptionController extends Controller
             $post['export'] = 1;
             $post['report_type'] = 'Subscription';
             $post['id_user'] = Session::get('id_user');
+            $post['type'] = $report_type;
             // dd($post);
             $report = MyHelper::post('report/export/create', $post);
 
@@ -645,7 +673,7 @@ class SubscriptionController extends Controller
             }
         }
 
-        $get_data = MyHelper::post('subscription/transaction-report?page='.$request->get('page'), $post);
+        $get_data = MyHelper::post('subscription/transaction-report?page='.$page, $post);
 
 		if(!empty($get_data['result']['data']) && $get_data['status'] == 'success' && !empty($get_data['result']['data'])){
 
@@ -681,7 +709,9 @@ class SubscriptionController extends Controller
 
         		$data['subs'][$key]['redirect_subs'] 	= url($redirect_subs.'/detail/'.$id_subs_encrypt);
         		$data['subs'][$key]['redirect_user'] 	= url('user/detail/'.$val['phone']);
-        		$data['subs'][$key]['redirect_trx'] 	= url('transaction/detail/'.$val['id_transaction'].'/all');
+        		if ($report_type == 'transaction') {
+        			$data['subs'][$key]['redirect_trx'] = url('transaction/detail/'.$val['id_transaction'].'/all');
+        		}
         	}
         }
 
