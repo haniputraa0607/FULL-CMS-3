@@ -29,7 +29,8 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:84'], 
     Route::post('update-complete', ['uses' => 'SubscriptionController@updateComplete']);
 
     /* Report */
-    Route::any('transaction-report', 'SubscriptionController@report');
+    Route::any('claim-report', ['uses' => 'SubscriptionController@report', 'report_type' => 'claim']);
+    Route::any('transaction-report', ['uses' => 'SubscriptionController@report', 'report_type' => 'transaction']);
     Route::any('list-export', [ 'uses' => 'SubscriptionController@listExport']);
     Route::any('export-action/{action}/{id}', [ 'uses' => 'SubscriptionController@actionExport']);
 });

@@ -81,9 +81,14 @@ class NewsController extends Controller
 
             $news = array_filter($news);
 
-            if (!isset($news['news_event_location_name'])) {
+            if (!isset($news['toggle_location'])) {
                 unset($news['news_event_latitude']);
                 unset($news['news_event_longitude']);
+            }
+
+            if (!isset($news['toggle_time'])) {
+                unset($news['news_event_time_start']);
+                unset($news['news_event_time_end']);
             }
 
             // set tanggal 
@@ -290,6 +295,16 @@ class NewsController extends Controller
             if (isset($news['news_content_long'])) {
                 // remove tag <font>
                 $news['news_content_long'] =preg_replace("/<\\/?font(.|\\s)*?>/",'',$news['news_content_long']);
+            }
+
+            if (!isset($news['toggle_location'])) {
+                unset($news['news_event_latitude']);
+                unset($news['news_event_longitude']);
+            }
+
+            if (!isset($news['toggle_time'])) {
+                unset($news['news_event_time_start']);
+                unset($news['news_event_time_end']);
             }
             
             // update data master news
