@@ -119,6 +119,7 @@ class PromoCampaignController extends Controller
         $id_promo_campaign = $exploded[0];
         $created_at = $exploded[1];
         $post = $request->except('_token');
+        $launch_modal = $post['modal']??0;
 
         if ($request->post('clear') == 'session') 
         {
@@ -152,7 +153,6 @@ class PromoCampaignController extends Controller
         }
 
         $result = MyHelper::post('promo-campaign/detail', $post);
-// return $result;
 
         if ( ($result['status']=='success')??false) {
             $result['result']['id_promo_campaign'] = MyHelper::createSlug($result['result']['id_promo_campaign'],$result['result']['created_at']);
@@ -183,6 +183,9 @@ class PromoCampaignController extends Controller
             $data['outlets'] = array_map(function($x){return [$x['id_outlet'],$x['outlet_name']];},$outlets);
             $data['operator']=$post['operator']??'and';
             $data['operator2']=$post['operator2']??'and';
+            if ($launch_modal) {
+            	$data['launch_modal'] = 1;
+            }
 
             return view('promocampaign::detail', $data);
         }else{
@@ -410,4 +413,47 @@ class PromoCampaignController extends Controller
         }
     }
 
+    public function exportPromoCode(Request $request)
+    {
+    	$post = $request->except('_token');
+    	$id_encrypt = $post['id_promo_campaign'];
+    	$post['id_promo_campaign'] = MyHelper::explodeSlug($post['id_promo_campaign'])[0];
+        $export = MyHelper::post('promo-campaign/export/create', $post);
+
+        if (isset($export['status']) && $export['status'] == "success") {
+            return redirect('promo-campaign/detail/'.$id_encrypt.'?modal=1#coupon')->withSuccess(['Success create export to queue']);
+        }else{
+            return redirect('promo-campaign/detail/'.$id_encrypt.'?modal=1#coupon')->withErrors(['Failed create export to queue']);
+        }
+    }
+
+    function actionExport(Request $request, $action, $id){
+        $post = $request->except('_token');
+
+        $post['action'] = $action;
+        $id_encrypt = $id;
+    	$post['id_promo_campaign'] = MyHelper::explodeSlug($id)[0];
+
+        $actions = MyHelper::post('promo-campaign/export/action', $post);
+
+        if($action == 'deleted'){
+            if (isset($actions['status']) && $actions['status'] == "success") {
+                return redirect('promo-campaign/detail/'.$id_encrypt.'?modal=1#coupon')->withSuccess(['Success to Remove file']);
+            } else {
+                return redirect('promo-campaign/detail/'.$id_encrypt.'?modal=1#coupon')->withErrors(['Failed to Remove file']);
+            }
+        }else{
+            if (isset($actions['status']) && $actions['status'] == "success") {
+                $link = $actions['result']['export_url'];
+                $filename = "Promo Code_".$actions['result']['campaign_name'].'_'.strtotime(date('Ymdhis')).'.xlsx';
+                $tempImage = tempnam(sys_get_temp_dir(), $filename);
+                copy($link, $tempImage);
+
+                return response()->download($tempImage, $filename)->deleteFileAfterSend(true);
+            } else {
+                return redirect('promo-campaign/detail/'.$id_encrypt.'?modal=1#coupon')->withErrors(['Failed to Download file']);
+            }
+        }
+
+    }
 }
