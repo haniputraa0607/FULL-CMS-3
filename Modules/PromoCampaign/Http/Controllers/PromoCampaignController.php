@@ -280,6 +280,7 @@ class PromoCampaignController extends Controller
 
                 if ( ($get_data['status']??false) == 'success' ) {
 	                $data['result'] = $get_data['result']??'';
+	                $data['result']['id_promo_campaign_decrypt'] = $data['result']['id_promo_campaign'];
 	                $data['result']['id_promo_campaign'] = $slug;
                 }
                 else{
