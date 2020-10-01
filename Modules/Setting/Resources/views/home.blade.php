@@ -1160,6 +1160,8 @@
 								<option value="deals_detail">Deals Detail</option>
 								<option value="subscription_list">Subscription List</option>
 								<option value="subscription_detail">Subscription Detail</option>
+								<option value="my_voucher">My Voucher</option>
+								<option value="edit_profile">Edit Profile</option>
 							</select>
                         </div>
 					</div>
@@ -1328,6 +1330,8 @@
 								<option value="deals_detail">Deals Detail</option>
 								<option value="subscription_list">Subscription List</option>
 								<option value="subscription_detail">Subscription Detail</option>
+								<option value="my_voucher">My Voucher</option>
+								<option value="edit_profile">Edit Profile</option>
 							</select>
                         </div>
 					</div>
