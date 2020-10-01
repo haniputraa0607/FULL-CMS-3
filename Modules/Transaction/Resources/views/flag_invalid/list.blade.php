@@ -49,6 +49,7 @@ $grantedFeature     = session('granted_features');
 
                         for(var i=0;i<result.result.length;i++){
                             table += '<tr>';
+                            table += '<td>'+result.result[i].reason+'</td>';
                             table += '<td>'+result.result[i].name+'</td>';
                             table += '<td>'+result.result[i].updated_date+'</td>';
                             table += '<td>'+result.result[i].tansaction_flag+'</td>';
@@ -169,14 +170,17 @@ $grantedFeature     = session('granted_features');
                             <div class="col-md-8" id="detail_receipt_number"></div>
                         </div>
                         <br>
-                        <table class="table table-striped table-bordered table-hover dt-responsive">
-                            <thead>
-                            <th>Updated By</th>
-                            <th>Updated Date</th>
-                            <th>Status</th>
-                            </thead>
-                            <tbody id="bodyDeatil"></tbody>
-                        </table>
+                        <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
+                            <table class="table table-striped table-bordered table-hover dt-responsive">
+                                <thead>
+                                <th>Reason</th>
+                                <th>Updated By</th>
+                                <th>Updated Date</th>
+                                <th>Status</th>
+                                </thead>
+                                <tbody id="bodyDeatil"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

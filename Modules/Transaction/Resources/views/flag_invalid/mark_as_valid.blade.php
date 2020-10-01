@@ -31,6 +31,23 @@ $grantedFeature     = session('granted_features');
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $('.mt-repeater').repeater({
+                show: function () {
+                    var val = $('input[name="filter_type"]:checked').val();
+                    if(val === 'order_id'){
+                        $('.div-date').show();
+                        $('.input-date').prop('required',true);
+                    }else{
+                        $('.div-date').hide();
+                        $('.input-date').prop('required',false);
+                    }
+                }
+            });
+        });
+
+    </script>
 @endsection
 
 @section('content')
@@ -55,8 +72,8 @@ $grantedFeature     = session('granted_features');
     </div><br>
 
     <?php
-    if(Session::has('filter-mark-as-invalid')){
-        $search_param = Session::get('filter-mark-as-invalid');
+    if(Session::has('filter-mark-as-valid')){
+        $search_param = Session::get('filter-mark-as-valid');
 
         if(isset($search_param['conditions'])){
             $conditions = $search_param['conditions'];
@@ -64,6 +81,7 @@ $grantedFeature     = session('granted_features');
         }
     }
     ?>
+
     <h1 class="page-title">
         {{$title}}
     </h1>
@@ -97,7 +115,7 @@ $grantedFeature     = session('granted_features');
                     @foreach($data as $res)
                         <tr>
                             <td>
-                                <a class="btn btn-block yellow btn-xs" target="_blank" href="{{ url('transaction/invalid-flag/detail') }}/{{ $res['id_transaction'] }}?from=invalid"><i class="icon-pencil"></i> Detail </a>
+                                <a class="btn btn-block yellow btn-xs" target="_blank" href="{{ url('transaction/invalid-flag/detail') }}/{{ $res['id_transaction'] }}?from=valid"><i class="icon-pencil"></i> Detail </a>
                             </td>
                             <td>{{date('d M Y H:i', strtotime($res['transaction_date']))}}</td>
                             <td>{{$res['transaction_receipt_number']}}</td>

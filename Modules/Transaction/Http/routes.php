@@ -73,7 +73,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     });
 
     Route::group(['prefix' => 'invalid-flag'], function(){
+        Route::any('detail/{id_transaction}', ['uses' => 'InvalidFlagController@detailTrx']);
         Route::any('mark-as-valid', ['middleware' => 'feature_control:275', 'uses' => 'InvalidFlagController@markAsValid']);
+        Route::post('mark-as-invalid/add', ['uses' => 'InvalidFlagController@markAsInvalidAdd']);
+        Route::post('mark-as-valid/update', ['uses' => 'InvalidFlagController@markAsValidUpdate']);
         Route::any('mark-as-invalid', ['middleware' => 'feature_control:274', 'uses' => 'InvalidFlagController@markAsInvalid']);
     });
 
