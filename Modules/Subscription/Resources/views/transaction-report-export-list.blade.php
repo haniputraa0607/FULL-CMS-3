@@ -61,7 +61,7 @@
                         }
 
                         if(isset($filter['type'])){
-                            $html .= 'Export Report Payment: '.$filter['type'].'<br>';
+                            $html .= 'Export Report Type: '.$filter['type'].'<br>';
                         }
 
                         if($val['report_type'] == 'Transaction' && isset($filter['detail'])){

@@ -1531,9 +1531,14 @@
 						</li>
 						@endif
 						@if(MyHelper::hasAccess([173], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'subscription-report') ? 'active open' : ''}}">
+						<li class="nav-item {{($submenu_active == 'subscription-claim-report') ? 'active open' : ''}}">
+							<a href="{{url('subscription/claim-report')}}" class="nav-link ">
+								<span class="title">Subscription Claim Report</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'subscription-transaction-report') ? 'active open' : ''}}">
 							<a href="{{url('subscription/transaction-report')}}" class="nav-link ">
-								<span class="title">Subscription Report</span>
+								<span class="title">Subscription Transaction Report</span>
 							</a>
 						</li>
 						<li class="nav-item {{($submenu_active == 'subscription-list-export') ? 'active open' : ''}}">

@@ -11,162 +11,249 @@ use App\Lib\MyHelper;
 $configs  = session('configs');
 
 ?>
-<script>
-	rules={
-		name:{
-			display:'User Name',
-			operator:[
-				['=','='],
-				['like','like']
-			],
-			opsi:[]
-		},
-		phone:{
-			display:'User Phone',
-			operator:[
-				['=','='],
-				['like','like']
-			],
-			opsi:[]
-		},
-		subscription:{
-			display:'Subscription',
-			operator:[],
-			opsi:{!!json_encode($subscription ?? [])!!},
-			type:'multiple'
-		},
-		bought_at:{
-			display:'Bought Date',
-			operator:[
-				['=','='],
-				['<','<'],
-				['>','>'],
-				['<=','<='],
-				['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		subscription_expired_at:{
-			display:'Expired Date',
-			operator:[
-				['=','='],
-				['<','<'],
-				['>','>'],
-				['<=','<='],
-				['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		used_at:{
-			display:'Used Date',
-			operator:[
-				['=','='],
-				['<','<'],
-				['>','>'],
-				['<=','<='],
-				['>=','>=']
-			],
-			opsi:[],
-			type:'date'
-		},
-		outlet:{
-			display:'Outlet',
-			operator:[],
-			opsi:{!!json_encode($outlets ?? [])!!},
-			type:'multiple'
-		},
-		transaction_receipt_number:{
-			display:'Receipt Number',
-			operator:[
-			['=','='],
-			['like','like']
-			],
-			opsi:[]
-		},
-		subscription_price_cash:{
-			display:'Subscription Price Cash',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		subscription_price_point:{
-			display:'Subscription Price Point',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		voucher_code:{
-			display:'Voucher Code',
-			operator:[
-			['=','='],
-			['like','like']
-			],
-			opsi:[]
-		},
-		subscription_nominal:{
-			display:'Subscription Nominal',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		transaction_grandtotal:{
-			display:'Transaction Grandtotal',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		charged_outlet:{
-			display:'Charged Outlet',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		charged_central:{
-			display:'Charged Central',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-	};
 
+@if ($report_type == 'claim')
+	<script>
+		rules={
+			name:{
+				display:'User Name',
+				operator:[
+					['=','='],
+					['like','like']
+				],
+				opsi:[]
+			},
+			phone:{
+				display:'User Phone',
+				operator:[
+					['=','='],
+					['like','like']
+				],
+				opsi:[]
+			},
+			subscription:{
+				display:'Subscription',
+				operator:[],
+				opsi:{!!json_encode($subscription ?? [])!!},
+				type:'multiple'
+			},
+			bought_at:{
+				display:'Bought Date',
+				operator:[
+					['=','='],
+					['<','<'],
+					['>','>'],
+					['<=','<='],
+					['>=','>=']
+				],
+				opsi:[],
+				type:'date'
+			},
+			subscription_expired_at:{
+				display:'Expired Date',
+				operator:[
+					['=','='],
+					['<','<'],
+					['>','>'],
+					['<=','<='],
+					['>=','>=']
+				],
+				opsi:[],
+				type:'date'
+			},
+			subscription_price_cash:{
+				display:'Subscription Price Cash',
+				operator:[
+				['=','='],
+				['<','<'],
+				['>','>'],
+				['<=','<='],
+				['>=','>=']
+				],
+				opsi:[],
+				type:'number'
+			},
+			subscription_price_point:{
+				display:'Subscription Price Point',
+				operator:[
+				['=','='],
+				['<','<'],
+				['>','>'],
+				['<=','<='],
+				['>=','>=']
+				],
+				opsi:[],
+				type:'number'
+			},
+			voucher_code:{
+				display:'Voucher Code',
+				operator:[
+				['=','='],
+				['like','like']
+				],
+				opsi:[]
+			},
+		};
+	</script>
+@else
+	<script>
+		rules={
+			name:{
+				display:'User Name',
+				operator:[
+					['=','='],
+					['like','like']
+				],
+				opsi:[]
+			},
+			phone:{
+				display:'User Phone',
+				operator:[
+					['=','='],
+					['like','like']
+				],
+				opsi:[]
+			},
+			subscription:{
+				display:'Subscription',
+				operator:[],
+				opsi:{!!json_encode($subscription ?? [])!!},
+				type:'multiple'
+			},
+			bought_at:{
+				display:'Bought Date',
+				operator:[
+					['=','='],
+					['<','<'],
+					['>','>'],
+					['<=','<='],
+					['>=','>=']
+				],
+				opsi:[],
+				type:'date'
+			},
+			subscription_expired_at:{
+				display:'Expired Date',
+				operator:[
+					['=','='],
+					['<','<'],
+					['>','>'],
+					['<=','<='],
+					['>=','>=']
+				],
+				opsi:[],
+				type:'date'
+			},
+			used_at:{
+				display:'Used Date',
+				operator:[
+					['=','='],
+					['<','<'],
+					['>','>'],
+					['<=','<='],
+					['>=','>=']
+				],
+				opsi:[],
+				type:'date'
+			},
+			outlet:{
+				display:'Outlet',
+				operator:[],
+				opsi:{!!json_encode($outlets ?? [])!!},
+				type:'multiple'
+			},
+			transaction_receipt_number:{
+				display:'Receipt Number',
+				operator:[
+				['=','='],
+				['like','like']
+				],
+				opsi:[]
+			},
+			subscription_price_cash:{
+				display:'Subscription Price Cash',
+				operator:[
+				['=','='],
+				['<','<'],
+				['>','>'],
+				['<=','<='],
+				['>=','>=']
+				],
+				opsi:[],
+				type:'number'
+			},
+			subscription_price_point:{
+				display:'Subscription Price Point',
+				operator:[
+				['=','='],
+				['<','<'],
+				['>','>'],
+				['<=','<='],
+				['>=','>=']
+				],
+				opsi:[],
+				type:'number'
+			},
+			voucher_code:{
+				display:'Voucher Code',
+				operator:[
+				['=','='],
+				['like','like']
+				],
+				opsi:[]
+			},
+			subscription_nominal:{
+				display:'Subscription Nominal',
+				operator:[
+				['=','='],
+				['<','<'],
+				['>','>'],
+				['<=','<='],
+				['>=','>=']
+				],
+				opsi:[],
+				type:'number'
+			},
+			transaction_grandtotal:{
+				display:'Transaction Grandtotal',
+				operator:[
+				['=','='],
+				['<','<'],
+				['>','>'],
+				['<=','<='],
+				['>=','>=']
+				],
+				opsi:[],
+				type:'number'
+			},
+			/*charged_outlet:{
+				display:'Charged Outlet',
+				operator:[
+				['=','='],
+				['<','<'],
+				['>','>'],
+				['<=','<='],
+				['>=','>=']
+				],
+				opsi:[],
+				type:'number'
+			},
+			charged_central:{
+				display:'Charged Central',
+				operator:[
+				['=','='],
+				['<','<'],
+				['>','>'],
+				['<=','<='],
+				['>=','>=']
+				],
+				opsi:[],
+				type:'number'
+			},*/
+		};
+	</script>
+@endif
+<script>
 	database={
 		operator: 'or',
 		value: {!!json_encode(array_values($rule??[]))!!}
@@ -369,6 +456,7 @@ $configs  = session('configs');
 						</div>
 						<div class="col-md-4">
 							{{ csrf_field() }}
+							<input type="hidden" name="search" value="1">
 							<button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
 						</div>
 					</div>

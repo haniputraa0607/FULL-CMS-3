@@ -49,6 +49,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::post('getUserFranchise', 'DisburseController@userFranchise');
 
         //Setting
+        Route::any('setting/delete-bank-account', 'DisburseSettingController@deleteBankAccount');
         Route::any('setting/edit-bank-account', 'DisburseSettingController@editBankAccount');
         Route::any('setting/bank-account', 'DisburseSettingController@bankAccount');
         Route::any('setting/bank-account-update', 'DisburseSettingController@bankAccountUpdate');
