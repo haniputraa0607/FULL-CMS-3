@@ -1108,6 +1108,39 @@
 			@endif
 		@endif
 
+		@if(MyHelper::hasAccess([274,275,276], $grantedFeature))
+			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
+				<h3 class="uppercase" style="color: #0F444C;font-weight: 600;">Invalid Transaction</h3>
+			</li>
+
+			@if(MyHelper::hasAccess([274], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'mark-as-invalid') ? 'active open' : ''}}">
+					<a href="{{url('transaction/invalid-flag/mark-as-invalid')}}" class="nav-link ">
+						<i class="fa fa-list-ul"></i>
+						<span class="title">Mark as Invalid</span>
+					</a>
+				</li>
+			@endif
+
+			@if(MyHelper::hasAccess([275], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'mark-as-valid') ? 'active open' : ''}}">
+					<a href="{{url('transaction/invalid-flag/mark-as-valid')}}" class="nav-link ">
+						<i class="fa fa-list-ul"></i>
+						<span class="title">Mark as Valid</span>
+					</a>
+				</li>
+			@endif
+
+			@if(MyHelper::hasAccess([276], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'log-invalid-flag') ? 'active open' : ''}}">
+					<a href="{{url('transaction/log-invalid-flag/list')}}" class="nav-link ">
+						<i class="fa fa-list-ul"></i>
+						<span class="title">Log Invalid Flag</span>
+					</a>
+				</li>
+			@endif
+		@endif
+
 		@if(MyHelper::hasAccess([25], $configs) || MyHelper::hasAccess([26], $configs))
 			@if(MyHelper::hasAccess([72,73,74,75,76,77,78,79,80,81,97], $grantedFeature))
 				<li class="heading" style="height: 50px;padding: 25px 15px 10px;">

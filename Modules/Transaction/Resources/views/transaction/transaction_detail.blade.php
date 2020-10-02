@@ -621,6 +621,70 @@
             </div>
         </div>
     @endif
-
 </div>
+@if(isset($from))
+
+    @if($from == 'invalid')
+        <div style="width: 500px;margin: auto;margin-top: 5%">
+            <form role="form" role="form" action="{{ url('transaction/invalid-flag/mark-as-invalid/add') }}" method="post" enctype="multipart/form-data">
+                <div class="modal-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label style="text-align: center">Reason</label>
+                            <textarea class="form-control" name="reason" required style="font-size: 15px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" style="text-align: center">
+                                Image
+                            </label>
+                            <input type="file" name="image">
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: center">Current Pin</label>
+                            <input class="form-control" type="password" name="pin" maxlength="6" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id_transaction" value="{{$id_transaction}}">
+                </div>
+                <div class="modal-footer">
+                    {{ csrf_field() }}
+                    <button class="btn btn-lg yellow-lemon" onclick="showModal()">Mark as Invalid</button>
+                </div>
+            </form>
+        </div>
+    @else
+        <div style="width: 500px;margin: auto;margin-top: 5%">
+            <form role="form" role="form" action="{{ url('transaction/invalid-flag/mark-as-valid/update') }}" method="post" enctype="multipart/form-data">
+                <div class="modal-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label style="text-align: center">Reason</label>
+                            <textarea class="form-control" name="reason" style="font-size: 15px;">{{$data['flag_reason']}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" style="text-align: center">
+                                Image
+                            </label>
+                            <br>
+                            @if(!empty($data['image_invalid_flag']))
+                            <img src="{{$data['image_invalid_flag']}}" width="200px">
+                            @else
+                                No Image
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: center">Current Pin</label>
+                            <input class="form-control" type="password" name="pin" maxlength="6" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id_transaction" value="{{$id_transaction}}">
+                </div>
+                <div class="modal-footer">
+                    {{ csrf_field() }}
+                    <button class="btn btn-lg" style="background-color: #26C281;color: white" onclick="showModal()">Mark as valid</button>
+                </div>
+            </form>
+        </div>
+    @endif
+@endif
 @endsection
