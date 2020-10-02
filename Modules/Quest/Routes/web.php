@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('quest')->group(function () {
+Route::prefix('quest')->middleware(['web', 'validate_session'])->group(function () {
     Route::get('/', 'QuestController@index');
     Route::any('create', 'QuestController@create');
     Route::any('detail/{slug}', 'QuestController@show');
