@@ -42,9 +42,18 @@ $grantedFeature     = session('granted_features');
                 success : function(result) {
                     $("#bodyDeatil").empty();
                     $("#detail_receipt_number").empty();
+                    $("#detail_image").empty();
 
                     if (result.status == "success") {
                         $('#detail_receipt_number').append(': '+result.result[0].transaction_receipt_number);
+
+                        if(result.result[0].image_invalid_flag !== null){
+                            var img = result.result[0].url_storage+result.result[0].image_invalid_flag;
+                            $('#detail_image').append('<a target="_blank" href="'+img+'"><img src="'+img+'" width="200px"></a>');
+                        }else{
+                            $('#detail_image').append(': No Image');
+                        }
+
                         var table = '';
 
                         for(var i=0;i<result.result.length;i++){
@@ -168,6 +177,12 @@ $grantedFeature     = session('granted_features');
                                 Recipt Number
                             </div>
                             <div class="col-md-8" id="detail_receipt_number"></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                Image
+                            </div>
+                            <div class="col-md-8" id="detail_image"></div>
                         </div>
                         <br>
                         <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">

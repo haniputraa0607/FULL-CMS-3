@@ -89,8 +89,8 @@
                     {{ csrf_field() }}
                     <a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add" onClick="changeSelect();">
                         <i class="fa fa-plus"></i> Add Parameter </a>
-                    <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
                     <a class="btn green" href="{{url()->current()}}">Reset</a>
+                    <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
                 </div>
             </div>
         </div>
