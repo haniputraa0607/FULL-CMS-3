@@ -154,7 +154,7 @@ class InvalidFlagController extends Controller
         $post = $request->except('_token');
         $data = [
             'title'          => 'Transaction',
-            'menu_active'    => 'transaction',
+            'menu_active'    => 'mark-as-invalid',
             'sub_title'      => 'Log Invalid Flag',
             'submenu_active' => 'log-invalid-flag'
         ];
