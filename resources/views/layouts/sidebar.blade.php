@@ -2203,6 +2203,7 @@
 			</li>
 			<li class="nav-item {{($submenu_active == 'setting-popup-messages') ? 'active open' : ''}}">
 				<a href="{{url('setting/otp-messages')}}" class="nav-link ">
+					<i class="fa fa-envelope"></i>
 					<span class="title">OTP Message</span>
 				</a>
 			</li>
