@@ -111,6 +111,12 @@ $grantedFeature     = session('granted_features');
                 @endif
                 </tbody>
             </table>
+            @if(isset($dataPerPage) && isset($dataUpTo) && isset($dataTotal))
+                Showing {{$dataPerPage}} to {{$dataUpTo}} of {{ $dataTotal }} entries<br>
+            @endif
+            @if ($dataPaginator)
+                {{ $dataPaginator->links() }}
+            @endif
         </div>
     </div>
 @endsection
