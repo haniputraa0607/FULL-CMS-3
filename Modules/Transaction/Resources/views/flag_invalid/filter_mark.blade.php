@@ -85,12 +85,16 @@
                         </div>
                     @endif
                 </div>
-                <div class="form-action" style="margin-top:15px;margin-left:3.6%;">
+                <div class="form-action" style="margin-top:15px;margin-left:2%;">
                     {{ csrf_field() }}
-                    <a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add" onClick="changeSelect();">
-                        <i class="fa fa-plus"></i> Add Parameter </a>
-                    <a class="btn green" href="{{url()->current()}}">Reset</a>
-                    <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
+                    <div class="col-md-6">
+                        <a href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add" onClick="changeSelect();">
+                            <i class="fa fa-plus"></i> Add Parameter </a>
+                        <button type="submit" class="btn yellow"><i class="fa fa-search"></i> Search</button>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <a class="btn green" href="{{url()->current()}}">Reset</a>
+                    </div>
                 </div>
             </div>
         </div>

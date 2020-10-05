@@ -46,6 +46,24 @@
 		}
 	@endphp
 	<script>
+
+	function permut(total_set, each){
+		total_set = parseInt(total_set);
+		each = parseInt(each);
+		let limit = total_set - each;
+    	let permut = 1;
+    	let arr = [];
+    	do {
+			permut = permut * total_set;
+			console.log([permut, total_set]);
+			total_set -= 1; 
+		}
+		while (total_set > limit);
+		console.log(permut, total_set, each);
+
+		return permut;
+    }
+
 	function delay(callback, ms) {
 		var timer = 0;
 		return function() {
@@ -270,7 +288,9 @@
 				$('input[name=total_coupon], #multipleNumberLastCode').keyup(function() {
 					if (code == 'Multiple') {
 						maxCharDigit = 28;
-						hitungKemungkinan = Math.pow(maxCharDigit, $('#multipleNumberLastCode').val())
+						// hitungKemungkinan = Math.pow(maxCharDigit, $('#multipleNumberLastCode').val())
+						hitungKemungkinan = permut(maxCharDigit, $('#multipleNumberLastCode').val());
+						console.log([hitungKemungkinan, $('#multipleNumberLastCode').val(), $('input[name=total_coupon]').inputmask('unmaskedvalue')]);
 						if (hitungKemungkinan >= $('input[name=total_coupon]').inputmask('unmaskedvalue')) {
 							$(':input[type="submit"]').prop('disabled', false);
 							$('#totalCoupon').removeClass( "has-error" );
