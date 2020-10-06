@@ -118,24 +118,49 @@ class DisburseController extends Controller
         if(!empty($post)){
             $post['id_user_franchise'] = session('id_user_franchise');
             $getData = MyHelper::post($this->baseuri.'/dashboard', $post);
+
             if(isset($getData['status']) && $getData['status'] == 'success'){
                 $data['status'] = 'success';
-                $data['nominal_success'] = $getData['result']['nominal']['nom_success'];
-                $data['nominal_fail'] = $getData['result']['nominal_fail'];
-                $data['total_income_central'] = $getData['result']['income_central'];
+                $data['pending'] = [
+	                'nominal_success' => $getData['result']['pending']['nominal']['nom_success'],
+	                'nominal_fail' => $getData['result']['pending']['nominal_fail']['disburse_nominal']??0,
+	                'total_income_central' => $getData['result']['pending']['income_central'],
+	                'total_disburse' => $getData['result']['pending']['total_disburse'],
 
-                $data['nominal_item'] = $getData['result']['nominal']['nominal']['nom_item']??0;
-                $data['nominal_grandtotal'] = $getData['result']['nominal']['nominal']['nom_grandtotal']??0;
-                $data['nominal_expense_central'] = $getData['result']['nominal']['nominal']['nom_expense_central']??0;
-                $data['nominal_delivery'] = $getData['result']['nominal']['nominal']['nom_delivery']??0;
+	                'nominal_item' => $getData['result']['pending']['nominal']['nominal']['nom_item']??0,
+	                'nominal_grandtotal' => $getData['result']['pending']['nominal']['nominal']['nom_grandtotal']??0,
+	                'nominal_expense_central' => $getData['result']['pending']['nominal']['nominal']['nom_expense_central']??0,
+	                'nominal_delivery' => $getData['result']['pending']['nominal']['nominal']['nom_delivery']??0,
 
-                $data['format_nominal_item'] = number_format($getData['result']['nominal']['nom_item'], 2);
-                $data['format_nominal_grandtotal'] = number_format($getData['result']['nominal']['nom_grandtotal'], 2);
-                $data['format_nominal_expense_central'] = number_format($getData['result']['nominal']['nom_expense_central'], 2);
-                $data['format_nominal_delivery'] = number_format($getData['result']['nominal']['nom_delivery'], 2);
-                $data['format_nominal_success'] = number_format($getData['result']['nominal']['nom_success'], 2);
-                $data['format_nominal_fail'] = number_format($getData['result']['nominal_fail'], 2);
-                $data['format_total_income_central'] = number_format($getData['result']['income_central'], 2);
+	                'format_nominal_item' => number_format($getData['result']['pending']['nominal']['nom_item'], 2),
+	                'format_nominal_grandtotal' => number_format($getData['result']['pending']['nominal']['nom_grandtotal'], 2),
+	                'format_nominal_expense_central' => number_format($getData['result']['pending']['nominal']['nom_expense_central'], 2),
+	                'format_nominal_delivery' => number_format($getData['result']['pending']['nominal']['nom_delivery'], 2),
+	                'format_nominal_success' => number_format($getData['result']['pending']['nominal']['nom_success'], 2),
+	                'format_nominal_fail' => number_format($getData['result']['pending']['nominal_fail']['disburse_nominal']??0, 2),
+	                'format_total_income_central' => number_format($getData['result']['pending']['income_central'], 2),
+	                'format_total_disburse' => number_format($getData['result']['pending']['total_disburse'], 2)
+                ];
+                $data['processed'] = [
+	                'nominal_success' => $getData['result']['processed']['nominal']['nom_success'],
+	                'nominal_fail' => $getData['result']['processed']['nominal_fail']['disburse_nominal']??0,
+	                'total_income_central' => $getData['result']['processed']['income_central'],
+	                'total_disburse' => $getData['result']['processed']['total_disburse'],
+
+	                'nominal_item' => $getData['result']['processed']['nominal']['nominal']['nom_item']??0,
+	                'nominal_grandtotal' => $getData['result']['processed']['nominal']['nominal']['nom_grandtotal']??0,
+	                'nominal_expense_central' => $getData['result']['processed']['nominal']['nominal']['nom_expense_central']??0,
+	                'nominal_delivery' => $getData['result']['processed']['nominal']['nominal']['nom_delivery']??0,
+
+	                'format_nominal_item' => number_format($getData['result']['processed']['nominal']['nom_item'], 2),
+	                'format_nominal_grandtotal' => number_format($getData['result']['processed']['nominal']['nom_grandtotal'], 2),
+	                'format_nominal_expense_central' => number_format($getData['result']['processed']['nominal']['nom_expense_central'], 2),
+	                'format_nominal_delivery' => number_format($getData['result']['processed']['nominal']['nom_delivery'], 2),
+	                'format_nominal_success' => number_format($getData['result']['processed']['nominal']['nom_success'], 2),
+	                'format_nominal_fail' => number_format($getData['result']['processed']['nominal_fail']['disburse_nominal']??0, 2),
+	                'format_total_income_central' => number_format($getData['result']['processed']['income_central'], 2),
+	                'format_total_disburse' => number_format($getData['result']['processed']['total_disburse'], 2)
+                ];
             }else{
                 $data['status'] = 'fail';
             }
@@ -149,15 +174,32 @@ class DisburseController extends Controller
             ];
 
             $getData = MyHelper::post($this->baseuri.'/dashboard', ['id_user_franchise' => session('id_user_franchise')]);
-            if(isset($getData['status']) && $getData['status'] == 'success'){
-                $data['nominal_success'] = $getData['result']['nominal']['nom_success']??0;
-                $data['nominal_item'] = $getData['result']['nominal']['nom_item']??0;
-                $data['nominal_grandtotal'] = $getData['result']['nominal']['nom_grandtotal']??0;
-                $data['nominal_expense_central'] = $getData['result']['nominal']['nom_expense_central']??0;
-                $data['nominal_delivery'] = $getData['result']['nominal']['nom_delivery']??0;
 
-                $data['nominal_fail'] = $getData['result']['nominal_fail'];
-                $data['total_income_central'] = $getData['result']['income_central'];
+            if(isset($getData['status']) && $getData['status'] == 'success'){
+            	$data['pending'] = [
+	                'nominal_success' => $getData['result']['pending']['nominal']['nom_success']??0,
+	                'nominal_item' => $getData['result']['pending']['nominal']['nom_item']??0,
+	                'nominal_grandtotal' => $getData['result']['pending']['nominal']['nom_grandtotal']??0,
+	                'nominal_expense_central' => $getData['result']['pending']['nominal']['nom_expense_central']??0,
+	                'nominal_delivery' => $getData['result']['pending']['nominal']['nom_delivery']??0,
+
+	                'nominal_fail' => $getData['result']['pending']['nominal_fail']['disburse_nominal']??0,
+	                'total_income_central' => $getData['result']['pending']['income_central'],
+	                'total_disburse' => $getData['result']['pending']['total_disburse']
+            	];
+
+            	$data['processed'] = [
+	                'nominal_success' => $getData['result']['processed']['nominal']['nom_success']??0,
+	                'nominal_item' => $getData['result']['processed']['nominal']['nom_item']??0,
+	                'nominal_grandtotal' => $getData['result']['processed']['nominal']['nom_grandtotal']??0,
+	                'nominal_expense_central' => $getData['result']['processed']['nominal']['nom_expense_central']??0,
+	                'nominal_delivery' => $getData['result']['processed']['nominal']['nom_delivery']??0,
+
+	                'nominal_fail' => $getData['result']['processed']['nominal_fail']['disburse_nominal']??0,
+	                'total_income_central' => $getData['result']['processed']['income_central'],
+	                'total_disburse' => $getData['result']['processed']['total_disburse']
+            	];
+
             }else{
                 $data['nominal_success'] = 0;
                 $data['nominal_item'] = 0;
@@ -166,6 +208,9 @@ class DisburseController extends Controller
                 $data['nominal_delivery'] = 0;
                 $data['nominal_fail'] = 0;
                 $data['total_income_central'] = 0;
+                $data['total_disburse'] = 0;
+                $data['pending'] = $data;
+                $data['processed'] = $data;
             }
 
             $outlets = MyHelper::post($this->baseuri.'/outlets',$post);

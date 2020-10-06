@@ -354,16 +354,44 @@
         }
 
         .page-logo {
-            margin-right:auto;
+            margin-right: auto;
         }
-
     </style>
+@endsection
+
+@section('page-script')
+    <script>
+        setTimeout(
+            function() { $(':password').val(''); },
+            1000  //1,000 milliseconds = 1 second
+        );
+    </script>
 @endsection
 
 @section('sub-content')
 @php $bulan = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']; @endphp
 <div style="max-width: 480px; margin: auto">
     @if ($data['trasaction_type'] != 'Offline')
+        @if(isset($from))
+                <?php
+                if($data['transaction_flag_invalid'] == 'Invalid'){
+                    $status = 'Invalid';
+                    $color = 'red';
+                }else{
+                    $status = 'Valid';
+                    $color = 'green';
+                }
+                ?>
+            <div class="kotak-biasa">
+                <div class="container">
+                    <div class="kotak-full" style="background-color: #ffffff;padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">
+                        <div class="row text-center">
+                            <div class="col-12 text-16-7px WorkSans-Bold" style="color: {{$color}};font-size: 18px"><b> Status Transaksi {{$status}}</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="kotak-biasa">
             <div class="container">
                 <?php
@@ -374,33 +402,31 @@
                         $html = '<div class="kotak-full" style="background-color: '.$bg[$data['transaction_status']].';padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
                     }
 
-                    $html .= '<div class="container">';
                     $html .= '<div class="row text-center">';
                     $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>'.$data['transaction_status_text'].'</b></div>';
-                    $html .= '</div>';
                     $html .= '</div>';
                     $html .= '</div>';
 
                     echo $html;
                 ?>
-                <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
-                    <div class="container">
-                        <div class="row text-center">
-                            <div class="col-12 text-15px text-black-grey-light space-text WorkSans-Bold">{{ $data['outlet']['outlet_name'] }}</div>
-                            <div class="kotak-inside col-12">
-                                <div class="col-12 text-11-7px text-grey-white space-nice text-center WorkSans">{{ $data['outlet']['outlet_address'] }}</div>
-                            </div>
-
-                            @if(isset($data['detail']['order_id_qrcode']))
-                                <div class="col-12 WorkSans-Bold text-14px space-text text-black-grey-light">Kode Pickup Anda</div>
-
-                                <div style="width: 135px;height: 135px;margin: 0 auto;" data-toggle="modal" data-target="#exampleModal">
-                                    <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['detail']['order_id_qrcode'] }}"></div>
-                                </div>
-                                <div class="col-12 text-black-grey-light text-20px WorkSans-SemiBold">{{ $data['detail']['order_id'] }}</div>
-                            @endif
-                        </div>
+            </div>
+        </div>
+        <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-12 text-15px text-black-grey-light space-text WorkSans-Bold">{{ $data['outlet']['outlet_name'] }}</div>
+                    <div class="kotak-inside col-12">
+                        <div class="col-12 text-11-7px text-grey-white space-nice text-center WorkSans">{{ $data['outlet']['outlet_address'] }}</div>
                     </div>
+
+                    @if(isset($data['detail']['order_id_qrcode']))
+                        <div class="col-12 WorkSans-Bold text-14px space-text text-black-grey-light">Kode Pickup Anda</div>
+
+                        <div style="width: 135px;height: 135px;margin: 0 auto;" data-toggle="modal" data-target="#exampleModal">
+                            <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['detail']['order_id_qrcode'] }}"></div>
+                        </div>
+                        <div class="col-12 text-black-grey-light text-20px WorkSans-SemiBold">{{ $data['detail']['order_id'] }}</div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -408,6 +434,14 @@
             <div class="kotak-biasa" style="background-color: #FFFFFF;box-shadow: 0 0.7px 3.3px #eeeeee;">
                 <div class="container" style="padding: 10px;margin-top: 10px;">
                     <div class="text-center">
+                        <div class="col-12 text-13px space-text text-medium-grey WorkSans-Regular">
+                            Data Pemesan
+                        </div>
+                        <div class="col-12 text-13-3px" style="padding-bottom: 25px;color: #000000;font-size: 15px">
+                            {{$data['user']['name']??''}}<br>
+                            {{$data['user']['phone']??''}}<br>
+                            {{$data['user']['email']??''}}
+                        </div>
                         <div class="col-12 text-13px space-text text-medium-grey WorkSans-Regular">
                             @if ($data['detail']['pickup_type'] == 'set time')
                                 Pesanan Anda akan siap pada
@@ -621,6 +655,75 @@
             </div>
         </div>
     @endif
-
 </div>
+@if(isset($from))
+    <br>
+    <br>
+    @if($from == 'invalid')
+        <div style="width: 500px;margin: auto;margin-top: 5%">
+            <p style="text-align: center"><b>MARK AS INVALID</b></p>
+            <hr>
+            <form role="form" role="form" action="{{ url('transaction/invalid-flag/mark-as-invalid/add') }}" method="post" enctype="multipart/form-data">
+                <div class="modal-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label style="text-align: center">Reason</label>
+                            <textarea class="form-control" name="reason" required style="font-size: 15px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" style="text-align: center">
+                                Image
+                            </label>
+                            <input type="file" name="image">
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: center">Current Pin</label>
+                            <input class="form-control" type="password" name="pin" maxlength="6" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id_transaction" value="{{$id_transaction}}">
+                </div>
+                <div class="modal-footer">
+                    {{ csrf_field() }}
+                    <button class="btn btn-lg yellow-lemon" onclick="showModal()">Mark as Invalid</button>
+                </div>
+            </form>
+        </div>
+    @else
+        <div style="width: 500px;margin: auto;margin-top: 5%">
+            <p style="text-align: center"><b>MARK AS VALID</b></p>
+            <hr>
+            <form role="form" role="form" action="{{ url('transaction/invalid-flag/mark-as-valid/update') }}" method="post" enctype="multipart/form-data">
+                <div class="modal-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label style="text-align: center">Reason</label>
+                            <textarea class="form-control" name="reason" style="font-size: 15px;">{{$data['flag_reason']}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" style="text-align: center">
+                                Image
+                            </label>
+                            <br>
+                            @if(!empty($data['image_invalid_flag']))
+                            <img src="{{$data['image_invalid_flag']}}" width="200px">
+                            @else
+                                No Image
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: center">Current Pin</label>
+                            <input class="form-control" type="password" name="pin" maxlength="6" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id_transaction" value="{{$id_transaction}}">
+                </div>
+                <div class="modal-footer">
+                    {{ csrf_field() }}
+                    <button class="btn btn-lg" style="background-color: #26C281;color: white" onclick="showModal()">Mark as valid</button>
+                </div>
+            </form>
+        </div>
+    @endif
+@endif
 @endsection

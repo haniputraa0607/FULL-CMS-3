@@ -10,6 +10,12 @@ $idUserFrenchisee = session('id_user_franchise');
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		.custom-card-caption {
+			margin-bottom: 12px;
+			font-size: 18px;
+		}
+	</style>
 @endsection
 
 @section('page-plugin')
@@ -37,35 +43,9 @@ $idUserFrenchisee = session('id_user_franchise');
 
 			$("#date_end").datepicker({
 				dateFormat: 'dd-mm-yy',
-			}).on("change", function(e) {
-				var startDate = $('#date_start').val();
-				startDate = startDate.split("-").reverse().join("-");
-				startDate = startDate.replace(/\s/g, '');
-				startDate = new Date(startDate);
-				var endDate = e.target.value;
-				endDate = new Date(endDate.split("-").reverse().join("-"));
-				if(endDate.getTime() < startDate.getTime()){
-					$('#date_start').val(e.target.value);
-				}
-
-				datatables();
-				dataDashboard();
 			});
 			$("#date_start").datepicker({
 				dateFormat: 'dd-mm-yy',
-			}).on("change", function(e) {
-				var endDate = $('#date_end').val();
-				endDate = endDate.split("-").reverse().join("-");
-				endDate = endDate.replace(/\s/g, '');
-				endDate = new Date(endDate);
-				var startDate = e.target.value;
-				startDate = new Date(startDate.split("-").reverse().join("-"));
-				if(endDate.getTime() < startDate.getTime()){
-					$('#date_end').val(e.target.value);
-				}
-
-				datatables();
-				dataDashboard();
 			});
 		});
 
@@ -163,32 +143,37 @@ $idUserFrenchisee = session('id_user_franchise');
 				url : url,
 				data : data,
 				success : function(result) {
-					$("#nom_success").empty();
-					$("#nom_fail").empty();
-					$("#nom_trx").empty();
-					$("#nom_income").empty();
+					$("#pending_nom_success, #pending_nom_fail, #pending_nom_trx, #pending_nom_income, #pending_nom_item, #pending_nom_delivery, #pending_nom_expense_central, #pending_nom_disburse").empty();
+					$("#processed_nom_success, #processed_nom_fail, #processed_nom_trx, #processed_nom_income, #processed_nom_item, #processed_nom_delivery, #processed_nom_expense_central, #processed_nom_disburse").empty();
 
-					$("#nom_item").empty();
-					$("#nom_delivery").empty();
-					$("#nom_expense_central").empty();
 					if (result.status === "success") {
-						$("#nom_success").append('<span data-counter="counterup" data-value="'+result.nominal_success+'" style="font-size: 22px">Rp '+result.format_nominal_success+'</span>');
-						$("#nom_fail").append('<span data-counter="counterup" data-value="'+result.nominal_fail+'" style="font-size: 22px">Rp '+result.format_nominal_fail+'</span>');
-						$("#nom_trx").append('<span data-counter="counterup" data-value="'+result.nom_grandtotal+'" style="font-size: 22px">Rp '+result.format_nominal_grandtotal+'</span>');
-						$("#nom_income").append('<span data-counter="counterup" data-value="'+result.total_income_central+'" style="font-size: 22px">Rp '+result.format_total_income_central+'</span>');
+						$("#pending_nom_success").append('<span data-counter="counterup" data-value="'+result.pending.nominal_success+'" style="font-size: 22px">Rp '+result.pending.format_nominal_success+'</span>');
+						$("#pending_nom_fail").append('<span data-counter="counterup" data-value="'+result.pending.nominal_fail+'" style="font-size: 22px">Rp '+result.pending.format_nominal_fail+'</span>');
+						$("#pending_nom_trx").append('<span data-counter="counterup" data-value="'+result.pending.nominal_grandtotal+'" style="font-size: 22px">Rp '+result.pending.format_nominal_grandtotal+'</span>');
+						$("#pending_nom_income").append('<span data-counter="counterup" data-value="'+result.pending.total_income_central+'" style="font-size: 22px">Rp '+result.pending.format_total_income_central+'</span>');
 
-						$("#nom_item").append('<span data-counter="counterup" data-value="'+result.nominal_item+'" style="font-size: 22px">Rp '+result.format_nominal_item+'</span>');
-						$("#nom_delivery").append('<span data-counter="counterup" data-value="'+result.nominal_delivery+'" style="font-size: 22px">Rp '+result.format_nominal_delivery+'</span>');
-						$("#nom_expense_central").append('<span data-counter="counterup" data-value="'+result.nominal_expense_central+'" style="font-size: 22px">Rp '+result.format_nominal_expense_central+'</span>');
+						$("#pending_nom_item").append('<span data-counter="counterup" data-value="'+result.pending.nominal_item+'" style="font-size: 22px">Rp '+result.pending.format_nominal_item+'</span>');
+						$("#pending_nom_delivery").append('<span data-counter="counterup" data-value="'+result.pending.nominal_delivery+'" style="font-size: 22px">Rp '+result.pending.format_nominal_delivery+'</span>');
+						$("#pending_nom_expense_central").append('<span data-counter="counterup" data-value="'+result.pending.nominal_expense_central+'" style="font-size: 22px">Rp '+result.pending.format_nominal_expense_central+'</span>');
+						$("#pending_nom_disburse").append('<span data-counter="counterup" data-value="'+result.pending.total_disburse+'" style="font-size: 22px">Rp '+result.pending.format_total_disburse+'</span>');
+
+						$("#processed_nom_success").append('<span data-counter="counterup" data-value="'+result.processed.nominal_success+'" style="font-size: 22px">Rp '+result.processed.format_nominal_success+'</span>');
+						$("#processed_nom_fail").append('<span data-counter="counterup" data-value="'+result.processed.nominal_fail+'" style="font-size: 22px">Rp '+result.processed.format_nominal_fail+'</span>');
+						$("#processed_nom_trx").append('<span data-counter="counterup" data-value="'+result.processed.nominal_grandtotal+'" style="font-size: 22px">Rp '+result.processed.format_nominal_grandtotal+'</span>');
+						$("#processed_nom_income").append('<span data-counter="counterup" data-value="'+result.processed.total_income_central+'" style="font-size: 22px">Rp '+result.processed.format_total_income_central+'</span>');
+
+						$("#processed_nom_item").append('<span data-counter="counterup" data-value="'+result.processed.nominal_item+'" style="font-size: 22px">Rp '+result.processed.format_nominal_item+'</span>');
+						$("#processed_nom_delivery").append('<span data-counter="counterup" data-value="'+result.processed.nominal_delivery+'" style="font-size: 22px">Rp '+result.processed.format_nominal_delivery+'</span>');
+						$("#processed_nom_expense_central").append('<span data-counter="counterup" data-value="'+result.processed.nominal_expense_central+'" style="font-size: 22px">Rp '+result.processed.format_nominal_expense_central+'</span>');
+						$("#processed_nom_disburse").append('<span data-counter="counterup" data-value="'+result.processed.total_disburse+'" style="font-size: 22px">Rp '+result.processed.format_total_disburse+'</span>');
+
 					}else{
-						$("#nom_success").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
-						$("#nom_fail").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
-						$("#nom_trx").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
-						$("#nom_income").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
-
-						$("#nom_item").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
-						$("#nom_delivery").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
-						$("#nom_expense_central").append('<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>');
+						let append_zero_currency = '<span data-counter="counterup" data-value="0" style="font-size: 22px">Rp 0</span>';
+						let append_zero = '<span data-counter="counterup" data-value="0" style="font-size: 22px">0</span>';
+						$("#pending_nom_success, #pending_nom_fail, #pending_nom_trx, #pending_nom_income, #pending_nom_item, #pending_nom_delivery, #pending_nom_expense_central").append(append_currency);
+						$("#pending_nom_disburse").append(append_zero);
+						$("#processed_nom_success, #processed_nom_fail, #processed_nom_trx, #processed_nom_income, #processed_nom_item, #processed_nom_delivery, #processed_nom_expense_central").append(append_currency);
+						$("#processed_nom_disburse").append(append_zero);
 					}
 				},
 				error: function (jqXHR, exception) {
@@ -204,15 +189,12 @@ $idUserFrenchisee = session('id_user_franchise');
 			}else{
 				document.getElementById('div_specific_date').style.display = 'none';
 			}
-
+		});
+		
+		function search() {
 			datatables();
 			dataDashboard();
-		});
-
-		$('#fitler_outlet').change(function(){
-			datatables();
-			dataDashboard();
-		});
+		}
 	</script>
 @endsection
 
@@ -259,6 +241,9 @@ $idUserFrenchisee = session('id_user_franchise');
 				<option value="specific_date">Specific Date</option>
 			</select>
 		</div>
+		<div class="col-md-4" style="margin-top: 0.3%">
+			<button class="btn btn-sm btn-primary" onclick="search()">Search</button>
+		</div>
 	</div>
 
 	<div class="row" style="margin-top: 1%;display: none" id="div_specific_date">
@@ -285,6 +270,36 @@ $idUserFrenchisee = session('id_user_franchise');
 	</div>
 
 	<div class="row" style="margin-top: 3%;">
+		<div class="col-md-12 custom-card-caption">
+			<span class="caption-subject font-blue sbold uppercase">Pending Disburse</span>
+		</div>
+		
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green" target="_blank" href="{{url('disburse/list/all')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="pending_nom_disburse">
+						<span data-counter="counterup" data-value="{{$pending['total_disburse']}}" style="font-size: 22px">Rp {{number_format($pending['total_disburse'], 2)}}</span>
+					</div>
+					<div class="desc"> Total Disburse</div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green-seagreen" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="pending_nom_item">
+						<span data-counter="counterup" data-value="{{$pending['nominal_item']}}" style="font-size: 22px">Rp {{number_format($pending['nominal_item'], 2)}}</span>
+					</div>
+					<div class="desc"> Total Fee Item (Subtotal)</div>
+				</div>
+			</a>
+		</div>
 		@if(MyHelper::hasAccess([235], $grantedFeature))
 			<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
 				<a class="dashboard-stat dashboard-stat-v2 purple" target="_blank" href="{{url('disburse/list/all')}}">
@@ -292,8 +307,8 @@ $idUserFrenchisee = session('id_user_franchise');
 						<i class="fa fa-shopping-cart"></i>
 					</div>
 					<div class="details">
-						<div class="number" id="nom_income">
-							<span data-counter="counterup" data-value="{{$total_income_central}}" style="font-size: 22px">Rp {{number_format($total_income_central, 2)}}</span>
+						<div class="number" id="pending_nom_income">
+							<span data-counter="counterup" data-value="{{$pending['total_income_central']}}" style="font-size: 22px">Rp {{number_format($pending['total_income_central'], 2)}}</span>
 						</div>
 						<div class="desc"> Income Central </div>
 					</div>
@@ -301,13 +316,52 @@ $idUserFrenchisee = session('id_user_franchise');
 			</div>
 		@endif
 		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 yellow-crusta" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="pending_nom_expense_central">
+						<span data-counter="counterup" data-value="{{$pending['nominal_expense_central']}}" style="font-size: 22px">Rp {{number_format($pending['nominal_expense_central'], 2)}}</span>
+					</div>
+					<div class="desc"> Total Expense Central </div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 blue" target="_blank" href="{{url('disburse/list/trx')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="pending_nom_trx">
+						<span data-counter="counterup" data-value="{{$pending['nominal_grandtotal']}}" style="font-size: 22px">Rp {{number_format($pending['nominal_grandtotal'], 2)}}</span>
+					</div>
+					<div class="desc"> Grand Total </div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green-jungle" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="pending_nom_delivery">
+						<span data-counter="counterup" data-value="{{$pending['nominal_delivery']}}" style="font-size: 22px">Rp {{number_format($pending['nominal_delivery'], 2)}}</span>
+					</div>
+					<div class="desc"> Total Delivery </div>
+				</div>
+			</a>
+		</div>
+		{{-- <div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
 			<a class="dashboard-stat dashboard-stat-v2 green" target="_blank" href="{{url('disburse/list/success')}}">
 				<div class="visual">
 					<i class="fa fa-shopping-cart"></i>
 				</div>
 				<div class="details">
-					<div class="number" id="nom_success">
-						<span data-counter="counterup" data-value="{{$nominal_success}}" style="font-size: 22px">Rp {{number_format($nominal_success, 2)}}</span>
+					<div class="number" id="pending_nom_success">
+						<span data-counter="counterup" data-value="{{$pending['nominal_success']}}" style="font-size: 22px">Rp {{number_format($pending['nominal_success'], 2)}}</span>
 					</div>
 					<div class="desc"> Total Success Disburse</div>
 				</div>
@@ -319,23 +373,42 @@ $idUserFrenchisee = session('id_user_franchise');
 					<i class="fa fa-bar-chart-o"></i>
 				</div>
 				<div class="details">
-					<div class="number" id="nom_fail">
-						<span data-counter="counterup" data-value="{{$nominal_fail}}" style="font-size: 22px">Rp {{number_format($nominal_fail, 2)}}</span>
+					<div class="number" id="pending_nom_fail">
+						<span data-counter="counterup" data-value="{{pending['$nominal_fail']}}" style="font-size: 22px">Rp {{number_format($pending['nominal_fail'], 2)}}</span>
 					</div>
 					<div class="desc"> Total Failed Disburse</div>
 				</div>
 			</a>
+		</div> --}}
+	</div>
+
+	<div class="row" style="margin-top: 3%;">
+		<div class="col-md-12 custom-card-caption">
+			<span class="caption-subject font-blue sbold uppercase">Processed Disburse</span>
 		</div>
 		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
-			<a class="dashboard-stat dashboard-stat-v2 blue" target="_blank" href="{{url('disburse/list/trx')}}">
+			<a class="dashboard-stat dashboard-stat-v2 green" target="_blank" href="{{url('disburse/list/success')}}">
 				<div class="visual">
-					<i class="fa fa-comments"></i>
+					<i class="fa fa-shopping-cart"></i>
 				</div>
 				<div class="details">
-					<div class="number" id="nom_trx">
-						<span data-counter="counterup" data-value="{{$nominal_grandtotal}}" style="font-size: 22px">Rp {{number_format($nominal_grandtotal, 2)}}</span>
+					<div class="number" id="processed_nom_success">
+						<span data-counter="counterup" data-value="{{$processed['nominal_success']}}" style="font-size: 22px">Rp {{number_format($processed['nominal_success'], 2)}}</span>
 					</div>
-					<div class="desc"> Grand Total </div>
+					<div class="desc"> Total Success Disburse</div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 red" target="_blank" href="{{url('disburse/list/fail-action')}}">
+				<div class="visual">
+					<i class="fa fa-bar-chart-o"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="processed_nom_fail">
+						<span data-counter="counterup" data-value="{{$processed['nominal_fail']}}" style="font-size: 22px">Rp {{number_format($processed['nominal_fail'], 2)}}</span>
+					</div>
+					<div class="desc"> Total Failed Disburse</div>
 				</div>
 			</a>
 		</div>
@@ -345,10 +418,51 @@ $idUserFrenchisee = session('id_user_franchise');
 					<i class="fa fa-comments"></i>
 				</div>
 				<div class="details">
-					<div class="number" id="nom_item">
-						<span data-counter="counterup" data-value="{{$nominal_item}}" style="font-size: 22px">Rp {{number_format($nominal_item, 2)}}</span>
+					<div class="number" id="processed_nom_item">
+						<span data-counter="counterup" data-value="{{$processed['nominal_item']}}" style="font-size: 22px">Rp {{number_format($processed['nominal_item'], 2)}}</span>
 					</div>
 					<div class="desc"> Total Fee Item (Subtotal)</div>
+				</div>
+			</a>
+		</div>
+		@if(MyHelper::hasAccess([235], $grantedFeature))
+			<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+				<a class="dashboard-stat dashboard-stat-v2 purple" target="_blank" href="{{url('disburse/list/all')}}">
+					<div class="visual">
+						<i class="fa fa-shopping-cart"></i>
+					</div>
+					<div class="details">
+						<div class="number" id="processed_nom_income">
+							<span data-counter="counterup" data-value="{{$processed['total_income_central']}}" style="font-size: 22px">Rp {{number_format($processed['total_income_central'], 2)}}</span>
+						</div>
+						<div class="desc"> Income Central </div>
+					</div>
+				</a>
+			</div>
+		@endif
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 yellow-crusta" target="_blank" href="{{url('disburse/list/success')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="processed_nom_expense_central">
+						<span data-counter="counterup" data-value="{{$processed['nominal_expense_central']}}" style="font-size: 22px">Rp {{number_format($processed['nominal_expense_central'], 2)}}</span>
+					</div>
+					<div class="desc"> Total Expense Central </div>
+				</div>
+			</a>
+		</div>
+		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 blue" target="_blank" href="{{url('disburse/list/trx')}}">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="processed_nom_trx">
+						<span data-counter="counterup" data-value="{{$processed['nominal_grandtotal']}}" style="font-size: 22px">Rp {{number_format($processed['nominal_grandtotal'], 2)}}</span>
+					</div>
+					<div class="desc"> Grand Total </div>
 				</div>
 			</a>
 		</div>
@@ -358,26 +472,26 @@ $idUserFrenchisee = session('id_user_franchise');
 					<i class="fa fa-comments"></i>
 				</div>
 				<div class="details">
-					<div class="number" id="nom_delivery">
-						<span data-counter="counterup" data-value="{{$nominal_delivery}}" style="font-size: 22px">Rp {{number_format($nominal_delivery, 2)}}</span>
+					<div class="number" id="processed_nom_delivery">
+						<span data-counter="counterup" data-value="{{$processed['nominal_delivery']}}" style="font-size: 22px">Rp {{number_format($processed['nominal_delivery'], 2)}}</span>
 					</div>
 					<div class="desc"> Total Delivery </div>
 				</div>
 			</a>
 		</div>
-		<div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
-			<a class="dashboard-stat dashboard-stat-v2 yellow-crusta" target="_blank" href="{{url('disburse/list/success')}}">
+		{{-- <div class="@if(MyHelper::hasAccess([235], $grantedFeature))col-lg-3 @else col-lg-4 @endif col-md-4 col-sm-12 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green" target="_blank" href="{{url('disburse/list/all')}}">
 				<div class="visual">
 					<i class="fa fa-comments"></i>
 				</div>
 				<div class="details">
-					<div class="number" id="nom_expense_central">
-						<span data-counter="counterup" data-value="{{$nominal_expense_central}}" style="font-size: 22px">Rp {{number_format($nominal_expense_central, 2)}}</span>
+					<div class="number" id="processed_nom_disburse">
+						<span data-counter="counterup" data-value="{{$processed['total_disburse']}}" style="font-size: 22px">Rp {{number_format($processed['total_disburse'], 2)}}</span>
 					</div>
-					<div class="desc"> Total Expense Central </div>
+					<div class="desc"> Total Disburse</div>
 				</div>
 			</a>
-		</div>
+		</div> --}}
 	</div>
 
 	<div class="portlet light bordered">

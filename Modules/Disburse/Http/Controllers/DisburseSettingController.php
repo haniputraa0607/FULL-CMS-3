@@ -144,6 +144,16 @@ class DisburseSettingController extends Controller
         }
     }
 
+    function deleteBankAccount(Request $request){
+        $post = $request->all();
+        $delete = MyHelper::post('disburse/setting/delete-bank-account',$post);
+        if (isset($delete['status']) && $delete['status'] == "success") {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+
     function exportListBank(Request $request){
         $bank = MyHelper::get('disburse/bank');
         if(isset($bank['status']) && $bank['status'] == 'success'){
@@ -196,6 +206,10 @@ class DisburseSettingController extends Controller
             $dataimport = array_map(function($x){return (Object)$x;}, $dataimport[0]??[]);
             $save = MyHelper::post('disburse/setting/import-bank-account-outlet', ['data_import' => $dataimport]);
             if (isset($save['status']) && $save['status'] == "success") {
+                if (!empty($save['data_failed'])) {
+                    return redirect('disburse/setting/bank-account#export-import')->withErrors($save['data_failed'])->withInput();
+                }
+
                 $message = ['Success import '.count($save['data_success'])];
                 return redirect('disburse/setting/bank-account#export-import')->withSuccess($message);
             }else {

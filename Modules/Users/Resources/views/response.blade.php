@@ -598,7 +598,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 	<div class="portlet-body form">
 		<form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
 			<div class="form-body">
-				@if ($subject != 'cron-transaction' && $subject != 'disburse-balance-is-not-enough' && !($forwardOnly??false))
+				@if ($subject != 'cron-transaction' && $subject != 'failed-send-disburse' && !($forwardOnly??false))
 					@if(MyHelper::hasAccess([38], $configs) && in_array('email', $active_response))
 						<h4>Email</h4>
 						<div class="form-group">
@@ -1265,7 +1265,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 						<div class="col-md-9">
 							<input type="text" placeholder="Forward Subject" class="form-control" name="autocrm_forward_email_subject" id="autocrm_forward_email_subject" value="{{$data['autocrm_forward_email_subject']}}">
 							<br>
-							@if ($subject != 'cron-transaction' && $subject != 'disburse-balance-is-not-enough' && !($noUser??false))
+							@if ($subject != 'cron-transaction' && $subject != 'failed-send-disburse' && !($noUser??false))
 								You can use this variables to display user personalized information:
 								<br><br>
 								<div class="row">
@@ -1295,7 +1295,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 						</div>
 						<div class="col-md-9">
 							<textarea name="autocrm_forward_email_content" id="autocrm_forward_email_content" class="form-control summernote"><?php echo $data['autocrm_forward_email_content']; ?></textarea>
-							@if ($subject != 'cron-transaction' && $subject != 'disburse-balance-is-not-enough' && !($noUser??false))
+							@if ($subject != 'cron-transaction' && $subject != 'failed-send-disburse' && !($noUser??false))
 								You can use this variables to display user personalized information:
 								<br><br>
 								<div class="row">
@@ -1316,7 +1316,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 								You can use this variables to display user personalized information:
 								<br><br>
 
-								@if($subject == 'disburse-balance-is-not-enough')
+								@if($subject == 'failed-send-disburse')
 									<div class="row">
 										<div class="col-md-3" style="margin-bottom:5px;">
 											<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '%list_outlet%'" onClick="addForwardContent('%list_outlet%');">{{ str_replace('_',' ','%list_outlet%') }}</span>

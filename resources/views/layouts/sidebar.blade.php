@@ -68,6 +68,11 @@
 										<span class="title">[Response] Pin Sent</span>
 									</a>
 								</li>
+								<li class="nav-item {{($submenu_active == 'user-autoresponse-pin-create') ? 'active open' : ''}}">
+									<a href="{{url('user/autoresponse/pin-create')}}" class="nav-link ">
+										<span class="title">[Response] Pin Create</span>
+									</a>
+								</li>
 							@endif
 							@if(MyHelper::hasAccess([42], $configs))
 								<li class="nav-item {{($submenu_active == 'user-autoresponse-pin-verify') ? 'active open' : ''}}">
@@ -868,6 +873,13 @@
 							</a>
 						</li>
 					@endif
+					@if(MyHelper::hasAccess([120], $configs) && MyHelper::hasAccess([272], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'setting-timer-payment-gateway') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/timer-payment-gateway')}}" class="nav-link ">
+								<span class="title">Setting Timer Payment Gateway</span>
+							</a>
+						</li>
+					@endif
 					@if(MyHelper::hasAccess([250], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'refund-reject-order') ? 'active open' : ''}}">
 							<a href="{{url('transaction/setting/refund-reject-order')}}" class="nav-link ">
@@ -1092,6 +1104,39 @@
 							</a>
 						</li>
 					</ul>
+				</li>
+			@endif
+		@endif
+
+		@if(MyHelper::hasAccess([274,275,276], $grantedFeature))
+			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
+				<h3 class="uppercase" style="color: #0F444C;font-weight: 600;">Invalid Transaction</h3>
+			</li>
+
+			@if(MyHelper::hasAccess([274], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'mark-as-invalid') ? 'active open' : ''}}">
+					<a href="{{url('transaction/invalid-flag/mark-as-invalid')}}" class="nav-link ">
+						<i class="fa fa-list-ul"></i>
+						<span class="title">Mark as Invalid</span>
+					</a>
+				</li>
+			@endif
+
+			@if(MyHelper::hasAccess([275], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'mark-as-valid') ? 'active open' : ''}}">
+					<a href="{{url('transaction/invalid-flag/mark-as-valid')}}" class="nav-link ">
+						<i class="fa fa-list-ul"></i>
+						<span class="title">Mark as Valid</span>
+					</a>
+				</li>
+			@endif
+
+			@if(MyHelper::hasAccess([276], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'log-invalid-flag') ? 'active open' : ''}}">
+					<a href="{{url('transaction/log-invalid-flag/list')}}" class="nav-link ">
+						<i class="fa fa-list-ul"></i>
+						<span class="title">Log Invalid Flag</span>
+					</a>
 				</li>
 			@endif
 		@endif
@@ -1486,9 +1531,14 @@
 						</li>
 						@endif
 						@if(MyHelper::hasAccess([173], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'subscription-report') ? 'active open' : ''}}">
+						<li class="nav-item {{($submenu_active == 'subscription-claim-report') ? 'active open' : ''}}">
+							<a href="{{url('subscription/claim-report')}}" class="nav-link ">
+								<span class="title">Subscription Claim Report</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'subscription-transaction-report') ? 'active open' : ''}}">
 							<a href="{{url('subscription/transaction-report')}}" class="nav-link ">
-								<span class="title">Subscription Report</span>
+								<span class="title">Subscription Transaction Report</span>
 							</a>
 						</li>
 						<li class="nav-item {{($submenu_active == 'subscription-list-export') ? 'active open' : ''}}">
@@ -1901,7 +1951,7 @@
 			@if(MyHelper::hasAccess([119], $configs))
 				<li class="nav-item {{($menu_active == 'redirect-complex') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
-						<i class="icon-feed"></i>
+						<i class="fa fa-external-link"></i>
 						<span class="title">Redirect Complex</span>
 						<span class="arrow {{($menu_active == 'redirect-complex') ? 'open' : ''}}"></span>
 					</a>
@@ -2184,6 +2234,12 @@
 					<span class="title">Time Expired OTP and Email</span>
 				</a>
 			</li>
+			<li class="nav-item {{($submenu_active == 'setting-popup-messages') ? 'active open' : ''}}">
+				<a href="{{url('setting/otp-messages')}}" class="nav-link ">
+					<i class="fa fa-envelope"></i>
+					<span class="title">OTP Message</span>
+				</a>
+			</li>
 		@endif
 
 		@if(MyHelper::hasAccess([85,86,87,88,89,90,91,94], $grantedFeature))
@@ -2317,9 +2373,9 @@
 						<span class="arrow {{($menu_active == 'disburse-settings') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
-						<li class="nav-item {{($submenu_active == 'autoresponse-disburse-balance-is-not-enough') ? 'active open' : ''}}">
-							<a href="{{url('disburse/autoresponse/disburse-balance-is-not-enough')}}" class="nav-link ">
-								<span class="title">[Response] Blance is Not Enough</span>
+						<li class="nav-item {{($submenu_active == 'autoresponse-failed-send-disburse') ? 'active open' : ''}}">
+							<a href="{{url('disburse/autoresponse/failed-send-disburse')}}" class="nav-link ">
+								<span class="title">[Response] Failed Send Disburse</span>
 							</a>
 						</li>
 						<li class="nav-item {{($submenu_active == 'disburse-setting-add-bank-account') ? 'active open' : ''}}">

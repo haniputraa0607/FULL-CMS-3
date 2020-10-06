@@ -46,6 +46,24 @@
 		}
 	@endphp
 	<script>
+
+	function permut(total_set, each){
+		total_set = parseInt(total_set);
+		each = parseInt(each);
+		let limit = total_set - each;
+    	let permut = 1;
+    	let arr = [];
+    	do {
+			permut = permut * total_set;
+			console.log([permut, total_set]);
+			total_set -= 1; 
+		}
+		while (total_set > limit);
+		console.log(permut, total_set, each);
+
+		return permut;
+    }
+
 	function delay(callback, ms) {
 		var timer = 0;
 		return function() {
@@ -57,6 +75,8 @@
 		};
 	}
 	$(document).ready(function() {
+		promo_id = {!! $result['id_promo_campaign_decrypt']??"false" !!};
+
 		$('.digit_mask').inputmask({
 			removeMaskOnSubmit: true, 
 			placeholder: "",
@@ -137,6 +157,9 @@
 			$('#multipleNumberLastCode').prop('required', false);
 			$('#multiplePrefixCode').val('')
 			if (code == 'Single') {
+				$(':input[type="submit"]').prop('disabled', false);
+				$('#totalCoupon').removeClass( "has-error" );
+				$('#alertTotalCoupon').hide();
 				$('#singleCode').show()
 				$('#singlePromoCode').prop('required', true);
 				$('#singlePromoCode').keyup(function() {	
@@ -149,8 +172,9 @@
 						type: "GET",
 						url: "check",
 						data: {
-							'type_code' : 'single',
-							'search_code' : this.value
+							'type_code' 	: 'single',
+							'search_code' 	: this.value,
+							'promo_id' 		: promo_id
 						},
 						dataType: "json",
 						success: function(msg){
@@ -170,7 +194,6 @@
 				$('#multipleCode').show()
 				$('#number_last_code').show()
 				$('input[name=total_coupon]').val('')
-				$('#multiplePrefixCode').prop('required', true);
 				$('#multipleNumberLastCode').prop('required', true);
 				$('#multiplePrefixCode').keyup(function() {	
 					$('#multiplePrefixCode').val (function () {
@@ -178,36 +201,64 @@
 					})
 				});
 				$('#multiplePrefixCode').keyup(delay(function() {
-					$.ajax({
-						type: "GET",
-						url: "check",
-						data: {
-							'type_code' : 'prefix',
-							'search_code' : this.value
-						},
-						dataType: "json",
-						success: function(msg){
-							if (msg.status == 'available') {
-								$(':input[type="submit"]').prop('disabled', false);
-								$('#alertMultipleCode').removeClass( "has-error" );
-								$('#alertMultiplePromoCode').hide();
-							} else {
-								$(':input[type="submit"]').prop('disabled', true);
-								$('#alertMultipleCode').addClass( "has-error" );
-								$('#alertMultiplePromoCode').show();
+					if ($(this).val()) {
+						$.ajax({
+							type: "GET",
+							url: "check",
+							data: {
+								'type_code' 	: 'prefix',
+								'search_code' 	: this.value,
+								'promo_id' 		: promo_id
+							},
+							dataType: "json",
+							success: function(msg){
+								if (msg.status == 'available') {
+									$(':input[type="submit"]').prop('disabled', false);
+									$('#alertMultipleCode').removeClass( "has-error" );
+									$('#alertMultiplePromoCode').hide();
+								} else {
+									$(':input[type="submit"]').prop('disabled', true);
+									$('#alertMultipleCode').addClass( "has-error" );
+									$('#alertMultiplePromoCode').show();
+								}
 							}
-						}
-					});
-					$('#exampleMultipleCode').show()
-					$('#number_last_code').show()
-					$('#multipleNumberLastCode').val('')
-					$('#exampleCode').replaceWith("<span id='exampleCode'></span>")
-					$('#multipleNumberLastCode').attr('max', maxChar - this.value.length)
-					$('#digit-random-max').text(maxChar - this.value.length)
+						});
+						$('#exampleMultipleCode').show()
+						$('#number_last_code').show()
+						$('#multipleNumberLastCode').val('')
+						$('#exampleCode').replaceWith("<span id='exampleCode'></span>")
+						$('#multipleNumberLastCode').attr('max', maxChar - this.value.length)
+						$('#digit-random-max').text(maxChar - this.value.length)
+					}
+					else {
+						$(':input[type="submit"]').prop('disabled', false);
+						$('#alertMultipleCode').removeClass( "has-error" );
+						$('#alertMultiplePromoCode').hide();
+						$('#multipleNumberLastCode').attr('max', maxChar - this.value.length)
+					}
 				}, 1000));
-				$('#multipleNumberLastCode').on('input',function() {
+
+				$('#multipleNumberLastCode').keyup(function() {
 					prefix = ($('#multiplePrefixCode').val())
 					last_code = ($('#multipleNumberLastCode').val())
+					max = +$(this).attr('max');
+					val = +$(this).val();
+
+					if (val > max) {
+						$('#multipleNumberLastCode').val(max);
+						last_code = max;
+					}
+
+					if(val < 6) {
+						$(':input[type="submit"]').prop('disabled', true);
+						$('#number_last_code').addClass( "has-error" );
+						$('#alertDigitRandom').show();
+					}else{
+						$(':input[type="submit"]').prop('disabled', false);
+						$('#number_last_code').removeClass( "has-error" );
+						$('#alertDigitRandom').hide();
+					}
+
 					var result           = '';
 					var result1          = '';
 					var result2          = '';
@@ -222,17 +273,33 @@
 					$('#exampleCode1').replaceWith("<span id='exampleCode1'>"+prefix+result1+"</span>")
 					$('#exampleCode2').replaceWith("<span id='exampleCode2'>"+prefix+result2+"</span>")
 				});
-				$('input[name=total_coupon]').keyup(function() {
-					maxCharDigit = 28;
-					hitungKemungkinan = Math.pow(maxCharDigit, $('#multipleNumberLastCode').val())
-					if (hitungKemungkinan >= $('input[name=total_coupon]').inputmask('unmaskedvalue')) {
-						$(':input[type="submit"]').prop('disabled', false);
-						$('#totalCoupon').removeClass( "has-error" );
-						$('#alertTotalCoupon').hide();
-					} else {
-						$(':input[type="submit"]').prop('disabled', true);
-						$('#totalCoupon').addClass( "has-error" );
-						$('#alertTotalCoupon').show();
+
+				$('#multipleNumberLastCode').keyup(function() {
+					prefix = ($('#multiplePrefixCode').val())
+					last_code = ($('#multipleNumberLastCode').val())
+					max = +$(this).attr('max');
+					val = +$(this).val();
+					
+					if (val > max) {
+						$('#multipleNumberLastCode').val(max);
+					}
+				});
+
+				$('input[name=total_coupon], #multipleNumberLastCode').keyup(function() {
+					if (code == 'Multiple') {
+						maxCharDigit = 28;
+						// hitungKemungkinan = Math.pow(maxCharDigit, $('#multipleNumberLastCode').val())
+						hitungKemungkinan = permut(maxCharDigit, $('#multipleNumberLastCode').val());
+						console.log([hitungKemungkinan, $('#multipleNumberLastCode').val(), $('input[name=total_coupon]').inputmask('unmaskedvalue')]);
+						if (hitungKemungkinan >= $('input[name=total_coupon]').inputmask('unmaskedvalue')) {
+							$(':input[type="submit"]').prop('disabled', false);
+							$('#totalCoupon').removeClass( "has-error" );
+							$('#alertTotalCoupon').hide();
+						} else {
+							$(':input[type="submit"]').prop('disabled', true);
+							$('#totalCoupon').addClass( "has-error" );
+							$('#alertTotalCoupon').show();
+						}
 					}
 				});
 			}
@@ -497,7 +564,7 @@
 								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Jumlah digit yang digenerate secara otomatis untuk akhiran kode. Prefix Code + Digit Random tidak boleh lebih dari 15 karakter" data-container="body"></i>
 								<div class="input-group col-md-12">
-									<input id="multipleNumberLastCode" type="number" class="form-control" name="number_last_code" placeholder="Total Digit Random Last Code" @if(isset($result['number_last_code']) && $result['number_last_code'] != "") value="{{$result['number_last_code']}}" @elseif(old('number_last_code') != "") value="{{old('number_last_code')}}" @endif autocomplete="off" oninput="validity.valid||(value='');" min="6" max="15">
+									<input id="multipleNumberLastCode" type="number" class="form-control" name="number_last_code" placeholder="Total Digit Random Last Code" @if(isset($result['number_last_code']) && $result['number_last_code'] != "") value="{{$result['number_last_code']}}" @elseif(old('number_last_code') != "") value="{{old('number_last_code')}}" @endif autocomplete="off" min="6" max="15">
 								</div>
 								<span class="help-block" id="subscription-false"> Min : <span id="digit-random-min" class="font-weight-bold" style="padding-right: 12px">6</span> Max : <span id="digit-random-max" class="font-weight-bold">15</span></span>
 							</div>

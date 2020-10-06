@@ -154,6 +154,14 @@ class UsersController extends Controller
         $data['click_notification'] = [
             ['value' => 'Home','title' => 'Home']
         ];
+
+        if ($subject == 'pin-create') {
+	        $data['click_notification'] = [
+	            ['value' => "No Action",'title' => 'No Action']
+	        ];
+	        return view('users::response_push', $data);
+        }
+
 		// print_r($data);exit;
         return view('users::response', $data);
 	}
@@ -556,6 +564,10 @@ class UsersController extends Controller
 		
 		if(isset($post['phone'])){
 			if(isset($post['birthday'])){
+				if (stristr($post['birthday'], '/')) {
+	                $explode = explode('/', $post['birthday']);
+	                $post['birthday'] = $explode[2] . '-' . $explode[1] . '-' . $explode[0];
+	            }
 				$post['birthday'] = date('Y-m-d', strtotime($post['birthday']));
 			}
 			if(isset($post['relationship']) && $post['relationship']=="-"){
@@ -600,7 +612,7 @@ class UsersController extends Controller
 			$update = MyHelper::post('users/update/suspend', $post);
 			return parent::redirect($update, 'Suspend Status has been changed.');
         }
-		
+
 		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
 		// return $getUser;exit;
 		$getLog = MyHelper::post('users/log?log_save=0', ['phone' => $phone, 'skip' => 0, 'take' => 50]);

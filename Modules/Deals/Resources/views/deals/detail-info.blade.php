@@ -88,7 +88,7 @@
                     <div class="col-md-4 name">Charged Outlet</div>
                     <div class="col-md-8 value">: {{$deals['charged_outlet']}} %</div>
                 </div>
-            @if($deals_type != 'WelcomeVoucher' && $deals_type != 'Promotion')
+            @if($deals_type != 'Promotion')
                 @if(isset($deals['deals_start']))
                 <div class="row static-info">
                     <div class="col-md-4 name">Start</div>
@@ -99,17 +99,19 @@
                     <div class="col-md-8 value">: {{date("d M Y", strtotime($deals['deals_end']))}}&nbsp;{{date("H:i", strtotime($deals['deals_end']))}}</div>
                 </div>
                 @endif
+            @endif
+            @if($deals_type != 'WelcomeVoucher' && $deals_type != 'Promotion')
                 @if($deals_type != 'Hidden')
-                @if(isset($deals['deals_end']))
-                <div class="row static-info">
-                    <div class="col-md-4 name">Publish Start</div>
-                    <div class="col-md-8 value">: {{date("d M Y", strtotime($deals['deals_publish_start']))}}&nbsp;{{date("H:i", strtotime($deals['deals_publish_start']))}}</div>
-                </div>
-                <div class="row static-info">
-                    <div class="col-md-4 name">Publish End</div>
-                    <div class="col-md-8 value">: {{date("d M Y", strtotime($deals['deals_publish_end']))}}&nbsp;{{date("H:i", strtotime($deals['deals_publish_end']))}}</div>
-                </div>
-                @endif
+	                @if(isset($deals['deals_end']))
+	                <div class="row static-info">
+	                    <div class="col-md-4 name">Publish Start</div>
+	                    <div class="col-md-8 value">: {{date("d M Y", strtotime($deals['deals_publish_start']))}}&nbsp;{{date("H:i", strtotime($deals['deals_publish_start']))}}</div>
+	                </div>
+	                <div class="row static-info">
+	                    <div class="col-md-4 name">Publish End</div>
+	                    <div class="col-md-8 value">: {{date("d M Y", strtotime($deals['deals_publish_end']))}}&nbsp;{{date("H:i", strtotime($deals['deals_publish_end']))}}</div>
+	                </div>
+	                @endif
                 @endif
             @endif
                 <div class="row static-info">
