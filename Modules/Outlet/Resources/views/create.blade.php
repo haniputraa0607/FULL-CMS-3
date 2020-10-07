@@ -536,6 +536,39 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
+                            Time Zone
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Zona waktu outlet" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" name="time_zone_utc" required>
+                                <option value="" disabled @if ( old('time_zone_utc')== "" ) selected @endif>Select Time Zone</option>
+                                <option value="7" 
+                                    @if ( old('time_zone_utc')) 
+                                        @if ( old('time_zone_utc') == '7' ) 
+                                            selected 
+                                        @endif
+                                    @endif>WIB - Asia/Jakarta (UTC +07:00)</option>
+                                <option value="8" 
+                                    @if ( old('time_zone_utc')) 
+                                        @if ( old('time_zone_utc') == '8' ) 
+                                            selected 
+                                        @endif
+                                    @endif>WITA - Asia/Makassar (UTC +08:00)</option>
+                                <option value="9" 
+                                    @if ( old('time_zone_utc')) 
+                                        @if ( old('time_zone_utc') == '9' ) 
+                                            selected 
+                                        @endif
+                                    @endif>WIT - Asia/Jayapura (UTC +09:00)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
                             Schedule Open & Close Hour
                             <i class="fa fa-question-circle tooltips" data-original-title="Jadwal jam buka dan jam tutup outlet" data-container="body"></i>
                             </label>
