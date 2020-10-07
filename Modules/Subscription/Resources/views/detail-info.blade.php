@@ -164,7 +164,18 @@
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Discount Type</div>
-                    <div class="col-md-8 value">: {{ $subscription['subscription_discount_type'] == 'discount' ? 'Discount' : 'Payment Method' }}</div>
+                    <div class="col-md-8 value">: 
+                    	@switch($subscription['subscription_discount_type'])
+                        @case('discount')
+                            Discount
+                            @break
+                        @case('discount_delivery')
+                            Discount Delivery
+                            @break
+                        @default
+                            Payment Method
+                    	@endswitch
+                	</div>
                 </div>
                 @if(!empty($subscription['subscription_voucher_nominal']))
                 <div class="row static-info">

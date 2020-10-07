@@ -39,6 +39,14 @@ $configs = session('configs');
                                             @elseif ( ($subscription['subscription_discount_type']??'') == 'discount') ) 
                                                 selected
                                             @endif>Discount</option>
+                                        <option value="discount_delivery" 
+                                            @if ( old('subscription_discount_type')) 
+                                                @if ( old('subscription_discount_type') == "discount_delivery" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( ($subscription['subscription_discount_type']??'') == 'discount_delivery') ) 
+                                                selected
+                                            @endif>Discount Delivery</option>
                                     </select>
                                 </div>
                             </div>
