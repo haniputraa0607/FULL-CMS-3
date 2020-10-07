@@ -644,6 +644,32 @@
 			</li>
 			@endif
 
+			@if(MyHelper::hasAccess([278,279,280,281], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'product-variant') ? 'active' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-coffee"></i>
+						<span class="title">Product Variant</span>
+						<span class="arrow {{($menu_active == 'product-variant') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([279], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'product-variant-new') ? 'active open' : ''}}">
+								<a href="{{url('product-variant/create')}}" class="nav-link ">
+									<span class="title">New Product Variant</span>
+								</a>
+							</li>
+						@endif
+						@if(MyHelper::hasAccess([278,279,281], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'product-modifier-list') ? 'active open' : ''}}">
+								<a href="{{url('product-variant')}}" class="nav-link ">
+									<span class="title">Product Variant List</span>
+								</a>
+							</li>
+						@endif
+					</ul>
+				</li>
+			@endif
+
 		@endif
 
 		@if(MyHelper::hasAccess([58,59,60,61,62,63,64,66,69,71], $grantedFeature))
