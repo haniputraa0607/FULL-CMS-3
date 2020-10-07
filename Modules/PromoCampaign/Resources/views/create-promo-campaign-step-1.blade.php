@@ -253,6 +253,7 @@
 						$(':input[type="submit"]').prop('disabled', true);
 						$('#number_last_code').addClass( "has-error" );
 						$('#alertDigitRandom').show();
+						$('#multipleNumberLastCode').val('');
 					}else{
 						$(':input[type="submit"]').prop('disabled', false);
 						$('#number_last_code').removeClass( "has-error" );
