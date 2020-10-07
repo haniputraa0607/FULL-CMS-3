@@ -225,10 +225,11 @@ $configs = session('configs');
                   },
                 }],
                 responsive: {
-                    details: {
+                    /*details: {
                         type: "column",
                         target: "tr"
-                    }
+                    }*/
+                    details: false
                 },
                 order: [0, "asc"],
                 lengthMenu: [
@@ -622,7 +623,7 @@ $configs = session('configs');
 													@if(MyHelper::hasAccess([84], $grantedFeature))
 														<a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
 
-														<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
+														<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace([" ",",","&"],"_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
 														@if(MyHelper::hasAccess([57], $configs))
 															<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
 														@endif
@@ -630,7 +631,7 @@ $configs = session('configs');
 												</td>
    		    	        	                </tr>
 
-   		    	        	                <div id="{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
+   		    	        	                <div id="{{ str_replace([" ",",","&"],"_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
    		    	        	                   <div class="modal-dialog">
    		    	        	                       <div class="modal-content">
    		    	        	                           <div class="modal-header">
