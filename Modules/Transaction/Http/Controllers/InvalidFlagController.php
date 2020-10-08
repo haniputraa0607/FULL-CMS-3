@@ -155,6 +155,13 @@ class InvalidFlagController extends Controller
 
         $data['from'] = $post['from'];
         $data['id_transaction'] = $id;
+
+        $data['logs'] = [];
+        $detailLog = MyHelper::post('transaction/log-invalid-flag/detail',['id_transaction' => $id]);
+
+        if (isset($detailLog['status']) && $detailLog['status'] == 'success') {
+            $data['logs'] = $detailLog['result'];
+        }
         return view('transaction::transactionDetail3', $data);
     }
 
