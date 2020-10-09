@@ -16,5 +16,15 @@ Route::prefix('product-variant')->group(function() {
         Route::get('/', ['middleware' => 'feature_control:278', 'uses' => 'ProductVariantController@index']);
         Route::get('create', ['middleware' => 'feature_control:279', 'uses' => 'ProductVariantController@create']);
         Route::post('store', ['middleware' => 'feature_control:279', 'uses' => 'ProductVariantController@store']);
+        Route::get('edit/{id}', ['middleware' => 'feature_control:281', 'uses' => 'ProductVariantController@edit']);
+        Route::post('update/{id}', ['middleware' => 'feature_control:281', 'uses' => 'ProductVariantController@update']);
+        Route::any('delete/{id}', ['middleware' => 'feature_control:282', 'uses' => 'ProductVariantController@destroy']);
+    });
+});
+
+Route::prefix('product-variant-group')->group(function() {
+    Route::group(['middleware' => 'validate_session'], function(){
+        Route::get('price/{id_outlet?}', ['middleware' => 'feature_control:281', 'uses' => 'ProductVariantGroupController@listPrice']);
+        Route::post('price/{id_outlet}', ['middleware' => 'feature_control:281', 'uses' => 'ProductVariantGroupController@updatePrice']);
     });
 });

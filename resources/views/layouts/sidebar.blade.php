@@ -644,7 +644,7 @@
 			</li>
 			@endif
 
-			@if(MyHelper::hasAccess([278,279,280,281], $grantedFeature))
+			@if(MyHelper::hasAccess([278,279,280,281,282], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'product-variant') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="fa fa-coffee"></i>
@@ -660,9 +660,14 @@
 							</li>
 						@endif
 						@if(MyHelper::hasAccess([278,279,281], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'product-modifier-list') ? 'active open' : ''}}">
+							<li class="nav-item {{($submenu_active == 'product-variant-list') ? 'active open' : ''}}">
 								<a href="{{url('product-variant')}}" class="nav-link ">
 									<span class="title">Product Variant List</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'product-variant-group-price') ? 'active open' : ''}}">
+								<a href="{{url('product-variant-group/price')}}" class="nav-link ">
+									<span class="title">Product Variant Price</span>
 								</a>
 							</li>
 						@endif
