@@ -3,6 +3,55 @@ use App\Lib\MyHelper;
 $configs = session('configs');
 ?>
 @section('step2')
+					<div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Discount Type
+                            <span class="required" aria-required="true"> * </span>  
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tipe subscription yang akan digunakan. Sebagai metode pembayaran atau sebagai diskon" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-9" style="padding-left: 0px">
+                            <div class="input-icon right">
+                                <div class="col-md-3">
+                                    <select class="form-control" name="subscription_discount_type">
+                                        <option value="" disabled 
+                                            @if ( old('subscription_discount_type')) 
+                                                @if ( old('subscription_discount_type') == "" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( empty($subscription['subscription_discount_type']) ) 
+                                                selected
+                                            @endif>Select Type</option>
+                                        <option value="payment_method" 
+                                            @if ( old('subscription_discount_type')) 
+                                                @if ( old('subscription_discount_type') == "payment_method" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( ($subscription['subscription_discount_type']??'') == 'payment_method') ) 
+                                                selected
+                                            @endif>Payment Method</option>
+                                        <option value="discount" 
+                                            @if ( old('subscription_discount_type')) 
+                                                @if ( old('subscription_discount_type') == "discount" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( ($subscription['subscription_discount_type']??'') == 'discount') ) 
+                                                selected
+                                            @endif>Discount</option>
+                                        <option value="discount_delivery" 
+                                            @if ( old('subscription_discount_type')) 
+                                                @if ( old('subscription_discount_type') == "discount_delivery" ) 
+                                                    selected
+                                                @endif
+                                            @elseif ( ($subscription['subscription_discount_type']??'') == 'discount_delivery') ) 
+                                                selected
+                                            @endif>Discount Delivery</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 					@if ($subscription_type == 'subscription')
                     <div class="form-group">
                         <div class="input-icon right">
@@ -381,7 +430,7 @@ $configs = session('configs');
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Voucher Discount Type
+                            Voucher Discount
                             <span class="required" aria-required="true"> * </span>  
                             <i class="fa fa-question-circle tooltips" data-original-title="Tipe potongan harga dari voucher subscription (persen atau nominal)" data-container="body"></i>
                             </label>
@@ -524,8 +573,8 @@ $configs = session('configs');
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Minimal Transaction (Subtotal)
-                            <i class="fa fa-question-circle tooltips" data-original-title="Jumlah transaksi paling sedikit untuk bisa mendapatkan potongan dari subscription. kosongkan jika tidak ada minimal transaksi" data-container="body"></i>
+                            Minimum Basket Size
+                            <i class="fa fa-question-circle tooltips" data-original-title="Total harga product sebelum dikenakan promo dan biaya pengiriman paling sedikit untuk bisa mendapatkan potongan dari subscription. kosongkan jika tidak ada minimum basket size" data-container="body"></i>
                             </label>
                         </div>
 

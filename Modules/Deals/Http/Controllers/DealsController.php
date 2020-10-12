@@ -762,7 +762,6 @@ class DealsController extends Controller
 
 			$action = MyHelper::post('promo-campaign/step2', $post);
 
-
             if (isset($action['status']) && $action['status'] == 'success') {
 
             	if($post['deals_type'] == 'Promotion'){
