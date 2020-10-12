@@ -199,7 +199,7 @@
                                 <td>{{ $val['outlet_type'] }}</td>
                                 <td>
                                 	@if ($val['promo_type'] == 'promo_campaign')
-                                		<a target="_blank" href="{{ url('promo-campaign/detail/'.$val['promo_campaign']['id_promo_campaign']) }}">{{ $val['promo_campaign']['campaign_name'] }}</a>
+                                		<a target="_blank" href="{{ url('promo-campaign/detail/'.$val['promo_campaign']['id_promo_campaign']) }}">{{ $val['promo_campaign']['campaign_name']??'' }}</a>
                                 	@endif
                                 <td>{{ $val['payment_method'] ?? null }}</td>
                                 @if(MyHelper::hasAccess([166,167], $grantedFeature))
