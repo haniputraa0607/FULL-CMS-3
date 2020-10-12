@@ -671,7 +671,9 @@
 			</div>
 
 			{{-- Global Requirement --}}
-			@yield('global-requirement')
+			<div class="col-md-12">
+				@yield('global-requirement')
+			</div>
 
 			{{-- PROMO TYPE FORM --}}
 			<div class="col-md-12">

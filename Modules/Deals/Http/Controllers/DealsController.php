@@ -751,7 +751,7 @@ class DealsController extends Controller
 
 	        } else {
 
-	            return redirect('deals')->withErrors($deals['messages']);
+	            return redirect('deals')->withErrors($deals['messages']??['Something went wrong']);
 	        }
 
 	        return view('deals::deals.step2', $data);

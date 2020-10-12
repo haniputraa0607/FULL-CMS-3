@@ -4,8 +4,14 @@
 			$data = $result;
 			break;
 		
+		case 'Promotion':
+			$data = $result;
+			$promo_source = 'deals_promotion';
+			break;
+
 		default:
-			# code...
+			$data = $result;
+			$promo_source = 'deals';
 			break;
 	}
 @endphp

@@ -464,21 +464,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="row static-info">
-                                    <div class="col-md-4 name">Shipment Method</div>
-                                    <div class="col-md-1 value">:</div>
-                                    <div class="col-md-7 value" style="margin-left: -35px">
-                                    	@if ($result['is_all_shipment'] == '1')
-                                            <div style="margin-left: -5px">All Shipment</div>
-                                        @elseif ($result['is_all_shipment'] == '0')
-                                        	@foreach ($result['promo_campaign_shipment_method'] as $val)
-                                        		<div style="margin-bottom: 10px">{{ '- '.$val['shipment_method'] }}</div>
-                                        	@endforeach
-                                        @else
-                                            -
-                                        @endif
-                                    </div>
-                                </div>
+                                @include('promocampaign::template.promo-global-requirement-detail', ['promo_source' => 'promo_campaign'])
                                 @if ( !empty($result['step_complete']) )
                                 	{{-- Product Discount --}}
                                     @if (isset($result['promo_campaign_product_discount_rules']) && $result['promo_campaign_product_discount_rules'] != null)
