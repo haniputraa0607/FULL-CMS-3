@@ -667,8 +667,36 @@
 							</li>
 							<li class="nav-item {{($submenu_active == 'product-variant-group-price') ? 'active open' : ''}}">
 								<a href="{{url('product-variant-group/price')}}" class="nav-link ">
-									<span class="title">Product Variant Price</span>
+									<span class="title">Product Variant Group Price</span>
 								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'product-variant-group-detail') ? 'active open' : ''}}">
+								<a href="{{url('product-variant-group/detail')}}" class="nav-link ">
+									<span class="title">Product Variant Group Detail</span>
+								</a>
+							</li>
+							<li class="nav-item {{(strpos($submenu_active , 'product-variant-import') !== false) ? 'active open' : ''}}">
+								<a href="javascript:;" class="nav-link nav-toggle">
+									<span class="title">Export & Import</span>
+									<span class="arrow"></span>
+								</a>
+								<ul class="sub-menu">
+									<li class="nav-item {{($submenu_active == 'product-variant-import-global') ? 'active open' : ''}}">
+										<a href="{{url('product-variant/import')}}" class="nav-link ">
+											<span class="title">Import Product Variant</span>
+										</a>
+									</li>
+{{--									<li class="nav-item {{($submenu_active == 'product-variant-group-import-global') ? 'active open' : ''}}">--}}
+{{--										<a href="{{url('product-variant-group/import')}}" class="nav-link ">--}}
+{{--											<span class="title">Import Product Variant Group</span>--}}
+{{--										</a>--}}
+{{--									</li>--}}
+									<li class="nav-item {{($submenu_active == 'product-variant-group-import-price') ? 'active open' : ''}}">
+										<a href="{{url('product-variant-group/import/price')}}" class="nav-link ">
+											<span class="title">Import Product Variant Group Price</span>
+										</a>
+									</li>
+								</ul>
 							</li>
 						@endif
 					</ul>
