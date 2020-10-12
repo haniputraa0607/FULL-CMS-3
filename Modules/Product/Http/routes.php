@@ -87,6 +87,13 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 		Route::delete('/{id}', ['middleware' => 'feature_control:184', 'uses' => 'ModifierController@destroy']);
 	});
 
+    /**
+     * modifier
+     */
+    Route::group(['prefix' => 'product-variant-group'], function() {
+        Route::post('{product_code}', ['uses' => 'ProductController@productVarianGroup']);
+    });
+
 	/**
 	 * discount
 	 */

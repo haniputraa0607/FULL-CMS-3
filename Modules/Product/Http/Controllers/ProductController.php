@@ -731,6 +731,10 @@ class ProductController extends Controller
             if (isset($outletAll['status']) && $outletAll['status'] == 'success') {
                 $data['outlet_all'] = $outletAll['result'];
             }
+
+            $data['product_variant'] = MyHelper::get('product-variant')['result'] ?? [];
+            $data['product_variant_group'] = MyHelper::post('product-variant-group',  ['product_code' => $code])['result'] ?? [];
+            $data['count'] = count($data['product_variant_group']);
             return view('product::product.detail', $data);
         }
         else {
@@ -846,6 +850,18 @@ class ProductController extends Controller
                 return redirect('product/detail/'.$code.'#photo')->with('success', ['Photo\'s order has been updated']);
             }
 
+        }
+    }
+
+    public function productVarianGroup(Request $request, $product_code){
+        $post = $request->all();
+        $post['product_code'] = $product_code;
+        $create_update = MyHelper::post('product-variant-group', $post);
+
+        if(($create_update['status']??'')=='success'){
+            return redirect('product/detail/'.$product_code.'#variant-group')->with('success',['Update Product Variant Group Success']);
+        }else{
+            return redirect('product/detail/'.$product_code.'#variant-group')->withErrors($create_update['messages'] ?? ['Something went wrong']);
         }
     }
 
