@@ -1108,6 +1108,15 @@
 			</li>
 
 			@if(MyHelper::hasAccess([274], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'mark-as-pending-invalid') ? 'active open' : ''}}">
+					<a href="{{url('transaction/invalid-flag/mark-as-pending-invalid')}}" class="nav-link ">
+						<i class="fa fa-list-ul"></i>
+						<span class="title">Mark as Pending Invalid</span>
+					</a>
+				</li>
+			@endif
+
+			@if(MyHelper::hasAccess([274], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'mark-as-invalid') ? 'active open' : ''}}">
 					<a href="{{url('transaction/invalid-flag/mark-as-invalid')}}" class="nav-link ">
 						<i class="fa fa-list-ul"></i>
@@ -1734,7 +1743,6 @@
 				</li>
 				@endif
 			@endif
-		@endif
 
 		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
