@@ -12,7 +12,7 @@
 							</br> Buy X get Y : Promo hanya berlaku untuk product tertentu" data-container="body" data-html="true"></i>
 							<select class="form-control" name="promo_type" required>
 								<option value="" disabled {{ empty($result['deals_product_discount_rules']) && empty($result['deals_tier_discount_rules']) && empty($result['deals_buyxgety_rules']) ? 'selected' : '' }}> Select Promo Type </option>
-								<option value="Product Discount" {{ !empty($result['deals_product_discount_rules']) ? 'selected' : '' }} title="Promo berlaku untuk semua product atau product tertentu tanpa jumlah minimum"> Product Discount </option>
+								<option value="Product discount" {{ !empty($result['deals_product_discount_rules']) ? 'selected' : '' }} title="Promo berlaku untuk semua product atau product tertentu tanpa jumlah minimum"> Product Discount </option>
 								<option value="Tier discount" {{ !empty($result['deals_tier_discount_rules']) ? 'selected' : '' }} title="Promo hanya berlaku untuk suatu product setelah melakukan pembelian dalam jumlah yang telah ditentukan"> Bulk/Tier Product </option>
 								<option value="Buy X Get Y" {{ !empty($result['deals_buyxgety_rules']) ? 'selected' : '' }} title="Promo hanya berlaku untuk product tertentu"> Buy X Get Y </option>
 	                        </select>
