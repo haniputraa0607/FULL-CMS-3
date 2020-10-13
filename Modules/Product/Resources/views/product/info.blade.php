@@ -7,6 +7,16 @@
     @foreach ($product as $syu)
     <div class="form-body">
         <div class="form-group">
+            <label for="multiple" class="control-label col-md-3">Product Variant Status <span class="required" aria-required="true"> * </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Jika produk memiliki variant silahkan centang checkbox ini" data-container="body"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="icheck-list">
+                    <label><input type="checkbox" class="icheck" id="checkbox-variant" name="product_variant_status" @if($product[0]['product_variant_status'] == 1) checked @endif> </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="multiple" class="control-label col-md-3">Category <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Pilih Kategori Produk" data-container="body"></i>
             </label>
@@ -67,7 +77,7 @@
             </label>
             <div class="col-md-8">
                 <div class="input-icon right">
-                    <input type="text" class="form-control price" name="product_global_price" value="@if(isset($syu['global_price'][0]['product_global_price'])) {{number_format($syu['global_price'][0]['product_global_price'])}} @endif" required>
+                    <input type="text" class="form-control price" name="product_global_price" value="@if(isset($syu['global_price'][0]['product_global_price'])) {{number_format($syu['global_price'][0]['product_global_price'])}} @endif"  @if($product[0]['product_variant_status'] == 1) disabled @endif required>
                 </div>
             </div>
         </div>
