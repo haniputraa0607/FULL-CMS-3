@@ -1,4 +1,4 @@
-@php
+{{-- @php
 	switch ($promo_source) {
 		case 'promo_campaign':
 			$data_global = $result;
@@ -40,4 +40,4 @@
             -
         @endif
     </div>
-</div>
+</div> --}}
