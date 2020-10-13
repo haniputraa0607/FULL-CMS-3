@@ -36,35 +36,38 @@
 				<span></span>
 			</label>
 		</div>
-        <div class="mt-checkbox-inline" id="selected-shipment" 
+        <div id="selected-shipment" 
 	        @if ( $data['is_all_shipment'] !== 0  ) 
 	        	style="display: none;" 
 	        @endif>
-            <label class="mt-checkbox mt-checkbox-outline">
-                <input class="input-selected-shipment" type="checkbox" value="Pickup Order" name="shipment_method[]" @if (in_array('Pickup Order', $shipment_method)) checked @endif> Pickup Order
-                <span></span>
-            </label>
-            <label class="mt-checkbox mt-checkbox-outline">
-                <input class="input-selected-shipment" type="checkbox" value="Delivery"	 id="checkbox-shipment-delivery" @if ($is_delivery) checked @endif> Delivery
-                <span></span>
-            </label>
+		        <label class="control-label">Select Shipment</label>
+	        <div class="mt-checkbox-inline">
+	            <label class="mt-checkbox mt-checkbox-outline">
+	                <input class="input-selected-shipment" type="checkbox" value="Pickup Order" name="shipment_method[]" @if (in_array('Pickup Order', $shipment_method)) checked @endif> Pickup Order
+	                <span></span>
+	            </label>
+	            <label class="mt-checkbox mt-checkbox-outline">
+	                <input class="input-selected-shipment" type="checkbox" value="Delivery"	 id="checkbox-shipment-delivery" @if ($is_delivery) checked @endif> Delivery
+	                <span></span>
+	            </label>
+	        </div>
         </div>
         <div id="shipment-delivery"
         	@if ( !$is_delivery && !in_array('GO-SEND', $shipment_method) )
         		style="display: none;" 
         	@endif
         	>
-	        <label class="control-label">Shipment delivery</label>
+	        <label class="control-label">Select Shipment delivery</label>
 			<i class="fa fa-question-circle tooltips" data-original-title="Pilih shipment delivery" data-container="body" data-html="true"></i>
 	        <div class="mt-checkbox-inline">
 	            <label class="mt-checkbox mt-checkbox-outline">
 	                <input class="input-shipment-delivery" type="checkbox" value="GO-SEND" name="shipment_method[]" @if (in_array('GO-SEND', $shipment_method)) checked @endif> GO-SEND
 	                <span></span>
 	            </label>
-	            <label class="mt-checkbox mt-checkbox-outline">
+	            {{-- <label class="mt-checkbox mt-checkbox-outline">
 	                <input class="input-shipment-delivery" type="checkbox" value="GRAB" name="shipment_method[]" @if (in_array('GRAB', $shipment_method)) checked @endif> GRAB
 	                <span></span>
-	            </label>
+	            </label> --}}
 	        </div>
         </div>
 	</div>
