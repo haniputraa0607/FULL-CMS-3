@@ -374,7 +374,7 @@
     @if ($data['trasaction_type'] != 'Offline')
         @if(isset($from))
                 <?php
-                if($data['transaction_flag_invalid'] == 'Invalid'){
+                if($data['transaction_flag_invalid'] == 'Invalid' || $data['transaction_flag_invalid'] == 'Pending Invalid'){
                     $status = 'Invalid';
                     $color = 'red';
                 }else{
@@ -659,7 +659,28 @@
 @if(isset($from))
     <br>
     <br>
-    @if($from == 'invalid')
+    @if($from == 'pendinginvalid' && empty($logs))
+        <div style="width: 500px;margin: auto;margin-top: 5%">
+            <br>
+            <p style="text-align: center"><b>MARK AS PENDING INVALID</b></p>
+            <hr>
+            <form role="form" role="form" action="{{ url('transaction/invalid-flag/mark-as-pending-invalid/add') }}" method="post" enctype="multipart/form-data">
+                <div class="modal-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label style="text-align: center">Current Pin</label>
+                            <input class="form-control" type="password" name="pin" maxlength="6" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id_transaction" value="{{$id_transaction}}">
+                </div>
+                <div class="modal-footer">
+                    {{ csrf_field() }}
+                    <button class="btn btn-lg" style="background-color: #F7CA18;color: white" onclick="showModal()">Mark as Pending Invalid</button>
+                </div>
+            </form>
+        </div>
+    @elseif($from == 'invalid' && $data['transaction_flag_invalid'] == 'Pending Invalid')
         <div style="width: 500px;margin: auto;margin-top: 5%">
             <p style="text-align: center"><b>DETAIL LOG</b></p>
             <hr>
@@ -767,6 +788,7 @@
                     </tbody>
                 </table>
             </div>
+            @if($data['transaction_flag_invalid'] !== 'Valid')
             <br>
             <br>
             <p style="text-align: center"><b>MARK AS VALID</b></p>
@@ -790,6 +812,7 @@
                     <button class="btn btn-lg" style="background-color: #26C281;color: white" onclick="showModal()">Mark as valid</button>
                 </div>
             </form>
+            @endif
         </div>
     @endif
 @endif

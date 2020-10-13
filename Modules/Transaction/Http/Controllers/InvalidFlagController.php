@@ -14,6 +14,46 @@ use Session;
 
 class InvalidFlagController extends Controller
 {
+    public function markAsPendingInvalid(Request $request){
+        $post = $request->except('_token');
+
+        $data = [
+            'title'          => 'Mark as Pending Invalid',
+            'menu_active'    => 'mark-as-pending-invalid',
+            'sub_title'      => '',
+            'submenu_active' => 'mark-as-pending-invalid'
+        ];
+
+        if(Session::has('filter-mark-as-pending-invalid') && !empty($post) && !isset($post['filter'])){
+            $post = Session::get('filter-mark-as-pending-invalid');
+        }else{
+            Session::forget('filter-mark-as-pending-invalid');
+        }
+
+        $data['list_trx'] = [];
+        $list = MyHelper::post('transaction/invalid-flag/filter', $post);
+
+        if (isset($list['result']['data']) && !empty($list['result']['data'])) {
+            $data['data']          = $list['result']['data'];
+            $data['dataTotal']     = $list['result']['total'];
+            $data['dataPerPage']   = $list['result']['from'];
+            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
+        }else {
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        if($post){
+            Session::put('filter-mark-as-pending-invalid',$post);
+        }
+
+        return view('transaction::flag_invalid.mark_as_pending_invalid', $data);
+    }
+
     public function markAsInvalid(Request $request){
         $post = $request->except('_token');
 
@@ -31,6 +71,7 @@ class InvalidFlagController extends Controller
         }
 
         $data['list_trx'] = [];
+        $post['pending_invalid'] = 1;
         $list = MyHelper::post('transaction/invalid-flag/filter', $post);
 
         if (isset($list['result']['data']) && !empty($list['result']['data'])) {
@@ -54,6 +95,17 @@ class InvalidFlagController extends Controller
         return view('transaction::flag_invalid.mark_as_invalid', $data);
     }
 
+    public function markAsPendingInvalidAdd(Request $request){
+        $post = $request->except('_token');
+        $add = MyHelper::post('transaction/invalid-flag/mark-as-pending-invalid/add', $post);
+
+        if (isset($add['status']) && $add['status'] == 'success') {
+            return redirect('transaction/invalid-flag/detail/'.$post['id_transaction'].'?from=invalid')->withSuccess(['Success Update Data']);
+        }else{
+            return back()->withErrors($add['messages']);
+        }
+    }
+
     public function markAsInvalidAdd(Request $request){
         $post = $request->except('_token');
 
@@ -64,7 +116,7 @@ class InvalidFlagController extends Controller
         $add = MyHelper::post('transaction/invalid-flag/mark-as-invalid/add', $post);
 
         if (isset($add['status']) && $add['status'] == 'success') {
-            return redirect('transaction/invalid-flag/detail/'.$post['id_transaction'].'?from=valid')->withSuccess(['Success Add Data']);
+            return redirect('transaction/invalid-flag/detail/'.$post['id_transaction'].'?from=valid')->withSuccess(['Success Update Data']);
         }else{
             return back()->withErrors($add['messages']);
         }
@@ -75,7 +127,7 @@ class InvalidFlagController extends Controller
         $update = MyHelper::post('transaction/invalid-flag/mark-as-valid/update', $post);
 
         if (isset($update['status']) && $update['status'] == 'success') {
-            return redirect('transaction/invalid-flag/detail/'.$post['id_transaction'].'?from=invalid')->withSuccess(['Success Add Data']);
+            return redirect('transaction/invalid-flag/detail/'.$post['id_transaction'].'?from=invalid')->withSuccess(['Success Update Data']);
         }else{
             return back()->withErrors($update['messages']);
         }
@@ -151,6 +203,10 @@ class InvalidFlagController extends Controller
             $data['menu_active'] = 'mark-as-invalid';
             $data['submenu_active'] = 'mark-as-invalid';
             $data['sub_title'] = 'Mark as Invalid';
+        }elseif($post['from'] == 'pendinginvalid'){
+            $data['menu_active'] = 'mark-as-pending-invalid';
+            $data['submenu_active'] = 'mark-as-pending-invalid';
+            $data['sub_title'] = 'Mark as Pending Invalid';
         }
 
         $data['from'] = $post['from'];

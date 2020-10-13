@@ -1136,6 +1136,15 @@
 			</li>
 
 			@if(MyHelper::hasAccess([274], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'mark-as-pending-invalid') ? 'active open' : ''}}">
+					<a href="{{url('transaction/invalid-flag/mark-as-pending-invalid')}}" class="nav-link ">
+						<i class="fa fa-list-ul"></i>
+						<span class="title">Mark as Pending Invalid</span>
+					</a>
+				</li>
+			@endif
+
+			@if(MyHelper::hasAccess([274], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'mark-as-invalid') ? 'active open' : ''}}">
 					<a href="{{url('transaction/invalid-flag/mark-as-invalid')}}" class="nav-link ">
 						<i class="fa fa-list-ul"></i>
@@ -1279,7 +1288,36 @@
 					</li>
 				@endif -->
 
+				@if(MyHelper::hasAccess([26], $configs))
+					@if(MyHelper::hasAccess([77,78,79,80,81], $grantedFeature))
+						<li class="nav-item {{($menu_active == 'product-bundling') ? 'active open' : ''}}">
+							<a href="javascript:;" class="nav-link nav-toggle">
+								<i class="icon-present"></i>
+								<span class="title">Product Bundling</span>
+								<span class="arrow {{($menu_active == 'product-bundling') ? 'open' : ''}}"></span>
+							</a>
+							<ul class="sub-menu">
+								@if(MyHelper::hasAccess([79], $grantedFeature))
+								<li class="nav-item {{($submenu_active == 'product-bundling-create') ? 'active open' : ''}}">
+									<a href="{{url('product-bundling/create')}}" class="nav-link ">
+										<span class="title">New Product Bundling</span>
+									</a>
+								</li>
+								@endif
+								@if(MyHelper::hasAccess([77], $grantedFeature))
+								<li class="nav-item {{($submenu_active == 'product-bundling-list') ? 'active open' : ''}}">
+									<a href="{{url('product-bundling')}}" class="nav-link ">
+										<span class="title">Product Bundling List</span>
+									</a>
+								</li>
+								@endif
+							</ul>
+						</li>
+						@endif
+					@endif
+				@endif
 
+				
 				@if(MyHelper::hasAccess([26], $configs))
 					@if(MyHelper::hasAccess([77,78,79,80,81], $grantedFeature))
 					<li class="nav-item {{($menu_active == 'inject-voucher') ? 'active open' : ''}}">
@@ -1733,7 +1771,6 @@
 				</li>
 				@endif
 			@endif
-		@endif
 
 		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">

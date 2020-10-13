@@ -3488,7 +3488,7 @@ $configs    		= session('configs');
 				{{ csrf_field() }}
 					<div class="col-md-offset-4 col-md-8">
 						<a href="{{url('promotion/step1').'/'.$result['id_promotion']}}" class="btn default">Previous Step</a>
-						@if($result['promotion_type'] == 'Instant Campaign' && isset($result['users']) && count($result['users']) > 0)
+						@if($result['promotion_type'] == 'Instant Campaign')
 							<input hidden name="send" value="send">
 							@if(MyHelper::hasAccess([112], $grantedFeature))
 								<button type="submit" class="btn blue">Send Promotion</button>
