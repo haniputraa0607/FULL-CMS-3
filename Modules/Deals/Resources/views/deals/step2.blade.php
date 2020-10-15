@@ -7,6 +7,7 @@
 @include('deals::deals.buyxgety-discount')
 @include('deals::deals.discount-bill')
 @include('deals::deals.discount-delivery')
+@include('promocampaign::template.promo-global-requirement', ['promo_source' => $result['deals_type']??$deals_type])
 @section('page-style')
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
@@ -389,6 +390,7 @@
 	@yield('child-script2')
 	@yield('discount-bill-script')
 	@yield('discount-delivery-script')
+	@yield('global-requirement-script')
 	<style>
 	input[type=number]::-webkit-inner-spin-button, 
 	input[type=number]::-webkit-outer-spin-button { 
@@ -525,6 +527,10 @@
 
 	    {{-- ONLINE RULE --}}
         @if( ($result['is_online']??false) == 1)
+
+        	{{-- Global Requirement --}}
+			@yield('global-requirement')
+
 	        <div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption font-blue ">
