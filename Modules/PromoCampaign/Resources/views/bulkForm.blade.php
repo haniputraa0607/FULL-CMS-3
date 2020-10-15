@@ -31,7 +31,7 @@
 		</div>
 	</div>
 </div>
-{{-- <div class="form-group">
+<div class="form-group">
 	<div class="row">
 		<div class="col-md-12">
 			<label class="control-label">Min basket size</label>
@@ -49,7 +49,7 @@
 			</div>
 		</div>
 	</div>
-</div> --}}
+</div>
 <div id="ruleSection">
 	<div class="row">
 		<div class="col-md-12">
