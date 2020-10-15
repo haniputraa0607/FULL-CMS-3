@@ -751,7 +751,7 @@ class DealsController extends Controller
 
 	        } else {
 
-	            return redirect('deals')->withErrors($deals['messages']);
+	            return redirect('deals')->withErrors($deals['messages']??['Something went wrong']);
 	        }
 
 	        return view('deals::deals.step2', $data);
@@ -761,7 +761,6 @@ class DealsController extends Controller
             $post['id_deals'] = $id;
 
 			$action = MyHelper::post('promo-campaign/step2', $post);
-
 
             if (isset($action['status']) && $action['status'] == 'success') {
 

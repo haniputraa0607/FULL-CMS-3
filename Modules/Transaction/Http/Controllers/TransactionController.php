@@ -79,8 +79,8 @@ class TransactionController extends Controller
     }
 	
 	public function autoResponse(Request $request, $subject){
-        // return $subject;
-		$data = [ 'title'             => 'Transaction Auto Response '.ucfirst(str_replace('-',' ',$subject)),
+        $autocrmSubject = ucwords(str_replace('-',' ',$subject));
+		$data = [ 'title'             => 'Transaction Auto Response '.$autocrmSubject,
 				  'menu_active'       => 'transaction',
                   'submenu_active'    => 'transaction-autoresponse-'.$subject,
                   'type'              => 'trx'  
@@ -247,7 +247,7 @@ class TransactionController extends Controller
                 ];
                 break;
         }
-        $query = MyHelper::get('autocrm/list');
+        $query = MyHelper::post('autocrm/list', ['autocrm_title' => $autocrmSubject]);
 		$test = MyHelper::get('autocrm/textreplace');
 		$auto = null;
 		$post = $request->except('_token');
@@ -271,13 +271,12 @@ class TransactionController extends Controller
 			$data['api_key_whatsapp'] = null;
 		}
         
-		foreach($query['result'] as $autonya){
-			if($autonya['autocrm_title'] == ucwords(str_replace('-',' ',$subject))){
-				$auto = $autonya;
-			}
-		}
-		
-		if($auto == null) return back()->withErrors(['No such response']);
+		if(isset($query['result'])){
+			$auto = $query['result'];
+		}else{
+			return back()->withErrors(['No such response']);
+        }
+        
 		$data['data'] = $auto;
 		if($test['status'] == 'success'){
 			$data['textreplaces'] = $test['result'];
@@ -1660,4 +1659,91 @@ class TransactionController extends Controller
 
     }
     /*================= End Export with queue =================*/
+
+    /*================ Start Setting Timer Payment Gateway ================*/
+    function timerPaymentGateway(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Transaction',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Timer Payment Gateway',
+            'submenu_active' => 'setting-timer-payment-gateway'
+        ];
+
+        if($post){
+            $dataUpdate = [];
+            if($post['timer_shopeepay'] ?? false){
+                $dataUpdate['shopeepay_validity_period'] = ['value', $post['timer_shopeepay']];
+            }
+            $update = MyHelper::post('setting/update2',[
+                'update' => $dataUpdate
+            ]);
+            if(isset($update['status']) && $update['status'] == 'success'){
+                return redirect('transaction/setting/timer-payment-gateway')->withSuccess(['Success update']);
+            }else{
+                return redirect('transaction/setting/timer-payment-gateway')->withErrors(['Failed update']);
+            }
+        }else{
+            $data['timer_shopeepay'] = MyHelper::post('setting',['key'=>'shopeepay_validity_period'])['result']['value']??'';
+            return view('transaction::setting.timer_payment', $data);
+        }
+    }
+    /*================ End Setting Timer Payment Gateway ================*/
+
+    public function updateStatusInvalidTrx(Request $request){
+        $post = $request->except('_token');
+        $update = MyHelper::post('transaction/update-invalid-flag',$post);
+
+        return $update;
+    }
+
+    public function listLogInvalidFlag(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Transaction',
+            'menu_active'    => 'transaction',
+            'sub_title'      => 'Log Invalid Flag',
+            'submenu_active' => 'log-invalid-flag'
+        ];
+
+        if(Session::has('filter-list-flag-invalid') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-list-flag-invalid');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-list-flag-invalid');
+        }
+
+        $list = MyHelper::post('transaction/log-invalid-flag/list', $post);
+
+        if (isset($list['result']['data']) && !empty($list['result']['data'])) {
+            $data['data']          = $list['result']['data'];
+            $data['dataTotal']     = $list['result']['total'];
+            $data['dataPerPage']   = $list['result']['from'];
+            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
+        }else {
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        if($post){
+            Session::put('filter-list-flag-invalid',$post);
+        }
+
+        return view('transaction::flag_invalid.list', $data);
+    }
+
+    public function detailLogInvalidFlag(Request $request){
+        $post = $request->except('_token');
+        $data = MyHelper::post('transaction/log-invalid-flag/detail',$post);
+
+        return $data;
+    }
 }

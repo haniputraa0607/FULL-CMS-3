@@ -88,6 +88,26 @@
             return false;
         });
 
+        $('#input-fee-disburse').keypress(function (e) {
+            var regex = new RegExp("^[0-9]+$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+            var check_browser = navigator.userAgent.search("Firefox");
+
+            if(check_browser == -1){
+                if (regex.test(str) || e.which == 8) {
+                    return true;
+                }
+            }else{
+                if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+                    return true;
+                }
+            }
+
+            e.preventDefault();
+            return false;
+        });
+
         $('input[name=central]').keyup(function () {
             var outlet = $('input[name=outlet]').val();
             var central = $('input[name=central]').val();
@@ -162,9 +182,9 @@
                         targets: 2,
                         render: function ( data, type, row, meta ) {
                             if(data == 1){
-                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;\">Franchise</span>";
+                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;\">Mitra</span>";
                             }else{
-                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;\">Not franchise</span>";
+                                var html = "<span class=\"sbold badge badge-pill\" style=\"font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;\">Pusat</span>";
                             }
                             return html;
                         }
@@ -317,7 +337,7 @@
     </script>
 @endsection
 
-@extends(($idUserFrenchisee == NULL ? 'layouts.main' : 'disburse::layouts.main'))
+@extends(($idUserFrenchisee == NULL ? 'layouts.main-closed' : 'disburse::layouts.main-closed'))
 
 @section('content')
     <div class="page-bar">
@@ -362,11 +382,22 @@
             <li>
                 <a data-toggle="tab" href="#time-to-sent">Time To Sent Disburse</a>
             </li>
+            <li>
+                <a data-toggle="tab" href="#fee-disburse">Fee Disburse</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#send-email-to">Send Email To</a>
+            </li>
         </ul>
     </div>
     <br>
     <div class="tab-content">
         <div id="fee" class="tab-pane active">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur fee untuk outlet pusat dan outlet mitra.</p>
+                <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
+            </div>
+            <br>
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
@@ -374,10 +405,6 @@
                     </div>
                 </div>
                 <div class="portlet-body form">
-                    <div class="m-heading-1 border-green m-bordered">
-                        <p>Setting ini digunakan untuk mengatur fee untuk outlet pusat dan outlet franchise.</p>
-                        <br><p style="color: red">*(Silahkan gunakan '.' jika Anda ingin menggunakan koma. Example : 0.2)</p>
-                    </div>
                     <form class="form-horizontal" role="form" action="{{url('disburse/setting/fee-global')}}" method="post">
                         <div class="form-body">
                             <div class="form-group">
@@ -390,8 +417,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Percent Fee Outlet Franchise<span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah  fee yang akan di bebankan ke outlet milik franchise" data-container="body"></i></label></label>
+                                <label class="col-md-4 control-label">Percent Fee Outlet Mitra<span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="jumlah  fee yang akan di bebankan ke outlet milik mitra" data-container="body"></i></label></label>
                                 <div class="col-md-4">
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="fee_outlet" required value="{{$fee['fee_outlet']}}"><span class="input-group-addon">%</span>
@@ -439,6 +466,20 @@
             </div>
             <br>
             @include('disburse::setting_global.setting_time_to_sent')
+        </div>
+        <div id="fee-disburse" class="tab-pane">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur biaya disburse untuk tiap pengiriman dana.</p>
+            </div>
+            <br>
+            @include('disburse::setting_global.setting_disburse_fee_transafer')
+        </div>
+        <div id="send-email-to" class="tab-pane">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur hasil laporan income outlet akan di kirim ke email bank atau email outlet.</p>
+            </div>
+            <br>
+            @include('disburse::setting_global.setting_disburse_send_email_to')
         </div>
     </div>
 @endsection

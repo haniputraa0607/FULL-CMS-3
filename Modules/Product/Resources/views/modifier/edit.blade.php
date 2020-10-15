@@ -145,6 +145,7 @@
                             </div>
                         </div>
                     </div>
+                {{--
                     <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Type
                             <span class="required" aria-required="true"> *
@@ -167,6 +168,7 @@
                             </div>
                         </div>
                     </div>
+                --}}
                     <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Scope
                             <span class="required" aria-required="true"> *

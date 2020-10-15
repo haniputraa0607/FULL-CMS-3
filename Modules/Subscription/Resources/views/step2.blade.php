@@ -2,6 +2,12 @@
 <?php
 use App\Lib\MyHelper;
 $configs = session('configs');
+if ($subscription_type == 'welcome') {
+	$redirect = 'welcome-subscription';
+}
+else{
+	$redirect = 'subscription';
+}
 ?>
 @extends('layouts.main-closed')
 
@@ -535,21 +541,21 @@ $configs = session('configs');
             <div class="mt-element-step">
                 <div class="row step-line">
                     <div class="col-md-4 mt-step-col first">
-                        <a href="{{ ($subscription['id_subscription']??0) ? url('subscription/step1/'.$subscription['id_subscription']) : '' }}" class="text-decoration-none">
+                        <a href="{{ ($subscription['id_subscription']??0) ? url($redirect.'/step1/'.$subscription['id_subscription']) : '' }}" class="text-decoration-none">
                             <div class="mt-step-number bg-white">1</div>
                             <div class="mt-step-title uppercase font-grey-cascade">Info</div>
                             <div class="mt-step-content font-grey-cascade">Title, Image, & Periode</div>
                         </a>
                     </div>
                     <div class="col-md-4 mt-step-col active">
-                        <a href="{{ ($subscription['id_subscription']??0) ? url('subscription/step2/'.$subscription['id_subscription']) : '' }}" class="text-decoration-none">
+                        <a href="{{ ($subscription['id_subscription']??0) ? url($redirect.'/step2/'.$subscription['id_subscription']) : '' }}" class="text-decoration-none">
                             <div class="mt-step-number bg-white">2</div>
                             <div class="mt-step-title uppercase font-grey-cascade">Rule</div>
                             <div class="mt-step-content font-grey-cascade">Discount, Limit, & Expired</div>
                         </a>
                     </div>
                     <div class="col-md-4 mt-step-col last">
-                        <a href="{{ ($subscription['id_subscription']??0) ? url('subscription/step3/'.$subscription['id_subscription']) : '' }}" class="text-decoration-none">
+                        <a href="{{ ($subscription['id_subscription']??0) ? url($redirect.'/step3/'.$subscription['id_subscription']) : '' }}" class="text-decoration-none">
                             <div class="mt-step-number bg-white">3</div>
                             <div class="mt-step-title uppercase font-grey-cascade">Content</div>
                             <div class="mt-step-content font-grey-cascade">Detail Content Subscription</div>
@@ -560,7 +566,7 @@ $configs = session('configs');
         </div>
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase ">New {{ $title }}</span>
+                <span class="caption-subject font-blue sbold uppercase ">{{ $subscription['subscription_title'] ?? "Step 2 ".$title }}</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -575,7 +581,7 @@ $configs = session('configs');
                         <div class="col-md-offset-4 col-md-8">
                             <input type="hidden" name="id_subscription" value="{{ $subscription['id_subscription']??'' }}">
                             <input type="hidden" name="subscription_type" value="{{ $subscription_type??'' }}">
-                            <a href="{{ ($subscription['id_subscription']??'') ? url('subscription/step1/'.$subscription['id_subscription']) : '' }}" class="btn green">Previous Step</a>
+                            <a href="{{ ($subscription['id_subscription']??'') ? url($redirect.'/step1/'.$subscription['id_subscription']) : '' }}" class="btn green">Previous Step</a>
                             <button type="submit" class="btn green">Next Step</button>
                             <!-- <button type="button" class="btn default">Cancel</button> -->
                         </div>

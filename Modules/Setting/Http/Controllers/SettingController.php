@@ -992,13 +992,7 @@ class SettingController extends Controller
         $post['type'] = 'general';
 
         if (isset($post['click_to'])) {
-            if ($post['click_to'] == 'gofood') {
-                $post['type'] = 'gofood';
-            }
-            elseif ($post['click_to'] == 'order') {
-                $post['type'] = 'order';
-            }
-
+            $post['type'] = $post['click_to'];
             // remove click_to index
             unset($post['click_to']);
         }
@@ -1033,13 +1027,7 @@ class SettingController extends Controller
         $post['type'] = 'general';
 
         if (isset($post['click_to'])) {
-            if ($post['click_to'] == 'gofood') {
-                $post['type'] = 'gofood';
-            }
-            elseif ($post['click_to'] == 'order') {
-                $post['type'] = 'order';
-            }
-
+            $post['type'] = $post['click_to'];
             // remove click_to index
             unset($post['click_to']);
         }
@@ -1253,6 +1241,41 @@ class SettingController extends Controller
         }
     }
 
+    public function otpMessages(Request $request){
+        $data = [
+            'title'          => 'Popup Messages',
+            'menu_active'    => 'setting',
+            'submenu_active' => 'setting-popup-messages',
+        ];
+        if($post=$request->except('_token')){
+            $data=[
+                'update'=>[
+                    'message_send_otp_miscall'=>['value_text',$post['message_send_otp_miscall']],
+                    'message_send_otp_wa'=>['value_text',$post['message_send_otp_wa']],
+                    'message_send_otp_sms'=>['value_text',$post['message_send_otp_sms']],
+                    'message_sent_otp_miscall'=>['value_text',$post['message_sent_otp_miscall']],
+                    'message_sent_otp_wa'=>['value_text',$post['message_sent_otp_wa']],
+                    'message_sent_otp_sms'=>['value_text',$post['message_sent_otp_sms']]
+                ]
+            ];
+            $result = MyHelper::post('setting/update2', $data);
+            if(($result['status']??'')=='success'){
+                return redirect('setting/otp-messages')->with('success',['popup messages has been updated']);
+            }else{
+                return back()->withErrors($result['messages']??['Something went wrong']);
+            }
+        }else{
+            $message_send_otp_miscall=MyHelper::post('setting',['key'=>'message_send_otp_miscall'])['result']['value_text']??'Kami akan mengirimkan kode OTP melalui Missed Call ke %phone%.<br/>Anda akan mendapatkan panggilan dari nomor 6 digit.<br/>Nomor panggilan tsb adalah Kode OTP Anda.';
+            $message_send_otp_wa=MyHelper::post('setting',['key'=>'message_send_otp_wa'])['result']['value_text']??'Kami akan mengirimkan kode OTP melalui Whatsapp.<br/>Pastikan nomor %phone% terdaftar di Whatsapp.';
+            $message_send_otp_sms=MyHelper::post('setting',['key'=>'message_send_otp_sms'])['result']['value_text']??'Kami akan mengirimkan kode OTP melalui SMS.<br/>Pastikan nomor %phone% aktif.';
+            $message_sent_otp_miscall=MyHelper::post('setting',['key'=>'message_sent_otp_miscall'])['result']['value_text']??'Kami telah mengirimkan PIN ke nomor %phone% melalui Missed Call.';
+            $message_sent_otp_wa=MyHelper::post('setting',['key'=>'message_sent_otp_wa'])['result']['value_text']??'Kami telah mengirimkan PIN ke nomor %phone% melalui Whatsapp.';
+            $message_sent_otp_sms=MyHelper::post('setting',['key'=>'message_sent_otp_sms'])['result']['value_text']??'Kami telah mengirimkan PIN ke nomor %phone% melalui SMS.';
+            $data['msg']=compact('message_send_otp_sms', 'message_send_otp_miscall', 'message_send_otp_wa', 'message_sent_otp_sms', 'message_sent_otp_miscall', 'message_sent_otp_wa');
+            return view('setting::confirmation-messages.popup-messages',$data);
+        }
+    }
+
     public function phoneNumberSetting(Request $request){
         $getSetting = MyHelper::get('setting/phone');
 
@@ -1384,5 +1407,38 @@ class SettingController extends Controller
         }
 
         return view('setting::time-expired', $data);
+    }
+
+    public function outletAppSetting(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'   		=> 'Outlet App Setting',
+            'menu_active'    => 'setting-outlet-apps',
+            'submenu_active' => 'setting-outlet-apps'
+        ];
+
+        $get = MyHelper::get('setting/outletapp/splash-screen');
+        $data['result_splash_screen'] = [];
+        if(isset($get['status']) &&  $get['status']=='success'){
+            $data['result_splash_screen'] = $get['result'];
+        }
+
+        return view('setting::outletapp', $data);
+    }
+
+    public function splashScreenOutletApps(Request $request){
+        $post = $request->except('_token');
+        if(isset($post['default_splash_screen_outlet_apps'])){
+            $post['default_splash_screen_outlet_apps'] = MyHelper::encodeImage($post['default_splash_screen_outlet_apps']);
+        }
+
+        if(isset($post['default_splash_screen_outlet_apps_duration'])){
+            if($post['default_splash_screen_outlet_apps_duration']<1){
+                $post['default_splash_screen_outlet_apps_duration']=1;
+            }
+        }
+
+        $result = MyHelper::post('setting/outletapp/splash-screen', $post);
+        return parent::redirect($result, 'Splash Screen has been updated.');
     }
 }

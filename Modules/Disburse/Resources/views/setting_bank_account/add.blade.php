@@ -18,49 +18,6 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/prices.js')}}"></script>
-
-    <script>
-        function loadOutlets(type){
-            if(type == 'all'){
-                document.getElementById('div_outlet').style.display = 'none';
-            }else{
-                var token  = "{{ csrf_token() }}";
-                var url = "{{url('disburse/getOutlets')}}";
-                var user = $("#id_user_franchise").val();
-                $("#outlet").empty();
-
-                $.ajax({
-                    type : "POST",
-                    url : url,
-                    data : {
-                        _token : token,
-                        id_user_franchise : user,
-                        type: 'add_bank_account'
-                    },
-                    success : function(result) {
-                        if(result.status === 'success'){
-                            document.getElementById('div_outlet').style.display = 'block';
-                            var len = result.result.length;
-                            var data = result.result;
-                            for (var i=0; i<len;i++){
-                                var status_franchise = 'Outlet Central';
-                                if(data[i].status_franchise == 1){
-                                    status_franchise = 'Outlet Franchise';
-                                }
-                                $("#outlet").append('<option value=' + data[i].id_outlet + '>' + data[i].outlet_code +' - '+ data[i].outlet_name + ' - ' +status_franchise + '</option>');
-                            }
-                        }else{
-                            document.getElementById('div_outlet').style.display = 'none';
-                        }
-                    },
-                    error: function (jqXHR, exception) {
-                        document.getElementById('div_outlet').style.display = 'none';
-                        toastr.warning('Failed get outlet');
-                    }
-                });
-            }
-        }
-    </script>
 @endsection
 
 @extends(($idUserFrenchisee == NULL ? 'layouts.main' : 'disburse::layouts.main'))
@@ -183,33 +140,15 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label"></label>
-                                            <div class="col-md-4">
-                                                <div class="md-radio-inline">
-                                                    <div class="md-radio">
-                                                        <input type="radio" id="optionsRadios4" name="outlets" class="md-radiobtn publishType" value="all" checked onclick="loadOutlets('all')">
-                                                        <label for="optionsRadios4">
-                                                            <span></span>
-                                                            <span class="check"></span>
-                                                            <span class="box"></span> All Outlet </label>
-                                                    </div>
-                                                    <div class="md-radio">
-                                                        <input type="radio" id="optionsRadios5" name="outlets" class="md-radiobtn publishType" value="not-all" onclick="loadOutlets('not-all')">
-                                                        <label for="optionsRadios5">
-                                                            <span></span>
-                                                            <span class="check"></span>
-                                                            <span class="box"></span> Specific Oultet </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group" style="display: none" id="div_outlet">
-                                            <div class="input-icon right">
-                                                <label class="col-md-3 control-label"></label>
-                                            </div>
+                                            <label class="col-md-3 control-label">Outlets
+                                                <i class="fa fa-question-circle tooltips" data-original-title="pilih outlet yang memiliki bank account yang sudah dimasukkan" data-container="body"></i>
+                                            </label>
                                             <div class="col-md-7">
-                                                <select class="form-control select2-multiple" data-placeholder="Outlets" id="outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet',[]))}}">
+                                                <select class="form-control select2-multiple" data-placeholder="Outlets" id="outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet',[]))}}" required>
+                                                    <option></option>
+                                                    @foreach($outlets as $o)
+                                                        <option value="{{$o['id_outlet']}}">{{$o['outlet_code']}} - {{$o['outlet_name']}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -231,8 +170,11 @@
                             </div>
                             <div class="portlet-body form">
                                 <div class="m-heading-1 border-green m-bordered">
-                                    <p>Anda bisa menambahkan dan mengubah data bank account dengan menggunakan hasil  export.</p>
-                                    <p style="color: red">Untuk nama bank silahkan menggunakan kode bank(bank_code) yang ada di "List Bank Name" dibawah ini, jika memasukkan kode bank yang tidak ada pada list maka data bank account outlet tersebut akan gagal disimpan.</p>
+                                    <p>Anda bisa menambahkan dan mengubah data bank account dengan menggunakan hasil  export.</p><br>
+                                    <p style="color: red">Note:</p>
+                                    <p style="color: red">1. Silahkan memasukan alamat email yang valid. Alamat email boleh kosong.</p>
+                                    <p style="color: red">2. Penulisan "Beneficiary Name" tidak boleh menggunakan latin letter dan latin numeric</p>
+                                    <p style="color: red">3. Untuk nama bank silahkan menggunakan kode bank(bank_code) yang ada di "List Bank Name" dibawah ini, jika memasukkan kode bank yang tidak ada pada list maka data bank account outlet tersebut akan gagal disimpan.</p>
                                 </div>
                                 <form class="form-horizontal" role="form" action="{{url('disburse/setting/import-bank-account-outlet')}}" method="post" enctype="multipart/form-data">
                                     <div class="form-body">

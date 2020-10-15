@@ -145,7 +145,7 @@
                         <th> Code </th>
                         <th> Name </th>
                         <th> Scope </th>
-                        <th> Type </th>
+                        <!-- <th> Type </th> -->
                         <th> Default Visibility </th>
                         @if(MyHelper::hasAccess([182,183,184], $grantedFeature))
                             <th> Action </th>
@@ -161,7 +161,7 @@
                                 <td>{{$modifier['code']}}</td>
                                 <td>{{$modifier['text']}}</td>
                                 <td>{{$modifier['modifier_type']}}</td>
-                                <td>{{$modifier['type']}}</td>
+                                <!-- <td>{{$modifier['type']}}</td> -->
                                 <td><input type="checkbox" class="make-switch default-visibility" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-id="{{$modifier['id_product_modifier']}}" data-off-text="Hidden" value="1" @if($modifier['product_modifier_visibility']=='Visible') checked @endif></td>
                                 @if(MyHelper::hasAccess([182,183,184], $grantedFeature))
                                 <td>

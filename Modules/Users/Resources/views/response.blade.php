@@ -592,13 +592,13 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 	<div class="portlet-title">
 		<div class="caption">
 			@if($subject == 'enquiry-partnership') @php $subject = 'enquiry-karir'; @endphp @endif
-			<span class="caption-subject font-dark sbold uppercase font-blue">Auto Response {{ucfirst(str_replace('-',' ',$subject))}}</span>
+			<span class="caption-subject font-dark sbold uppercase font-blue">Auto Response {{str_replace('_','-',str_replace('-',' ',$subject))}}</span>
 		</div>
 	</div>
 	<div class="portlet-body form">
 		<form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
 			<div class="form-body">
-				@if ($subject != 'cron-transaction' && !($forwardOnly??false))
+				@if ($subject != 'cron-transaction' && $subject != 'failed-send-disburse' && !($forwardOnly??false))
 					@if(MyHelper::hasAccess([38], $configs) && in_array('email', $active_response))
 						<h4>Email</h4>
 						<div class="form-group">
@@ -1265,7 +1265,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 						<div class="col-md-9">
 							<input type="text" placeholder="Forward Subject" class="form-control" name="autocrm_forward_email_subject" id="autocrm_forward_email_subject" value="{{$data['autocrm_forward_email_subject']}}">
 							<br>
-							@if ($subject != 'cron-transaction' && !($noUser??false))
+							@if ($subject != 'cron-transaction' && $subject != 'failed-send-disburse' && !($noUser??false))
 								You can use this variables to display user personalized information:
 								<br><br>
 								<div class="row">
@@ -1295,7 +1295,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 						</div>
 						<div class="col-md-9">
 							<textarea name="autocrm_forward_email_content" id="autocrm_forward_email_content" class="form-control summernote"><?php echo $data['autocrm_forward_email_content']; ?></textarea>
-							@if ($subject != 'cron-transaction' && !($noUser??false))
+							@if ($subject != 'cron-transaction' && $subject != 'failed-send-disburse' && !($noUser??false))
 								You can use this variables to display user personalized information:
 								<br><br>
 								<div class="row">
@@ -1315,11 +1315,20 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 							@elseif(!($forwardOnly??false))
 								You can use this variables to display user personalized information:
 								<br><br>
-								<div class="row">
-									<div class="col-md-3" style="margin-bottom:5px;">
-										<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '%table_trx%'" onClick="addForwardContent('%table_trx%');">{{ str_replace('_',' ','%table_trx%') }}</span>
+
+								@if($subject == 'failed-send-disburse')
+									<div class="row">
+										<div class="col-md-3" style="margin-bottom:5px;">
+											<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '%list_outlet%'" onClick="addForwardContent('%list_outlet%');">{{ str_replace('_',' ','%list_outlet%') }}</span>
+										</div>
 									</div>
-								</div>
+								@else
+									<div class="row">
+										<div class="col-md-3" style="margin-bottom:5px;">
+											<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '%table_trx%'" onClick="addForwardContent('%table_trx%');">{{ str_replace('_',' ','%table_trx%') }}</span>
+										</div>
+									</div>
+								@endif
 							@endif
 							@if($customNotes??false)
 							<span class="help-block">{{$customNotes}}</span>

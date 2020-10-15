@@ -67,8 +67,8 @@
                                             <div class="col-md-4">
                                                 <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
                                                     @if($con['subject'] == 'user_status')
-                                                        <option value="Franchise" @if ($con['operator'] == 'Franchise') selected @endif>Franchise</option>
-                                                        <option value="Not Franchise" @if ($con['operator'] == 'Not Franchise') selected @endif>Not Franchise</option>
+                                                        <option value="Franchise" @if ($con['operator'] == 'Franchise') selected @endif>Mitra</option>
+                                                        <option value="Not Franchise" @if ($con['operator'] == 'Not Franchise') selected @endif>Pusat</option>
                                                     @else
                                                         <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                                         <option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>

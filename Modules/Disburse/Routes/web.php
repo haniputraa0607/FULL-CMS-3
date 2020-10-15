@@ -49,6 +49,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::post('getUserFranchise', 'DisburseController@userFranchise');
 
         //Setting
+        Route::any('setting/delete-bank-account', 'DisburseSettingController@deleteBankAccount');
         Route::any('setting/edit-bank-account', 'DisburseSettingController@editBankAccount');
         Route::any('setting/bank-account', 'DisburseSettingController@bankAccount');
         Route::any('setting/bank-account-update', 'DisburseSettingController@bankAccountUpdate');
@@ -62,9 +63,12 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('setting/outlet-special', 'DisburseSettingController@settingSpecialOutlet');
         Route::any('setting/approver', 'DisburseSettingController@settingApprover');
         Route::any('setting/time-to-sent', 'DisburseSettingController@settingTimeToSent');
+        Route::any('setting/fee-disburse', 'DisburseSettingController@settingFeeDisburse');
+        Route::any('setting/send-email-to', 'DisburseSettingController@settingSendEmailTo');
         Route::any('setting/export-list-bank', 'DisburseSettingController@exportListBank');
         Route::any('setting/export-bank-account-outlet', 'DisburseSettingController@exportBankAccoutOutlet');
         Route::post('setting/import-bank-account-outlet', 'DisburseSettingController@importBankAccoutOutlet');
+        Route::any('autoresponse/{subject}', 'DisburseSettingController@autoResponse');
 
         //Disburse
         Route::any('list/trx', 'DisburseController@listTrx');

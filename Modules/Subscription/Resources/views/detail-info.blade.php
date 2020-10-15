@@ -49,7 +49,7 @@
                     <div class="col-md-8 value">: {{date("d M Y", strtotime($subscription['subscription_end']))}}&nbsp;{{date("H:i", strtotime($subscription['subscription_end']))}}</div>
                 </div>
                 @endif
-            	@if(isset($subscription['subscription_end']))
+            	@if(isset($subscription['subscription_publish_start']))
                 <div class="row static-info">
                     <div class="col-md-4 name">Publish Start</div>
                     <div class="col-md-8 value">: {{date("d M Y", strtotime($subscription['subscription_publish_start']))}}&nbsp;{{date("H:i", strtotime($subscription['subscription_publish_start']))}}</div>
@@ -162,15 +162,30 @@
                     <div class="col-md-4 name">Voucher Total</div>
                     <div class="col-md-8 value">: {{ !empty($subscription['subscription_voucher_total']) ? number_format($subscription['subscription_voucher_total']).' Vouchers' : '' }}</div>
                 </div>
+                <div class="row static-info">
+                    <div class="col-md-4 name">Discount Type</div>
+                    <div class="col-md-8 value">: 
+                    	@switch($subscription['subscription_discount_type'])
+                        @case('discount')
+                            Discount
+                            @break
+                        @case('discount_delivery')
+                            Discount Delivery
+                            @break
+                        @default
+                            Payment Method
+                    	@endswitch
+                	</div>
+                </div>
                 @if(!empty($subscription['subscription_voucher_nominal']))
                 <div class="row static-info">
-                    <div class="col-md-4 name">Voucher Discount Type</div>
+                    <div class="col-md-4 name">Voucher Discount</div>
                     <div class="col-md-8 value">: {{ 'Nominal (IDR '.number_format($subscription['subscription_voucher_nominal']).')' }}</div>
                 </div>
                 @endif
                 @if(!empty($subscription['subscription_voucher_percent']))
                 <div class="row static-info">
-                    <div class="col-md-4 name">Voucher Discount Type</div>
+                    <div class="col-md-4 name">Voucher Discount</div>
                     <div class="col-md-8 value">: {{ 'Percent ('.$subscription['subscription_voucher_percent'].' %)' }}</div>
                 </div>
                 <div class="row static-info">
@@ -179,7 +194,7 @@
                 </div>
                 @endif
                 <div class="row static-info">
-                    <div class="col-md-4 name">Minimal Transaction (Subtotal)</div>
+                    <div class="col-md-4 name">Min Basket Size</div>
                     <div class="col-md-8 value">: {{ !empty($subscription['subscription_minimal_transaction']) ? number_format($subscription['subscription_minimal_transaction']) : '' }}</div>
                 </div>
                 <div class="row static-info">

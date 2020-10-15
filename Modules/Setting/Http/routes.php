@@ -28,6 +28,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     /* confirmation messages */
     Route::any('confirmation-messages','SettingController@confirmationMessages');
 
+    /* confirmation messages */
+    Route::any('otp-messages','SettingController@otpMessages');
+
     /*Text menu*/
     Route::any('text_menu', 'SettingController@textMenu');
     Route::post('text_menu/update/{category}', 'SettingController@updateTextMenu');
@@ -41,6 +44,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 
     /*Setting Expired time OTP and Email*/
     Route::any('time-expired', 'SettingController@timeExpired');
+
+    Route::any('outletapp', 'SettingController@outletAppSetting');
+    Route::post('outletapp/splash-screen', 'SettingController@splashScreenOutletApps');
 
     Route::any('home', 'SettingController@homeSetting');
 	Route::any('date', 'SettingController@dateSetting');

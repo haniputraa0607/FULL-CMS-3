@@ -89,6 +89,7 @@
                   <th>Phone</th>
                   <th>Total Price</th>
                   <th>Payment Status</th>
+                  <th>Transaction Status</th>
                   @if(strtolower($key) == 'delivery')
                   <th>Shipment Status</th>
                   @endif
@@ -116,7 +117,32 @@
                             @endif
 
                             <td>Rp {{ number_format($res['transaction_grandtotal'], 2) }}</td>
-                            <td>{{ $res['transaction_payment_status'] }}</td>
+                            <td>
+                                @if($res['transaction_payment_status'] == 'Completed')
+                                    <span class="badge" style="background-color: #A6BA35;">Completed</span>
+                                @elseif($res['transaction_payment_status'] == 'Pending')
+                                    <span class="badge" style="background-color: #FD6437">Pending</span>
+                                @elseif($res['transaction_payment_status'] == 'Cancelled')
+                                    <span class="badge" style="background-color: #EF1E31">Cancelled</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if(empty($res['receive_at']))
+                                    <span class="badge" style="background-color: #FD6437">Pending</span>
+                                @elseif(!empty($res['receive_at']) && empty($res['ready_at']))
+                                    <span class="badge" style="background-color: #006451">Received</span>
+                                @elseif(!empty($res['ready_at']) && empty($res['taken_at']))
+                                    <span class="badge" style="background-color: #7DB8B2">Ready</span>
+                                @elseif(!empty($res['taken_at']) && $res['pickup_by'] == 'Customer')
+                                    <span class="badge bg-green-jungle">Taken by Customer</span>
+                                @elseif(!empty($res['taken_at']) && $res['pickup_by'] != 'Customer')
+                                    <span class="badge bg-green-jungle">Taken by Driver</span>
+                                @elseif(!empty($res['taken_by_system_at']))
+                                    <span class="badge bg-green-jungle">Taken by System</span>
+                                @elseif(!empty($res['reject_at']))
+                                    <span class="badge" style="background-color: #EF1E31">Reject</span>
+                                @endif
+                            </td>
                             @if(strtolower($key) == 'delivery')
                             @php 
                             $bg = 'default';

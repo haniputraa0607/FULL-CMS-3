@@ -240,7 +240,13 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="3">{{ !empty($result['total_coupon']) ? number_format(($result['total_coupon']??0)-($result['count']??0)) : isset($result['total_coupon']) ? 'unlimited' : '' }}</span>
+                                <span data-counter="counterup" data-value="3">
+                                	@if ( !empty($result['total_coupon']) )
+                                		{{ number_format(($result['total_coupon']??0)-($result['used_code']??0)) }}
+                                	@elseif( $result['total_coupon'] === 0 || $result['total_coupon'] === '0' )
+                                		{{'unlimited'}}
+                                	@endif
+                                </span>
                             </div>
                             <div class="desc"> Available </div>
                         </div>
@@ -266,7 +272,13 @@
                         </div>
                         <div class="details">
                             <div class="number">
-                                <span data-counter="counterup" data-value="{{$result['total_coupon']??''}}">{{ !empty($result['total_coupon']) ? number_format($result['total_coupon']??0) : isset($result['total_coupon']) ? 'unlimited' : '' }}</span>
+                                <span data-counter="counterup" data-value="{{$result['total_coupon']??''}}">
+                                	@if ( !empty($result['total_coupon']) )
+                                		{{ number_format($result['total_coupon']??0) }}
+                                	@elseif( isset($result['total_coupon']) )
+                                		{{'unlimited'}}
+                                	@endif
+                                </span>
                             </div>
                             <div class="desc"> Total {{ isset($result['total_coupon']) ? 'Coupon' : '' }} </div>
                         </div>
@@ -415,28 +427,6 @@
                                         <div class="col-md-4 name">Limitation Usage</div>
                                         <div class="col-md-8 value">: {{ $result['limitation_usage']??false ? number_format($result['limitation_usage']).' Times usage' : 'Unlimited' }}</div>
                                     </div>
-                                    <div class="row static-info">
-                                        <div class="col-md-4 name">User Target</div>
-                                        <div class="col-md-8 value">: {{ $result['user_type']??'No User Target' }} </div>
-                                    </div>
-                                    @if($result['user_type'] == 'Specific user')
-                                    <div class="row static-info">
-                                        <div class="col-md-4 name">Specific user</div>
-                                        <div class="col-md-8 value">: {{ $result['specific_user']??'No Specific Target' }} </div>
-                                    </div>
-                                    @endif
-                                    <div class="row static-info">
-                                        <div class="col-md-4 name">Outlet Target</div>
-                                        <div class="col-md-8 value">: 
-                                            @if ($result['is_all_outlet'] == '1')
-                                                All Outlet
-                                            @elseif ($result['is_all_outlet'] == '0')
-                                                Selected Outlet
-                                            @else
-                                                No Outlet Target
-                                            @endif
-                                        </div>
-                                    </div>
                                 @if( empty($result['promo_campaign_reports']) || empty($result['step_complete']))
                                 <div class="row static-info">
                                     <div class="col-md-11 value">
@@ -452,7 +442,31 @@
                                 <div class="portlet-title"> 
                                 <span class="caption font-blue sbold uppercase">{{ $result['promo_type']??'' }} Rules </span>
                                 </div>
+                                <div class="row static-info">
+                                    <div class="col-md-4 name">User Target</div>
+                                    <div class="col-md-8 value">: {{ $result['user_type']??'No User Target' }} </div>
+                                </div>
+                                @if($result['user_type'] == 'Specific user')
+                                <div class="row static-info">
+                                    <div class="col-md-4 name">Specific user</div>
+                                    <div class="col-md-8 value">: {{ $result['specific_user']??'No Specific Target' }} </div>
+                                </div>
+                                @endif
+                                <div class="row static-info">
+                                    <div class="col-md-4 name">Outlet Target</div>
+                                    <div class="col-md-7 value">: 
+                                        @if ($result['is_all_outlet'] == '1')
+                                            All Outlet
+                                        @elseif ($result['is_all_outlet'] == '0')
+                                        	<a href="{{ url('#outlet') }}" target="_blank"> Selected Outlet </a>
+                                        @else
+                                            No Outlet Target
+                                        @endif
+                                    </div>
+                                </div>
+                                @include('promocampaign::template.promo-global-requirement-detail', ['promo_source' => 'promo_campaign'])
                                 @if ( !empty($result['step_complete']) )
+                                	{{-- Product Discount --}}
                                     @if (isset($result['promo_campaign_product_discount_rules']) && $result['promo_campaign_product_discount_rules'] != null)
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Product Requirement</div>
@@ -486,6 +500,12 @@
                                             </div>
                                         </div>
                                         <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
                                             <div class="col-md-4 name">Max Product</div>
                                             <div class="col-md-8 value">: 
                                                     {{ ($result['promo_campaign_product_discount_rules']['max_product'] == 0) ? 'no limit' : number_format($result['promo_campaign_product_discount_rules']['max_product']).' item' }}
@@ -508,7 +528,7 @@
                                                                 <tr>
                                                                     <td>{{ $res['product']['category']['product_category_name']??'' }}</td>
                                                                     <td>{{ $res['product']['product_code'] }}</td>
-                                                                    <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}">{{ $res['product']['product_name']??'' }}</a></td>
+                                                                    <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
@@ -516,13 +536,20 @@
                                                 @endif
                                             @endif
                                         </div>
+                                    {{-- Tier Discount --}}
                                     @elseif (isset($result['promo_campaign_tier_discount_rules']) && $result['promo_campaign_tier_discount_rules'] != null)
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Product Requirement</div>
                                             <div class="col-md-8 value">: 
                                                 @if ( isset($result['promo_campaign_tier_discount_product']) )
-                                                <a href="{{ url('product/detail/'.$result['promo_campaign_tier_discount_product']['product']['product_code']??'') }}">{{ ($result['promo_campaign_tier_discount_product']['product']['product_code']??'').' - '.($result['promo_campaign_tier_discount_product']['product']['product_name']??'') }}</a>
+                                                <a href="{{ url('product/detail/'.$result['promo_campaign_tier_discount_product']['product']['product_code']??'') }}" target="_blank">{{ ($result['promo_campaign_tier_discount_product']['product']['product_code']??'').' - '.($result['promo_campaign_tier_discount_product']['product']['product_name']??'') }}</a>
                                                 @endif
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
                                             </div>
                                         </div>
                                         <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_6">
@@ -543,13 +570,20 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                    {{-- Buy x Get Y Discount --}}
                                     @elseif (isset($result['promo_campaign_buyxgety_rules']) && $result['promo_campaign_buyxgety_rules'] != null)
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Product Requirement</div>
                                             <div class="col-md-8 value">: 
                                                 @if ( isset($result['promo_campaign_buyxgety_product_requirement']) )
-                                                <a href="{{ url('product/detail/'.$result['promo_campaign_buyxgety_product_requirement']['product']['product_code']??'') }}">{{ ($result['promo_campaign_buyxgety_product_requirement']['product']['product_code']??'').' - '.$result['promo_campaign_buyxgety_product_requirement']['product']['product_name']??'' }}</a>
+                                                <a href="{{ url('product/detail/'.$result['promo_campaign_buyxgety_product_requirement']['product']['product_code']??'') }}" target="_blank">{{ ($result['promo_campaign_buyxgety_product_requirement']['product']['product_code']??'').' - '.$result['promo_campaign_buyxgety_product_requirement']['product']['product_name']??'' }}</a>
                                                 @endif
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
                                             </div>
                                         </div>
                                         <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_7">
@@ -567,7 +601,7 @@
                                                     <tr>
                                                         <td>{{ $res['min_qty_requirement'] }}</td>
                                                         <td>{{ $res['max_qty_requirement'] }}</td>
-                                                        <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}">{{ $res['product']['product_code'].' - '.$res['product']['product_name'] }}</a></td>
+                                                        <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_code'].' - '.$res['product']['product_name'] }}</a></td>
                                                         <td>{{ $res['benefit_qty'] }}</td>
                                                         <td>
                                                         @if( ($res['discount_type']??false) == 'nominal' )
@@ -586,21 +620,52 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                    @elseif (isset($result['promo_campaign_discount_global_rule']) && $result['promo_campaign_discount_global_rule'] != null) 
-                                        @if ($result['promo_campaign_discount_global_rule'] != null)
+                                    {{-- Bill Discount --}}
+                                    @elseif (!empty($result['promo_campaign_discount_bill_rules'])) 
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Discount</div>
                                             <div class="col-md-8 value">: 
-                                                @if ($result['promo_campaign_discount_global_rule']['discount_type'] == 'Percent')
-                                                    {{ $result['promo_campaign_discount_global_rule']['discount_value'] }} %
-                                                @elseif ($result['promo_campaign_discount_global_rule']['discount_type'] == 'Nominal')
-                                                    {{ 'IDR '.number_format($result['promo_campaign_discount_global_rule']['discount_value']) }}
+                                                @if ($result['promo_campaign_discount_bill_rules']['discount_type'] == 'Percent')
+                                                    {{ $result['promo_campaign_discount_bill_rules']['discount_value'] }} % 
+                                                    @if (!empty($result['promo_campaign_discount_bill_rules']['max_percent_discount']))
+                                                    	(max: IDR {{ number_format($result['promo_campaign_discount_bill_rules']['max_percent_discount']) }})
+                                                    @endif
+                                                @elseif ($result['promo_campaign_discount_bill_rules']['discount_type'] == 'Nominal')
+                                                    {{ 'IDR '.number_format($result['promo_campaign_discount_bill_rules']['discount_value']) }}
                                                 @else
                                                     No discount
                                                 @endif
                                             </div>
                                         </div>
-                                        @endif
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
+                                            </div>
+                                        </div>
+                                    {{-- Delivery Discount --}}
+                                    @elseif (!empty($result['promo_campaign_discount_delivery_rules'])) 
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Discount</div>
+                                            <div class="col-md-8 value">: 
+                                                @if ($result['promo_campaign_discount_delivery_rules']['discount_type'] == 'Percent')
+                                                    {{ $result['promo_campaign_discount_delivery_rules']['discount_value'] }} % 
+                                                    @if (!empty($result['promo_campaign_discount_delivery_rules']['max_percent_discount']))
+                                                    	(max: IDR {{ number_format($result['promo_campaign_discount_delivery_rules']['max_percent_discount']) }})
+                                                    @endif
+                                                @elseif ($result['promo_campaign_discount_delivery_rules']['discount_type'] == 'Nominal')
+                                                    {{ 'IDR '.number_format($result['promo_campaign_discount_delivery_rules']['discount_value']) }}
+                                                @else
+                                                    No discount
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Min Basket Size</div>
+                                            <div class="col-md-8 value">: 
+                                                    {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
+                                            </div>
+                                        </div>
                                     @endif
                                     @if( empty($result['promo_campaign_reports']) || empty($result['step_complete']))
                                     <div class="row static-info">

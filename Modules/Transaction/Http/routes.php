@@ -52,6 +52,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::post('/setting/refund-reject-order', 'TransactionSettingController@updateRefundRejectOrder');
     Route::get('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@autoReject']);
     Route::post('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@updateAutoReject']);
+    Route::any('/setting/timer-payment-gateway', 'TransactionController@timerPaymentGateway');
 });
 
 Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
@@ -66,6 +67,21 @@ Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Htt
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
+    Route::group(['prefix' => 'log-invalid-flag'], function(){
+        Route::any('list', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@listLogInvalidFlag']);
+        Route::any('detail', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@detailLogInvalidFlag']);
+    });
+
+    Route::group(['prefix' => 'invalid-flag'], function(){
+        Route::any('detail/{id_transaction}', ['uses' => 'InvalidFlagController@detailTrx']);
+        Route::any('mark-as-valid', ['middleware' => 'feature_control:275', 'uses' => 'InvalidFlagController@markAsValid']);
+        Route::post('mark-as-invalid/add', ['uses' => 'InvalidFlagController@markAsInvalidAdd']);
+        Route::post('mark-as-pending-invalid/add', ['uses' => 'InvalidFlagController@markAsPendingInvalidAdd']);
+        Route::post('mark-as-valid/update', ['uses' => 'InvalidFlagController@markAsValidUpdate']);
+        Route::any('mark-as-pending-invalid', ['middleware' => 'feature_control:274', 'uses' => 'InvalidFlagController@markAsPendingInvalid']);
+        Route::any('mark-as-invalid', ['middleware' => 'feature_control:274', 'uses' => 'InvalidFlagController@markAsInvalid']);
+    });
+
     Route::any('/create/fake', 'TransactionController@fakeTransaction');
     Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
     Route::get('/detail/{id}/{key}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);

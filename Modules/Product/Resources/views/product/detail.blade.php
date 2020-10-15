@@ -15,6 +15,7 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/skins/all.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
@@ -29,6 +30,7 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-bootstrap-select.min.js') }}"  type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
 
         $(document).ready(function(){
@@ -145,7 +147,7 @@
                 }
             });
 
-            @foreach($outlet as $key => $ou)
+            @foreach($outlet_all as $key => $ou)
             <?php $marker = 0; ?>
                 @foreach($ou['product_detail'] as $keyPrice => $price)
                     @if($price['id_product'] == $product[0]['id_product'])
@@ -687,6 +689,129 @@
             $(this).parent().parent().parent().find('.product-price').val(price);
         }
     });
+
+    $('#checkbox-variant').on('ifChanged', function(event) {
+        if(this.checked) {
+            $('#nav-prod-variant').show();
+            $("input[name=product_global_price]").prop('disabled', true);
+            $('input[name=product_global_price]').prop('required',false);
+        }else{
+            $('#nav-prod-variant').hide();
+            $("input[name=product_global_price]").prop('disabled', false);
+            $('input[name=product_global_price]').prop('required',true);
+        }
+    });
+
+    var row = "{{$count}}";
+    function addProductVariantGroup() {
+        var product_variant = $('#select2-product-variant').val();
+        var product_variant_price = $('#product-variant-group-price').val();
+        var product_variant_group_code = $('#product-variant-group-code').val();
+        var product_variant_group_id = $('#product-variant-group-id').val();
+        var text = $('#select2-product-variant option:selected').toArray().map(item => item.text).join();
+        var visibility = $('input[name="product_variant_group_visibility"]:checked').val();
+        var msg_error = '';
+
+        if(product_variant.length <= 0){
+            msg_error += '-Please select one or more product variant <br>';
+        }
+
+        var check_level = '';
+        var id = [];
+        for(var i=0;i<product_variant.length;i++){
+            var split = product_variant[i].split("|");
+            id.push(split[0]);
+            if(check_level == split[1]){
+                msg_error += '-Can not select same level in product variant group<br>';
+            }
+            check_level = split[1];
+        }
+
+        if(product_variant_group_code === ''){
+            msg_error += '-Please input code <br>';
+        }
+
+        if(product_variant_price === ''){
+            msg_error += '-Please input price <br>';
+        }
+
+        if(msg_error !== ""){
+            toastr.warning(msg_error);
+        }else{
+            var html = '';
+            html += '<tr>';
+            html += '<td>'+text+'</td>';
+            html += '<td>'+product_variant_group_code+'</td>';
+            html += '<td>'+product_variant_price+'</td>';
+            html += '<td>'+visibility+'</td>';
+            html += '<td><a  onclick="deleteRowProductVariant(this)" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>' +
+                '<a  onclick="editRowProductVariant(this,'+row+')" class="btn btn-sm btn-primary" style="margin-left: 2%"><i class="fa fa-pen"></i> Edit</a></td>';
+            html += '<input type="hidden" id="product-variant-'+row+'" name="data['+row+'][id]" value="'+id+'">';
+            html += '<input type="hidden" id="product-variant-edit-'+row+'" name="data['+row+'][id-edit]" value="'+product_variant+'">';
+            html += '<input type="hidden" id="product-variant-group-code-'+row+'" name="data['+row+'][code]" value="'+product_variant_group_code+'">';
+            html += '<input type="hidden" id="product-variant-price-'+row+'" name="data['+row+'][price]" value="'+product_variant_price+'">';
+            html += '<input type="hidden" id="product-variant-group-visibility-'+row+'" name="data['+row+'][visibility]" value="'+visibility+'">';
+            html += '<input type="hidden" id="product-variant-group-id-'+row+'" name="data['+row+'][group_id]" value="'+product_variant_group_id+'">';
+            html += '</tr>';
+
+            $("#select2-product-variant").val(null).trigger('change');
+            $('#product-variant-group-price').val('');
+            $('#product-variant-group-code').val('');
+
+            $( "#product-variant-group-body" ).append(html);
+            row++;
+
+            var arr_tmp = [];
+            $("#table-product-variant > tbody > tr").each(function(index, tr) {
+                var price = document.getElementById("table-product-variant").rows[index+1].cells[1].innerHTML;
+                arr_tmp.push(price);
+            });
+
+            var min_price = Math.min.apply(Math,arr_tmp);
+            $('#product_base_price_pvg').val(min_price);
+        }
+    }
+
+    function deleteRowProductVariant(content, id = null) {
+        $(content).parent().parent('tr').remove();
+
+        if(id !== null){
+            $('#form_product_variant_group').append('<input type="hidden" name="data_to_delete[]" value="'+id+'">');
+        }
+    }
+
+    function editRowProductVariant(content,id) {
+        var data_id = $('#product-variant-edit-'+id).val().split(',');
+        var data_price = $('#product-variant-price-'+id).val();
+        var group_id = $('#product-variant-group-id-'+id).val();
+        var code = $('#product-variant-group-code-'+id).val();
+        var visibility = $('#product-variant-group-visibility-'+id).val();
+
+        if(visibility == 'Visible'){
+            document.getElementById("radio-variant-visibility1").checked = true;
+            document.getElementById("radio-variant-visibility2").checked = false;
+        }else{
+            document.getElementById("radio-variant-visibility1").checked = false;
+            document.getElementById("radio-variant-visibility2").checked = true;
+        }
+
+        $("#select2-product-variant").val(data_id).trigger('change');
+        $('#product-variant-group-price').val(data_price);
+        $('#product-variant-group-id').val(group_id);
+        $('#product-variant-group-code').val(code);
+        $(content).parent().parent('tr').remove();
+    }
+
+    function submitProductVariant() {
+        var tbody = $("#table-product-variant tbody");
+
+        if (tbody.children().length == 0) {
+            Swal.fire("", 'Please add 1 or more product variant group', "error");
+        }else{
+            $( "#form_product_variant_group" ).submit();
+        }
+    }
+
   </script>
 
 @endsection
@@ -728,6 +853,9 @@
                 <li class="active">
                     <a href="#info" data-toggle="tab"> Info </a>
                 </li>
+                <li id="nav-prod-variant" @if($product[0]['product_variant_status'] != 1) style="display: none" @endif>
+                    <a href="#variant-group" data-toggle="tab"> Variant Group</a>
+                </li>
                 <!-- @if(MyHelper::hasAccess([53], $grantedFeature))
                     <li>
                         <a href="#photo" data-toggle="tab"> Photo </a>
@@ -751,6 +879,9 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
                     @include('product::product.info')
+                </div>
+                <div class="tab-pane" id="variant-group">
+                    @include('product::product.product-variant-group')
                 </div>
                 <div class="tab-pane" id="photo">
                     @include('product::product.photo')

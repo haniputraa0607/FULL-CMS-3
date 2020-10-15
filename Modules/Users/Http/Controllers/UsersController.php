@@ -20,7 +20,7 @@ class UsersController extends Controller
      * @return Response
      */
     public function listPhoneUser(){
-		$query = MyHelper::get('users/list/phone', $post);
+		$query = MyHelper::get('users/list/phone');
 		// print_r($query);exit;
 		if (isset($query['status']) && $query['status'] == "success") {
             $data = $query['result'];
@@ -32,7 +32,7 @@ class UsersController extends Controller
 	}
 	
 	public function listEmailUser(){
-		$query = MyHelper::post('users/list/email', $post);
+		$query = MyHelper::get('users/list/email');
 		
 		if (isset($query['status']) && $query['status'] == "success") {
             $data = $query['result'];
@@ -44,7 +44,7 @@ class UsersController extends Controller
 	}
 	
 	public function listNameUser(){
-		$query = MyHelper::post('users/list/name', $post);
+		$query = MyHelper::get('users/list/name');
 		
 		if (isset($query['status']) && $query['status'] == "success") {
             $data = $query['result'];
@@ -69,7 +69,8 @@ class UsersController extends Controller
 	}
 	
     public function autoResponse(Request $request, $subject){
-		$data = [ 'title'             => 'User Auto Response '.ucfirst(str_replace('-',' ',$subject)),
+		$autocrmSubject = ucwords(str_replace('-',' ',$subject));
+		$data = [ 'title'             => 'User Auto Response '.$autocrmSubject,
 				  'menu_active'       => 'user',
 				  'submenu_active'    => 'user-autoresponse-'.$subject
 				];
@@ -84,7 +85,7 @@ class UsersController extends Controller
 				# code...
 				break;
 		}
-		$query = MyHelper::get('autocrm/list');
+		$query = MyHelper::post('autocrm/list', ['autocrm_title' => $autocrmSubject]);
 		$test = MyHelper::get('autocrm/textreplace?log_save=0');
 		$auto = null;
 
@@ -121,13 +122,12 @@ class UsersController extends Controller
 			// print_r($query);exit;
 			return back()->withSuccess(['Response updated']);
 		}
-		foreach($query['result'] as $autonya){
-			if($autonya['autocrm_title'] == ucwords(str_replace('-',' ',$subject))){
-				$auto = $autonya;
-			}
+		if(isset($query['result'])){
+			$auto = $query['result'];
+		}else{
+			return back()->withErrors(['No such response']);
 		}
 		
-		if($auto == null) return back()->withErrors(['No such response']);
 		$data['data'] = $auto;
 		if($test['status'] == 'success'){
 			$data['textreplaces'] = $test['result'];
@@ -154,6 +154,14 @@ class UsersController extends Controller
         $data['click_notification'] = [
             ['value' => 'Home','title' => 'Home']
         ];
+
+        if ($subject == 'pin-create') {
+	        $data['click_notification'] = [
+	            ['value' => "No Action",'title' => 'No Action']
+	        ];
+	        return view('users::response_push', $data);
+        }
+
 		// print_r($data);exit;
         return view('users::response', $data);
 	}
@@ -556,6 +564,10 @@ class UsersController extends Controller
 		
 		if(isset($post['phone'])){
 			if(isset($post['birthday'])){
+				if (stristr($post['birthday'], '/')) {
+	                $explode = explode('/', $post['birthday']);
+	                $post['birthday'] = $explode[2] . '-' . $explode[1] . '-' . $explode[0];
+	            }
 				$post['birthday'] = date('Y-m-d', strtotime($post['birthday']));
 			}
 			if(isset($post['relationship']) && $post['relationship']=="-"){
@@ -600,7 +612,7 @@ class UsersController extends Controller
 			$update = MyHelper::post('users/update/suspend', $post);
 			return parent::redirect($update, 'Suspend Status has been changed.');
         }
-		
+
 		$getUser = MyHelper::post('users/detail', ['phone' => $phone]);
 		// return $getUser;exit;
 		$getLog = MyHelper::post('users/log?log_save=0', ['phone' => $phone, 'skip' => 0, 'take' => 50]);

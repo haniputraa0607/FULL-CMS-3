@@ -48,12 +48,17 @@ class DisburseSettingController extends Controller
         }
         $dataBank = MyHelper::post('disburse/setting/list-bank-account',$post);
         if(isset($dataBank['status']) && $dataBank['status'] == 'success'){
-            if (!empty($dataBank['result']['data'])) {
-                $data['bankAccount']          = $dataBank['result']['data'];
-                $data['bankAccountTotal']     = $dataBank['result']['total'];
-                $data['bankAccountPerPage']   = $dataBank['result']['from'];
-                $data['bankAccountUpTo']      = $dataBank['result']['from'] + count($dataBank['result']['data'])-1;
-                $data['bankAccountPaginator'] = new LengthAwarePaginator($dataBank['result']['data'], $dataBank['result']['total'], $dataBank['result']['per_page'], $dataBank['result']['current_page'], ['path' => url()->current()]);
+            $data['outlet_dont_have_account'] = [];
+            if(!empty($dataBank['result']['list_outlet_dont_have_account'])){
+                $data['outlet_dont_have_account'] = $dataBank['result']['list_outlet_dont_have_account'];
+            }
+
+            if (!empty($dataBank['result']['list_bank']['data'])) {
+                $data['bankAccount']          = $dataBank['result']['list_bank']['data'];
+                $data['bankAccountTotal']     = $dataBank['result']['list_bank']['total'];
+                $data['bankAccountPerPage']   = $dataBank['result']['list_bank']['from'];
+                $data['bankAccountUpTo']      = $dataBank['result']['list_bank']['from'] + count($dataBank['result']['list_bank']['data'])-1;
+                $data['bankAccountPaginator'] = new LengthAwarePaginator($dataBank['result']['list_bank']['data'], $dataBank['result']['list_bank']['total'], $dataBank['result']['list_bank']['per_page'], $dataBank['result']['list_bank']['current_page'], ['path' => url()->current()]);
             }
             else {
                 $data['bankAccount']          = [];
@@ -128,14 +133,25 @@ class DisburseSettingController extends Controller
                 $data['bank'] = [];
             }
 
-            $user_franchisee = MyHelper::post('disburse/user-franchisee',$post);
-            if(isset($user_franchisee['status']) && $user_franchisee['status'] == 'success'){
-                $data['user_franchises'] = $user_franchisee['result'];
+            $outlets = MyHelper::post('disburse/outlets',['for' => 'select2']);
+
+            if(isset($outlets['status']) && $outlets['status'] == 'success'){
+                $data['outlets'] = $outlets['result'];
             }else{
-                $data['user_franchises'] = [];
+                $data['outlets'] = [];
             }
 
             return view('disburse::setting_bank_account.add', $data);
+        }
+    }
+
+    function deleteBankAccount(Request $request){
+        $post = $request->all();
+        $delete = MyHelper::post('disburse/setting/delete-bank-account',$post);
+        if (isset($delete['status']) && $delete['status'] == "success") {
+            return "success";
+        } else {
+            return "fail";
         }
     }
 
@@ -191,11 +207,11 @@ class DisburseSettingController extends Controller
             $dataimport = array_map(function($x){return (Object)$x;}, $dataimport[0]??[]);
             $save = MyHelper::post('disburse/setting/import-bank-account-outlet', ['data_import' => $dataimport]);
             if (isset($save['status']) && $save['status'] == "success") {
-                if(count($save['data_failed']) == 0){
-                    $message = ['Success import '.count($save['data_success'])];
-                }else{
-                    $message = ['Success import '.count($save['data_success']),'Failed import ('.implode(",",$save['data_failed']).')'];
+                if (!empty($save['data_failed'])) {
+                    return redirect('disburse/setting/bank-account#export-import')->withErrors($save['data_failed'])->withInput();
                 }
+
+                $message = ['Success import '.count($save['data_success'])];
                 return redirect('disburse/setting/bank-account#export-import')->withSuccess($message);
             }else {
                 if (isset($save['errors'])) {
@@ -287,6 +303,20 @@ class DisburseSettingController extends Controller
             $data['time_to_sent'] = $timeToSent['result'];
         }else{
             $data['time_to_sent'] = [];
+        }
+
+        $feeDisburse = MyHelper::get('disburse/setting/fee-disburse');
+        if(isset($feeDisburse['status']) && $feeDisburse['status'] == 'success'){
+            $data['fee_disburse'] = $feeDisburse['result'];
+        }else{
+            $data['fee_disburse'] = [];
+        }
+
+        $sendEmailTo = MyHelper::get('disburse/setting/send-email-to');
+        if(isset($sendEmailTo['status']) && $sendEmailTo['status'] == 'success'){
+            $data['send_email_to'] = (array)json_decode($sendEmailTo['result']['value_text']);
+        }else{
+            $data['send_email_to'] = [];
         }
 
         return view('disburse::setting_global.setting', $data);
@@ -405,5 +435,88 @@ class DisburseSettingController extends Controller
         }else{
             return redirect('disburse/setting/global#time-to-sent')->withErrors(['Failed Update Data']);
         }
+    }
+
+    function settingFeeDisburse(Request $request){
+        $post = $request->except('_token');
+
+        $save = MyHelper::post('disburse/setting/fee-disburse', $post);
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('disburse/setting/global#fee-disburse')->withSuccess(['Success Update Data']);
+        }else{
+            return redirect('disburse/setting/global#fee-disburse')->withErrors(['Failed Update Data']);
+        }
+    }
+
+    function settingSendEmailTo(Request $request){
+        $post = $request->except('_token');
+
+        if(!empty($post)) $update['value_text'] = json_encode($post);
+
+        $save = MyHelper::post('disburse/setting/send-email-to', $update);
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('disburse/setting/global#send-email-to')->withSuccess(['Success Update Data']);
+        }else{
+            return redirect('disburse/setting/global#send-email-to')->withErrors(['Failed Update Data']);
+        }
+    }
+
+    function autoResponse(Request $request, $subject){
+        $autocrmSubject = ucwords(str_replace('-',' ',$subject));
+        $data = [
+            'title'             => 'Disburse Auto Response '.$autocrmSubject,
+            'menu_active'       => 'disburse-settings',
+            'submenu_active'    => 'autoresponse-'.$subject
+        ];
+
+        $data['click_notification'] = [];
+        $data['click_inbox'] = [];
+        $query = MyHelper::post('autocrm/list', ['autocrm_title' => $autocrmSubject]);
+        $test = MyHelper::get('autocrm/textreplace');
+        $auto = null;
+        $post = $request->except('_token');
+        if(!empty($post)){
+            if (isset($post['autocrm_push_image'])) {
+                $post['autocrm_push_image'] = MyHelper::encodeImage($post['autocrm_push_image']);
+            }
+
+            if(isset($post['files'])){
+                unset($post['files']);
+            }
+
+            $query = MyHelper::post('autocrm/update', $post);
+            return back()->withSuccess(['Response updated']);
+        }
+
+        $getApiKey = MyHelper::get('setting/whatsapp');
+        if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+            $data['api_key_whatsapp'] = $getApiKey['result']['value'];
+        }else{
+            $data['api_key_whatsapp'] = null;
+        }
+
+        if(isset($query['result'])){
+            $auto = $query['result'];
+        }else{
+            return back()->withErrors(['No such response']);
+        }
+
+        $data['data'] = $auto;
+        if($test['status'] == 'success'){
+            $data['textreplaces'] = $test['result'];
+            $data['subject'] = $subject;
+        }
+
+        $custom = [];
+        if (isset($data['data']['custom_text_replace'])) {
+            $custom = explode(';', $data['data']['custom_text_replace']);
+
+            unset($custom[count($custom) - 1]);
+        }
+
+        $data['custom'] = $custom;
+        $data['active_response'] = ['forward'];
+
+        return view('users::response', $data);
     }
 }

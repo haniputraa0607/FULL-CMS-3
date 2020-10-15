@@ -225,10 +225,11 @@ $configs = session('configs');
                   },
                 }],
                 responsive: {
-                    details: {
+                    /*details: {
                         type: "column",
                         target: "tr"
-                    }
+                    }*/
+                    details: false
                 },
                 order: [0, "asc"],
                 lengthMenu: [
@@ -568,22 +569,17 @@ $configs = session('configs');
     	      <ul class="nav nav-tabs ">
 				@if(MyHelper::hasAccess([58], $configs))
 					<li class="active">
-					<a href="#feedback" data-toggle="tab"> Customer Feedback </a>
+					<a href="#feedback" data-toggle="tab"> Kritik, Saran & Keluhan </a>
 					</li>
 				@endif
 				@if(MyHelper::hasAccess([60], $configs))
 					<li>
-					<a href="#marketing" data-toggle="tab"> Marketing Partnership </a>
+					<a href="#marketing" data-toggle="tab"> Pengubahan Data Diri </a>
 					</li>
 				@endif
 				@if(MyHelper::hasAccess([59], $configs))
 					<li>
-					<a href="#development" data-toggle="tab"> Business Development </a>
-					</li>
-				@endif
-				@if(MyHelper::hasAccess([59], $configs))
-					<li>
-					<a href="#career" data-toggle="tab"> Career </a>
+					<a href="#development" data-toggle="tab"> Lain - Lain </a>
 					</li>
 				@endif
     	      </ul>
@@ -612,7 +608,7 @@ $configs = session('configs');
 		    	        	       @if (!empty($enquiries))
 									<?php $no = 1; ?>
    		    	        	            @foreach($enquiries as $key=>$value)
-   		    	        	            	@if ($value['enquiry_subject'] == "Customer Feedback")
+   		    	        	            	@if ($value['enquiry_subject'] == "Kritik, Saran & Keluhan")
    		    	        	                <tr>
    		    	        	                    <td>{{ $no }}</td>
    		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
@@ -627,7 +623,7 @@ $configs = session('configs');
 													@if(MyHelper::hasAccess([84], $grantedFeature))
 														<a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
 
-														<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
+														<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace([" ",",","&"],"_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
 														@if(MyHelper::hasAccess([57], $configs))
 															<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
 														@endif
@@ -635,7 +631,7 @@ $configs = session('configs');
 												</td>
    		    	        	                </tr>
 
-   		    	        	                <div id="{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
+   		    	        	                <div id="{{ str_replace([" ",",","&"],"_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
    		    	        	                   <div class="modal-dialog">
    		    	        	                       <div class="modal-content">
    		    	        	                           <div class="modal-header">
@@ -743,7 +739,7 @@ $configs = session('configs');
 		    	        	        @if (!empty($enquiries))
 										<?php $no = 1; ?>
 		    	        	            @foreach($enquiries as $key => $value)
-		    	        	            	@if ($value['enquiry_subject'] == "Marketing Partnership")
+		    	        	            	@if ($value['enquiry_subject'] == "Pengubahan Data Diri")
 		    	        	                 <tr>
 												<td>{{ $no }}</td>
    		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
@@ -855,7 +851,7 @@ $configs = session('configs');
 		    	        	        @if (!empty($enquiries))
 										<?php $no = 1; ?>
 		    	        	            @foreach($enquiries as $key => $value)
-		    	        	            	@if ($value['enquiry_subject'] == "Business Development")
+		    	        	            	@if ($value['enquiry_subject'] == "Lain - Lain")
 		    	        	                 <tr>
 												<td>{{ $no }}</td>
    		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
