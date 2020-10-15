@@ -748,6 +748,7 @@ class DealsController extends Controller
 	        if (isset($deals['status']) && $deals['status'] == 'success') {
 
 	            $data['result'] = $deals['result'];
+	            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
 
 	        } else {
 
