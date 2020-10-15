@@ -9,7 +9,7 @@
 		</div>
 	</div>
 </div>
-<div class="form-group">
+{{-- <div class="form-group">
 	<label class="control-label">Min basket size</label>
 	<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
 	<div class="row">
@@ -23,7 +23,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> --}}
 <div id="ruleSection2">
 	<label class="control-label">Price Rule
 	<span class="required" aria-required="true"> * </span>
