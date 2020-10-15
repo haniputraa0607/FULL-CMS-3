@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 
-            @if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
+            @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
             <div class="row static-info text-center">
                 <div class="col-md-11 value">
                     <a class="btn blue" href="{{ url('/'.$rpage)}}/step1/{{$deals['id_deals']}}">Edit Detail</a>
@@ -191,7 +191,7 @@
 	                    </div>
 	                </div>
 
-	                @if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
+	                @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
 	                <div class="row static-info">
 	                    <div class="col-md-11 value">
 	                        <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
@@ -202,7 +202,7 @@
 	            <span class="sale-num font-red sbold">
 	                No Deals Rules
 	            </span>
-	            @if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
+	            @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
 	            <div class="row static-info">
 	                <div class="col-md-11 value">
 	                    <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Create Rule</a>
@@ -458,7 +458,7 @@
 	                </div>
 	                @endif
 	            @endif
-	            @if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
+	            @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
 	            <div class="row static-info">
 	                <div class="col-md-11 value">
 	                    <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>

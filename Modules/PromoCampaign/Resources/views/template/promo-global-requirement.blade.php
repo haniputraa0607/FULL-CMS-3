@@ -1,4 +1,4 @@
-{{-- @include('promocampaign::template.promo-shipment-method', ['promo_source' => $promo_source])
+@include('promocampaign::template.promo-shipment-method', ['promo_source' => $promo_source])
 @include('promocampaign::template.promo-payment-method', ['promo_source' => $promo_source])
 
 @section('global-requirement')
@@ -20,4 +20,4 @@
 @section('global-requirement-script')
 	@yield('promo-shipment-method-script')
 	@yield('promo-payment-method-script')
-@endsection --}}
+@endsection
