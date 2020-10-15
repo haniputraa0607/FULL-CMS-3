@@ -1120,6 +1120,11 @@
 								<span class="title">Ipay88</span>
 							</a>
 						</li>
+						<li class="nav-item {{($submenu_active == 'report-payment-shopee') ? 'active open' : ''}}">
+							<a href="{{url('report/payment/shopee')}}" class="nav-link ">
+								<span class="title">Shopee Pay</span>
+							</a>
+						</li>
 						<li class="nav-item {{($submenu_active == 'report-payment-export') ? 'active open' : ''}}">
 							<a href="{{url('report/payment/list-export')}}" class="nav-link ">
 								<span class="title">List Export</span>

@@ -7,6 +7,7 @@
 @include('deals::deals.buyxgety-discount')
 @include('deals::deals.discount-bill')
 @include('deals::deals.discount-delivery')
+@include('promocampaign::template.promo-global-requirement', ['promo_source' => $result['deals_type']??$deals_type])
 @section('page-style')
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
@@ -389,6 +390,7 @@
 	@yield('child-script2')
 	@yield('discount-bill-script')
 	@yield('discount-delivery-script')
+	@yield('global-requirement-script')
 	<style>
 	input[type=number]::-webkit-inner-spin-button, 
 	input[type=number]::-webkit-outer-spin-button { 
@@ -525,6 +527,12 @@
 
 	    {{-- ONLINE RULE --}}
         @if( ($result['is_online']??false) == 1)
+
+        	{{-- Global Requirement --}}
+			{{-- @yield('global-requirement') --}}
+			<input type="hidden" name="filter_shipment" value="all_shipment">
+			<input type="hidden" name="filter_payment" value="all_payment">
+
 	        <div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption font-blue ">
@@ -544,10 +552,10 @@
 								</br> Bulk/Tier Product : Promo hanya berlaku untuk suatu product setelah melakukan pembelian dalam jumlah yang telah ditentukan
 								</br>
 								</br> Buy X get Y : Promo hanya berlaku untuk product tertentu
-								</br>
+								{{-- </br>
 								</br> Discount Bill : Promo berupa potongan harga untuk total transaksi / bill
 								</br>
-								</br> Discount Delivery : Promo berupa potongan harga untuk biaya pengiriman
+								</br> Discount Delivery : Promo berupa potongan harga untuk biaya pengiriman --}}
 								" data-container="body" data-html="true"></i>
 								<select class="form-control" name="promo_type" required>
 									<option value="" disabled {{ 
@@ -594,7 +602,7 @@
 										}} 
 										@endif
 										title="Promo hanya berlaku untuk product tertentu"> Buy X Get Y </option>
-									<option value="Discount bill" 
+									{{-- <option value="Discount bill" 
 										@if ( old('promo_type') && old('promo_type') == 'Discount bill' ) selected 
 										@elseif ( !empty($result['deals_discount_bill_rules']) || !empty($result['deals_promotion_discount_bill_rules']) ) selected 
 										@endif
@@ -605,7 +613,7 @@
 											@elseif ( !empty($result['deals_discount_delivery_rules']) || !empty($result['deals_promotion_discount_delivery_rules']) ) selected 
 											@endif
 											title="Promo berupa potongan harga untuk total transaksi / delivery"
-											> Discount Delivery </option>
+											> Discount Delivery </option> --}}
 		                        </select>
 							</div>
 						</div>
@@ -655,7 +663,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
+							{{-- <div class="form-group">
 								<label class="control-label">Min basket size</label>
 								<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
 								<div class="row">
@@ -669,7 +677,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> --}}
 							<div class="form-group">
 								<label class="control-label">Max product discount per transaction</label>
 								<i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal masing-masing produk yang dapat dikenakan diskon dalam satu transaksi </br></br>Note : Kosongkan jika jumlah maksimal produk tidak dibatasi" data-container="body" data-html="true"></i>
@@ -787,12 +795,12 @@
 						<div id="buyXgetYProduct" class="p-t-10px">
 							@yield('buyXgetYForm')
 						</div>
-						<div id="discount-bill" class="p-t-10px">
+						{{-- <div id="discount-bill" class="p-t-10px">
 							@yield('discount-bill')
 						</div>
 						<div id="discount-delivery" class="p-t-10px">
 							@yield('discount-delivery')
-						</div>
+						</div> --}}
 					</div>
 				</div>
 			</div>
