@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller;
+use Excel;
+use App\Imports\FirstSheetOnlyImport;
 
 class ProductVariantGroupController extends Controller
 {
@@ -158,40 +160,30 @@ class ProductVariantGroupController extends Controller
 
     public function export(Request $request) {
         $post = $request->except('_token');
-        $data = MyHelper::post('product-variant', [])['result']??[];
+        $data = MyHelper::post('product-variant-group', [])['result']??[];
         $tab_title = 'List Product Variant';
 
         if(empty($data)){
             $datas['All Type'] = [
                 [
-                    'product_variant_name' => 'Size',
-                    'product_variant_child' => 'S,M,L,XL',
-                    'product_variant_name' => 'Size',
-                    'product_variant_child' => 'S,M,L,XL'
+                    'product_name' => 'Product 1',
+                    'product_code' => 'P1',
+                    'use_variant_status' => 'YES',
+                    'Size' => 'S,M,L',
+                    'Type' => 'Hot,Ice,Less Ice,More Ice'
                 ],
                 [
-                    'product_variant_name' => 'Type',
-                    'product_variant_child' => 'Hot,Ice'
-                ],
-                [
-                    'product_variant_name' => 'Ice',
-                    'product_variant_child' => 'Less Ice,More Ice'
+                    'product_name' => 'Product 2',
+                    'product_code' => 'P2',
+                    'use_variant_status' => 'NO',
+                    'Size' => '',
+                    'Type' => ''
                 ]
             ];
         }else{
-            $arr = [];
-            foreach ($data as $dt){
-                $child = array_column($dt['product_variant_child'], 'product_variant_name');
-                if(!empty($dt['product_variant_child'])){
-                    $arr[] = [
-                        'product_variant_name' => $dt['product_variant_name'],
-                        'product_variant_child' => implode(",",$child)
-                    ];
-                }
-            }
-            $datas['All Type'] = $arr;
+
         }
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product variant.xlsx');
+        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product variant group.xlsx');
     }
 
     public function import(Request $request){

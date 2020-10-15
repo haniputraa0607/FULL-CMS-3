@@ -241,6 +241,36 @@ $configs    		= session('configs');
 							<li>Value dari variant adalah semua variant yang mungkin tersedia</li>
 							<li>Silahkan menghapus variant yang tidak tersedia</li>
 						</ul>
+						<p>
+							Contoh data :
+							<br>
+							<table class="table table-striped table-bordered table-hover table-responsive" width="100%">
+								<thead>
+									<th>product_name</th>
+									<th>product_code</th>
+									<th>use_variant_status</th>
+									<th>Size</th>
+									<th>Type</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Product 1</td>
+										<td>P1</td>
+										<td>YES</td>
+										<td>S,M,L</td>
+										<td>Hot,Ice,Less Ice,More Ice</td>
+									</tr>
+									<tr>
+										<td>Product 2</td>
+										<td>P2</td>
+										<td>NO</td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</p>
+						<br>
 						<p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor produk</p>
 					</div>
 					<div class="form-actions" style="padding-bottom: 5px">
