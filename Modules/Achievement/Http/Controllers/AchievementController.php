@@ -367,6 +367,9 @@ class AchievementController extends Controller
     {
         $post = $request->except('_token');
         $data = MyHelper::post('achievement/detailAjax', $post)['data'];
+        $data['is_start'] = ($data['date_start']??false) < date('Y-m-d H:i:s');
+        $data['date_start'] = $data['date_start']??false?date('d-M-Y H:i',strtotime($data['date_start'])):'';
+        $data['date_end'] = $data['date_end']??false?date('d-M-Y H:i',strtotime($data['date_end'])):'';
         $data['logo_badge_default'] = env('STORAGE_URL_API') . $data['logo_badge_default'];
         return $data;
     }
@@ -384,7 +387,21 @@ class AchievementController extends Controller
         if (isset($post['group']['logo_badge_default'])) {
             $post['group']['logo_badge_default'] = MyHelper::encodeImage($post['group']['logo_badge_default']);
         }
-        
+
+        if (isset($post['group']['date_start'])) {
+            $post['group']['date_start'] = date('Y-m-d H:i:s', strtotime($post['group']['date_start']));
+            if ($post['group']['date_start'] < date('Y-m-d H:i:s')) {
+                return back()->withErrors(['The start date must be after the current datetime']);
+            }
+        }
+
+        if (isset($post['group']['date_end'])) {
+            $post['group']['date_end'] = date('Y-m-d H:i:s', strtotime($post['group']['date_end']));
+            if ($post['group']['date_end'] < date('Y-m-d H:i:s')) {
+                return back()->withErrors(['The end date must be after the current datetime']);
+            }
+        }
+
         $save = MyHelper::post('achievement/update', $post);
         
         if (isset($save['status']) && $save['status'] == "success") {
