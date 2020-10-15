@@ -162,7 +162,7 @@
                     <div class="col-md-4 name">Voucher Total</div>
                     <div class="col-md-8 value">: {{ !empty($subscription['subscription_voucher_total']) ? number_format($subscription['subscription_voucher_total']).' Vouchers' : '' }}</div>
                 </div>
-                {{-- <div class="row static-info">
+                <div class="row static-info">
                     <div class="col-md-4 name">Discount Type</div>
                     <div class="col-md-8 value">: 
                     	@switch($subscription['subscription_discount_type'])
@@ -176,7 +176,7 @@
                             Payment Method
                     	@endswitch
                 	</div>
-                </div> --}}
+                </div>
                 @if(!empty($subscription['subscription_voucher_nominal']))
                 <div class="row static-info">
                     <div class="col-md-4 name">Voucher Discount</div>
@@ -194,7 +194,7 @@
                 </div>
                 @endif
                 <div class="row static-info">
-                    <div class="col-md-4 name">Minimal Transaction (Subtotal)</div>
+                    <div class="col-md-4 name">Min Basket Size</div>
                     <div class="col-md-8 value">: {{ !empty($subscription['subscription_minimal_transaction']) ? number_format($subscription['subscription_minimal_transaction']) : '' }}</div>
                 </div>
                 <div class="row static-info">

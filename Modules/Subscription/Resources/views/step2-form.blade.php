@@ -3,7 +3,7 @@ use App\Lib\MyHelper;
 $configs = session('configs');
 ?>
 @section('step2')
-					{{-- <div class="form-group">
+					<div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Discount Type
@@ -51,9 +51,7 @@ $configs = session('configs');
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
-                    <input type="hidden" name="subscription_discount_type" value="payment_method">
-
+                    </div>
 					@if ($subscription_type == 'subscription')
                     <div class="form-group">
                         <div class="input-icon right">
@@ -575,8 +573,8 @@ $configs = session('configs');
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Minimal Transaction (Subtotal)
-                            <i class="fa fa-question-circle tooltips" data-original-title="Jumlah transaksi paling sedikit untuk bisa mendapatkan potongan dari subscription. kosongkan jika tidak ada minimal transaksi" data-container="body"></i>
+                            Minimum Basket Size
+                            <i class="fa fa-question-circle tooltips" data-original-title="Total harga product sebelum dikenakan promo dan biaya pengiriman paling sedikit untuk bisa mendapatkan potongan dari subscription. kosongkan jika tidak ada minimum basket size" data-container="body"></i>
                             </label>
                         </div>
 
