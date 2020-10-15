@@ -218,7 +218,7 @@
             <div class="portlet-title"> 
             <span class="caption font-blue sbold uppercase">Voucher Online Rules : {{ $deals['promo_type']??'' }}</span>
             </div>
-            @include('promocampaign::template.promo-global-requirement-detail', ['promo_source' => 'deals'])
+            {{-- @include('promocampaign::template.promo-global-requirement-detail', ['promo_source' => 'deals']) --}}
             @if ( 
             		!empty($deals['deals_product_discount_rules']) 
             		|| !empty($deals['deals_tier_discount_rules']) 
@@ -262,12 +262,12 @@
                             @endif
                         </div>
                     </div>
-                    <div class="row static-info">
+                    {{-- <div class="row static-info">
                         <div class="col-md-4 name">Min Basket Size</div>
                         <div class="col-md-8 value">: 
                                 {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row static-info">
                         <div class="col-md-4 name">Max Product</div>
                         <div class="col-md-8 value">: 
@@ -317,12 +317,12 @@
                             @endif
                         </div>
                     </div>
-                    <div class="row static-info">
+                    {{-- <div class="row static-info">
                         <div class="col-md-4 name">Min Basket Size</div>
                         <div class="col-md-8 value">: 
                                 {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
                         </div>
-                    </div>
+                    </div> --}}
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_6">
                         <thead>
                             <tr>
@@ -355,12 +355,12 @@
                             @endif
                         </div>
                     </div>
-                    <div class="row static-info">
+                    {{-- <div class="row static-info">
                         <div class="col-md-4 name">Min Basket Size</div>
                         <div class="col-md-8 value">: 
                                 {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
                         </div>
-                    </div>
+                    </div> --}}
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_7">
                         <thead>
                             <tr>
@@ -397,7 +397,7 @@
                         </tbody>
                     </table>
                 {{-- Bill Discount --}}
-                @elseif (!empty($deals['deals_discount_bill_rules'])) 
+                {{-- @elseif (!empty($deals['deals_discount_bill_rules'])) 
                     <div class="row static-info">
                         <div class="col-md-4 name">Discount</div>
                         <div class="col-md-8 value">: 
@@ -418,9 +418,9 @@
                         <div class="col-md-8 value">: 
                                 {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
                         </div>
-                    </div>
+                    </div> --}}
                 {{-- Delivery Discount --}}
-                @elseif (!empty($deals['deals_discount_delivery_rules'])) 
+                {{-- @elseif (!empty($deals['deals_discount_delivery_rules'])) 
                     <div class="row static-info">
                         <div class="col-md-4 name">Discount</div>
                         <div class="col-md-8 value">: 
@@ -441,7 +441,7 @@
                         <div class="col-md-8 value">: 
                                 {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
                         </div>
-                    </div>
+                    </div> --}}
             	@elseif (isset($deals['deals_discount_global_rule']) && $deals['deals_discount_global_rule'] != null) 
                 	@if ($deals['deals_discount_global_rule'] != null)
 	                <div class="row static-info">
