@@ -133,11 +133,12 @@ class DisburseSettingController extends Controller
                 $data['bank'] = [];
             }
 
-            $user_franchisee = MyHelper::post('disburse/user-franchisee',$post);
-            if(isset($user_franchisee['status']) && $user_franchisee['status'] == 'success'){
-                $data['user_franchises'] = $user_franchisee['result'];
+            $outlets = MyHelper::post('disburse/outlets',['for' => 'select2']);
+
+            if(isset($outlets['status']) && $outlets['status'] == 'success'){
+                $data['outlets'] = $outlets['result'];
             }else{
-                $data['user_franchises'] = [];
+                $data['outlets'] = [];
             }
 
             return view('disburse::setting_bank_account.add', $data);
