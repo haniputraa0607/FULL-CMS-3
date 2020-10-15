@@ -6,6 +6,7 @@
 @include('promocampaign::buyXgetYForm')
 @include('promocampaign::discount-bill')
 @include('promocampaign::discount-delivery')
+@include('promocampaign::template.promo-global-requirement', ['promo_source' => 'promo_campaign'])
 @section('page-style')
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
@@ -92,6 +93,8 @@
 		$product 			= null;
 		$is_all_outlet 		= null;
 		$outlet			 	= null;
+		$payment_method		= null;
+		$shipment_method	= null;
 
 		if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == "0") {
 			$is_all_outlet = $result['is_all_outlet'];
@@ -105,6 +108,13 @@
 			$product = [];
 			for ($i=0; $i < count($result['promo_campaign_product_discount']); $i++) { 
 				$product[] = $result['promo_campaign_product_discount'][$i]['id_product'];
+			}
+		}
+		if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == "0") {
+			$is_all_outlet = $result['is_all_outlet'];
+			$outlet = [];
+			for ($i=0; $i < count($result['outlets']); $i++) { 
+				$outlet[] = $result['outlets'][$i]['id_outlet'];
 			}
 		}
 
@@ -423,6 +433,7 @@
 	@yield('child-script2')
 	@yield('discount-bill-script')
 	@yield('discount-delivery-script')
+	@yield('global-requirement-script')
 	<style>
 	input[type=number]::-webkit-inner-spin-button, 
 	input[type=number]::-webkit-outer-spin-button { 
@@ -657,6 +668,11 @@
 
 					</div>
 				</div>
+			</div>
+
+			{{-- Global Requirement --}}
+			<div class="col-md-12">
+				@yield('global-requirement')
 			</div>
 
 			{{-- PROMO TYPE FORM --}}

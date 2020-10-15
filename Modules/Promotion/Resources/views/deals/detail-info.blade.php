@@ -175,6 +175,7 @@
             <div class="portlet-title"> 
             <span class="caption font-blue sbold uppercase">Voucher Online Rules : {{ $deals['promo_type']??'' }}</span>
             </div>
+            @include('promocampaign::template.promo-global-requirement-detail', ['promo_source' => 'deals_promotion'])
             @if ( 
             		!empty($deals['deals_promotion_product_discount_rules']) 
             		|| !empty($deals['deals_promotion_tier_discount_rules']) 
