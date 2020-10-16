@@ -332,6 +332,7 @@ class SubscriptionController extends Controller
 
             $post['select'] = ['id_outlet','outlet_code','outlet_name'];
             $outlets = MyHelper::post('outlet/ajax_handler', $post);
+            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
             
             if (!empty($outlets['result'])) {
                 $data['outlets'] = $outlets['result'];

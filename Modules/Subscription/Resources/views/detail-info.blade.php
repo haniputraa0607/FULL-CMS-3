@@ -143,6 +143,37 @@
                     <div class="col-md-8 value">: {{ !empty($subscription['is_all_product']) ? 'All product' : (!empty($subscription['products']) ? 'Selected product' : '') }}</div>
                 </div>
                 <div class="row static-info">
+				    <div class="col-md-4 name">Shipment Method</div>
+				    <div class="col-md-1 value">:</div>
+				    <div class="col-md-7 value" style="margin-left: -31px">
+				    	@if ($subscription['is_all_shipment'] == '1')
+				            <div>All Shipment</div>
+				        @elseif ($subscription['is_all_shipment'] == '0')
+				        	@foreach ($subscription['subscription_shipment_method'] as $val)
+				        		<div style="margin-bottom: 10px">{{ '- '.$val['shipment_method'] }}</div>
+				        	@endforeach
+				        @else
+				            -
+				        @endif
+				    </div>
+				</div>
+
+				<div class="row static-info">
+				    <div class="col-md-4 name">Payment Method</div>
+				    <div class="col-md-1 value">:</div>
+				    <div class="col-md-7 value" style="margin-left: -31px">
+				    	@if ($subscription['is_all_payment'] == '1')
+				            <div>All Payment Method</div>
+				        @elseif ($subscription['is_all_payment'] == '0')
+				        	@foreach ($subscription['subscription_payment_method'] as $val)
+				        		<div style="margin-bottom: 10px">{{ '- '.$val['payment_method'] }}</div>
+				        	@endforeach
+				        @else
+				            -
+				        @endif
+				    </div>
+				</div>
+                <div class="row static-info">
                     <div class="col-md-4 name">Subscription Total</div>
                     <div class="col-md-8 value">: {{ !empty($subscription['subscription_total']) ? number_format($subscription['subscription_total']).' Subscriptions' : (($subscription['subscription_total']==0) ? 'unlimited' : '') }}</div>
                 </div>
