@@ -211,4 +211,76 @@ class ProductVariantGroupController extends Controller
 
         return parent::redirect($import, 'Product variant has been updated.');
     }
+
+    public function exportPrice(Request $request){
+        $post = $request->except('_token');
+        $data = MyHelper::post('product-variant-group/export-price', [])['result']??[];
+        $tab_title = 'List Product Variant Group Price';
+
+        if(empty($data)){
+            $datas['All Type'] = $data['products'] = [
+                [
+                    'product' => 'P1 - Kopi Susu',
+                    'product_variant_group_code' => 'PVG001',
+                    'product_variant_group' => 'Hot, S',
+                    'global_price' => 10000,
+                    'price_PP001' => 15000,
+                    'price_PP002' =>13500
+                ],
+                [
+                    'product' => 'P2 - Kopi',
+                    'product_variant_group_code' => 'PVG002',
+                    'product_variant_group' => 'Hot, L',
+                    'global_price' => 15000,
+                    'price_PP001' => 20000,
+                    'price_PP002' =>23000
+                ],
+                [
+                    'product' => 'P3 - Es Milo',
+                    'product_variant_group_code' => 'PVG003',
+                    'product_variant_group' => 'Ice, S, Less Ice',
+                    'global_price' => 15000,
+                    'price_PP001' => 20000,
+                    'price_PP002' =>23000
+                ],
+                [
+                    'product' => 'P3 - Es Milo',
+                    'product_variant_group_code' => 'PVG004',
+                    'product_variant_group' => 'Ice, S, No Ice',
+                    'global_price' => 15000,
+                    'price_PP001' => 20000,
+                    'price_PP002' =>23000
+                ],
+            ];
+        }else{
+            $datas['All Type'] = $data;
+        }
+        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product variant group price.xlsx');
+    }
+
+    public function importPrice(Request $request){
+        $data = [
+            'title'          => 'Product Variant Group',
+            'sub_title'      => 'Import Product Variant Group Price',
+            'menu_active'    => 'product-variant',
+            'submenu_active' => 'product-variant-group-import-price'
+        ];
+
+        return view('productvariant::group.import_price', $data);
+    }
+
+    public function importPriceSave(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
+            if(!empty($data)){
+                $import = MyHelper::post('product-variant-group/import-price', ['data' => $data]);
+            }
+        }
+
+        return $import;
+    }
 }
