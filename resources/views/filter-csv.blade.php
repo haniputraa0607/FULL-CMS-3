@@ -3,7 +3,20 @@ use App\Lib\MyHelper;
 $configs = session('configs');
 $show=$show??false;
 ?>
-<script type="text/javascript">document.getElementById('upload-csv-btn').classList.remove('hidden')</script>
+<script type="text/javascript">
+document.getElementById('upload-csv-btn').classList.remove('hidden')
+window.addEventListener('DOMContentLoaded', function() {
+	$('input[name="csv_content"]').on('change', function(){
+		var url_sample = '{{url('campaign-assets/sample_data.csv')}}';
+		if($('input[name="csv_content"]:checked').val() !== 'phone'){
+			url_sample = '{{url('campaign-assets/sample_data.csv')}}';
+		} else {
+			url_sample = '{{url('campaign-assets/sample_data_phone.csv')}}';
+		}
+		$('#sample-file-link').attr('href', url_sample);
+	});
+});
+</script>
 <div id="csvFilter" class="collapse @if($show) show @endif">
 <div class="portlet light bordered">
 	<div class="portlet-title">
@@ -25,7 +38,7 @@ $show=$show??false;
 			<div class="form-group row">
 				<label class="col-md-3 control-label text-right">Sample File</label>
 				<div class="col-md-9">
-					<a href="{{url('campaign-assets/sample_data.csv')}}"> <i class="fa fa-file-o"></i> Sample CSV file </a> 
+					<a href="{{url('campaign-assets/sample_data.csv')}}" id="sample-file-link"> <i class="fa fa-file-o"></i> Sample CSV file </a> 
 				</div>
 			</div>
 			<div class="form-group row">
