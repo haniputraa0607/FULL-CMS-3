@@ -469,11 +469,25 @@
                         </div>
                         <div class="">
                             <div class="input-icon right">
-                                <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand" required>
+                                <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand[]" multiple required>
                                     <option></option>
+                                @php
+									$selected_brand = [];
+									if (old('id_brand')) {
+										$selected_brand = old('id_brand');
+									}
+									elseif (!empty($result['promo_campaign_brands'])) {
+										$selected_brand = array_column($result['promo_campaign_brands'], 'id_brand');
+									}
+								@endphp
                                 @if (!empty($brands))
                                     @foreach($brands as $brand)
-                                        <option value="{{ $brand['id_brand'] }}" @if (old('id_brand',($result['id_brand']??false))) @if($brand['id_brand'] == old('id_brand',($result['id_brand']??false))) selected @endif @endif>{{ $brand['name_brand'] }}</option>
+                                        <option value="{{ $brand['id_brand'] }}" 
+                                        	@if ($selected_brand) 
+                                        		@if(in_array($brand['id_brand'], $selected_brand)) selected 
+                                        		@endif 
+                                        	@endif
+                                        >{{ $brand['name_brand'] }}</option>
                                     @endforeach
                                 @endif
                                 </select>
