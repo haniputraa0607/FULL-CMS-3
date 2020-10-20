@@ -139,7 +139,7 @@
 		var brand = '{!!$result['id_brand']!!}';
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
-			$('#selectProduct').show()
+			$('#selectProduct, #product-rule-option').show()
 			if (productLoad == 0) {
 				$.ajax({
 					type: "GET",
@@ -219,7 +219,7 @@
 			}
 		});
 
-		$('#selectProduct').hide()
+		$('#selectProduct, #product-rule-option').hide()
 		function loadProduct(selector,callback){
 			if (productLoad == 0) {
 				var valuee=$(selector).data('value');
@@ -294,7 +294,7 @@
 			$('#multipleProduct').prop('required', false)
 			$('#multipleProduct').prop('disabled', true)
 			if (product == 'Selected') {
-				$('#selectProduct').show()
+				$('#selectProduct, #product-rule-option').show()
 				if (productLoad == 0) {
 					$.ajax({
 						type: "GET",
@@ -319,7 +319,7 @@
 					$('#multipleProduct').prop('disabled', false)
 				}
 			} else {
-				$('#selectProduct').hide()
+				$('#selectProduct, #product-rule-option').hide()
 			}
 		});
 		$('input[name=discount_type]').change(function() {
@@ -364,7 +364,7 @@
 		var is_all_product = '{!!$is_all_product!!}'
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
-			$('#selectProduct').show()
+			$('#selectProduct, #product-rule-option').show()
 			if (productLoad == 0) {
 				$.ajax({
 					type: "GET",
@@ -551,7 +551,17 @@
 						</div>
 						<div class="row static-info">
                             <div class="col-md-4 name">Brand</div>
-                            <div class="col-md-8 value">: {{ $result['brand']['name_brand']??'' }}</div>
+                            <div class="col-md-8 value">: 
+                            	@php
+                            		foreach ($result['brands'] as $key => $value) {
+	                            		if ($key == 0) {
+	                            			$comma = '';
+	                            		}else{
+	                            			$comma = ', ';
+	                            		}
+	                            		echo $comma.$value['name_brand'];
+                            		}
+                            	@endphp</div>
                         </div>
 						<div class="row static-info">
 							<div class="col-md-4 name">Tag</div>
@@ -761,6 +771,24 @@
 										</div>
 									</div>
 								</div>
+
+								<div id="product-rule-option">
+									<label class="control-label">Product Rule</label>
+									<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
+									<div class="mt-radio-list">
+										<label class="mt-radio mt-radio-outline"> Semua product
+											<input type="radio" value="and" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'and') checked @endif required/>
+											<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>semua</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+											<span></span>
+										</label>
+										<label class="mt-radio mt-radio-outline"> Salah satu product
+											<input type="radio" value="or" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'or') checked @endif required/>
+											<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>salah satu</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+											<span></span>
+										</label>
+									</div>
+								</div>
+
 								<div id="selectProduct" class="form-group row" style="width: 100%!important">
 									<div class="">
 										<div class="col-md-6">
