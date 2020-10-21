@@ -98,6 +98,21 @@
             $('#editAchievement').find("select[name='category[name]']").val(data.id_achievement_category).trigger('change')
             $('#editAchievement').find("img").attr("src", data.logo_badge_default)
             $('#editAchievement').find("input[name='group[name]']").val(data.name).trigger('change')
+
+            $('#editAchievement').find("input[name='group[date_start]']").val(data.date_start).trigger('change')
+            if (!data.is_start) {
+                $('#editAchievement').find("input[name='group[date_start]']").removeAttr('disabled');
+            } else {
+                $('#editAchievement').find("input[name='group[date_start]']").attr('disabled', 'disabled');
+            }
+
+            $('#editAchievement').find("input[name='group[date_end]']").val(data.date_end).trigger('change')
+            if (!data.is_start || data.date_end.length === 0) {
+                $('#editAchievement').find("input[name='group[date_end]']").removeAttr('disabled');
+            } else {
+                $('#editAchievement').find("input[name='group[date_end]']").attr('disabled', 'disabled');
+            }
+
             // $('#editAchievement').find("input[name='group[publish_start]']").val(data.publish_start).trigger('change')
             // $('#editAchievement').find("input[name='group[publish_end]']").val(data.publish_end).trigger('change')
             // $('#editAchievement').find("input[name='group[date_start]']").val(data.date_start).trigger('change')
@@ -315,7 +330,7 @@
             <form role="form" action="{{ url('achievement/update/achievement') }}" method="post" enctype="multipart/form-data" class="form-horizontal modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Modal Title</h4>
+                    <h4 class="modal-title">Edit Achievement</h4>
                 </div>
                 <div class="modal-body" style="padding: 20ox;display: table;width: 100%;">
                     <div class="col-md-12">
@@ -656,6 +671,42 @@
                                             <input type="radio" id="calculate_0" name="group[is_calculate]" value="0"> No
                                             <span></span>
                                         </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"> Achievement Start Periode <span class="required" aria-required="true"> * </span> </label>
+                                <div class="col-md-5">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <input type="text" class="form_datetime form-control" name="group[date_start]" value="{{ old('group.date_start') }}" autocomplete="off">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Start Peroide Achievement" data-container="body"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"> Achievement End Periode </label>
+                                <div class="col-md-5">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <input type="text" class="form_datetime form-control" name="group[date_end]" value="{{ old('group.date_end') }}" autocomplete="off">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="End Peroide Achievement (Leave this column, if the achievement is active forever)" data-container="body"></i>
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

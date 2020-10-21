@@ -960,10 +960,10 @@
                                                 <span class="sale-info"> Status 
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
-                                                @if ($data['group']['date_start'] < date('Y-m-d H:i:s'))
-                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                                                @elseif (!is_null($data['group']['date_end']) && $data['group']['date_end'] > date('Y-m-d H:i:s'))
+                                                @if (!is_null($data['group']['date_end']) && $data['group']['date_end'] < date('Y-m-d H:i:s'))
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
+                                                @elseif ($data['group']['date_start'] < date('Y-m-d H:i:s'))
+                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
                                                 @else
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
                                                 @endif
