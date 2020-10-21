@@ -1229,7 +1229,7 @@ class SettingController extends Controller
             }
         }else{
             $payment_messages=MyHelper::post('setting',['key'=>'payment_messages'])['result']['value_text']??'Kamu yakin ingin mengambil voucher ini?';
-            $payment_messages_cash=MyHelper::post('setting',['key'=>'payment_messages_cash'])['result']['value_text']??'Kamu yakin ingin membeli subscription %deals_title% dengan harga %cash% ?';
+            $payment_messages_cash=MyHelper::post('setting',['key'=>'payment_messages_cash'])['result']['value_text']??'Kamu yakin ingin membeli deals %deals_title% dengan harga %cash% ?';
             $payment_messages_point=MyHelper::post('setting',['key'=>'payment_messages_point'])['result']['value_text']??'Anda akan menukarkan %point% points anda dengan Voucher %deals_title%?';
             $payment_success_messages=MyHelper::post('setting',['key'=>'payment_success_messages'])['result']['value_text']??'Apakah kamu ingin menggunakan Voucher sekarang?';
             $payment_fail_messages=MyHelper::post('setting',['key'=>'payment_fail_messages'])['result']['value_text']??'Mohon maaf, point anda tidak cukup';
