@@ -341,10 +341,11 @@ class PromoCampaignController extends Controller
 
                 $data['result'] = $get_data['result'];
                 $data['result']['id_promo_campaign'] = $slug;
+            	$data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
 
             } else {
 
-                return redirect('promo-campaign')->withErrors($get_data['messages']);
+                return redirect('promo-campaign')->withErrors($get_data['messages']??['Something went wrong']);
             }
 
             return view('promocampaign::promo-campaign-step-2', $data);

@@ -4,6 +4,9 @@
 @extends('layouts.main-closed')
 @include('promocampaign::bulkForm')
 @include('promocampaign::buyXgetYForm')
+@include('promocampaign::discount-bill')
+@include('promocampaign::discount-delivery')
+@include('promocampaign::template.promo-global-requirement', ['promo_source' => 'promo_campaign'])
 @section('page-style')
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
@@ -90,6 +93,8 @@
 		$product 			= null;
 		$is_all_outlet 		= null;
 		$outlet			 	= null;
+		$payment_method		= null;
+		$shipment_method	= null;
 
 		if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == "0") {
 			$is_all_outlet = $result['is_all_outlet'];
@@ -103,6 +108,13 @@
 			$product = [];
 			for ($i=0; $i < count($result['promo_campaign_product_discount']); $i++) { 
 				$product[] = $result['promo_campaign_product_discount'][$i]['id_product'];
+			}
+		}
+		if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == "0") {
+			$is_all_outlet = $result['is_all_outlet'];
+			$outlet = [];
+			for ($i=0; $i < count($result['outlets']); $i++) { 
+				$outlet[] = $result['outlets'][$i]['id_outlet'];
 			}
 		}
 
@@ -245,9 +257,9 @@
 			$('#tabContainer .tabContent').hide();
 			promo_type = $('select[name=promo_type] option:selected').val();
 			// $('#tabContainer input:not(input[name="promo_type"]),#tabContainer select').prop('disabled',true);
-			$('#productDiscount, #bulkProduct, #buyXgetYProduct').hide().find('input, textarea, select').prop('disabled', true);
+			$('#productDiscount, #bulkProduct, #buyXgetYProduct, #discount-bill, #discount-delivery').hide().find('input, textarea, select').prop('disabled', true);
 
-			if (promo_type == 'Product Discount') {
+			if (promo_type == 'Product discount') {
 				product = $('select[name=filter_product] option:selected').val();
 				$('#productDiscount').show().find('input, textarea, select').prop('disabled', false);
 				if (product == 'All Product') {
@@ -265,6 +277,14 @@
 				reOrder2();
 				$('#buyXgetYProduct').show().find('input, textarea, select').prop('disabled', false);
 				loadProduct('#multipleProduct3',reOrder2);
+			}
+			else if(promo_type == 'Discount bill'){
+
+				$('#discount-bill').show().find('input, textarea, select').prop('disabled', false);
+			}
+			else if(promo_type == 'Discount delivery'){
+
+				$('#discount-delivery').show().find('input, textarea, select').prop('disabled', false);
 			}
 		}
 
@@ -411,6 +431,9 @@
 	</script>
 	@yield('child-script')
 	@yield('child-script2')
+	@yield('discount-bill-script')
+	@yield('discount-delivery-script')
+	@yield('global-requirement-script')
 	<style>
 	input[type=number]::-webkit-inner-spin-button, 
 	input[type=number]::-webkit-outer-spin-button { 
@@ -617,7 +640,7 @@
 						</div>
 						<div id="specific-user" class="form-group" @if($result['user_type'] != 'Specific user') style="display: none;" @endif>
 							<label>Add User</label>
-							<textarea class="form-control" rows="3" name="specific_user" placeholder="081xxxxxxxxx, 082xxxxxxxxx, ..." style="resize: vertical;"></textarea>
+							<textarea class="form-control" rows="3" name="specific_user" placeholder="081xxxxxxxxx, 082xxxxxxxxx, ..." style="resize: vertical;">{{ $result['specific_user']??null }}</textarea>
 							<p class="help-block">Comma ( , ) separated for multiple phone number</p>
 						</div>
 						<div class="form-group" style="height: 55px;">
@@ -647,6 +670,15 @@
 				</div>
 			</div>
 
+			{{-- Global Requirement --}}
+			{{-- 
+			<div class="col-md-12">
+				@yield('global-requirement')
+			</div>
+			 --}}
+			 <input type="hidden" name="filter_shipment" value="all_shipment">
+			 <input type="hidden" name="filter_payment" value="all_payment">
+
 			{{-- PROMO TYPE FORM --}}
 			<div class="col-md-12">
 				<div class="portlet light bordered" id="promotype-form">
@@ -668,12 +700,52 @@
 									</br>
 									</br> Bulk/Tier Product : Promo hanya berlaku untuk suatu product setelah melakukan pembelian dalam jumlah yang telah ditentukan
 									</br>
-									</br> Buy X get Y : Promo hanya berlaku untuk product tertentu" data-container="body" data-html="true"></i>
+									</br> Buy X get Y : Promo hanya berlaku untuk product tertentu
+									{{-- </br>
+									</br> Discount Bill : Promo berupa potongan harga untuk total transaksi / bill
+									</br>
+									</br> Discount Delivery : Promo berupa potongan harga untuk biaya pengiriman --}}
+									" data-container="body" data-html="true"></i>
 									<select class="form-control" name="promo_type" required>
-										<option value="" disabled {{ empty($result['promo_campaign_product_discount_rules']) && empty($result['promo_campaign_tier_discount_rules']) && empty($result['promo_campaign_buyxgety_rules']) ? 'selected' : '' }}> Select Promo Type </option>
-										<option value="Product Discount" {{ !empty($result['promo_campaign_product_discount_rules']) ? 'selected' : '' }} title="Promo berlaku untuk semua product atau product tertentu tanpa jumlah minimum"> Product Discount </option>
-										<option value="Tier discount" {{ !empty($result['promo_campaign_tier_discount_rules']) ? 'selected' : '' }} title="Promo hanya berlaku untuk suatu product setelah melakukan pembelian dalam jumlah yang telah ditentukan"> Bulk/Tier Product </option>
-										<option value="Buy X Get Y" {{ !empty($result['promo_campaign_buyxgety_rules']) ? 'selected' : '' }} title="Promo hanya berlaku untuk product tertentu"> Buy X Get Y </option>
+										<option value="" disabled 
+											@if (empty($result['promo_campaign_product_discount_rules'])
+												&& empty($result['promo_campaign_tier_discount_rules'])
+												&& empty($result['promo_campaign_buyxgety_rules'])
+												&& empty($result['promo_campaign_discount_bill_rules'])
+												&& empty($result['promo_campaign_discount_delivery_rules'])
+											) selected 
+											@endif
+											> Select Promo Type </option>
+										<option value="Product discount" 
+											@if ( old('promo_type') && old('promo_type') == 'Product discount' ) selected 
+											@elseif ( !empty($result['promo_campaign_product_discount_rules']) ) selected 
+											@endif
+											title="Promo berlaku untuk semua product atau product tertentu tanpa jumlah minimum"
+											> Product Discount </option>
+										<option value="Tier discount" 
+											@if ( old('promo_type') && old('promo_type') == 'Tier discount' ) selected 
+											@elseif ( !empty($result['promo_campaign_tier_discount_rules']) ) selected 
+											@endif
+											title="Promo hanya berlaku untuk suatu product setelah melakukan pembelian dalam jumlah yang telah ditentukan"
+											> Bulk/Tier Product </option>
+										<option value="Buy X Get Y" 
+											@if ( old('promo_type') && old('promo_type') == 'Buy X Get Y' ) selected 
+											@elseif ( !empty($result['promo_campaign_buyxgety_rules']) ) selected 
+											@endif
+											title="Promo hanya berlaku untuk product tertentu"
+											> Buy X Get Y </option>
+										{{-- <option value="Discount bill" 
+											@if ( old('promo_type') && old('promo_type') == 'Discount bill' ) selected 
+											@elseif ( !empty($result['promo_campaign_discount_bill_rules']) ) selected 
+											@endif
+											title="Promo berupa potongan harga untuk total transaksi / bill"
+											> Discount Bill </option>
+										<option value="Discount delivery" 
+											@if ( old('promo_type') && old('promo_type') == 'Discount delivery' ) selected 
+											@elseif ( !empty($result['promo_campaign_discount_delivery_rules']) ) selected 
+											@endif
+											title="Promo berupa potongan harga untuk total transaksi / delivery"
+											> Discount Delivery </option> --}}
 		                            </select>
 								</div>
 							</div>
@@ -702,6 +774,21 @@
 										</div>
 									</div>
 								</div>
+								{{-- <div class="form-group">
+									<label class="control-label">Min basket size</label>
+									<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
+									<div class="row">
+										<div class="col-md-3">
+											<div class="input-group" >
+												<div class="input-group-addon">IDR</div>
+												<input type="text" class="form-control text-center digit_mask" name="min_basket_size" placeholder="" 
+													@if(old('min_basket_size') != "") value="{{old('min_basket_size')}}" 
+													@elseif(isset($result['min_basket_size'])) value="{{$result['min_basket_size']}}" 
+													@endif min="0" oninput="validity.valid||(value='');" autocomplete="off">
+											</div>
+										</div>
+									</div>
+								</div> --}}
 								<div class="form-group">
 									<label class="control-label">Max product discount per transaction</label>
 									<i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal masing-masing produk yang dapat dikenakan diskon dalam satu transaksi </br></br>Note : Kosongkan jika jumlah maksimal produk tidak dibatasi" data-container="body" data-html="true"></i>
@@ -763,6 +850,12 @@
 							<div id="buyXgetYProduct" class="p-t-10px">
 								@yield('buyXgetYForm')
 							</div>
+							{{-- <div id="discount-bill" class="p-t-10px">
+								@yield('discount-bill')
+							</div>
+							<div id="discount-delivery" class="p-t-10px">
+								@yield('discount-delivery')
+							</div> --}}
 						</div>
 					</div>
 				</div>

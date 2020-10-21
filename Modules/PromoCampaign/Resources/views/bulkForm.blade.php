@@ -31,6 +31,25 @@
 		</div>
 	</div>
 </div>
+{{-- <div class="form-group">
+	<div class="row">
+		<div class="col-md-12">
+			<label class="control-label">Min basket size</label>
+			<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="input-group" >
+						<div class="input-group-addon">IDR</div>
+						<input type="text" class="form-control text-center digit_mask" name="min_basket_size" placeholder="" 
+							@if(old('min_basket_size') != "") value="{{old('min_basket_size')}}" 
+							@elseif(isset($result['min_basket_size'])) value="{{$result['min_basket_size']}}" 
+							@endif min="0" oninput="validity.valid||(value='');" autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> --}}
 <div id="ruleSection">
 	<div class="row">
 		<div class="col-md-12">

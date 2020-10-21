@@ -352,6 +352,8 @@ class UsersController extends Controller
 				if($post['action'] == 'delete'){
 					$action = MyHelper::post('users/delete', ['phone' => $phone]);
 					if($action['status'] == 'success'){
+						unset($post['action']);
+						Session::put('form',$post);
 						return back()->withSuccess($action['result']);
 					} else{
 						return back()->withErrors($action['messages']);
@@ -361,6 +363,8 @@ class UsersController extends Controller
 				if($post['action'] == 'phone verified'){
 					$action = MyHelper::post('users/phone/verified', ['phone' => $phone]);
 					if($action['status'] == 'success'){
+						unset($post['action']);
+						Session::put('form',$post);
 						return back()->withSuccess($action['result']);
 					} else{
 						return back()->withErrors($action['messages']);
@@ -370,6 +374,8 @@ class UsersController extends Controller
 				if($post['action'] == 'phone not verified'){
 					$action = MyHelper::post('users/phone/unverified', ['phone' => $phone]);
 					if($action['status'] == 'success'){
+						unset($post['action']);
+						Session::put('form',$post);
 						return back()->withSuccess($action['result']);
 					} else{
 						return back()->withErrors($action['messages']);
@@ -379,6 +385,8 @@ class UsersController extends Controller
 				if($post['action'] == 'email verified'){
 					$action = MyHelper::post('users/email/verified', ['phone' => $phone]);
 					if($action['status'] == 'success'){
+						unset($post['action']);
+						Session::put('form',$post);
 						return back()->withSuccess($action['result']);
 					} else{
 						return back()->withErrors($action['messages']);
@@ -388,6 +396,8 @@ class UsersController extends Controller
 				if($post['action'] == 'email not verified'){
 					$action = MyHelper::post('users/email/unverified', ['phone' => $phone]);
 					if($action['status'] == 'success'){
+						unset($post['action']);
+						Session::put('form',$post);
 						return back()->withSuccess($action['result']);
 					} else{
 						return back()->withErrors($action['messages']);

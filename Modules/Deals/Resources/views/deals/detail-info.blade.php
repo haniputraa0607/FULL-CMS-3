@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 
-            @if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
+            @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
             <div class="row static-info text-center">
                 <div class="col-md-11 value">
                     <a class="btn blue" href="{{ url('/'.$rpage)}}/step1/{{$deals['id_deals']}}">Edit Detail</a>
@@ -191,7 +191,7 @@
 	                    </div>
 	                </div>
 
-	                @if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
+	                @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
 	                <div class="row static-info">
 	                    <div class="col-md-11 value">
 	                        <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
@@ -202,7 +202,7 @@
 	            <span class="sale-num font-red sbold">
 	                No Deals Rules
 	            </span>
-	            @if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
+	            @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
 	            <div class="row static-info">
 	                <div class="col-md-11 value">
 	                    <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Create Rule</a>
@@ -218,14 +218,18 @@
             <div class="portlet-title"> 
             <span class="caption font-blue sbold uppercase">Voucher Online Rules : {{ $deals['promo_type']??'' }}</span>
             </div>
+            {{-- @include('promocampaign::template.promo-global-requirement-detail', ['promo_source' => 'deals']) --}}
             @if ( 
-            		!empty($deals['deals_product_discount_rules']) || 
-            		!empty($deals['deals_tier_discount_rules']) || 
-            		!empty($deals['deals_buyxgety_rules']) ||
-            		!empty($deals['deals_promotion_product_discount_rules']) || 
-            		!empty($deals['deals_promotion_tier_discount_rules']) || 
-            		!empty($deals['deals_promotion_buyxgety_rules']) 
+            		!empty($deals['deals_product_discount_rules']) 
+            		|| !empty($deals['deals_tier_discount_rules']) 
+            		|| !empty($deals['deals_buyxgety_rules']) 
+            		|| !empty($deals['deals_promotion_product_discount_rules']) 
+            		|| !empty($deals['deals_promotion_tier_discount_rules']) 
+            		|| !empty($deals['deals_promotion_buyxgety_rules']) 
+            		|| !empty($deals['deals_discount_bill_rules']) 
+            		|| !empty($deals['deals_discount_delivery_rules']) 
             	)
+            	{{-- Product Discount --}}
                 @if (isset($deals['deals_product_discount_rules']) && $deals['deals_product_discount_rules'] != null)
                     <div class="row static-info">
                         <div class="col-md-4 name">Product Requirement</div>
@@ -258,6 +262,12 @@
                             @endif
                         </div>
                     </div>
+                    {{-- <div class="row static-info">
+                        <div class="col-md-4 name">Min Basket Size</div>
+                        <div class="col-md-8 value">: 
+                                {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
+                        </div>
+                    </div> --}}
                     <div class="row static-info">
                         <div class="col-md-4 name">Max Product</div>
                         <div class="col-md-8 value">: 
@@ -293,6 +303,7 @@
                             @endif
                         @endif
                     </div>
+                {{-- Tier Discount --}}
                 @elseif (isset($deals['deals_tier_discount_rules']) && $deals['deals_tier_discount_rules'] != null)
                     <div class="row static-info">
                         <div class="col-md-4 name">Product Requirement</div>
@@ -306,6 +317,12 @@
                             @endif
                         </div>
                     </div>
+                    {{-- <div class="row static-info">
+                        <div class="col-md-4 name">Min Basket Size</div>
+                        <div class="col-md-8 value">: 
+                                {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
+                        </div>
+                    </div> --}}
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_6">
                         <thead>
                             <tr>
@@ -324,6 +341,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                {{-- Buy X Get Y Discount --}}
                 @elseif (isset($deals['deals_buyxgety_rules']) && $deals['deals_buyxgety_rules'] != null)
                     <div class="row static-info">
                         <div class="col-md-4 name">Product Requirement</div>
@@ -337,6 +355,12 @@
                             @endif
                         </div>
                     </div>
+                    {{-- <div class="row static-info">
+                        <div class="col-md-4 name">Min Basket Size</div>
+                        <div class="col-md-8 value">: 
+                                {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
+                        </div>
+                    </div> --}}
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_7">
                         <thead>
                             <tr>
@@ -368,33 +392,79 @@
 	                                    </td>
 	                                    <td>
 	                                    {{ ( ($res['discount_percent']??'') == 100) ? 'Free' : ( ($res['discount_percent']??false) ? $res['discount_percent'].' % (Max : IDR '.number_format($res['max_percent_discount']).')' : (($res['discount_nominal']??false) ? 'IDR '.number_format($res['discount_nominal']) : '' ) ) }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @elseif (isset($deals['deals_discount_global_rule']) && $deals['deals_discount_global_rule'] != null) 
-                                        @if ($deals['deals_discount_global_rule'] != null)
-                                        <div class="row static-info">
-                                            <div class="col-md-4 name">Discount</div>
-                                            <div class="col-md-8 value">: 
-                                                @if ($deals['deals_discount_global_rule']['discount_type'] == 'Percent')
-                                                    {{ $deals['deals_discount_global_rule']['discount_value'] }} %
-                                                @elseif ($deals['deals_discount_global_rule']['discount_type'] == 'Nominal')
-                                                    {{ 'IDR '.number_format($deals['deals_discount_global_rule']['discount_value']) }}
-                                                @else
-                                                    No discount
-                                                @endif
-                                            </div>
-                                        </div>
-                                        @endif
-                                    @endif
-                                    @if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
-                                    <div class="row static-info">
-                                        <div class="col-md-11 value">
-                                            <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
-                                        </div>
-                                    </div>
-                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                {{-- Bill Discount --}}
+                {{-- @elseif (!empty($deals['deals_discount_bill_rules'])) 
+                    <div class="row static-info">
+                        <div class="col-md-4 name">Discount</div>
+                        <div class="col-md-8 value">: 
+                            @if ($deals['deals_discount_bill_rules']['discount_type'] == 'Percent')
+                                {{ $deals['deals_discount_bill_rules']['discount_value'] }} % 
+                                @if (!empty($deals['deals_discount_bill_rules']['max_percent_discount']))
+                                	(max: IDR {{ number_format($deals['deals_discount_bill_rules']['max_percent_discount']) }})
+                                @endif
+                            @elseif ($deals['deals_discount_bill_rules']['discount_type'] == 'Nominal')
+                                {{ 'IDR '.number_format($deals['deals_discount_bill_rules']['discount_value']) }}
+                            @else
+                                No discount
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row static-info">
+                        <div class="col-md-4 name">Min Basket Size</div>
+                        <div class="col-md-8 value">: 
+                                {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
+                        </div>
+                    </div> --}}
+                {{-- Delivery Discount --}}
+                {{-- @elseif (!empty($deals['deals_discount_delivery_rules'])) 
+                    <div class="row static-info">
+                        <div class="col-md-4 name">Discount</div>
+                        <div class="col-md-8 value">: 
+                            @if ($deals['deals_discount_delivery_rules']['discount_type'] == 'Percent')
+                                {{ $deals['deals_discount_delivery_rules']['discount_value'] }} % 
+                                @if (!empty($deals['deals_discount_delivery_rules']['max_percent_discount']))
+                                	(max: IDR {{ number_format($deals['deals_discount_delivery_rules']['max_percent_discount']) }})
+                                @endif
+                            @elseif ($deals['deals_discount_delivery_rules']['discount_type'] == 'Nominal')
+                                {{ 'IDR '.number_format($deals['deals_discount_delivery_rules']['discount_value']) }}
+                            @else
+                                No discount
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row static-info">
+                        <div class="col-md-4 name">Min Basket Size</div>
+                        <div class="col-md-8 value">: 
+                                {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
+                        </div>
+                    </div> --}}
+            	@elseif (isset($deals['deals_discount_global_rule']) && $deals['deals_discount_global_rule'] != null) 
+                	@if ($deals['deals_discount_global_rule'] != null)
+	                <div class="row static-info">
+	                    <div class="col-md-4 name">Discount</div>
+	                    <div class="col-md-8 value">: 
+	                        @if ($deals['deals_discount_global_rule']['discount_type'] == 'Percent')
+	                            {{ $deals['deals_discount_global_rule']['discount_value'] }} %
+	                        @elseif ($deals['deals_discount_global_rule']['discount_type'] == 'Nominal')
+	                            {{ 'IDR '.number_format($deals['deals_discount_global_rule']['discount_value']) }}
+	                        @else
+	                            No discount
+	                        @endif
+	                    </div>
+	                </div>
+	                @endif
+	            @endif
+	            @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
+	            <div class="row static-info">
+	                <div class="col-md-11 value">
+	                    <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
+	                </div>
+	            </div>
+	            @endif
             @else
             <span class="sale-num font-red sbold">
                 No Deals Rules
