@@ -258,7 +258,7 @@ $configs    		= session('configs');
 										<td>P1</td>
 										<td>YES</td>
 										<td>S,M,L</td>
-										<td>Hot,Ice,Less Ice,More Ice</td>
+										<td>Hot,Ice</td>
 									</tr>
 									<tr>
 										<td>Product 2</td>

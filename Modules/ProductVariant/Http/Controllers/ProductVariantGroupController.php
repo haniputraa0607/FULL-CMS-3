@@ -160,7 +160,7 @@ class ProductVariantGroupController extends Controller
 
     public function export(Request $request) {
         $post = $request->except('_token');
-        $data = MyHelper::post('product-variant-group', [])['result']??[];
+        $data = MyHelper::get('product-variant-group/export')['result']??[];
         $tab_title = 'List Product Variant';
 
         if(empty($data)){
@@ -170,7 +170,7 @@ class ProductVariantGroupController extends Controller
                     'product_code' => 'P1',
                     'use_variant_status' => 'YES',
                     'Size' => 'S,M,L',
-                    'Type' => 'Hot,Ice,Less Ice,More Ice'
+                    'Type' => 'Hot,Ice'
                 ],
                 [
                     'product_name' => 'Product 2',
@@ -181,7 +181,7 @@ class ProductVariantGroupController extends Controller
                 ]
             ];
         }else{
-
+            $datas['All Type'] = $data;
         }
         return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product variant group.xlsx');
     }
@@ -205,7 +205,7 @@ class ProductVariantGroupController extends Controller
             $path = $request->file('import_file')->getRealPath();
             $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
             if(!empty($data)){
-                $import = MyHelper::post('product-variant/import', ['data' => $data]);
+                $import = MyHelper::post('product-variant-group/import', ['data' => $data]);
             }
         }
 
@@ -238,19 +238,11 @@ class ProductVariantGroupController extends Controller
                 [
                     'product' => 'P3 - Es Milo',
                     'product_variant_group_code' => 'PVG003',
-                    'product_variant_group' => 'Ice, S, Less Ice',
+                    'product_variant_group' => 'Ice, S',
                     'global_price' => 15000,
                     'price_PP001' => 20000,
                     'price_PP002' =>23000
-                ],
-                [
-                    'product' => 'P3 - Es Milo',
-                    'product_variant_group_code' => 'PVG004',
-                    'product_variant_group' => 'Ice, S, No Ice',
-                    'global_price' => 15000,
-                    'price_PP001' => 20000,
-                    'price_PP002' =>23000
-                ],
+                ]
             ];
         }else{
             $datas['All Type'] = $data;

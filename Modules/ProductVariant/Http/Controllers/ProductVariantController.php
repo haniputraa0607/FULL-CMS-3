@@ -173,10 +173,6 @@ class ProductVariantController extends Controller
                 [
                     'product_variant_name' => 'Type',
                     'product_variant_child' => 'Hot,Ice'
-                ],
-                [
-                    'product_variant_name' => 'Ice',
-                    'product_variant_child' => 'Less Ice,More Ice'
                 ]
             ];
         }else{
