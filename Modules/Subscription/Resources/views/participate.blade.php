@@ -21,7 +21,7 @@
                         target: "tr"
                     }
                 },
-                order: [0, "asc"],
+                order: [0, "desc"],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "All"]

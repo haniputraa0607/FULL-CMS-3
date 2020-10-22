@@ -611,7 +611,7 @@ $configs = session('configs');
    		    	        	            	@if ($value['enquiry_subject'] == "Kritik, Saran & Keluhan")
    		    	        	                <tr>
    		    	        	                    <td>{{ $no }}</td>
-   		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
+   		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
 
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
@@ -635,7 +635,7 @@ $configs = session('configs');
    		    	        	                   <div class="modal-dialog">
    		    	        	                       <div class="modal-content">
    		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
+   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
    		    	        	                           </div>
    		    	        	                           <div class="col-md-12" style="margin-top: 10px">
    		    	        	                              <div class="portlet light portlet-fit bordered">
@@ -671,7 +671,7 @@ $configs = session('configs');
 																				Visiting Time
 																			</label>
 																			<div class="col-md-9">
-																				<input type="text" readonly value="{{ date("d F Y H:i", strtotime($value['visiting_time'])) }}" class="form-control" />
+																				<input type="text" readonly value="@if(!empty($value['visiting_time'])){{ date("d F Y H:i:s", strtotime($value['visiting_time'])) }}@endif" class="form-control" />
 																			</div>
 																		</div>
 																		<div class="form-group">
@@ -742,7 +742,7 @@ $configs = session('configs');
 		    	        	            	@if ($value['enquiry_subject'] == "Pengubahan Data Diri")
 		    	        	                 <tr>
 												<td>{{ $no }}</td>
-   		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
+   		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
@@ -763,7 +763,7 @@ $configs = session('configs');
    		    	        	                   <div class="modal-dialog">
    		    	        	                       <div class="modal-content">
    		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
+   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
    		    	        	                           </div>
    		    	        	                           <div class="col-md-12" style="margin-top: 10px">
 															<div class="portlet light portlet-fit bordered">
@@ -854,7 +854,7 @@ $configs = session('configs');
 		    	        	            	@if ($value['enquiry_subject'] == "Lain - Lain")
 		    	        	                 <tr>
 												<td>{{ $no }}</td>
-   		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
+   		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
@@ -875,7 +875,7 @@ $configs = session('configs');
    		    	        	                   <div class="modal-dialog">
    		    	        	                       <div class="modal-content">
    		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
+   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
    		    	        	                           </div>
    		    	        	                           <div class="col-md-12" style="margin-top: 10px">
 															<div class="portlet light portlet-fit bordered">
@@ -966,7 +966,7 @@ $configs = session('configs');
 		    	        	            	@if ($value['enquiry_subject'] == "Career")
 		    	        	                 <tr>
    		    	        	                    <td>{{ $no }}</td>
-   		    	        	                    <td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
+   		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
@@ -987,7 +987,7 @@ $configs = session('configs');
    		    	        	                   <div class="modal-dialog">
    		    	        	                       <div class="modal-content">
    		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
+   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
    		    	        	                           </div>
    		    	        	                           <div class="col-md-12" style="margin-top: 10px">
 															<div class="portlet light portlet-fit bordered">
