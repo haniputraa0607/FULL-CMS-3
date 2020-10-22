@@ -474,6 +474,17 @@
                                         @endif
                                     </div>
                                 </div>
+                                @if ( (isset($result['promo_campaign_product_discount_rules']['is_all_product']) 
+                                		&& $result['promo_campaign_product_discount_rules']['is_all_product'] == 0)  
+                                	|| isset($result['product_rule'])
+                                )
+                                <div class="row static-info">
+                                    <div class="col-md-4 name">Product Rule</div>
+                                    <div class="col-md-8 value">: 
+                                        {{ $result['product_rule'] && $result['product_rule'] == 'and' ? 'All items must be present' : 'One of the items must exist' }}
+                                    </div>
+                                </div>
+                                @endif
                                 @include('promocampaign::template.promo-global-requirement-detail', ['promo_source' => 'promo_campaign'])
                                 @if ( !empty($result['step_complete']) )
                                 	{{-- Product Discount --}}
@@ -496,14 +507,6 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        @if ($result['promo_campaign_product_discount_rules']['is_all_product'] == '0')
-                                        <div class="row static-info">
-                                            <div class="col-md-4 name">Product Rule</div>
-                                            <div class="col-md-8 value">: 
-                                                {{ $result['product_rule'] && $result['product_rule'] == 'and' ? 'Semua product' : 'Salah satu product' }}
-                                            </div>
-                                        </div>
-                                        @endif
                                         @if ($result['promo_campaign_product_discount_rules'] != null)
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Discount</div>

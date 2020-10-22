@@ -796,12 +796,12 @@
 									<label class="control-label">Product Rule</label>
 									<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
 									<div class="mt-radio-list">
-										<label class="mt-radio mt-radio-outline"> Semua product
+										<label class="mt-radio mt-radio-outline"> All items must be present
 											<input type="radio" value="and" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'and') checked @endif required/>
 											<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>semua</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
 											<span></span>
 										</label>
-										<label class="mt-radio mt-radio-outline"> Salah satu product
+										<label class="mt-radio mt-radio-outline"> One of the items must exist
 											<input type="radio" value="or" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'or') checked @endif required/>
 											<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>salah satu</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
 											<span></span>
@@ -855,7 +855,7 @@
 										<div class="col-md-3">
 											<label class="control-label" id="product-discount-value">Discount Value</label>
 											<span class="required" aria-required="true"> * </span>
-											<i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon yang diberikan. Persentase akan dihitung dari harga produk + harga modifier" data-container="body"></i>
+											<i class="fa fa-question-circle tooltips" data-original-title="Besar diskon yang akan diberikan untuk setiap produk. Diskon akan dihitung dari harga produk tanpa harga modifier" data-container="body"></i>
 											<div class="input-group @if(isset($result['promo_campaign_product_discount_rules']['discount_type']) && $result['promo_campaign_product_discount_rules']['discount_type'] == "Percent") col-md-5 @else col-md-12 @endif" id="product-discount-group">
 												<div class="input-group-addon" id="product-addon-rp" @if(isset($result['promo_campaign_product_discount_rules']['discount_type']) && $result['promo_campaign_product_discount_rules']['discount_type'] == "Percent") style="display: none;" @endif>IDR</div>
 												<input required type="text" class="form-control text-center" name="discount_value" placeholder="" @if(isset($result['promo_campaign_product_discount_rules']['discount_value']) && $result['promo_campaign_product_discount_rules']['discount_value'] != "") value="{{$result['promo_campaign_product_discount_rules']['discount_value']}}" @elseif(old('discount_value') != "") value="{{old('discount_value')}}" @endif min="0" oninput="validity.valid||(value='');" autocomplete="off">
