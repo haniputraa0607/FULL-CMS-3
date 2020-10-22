@@ -110,6 +110,11 @@
 				$product[] = $result['promo_campaign_product_discount'][$i]['id_product'];
 			}
 		}
+
+		if (!empty($result['promo_campaign_tier_discount_product'])) {
+			$product = array_column($result['promo_campaign_tier_discount_product'], 'id_product');
+		}
+// dd($product, $result);
 		if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == "0") {
 			$is_all_outlet = $result['is_all_outlet'];
 			$outlet = [];
@@ -137,6 +142,8 @@
 
 		var is_all_product = '{!!$is_all_product!!}';
 		var brand = '{!!$result['id_brand']!!}';
+		var selectedProduct = JSON.parse('{!!json_encode($product)!!}');
+
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
 			$('#selectProduct, #product-rule-option').show()
@@ -244,7 +251,10 @@
 							}else{
 								var more='';
 							}
-							$('#multipleProduct,#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_product+"' "+more+">"+value.product+"</option>");
+							$('#multipleProduct,#multipleProduct2,#multipleProduct3').append("<option class='product"+value.id_product+"' value='"+value.id_product+"' "+more+">"+value.product+"</option>");
+						});
+						$.each(selectedProduct, function( key, value ) {
+							$(".product"+value+"").attr('selected', true)
 						});
 						$(selector).prop('required', true)
 						$(selector).prop('disabled', false)
@@ -772,6 +782,16 @@
 									</div>
 								</div>
 
+								<div id="selectProduct" class="form-group row" style="width: 100%!important">
+									<div class="">
+										<div class="col-md-6">
+											<label for="multipleProduct" class="control-label">Select Product</label>
+											<select id="multipleProduct" name="multiple_product[]" class="form-control select2 select2-hidden-accessible col-md-6" multiple="" tabindex="-1" aria-hidden="true" style="width: 100%!important" @if(isset($result['promo_campaign_product_discount_rules']['is_all_product']) && $result['promo_campaign_product_discount_rules']['is_all_product'] == "0") required @endif>
+											</select>
+										</div>
+									</div>
+								</div>
+
 								<div id="product-rule-option">
 									<label class="control-label">Product Rule</label>
 									<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
@@ -789,15 +809,6 @@
 									</div>
 								</div>
 
-								<div id="selectProduct" class="form-group row" style="width: 100%!important">
-									<div class="">
-										<div class="col-md-6">
-											<label for="multipleProduct" class="control-label">Select Product</label>
-											<select id="multipleProduct" name="multiple_product[]" class="form-control select2 select2-hidden-accessible col-md-6" multiple="" tabindex="-1" aria-hidden="true" style="width: 100%!important" @if(isset($result['promo_campaign_product_discount_rules']['is_all_product']) && $result['promo_campaign_product_discount_rules']['is_all_product'] == "0") required @endif>
-											</select>
-										</div>
-									</div>
-								</div>
 								<div class="form-group">
 									<label class="control-label">Min basket size</label>
 									<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
