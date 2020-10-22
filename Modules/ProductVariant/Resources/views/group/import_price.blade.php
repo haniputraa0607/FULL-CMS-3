@@ -238,7 +238,8 @@ $configs    		= session('configs');
 						<p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data harga produk variant group.</p>
 						<p style="white-space: pre-wrap;">Saat melakukan impor harga produk variant group, mohon diperhatikan bahwa : </p>
 						<ul>
-							<li>Price product variant group diidentifikasi berdasarkan kolom <b>code</b></li>
+							<li>Price product variant group diidentifikasi berdasarkan kolom <b>current_product_variant_group_code</b></li>
+							<li>Product variant group dapat diubah dengan mengisi colom <b>new_product_variant_group_code</b></li>
 							<li>Apabila code sudah ada dalam database, maka sistem akan memperbarui harga product variant group</li>
 							<li>Apabila code belum ada dalam database, maka sistem akan <b>mengabaikan data</b></li>
 						</ul>

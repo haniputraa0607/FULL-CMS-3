@@ -209,7 +209,7 @@ class ProductVariantGroupController extends Controller
             }
         }
 
-        return parent::redirect($import, 'Product variant has been updated.');
+        return $import;
     }
 
     public function exportPrice(Request $request){
@@ -221,7 +221,8 @@ class ProductVariantGroupController extends Controller
             $datas['All Type'] = $data['products'] = [
                 [
                     'product' => 'P1 - Kopi Susu',
-                    'product_variant_group_code' => 'PVG001',
+                    'current_product_variant_group_code' => 'PVG001',
+                    'new_product_variant_group_code' => '',
                     'product_variant_group' => 'Hot, S',
                     'global_price' => 10000,
                     'price_PP001' => 15000,
@@ -229,7 +230,8 @@ class ProductVariantGroupController extends Controller
                 ],
                 [
                     'product' => 'P2 - Kopi',
-                    'product_variant_group_code' => 'PVG002',
+                    'current_product_variant_group_code' => 'PVG002',
+                    'new_product_variant_group_code' => 'PVG002A',
                     'product_variant_group' => 'Hot, L',
                     'global_price' => 15000,
                     'price_PP001' => 20000,
@@ -237,7 +239,8 @@ class ProductVariantGroupController extends Controller
                 ],
                 [
                     'product' => 'P3 - Es Milo',
-                    'product_variant_group_code' => 'PVG003',
+                    'current_product_variant_group_code' => 'PVG003',
+                    'new_product_variant_group_code' => '',
                     'product_variant_group' => 'Ice, S',
                     'global_price' => 15000,
                     'price_PP001' => 20000,
