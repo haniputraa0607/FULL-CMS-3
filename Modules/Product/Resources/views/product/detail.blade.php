@@ -806,7 +806,7 @@
         var tbody = $("#table-product-variant tbody");
 
         if (tbody.children().length == 0) {
-            Swal.fire("", 'Please add 1 or more product variant group', "error");
+            toastr.warning("Please add 1 or more product variant group.");
         }else{
             $( "#form_product_variant_group" ).submit();
         }

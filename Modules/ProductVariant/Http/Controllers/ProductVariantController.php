@@ -2,10 +2,14 @@
 
 namespace Modules\ProductVariant\Http\Controllers;
 
+use App\Exports\MultisheetExport;
 use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Excel;
+
+use App\Imports\FirstSheetOnlyImport;
 
 class ProductVariantController extends Controller
 {
@@ -153,5 +157,63 @@ class ProductVariantController extends Controller
             return redirect('product-variant')->with('success', ['Success delete product variant']);
         }
         return redirect('product-variant')->withErrors(['Fail delete product variant']);
+    }
+
+    public function export(Request $request) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('product-variant', [])['result']??[];
+        $tab_title = 'List Product Variant';
+
+        if(empty($data)){
+            $datas['All Type'] = [
+                [
+                    'product_variant_name' => 'Size',
+                    'product_variant_child' => 'S,M,L,XL'
+                ],
+                [
+                    'product_variant_name' => 'Type',
+                    'product_variant_child' => 'Hot,Ice'
+                ]
+            ];
+        }else{
+            $arr = [];
+            foreach ($data as $dt){
+                $child = array_column($dt['product_variant_child'], 'product_variant_name');
+                if(!empty($dt['product_variant_child'])){
+                    $arr[] = [
+                        'product_variant_name' => $dt['product_variant_name'],
+                        'product_variant_child' => implode(",",$child)
+                    ];
+                }
+            }
+            $datas['All Type'] = $arr;
+        }
+        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product variant.xlsx');
+    }
+
+    public function import(){
+        $data = [
+            'title'          => 'Product Variant',
+            'sub_title'      => 'Import Product Variant',
+            'menu_active'    => 'product-variant',
+            'submenu_active' => 'product-variant-import-global'
+        ];
+
+        return view('productvariant::import', $data);
+    }
+
+    public function importSave(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
+            if(!empty($data)){
+                $import = MyHelper::post('product-variant/import', ['data' => $data]);
+            }
+        }
+
+        return $import;
     }
 }
