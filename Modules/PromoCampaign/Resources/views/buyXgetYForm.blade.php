@@ -74,6 +74,7 @@
 @section('child-script2')
 <script type="text/javascript">
 	var lastError2='';
+	var listVariant=[];
 	var template2='<div class="row" data-id="::n::">\
 		<div class="col-md-3">\
 			<div class="col-md-6">\
@@ -109,7 +110,15 @@
 		<div class="col-md-3">\
 		</div>\
 		<div class="col-md-9">\
-			<div class="col-md-5 text-right">\
+			<div class="col-md-5 text-center">\
+				<div class="form-group ::hide_select_variant::">\
+					<div class="col-md-4 p-l-0 text-right">\
+						<label>Variant<span class="required" aria-required="true"> * </span></label>\
+					</div>\
+					<div class="col-md-8 p-l-r-0">\
+						<select name="promo_rule[::n::][id_product_variant_group]" class="form-control variant-selector select2" placeholder="Select Variant" style="width: 100%!important;">::variantList::</select>\
+					</div>\
+				</div>\
 			</div>\
 			<div class="col-md-6">\
 				<div class="col-md-6 p-l-0 text-right">\
@@ -205,6 +214,7 @@
 			it_max_qty = it_max_qty.replace(/,/g , '');
 			it_min_qty = parseInt(it_min_qty);
 			it_max_qty = parseInt(it_max_qty);
+			let id_product = it['benefit_id_product'];
 
 			if(it['benefit_type'] == "free"){
 
@@ -333,6 +343,27 @@
 			}else{
 				edited=edited.replace('::productList::','');
 			}
+
+			if (it['benefit_id_product']) {
+				loadProductVariant(it['benefit_id_product']);
+
+				if(listVariant[id_product] && listVariant[id_product].length){
+					console.log(1, listVariant[id_product]);
+					var htmlProduct='';
+					listVariant[id_product].forEach(function(i){
+						var addthis='';
+						if(it['id_product_variant_group'] && it['id_product_variant_group'] == i['id_product_variant_group']){
+							addthis = 'selected';
+						}
+						htmlProduct+='<option value="'+i['id_product_variant_group']+'" '+addthis+'>'+i['product_variant_group_name']+'</option>';
+					})
+					edited=edited.replace('::variantList::',htmlProduct).replace('::hide_select_variant::', '');
+				}else{
+					console.log(0, listVariant[id_product]);
+					edited=edited.replace('::variantList::','').replace('::hide_select_variant::', 'd-none');
+				}
+			}
+
 			last=it['max_qty_requirement'];
 			html+=edited;
 		})
@@ -340,6 +371,7 @@
 			lastError2=lastErrorReal;
 			$('#ruleSectionBody2').html(html);
 			$('.product-selector').select2({ width: '100%' ,placeholder:'Select product'});
+			$('.variant-selector').select2({ width: '100%' ,placeholder:'Select variant'});
 		}
 
 		$('.digit_mask').inputmask({
@@ -363,6 +395,34 @@
 
 		return status;
 	}
+
+	function loadProductVariant(id_product){
+		if (!(id_product in listVariant)) {
+		    listVariant[id_product] = [];
+			$.ajax({
+				type: "GET",
+				url: "getData",
+				data : {
+					"get" : 'Product Variant',
+					"id_product" : id_product
+				},
+				dataType: "json",
+				success: function(data){
+					if (data.status == 'fail') {
+						$.ajax(this)
+						return
+					}
+					listVariant[id_product] = data;
+					productVariantLoad = 1;
+					reOrder2();
+				}
+			});
+		}else{
+			return true;
+		}
+
+	}
+
 	$(document).ready(function(){
 		$('#buyXgetYProduct').on('click','.new',function(){
 			if(!reOrder2()){

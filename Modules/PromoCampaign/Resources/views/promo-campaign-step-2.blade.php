@@ -134,6 +134,8 @@
             $date_start = null;
             $date_end   = null;
         }
+
+        $brands = array_column($result['brands'], 'id_brand');
 	@endphp
 	<script>
 	$(document).ready(function() {
@@ -141,7 +143,7 @@
 		productLoad = 0;
 
 		var is_all_product = '{!!$is_all_product!!}';
-		var brand = '{!!$result['id_brand']!!}';
+		var brand = JSON.parse('{!!json_encode($brands)!!}');
 		var selectedProduct = JSON.parse('{!!json_encode($product)!!}');
 
 		if (is_all_product == 0 && is_all_product.length != 0) {
