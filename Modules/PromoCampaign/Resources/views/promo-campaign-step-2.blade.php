@@ -109,10 +109,10 @@
 			for ($i=0; $i < count($result['promo_campaign_product_discount']); $i++) { 
 				$product[] = $result['promo_campaign_product_discount'][$i]['id_product'];
 			}
-		}
-
-		if (!empty($result['promo_campaign_tier_discount_product'])) {
+		}elseif (!empty($result['promo_campaign_tier_discount_product'])) {
 			$product = array_column($result['promo_campaign_tier_discount_product'], 'id_product');
+		}elseif (!empty($result['promo_campaign_buyxgety_product_requirement'])) {
+			$product = array_column($result['promo_campaign_buyxgety_product_requirement'], 'id_product');
 		}
 // dd($product, $result);
 		if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == "0") {
@@ -229,7 +229,7 @@
 		$('#selectProduct, #product-rule-option').hide()
 		function loadProduct(selector,callback){
 			if (productLoad == 0) {
-				var valuee=$(selector).data('value');
+				// var valuee=$(selector).data('value');
 				$.ajax({
 					type: "GET",
 					url: "getData",
@@ -246,11 +246,12 @@
 						listProduct=data;
 						productLoad = 1;
 						$.each(data, function( key, value ) {
-							if(valuee.indexOf(value.id_product)>-1){
+							/*if(valuee.indexOf(value.id_product)>-1){
 								var more='selected';
 							}else{
 								var more='';
-							}
+							}*/
+							let more='';
 							$('#multipleProduct,#multipleProduct2,#multipleProduct3').append("<option class='product"+value.id_product+"' value='"+value.id_product+"' "+more+">"+value.product+"</option>");
 						});
 						$.each(selectedProduct, function( key, value ) {

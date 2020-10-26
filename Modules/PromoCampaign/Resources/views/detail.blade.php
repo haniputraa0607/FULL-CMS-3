@@ -591,7 +591,7 @@
                                             @endif
                                         </div>
                                         <div class="row static-info">
-                                            <div class="col-md-4 name">Rule</div>
+                                            <div class="col-md-4 name">Promo Rule</div>
                                             <div class="col-md-8 value">: 
                                             </div>
                                         </div>
@@ -616,17 +616,39 @@
                                     {{-- Buy x Get Y Discount --}}
                                     @elseif (isset($result['promo_campaign_buyxgety_rules']) && $result['promo_campaign_buyxgety_rules'] != null)
                                         <div class="row static-info">
-                                            <div class="col-md-4 name">Product Requirement</div>
-                                            <div class="col-md-8 value">: 
-                                                @if ( isset($result['promo_campaign_buyxgety_product_requirement']) )
-                                                <a href="{{ url('product/detail/'.$result['promo_campaign_buyxgety_product_requirement']['product']['product_code']??'') }}" target="_blank">{{ ($result['promo_campaign_buyxgety_product_requirement']['product']['product_code']??'').' - '.$result['promo_campaign_buyxgety_product_requirement']['product']['product_name']??'' }}</a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="row static-info">
                                             <div class="col-md-4 name">Min Basket Size</div>
                                             <div class="col-md-8 value">: 
                                                     {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Product Requirement</div>
+                                            <div class="col-md-8 value">: 
+                                            </div>
+                                        </div>
+                                        <div class="mt-comments">
+                                            @if(!empty($result['promo_campaign_buyxgety_product_requirement']))
+                                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-3">Code</th>
+                                                            <th class="col-md-9">Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($result['promo_campaign_buyxgety_product_requirement'] as $res)
+                                                            <tr>
+                                                                <td>{{ $res['product']['product_code'] }}</td>
+                                                                <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            @endif
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-4 name">Promo Rule</div>
+                                            <div class="col-md-8 value">: 
                                             </div>
                                         </div>
                                         <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_7">
