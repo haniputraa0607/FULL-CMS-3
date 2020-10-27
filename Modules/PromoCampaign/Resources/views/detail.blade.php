@@ -539,7 +539,7 @@
                                                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
                                                         <thead>
                                                             <tr>
-                                                                <th>Category</th>
+                                                                <th>Brand</th>
                                                                 <th>Code</th>
                                                                 <th>Name</th>
                                                             </tr>
@@ -547,7 +547,7 @@
                                                         <tbody>
                                                             @foreach($result['promo_campaign_product_discount'] as $res)
                                                                 <tr>
-                                                                    <td>{{ $res['product']['category']['product_category_name']??'' }}</td>
+                                                                    <td>{{ $res['brand']['name_brand']??'' }}</td>
                                                                     <td>{{ $res['product']['product_code'] }}</td>
                                                                     <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
                                                                 </tr>
@@ -575,13 +575,15 @@
                                                 <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
                                                     <thead>
                                                         <tr>
+                                                            <th  class="col-md-3">Brand</th>
                                                             <th  class="col-md-3">Code</th>
-                                                            <th  class="col-md-9">Name</th>
+                                                            <th  class="col-md-6">Name</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach($result['promo_campaign_tier_discount_product'] as $res)
                                                             <tr>
+                                                                <td>{{ $res['brand']['name_brand'] }}</td>
                                                                 <td>{{ $res['product']['product_code'] }}</td>
                                                                 <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
                                                             </tr>
@@ -631,13 +633,15 @@
                                                 <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
                                                     <thead>
                                                         <tr>
+                                                            <th class="col-md-3">Brand</th>
                                                             <th class="col-md-3">Code</th>
-                                                            <th class="col-md-9">Name</th>
+                                                            <th class="col-md-6">Name</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach($result['promo_campaign_buyxgety_product_requirement'] as $res)
                                                             <tr>
+                                                                <td>{{ $res['brand']['name_brand'] }}</td>
                                                                 <td>{{ $res['product']['product_code'] }}</td>
                                                                 <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
                                                             </tr>
@@ -666,7 +670,7 @@
                                                     <tr>
                                                         <td>{{ $res['min_qty_requirement'] }}</td>
                                                         <td>{{ $res['max_qty_requirement'] }}</td>
-                                                        <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_code'].' - '.$res['product']['product_name'] }}</a></td>
+                                                        <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['brand']['name_brand'].' - '.$res['product']['product_code'].' - '.$res['product']['product_name'] }}</a></td>
                                                         <td>{{ $res['benefit_qty'] }}</td>
                                                         <td>
                                                         @if( ($res['discount_type']??false) == 'nominal' )
