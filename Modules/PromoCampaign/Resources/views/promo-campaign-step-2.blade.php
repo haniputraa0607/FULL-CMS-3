@@ -57,6 +57,9 @@
 			padding-left: 0px;
 			padding-right: 0px;
 		}
+		.select2-results__option[aria-selected=true] {
+		    display: none;
+		}
 	</style>
 @endsection
 
@@ -107,14 +110,19 @@
 			$is_all_product = $result['promo_campaign_product_discount_rules']['is_all_product'];
 			$product = [];
 			for ($i=0; $i < count($result['promo_campaign_product_discount']); $i++) { 
-				$product[] = $result['promo_campaign_product_discount'][$i]['id_product'];
+				$product[] = $result['promo_campaign_product_discount'][$i]['id_brand'].'-'.$result['promo_campaign_product_discount'][$i]['id_product'];
 			}
 		}elseif (!empty($result['promo_campaign_tier_discount_product'])) {
-			$product = array_column($result['promo_campaign_tier_discount_product'], 'id_product');
+			$product = [];
+			foreach ($result['promo_campaign_tier_discount_product'] as $key => $value) {
+				$product[] = $value['id_brand'].'-'.$value['id_product'];
+			}
 		}elseif (!empty($result['promo_campaign_buyxgety_product_requirement'])) {
-			$product = array_column($result['promo_campaign_buyxgety_product_requirement'], 'id_product');
+			foreach ($result['promo_campaign_buyxgety_product_requirement'] as $key => $value) {
+				$product[] = $value['id_brand'].'-'.$value['id_product'];
+			}
 		}
-// dd($product, $result);
+
 		if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == "0") {
 			$is_all_outlet = $result['is_all_outlet'];
 			$outlet = [];
@@ -166,8 +174,8 @@
 						productLoad = 1;
 						listProduct=data;
 						$.each(data, function( key, value ) {
-							$('#multipleProduct').append("<option id='product"+value.id_product+"' value='"+value.id_product+"'>"+value.product+"</option>");
-							$('#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
 						});
 						$('#multipleProduct').prop('required', true)
 						$('#multipleProduct').prop('disabled', false)
@@ -254,7 +262,7 @@
 								var more='';
 							}*/
 							let more='';
-							$('#multipleProduct,#multipleProduct2,#multipleProduct3').append("<option class='product"+value.id_product+"' value='"+value.id_product+"' "+more+">"+value.product+"</option>");
+							$('#multipleProduct,#multipleProduct2,#multipleProduct3').append("<option class='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"' "+more+">"+value.product+"</option>");
 						});
 						$.each(selectedProduct, function( key, value ) {
 							$(".product"+value+"").attr('selected', true)
@@ -321,7 +329,7 @@
 							productLoad = 1;
 							listProduct=data;
 							$.each(data, function( key, value ) {
-								$('#multipleProduct,#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_product+"'>"+value.product+"</option>");
+								$('#multipleProduct,#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
 							});
 							$('#multipleProduct').prop('required', true)
 							$('#multipleProduct').prop('disabled', false)
@@ -395,8 +403,8 @@
 						productLoad = 1;
 						listProduct=data;
 						$.each(data, function( key, value ) {
-							$('#multipleProduct').append("<option id='product"+value.id_product+"' value='"+value.id_product+"'>"+value.product+"</option>");
-							$('#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
 						});
 						$('#multipleProduct').prop('required', true)
 						$('#multipleProduct').prop('disabled', false)
@@ -457,7 +465,6 @@
 	@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
 	<script type="text/javascript">
 		$(document).ready(function() {
-			console.log('ok');
 			$('#promotype-form').find('input, textarea, select').prop('disabled', true);
 			$('#user-search-form').find('input, textarea').prop('disabled', true);
 		});

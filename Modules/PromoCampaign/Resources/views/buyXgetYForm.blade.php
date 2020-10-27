@@ -93,7 +93,7 @@
 		<div class="col-md-9">\
 			<div class="col-md-5">\
 				<div class="form-group">\
-					<select name="promo_rule[::n::][benefit_id_product]" class="form-control product-selector select2" placeholder="Select product" style="width: 100%!important">::productList::</select>\
+					<select name="promo_rule[::n::][benefit_id_product]" class="form-control product-selector select2" placeholder="Select product" style="width: 100%!important" required>::productList::</select>\
 				</div>\
 			</div>\
 			<div class="col-md-6">\
@@ -116,7 +116,7 @@
 						<label>Variant<span class="required" aria-required="true"> * </span></label>\
 					</div>\
 					<div class="col-md-8 p-l-r-0">\
-						<select name="promo_rule[::n::][id_product_variant_group]" class="form-control variant-selector select2" placeholder="Select Variant" style="width: 100%!important;">::variantList::</select>\
+						<select name="promo_rule[::n::][id_product_variant_group]" class="form-control variant-selector select2" placeholder="Select Variant" style="width: 100%!important;" ::variant_required::>::variantList::</select>\
 					</div>\
 				</div>\
 			</div>\
@@ -214,7 +214,6 @@
 			it_max_qty = it_max_qty.replace(/,/g , '');
 			it_min_qty = parseInt(it_min_qty);
 			it_max_qty = parseInt(it_max_qty);
-			let id_product = it['benefit_id_product'];
 
 			if(it['benefit_type'] == "free"){
 
@@ -286,6 +285,15 @@
 
 			}
 
+			let id_product = '' + it['benefit_id_product'];
+
+			if (id_product.indexOf('-') > -1) {
+				id_product = id_product.split('-');
+				id_product = id_product[1];
+			}else{
+				it['benefit_id_product'] = it['id_brand']+'-'+it['benefit_id_product'];
+			}
+
 			$('button[type="submit"]').prop('disabled', false);
 			if( (it['discount_value']-100)>0 && it['discount_type'] == "percent"){
 				discount_value=100;
@@ -330,14 +338,24 @@
 			if(!lastErrorReal){
 				lastErrorReal=errorNow;
 			}
+			// console.log(id_product);
 			if(listProduct){
-				var htmlProduct='<option value="0">Same Product</option>';
+				if (it['benefit_id_product'] == 'undefined' || it['benefit_id_product'] == 'undefined-undefined') {
+					var htmlProduct = '<option value="">Select Product</option>';
+				}else{
+					console.log(it['benefit_id_product']);
+					var htmlProduct = '';
+				}
+					
 				listProduct.forEach(function(i){
 					var addthis='';
-					if(it['benefit_id_product']&&it['benefit_id_product']==i['id_product']){
+					// if(it['benefit_id_product'] && it['id_brand']+'-'+it['benefit_id_product'] == i['id_brand']+'-'+i['id_product']){
+					// console.log([it['benefit_id_product'] == i['id_brand']+'-'+i['id_product'], it['benefit_id_product'], i['id_brand']+'-'+i['id_product']]);
+					if(it['benefit_id_product'] && it['benefit_id_product'] == i['id_brand']+'-'+i['id_product']){
 						addthis='selected';
+						// console.log([it['benefit_id_product'] == i['id_brand']+'-'+i['id_product'], it['benefit_id_product'], i['id_brand']+'-'+i['id_product']]);
 					}
-					htmlProduct+='<option value="'+i['id_product']+'" '+addthis+'>'+i['product']+'</option>';
+					htmlProduct+='<option value="'+i['id_brand']+'-'+i['id_product']+'" '+addthis+'>'+i['product']+'</option>';
 				})
 				edited=edited.replace('::productList::',htmlProduct);
 			}else{
@@ -345,10 +363,9 @@
 			}
 
 			if (it['benefit_id_product']) {
-				loadProductVariant(it['benefit_id_product']);
+				loadProductVariant(id_product);
 
 				if(listVariant[id_product] && listVariant[id_product].length){
-					console.log(1, listVariant[id_product]);
 					var htmlProduct='';
 					listVariant[id_product].forEach(function(i){
 						var addthis='';
@@ -357,10 +374,9 @@
 						}
 						htmlProduct+='<option value="'+i['id_product_variant_group']+'" '+addthis+'>'+i['product_variant_group_name']+'</option>';
 					})
-					edited=edited.replace('::variantList::',htmlProduct).replace('::hide_select_variant::', '');
+					edited=edited.replace('::variantList::',htmlProduct).replace('::hide_select_variant::', '').replace('::variant_required::','required');
 				}else{
-					console.log(0, listVariant[id_product]);
-					edited=edited.replace('::variantList::','').replace('::hide_select_variant::', 'd-none');
+					edited=edited.replace('::variantList::','').replace('::hide_select_variant::', 'd-none').replace('::variant_required::','');
 				}
 			}
 
@@ -420,7 +436,6 @@
 		}else{
 			return true;
 		}
-
 	}
 
 	$(document).ready(function(){
