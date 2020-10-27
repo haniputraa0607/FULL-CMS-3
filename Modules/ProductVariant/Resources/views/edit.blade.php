@@ -42,7 +42,7 @@
                 '<div class="form-group">' +
                 '<label class="col-md-2 col-form-label">'+name+' <span class="text-danger">*</span></label>' +
                 '<div class="col-md-4">' +
-                '<input class="form-control" type="text" maxlength="200" id="product_variant_name_'+i+'" name="child['+i+'][product_variant_name]" required placeholder="Enter product variant name"/>' +
+                '<input class="form-control" type="text" maxlength="200" id="product_variant_name_'+i+'" name="child['+i+'][product_variant_name]" required placeholder="Enter variant name"/>' +
                 '</div>' +
                 '<div class="col-md-3">' +
                 '<input data-switch="true" type="checkbox" name="child['+i+'][product_variant_visibility]" data-on-text="Visible" data-off-text="Hidden" checked/>' +
@@ -93,7 +93,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">Update Product Variant</span>
+                <span class="caption-subject sbold uppercase font-blue">Update Variant</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -101,9 +101,9 @@
                 {{ csrf_field() }}
                 <div class="form-body">
                     <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Product Variant Name Parent <span class="text-danger">*</span></label>
+                        <label class="col-md-2 col-form-label">Variant Name Parent <span class="text-danger">*</span></label>
                         <div class="col-md-4">
-                            <input class="form-control" type="text" maxlength="200" name="product_variant_name" value="{{$product_variant['product_variant_name']}}" required placeholder="Enter product variant name here"/>
+                            <input class="form-control" type="text" maxlength="200" name="product_variant_name" value="{{$product_variant['product_variant_name']}}" required placeholder="Enter variant name here"/>
                         </div>
                         <div class="col-md-3">
                             <input data-switch="true" type="checkbox" name="product_variant_visibility" data-on-text="Visible" data-off-text="Hidden" @if($product_variant['product_variant_visibility'] == 'Visible') checked @endif/>
@@ -119,7 +119,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-2 col-form-label">{{$product_variant['product_variant_name']}}  <span class="text-danger">*</span></label>
                                     <div class="col-md-4">
-                                        <input class="form-control" type="text" maxlength="200" name="child[{{$i}}][product_variant_name]" value="{{$child['product_variant_name']}}" required placeholder="Enter product variant name here"/>
+                                        <input class="form-control" type="text" maxlength="200" name="child[{{$i}}][product_variant_name]" value="{{$child['product_variant_name']}}" required placeholder="Enter variant name here"/>
                                     </div>
                                     <div class="col-md-3">
                                         <input data-switch="true" type="checkbox" name="child[{{$i}}][product_variant_visibility]" data-on-text="Visible" data-off-text="Hidden" @if($child['product_variant_visibility'] == 'Visible') checked @endif/>

@@ -20,8 +20,8 @@ class ProductVariantController extends Controller
     public function index(Request $request)
     {
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'Product Variant List',
+            'title'          => 'Variant',
+            'sub_title'      => 'Variant List',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-list',
         ];
@@ -56,8 +56,8 @@ class ProductVariantController extends Controller
     public function create()
     {
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'New Product Variant',
+            'title'          => 'Variant',
+            'sub_title'      => 'New Variant',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-new',
         ];
@@ -75,7 +75,7 @@ class ProductVariantController extends Controller
         $store = MyHelper::post('product-variant/store', $post);
 
         if(($store['status']??'')=='success'){
-            return redirect('product-variant')->with('success',['Create Product Variant Success']);
+            return redirect('product-variant')->with('success',['Create Variant Success']);
         }else{
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
@@ -99,8 +99,8 @@ class ProductVariantController extends Controller
     public function edit($id)
     {
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'Update Product Variant',
+            'title'          => 'Variant',
+            'sub_title'      => 'Update Variant',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant',
         ];
@@ -139,7 +139,7 @@ class ProductVariantController extends Controller
         $update = MyHelper::post('product-variant/update', $post);
 
         if(($update['status']??'')=='success'){
-            return redirect('product-variant/edit/'.$id)->with('success',['Updated Product Variant Success']);
+            return redirect('product-variant/edit/'.$id)->with('success',['Updated Variant Success']);
         }else{
             return back()->withInput()->withErrors($update['messages'] ?? ['Something went wrong']);
         }
@@ -154,15 +154,15 @@ class ProductVariantController extends Controller
     {
         $result = MyHelper::post('product-variant/delete', ['id_product_variant' => $id]);
         if ($result['status'] == 'success') {
-            return redirect('product-variant')->with('success', ['Success delete product variant']);
+            return redirect('product-variant')->with('success', ['Success delete variant']);
         }
-        return redirect('product-variant')->withErrors(['Fail delete product variant']);
+        return redirect('product-variant')->withErrors(['Fail delete variant']);
     }
 
     public function export(Request $request) {
         $post = $request->except('_token');
         $data = MyHelper::post('product-variant', [])['result']??[];
-        $tab_title = 'List Product Variant';
+        $tab_title = 'List Variant';
 
         if(empty($data)){
             $datas['All Type'] = [
@@ -188,13 +188,13 @@ class ProductVariantController extends Controller
             }
             $datas['All Type'] = $arr;
         }
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product variant.xlsx');
+        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_variant.xlsx');
     }
 
     public function import(){
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'Import Product Variant',
+            'title'          => 'Variant',
+            'sub_title'      => 'Import Variant',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-import-global'
         ];
