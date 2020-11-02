@@ -865,6 +865,11 @@ class ProductController extends Controller
         }
     }
 
+    public function deleteProductVarianGroup(Request $request){
+        $post = $request->all();
+        $delete = MyHelper::post('product-variant-group/delete', $post);
+        return $delete;
+    }
     /**
      * delete photo
      */
