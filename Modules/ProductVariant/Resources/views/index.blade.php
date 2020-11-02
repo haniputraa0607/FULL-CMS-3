@@ -124,9 +124,9 @@ $grantedFeature     = session('granted_features');
                 <thead>
                 <tr>
                 <tr>
-                    <th>Product Variant Name</th>
-                    <th>Product Variant Parent</th>
-                    <th>Product Variant Child</th>
+                    <th>Variant Name</th>
+                    <th>Variant Parent</th>
+                    <th>Variant Child</th>
                     @if(MyHelper::hasAccess([281], $grantedFeature))
                         <th>Action</th>
                     @endif

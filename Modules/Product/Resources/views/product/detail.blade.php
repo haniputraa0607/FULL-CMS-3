@@ -693,10 +693,12 @@
     $('#checkbox-variant').on('ifChanged', function(event) {
         if(this.checked) {
             $('#nav-prod-variant').show();
+            $("input[name=product_global_price]").val('');
             $("input[name=product_global_price]").prop('disabled', true);
             $('input[name=product_global_price]').prop('required',false);
         }else{
             $('#nav-prod-variant').hide();
+            $("input[name=product_global_price]").val($("#old_global_price").val());
             $("input[name=product_global_price]").prop('disabled', false);
             $('input[name=product_global_price]').prop('required',true);
         }

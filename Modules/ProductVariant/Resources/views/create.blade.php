@@ -30,13 +30,13 @@
         function addChild(number) {
             var name = $('#product_variant_name_'+number).val();
             if(name === ''){
-                toastr.warning("Please input product variant name.");
+                toastr.warning("Please input variant name.");
             }else{
                 var html = '<div id="div_parent_'+i+'">' +
                     '<div class="form-group">' +
                     '<label class="col-md-2 control-label">'+name+' <span class="text-danger">*</span></label>' +
                     '<div class="col-md-4">' +
-                    '<input class="form-control" type="text" maxlength="200" id="product_variant_name_'+i+'" name="data[child]['+i+'][product_variant_name]" required placeholder="Enter product variant name"/>' +
+                    '<input class="form-control" type="text" maxlength="200" id="product_variant_name_'+i+'" name="data[child]['+i+'][product_variant_name]" required placeholder="Enter variant name"/>' +
                     '<input class="form-control" type="hidden" name="data[child]['+i+'][parent]" value="'+number+'"/>' +
                     '</div>' +
                     '<div class="col-md-3">' +
@@ -87,7 +87,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">New Product Variant</span>
+                <span class="caption-subject sbold uppercase font-blue">New Variant</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -96,9 +96,9 @@
                 <div class="form-body">
                     <div id="div_parent_0">
                         <div class="form-group">
-                            <label class="col-md-2 control-label">Product Variant Name Parent <span class="text-danger">*</span></label>
+                            <label class="col-md-2 control-label">Variant Name Parent <span class="text-danger">*</span></label>
                             <div class="col-md-4">
-                                <input class="form-control" type="text" maxlength="200" id="product_variant_name_0" name="data[0][product_variant_name]" required placeholder="Enter product variant name"/>
+                                <input class="form-control" type="text" maxlength="200" id="product_variant_name_0" name="data[0][product_variant_name]" required placeholder="Enter variant name"/>
                             </div>
                             <div class="col-md-3">
                                 <input data-switch="true" type="checkbox" name="data[0][product_variant_visibility]" data-on-text="Visible" data-off-text="Hidden" checked/>
