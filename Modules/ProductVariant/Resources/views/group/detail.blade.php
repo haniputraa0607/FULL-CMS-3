@@ -31,12 +31,12 @@
     <script type="text/javascript">
         rules = {
             all_product_variant_group :{
-                display:'All Product Variant Group',
+                display:'All Product Variant',
                 operator:[],
                 opsi:[]
             },
             product_variant_group_code :{
-                display:'Product Variant Group Code',
+                display:'Product Variant Code',
                 operator:[
                     ['=','='],
                     ['like','like']
@@ -97,7 +97,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">List Product Variant Group</span>
+                <span class="caption-subject sbold uppercase font-blue">List Product Variant</span>
             </div>
             <div class="actions">
                 <div class="btn-group" style="width: 300px">
@@ -115,7 +115,7 @@
                     <thead>
                         <tr>
                             <th> Product </th>
-                            <th> Product Variant Group </th>
+                            <th> Product Variant </th>
                             <th> Visible </th>
                             <th> Stock </th>
                             <th> Status </th>

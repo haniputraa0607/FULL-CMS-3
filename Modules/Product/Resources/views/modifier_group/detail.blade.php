@@ -1,10 +1,10 @@
 <?php
-use App\Lib\MyHelper;
-$grantedFeature     = session('granted_features');
-$configs    		= session('configs');
+    use App\Lib\MyHelper;
+    $grantedFeature     = session('granted_features');
+    $configs    		= session('configs');
 
-?>
-@extends('layouts.main')
+ ?>
+ @extends('layouts.main')
 
 @include('list_filter')
 @section('page-style')
@@ -30,20 +30,20 @@ $configs    		= session('configs');
     @yield('filter_script')
     <script type="text/javascript">
         rules = {
-            all_product_variant_group :{
-                display:'All Product Variant',
+            all_product_modifier :{
+                display:'All Modifier Group',
                 operator:[],
                 opsi:[]
             },
-            product_variant_group_code :{
-                display:'Product Variant Code',
+            text :{
+                display:'Name',
                 operator:[
                     ['=','='],
                     ['like','like']
                 ],
                 opsi:[]
             },
-            product_variant_group_visibility :{
+            product_modifier_visibility :{
                 display:'Default Visibility',
                 operator:[],
                 opsi:[
@@ -52,7 +52,6 @@ $configs    		= session('configs');
                 ]
             },
         };
-
         $('.price').inputmask("numeric", {
             radixPoint: ",",
             groupSeparator: ".",
@@ -61,9 +60,8 @@ $configs    		= session('configs');
             rightAlign: false,
             oncleared: function () { self.Value(''); }
         });
-
         $('#outlet_selector').on('change',function(){
-            window.location.href = "{{url('product-variant-group/price')}}/"+$(this).val();
+            window.location.href = "{{url('product/modifier-group/detail')}}/"+$(this).val();
         });
         $('#form-prices').submit(function(){
             $('.price').inputmask('remove');
@@ -86,9 +84,9 @@ $configs    		= session('configs');
                 @endif
             </li>
             @if (!empty($sub_title))
-                <li>
-                    <span>{{ $sub_title }}</span>
-                </li>
+            <li>
+                <span>{{ $sub_title }}</span>
+            </li>
             @endif
         </ul>
     </div><br>
@@ -99,12 +97,11 @@ $configs    		= session('configs');
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">List Product Variant</span>
+                <span class="caption-subject sbold uppercase font-blue">List Product Modifier</span>
             </div>
             <div class="actions">
                 <div class="btn-group" style="width: 300px">
-                    <select class="form-control select2" name="id_outlet" id="outlet_selector" data-placeholder="select outlet">
-                        <option value="0">Global price</option>
+                   <select class="form-control select2" name="id_outlet" id="outlet_selector" data-placeholder="select outlet">
                         @foreach($outlets as $outlet)
                             <option value="{{ $outlet['id_outlet'] }}" @if ($outlet['id_outlet'] == $key) selected @endif>{{ $outlet['outlet_code'] }} - {{ $outlet['outlet_name'] }}</option>
                         @endforeach
@@ -116,37 +113,49 @@ $configs    		= session('configs');
             <form id="form-prices" action="{{url()->current()}}" method="POST">
                 <table class="table table-striped table-bordered table-hover table-responsive" width="100%">
                     <thead>
-                    <tr>
-                        <th> Product </th>
-                        <th> Product Variant </th>
-                        <th> Price </th>
-                    </tr>
+                        <tr>
+                            <th> No </th>
+                            <th> Modifier </th>
+                            <th> Visible </th>
+                            <th> Stock </th>
+                            <th> Status </th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @if (!empty($productVariant))
-                        @foreach($productVariant as $pv)
-                            <tr>
-                                <td>{{$pv['product_code']}} - {{$pv['product_name']}}</td>
-                                <td>{{$pv['product_variant_group_code']}} -
-                                    <?php
-                                    $arr = array_column($pv['product_variant_pivot'], 'product_variant_name');
-                                    $name = implode(',',$arr);
-                                    echo $name;
-                                    ?>
-                                </td>
-                                <td><input type="text" class="form-control price" name="prices[{{$pv['id_product_variant_group']}}][product_variant_group_price]" value="@if(is_null($pv['product_variant_group_price'])) 0 @else {{$pv['product_variant_group_price']}} @endif" style="max-width: 200px" /></td>
-                            </tr>
-                        @endforeach
-                    @endif
+                        @if (!empty($modifiers['data']))
+                            @foreach($modifiers['data'] as $modifier)
+                                @php $start++  @endphp
+                                <tr>
+                                    <td style="width: 1%">{{$start}}</td>
+                                    <td>{{$modifier['product_modifier_group_name']}} - {{$modifier['text']}}</td>
+                                    <td>
+                                        <select class="form-control" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_visibility]">
+                                            <option></option>
+                                            <option value="Visible" @if($modifier['product_modifier_visibility']=='Visible') selected @endif>Visible</option>
+                                            <option value="Hidden" @if($modifier['product_modifier_visibility']=='Hidden') selected @endif>Hidden</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_stock_status]">
+                                            <option value="Available" @if($modifier['product_modifier_stock_status']=='Available') selected @endif>Available</option>
+                                            <option value="Sold Out" @if($modifier['product_modifier_stock_status']=='Sold Out') selected @endif>Sold Out</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" value="{{$modifier['product_modifier_status']}}" style="max-width: 120px" disabled />
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
                 <div class="form-actions">
                     {{ csrf_field() }}
                     <div class="row">
-                        @if ($productVariantPaginator)
-                            <div class="col-md-10">
-                                {{ $productVariantPaginator->links() }}
-                            </div>
+                        @if ($paginator)
+                        <div class="col-md-10">
+                            {{ $paginator->links() }}
+                        </div>
                         @endif
                         <div class="col-md-2">
                             <button type="submit" class="btn blue pull-right" style="margin:10px 0">Save</button>

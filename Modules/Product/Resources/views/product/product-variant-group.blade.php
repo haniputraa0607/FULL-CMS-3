@@ -83,7 +83,7 @@
         <div style="margin-top: 5%">
             <table class="table table-bordered table-hover" style="width: 70%" id="table-product-variant">
                 <thead>
-                <th>Product Variant Group</th>
+                <th>Product Variant</th>
                 <th>Code</th>
                 <th>Price</th>
                 <th>Visibility</th>
