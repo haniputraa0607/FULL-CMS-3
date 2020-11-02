@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $configs  = session('configs');
+    $grantedFeature     = session('granted_features');
  ?>
 @extends('layouts.main-closed')
 @include('infinitescroll')
@@ -837,7 +838,7 @@
 																						<td> {{ $balance['balance'] }} </td>
 																						<td> {{ date('d F Y', strtotime($balance['created_at'])) }} </td>
 																						<td> {{ date('H:i:s', strtotime($balance['created_at'])) }} </td>
-																						@if ($balance['source'] != 'voucher' || $balance['source'] != 'Complete Profile')
+																						@if ($balance['source'] != 'voucher' && $balance['source'] != 'Complete Profile' && $balance['source'] != 'Point Injection')
 																							<td>
 																							<a href="{{ url('transaction/detail/'.$balance['detail_trx']['id_transaction'].'/'.$balance['detail_trx']['trasaction_type']) }}">
 
@@ -845,7 +846,11 @@
 																							</a>
 																							</td>
 																						@else
-																							<td> {{ $balance['detail_trx']['trx_id'] }} </td>
+                                                                                            @if($balance['source'] == 'Point Injection' && MyHelper::hasAccess([245], $grantedFeature))
+                                                                                                <td> <a target="_blank" href="{{ url('point-injection/report') }}/{{ $balance['id_reference'] }}"> Detail Point Injection </a> </td>
+                                                                                            @else
+                                                                                                <td> {{ $balance['detail_trx']['trx_id']??'' }} </td>
+                                                                                            @endif
 																						@endif
 
 																					</tr>
