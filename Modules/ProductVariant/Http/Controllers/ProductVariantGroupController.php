@@ -278,4 +278,10 @@ class ProductVariantGroupController extends Controller
 
         return $import;
     }
+
+    public function productVariantGroupList(Request $request){
+        $post = $request->except('_token');
+        $get = MyHelper::post('product-variant-group',$post);
+        return '';
+    }
 }
