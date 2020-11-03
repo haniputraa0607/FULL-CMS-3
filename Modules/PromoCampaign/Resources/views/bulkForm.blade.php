@@ -17,12 +17,12 @@
 	<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
 	<div class="mt-radio-list">
 		<label class="mt-radio mt-radio-outline"> All items must be present
-			<input type="radio" value="and" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'and' && !empty($result['promo_campaign_tier_discount_rules'])) checked @endif required/>
+			<input type="radio" value="and" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'and' && !empty($result['promo_campaign_tier_discount_rules'])) checked @endif />
 			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>semua</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
 			<span></span>
 		</label>
 		<label class="mt-radio mt-radio-outline"> One of the items must exist
-			<input type="radio" value="or" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'or' && !empty($result['promo_campaign_tier_discount_rules'])) checked @endif required/>
+			<input type="radio" value="or" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'or' && !empty($result['promo_campaign_tier_discount_rules'])) checked @endif />
 			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>salah satu</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
 			<span></span>
 		</label>
