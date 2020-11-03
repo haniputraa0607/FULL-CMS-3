@@ -474,10 +474,13 @@
                                         @endif
                                     </div>
                                 </div>
-                                @if ( (isset($result['promo_campaign_product_discount_rules']['is_all_product']) 
-                                		&& $result['promo_campaign_product_discount_rules']['is_all_product'] == 0)  
-                                	|| isset($result['product_rule'])
-                                )
+                                @if ( !empty($result['product_rule'])
+	                                	&& ( (!empty($result['promo_campaign_product_discount_rules']['is_all_product']) 
+	                                			&& $result['promo_campaign_product_discount_rules']['is_all_product'] == 0)
+		                                	|| !empty($result['promo_campaign_tier_discount_rules'])
+		                                	|| !empty($result['promo_campaign_buyxgety_rules'])
+	                                	)
+                                	)
                                 <div class="row static-info">
                                     <div class="col-md-4 name">Product Rule</div>
                                     <div class="col-md-8 value">: 
