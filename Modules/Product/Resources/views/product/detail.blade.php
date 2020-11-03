@@ -731,7 +731,6 @@
         var product_variant_group_code = $('#product-variant-group-code').val();
         var product_variant_group_id = $('#product-variant-group-id').val();
         var text = $('#select2-product-variant option:selected').toArray().map(item => item.text).join();
-        var visibility = $('input[name="product_variant_group_visibility"]:checked').val();
         var msg_error = '';
 
         if(product_variant.length <= 0){
@@ -785,7 +784,6 @@
             html += '<td>'+text+'</td>';
             html += '<td>'+product_variant_group_code+'</td>';
             html += '<td>'+product_variant_price+'</td>';
-            html += '<td>'+visibility+'</td>';
             if(product_variant_group_id){
                 html += '<td><a  onclick="deleteRowProductVariant(this,'+product_variant_group_id+')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>' +
                     '<a  onclick="editRowProductVariant(this,'+row+')" data-toggle="confirmation" class="btn btn-sm btn-primary" style="margin-left: 2%"><i class="fa fa-pen"></i> Edit</a></td>';
@@ -798,7 +796,6 @@
             html += '<input type="hidden" id="product-variant-edit-'+row+'" name="data['+row+'][id-edit]" value="'+product_variant+'">';
             html += '<input type="hidden" id="product-variant-group-code-'+row+'" name="data['+row+'][code]" value="'+product_variant_group_code+'">';
             html += '<input type="hidden" id="product-variant-price-'+row+'" name="data['+row+'][price]" value="'+product_variant_price+'">';
-            html += '<input type="hidden" id="product-variant-group-visibility-'+row+'" name="data['+row+'][visibility]" value="'+visibility+'">';
             html += '<input type="hidden" id="product-variant-group-id-'+row+'" name="data['+row+'][group_id]" value="'+product_variant_group_id+'">';
             html += '</tr>';
 
@@ -858,15 +855,6 @@
             var data_price = $('#product-variant-price-'+id).val();
             var group_id = $('#product-variant-group-id-'+id).val();
             var code = $('#product-variant-group-code-'+id).val();
-            var visibility = $('#product-variant-group-visibility-'+id).val();
-
-            if(visibility == 'Visible'){
-                document.getElementById("radio-variant-visibility1").checked = true;
-                document.getElementById("radio-variant-visibility2").checked = false;
-            }else{
-                document.getElementById("radio-variant-visibility1").checked = false;
-                document.getElementById("radio-variant-visibility2").checked = true;
-            }
 
             $("#select2-product-variant").val(data_id).trigger('change');
             $('#product-variant-group-price').val(data_price);
