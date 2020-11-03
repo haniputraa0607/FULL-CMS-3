@@ -113,6 +113,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
      * product_variant_group
      */
     Route::group(['prefix' => 'product-variant-group'], function() {
+        Route::post('delete', ['uses' => 'ProductController@deleteProductVarianGroup']);
         Route::post('{product_code}', ['uses' => 'ProductController@productVarianGroup']);
     });
 

@@ -153,10 +153,10 @@ class ProductVariantController extends Controller
     public function destroy($id)
     {
         $result = MyHelper::post('product-variant/delete', ['id_product_variant' => $id]);
-        if ($result['status'] == 'success') {
-            return redirect('product-variant')->with('success', ['Success delete variant']);
+         if (isset($result['status']) && $result['status'] == 'success') {
+            return redirect('product-variant')->with('success', ['Success delete product variant']);
         }
-        return redirect('product-variant')->withErrors(['Fail delete variant']);
+        return redirect('product-variant')->withErrors(['Fail delete product variant, product variant already to use in transaction']);
     }
 
     public function export(Request $request) {
