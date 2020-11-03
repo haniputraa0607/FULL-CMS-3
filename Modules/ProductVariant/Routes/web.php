@@ -29,6 +29,7 @@ Route::prefix('product-variant-group')->group(function() {
     Route::group(['middleware' => 'validate_session'], function(){
         Route::any('list', ['uses' => 'ProductVariantGroupController@listProductVariant']);
         Route::any('edit/{product_code}', ['uses' => 'ProductVariantGroupController@editProductVariant']);
+        Route::any('delete/{product_code}', ['uses' => 'ProductVariantGroupController@deleteProductVariant']);
 
         Route::get('price/{id_outlet?}', ['middleware' => 'feature_control:279,281', 'uses' => 'ProductVariantGroupController@listPrice']);
         Route::post('price/{id_outlet}', ['middleware' => 'feature_control:279,281', 'uses' => 'ProductVariantGroupController@updatePrice']);

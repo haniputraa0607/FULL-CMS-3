@@ -75,7 +75,6 @@ $grantedFeature     = session('granted_features');
 
                             if(status == 1){
                                 html += '<form action="{{url('product-variant/delete')}}/'+data+'" method="POST" class="form-inline">';
-                                html += '{{method_field('DELETE')}}';
                                 html += '{{csrf_field()}}';
                                 html += '<button class="btn btn-sm red btnDelete" type="submit" data-toggle="confirmation"><i class="fa fa-trash"></i></button>';
                                 html += '<a href="{{ url("product-variant/edit") }}/'+data+'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>';

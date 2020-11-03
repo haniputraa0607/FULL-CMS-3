@@ -74,6 +74,16 @@ class ProductVariantGroupController extends Controller
         }
     }
 
+    public function deleteProductVariant($product_code)
+    {
+        $result = MyHelper::post('product-variant-group/product-delete', ['product_code' => $product_code]);
+
+        if (isset($result['status']) && $result['status'] == 'success') {
+            return redirect('product-variant-group/list')->with('success',['Delete All Product Variant Group Success']);
+        }
+        return redirect('product-variant-group/list')->withErrors($result['messages'] ?? ['Something went wrong']);
+    }
+
     public function listPrice(Request $request, $id_outlet = null)
     {
         $outlets = MyHelper::post('outlet/be/list', ['filter' => 'different_price'])['result'] ?? [];
