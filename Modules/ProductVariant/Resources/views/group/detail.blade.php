@@ -42,15 +42,7 @@
                     ['like','like']
                 ],
                 opsi:[]
-            },
-            product_variant_group_visibility :{
-                display:'Default Visibility',
-                operator:[],
-                opsi:[
-                    ['Visible','Visible'],
-                    ['Hidden', 'Hidden']
-                ]
-            },
+            }
         };
         $('.price').inputmask("numeric", {
             radixPoint: ",",
@@ -116,7 +108,6 @@
                         <tr>
                             <th> Product </th>
                             <th> Product Variant </th>
-                            <th> Visible </th>
                             <th> Stock </th>
                             <th> Status </th>
                         </tr>
@@ -132,13 +123,6 @@
                                         $name = implode(',',$arr);
                                         echo $name;
                                         ?>
-                                    </td>
-                                    <td>
-                                        <select class="form-control" name="detail[{{$pv['id_product_variant_group']}}][product_variant_group_visibility]">
-                                            <option></option>
-                                            <option value="Visible" @if($pv['product_variant_group_visibility']=='Visible') selected @endif>Visible</option>
-                                            <option value="Hidden" @if($pv['product_variant_group_visibility']=='Hidden') selected @endif>Hidden</option>
-                                        </select>
                                     </td>
                                     <td>
                                         <select class="form-control" name="detail[{{$pv['id_product_variant_group']}}][product_variant_group_stock_status]">
