@@ -13,10 +13,67 @@ use App\Imports\FirstSheetOnlyImport;
 
 class ProductVariantGroupController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
+    public function listProductVariant(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Product Variant',
+            'sub_title'      => 'Product Variant List',
+            'menu_active'    => 'product-variant',
+            'submenu_active' => 'product-variant-group-list'
+        ];
+
+        if ($request->wantsJson()) {
+            $draw = $request->draw;
+
+            $list = MyHelper::post('product-variant-group/list',$request->all());
+
+            if(isset($list['status']) && $list['status'] == 'success'){
+                $arr_result['draw'] = $draw;
+                $arr_result['recordsTotal'] = $list['result']['total'];
+                $arr_result['recordsFiltered'] = $list['result']['total'];
+                $arr_result['data'] = $list['result']['data'];
+            }else{
+                $arr_result['draw'] = $draw;
+                $arr_result['recordsTotal'] = 0;
+                $arr_result['recordsFiltered'] = 0;
+                $arr_result['data'] = array();
+            }
+
+            return response()->json($arr_result);
+        }
+
+        return view('productvariant::group.product_variant_list', $data);
+    }
+
+    public function editProductVariant(Request $request, $product_code){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Product Variant',
+            'sub_title'      => 'Product Variant Edit',
+            'menu_active'    => 'product-variant',
+            'submenu_active' => 'product-variant-group-list'
+        ];
+
+        if(empty($post)){
+            $data['products'] = MyHelper::post('product/be/list', ['product_code' => $product_code, 'outlet_prices' => 1])['result'] ?? [];
+            $data['product_variant'] = MyHelper::get('product-variant')['result'] ?? [];
+            $data['product_variant_group'] = MyHelper::post('product-variant-group',  ['product_code' => $product_code])['result'] ?? [];
+            $data['count'] = count($data['product_variant_group']);
+            $data['product_code'] = $product_code;
+            return view('productvariant::group.product_variant_detail', $data);
+        }else{
+            $post = $request->all();
+            $post['product_code'] = $product_code;
+            $create_update = MyHelper::post('product-variant-group', $post);
+
+            if(($create_update['status']??'')=='success'){
+                return redirect('product-variant-group/edit/'.$product_code)->with('success',['Update Product Variant Group Success']);
+            }else{
+                return redirect('product-variant-group/edit/'.$product_code)->withErrors($create_update['messages'] ?? ['Something went wrong']);
+            }
+        }
+    }
+
     public function listPrice(Request $request, $id_outlet = null)
     {
         $outlets = MyHelper::post('outlet/be/list', ['filter' => 'different_price'])['result'] ?? [];
