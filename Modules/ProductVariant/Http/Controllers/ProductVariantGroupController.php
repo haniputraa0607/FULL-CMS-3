@@ -110,6 +110,11 @@ class ProductVariantGroupController extends Controller
         $data['key']       = $id_outlet;
         $data['outlets']   = $outlets;
         $post['id_outlet'] = $id_outlet;
+        $page = $request->page;
+        if (!$page) {
+            $page = 1;
+        }
+        $post['page'] = $page;
 
         $get = MyHelper::post('product-variant-group/list-price', $post);
 
@@ -183,6 +188,11 @@ class ProductVariantGroupController extends Controller
         $data['key']       = $id_outlet;
         $data['outlets']   = $outlets;
         $post['id_outlet'] = $id_outlet;
+        $page = $request->page;
+        if (!$page) {
+            $page = 1;
+        }
+        $post['page'] = $page;
 
         $get = MyHelper::post('product-variant-group/list-detail', $post);
 
