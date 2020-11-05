@@ -208,18 +208,18 @@ $configs    		= session('configs');
 				<div class="row step-line">
 					<div class="col-md-4 mt-step-col first active" data-step="1">
 						<div class="mt-step-number bg-white">1</div>
-						<div class="mt-step-title uppercase font-grey-cascade">Download Template Product Variant Group</div>
-						<div class="mt-step-content font-grey-cascade">Download current product variant group</div>
+						<div class="mt-step-title uppercase font-grey-cascade">Download Template Product Variant</div>
+						<div class="mt-step-content font-grey-cascade">Download current product variant</div>
 					</div>
 					<div class="col-md-4 mt-step-col" data-step="2">
 						<div class="mt-step-number bg-white">2</div>
-						<div class="mt-step-title uppercase font-grey-cascade">Upload Data Product Variant Group</div>
-						<div class="mt-step-content font-grey-cascade">Import from modified product variant group list</div>
+						<div class="mt-step-title uppercase font-grey-cascade">Upload Data Product Variant</div>
+						<div class="mt-step-content font-grey-cascade">Import from modified product variant list</div>
 					</div>
 					<div class="col-md-4 mt-step-col last" data-step="3">
 						<div class="mt-step-number bg-white">#</div>
-						<div class="mt-step-title uppercase font-grey-cascade">Result Product Variant Group</div>
-						<div class="mt-step-content font-grey-cascade">Report imported product variant group</div>
+						<div class="mt-step-title uppercase font-grey-cascade">Result Product Variant</div>
+						<div class="mt-step-content font-grey-cascade">Report imported product variant</div>
 					</div>
 				</div>
 			</div>
@@ -235,8 +235,8 @@ $configs    		= session('configs');
 				</div>
 				<div class="portlet-body form">
 					<div class="m-heading-1 border-green m-bordered">
-						<p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data produk variant group.</p>
-						<p style="white-space: pre-wrap;">Saat melakukan impor produk variant group, mohon diperhatikan bahwa : </p>
+						<p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data produk variant.</p>
+						<p style="white-space: pre-wrap;">Saat melakukan impor produk variant, mohon diperhatikan bahwa : </p>
 						<ul>
 							<li>Value dari variant adalah semua variant yang mungkin tersedia</li>
 							<li>Silahkan menghapus variant yang tidak tersedia</li>
@@ -248,7 +248,7 @@ $configs    		= session('configs');
 								<thead>
 									<th>product_name</th>
 									<th>product_code</th>
-									<th>use_variant_status</th>
+									<th>use_product_variant_status</th>
 									<th>Size</th>
 									<th>Type</th>
 								</thead>
@@ -288,7 +288,7 @@ $configs    		= session('configs');
 			<div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption">
-						<span class="caption-subject font-dark sbold uppercase font-green">Download Template Product Variant Group</span>
+						<span class="caption-subject font-dark sbold uppercase font-green">Download Template Product Variant</span>
 					</div>
 				</div>
 				<div class="portlet-body form">
@@ -317,7 +317,7 @@ $configs    		= session('configs');
 			<div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption">
-						<span class="caption-subject font-dark sbold uppercase font-green">Upload Data Product Variant Group</span>
+						<span class="caption-subject font-dark sbold uppercase font-green">Upload Data Product Variant</span>
 					</div>
 				</div>
 				<div class="portlet-body form upload-container">
@@ -371,7 +371,7 @@ $configs    		= session('configs');
 			<div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption">
-						<span class="caption-subject font-dark sbold uppercase font-green">Import Result Product Variant Group</span>
+						<span class="caption-subject font-dark sbold uppercase font-green">Import Result Product Variant</span>
 					</div>
 				</div>
 				<div class="portlet-body step3 form">

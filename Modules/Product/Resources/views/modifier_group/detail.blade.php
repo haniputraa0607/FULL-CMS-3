@@ -30,19 +30,27 @@
     @yield('filter_script')
     <script type="text/javascript">
         rules = {
-            all_product_variant_group :{
-                display:'All Product Variant',
+            all_product_modifier :{
+                display:'All Modifier Group',
                 operator:[],
                 opsi:[]
             },
-            product_variant_group_code :{
-                display:'Product Variant Code',
+            text :{
+                display:'Name',
                 operator:[
                     ['=','='],
                     ['like','like']
                 ],
                 opsi:[]
-            }
+            },
+            product_modifier_visibility :{
+                display:'Default Visibility',
+                operator:[],
+                opsi:[
+                    ['Visible','Visible'],
+                    ['Hidden', 'Hidden']
+                ]
+            },
         };
         $('.price').inputmask("numeric", {
             radixPoint: ",",
@@ -53,7 +61,7 @@
             oncleared: function () { self.Value(''); }
         });
         $('#outlet_selector').on('change',function(){
-            window.location.href = "{{url('product-variant-group/detail')}}/"+$(this).val();
+            window.location.href = "{{url('product/modifier-group/detail')}}/"+$(this).val();
         });
         $('#form-prices').submit(function(){
             $('.price').inputmask('remove');
@@ -89,7 +97,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">List Product Variant</span>
+                <span class="caption-subject sbold uppercase font-blue">List Product Modifier</span>
             </div>
             <div class="actions">
                 <div class="btn-group" style="width: 300px">
@@ -106,32 +114,35 @@
                 <table class="table table-striped table-bordered table-hover table-responsive" width="100%">
                     <thead>
                         <tr>
-                            <th> Product </th>
-                            <th> Product Variant </th>
+                            <th> No </th>
+                            <th> Modifier </th>
+                            <th> Visible </th>
                             <th> Stock </th>
                             <th> Status </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($productVariant))
-                            @foreach($productVariant as $pv)
+                        @if (!empty($modifiers['data']))
+                            @foreach($modifiers['data'] as $modifier)
+                                @php $start++  @endphp
                                 <tr>
-                                    <td>{{$pv['product_code']}} - {{$pv['product_name']}}</td>
-                                    <td>{{$pv['product_variant_group_code']}} -
-                                        <?php
-                                        $arr = array_column($pv['product_variant_pivot'], 'product_variant_name');
-                                        $name = implode(',',$arr);
-                                        echo $name;
-                                        ?>
-                                    </td>
+                                    <td style="width: 1%">{{$start}}</td>
+                                    <td>{{$modifier['product_modifier_group_name']}} - {{$modifier['text']}}</td>
                                     <td>
-                                        <select class="form-control" name="detail[{{$pv['id_product_variant_group']}}][product_variant_group_stock_status]">
-                                            <option value="Available" @if($pv['product_variant_group_stock_status']=='Available') selected @endif>Available</option>
-                                            <option value="Sold Out" @if($pv['product_variant_group_stock_status']=='Sold Out') selected @endif>Sold Out</option>
+                                        <select class="form-control" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_visibility]">
+                                            <option></option>
+                                            <option value="Visible" @if($modifier['product_modifier_visibility']=='Visible') selected @endif>Visible</option>
+                                            <option value="Hidden" @if($modifier['product_modifier_visibility']=='Hidden') selected @endif>Hidden</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" value="{{$pv['product_variant_group_status']}}" style="max-width: 120px" disabled />
+                                        <select class="form-control" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_stock_status]">
+                                            <option value="Available" @if($modifier['product_modifier_stock_status']=='Available') selected @endif>Available</option>
+                                            <option value="Sold Out" @if($modifier['product_modifier_stock_status']=='Sold Out') selected @endif>Sold Out</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" value="{{$modifier['product_modifier_status']}}" style="max-width: 120px" disabled />
                                     </td>
                                 </tr>
                             @endforeach
@@ -141,9 +152,9 @@
                 <div class="form-actions">
                     {{ csrf_field() }}
                     <div class="row">
-                        @if ($productVariantPaginator)
+                        @if ($paginator)
                         <div class="col-md-10">
-                            {{ $productVariantPaginator->links() }}
+                            {{ $paginator->links() }}
                         </div>
                         @endif
                         <div class="col-md-2">

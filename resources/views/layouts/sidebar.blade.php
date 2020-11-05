@@ -644,6 +644,61 @@
 			</li>
 			@endif
 
+			@if(MyHelper::hasAccess([283,284,285,286,287], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'product-modifier-group') ? 'active' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-glass"></i>
+						<span class="title">Product Modifier Group</span>
+						<span class="arrow {{($menu_active == 'product-modifier-group') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([284], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'product-modifier-group-new') ? 'active open' : ''}}">
+								<a href="{{url('product/modifier-group/create')}}" class="nav-link ">
+									<span class="title">New Product Modifier Group</span>
+								</a>
+							</li>
+						@endif
+						@if(MyHelper::hasAccess([283,285,286,287], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'product-modifier-group-list') ? 'active open' : ''}}">
+								<a href="{{url('product/modifier-group')}}" class="nav-link ">
+									<span class="title">Product Modifier Group List</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'product-modifier-group-price') ? 'active open' : ''}}">
+								<a href="{{url('product/modifier-group/price')}}" class="nav-link ">
+									<span class="title">Product Modifier Group Price</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'product-modifier-group-detail') ? 'active open' : ''}}">
+								<a href="{{url('product/modifier-group/detail')}}" class="nav-link ">
+									<span class="title">Product Modifier Group Detail</span>
+								</a>
+							</li>
+							<li class="nav-item {{(strpos($submenu_active , 'product-modifier-group-import') !== false) ? 'active open' : ''}}">
+								<a href="javascript:;" class="nav-link nav-toggle">
+									<span class="title">Export & Import Product Modifier Group</span>
+									<span class="arrow"></span>
+								</a>
+								<ul class="sub-menu">
+									<li class="nav-item {{($submenu_active == 'product-modifier-group-import-global') ? 'active open' : ''}}">
+										<a href="{{url('product/modifier-group/import')}}" class="nav-link ">
+											<span class="title">Import Product Modifier Group</span>
+										</a>
+									</li>
+									<li class="nav-item {{($submenu_active == 'product-modifier-group-import-price') ? 'active open' : ''}}">
+										<a href="{{url('product/modifier-group/import-price')}}" class="nav-link ">
+											<span class="title">Import Modifier Group Price</span>
+										</a>
+									</li>
+								</ul>
+							</li>
+						@endif
+					</ul>
+
+				</li>
+			@endif
+
 			@if(MyHelper::hasAccess([278,279,280,281,282], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'product-variant') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
@@ -655,24 +710,29 @@
 						@if(MyHelper::hasAccess([279], $grantedFeature))
 							<li class="nav-item {{($submenu_active == 'product-variant-new') ? 'active open' : ''}}">
 								<a href="{{url('product-variant/create')}}" class="nav-link ">
-									<span class="title">New Product Variant</span>
+									<span class="title">New Variant</span>
 								</a>
 							</li>
 						@endif
 						@if(MyHelper::hasAccess([278,279,281], $grantedFeature))
 							<li class="nav-item {{($submenu_active == 'product-variant-list') ? 'active open' : ''}}">
 								<a href="{{url('product-variant')}}" class="nav-link ">
-									<span class="title">Product Variant List</span>
+									<span class="title">Variant List</span>
 								</a>
 							</li>
+								<li class="nav-item {{($submenu_active == 'product-variant-group-list') ? 'active open' : ''}}">
+									<a href="{{url('product-variant-group/list')}}" class="nav-link ">
+										<span class="title">Product Variant List</span>
+									</a>
+								</li>
 							<li class="nav-item {{($submenu_active == 'product-variant-group-price') ? 'active open' : ''}}">
 								<a href="{{url('product-variant-group/price')}}" class="nav-link ">
-									<span class="title">Product Variant Group Price</span>
+									<span class="title">Product Variant Price</span>
 								</a>
 							</li>
 							<li class="nav-item {{($submenu_active == 'product-variant-group-detail') ? 'active open' : ''}}">
 								<a href="{{url('product-variant-group/detail')}}" class="nav-link ">
-									<span class="title">Product Variant Group Detail</span>
+									<span class="title">Product Variant Detail</span>
 								</a>
 							</li>
 							<li class="nav-item {{(strpos($submenu_active , 'product-variant-import') !== false) ? 'active open' : ''}}">
@@ -683,17 +743,17 @@
 								<ul class="sub-menu">
 									<li class="nav-item {{($submenu_active == 'product-variant-import-global') ? 'active open' : ''}}">
 										<a href="{{url('product-variant/import')}}" class="nav-link ">
-											<span class="title">Import Product Variant</span>
+											<span class="title">Import Variant</span>
 										</a>
 									</li>
 									<li class="nav-item {{($submenu_active == 'product-variant-group-import-global') ? 'active open' : ''}}">
 										<a href="{{url('product-variant-group/import')}}" class="nav-link ">
-											<span class="title">Import Product Variant Group</span>
+											<span class="title">Import Product Variant</span>
 										</a>
 									</li>
 									<li class="nav-item {{($submenu_active == 'product-variant-group-import-price') ? 'active open' : ''}}">
 										<a href="{{url('product-variant-group/import-price')}}" class="nav-link ">
-											<span class="title">Import Product Variant Group Price</span>
+											<span class="title">Import Product Variant Price</span>
 										</a>
 									</li>
 								</ul>

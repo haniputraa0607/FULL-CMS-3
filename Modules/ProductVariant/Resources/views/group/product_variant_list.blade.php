@@ -29,7 +29,7 @@ $grantedFeature     = session('granted_features');
             table = $('#kt_datatable').DataTable({serverSide: true, ordering: false,
                 "lengthChange": false,
                 ajax: {
-                    url : "{{url('product-variant')}}",
+                    url : "{{url('product-variant-group/list')}}",
                     type: 'GET',
                     data: function (data) {
                         const info = $('#kt_datatable').DataTable().page.info();
@@ -38,35 +38,12 @@ $grantedFeature     = session('granted_features');
                     dataSrc: 'data'
                 },
                 columns: [
-                    {data: 'product_variant_name'},
-                    {data: 'product_variant_parent'},
-                    {data: 'product_variant_child'},
-                    {data: 'id_product_variant'},
+                    {data: 'product_code'},
+                    {data: 'product_name'},
+                    {data: 'count_product_variant_group'},
+                    {data: 'product_code'},
                 ],
                 columnDefs: [
-                    {
-                        'targets': 1,
-                        render: function ( data, type, row, meta ) {
-                            var html = '';
-                            if(data){
-                                html += data.product_variant_name
-                            }
-                            return html;
-                        }
-                    },
-                    {
-                        'targets': 2,
-                        render: function ( data, type, row, meta ) {
-                            var html = '<ul>';
-                            if(data){
-                                for(var i=0;i<data.length;i++){
-                                    html += ' <li>'+data[i].product_variant_name+'</li>'
-                                }
-                            }
-                            html += '</ul>';
-                            return html;
-                        }
-                    },
                     {
                         'targets': 3,
                         render: function ( data, type, row, meta ) {
@@ -74,10 +51,11 @@ $grantedFeature     = session('granted_features');
                             var html = '';
 
                             if(status == 1){
-                                html += '<form action="{{url('product-variant/delete')}}/'+data+'" method="POST" class="form-inline">';
+                                html += '<form action="{{url('product-variant-group/delete')}}/'+data+'" method="POST" class="form-inline">';
+                                html += '{{method_field('DELETE')}}';
                                 html += '{{csrf_field()}}';
                                 html += '<button class="btn btn-sm red btnDelete" type="submit" data-toggle="confirmation"><i class="fa fa-trash"></i></button>';
-                                html += '<a href="{{ url("product-variant/edit") }}/'+data+'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>';
+                                html += '<a href="{{ url("product-variant-group/edit") }}/'+data+'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>';
                                 html += '</form>';
                             }
                             $('[data-toggle=confirmation]').confirmation({ btnOkClass: 'btn btn-sm btn-success submit', btnCancelClass: 'btn btn-sm btn-danger'});
@@ -124,10 +102,10 @@ $grantedFeature     = session('granted_features');
                 <thead>
                 <tr>
                 <tr>
-                    <th>Variant Name</th>
-                    <th>Variant Parent</th>
-                    <th>Variant Child</th>
-                    @if(MyHelper::hasAccess([281], $grantedFeature))
+                    <th>Product Code</th>
+                    <th>Product Name</th>
+                    <th>Variant</th>
+                    @if(MyHelper::hasAccess([286,287], $grantedFeature))
                         <th>Action</th>
                     @endif
                 </tr>

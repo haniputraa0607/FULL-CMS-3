@@ -693,12 +693,34 @@
     $('#checkbox-variant').on('ifChanged', function(event) {
         if(this.checked) {
             $('#nav-prod-variant').show();
+            $("input[name=product_global_price]").val('');
             $("input[name=product_global_price]").prop('disabled', true);
             $('input[name=product_global_price]').prop('required',false);
         }else{
             $('#nav-prod-variant').hide();
+            $("input[name=product_global_price]").val($("#old_global_price").val());
             $("input[name=product_global_price]").prop('disabled', false);
             $('input[name=product_global_price]').prop('required',true);
+        }
+    });
+
+    $('#select2-product-variant').change(function(e) {
+        var selected = $(e.target).val();
+        if(selected !== null){
+            var last = selected[selected.length-1];
+            var cek = 0;
+            for(var i=0;i<selected.length;i++){
+                var split = selected[i].split("|");
+                var split2 = last.split("|");
+
+                if(split[0] === split2[1]){
+                    cek = 1;
+                    selected.splice(i, 1);
+                }
+            }
+            if(cek === 1){
+                $("#select2-product-variant").val(selected).trigger('change');
+            }
         }
     });
 
@@ -709,7 +731,6 @@
         var product_variant_group_code = $('#product-variant-group-code').val();
         var product_variant_group_id = $('#product-variant-group-id').val();
         var text = $('#select2-product-variant option:selected').toArray().map(item => item.text).join();
-        var visibility = $('input[name="product_variant_group_visibility"]:checked').val();
         var msg_error = '';
 
         if(product_variant.length <= 0){
@@ -725,6 +746,26 @@
                 msg_error += '-Can not select same level in product variant group<br>';
             }
             check_level = split[1];
+        }
+
+        var checkSameCombination = 0;
+        $('#table-product-variant > tbody  > tr').each(function(index, tr) {
+            if($('#product-variant-'+index).val()){
+                var arrProdVariantFromTable = $('#product-variant-'+index).val().split(",");
+                var flag = 0;
+                for(var i=0;i<arrProdVariantFromTable.length;i++){
+                    if(id.indexOf(arrProdVariantFromTable[i]) >= 0){
+                        flag++;
+                    }
+                }
+                if(flag > 1){
+                    checkSameCombination = 1;
+                }
+            }
+        });
+
+        if(checkSameCombination === 1){
+            msg_error += '-Combination "'+text+'" already exist<br>';
         }
 
         if(product_variant_group_code === ''){
@@ -743,14 +784,18 @@
             html += '<td>'+text+'</td>';
             html += '<td>'+product_variant_group_code+'</td>';
             html += '<td>'+product_variant_price+'</td>';
-            html += '<td>'+visibility+'</td>';
-            html += '<td><a  onclick="deleteRowProductVariant(this)" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>' +
-                '<a  onclick="editRowProductVariant(this,'+row+')" class="btn btn-sm btn-primary" style="margin-left: 2%"><i class="fa fa-pen"></i> Edit</a></td>';
+            if(product_variant_group_id){
+                html += '<td><a  onclick="deleteRowProductVariant(this,'+product_variant_group_id+')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>' +
+                    '<a  onclick="editRowProductVariant(this,'+row+')" data-toggle="confirmation" class="btn btn-sm btn-primary" style="margin-left: 2%"><i class="fa fa-pen"></i> Edit</a></td>';
+            }else{
+                html += '<td><a  onclick="deleteRowProductVariant(this)" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>' +
+                    '<a  onclick="editRowProductVariant(this,'+row+')" data-toggle="confirmation" class="btn btn-sm btn-primary" style="margin-left: 2%"><i class="fa fa-pen"></i> Edit</a></td>';
+            }
+
             html += '<input type="hidden" id="product-variant-'+row+'" name="data['+row+'][id]" value="'+id+'">';
             html += '<input type="hidden" id="product-variant-edit-'+row+'" name="data['+row+'][id-edit]" value="'+product_variant+'">';
             html += '<input type="hidden" id="product-variant-group-code-'+row+'" name="data['+row+'][code]" value="'+product_variant_group_code+'">';
             html += '<input type="hidden" id="product-variant-price-'+row+'" name="data['+row+'][price]" value="'+product_variant_price+'">';
-            html += '<input type="hidden" id="product-variant-group-visibility-'+row+'" name="data['+row+'][visibility]" value="'+visibility+'">';
             html += '<input type="hidden" id="product-variant-group-id-'+row+'" name="data['+row+'][group_id]" value="'+product_variant_group_id+'">';
             html += '</tr>';
 
@@ -773,42 +818,67 @@
     }
 
     function deleteRowProductVariant(content, id = null) {
-        $(content).parent().parent('tr').remove();
+        if(confirm('Are you sure you want to delete this product variant group?')) {
 
-        if(id !== null){
-            $('#form_product_variant_group').append('<input type="hidden" name="data_to_delete[]" value="'+id+'">');
+            if(id !== null){
+                var token  = "{{ csrf_token() }}";
+                $.ajax({
+                    type : "POST",
+                    url : "{{ url('product/product-variant-group/delete') }}",
+                    data : "_token="+token+"&id_product_variant_group="+id,
+                    success : function(result) {
+                        if (result.status == "success") {
+                            $(content).parent().parent('tr').remove();
+                            toastr.info("Successfully delete the product variant group");
+                        }
+                        else {
+                            toastr.warning("Something went wrong. Failed to delete product variant group.");
+                        }
+                    }
+                });
+            }else{
+                $(content).parent().parent('tr').remove();
+                toastr.info("Successfully delete the product variant");
+            }
         }
     }
 
     function editRowProductVariant(content,id) {
-        var data_id = $('#product-variant-edit-'+id).val().split(',');
-        var data_price = $('#product-variant-price-'+id).val();
-        var group_id = $('#product-variant-group-id-'+id).val();
-        var code = $('#product-variant-group-code-'+id).val();
-        var visibility = $('#product-variant-group-visibility-'+id).val();
+        var product_variant = $('#select2-product-variant').val();
+        var product_variant_price = $('#product-variant-group-price').val();
+        var product_variant_group_code = $('#product-variant-group-code').val();
 
-        if(visibility == 'Visible'){
-            document.getElementById("radio-variant-visibility1").checked = true;
-            document.getElementById("radio-variant-visibility2").checked = false;
+        if(product_variant !== null || product_variant_price !== "" || product_variant_group_code !== ""){
+            toastr.warning("Please complete your edit process");
         }else{
-            document.getElementById("radio-variant-visibility1").checked = false;
-            document.getElementById("radio-variant-visibility2").checked = true;
-        }
+            var data_id = $('#product-variant-edit-'+id).val().split(',');
+            var data_price = $('#product-variant-price-'+id).val();
+            var group_id = $('#product-variant-group-id-'+id).val();
+            var code = $('#product-variant-group-code-'+id).val();
 
-        $("#select2-product-variant").val(data_id).trigger('change');
-        $('#product-variant-group-price').val(data_price);
-        $('#product-variant-group-id').val(group_id);
-        $('#product-variant-group-code').val(code);
-        $(content).parent().parent('tr').remove();
+            $("#select2-product-variant").val(data_id).trigger('change');
+            $('#product-variant-group-price').val(data_price);
+            $('#product-variant-group-id').val(group_id);
+            $('#product-variant-group-code').val(code);
+            $(content).parent().parent('tr').remove();
+        }
     }
 
     function submitProductVariant() {
-        var tbody = $("#table-product-variant tbody");
+        var product_variant = $('#select2-product-variant').val();
+        var product_variant_price = $('#product-variant-group-price').val();
+        var product_variant_group_code = $('#product-variant-group-code').val();
 
-        if (tbody.children().length == 0) {
-            toastr.warning("Please add 1 or more product variant group.");
+        if(product_variant !== null || product_variant_price !== "" || product_variant_group_code !== ""){
+            toastr.warning("Please complete your edit process");
         }else{
-            $( "#form_product_variant_group" ).submit();
+            var tbody = $("#table-product-variant tbody");
+
+            if (tbody.children().length == 0) {
+                toastr.warning("Please add 1 or more product variant group.");
+            }else{
+                $( "#form_product_variant_group" ).submit();
+            }
         }
     }
 
