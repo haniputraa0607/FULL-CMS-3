@@ -374,16 +374,21 @@
                                 	<div class="row static-info">
                                         <div class="col-md-4 name">Brand</div>
 			                            <div class="col-md-8 value">: 
-			                            	@php
-			                            		foreach ($result['brands'] as $key => $value) {
-				                            		if ($key == 0) {
-				                            			$comma = '';
-				                            		}else{
-				                            			$comma = ', ';
+			                            	@if (!empty($result['id_brand']))
+			                            		{{ $result['brand']['name_brand'] }}
+			                            	@else
+				                            	@php
+				                            		foreach ($result['brands'] as $key => $value) {
+					                            		if ($key == 0) {
+					                            			$comma = '';
+					                            		}else{
+					                            			$comma = ', ';
+					                            		}
+					                            		echo $comma.$value['name_brand'];
 				                            		}
-				                            		echo $comma.$value['name_brand'];
-			                            		}
-			                            	@endphp</div>
+				                            	@endphp
+			                            	@endif
+				                        </div>
                                     </div>
                                     <div class="row static-info">
                                         <div class="col-md-4 name">Tag</div>
@@ -550,7 +555,7 @@
                                                         <tbody>
                                                             @foreach($result['promo_campaign_product_discount'] as $res)
                                                                 <tr>
-                                                                    <td>{{ $res['brand']['name_brand']??'' }}</td>
+                                                                    <td>{{ $res['brand']['name_brand']??$result['brand']['name_brand']??'' }}</td>
                                                                     <td>{{ $res['product']['product_code'] }}</td>
                                                                     <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
                                                                 </tr>
@@ -586,7 +591,7 @@
                                                     <tbody>
                                                         @foreach($result['promo_campaign_tier_discount_product'] as $res)
                                                             <tr>
-                                                                <td>{{ $res['brand']['name_brand'] }}</td>
+                                                                <td>{{ $res['brand']['name_brand']??$result['brand']['name_brand']??'' }}</td>
                                                                 <td>{{ $res['product']['product_code'] }}</td>
                                                                 <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
                                                             </tr>
@@ -644,7 +649,7 @@
                                                     <tbody>
                                                         @foreach($result['promo_campaign_buyxgety_product_requirement'] as $res)
                                                             <tr>
-                                                                <td>{{ $res['brand']['name_brand'] }}</td>
+                                                                <td>{{ $res['brand']['name_brand']??$result['brand']['name_brand']??'' }}</td>
                                                                 <td>{{ $res['product']['product_code'] }}</td>
                                                                 <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
                                                             </tr>
