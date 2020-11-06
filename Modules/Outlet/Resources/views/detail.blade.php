@@ -581,9 +581,11 @@
                 <li>
                     <a href="#schedule" data-toggle="tab"> Schedule </a>
                 </li>
+                @if(MyHelper::hasAccess([51], $grantedFeature))
                 <li>
                     <a href="#visibility" data-toggle="tab"> Visibility </a>
                 </li>
+                @endif
             </ul>
         </div>
         <div class="portlet-body">

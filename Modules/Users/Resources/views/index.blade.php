@@ -343,7 +343,7 @@ $configs     		= session('configs');
 					<div class="col-md-4" style="padding-left:0px;padding-right:0px;">
 						<div class="pull-right pagination" style="margin-top: 0px;margin-bottom: 0px;">
 							<ul class="pagination" style="margin-top: 0px;margin-bottom: 0px;">
-								@if($page <= 1) <li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
+								@if($begin <= 1) <li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
 								@else <li class="page-first"><a href="{{url('user')}}/{{$page-1}}">«</a></li>
 								@endif
 

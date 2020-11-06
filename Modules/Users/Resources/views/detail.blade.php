@@ -422,9 +422,11 @@
 					<li>
 						<a href="#profileupdate" data-toggle="tab"> Account Update </a>
 					</li>
+                    @if(MyHelper::hasAccess([6], $grantedFeature))
 					<li>
 						<a href="#permission" data-toggle="tab"> Access Permission </a>
 					</li>
+                    @endif
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="overview">
@@ -511,7 +513,7 @@
 									</div>
 									<!--end col-md-8-->
 									<div class="col-md-8">
-										@if(isset($log))
+										@if(isset($log) && MyHelper::hasAccess([7], $grantedFeature))
 											<a href="{{url('user/log/'.$profile['phone'])}}" class="btn btn-sm yellow" type="button" style="float:right">
 												Show All Activity
 											</a>
@@ -1211,10 +1213,12 @@
 										<a data-toggle="tab" href="#tab_2-2">
 											<i class="fa fa-picture-o"></i> Change Photo </a>
 									</li> -->
+                                    @if(MyHelper::hasAccess([5], $grantedFeature) || $profile['phone'] == session('phone'))
 									<li>
 										<a data-toggle="tab" href="#tab_3-3">
 											<i class="fa fa-lock"></i> Change PIN </a>
 									</li>
+                                    @endif
 									<li>
 										<a data-toggle="tab" href="#tab_4-4">
 											<i class="fa fa-ban"></i> Suspend User </a>
@@ -1334,6 +1338,7 @@
                                                         </div>
                                                     @endif
 													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
+                                                    @if(MyHelper::hasAccess([5], $grantedFeature) || $profile['phone'] == session('phone'))
 													<div>
 															<span class="btn default btn-file">
 																<span class="fileinput-new"> Select image ID Card </span>
@@ -1342,6 +1347,7 @@
 															</span>
 														<a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 													</div>
+                                                    @endif
 												</div>
 											</div>
 											<!-- <div class="form-group">
@@ -1357,9 +1363,11 @@
 													</label>
 												</div>
 											</div> -->
+                                            @if(MyHelper::hasAccess([5], $grantedFeature) || $profile['phone'] == session('phone'))
 											<div class="margiv-top-10">
 												<button class="btn green"> Save Changes </button>
 											</div>
+                                            @endif
 										</form>
 									</div>
 									<!-- <div id="tab_2-2" class="tab-pane">
@@ -1400,6 +1408,7 @@
 													</label>
 												</div>
 											</div>
+                                            @if(MyHelper::hasAccess([5], $grantedFeature))
 											<div class="form-group row">
 												<label class="control-label col-md-12">Your PIN</label>
 												<div class="col-md-4">
@@ -1410,6 +1419,7 @@
 											<div class="margin-top-10">
 												<a type="button" data-toggle="confirmation" data-original-title="Are you sure to change the suspend status of this user ?" data-placement="bottom" data-popout="true" class="btn green">Save Changes</a> 
 											</div>
+                                            @endif
 										</form>
 									</div>
 								</div>

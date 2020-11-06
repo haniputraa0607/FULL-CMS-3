@@ -332,6 +332,7 @@ class OutletController extends Controller
         $data['order_field']=$post['order_field'];
         $post['order_method']=session('outlet_location_order_method')??'asc';
         $data['order_method']=$post['order_method'];
+        $post['admin'] = 1;
         $req=MyHelper::post('outlet/be/list?page='.$page,$post);
         $data['total']=$req['result']['total']??0;
         $data['outlets']=$req['result']['data']??[];

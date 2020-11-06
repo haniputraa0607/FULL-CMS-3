@@ -1,7 +1,8 @@
 @section('detail-info')
 @php
     $datenow = date("Y-m-d H:i:s");
-    // dd($deals);
+    use App\Lib\MyHelper;
+    $grantedFeature     = session('granted_features');
 @endphp
 <div class="row">
     <div class="col-md-5">
@@ -111,12 +112,13 @@
                     	<div>@if(empty($deals['deals_warning_image'])) Use Global @else <img src="{{ $deals['url_deals_warning_image']??'' }}" style="width: 100px">@endif</div>
                 	</div>
                 </div>
-                
+            @if(MyHelper::hasAccess([112], $grantedFeature))
             <div class="row static-info">
                 <div class="col-md-11 value">
                     <a class="btn blue" href="{{ url('/'.$rpage)}}/step1/{{$deals['id_deals_promotion_template']}}">Edit Detail</a>
                 </div>
             </div>
+            @endif
 
             </div>
         </div>
@@ -412,11 +414,13 @@
                     </div>
                     @endif
                 @endif
+                @if(MyHelper::hasAccess([112], $grantedFeature))
                 <div class="row static-info">
                     <div class="col-md-11 value">
                         <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals_promotion_template']}}">Edit Rule</a>
                     </div>
                 </div>
+                @endif
             @else
             <span class="sale-num font-red sbold">
                 No Deals Rules
