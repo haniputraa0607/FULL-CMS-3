@@ -186,6 +186,7 @@ class ModifierGroupController extends Controller
             return redirect('product/modifier-group/price');
         }
         $post['id_outlet'] = $id_outlet;
+        $post['type'] = 'modifiergroup';
         $result            = MyHelper::post('product/modifier/update-price', $post);
         if (($result['status'] ?? false) == 'success') {
             return back()->with('success', ['Success update price']);
@@ -255,6 +256,7 @@ class ModifierGroupController extends Controller
             return redirect('product/modifier-group/detail');
         }
         $post['id_outlet'] = $id_outlet;
+        $post['type'] = 'modifiergroup';
         $result            = MyHelper::post('product/modifier/update-detail', $post);
         if (($result['status'] ?? false) == 'success') {
             return back()->with('success', ['Success update detail']);
