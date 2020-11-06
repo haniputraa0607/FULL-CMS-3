@@ -126,7 +126,7 @@
 		var brand = '{!!$result['id_brand']!!}';
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
-			$('#selectProduct').show()
+			$('#selectProduct, #product-rule-option').show()
 			if (productLoad == 0) {
 				$.ajax({
 					type: "GET",
@@ -165,7 +165,7 @@
 			}
 		}
 
-		$('#selectProduct').hide()
+		$('#selectProduct, #product-rule-option').hide()
 		function loadProduct(selector,callback){
 			if (productLoad == 0) {
 				var valuee=$(selector).data('value');
@@ -240,7 +240,7 @@
 			$('#multipleProduct').prop('required', false)
 			$('#multipleProduct').prop('disabled', true)
 			if (product == 'Selected') {
-				$('#selectProduct').show()
+				$('#selectProduct, #product-rule-option').show()
 				if (productLoad == 0) {
 					$.ajax({
 						type: "GET",
@@ -265,7 +265,7 @@
 					$('#multipleProduct').prop('disabled', false)
 				}
 			} else {
-				$('#selectProduct').hide()
+				$('#selectProduct, #product-rule-option').hide()
 			}
 		});
 		$('input[name=discount_type]').change(function() {
@@ -310,7 +310,7 @@
 		var is_all_product = '{!!$is_all_product!!}'
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
-			$('#selectProduct').show()
+			$('#selectProduct, #product-rule-option').show()
 			if (productLoad == 0) {
 				$.ajax({
 					type: "GET",
@@ -661,6 +661,34 @@
 									</div>
 								</div>
 							</div>
+
+							<div id="product-rule-option">
+								<label class="control-label">Product Rule</label>
+								<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
+								<div class="mt-radio-list">
+									<label class="mt-radio mt-radio-outline"> All items must be present
+										<input type="radio" value="and" name="product_rule" 
+											@if(isset($result['product_rule']) 
+												&& $result['product_rule'] === 'and' 
+												&& (!empty($result['deals_product_discount_rules']) || !empty($result['deals_promotion_product_discount_rules']))
+												) checked 
+											@endif/>
+										<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>semua</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+										<span></span>
+									</label>
+									<label class="mt-radio mt-radio-outline"> One of the items must exist
+										<input type="radio" value="or" name="product_rule" 
+											@if(isset($result['product_rule']) 
+												&& $result['product_rule'] === 'or' 
+												&& (!empty($result['deals_product_discount_rules']) || !empty($result['deals_promotion_product_discount_rules']))
+												) checked 
+											@endif/>
+										<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>salah satu</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+										<span></span>
+									</label>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<label class="control-label">Min basket size</label>
 								<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>

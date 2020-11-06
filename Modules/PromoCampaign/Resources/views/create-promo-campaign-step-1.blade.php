@@ -448,7 +448,7 @@
 								<input required type="text" class="form-control disable-input" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
-							<p style="color: red;display: none" id="label_central">Invalid value, charged central and outlet must be 100</p>
+							<p style="color: red;display: none" id="label_central">Invalid value, charged central + charged outlet total must be 100</p>
 						</div>
 					</div>
 
@@ -461,7 +461,7 @@
 								<input required type="text" class="form-control disable-input" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
-							<p style="color: red;display: none" id="label_outlet">Invalid value, charged central and outlet must be 100</p>
+							<p style="color: red;display: none" id="label_outlet">Invalid value, charged central + charged outlet total must be 100</p>
 						</div>
 					</div>
 					<div class="form-group">
@@ -469,7 +469,7 @@
                             <label class="control-label">
                             Brand
                             <span class="required" aria-required="true"> * </span>  
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk promo campaign ini" data-container="body"></i>
                             </label>
                         </div>
                         <div class="">
