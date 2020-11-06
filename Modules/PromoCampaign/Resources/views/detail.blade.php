@@ -480,7 +480,7 @@
                                     </div>
                                 </div>
                                 @if ( !empty($result['product_rule'])
-	                                	&& ( (!empty($result['promo_campaign_product_discount_rules']['is_all_product']) 
+	                                	&& ( (isset($result['promo_campaign_product_discount_rules']['is_all_product']) 
 	                                			&& $result['promo_campaign_product_discount_rules']['is_all_product'] == 0)
 		                                	|| !empty($result['promo_campaign_tier_discount_rules'])
 		                                	|| !empty($result['promo_campaign_buyxgety_rules'])
