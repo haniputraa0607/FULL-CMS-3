@@ -5,7 +5,7 @@
 			<div class="col-md-6">
 				<label for="multipleProduct2" class="control-label">Select Product <span class="required" aria-required="true"> * </span>
 				<i class="fa fa-question-circle tooltips" data-original-title="Pilih produk yang akan diberikan diskon" data-container="body"></i></label>
-				<select id="multipleProduct2" name="product" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" data-value="{{
+				<select id="multipleProduct2" name="product[]" class="form-control select2 select2-hidden-accessible"  multiple tabindex="-1" aria-hidden="true" data-value="{{
 					($result['deals_promotion_tier_discount_product']??$result['deals_tier_discount_product']??null)
 					?
 					json_encode(
@@ -24,6 +24,34 @@
 		</div>
 	</div>
 </div>
+
+<div>
+	<label class="control-label">Product Rule</label>
+	<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
+	<div class="mt-radio-list">
+		<label class="mt-radio mt-radio-outline"> All items must be present
+			<input type="radio" value="and" name="product_rule" 
+				@if(isset($result['product_rule']) 
+					&& $result['product_rule'] === 'and' 
+					&& (!empty($result['deals_tier_discount_rules']) || !empty($result['deals_promotion_tier_discount_rules']))
+					) checked 
+				@endif/>
+			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>semua</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+			<span></span>
+		</label>
+		<label class="mt-radio mt-radio-outline"> One of the items must exist
+			<input type="radio" value="or" name="product_rule" 
+				@if(isset($result['product_rule']) 
+					&& $result['product_rule'] === 'or' 
+					&& (!empty($result['deals_tier_discount_rules']) || !empty($result['deals_promotion_tier_discount_rules']))
+					) checked 
+				@endif/>
+			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>salah satu</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+			<span></span>
+		</label>
+	</div>
+</div>
+
 <div id="selectProduct2" class="form-group" style="height: 90px;">
 	<div class="row">
 		<div class=" col-md-6">
