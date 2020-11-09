@@ -387,7 +387,7 @@ class PromoCampaignController extends Controller
 
     public function getData(Request $request)
     {
-        $action = MyHelper::post('promo-campaign/getData', ['get' => $request->get, 'brand' => $request->brand]);
+        $action = MyHelper::post('promo-campaign/getData', $request->all());
 
         return $action;
     }

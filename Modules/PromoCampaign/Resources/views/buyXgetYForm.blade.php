@@ -4,12 +4,28 @@
 		<div id="selectProduct2" class="form-group" style="width: 100%!important">
 			<label for="multipleProduct2" class="control-label">Product Utama<span class="required" aria-required="true"> * </span>
 			<i class="fa fa-question-circle tooltips" data-original-title="Pilih produk X yang akan menjadi syarat untuk mendapatkan promo </br></br>X : Produk utama </br>Y : Produk benefit" data-container="body" data-html="true"></i></label>
-			<select id="multipleProduct3" name="product" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" data-value="{{ ($result['promo_campaign_buyxgety_product_requirement']??false) ? json_encode( ([$result['promo_campaign_buyxgety_product_requirement']['id_product']] ?? ([$result['promo_campaign_buyxgety_product_requirement'][0]['id_product']]??'') ) ) :''}}" style="width: 100%!important">
+			<select id="multipleProduct3" name="product[]" class="form-control select2 select2-hidden-accessible" multiple tabindex="-1" aria-hidden="true" data-value="{{ ($result['promo_campaign_buyxgety_product_requirement']??false) ? json_encode( ([$result['promo_campaign_buyxgety_product_requirement']] ?? ([$result['promo_campaign_buyxgety_product_requirement']]??'') ) ) :''}}" style="width: 100%!important">
 			</select>
 		</div>
 	</div>
 </div>
-{{-- <div class="form-group">
+<div>
+	<label class="control-label">Product Rule</label>
+	<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
+	<div class="mt-radio-list">
+		<label class="mt-radio mt-radio-outline"> All items must be present
+			<input type="radio" value="and" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'and' && !empty($result['promo_campaign_buyxgety_rules'])) checked @endif />
+			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>semua</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+			<span></span>
+		</label>
+		<label class="mt-radio mt-radio-outline"> One of the items must exist
+			<input type="radio" value="or" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'or' && !empty($result['promo_campaign_buyxgety_rules'])) checked @endif />
+			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>salah satu</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+			<span></span>
+		</label>
+	</div>
+</div>
+<div class="form-group">
 	<label class="control-label">Min basket size</label>
 	<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
 	<div class="row">
@@ -23,7 +39,7 @@
 			</div>
 		</div>
 	</div>
-</div> --}}
+</div>
 <div id="ruleSection2">
 	<label class="control-label">Price Rule
 	<span class="required" aria-required="true"> * </span>
@@ -42,7 +58,7 @@
 				<label>Product Benefit <span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Produk Y yang akan diberikan diskon setelah pembelian produk X" data-container="body"></i></label>
 			</div>
 			<div class="col-md-6 text-center">
-				<label>Benefit <span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk Y yang akan dikenakan diskon setelah pembelian produk X </br></br> Free : jumlah product Y yang diberikan </br></br> Discount : Besar diskon yang diberikan pada produk Y. Persentase akan dihitung dari harga produk + harga modifier" data-html="true" data-container="body"></i></label>
+				<label>Benefit <span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk Y yang akan dikenakan diskon setelah pembelian produk X </br></br> Free : jumlah product Y yang diberikan </br></br> Discount : Besar diskon yang diberikan pada produk Y. Diskon akan dihitung dari harga produk tanpa harga modifier" data-html="true" data-container="body"></i></label>
 			</div>
 			<div class="col-md-1 text-center">
 			</div>
@@ -58,6 +74,7 @@
 @section('child-script2')
 <script type="text/javascript">
 	var lastError2='';
+	var listVariant=[];
 	var template2='<div class="row" data-id="::n::">\
 		<div class="col-md-3">\
 			<div class="col-md-6">\
@@ -76,7 +93,7 @@
 		<div class="col-md-9">\
 			<div class="col-md-5">\
 				<div class="form-group">\
-					<select name="promo_rule[::n::][benefit_id_product]" class="form-control product-selector select2" placeholder="Select product" style="width: 100%!important">::productList::</select>\
+					<select name="promo_rule[::n::][benefit_id_product]" class="form-control product-selector select2" placeholder="Select product" style="width: 100%!important" required>::productList::</select>\
 				</div>\
 			</div>\
 			<div class="col-md-6">\
@@ -93,7 +110,15 @@
 		<div class="col-md-3">\
 		</div>\
 		<div class="col-md-9">\
-			<div class="col-md-5 text-right">\
+			<div class="col-md-5 text-center">\
+				<div class="form-group ::hide_select_variant::">\
+					<div class="col-md-4 p-l-0 text-right">\
+						<label>Variant<span class="required" aria-required="true"> * </span></label>\
+					</div>\
+					<div class="col-md-8 p-l-r-0">\
+						<select name="promo_rule[::n::][id_product_variant_group]" class="form-control variant-selector select2" placeholder="Select Variant" style="width: 100%!important;" ::variant_required::>::variantList::</select>\
+					</div>\
+				</div>\
 			</div>\
 			<div class="col-md-6">\
 				<div class="col-md-6 p-l-0 text-right">\
@@ -260,6 +285,15 @@
 
 			}
 
+			let id_product = '' + it['benefit_id_product'];
+
+			if (id_product.indexOf('-') > -1) {
+				id_product = id_product.split('-');
+				id_product = id_product[1];
+			}else{
+				it['benefit_id_product'] = it['id_brand']+'-'+it['benefit_id_product'];
+			}
+
 			$('button[type="submit"]').prop('disabled', false);
 			if( (it['discount_value']-100)>0 && it['discount_type'] == "percent"){
 				discount_value=100;
@@ -304,19 +338,48 @@
 			if(!lastErrorReal){
 				lastErrorReal=errorNow;
 			}
+			// console.log(id_product);
 			if(listProduct){
-				var htmlProduct='<option value="0">Same Product</option>';
+				if (it['benefit_id_product'] == 'undefined' || it['benefit_id_product'] == 'undefined-undefined') {
+					var htmlProduct = '<option value="">Select Product</option>';
+				}else{
+					console.log(it['benefit_id_product']);
+					var htmlProduct = '';
+				}
+					
 				listProduct.forEach(function(i){
 					var addthis='';
-					if(it['benefit_id_product']&&it['benefit_id_product']==i['id_product']){
+					// if(it['benefit_id_product'] && it['id_brand']+'-'+it['benefit_id_product'] == i['id_brand']+'-'+i['id_product']){
+					// console.log([it['benefit_id_product'] == i['id_brand']+'-'+i['id_product'], it['benefit_id_product'], i['id_brand']+'-'+i['id_product']]);
+					if(it['benefit_id_product'] && it['benefit_id_product'] == i['id_brand']+'-'+i['id_product']){
 						addthis='selected';
+						// console.log([it['benefit_id_product'] == i['id_brand']+'-'+i['id_product'], it['benefit_id_product'], i['id_brand']+'-'+i['id_product']]);
 					}
-					htmlProduct+='<option value="'+i['id_product']+'" '+addthis+'>'+i['product']+'</option>';
+					htmlProduct+='<option value="'+i['id_brand']+'-'+i['id_product']+'" '+addthis+'>'+i['product']+'</option>';
 				})
 				edited=edited.replace('::productList::',htmlProduct);
 			}else{
 				edited=edited.replace('::productList::','');
 			}
+
+			if (it['benefit_id_product']) {
+				loadProductVariant(id_product);
+
+				if(listVariant[id_product] && listVariant[id_product].length){
+					var htmlProduct='';
+					listVariant[id_product].forEach(function(i){
+						var addthis='';
+						if(it['id_product_variant_group'] && it['id_product_variant_group'] == i['id_product_variant_group']){
+							addthis = 'selected';
+						}
+						htmlProduct+='<option value="'+i['id_product_variant_group']+'" '+addthis+'>'+i['product_variant_group_name']+'</option>';
+					})
+					edited=edited.replace('::variantList::',htmlProduct).replace('::hide_select_variant::', '').replace('::variant_required::','required');
+				}else{
+					edited=edited.replace('::variantList::','').replace('::hide_select_variant::', 'd-none').replace('::variant_required::','');
+				}
+			}
+
 			last=it['max_qty_requirement'];
 			html+=edited;
 		})
@@ -324,6 +387,7 @@
 			lastError2=lastErrorReal;
 			$('#ruleSectionBody2').html(html);
 			$('.product-selector').select2({ width: '100%' ,placeholder:'Select product'});
+			$('.variant-selector').select2({ width: '100%' ,placeholder:'Select variant'});
 		}
 
 		$('.digit_mask').inputmask({
@@ -347,6 +411,33 @@
 
 		return status;
 	}
+
+	function loadProductVariant(id_product){
+		if (!(id_product in listVariant)) {
+		    listVariant[id_product] = [];
+			$.ajax({
+				type: "GET",
+				url: "getData",
+				data : {
+					"get" : 'Product Variant',
+					"id_product" : id_product
+				},
+				dataType: "json",
+				success: function(data){
+					if (data.status == 'fail') {
+						$.ajax(this)
+						return
+					}
+					listVariant[id_product] = data;
+					productVariantLoad = 1;
+					reOrder2();
+				}
+			});
+		}else{
+			return true;
+		}
+	}
+
 	$(document).ready(function(){
 		$('#buyXgetYProduct').on('click','.new',function(){
 			if(!reOrder2()){
@@ -366,7 +457,13 @@
 			database2=database2.filter(function(x){return x!==undefined;});
 			reOrder2();
 		});
-		$('#buyXgetYProduct').on('change','input,select',function(){
+		$('#buyXgetYProduct').on('change','input',function(){
+			var col=$(this).prop('name');
+			var val=$(this).val();
+			update2(col,val);
+			reOrder2();
+		});
+		$('#ruleSectionBody2').on('change','input,select',function(){
 			var col=$(this).prop('name');
 			var val=$(this).val();
 			update2(col,val);
