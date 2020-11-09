@@ -214,7 +214,7 @@ $grantedFeature     = session('granted_features');
 											<i class="fa fa-angle-down"></i>
 											</button>
 											<ul class="dropdown-menu pull-right">
-												@if(MyHelper::hasAccess([110,112], $grantedFeature))
+												@if(MyHelper::hasAccess([112], $grantedFeature))
 												<li>
 													<a href="{{ url('promotion/step1') }}/{{ $data['id_promotion'] }}">
 													<i class="fa fa-edit"></i> Edit Information </a>
@@ -223,6 +223,8 @@ $grantedFeature     = session('granted_features');
 													<a href="{{ url('promotion/step2') }}/{{ $data['id_promotion'] }}">
 													<i class="fa fa-edit"></i> Edit Content </a>
 												</li>
+												@endif
+												@if(MyHelper::hasAccess([110], $grantedFeature))
 												<li>
 													<a href="{{ url('promotion/step3') }}/{{ $data['id_promotion'] }}">
 													<i class="fa fa-gear"></i> Summary </a>

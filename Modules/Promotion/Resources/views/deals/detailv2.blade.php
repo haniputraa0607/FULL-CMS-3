@@ -672,7 +672,7 @@ $grantedFeature     = session('granted_features');
 					<a data-toggle="modal" href="#export-modal" class="btn green-jungle list-deals" data-deals="{{ $deals['id_deals_promotion_template']??'' }}" style="float: right;"><i class="fa fa-download"></i> Export</a>
                     @endif
                 --}}
-                	@if ($deals['step_complete'] != 1)
+                	@if ($deals['step_complete'] != 1 && MyHelper::hasAccess([112], $grantedFeature))
                     <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; margin-right: 5px">Start Deals Template</a>
                     @endif
                 	<ul class="nav nav-tabs" id="tab-header">

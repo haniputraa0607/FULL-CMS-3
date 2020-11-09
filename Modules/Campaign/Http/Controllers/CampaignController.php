@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 // use Illuminate\Routing\Controller;
 use App\Http\Controllers\Controller;
 use App\Lib\MyHelper;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Session;
 use Excel;
 
@@ -34,36 +35,43 @@ class CampaignController extends Controller
 
 		$post = $request->except(['_token']);
 		// print_r($post);exit;
-		if(!empty($post)){
-			if(!empty($page)){
-				$skip = ($page-1) * 15;
-				$post = ['skip' => $skip, 'take' => 15, 'campaign_title' => $post['campaign_title']];
-			} else {
-				$post = ['skip' => 0, 'take' => 15, 'campaign_title' => $post['campaign_title']];
-			}
-		} else {
-			if(!empty($page)){
-				$skip = ($page-1) * 15;
-				$post = ['skip' => $skip, 'take' => 15];
-			} else {
-				$post = ['skip' => 0, 'take' => 15];
-			}
-		}
+        $page = 1;
+        if(Session::has('search-campaign') && !empty($post) && !isset($post['filter'])){
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('search-campaign');
+        }else{
+            Session::forget('search-campaign');
+        }
+        $post['page'] = $post['page']??$page;
 
 		$action = MyHelper::post('campaign/list', $post);
-		// print_r($action);exit;
-		if(isset($action['status']) && $action['status'] == 'success'){
-			if (!empty($action['result'])) {
-				foreach ($action['result'] as $key => $val) {
-					$action['result'][$key]['id_campaign'] = MyHelper::createSlug($val['id_campaign'], $val['created_at']);
-					$action['result'][$key]['id_user'] = MyHelper::createSlug($val['id_user'], $val['created_at']);
-				}
-			}
-			$data['result'] = $action['result'];
-			$data['count'] = $action['count'];
-		} else{
-			$data['result'] =[];
-		}
+
+        if (isset($action['status']) && $action['status'] == "success") {
+            if (!empty($action['result']['data'])) {
+                foreach ($action['result']['data'] as $key => $val) {
+                    $action['result']['data'][$key]['id_campaign'] = MyHelper::createSlug($val['id_campaign'], $val['created_at']);
+                    $action['result']['data'][$key]['id_user'] = MyHelper::createSlug($val['id_user'], $val['created_at']);
+                }
+            }
+            $data['campaign']     = $action['result']['data'];
+            $data['campaignTotal']     = $action['result']['total'];
+            $data['campaignPerPage']   = $action['result']['from'];
+            $data['campaignUpTo']      = $action['result']['from'] + count($action['result']['data'])-1;
+            $data['campaignPaginator'] = new LengthAwarePaginator($action['result']['data'], $action['result']['total'], $action['result']['per_page'], $action['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['campaign']          = [];
+            $data['campaignTotal']     = 0;
+            $data['campaignPerPage']   = 0;
+            $data['campaignUpTo']      = 0;
+            $data['campaignPaginator'] = false;
+        }
+
+        if(isset($post['campaign_title']) && !empty($post['campaign_title'])){
+            Session::put('search-campaign',['campaign_title' => $post['campaign_title']]);
+        }
+
 		$data['post'] = $post;
 
 		return view('campaign::list', $data);

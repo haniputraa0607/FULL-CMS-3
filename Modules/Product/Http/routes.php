@@ -6,13 +6,13 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 * product
 	 */
 	Route::get('/', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProduct']);
-	Route::any('/image/add', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addImage']);
+	Route::any('/image/add', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@addImage']);
 	Route::any('/image/list', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listImage']);
-	Route::any('/image/override', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@overrideImage']);
+	Route::any('/image/override', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@overrideImage']);
 	Route::any('/visible/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::any('/hidden/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::post('/id_visibility', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addIdVisibility']);
-	Route::post('update/visible', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@updateVisibilityProduct']);
+	Route::post('update/visible', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@updateVisibilityProduct']);
 	Route::get('import/{type}', ['middleware' => ['feature_control:56,57', 'config_control:10,11,or'], 'uses' => 'ProductController@importProduct']);
 	Route::post('import/save', ['middleware' => ['feature_control:56', 'config_control:10'], 'uses' => 'ProductController@importProductSave']);
 	Route::get('ajax', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProductAjax']);
