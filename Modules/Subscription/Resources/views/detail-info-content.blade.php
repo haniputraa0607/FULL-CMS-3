@@ -1,10 +1,14 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 @section('detail-info-content')
 @php
     $datenow = date("Y-m-d H:i:s");
 @endphp
 <div class="row">
 	<div class="col-md-12">
-		@if( $subscription['subscription_bought'] == 0 )
+		@if( $subscription['subscription_bought'] == 0 && MyHelper::hasAccess([175], $grantedFeature))
 	    <div class="row static-info">
 	        <div class="col-md-11 value">
 	            <a class="btn blue" href="{{ url('/'.$rpage)}}/step3/{{$subscription['id_subscription']}}">Edit Content</a>
