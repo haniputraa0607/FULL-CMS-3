@@ -1,3 +1,7 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 @section('detail-info-content')
 @php
     $datenow = date("Y-m-d H:i:s");
@@ -11,10 +15,14 @@
 	        </div>
 	        <div class="row static-info">
 	            <div class="col-md-12 value">{!! $deals['deals_description'] !!}</div>
-				@if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
-		        <div class="col-md-12">
-		            <a class="btn blue" href="{{ url('/'.$rpage)}}/step3/{{$deals['id_deals']??$deals['id_deals_promotion_template']}}">Edit Description & Content</a>
-		        </div>
+				@if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0)
+					@if((MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
+						(MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
+						(MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
+						<div class="col-md-12">
+							<a class="btn blue" href="{{ url('/'.$rpage)}}/step3/{{$deals['id_deals']??$deals['id_deals_promotion_template']}}">Edit Description & Content</a>
+						</div>
+					@endif
 			    @endif
 	        </div>
 	    </div>
@@ -27,10 +35,15 @@
 	        </div>
 	        <div class="row static-info">
 	            <div class="col-md-12 value">{!! $deals['custom_outlet_text']??null !!}</div>
-				@if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0 )
+				@if( $deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0)
+					@if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
+					(MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
+               (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
+               (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
 		        <div class="col-md-12">
 		            <a class="btn blue" href="{{ url('/'.$rpage)}}/step1/{{$deals['id_deals']??$deals['id_deals_promotion_template']}}">Edit Text</a>
 		        </div>
+					@endif
 			    @endif
 	        </div>
 	    </div>

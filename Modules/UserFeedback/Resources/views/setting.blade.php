@@ -1,3 +1,7 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 @extends('layouts.main')
 
 @section('page-style')
@@ -158,6 +162,7 @@
                             </div>
                         </div>
                     </div>
+                    @if(MyHelper::hasAccess([213], $grantedFeature))
                     <div class="row">
                         <div class="col-md-offset-3 col-md-5">
                             <div class="form-group">
@@ -165,6 +170,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </form>
             </div>
             <div class="tab-pane fade" id="tab_rating_items">
@@ -408,9 +414,11 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(MyHelper::hasAccess([213], $grantedFeature))
                             <div class="text-center" style="margin-top: 10px">
                                 <button class="btn blue" id="saveItemBtn"><i class="fa fa-check"></i> Save</button>
                             </div>
+                            @endif
                         </div>
                         <div class="preview col-md-4 pull-right" style="right: 0;top: 70px; position: sticky">
                             <img src="{{env('STORAGE_URL_VIEW')}}img/setting/rating_preview.png" class="img-responsive">

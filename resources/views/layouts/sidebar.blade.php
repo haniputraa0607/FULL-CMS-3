@@ -2165,9 +2165,6 @@
             </li>
         @endif
 		@if(MyHelper::hasAccess([15,16,17,18,144,145,146,147,148,241], $grantedFeature))
-			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
-				<h3 class="uppercase" style="color: #0F444C;font-weight: 600;">Settings</h3>
-			</li>
 			<li class="nav-item {{($menu_active == 'setting-home') ? 'active' : ''}}">
 				<a href="{{url('setting/home')}}" class="nav-link">
 					<i class="icon-screen-tablet "></i>
