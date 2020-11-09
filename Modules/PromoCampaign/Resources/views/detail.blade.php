@@ -2,6 +2,7 @@
     use App\Lib\MyHelper;
     $configs  = session('configs');
     date_default_timezone_set('Asia/Jakarta');
+    $grantedFeature     = session('granted_features');
  ?>
 @extends('layouts.main-closed')
 @include('promocampaign::report')
@@ -427,7 +428,7 @@
                                         <div class="col-md-4 name">Limitation Usage</div>
                                         <div class="col-md-8 value">: {{ $result['limitation_usage']??false ? number_format($result['limitation_usage']).' Times usage' : 'Unlimited' }}</div>
                                     </div>
-                                @if( empty($result['promo_campaign_reports']) || empty($result['step_complete']))
+                                @if( (empty($result['promo_campaign_reports']) || empty($result['step_complete'])) && MyHelper::hasAccess([203], $grantedFeature))
                                 <div class="row static-info">
                                     <div class="col-md-11 value">
                                         <a class="btn blue" href="{{ url('/')}}/promo-campaign/step1/{{$result['id_promo_campaign']}}">Edit Detail</a>
@@ -680,11 +681,13 @@
                                 <span class="sale-num font-red sbold">
                                     No Promo Campaign Rules
                                 </span>
+                                @if(MyHelper::hasAccess([203], $grantedFeature))
                                 <div class="row static-info">
                                     <div class="col-md-11 value">
                                         <a class="btn blue" href="{{ url('/')}}/promo-campaign/step2/{{$result['id_promo_campaign']}}">Create Rule</a>
                                     </div>
                                 </div>
+                                @endif
                                 @endif
                             </div>
                         </div>

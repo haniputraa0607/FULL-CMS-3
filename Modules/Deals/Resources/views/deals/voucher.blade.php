@@ -1,3 +1,7 @@
+<?php
+    use App\Lib\MyHelper;
+    $grantedFeature     = session('granted_features');
+?>
 @if ($deals['deals_voucher_type'] == "List Vouchers")
 <form class="form-horizontal" role="form" action="{{ url('deals/update') }}" method="post" enctype="multipart/form-data">
   <div class="form-body">
@@ -42,7 +46,9 @@
                     <tr>
                         <th> Code </th>
                         <th> Status </th>
+                        @if(MyHelper::hasAccess([76], $grantedFeature))
                         <th> Action </th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +57,9 @@
                     <tr>
                         <td> {{ $value['voucher_code'] }} </td>
                         <td> {{ $value['deals_voucher_status'] }} </td>
+                        @if(MyHelper::hasAccess([76], $grantedFeature))
                         <td> <a data-toggle="confirmation" data-popout="true" class="btn red delete-disc" data-id="{{ $value['id_deals_voucher'] }}"><i class="fa fa-trash-o"></i></a> </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

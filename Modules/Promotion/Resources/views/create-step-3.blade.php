@@ -2048,6 +2048,7 @@ $grantedFeature     = session('granted_features');
 	--}}
 
 	</div>
+	@if(MyHelper::hasAccess([112], $grantedFeature))
 	<div class="col-md-12" style="padding-left: 30px;padding-right: 30px;">
 			<div class="portlet light bordered">
 				<div class="form-actions">
@@ -2060,6 +2061,7 @@ $grantedFeature     = session('granted_features');
 			</div>
 		</div>
 	</div>
+	@endif
 
 	<div class="modal fade bs-modal-lg" id="modalSentList" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-lg">

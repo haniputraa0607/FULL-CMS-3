@@ -1,14 +1,18 @@
 @section('detail-info-content')
 @php
     $datenow = date("Y-m-d H:i:s");
+	use App\Lib\MyHelper;
+    $grantedFeature     = session('granted_features');
 @endphp
 <div class="row">
 	<div class="col-md-12">
+		@if(MyHelper::hasAccess([112], $grantedFeature))
 	    <div class="row static-info">
 	        <div class="col-md-11 value">
 	            <a class="btn blue" href="{{ url('/'.$rpage)}}/step3/{{$deals['id_deals_promotion_template']}}">Edit Content</a>
 	        </div>
 	    </div>
+		@endif
 		<div class="profile-info portlet light bordered">
 		    <div class="row static-info">
 	            <div class="col-md-4 name"> Description :</div>

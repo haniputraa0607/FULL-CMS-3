@@ -122,9 +122,11 @@
           <div class="form-actions">
               {{ csrf_field() }}
               <div class="row">
+                @if(MyHelper::hasAccess([27], $grantedFeature))
                 <div class="col-md-offset-3 col-md-3">
                     <button type="submit" class="btn green">Save</button>
                 </div>
+                @endif
                 <div class="col-md-offset-3 col-md-3 text-right">
                   <div class="pull-right pagination" style="margin-top: 0px;margin-bottom: 0px;">
                     <ul class="pagination" style="margin-top: 0px;margin-bottom: 0px;">
