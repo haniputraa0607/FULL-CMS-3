@@ -10,6 +10,11 @@
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<style type="text/css">
+		.select2-results__option[aria-selected=true] {
+		    display: none;
+		}
+	</style>
 @endsection
 
 @section('page-plugin')
@@ -443,7 +448,7 @@
 								<input required type="text" class="form-control disable-input" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
-							<p style="color: red;display: none" id="label_central">Invalid value, charged central and outlet must be 100</p>
+							<p style="color: red;display: none" id="label_central">Invalid value, charged central + charged outlet total must be 100</p>
 						</div>
 					</div>
 
@@ -456,7 +461,7 @@
 								<input required type="text" class="form-control disable-input" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
-							<p style="color: red;display: none" id="label_outlet">Invalid value, charged central and outlet must be 100</p>
+							<p style="color: red;display: none" id="label_outlet">Invalid value, charged central + charged outlet total must be 100</p>
 						</div>
 					</div>
 					<div class="form-group">
@@ -464,16 +469,30 @@
                             <label class="control-label">
                             Brand
                             <span class="required" aria-required="true"> * </span>  
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk deal ini" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk promo campaign ini" data-container="body"></i>
                             </label>
                         </div>
                         <div class="">
                             <div class="input-icon right">
-                                <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand" required>
+                                <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand[]" multiple required>
                                     <option></option>
+                                @php
+									$selected_brand = [];
+									if (old('id_brand')) {
+										$selected_brand = old('id_brand');
+									}
+									elseif (!empty($result['promo_campaign_brands'])) {
+										$selected_brand = array_column($result['promo_campaign_brands'], 'id_brand');
+									}
+								@endphp
                                 @if (!empty($brands))
                                     @foreach($brands as $brand)
-                                        <option value="{{ $brand['id_brand'] }}" @if (old('id_brand',($result['id_brand']??false))) @if($brand['id_brand'] == old('id_brand',($result['id_brand']??false))) selected @endif @endif>{{ $brand['name_brand'] }}</option>
+                                        <option value="{{ $brand['id_brand'] }}" 
+                                        	@if ($selected_brand) 
+                                        		@if(in_array($brand['id_brand'], $selected_brand)) selected 
+                                        		@endif 
+                                        	@endif
+                                        >{{ $brand['name_brand'] }}</option>
                                     @endforeach
                                 @endif
                                 </select>
