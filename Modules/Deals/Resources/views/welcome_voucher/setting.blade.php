@@ -571,11 +571,17 @@ $configs    		= session('configs');
 
             <br>
             <div class="form-group row">
-                <div class="col-md-4" style="margin-left: 2.5%;margin-top: 7px;">
-                    <button type="button" class="btn btn-lg btn-toggle switch @if($setting['value']) active @endif" data-toggle="button" aria-pressed="<?=($setting['value'] == '1' ? 'true' : 'false')?>" autocomplete="off">
-                        <div class="handle"></div>
-                    </button>
-                </div>
+                @if(MyHelper::hasAccess([189,190], $grantedFeature))
+                    <div class="col-md-4" style="margin-left: 2.5%;margin-top: 7px;">
+                        <button type="button" class="btn btn-lg btn-toggle switch @if($setting['value']) active @endif" data-toggle="button" aria-pressed="<?=($setting['value'] == '1' ? 'true' : 'false')?>" autocomplete="off">
+                            <div class="handle"></div>
+                        </button>
+                    </div>
+                @else
+                    <div class="col-md-12" style="margin-left: 0.5%;margin-top: 7px;">
+                        <b> Status Welcome Voucher : </b> @if($setting['value'] == 0) <b style="color: red"> Inactive </b> @else <b style="color: green"> Active @endif </b>
+                    </div>
+                @endif
             </div>
             <br>
 
@@ -602,9 +608,11 @@ $configs    		= session('configs');
                                 </select>
                             @endif
                         </div>
+                        @if(MyHelper::hasAccess([189,190], $grantedFeature))
                         <div class="col-md-3">
                             <button class="btn green" onclick="addDealsToList()">Add Voucher</button>
                         </div>
+                        @endif
                     </div>
 
                     <form role="form" class="form-horizontal" id="form_setting" action="{{url('welcome-voucher/setting')}}" method="POST">
@@ -613,11 +621,13 @@ $configs    		= session('configs');
                             @foreach($deals as $val)
                                 @if(MyHelper::hasAccess([95], $configs))
                                     <div class="row" id="div_{{$val['id_deals']}}" style="margin-bottom: 2%;">
+                                        @if(MyHelper::hasAccess([189,190], $grantedFeature))
                                         <div class="col-md-1">
                                             <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteDeals('{{$val['id_deals']}}')">
                                                 <i class="fa fa-close"></i>
                                             </a>
                                         </div>
+                                        @endif
                                         <div class="col-md-6">
                                             <textarea class="form-control" type="text" rows="2" disabled>{{$val['name_brand']}} - {{$val['deals_title']}}</textarea>
                                         </div>
@@ -628,11 +638,13 @@ $configs    		= session('configs');
                                     </div>
                                 @else
                                     <div class="row" id="div_{{$val['id_deals']}}" style="margin-bottom: 2%;">
+                                        @if(MyHelper::hasAccess([189,190], $grantedFeature))
                                         <div class="col-md-1">
                                             <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteDeals('{{$val['id_deals']}}')">
                                                 <i class="fa fa-close"></i>
                                             </a>
                                         </div>
+                                        @endif
                                         <div class="col-md-6">
                                             <textarea class="form-control" type="text" rows="2" disabled>{{$val['deals_title']}}</textarea>
                                         </div>
@@ -645,9 +657,11 @@ $configs    		= session('configs');
                             @endforeach
                         </div>
                     </form>
+                    @if(MyHelper::hasAccess([189,190], $grantedFeature))
                     <div style="text-align: center;margin-top: 5%">
                         <button onclick="inCheck()" class="btn green"> Save </button>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

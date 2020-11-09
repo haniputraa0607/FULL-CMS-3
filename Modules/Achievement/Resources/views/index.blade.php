@@ -1,3 +1,7 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 @extends('layouts.main')
 @include('infinitescroll')
 
@@ -62,15 +66,19 @@
                             </div>
                         </button>
                         <ul class="dropdown-menu dropdown">
+                            @if(MyHelper::hasAccess([224], $grantedFeature))
                             <li style="margin: 0px;">
                                 <a href="#editAchievement" data-toggle="modal" onclick="editAchievement(${item.id_achievement_group})"> Edit </a>
                             </li>
+                            @endif
                             <li style="margin: 0px;">
                                 <a href="{{url('achievement/detail/${item.id_achievement_group}')}}/"> Detail </a>
                             </li>
+                            @if(MyHelper::hasAccess([225], $grantedFeature))
                             <li style="margin: 0px;">
                                 <a href="javascript:;" onclick="removeAchievement(this, ${item.id_achievement_group})"> Remove </a>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </td>
