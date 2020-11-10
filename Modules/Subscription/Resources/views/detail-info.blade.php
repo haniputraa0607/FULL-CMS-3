@@ -86,20 +86,22 @@
 	            <span class="caption font-blue sbold uppercase"> Selected Product </span>
 	        </div>
 	        <div class="mt-comments">
-                @if ($subscription['products'] != null)
+                @if (!empty($subscription['subscription_products']))
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
                         <thead>
                             <tr>
+                                <th>Brand</th>
                                 <th>Code</th>
                                 <th>Name</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($subscription['products'] as $res)
+                            @foreach($subscription['subscription_products'] as $res)
                                 <tr>
-                                    <td>{{ $res['product_code']??'' }}</td>
+                                    <td>{{ $res['brand']['name_brand']??'' }}</td>
+                                    <td>{{ $res['product']['product_code']??'' }}</td>
                                     <td>
-                                    	<a href="{{ url('product/detail/'.($res['product_code']??'')) }}">{{ $res['product_name']??'' }}</a>	
+                                    	<a href="{{ url('product/detail/'.($res['product']['product_code']??'')) }}">{{ $res['product']['product_name']??'' }}</a>	
                                     </td>
                                 </tr>
                             @endforeach
@@ -132,7 +134,22 @@
                 </div>
 	            <div class="row static-info">
                     <div class="col-md-4 name">Brand</div>
-                    <div class="col-md-8 value">: {{ $subscription['brand']['name_brand']??'' }}</div>
+                    <div class="col-md-8 value">: 
+                    	@if (!empty($subscription['id_brand']))
+                    		{{ $subscription['brand']['name_brand'] }}
+                    	@else
+                        	@php
+                        		foreach ($subscription['brands'] as $key => $value) {
+                            		if ($key == 0) {
+                            			$comma = '';
+                            		}else{
+                            			$comma = ', ';
+                            		}
+                            		echo $comma.$value['name_brand'];
+                        		}
+                        	@endphp
+                    	@endif
+                    </div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Outlet</div>
