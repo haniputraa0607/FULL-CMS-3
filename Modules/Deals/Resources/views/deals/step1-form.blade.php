@@ -69,17 +69,17 @@
             </div>
             <div class="col-md-9">
                 <div class="input-icon right">
-                    <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand[]" multiple required>
-                        <option></option>
                     @php
 						$selected_brand = [];
 						if (old('id_brand')) {
 							$selected_brand = old('id_brand');
 						}
-						elseif (!empty($deals['deals_brands'])) {
-							$selected_brand = array_column($deals['deals_brands'], 'id_brand');
+						elseif (!empty($deals['deals_brands']) || !empty($deals['deals_promotion_brands'])) {
+							$selected_brand = array_column($deals['deals_brands']??$deals['deals_promotion_brands'], 'id_brand');
 						}
 					@endphp
+                    <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand[]" multiple required>
+                        <option></option>
                     @if (!empty($brands))
                         @foreach($brands as $brand)
                             <option value="{{ $brand['id_brand'] }}" 
@@ -233,12 +233,18 @@
 
         {{-- Outlet --}}
         @php
-            if (!empty($deals['outlets'])) {
+        	if (!empty($deals['deals_list_outlet'])) { // promotion deals
+        		$outletselected = explode(',',$deals['deals_list_outlet']);
+        		if (in_array('all', $outletselected)) {
+        			$deals['is_all_outlet'] = 1;
+        		}
+        	}elseif (!empty($deals['outlets'])) { // normal deals
                 $outletselected = array_pluck($deals['outlets'],'id_outlet');
             }
             else {
                 $outletselected = [];
             }
+
         @endphp
 
         <div class="form-group">
@@ -250,7 +256,7 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet')??$outletselected??[])}}" data-all-outlet="{{json_encode($outlets??[])}}">
+                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet')??$outletselected??[])}}" data-all-outlet="{{json_encode($outlets??[])}}" data-all="{{ $deals['is_all_outlet']??0 }}">
                 	@if(!empty($outlets))
                         <option value="all">All Outlets</option>
                         @foreach($outlets as $row)
