@@ -1,3 +1,7 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 @section('detail-info')
 @php
     $datenow = date("Y-m-d H:i:s");
@@ -71,7 +75,7 @@
                     </div>
                 </div>
                 
-            @if( $subscription['subscription_bought'] == 0 )
+            @if( $subscription['subscription_bought'] == 0 && MyHelper::hasAccess([175], $grantedFeature))
             <div class="row static-info text-center">
                 <div class="col-md-11 value">
                     <a class="btn blue" href="{{ url('/'.$rpage)}}/step1/{{$subscription['id_subscription']}}">Edit Detail</a>
@@ -259,7 +263,7 @@
                     <div class="col-md-8 value">: {{ ($subscription['new_purchase_after'] == 'Empty Expired') ? 'Empty/Expired' : $subscription['new_purchase_after']}}</div>
                 </div>
                 @endif
-	            @if( $subscription['subscription_bought'] == 0 )
+	            @if( $subscription['subscription_bought'] == 0 && MyHelper::hasAccess([175], $grantedFeature))
 	                <div class="row static-info">
 	                    <div class="col-md-11 value">
 	                        <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$subscription['id_subscription']}}">Edit Rule</a>
@@ -456,7 +460,7 @@
                                         </div>
                                         @endif
                                     @endif
-                                    @if( $subscription_type == 'Promotion' || $subscription['deals_total_claimed'] == 0 )
+                                    @if( $subscription_type == 'Promotion' || $subscription['deals_total_claimed'] == 0 && MyHelper::hasAccess([175], $grantedFeature))
                                     <div class="row static-info">
                                         <div class="col-md-11 value">
                                             <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$subscription['id_deals']}}">Edit Rule</a>
@@ -467,11 +471,13 @@
             <span class="sale-num font-red sbold">
                 No Deals Rules
             </span>
+            @if(MyHelper::hasAccess([175], $grantedFeature))
             <div class="row static-info">
                 <div class="col-md-11 value">
                     <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$subscription['id_deals']}}">Create Rule</a>
                 </div>
             </div>
+            @endif
             @endif
         </div>
         @endif

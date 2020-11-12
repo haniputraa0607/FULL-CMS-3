@@ -1,3 +1,7 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 @section('detail-info')
 @php
     $datenow = date("Y-m-d H:i:s");
@@ -167,12 +171,17 @@
                     </div>
                 </div>
                 
-            @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
-            <div class="row static-info text-center">
-                <div class="col-md-11 value">
-                    <a class="btn blue" href="{{ url('/'.$rpage)}}/step1/{{$deals['id_deals']}}">Edit Detail</a>
+            @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals')
+                @if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
+                (MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
+                (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
+                (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
+                <div class="row static-info text-center">
+                    <div class="col-md-11 value">
+                        <a class="btn blue" href="{{ url('/'.$rpage)}}/step1/{{$deals['id_deals']}}">Edit Detail</a>
+                    </div>
                 </div>
-            </div>
+                @endif
             @endif
             </div>
         </div>
@@ -207,11 +216,16 @@
 	                </div>
 
 	                @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
-	                <div class="row static-info">
-	                    <div class="col-md-11 value">
-	                        <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
-	                    </div>
-	                </div>
+                        @if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
+                        (MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
+                        (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
+                        (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
+                        <div class="row static-info">
+                            <div class="col-md-11 value">
+                                <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
+                            </div>
+                        </div>
+                        @endif
 	                @endif
 	            @else
 	            <span class="sale-num font-red sbold">
@@ -536,21 +550,31 @@
 	                @endif
 	            @endif
 	            @if( ($deals_type == 'Promotion' || $deals['deals_total_claimed'] == 0) && $deals_type != 'promotion-deals' )
-	            <div class="row static-info">
-	                <div class="col-md-11 value">
-	                    <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
-	                </div>
-	            </div>
+                    @if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
+                    (MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
+                    (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
+                    (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
+                    <div class="row static-info">
+                        <div class="col-md-11 value">
+                            <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
+                        </div>
+                    </div>
+                    @endif
 	            @endif
             @else
             <span class="sale-num font-red sbold">
                 No Deals Rules
             </span>
-            <div class="row static-info">
-                <div class="col-md-11 value">
-                    <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Create Rule</a>
+                @if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
+                    (MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
+                    (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
+                    (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
+                <div class="row static-info">
+                    <div class="col-md-11 value">
+                        <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Create Rule</a>
+                    </div>
                 </div>
-            </div>
+                @endif
             @endif
         </div>
         @endif

@@ -732,6 +732,10 @@
         </div>
     </div>
     @if ($deals['step_complete'] != 1)
+        @if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
+                (MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
+                (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
+                (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
     <div class="modal fade bs-modal-sm" id="small" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -753,6 +757,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+        @endif
     @endif
 
 @endsection
