@@ -148,6 +148,7 @@ else{
         $(document).ready(function() {
 
             var _URL = window.URL || window.webkitURL;
+            var brand_rule = $('select[name="id_outlet[]"]').data('brand-outlet');
 
             $('.price').each(function() {
                 var input = $(this).val();
@@ -435,6 +436,11 @@ else{
                 allowPlus : false
             });
 
+            $('select[name="brand_rule"]').on('change',function(){
+                brand_rule = $('select[name="brand_rule"]').val();
+                ajaxOutletMultiBrand(id_brands);
+            });
+
             ajaxProductMultiBrand();
             ajaxOutletMultiBrand();
             $('select[name="id_brand[]"]').on('change',function(){
@@ -499,7 +505,8 @@ else{
 					url: "{{url('promo-campaign/step2/getData')}}",
 					data : {
 						"get" : 'Outlet',
-						"brand" : id_brands
+						"brand" : id_brands,
+						"brand_rule" : brand_rule
 					},
 					dataType: "json",
 					success: function(data){

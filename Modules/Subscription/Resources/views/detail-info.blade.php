@@ -156,6 +156,12 @@ $grantedFeature     = session('granted_features');
                     </div>
                 </div>
                 <div class="row static-info">
+                    <div class="col-md-4 name">Brand Rule</div>
+                    <div class="col-md-8 value">: 
+                        {{ $subscription['brand_rule'] && $subscription['brand_rule'] == 'and' ? 'All selected brands' : 'One of the selected brands' }}
+                    </div>
+                </div>
+                <div class="row static-info">
                     <div class="col-md-4 name">Outlet</div>
                     <div class="col-md-8 value">: {{ !empty($subscription['is_all_outlet']) ? 'All outlet' : (!empty($subscription['outlets']) ? 'Selected outlet' : '') }}</div>
                 </div>

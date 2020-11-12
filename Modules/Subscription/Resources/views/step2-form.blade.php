@@ -199,6 +199,54 @@ $configs = session('configs');
         }
     @endphp
 
+    <div class="form-group" id="brand-rule">
+        <div class="input-icon right">
+            <label class="col-md-3 control-label">
+            Brand Rule
+            <span class="required" aria-required="true"> * </span>  
+            <i class="fa fa-question-circle tooltips" data-original-title="<div style='text-align: left'>Pilih rule yang akan digunakan untuk memilih outlet
+            </br>
+			</br> All selected brands : Promo berlaku untuk semua product atau product tertentu tanpa jumlah minimum
+			</br>
+			</br> One of the selected brands : Promo hanya berlaku untuk suatu product setelah melakukan pembelian dalam jumlah yang telah ditentukan</div>" data-container="body" data-html="true"></i>
+            </label>
+        </div>
+        <div class="col-md-9" style="padding-left: 0px">
+            <div class="input-icon right">
+                <div class="col-md-5">
+                    <select class="form-control" name="brand_rule" required>
+                        <option value="" disabled 
+                            @if ( old('brand_rule')) 
+                                @if ( old('brand_rule') == "" ) 
+                                    selected
+                                @endif
+                            @elseif ( empty($subscription['brand_rule']) ) 
+                                selected
+                            @endif>Select Product Rule</option>
+                        <option value="and" 
+                            @if ( old('brand_rule')) 
+                                @if ( old('brand_rule') == "and" ) 
+                                    selected
+                                @endif
+                            @elseif(isset($subscription['brand_rule']) && $subscription['brand_rule'] === 'and')
+                                selected
+                            @endif>All selected brands<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki semua brand yang dipilih" data-container="body"></i>
+                        </option>
+                        <option value="or" 
+                            @if ( old('brand_rule')) 
+                                @if ( old('brand_rule') == "or" ) 
+                                    selected
+                                @endif
+                            @elseif(isset($subscription['brand_rule']) && $subscription['brand_rule'] === 'or')
+                                selected
+                            @endif>One of the selected brands<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki setidaknya salah satu brand yang dipilih" data-container="body"></i>
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group">
         <div class="input-icon right">
             <label class="col-md-3 control-label">
@@ -208,7 +256,7 @@ $configs = session('configs');
             </label>
         </div>
         <div class="col-md-9">
-            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" required>
+            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" data-brand-rule="{{ $subscription['brand_rule']??'and' }}" required>
             </select>
         </div>
     </div>
