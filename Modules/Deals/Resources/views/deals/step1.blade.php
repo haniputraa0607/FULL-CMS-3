@@ -4,6 +4,7 @@ if(isset($deals['is_all_outlet'])){
 }else{
     $is_all_outlet = 0;
 }
+$brand_rule = $deals['brand_rule']??'and';
 ?>
 @extends('layouts.main')
 
@@ -189,6 +190,7 @@ if(isset($deals['is_all_outlet'])){
         var value=$('select[name="id_outlet[]"]').val();
         var convertAll=false;
         var id_brands = [];
+        var brand_rule = '{!!$brand_rule!!}';
 
         function redrawOutlets2(list,selected,convertAll, all){
             var html="";
@@ -233,7 +235,8 @@ if(isset($deals['is_all_outlet'])){
 				url: "{{url('promo-campaign/step2/getData')}}",
 				data : {
 					"get" : 'Outlet',
-					"brand" : id_brands
+					"brand" : id_brands,
+					"brand_rule" : brand_rule
 				},
 				dataType: "json",
 				success: function(data){
@@ -257,6 +260,12 @@ if(isset($deals['is_all_outlet'])){
 
         $(document).ready(function() {
             token = '<?php echo csrf_token();?>';
+
+			$('input[name="brand_rule"]').on('click',function(){
+				brand_rule = $(this).val();
+				ajaxOutletMultiBrand(id_brands);
+
+            });            
 
             $('select[name="id_brand[]"]').on('change',function(){
                 id_brands = $('select[name="id_brand[]"]').val();

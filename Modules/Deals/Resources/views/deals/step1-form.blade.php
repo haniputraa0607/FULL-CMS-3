@@ -94,6 +94,46 @@
                 </div>
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                Brand Rule
+                <span class="required" aria-required="true"> * </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang akan digunakan untuk memilih outlet" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9" style="margin-left: -15px;">
+            	<div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="brand_rule" id="brand_rule_radio_and" value="and" class="md-radiobtn" required 
+	                    		@if ( (old('brand_rule')??$deals['brand_rule']??false) == "and" ) checked 
+	                    		@endif>
+	                        <label for="brand_rule_radio_and">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> All selected brands </label>
+	                        	<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki semua brand yang dipilih" data-container="body"></i>
+	                    </div>
+	                </div>
+            	</div>
+	            <div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="brand_rule" id="brand_rule_radio_or" value="or" class="md-radiobtn" required 
+	                        	@if ( (old('brand_rule')??$deals['brand_rule']??false) == "or" ) checked 
+	                    		@endif>
+	                        <label for="brand_rule_radio_or">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> One of the selected brands </label>
+	                            <i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki setidaknya salah satu brand yang dipilih" data-container="body"></i>
+	                    </div>
+	                </div>
+	            </div>
+            </div>
+        </div>
         @endif
 
         {{-- Title --}}

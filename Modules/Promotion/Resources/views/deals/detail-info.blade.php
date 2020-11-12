@@ -76,6 +76,12 @@
                     </div>
                 </div>
                 <div class="row static-info">
+                    <div class="col-md-4 name">Brand Rule</div>
+                    <div class="col-md-8 value">: 
+                        {{ $deals['brand_rule'] && $deals['brand_rule'] == 'and' ? 'All selected brands' : 'One of the selected brands' }}
+                    </div>
+                </div>
+                <div class="row static-info">
                     <div class="col-md-4 name">Charged Central</div>
                     <div class="col-md-8 value">: {{$deals['charged_central']}} %</div>
                 </div>

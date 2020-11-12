@@ -503,7 +503,7 @@
                     <div class="form-group" style="height: 90px;">
 						<label class="control-label">Brand Rule</label>
 						<span class="required" aria-required="true"> * </span>
-						<i class="fa fa-question-circle tooltips" data-original-title="Pilih aturan Brand yang akan dikenakan ke outlet" data-container="body"></i>
+						<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang akan digunakan untuk memilih outlet" data-container="body"></i>
 						<div class="mt-radio-list">
 							<label class="mt-radio mt-radio-outline"> All selected brands
 								<input type="radio" value="and" name="brand_rule" @if(isset($result['brand_rule']) && $result['brand_rule'] == "and") checked @elseif(old('brand_rule') == "and") checked @endif required/>
