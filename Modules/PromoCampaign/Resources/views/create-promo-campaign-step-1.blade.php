@@ -499,6 +499,25 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group" style="height: 90px;">
+						<label class="control-label">Brand Rule</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Pilih aturan Brand yang akan dikenakan ke outlet" data-container="body"></i>
+						<div class="mt-radio-list">
+							<label class="mt-radio mt-radio-outline"> All selected brands
+								<input type="radio" value="and" name="brand_rule" @if(isset($result['brand_rule']) && $result['brand_rule'] == "and") checked @elseif(old('brand_rule') == "and") checked @endif required/>
+								<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki semua brand yang dipilih" data-container="body"></i>
+								<span></span>
+							</label>
+							<label class="mt-radio mt-radio-outline"> One of the selected brands
+								<input type="radio" value="or" name="brand_rule" @if(isset($result['brand_rule']) && $result['brand_rule'] == "or") checked  @elseif(old('brand_rule') == "or") checked @endif required/>
+								<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki setidaknya salah satu brand yang dipilih" data-container="body"></i>
+								<span></span>
+							</label>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<label class="control-label">Start Date</label>
 						<span class="required" aria-required="true"> * </span>

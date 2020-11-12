@@ -392,6 +392,12 @@
 				                        </div>
                                     </div>
                                     <div class="row static-info">
+	                                    <div class="col-md-4 name">Brand Rule</div>
+	                                    <div class="col-md-8 value">: 
+	                                        {{ $result['brand_rule'] && $result['brand_rule'] == 'and' ? 'All selected brands' : 'One of the selected brands' }}
+	                                    </div>
+	                                </div>
+                                    <div class="row static-info">
                                         <div class="col-md-4 name">Tag</div>
                                         @if (count($result['promo_campaign_have_tags']) > 1)
                                             @php
