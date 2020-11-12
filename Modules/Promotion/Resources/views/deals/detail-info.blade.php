@@ -120,13 +120,13 @@
                     	<div><img src="{{ $deals['url_deals_image']??'' }}" style="width: 100px"></div>
                     </div>
                 </div>
-                <div class="row static-info">
+                {{-- <div class="row static-info">
                     <div class="col-md-4 name">Warning Image</div>
                     <div class="col-md-8 value">
                     	<span style="float: left;margin-right: 5px">:</span> 
                     	<div>@if(empty($deals['deals_warning_image'])) Use Global @else <img src="{{ $deals['url_deals_warning_image']??'' }}" style="width: 100px">@endif</div>
                 	</div>
-                </div>
+                </div> --}}
             @if(MyHelper::hasAccess([112], $grantedFeature))
             <div class="row static-info">
                 <div class="col-md-11 value">
