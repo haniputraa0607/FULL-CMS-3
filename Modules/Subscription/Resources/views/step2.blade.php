@@ -148,7 +148,7 @@ else{
         $(document).ready(function() {
 
             var _URL = window.URL || window.webkitURL;
-            var brand_rule = $('select[name="id_outlet[]"]').data('brand-outlet');
+            var brand_rule = $('select[name="id_outlet[]"]').data('brand-rule');
 
             $('.price').each(function() {
                 var input = $(this).val();
@@ -436,13 +436,15 @@ else{
                 allowPlus : false
             });
 
+
+            ajaxProductMultiBrand();
+            ajaxOutletMultiBrand();
+
             $('select[name="brand_rule"]').on('change',function(){
                 brand_rule = $('select[name="brand_rule"]').val();
                 ajaxOutletMultiBrand(id_brands);
             });
 
-            ajaxProductMultiBrand();
-            ajaxOutletMultiBrand();
             $('select[name="id_brand[]"]').on('change',function(){
                 id_brands = $('select[name="id_brand[]"]').val();
                 ajaxOutletMultiBrand(id_brands);
