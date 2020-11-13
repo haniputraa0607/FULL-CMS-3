@@ -140,6 +140,12 @@ class AutocrmController extends Controller
 		$auto = null;
 		$post = $request->except('_token');
 		if(!empty($post)){
+			if(!isset($post['attachment_mail'])){
+				$post['attachment_mail']=0;
+			}
+			if(!isset($post['attachment_forward'])){
+				$post['attachment_forward']=0;
+			}
 			if (isset($post['autocrm_push_image'])) {
 				$post['autocrm_push_image'] = MyHelper::encodeImage($post['autocrm_push_image']);
 			}
@@ -152,6 +158,10 @@ class AutocrmController extends Controller
 			$auto = $query['result'];
 		}else{
 			return back()->withErrors(['No such response']);
+		}
+
+		if(strpos($type, 'enquir')!== false){
+			$data['attachment'] = '1';
 		}
 
 		switch ($subject){
