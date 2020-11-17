@@ -69,17 +69,17 @@
             </div>
             <div class="col-md-9">
                 <div class="input-icon right">
-                    <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand[]" multiple required>
-                        <option></option>
                     @php
 						$selected_brand = [];
 						if (old('id_brand')) {
 							$selected_brand = old('id_brand');
 						}
-						elseif (!empty($deals['deals_brands'])) {
-							$selected_brand = array_column($deals['deals_brands'], 'id_brand');
+						elseif (!empty($deals['deals_brands']) || !empty($deals['deals_promotion_brands'])) {
+							$selected_brand = array_column($deals['deals_brands']??$deals['deals_promotion_brands'], 'id_brand');
 						}
 					@endphp
+                    <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand[]" multiple required>
+                        <option></option>
                     @if (!empty($brands))
                         @foreach($brands as $brand)
                             <option value="{{ $brand['id_brand'] }}" 
@@ -92,6 +92,46 @@
                     @endif
                     </select>
                 </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                Brand Rule
+                <span class="required" aria-required="true"> * </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang akan digunakan untuk memilih outlet" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9" style="margin-left: -15px;">
+            	<div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="brand_rule" id="brand_rule_radio_and" value="and" class="md-radiobtn" required 
+	                    		@if ( (old('brand_rule')??$deals['brand_rule']??false) == "and" ) checked 
+	                    		@endif>
+	                        <label for="brand_rule_radio_and">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> All selected brands </label>
+	                        	<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki semua brand yang dipilih" data-container="body"></i>
+	                    </div>
+	                </div>
+            	</div>
+	            <div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="brand_rule" id="brand_rule_radio_or" value="or" class="md-radiobtn" required 
+	                        	@if ( (old('brand_rule')??$deals['brand_rule']??false) == "or" ) checked 
+	                    		@endif>
+	                        <label for="brand_rule_radio_or">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> One of the selected brands </label>
+	                            <i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki setidaknya salah satu brand yang dipilih" data-container="body"></i>
+	                    </div>
+	                </div>
+	            </div>
             </div>
         </div>
         @endif
@@ -233,12 +273,18 @@
 
         {{-- Outlet --}}
         @php
-            if (!empty($deals['outlets'])) {
+        	if (!empty($deals['deals_list_outlet'])) { // promotion deals
+        		$outletselected = explode(',',$deals['deals_list_outlet']);
+        		if (in_array('all', $outletselected)) {
+        			$deals['is_all_outlet'] = 1;
+        		}
+        	}elseif (!empty($deals['outlets'])) { // normal deals
                 $outletselected = array_pluck($deals['outlets'],'id_outlet');
             }
             else {
                 $outletselected = [];
             }
+
         @endphp
 
         <div class="form-group">
@@ -250,7 +296,7 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet')??$outletselected??[])}}" data-all-outlet="{{json_encode($outlets??[])}}">
+                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet')??$outletselected??[])}}" data-all-outlet="{{json_encode($outlets??[])}}" data-all="{{ $deals['is_all_outlet']??0 }}">
                 	@if(!empty($outlets))
                         <option value="all">All Outlets</option>
                         @foreach($outlets as $row)

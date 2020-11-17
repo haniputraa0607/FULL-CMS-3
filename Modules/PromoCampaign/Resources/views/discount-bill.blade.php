@@ -14,7 +14,7 @@
 <div class="form-group" style="height: 90px;">
 	<label class="control-label">Discount Type</label>
 	<span class="required" aria-required="true"> * </span>
-	<i class="fa fa-question-circle tooltips" data-original-title="Pilih jenis diskon </br></br>Nominal : Diskon berupa potongan nominal, jika total diskon melebihi harga subtotal akan dikembalikan ke harga subtotal </br></br>Percent : Diskon berupa potongan persen" data-container="body" data-html="true"></i>
+	<i class="fa fa-question-circle tooltips" data-original-title="Pilih jenis diskon. Diskon yang didapatkan berlaku untuk semua produk dari brand yang dipilih </br></br>Nominal : Diskon berupa potongan nominal, jika total diskon melebihi harga subtotal akan dikembalikan ke harga subtotal </br></br>Percent : Diskon berupa potongan persen" data-container="body" data-html="true"></i>
 	<div class="mt-radio-list">
 		<label class="mt-radio mt-radio-outline"> Nominal
 			<input type="radio" value="Nominal" name="discount_type" @if( (old('discount_type')??$result['promo_campaign_discount_bill_rules']['discount_type']??false) == "Nominal") checked @endif required/>
@@ -31,7 +31,7 @@
 		<div class="col-md-3">
 			<label class="control-label" id="discount-bill-value">Discount Value</label>
 			<span class="required" aria-required="true"> * </span>
-			<i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon yang diberikan. Persentase akan dihitung dari subtotal" data-container="body"></i>
+			<i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon yang diberikan. Persentase akan dihitung dari subtotal produk yang berasal dari brand yang dipilih" data-container="body"></i>
 			<div class="input-group @if( (old('discount_type')??$result['promo_campaign_discount_bill_rules']['discount_type']??false) == "Percent") col-md-5 @else col-md-12 @endif" id="discount-bill-group">
 				<div class="input-group-addon" id="bill-addon-rp" @if( (old('discount_type')??$result['promo_campaign_discount_bill_rules']['discount_type']??false) == "Percent") style="display: none;" @endif>IDR</div>
 				<input required type="text" class="form-control text-center" name="discount_value" placeholder="" value="{{ old('discount_value')??$result['promo_campaign_discount_bill_rules']['discount_value']??null }}" min="0" oninput="validity.valid||(value='');" autocomplete="off">

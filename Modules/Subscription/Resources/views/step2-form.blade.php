@@ -14,7 +14,7 @@ $configs = session('configs');
         <div class="col-md-9" style="padding-left: 0px">
             <div class="input-icon right">
                 <div class="col-md-3">
-                    <select class="form-control" name="subscription_discount_type">
+                    <select class="form-control" name="subscription_discount_type" required>
                         <option value="" disabled 
                             @if ( old('subscription_discount_type')) 
                                 @if ( old('subscription_discount_type') == "" ) 
@@ -150,20 +150,41 @@ $configs = session('configs');
         <div class="input-icon right">
             <label class="col-md-3 control-label">
             Brand
+            <span class="required" aria-required="true"> * </span>  
             <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk subscription ini" data-container="body"></i>
             </label>
         </div>
         <div class="col-md-9">
             <div class="input-icon right">
-                <select class="form-control select2-multiple" data-placeholder="Select Brand" name="id_brand">
+                <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand[]" multiple required>
                     <option></option>
+                @php
+					$selected_brand = [];
+					if (old('id_brand')) {
+						$selected_brand = old('id_brand');
+					}
+					elseif (!empty($subscription['subscription_brands'])) {
+						$selected_brand = array_column($subscription['subscription_brands'], 'id_brand');
+					}
+				@endphp
                 @if (!empty($brands))
-                    @foreach($brands as $brand)
-                        <option value="{{ $brand['id_brand'] }}" 
-                    	@if (old('id_brand',$subscription['id_brand'])) 
-                    		@if($brand['id_brand'] == old('id_brand',$subscription['id_brand'])) selected @endif 
-                    	@endif>{{ $brand['name_brand'] }}</option>
-                    @endforeach
+                	@if ($subscription['id_brand']) 
+	                    @foreach($brands as $brand)
+	                        <option value="{{ $brand['id_brand'] }}" 
+	                    	@if ($subscription['id_brand']) 
+	                    		@if($brand['id_brand'] == $subscription['id_brand']) selected @endif 
+	                    	@endif>{{ $brand['name_brand'] }}</option>
+	                    @endforeach
+	                @else
+	                    @foreach($brands as $brand)
+	                        <option value="{{ $brand['id_brand'] }}" 
+	                        	@if ($selected_brand) 
+	                        		@if(in_array($brand['id_brand'], $selected_brand)) selected 
+	                        		@endif 
+	                        	@endif
+	                        >{{ $brand['name_brand'] }}</option>
+	                    @endforeach
+                	@endif
                 @endif
                 </select>
             </div>
@@ -175,9 +196,57 @@ $configs = session('configs');
             $outletselected = array_pluck($subscription['outlets'],'id_outlet');
         }
         else {
-            $outletselected = old('id_outlet',[]);
+            $outletselected = old('id_outlet[]',[]);
         }
     @endphp
+
+    <div class="form-group" id="brand-rule">
+        <div class="input-icon right">
+            <label class="col-md-3 control-label">
+            Brand Rule
+            <span class="required" aria-required="true"> * </span>  
+            <i class="fa fa-question-circle tooltips" data-original-title="<div style='text-align: left'>Pilih rule yang akan digunakan untuk memilih outlet
+            </br>
+			</br> All selected brands : Promo berlaku untuk semua product atau product tertentu tanpa jumlah minimum
+			</br>
+			</br> One of the selected brands : Promo hanya berlaku untuk suatu product setelah melakukan pembelian dalam jumlah yang telah ditentukan</div>" data-container="body" data-html="true"></i>
+            </label>
+        </div>
+        <div class="col-md-9" style="padding-left: 0px">
+            <div class="input-icon right">
+                <div class="col-md-5">
+                    <select class="form-control" name="brand_rule" required>
+                        <option value="" disabled 
+                            @if ( old('brand_rule')) 
+                                @if ( old('brand_rule') == "" ) 
+                                    selected
+                                @endif
+                            @elseif ( empty($subscription['brand_rule']) ) 
+                                selected
+                            @endif>Select Product Rule</option>
+                        <option value="and" 
+                            @if ( old('brand_rule')) 
+                                @if ( old('brand_rule') == "and" ) 
+                                    selected
+                                @endif
+                            @elseif(isset($subscription['brand_rule']) && $subscription['brand_rule'] === 'and')
+                                selected
+                            @endif>All selected brands<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki semua brand yang dipilih" data-container="body"></i>
+                        </option>
+                        <option value="or" 
+                            @if ( old('brand_rule')) 
+                                @if ( old('brand_rule') == "or" ) 
+                                    selected
+                                @endif
+                            @elseif(isset($subscription['brand_rule']) && $subscription['brand_rule'] === 'or')
+                                selected
+                            @endif>One of the selected brands<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki setidaknya salah satu brand yang dipilih" data-container="body"></i>
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="input-icon right">
@@ -188,17 +257,20 @@ $configs = session('configs');
             </label>
         </div>
         <div class="col-md-9">
-            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" required>
+            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" data-brand-rule="{{ $subscription['brand_rule']??'and' }}" required>
             </select>
         </div>
     </div>
 
     @php
-        if (!empty($subscription['products'])) {
-            $productselected = array_pluck($subscription['products'],'id_product');
+    	$productselected = [];
+        if (!empty($subscription['subscription_products'])) {
+        	foreach ($subscription['subscription_products'] as $key => $value) {
+    			$productselected[] = $value['id_brand'].'-'.$value['id_product'];
+        	}
         }
         else {
-            $productselected = old('id_product',[]);
+            $productselected = old('id_product[]',[]);
         }
     @endphp
 
@@ -213,6 +285,48 @@ $configs = session('configs');
         <div class="col-md-9">
             <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_product[]" multiple data-value="{{json_encode($productselected)}}" data-all="{{ $subscription['is_all_product']??0 }}" required>
             </select>
+        </div>
+    </div>
+
+    <div class="form-group" id="product-rule">
+        <div class="input-icon right">
+            <label class="col-md-3 control-label">
+            Product Rule
+            <span class="required" aria-required="true"> * </span>  
+            <i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body"></i>
+            </label>
+        </div>
+        <div class="col-md-9" style="padding-left: 0px">
+            <div class="input-icon right">
+                <div class="col-md-5">
+                    <select class="form-control" name="product_rule" required>
+                        <option value="" disabled 
+                            @if ( old('product_rule')) 
+                                @if ( old('product_rule') == "" ) 
+                                    selected
+                                @endif
+                            @elseif ( empty($subscription['product_rule']) ) 
+                                selected
+                            @endif>Select Product Rule</option>
+                        <option value="and" 
+                            @if ( old('product_rule')) 
+                                @if ( old('product_rule') == "and" ) 
+                                    selected
+                                @endif
+                            @elseif(isset($subscription['product_rule']) && $subscription['product_rule'] === 'and')
+                                selected
+                            @endif>All items must be present</option>
+                        <option value="or" 
+                            @if ( old('product_rule')) 
+                                @if ( old('product_rule') == "or" ) 
+                                    selected
+                                @endif
+                            @elseif(isset($subscription['product_rule']) && $subscription['product_rule'] === 'or')
+                                selected
+                            @endif>One of the items must exist</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
 
