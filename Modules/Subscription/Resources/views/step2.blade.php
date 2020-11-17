@@ -457,8 +457,10 @@ else{
                 let product = $('select[name="id_product[]"]').val();
                 if (!product || product.indexOf("all") != -1) {
                 	$('#product-rule').hide();
+                	$('select[name="product_rule"]').prop('required', false);
                 }else{
                 	$('#product-rule').show();
+                	$('select[name="product_rule"]').prop('required', true);
                 }
             });
 
