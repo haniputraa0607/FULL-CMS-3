@@ -357,7 +357,13 @@ class PromoCampaignController extends Controller
 
             if (isset($action['status']) && $action['status'] == 'success') {
 
-                return redirect('promo-campaign/detail/' . $slug)->withSuccess(['Promo Campaign has been updated']);
+                $redirect = redirect('promo-campaign/detail/' . $slug)->withSuccess(['Promo Campaign has been updated']);
+
+	            if (isset($action['brand_product_error'])) {
+	            	$redirect = redirect('promo-campaign/step2/' . $slug)->withSuccess(['Promo Campaign has been updated'])->withErrors($action['brand_product_error']??[]);
+	            }
+
+	            return $redirect;
             } 
             elseif($action['messages']??false) {
                 return back()->withErrors($action['messages'])->withInput();

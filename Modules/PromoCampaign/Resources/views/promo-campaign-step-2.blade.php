@@ -144,6 +144,7 @@
         }
 
         $brands = array_column($result['brands'], 'id_brand');
+        $brand_rule = $result['brand_rule'];
 	@endphp
 	<script>
 	$(document).ready(function() {
@@ -153,6 +154,7 @@
 		var is_all_product = '{!!$is_all_product!!}';
 		var brand = JSON.parse('{!!json_encode($brands)!!}');
 		var selectedProduct = JSON.parse('{!!json_encode($product)!!}');
+		var brand_rule = '{!!$brand_rule!!}';
 
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
@@ -200,7 +202,8 @@
 			url: "getData",
 			data : {
 				"get" : 'Outlet',
-				"brand" : brand
+				"brand" : brand,
+				'brand_rule' : brand_rule
 			},
 			dataType: "json",
 			success: function(data){
@@ -582,6 +585,12 @@
 	                            		echo $comma.$value['name_brand'];
                             		}
                             	@endphp</div>
+                        </div>
+                        <div class="row static-info">
+                            <div class="col-md-4 name">Brand Rule</div>
+                            <div class="col-md-8 value">: 
+                                {{ $result['brand_rule'] && $result['brand_rule'] == 'and' ? 'All selected brands' : 'One of the selected brands' }}
+                            </div>
                         </div>
 						<div class="row static-info">
 							<div class="col-md-4 name">Tag</div>

@@ -323,7 +323,11 @@ class SubscriptionController extends Controller
             $save = MyHelper::post('subscription/step2', $post);
 
             if ( ($save['status']??false) == "success") {
-                return redirect($data['rpage'].'/step3/'.$slug)->with('success', ['Subscription has been updated']);
+            	$redirect = redirect($data['rpage'].'/step3/'.$slug)->with('success', ['Subscription has been updated']);
+            	if (isset($save['brand_product_error'])) {
+            		$redirect = redirect($data['rpage'].'/step2/'.$slug)->with('success', ['Subscription has been updated'])->withErrors($save['brand_product_error']??[]);
+            	}
+                return $redirect;
             }else{
                 return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
             }

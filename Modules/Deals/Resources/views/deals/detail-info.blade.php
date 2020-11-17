@@ -100,6 +100,12 @@ $grantedFeature     = session('granted_features');
                     </div>
                 </div>
                 <div class="row static-info">
+                    <div class="col-md-4 name">Brand Rule</div>
+                    <div class="col-md-8 value">: 
+                        {{ $deals['brand_rule'] && $deals['brand_rule'] == 'and' ? 'All selected brands' : 'One of the selected brands' }}
+                    </div>
+                </div>
+                <div class="row static-info">
                     <div class="col-md-4 name">Charged Central</div>
                     <div class="col-md-8 value">: {{$deals['charged_central']}} %</div>
                 </div>
@@ -390,6 +396,11 @@ $grantedFeature     = session('granted_features');
                             </table>
                         @endif
                     </div>
+                    <div class="row static-info">
+                        <div class="col-md-4 name">Promo Rule</div>
+                        <div class="col-md-8 value">: 
+                        </div>
+                    </div>
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_6">
                         <thead>
                             <tr>
@@ -410,6 +421,12 @@ $grantedFeature     = session('granted_features');
                     </table>
                 {{-- Buy X Get Y Discount --}}
                 @elseif (isset($deals['deals_buyxgety_rules']) && $deals['deals_buyxgety_rules'] != null)
+                    <div class="row static-info">
+                        <div class="col-md-4 name">Min Basket Size</div>
+                        <div class="col-md-8 value">: 
+                                {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
+                        </div>
+                    </div>
                     <div class="row static-info">
                         <div class="col-md-4 name">Product Requirement</div>
                         <div class="col-md-8 value">: </div>
@@ -437,9 +454,8 @@ $grantedFeature     = session('granted_features');
                         @endif
                     </div>
                     <div class="row static-info">
-                        <div class="col-md-4 name">Min Basket Size</div>
+                        <div class="col-md-4 name">Promo Rule</div>
                         <div class="col-md-8 value">: 
-                                {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
                         </div>
                     </div>
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_7">

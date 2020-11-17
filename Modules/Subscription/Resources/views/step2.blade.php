@@ -57,6 +57,9 @@ else{
         .text-decoration-none {
             text-decoration: none!important;
         }
+        .select2-results__option[aria-selected=true] {
+		    display: none;
+		}
     </style>
 @endsection
 
@@ -99,6 +102,7 @@ else{
     <script type="text/javascript">        
         var oldOutlet=[];
         let id_brand = null;
+        let id_brands = [];
 
         function redrawOutlets(list,selected,convertAll, all){
             var html="";
@@ -106,7 +110,11 @@ else{
                 html+="<option value=\"all\">All Outlets</option>";
             }
             list.forEach(function(outlet){
-                html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet_code+" - "+outlet.outlet_name+"</option>";
+            	// single brand
+                // html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet_code+" - "+outlet.outlet_name+"</option>";
+
+                // multi brand
+                html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet+"</option>";
             });
             $('select[name="id_outlet[]"]').html(html);
             $('select[name="id_outlet[]"]').val(selected);
@@ -123,7 +131,11 @@ else{
                 html+="<option value=\"all\">All Products</option>";
             }
             list.forEach(function(product){
-                html+="<option value=\""+product.id_product+"\">"+product.product_code+" - "+product.product_name+"</option>";
+            	// single brand
+             	// html+="<option value=\""+product.id_product+"\">"+product.product_code+" - "+product.product_name+"</option>";
+
+                // multi brand
+                html+="<option value=\""+product.id_brand+"-"+product.id_product+"\">"+product.product+"</option>";
             });
             $('select[name="id_product[]"]').html(html);
             $('select[name="id_product[]"]').val(selected);
@@ -136,6 +148,7 @@ else{
         $(document).ready(function() {
 
             var _URL = window.URL || window.webkitURL;
+            var brand_rule = $('select[name="id_outlet[]"]').data('brand-rule');
 
             $('.price').each(function() {
                 var input = $(this).val();
@@ -311,7 +324,6 @@ else{
                             data: 'filename='+name+'&_token='+token,
                             url: "{{url('summernote/picture/delete/subscription')}}",
                             success: function(data){
-                                // console.log(data);
                             }
                         });
                     }
@@ -424,15 +436,33 @@ else{
                 allowPlus : false
             });
 
-            ajaxProduct();
-            ajaxOutlet();
-            $('select[name="id_brand"]').on('change',function(){
-                id_brand=$('select[name="id_brand"]').val();
-                ajaxOutlet(id_brand);
-                ajaxProduct(id_brand);
+
+            ajaxProductMultiBrand();
+            ajaxOutletMultiBrand();
+
+            $('select[name="brand_rule"]').on('change',function(){
+                brand_rule = $('select[name="brand_rule"]').val();
+                ajaxOutletMultiBrand(id_brands);
+            });
+
+            $('select[name="id_brand[]"]').on('change',function(){
+                id_brands = $('select[name="id_brand[]"]').val();
+                ajaxOutletMultiBrand(id_brands);
+                ajaxProductMultiBrand(id_brands);
 
             });
-            $('select[name="id_brand"]').change();
+            $('select[name="id_brand[]"]').change();
+
+            $('select[name="id_product[]"]').on('change',function(){
+                let product = $('select[name="id_product[]"]').val();
+                if (!product || product.indexOf("all") != -1) {
+                	$('#product-rule').hide();
+                	$('select[name="product_rule"]').prop('required', false);
+                }else{
+                	$('#product-rule').show();
+                	$('select[name="product_rule"]').prop('required', true);
+                }
+            });
 
             function ajaxOutlet(id_brand = null) {
 
@@ -471,7 +501,36 @@ else{
                         }
                     }
                 });
-            };
+            }
+
+            function ajaxOutletMultiBrand(id_brands = []) {
+            	$.ajax({
+					type: "GET",
+					url: "{{url('promo-campaign/step2/getData')}}",
+					data : {
+						"get" : 'Outlet',
+						"brand" : id_brands,
+						"brand_rule" : brand_rule
+					},
+					dataType: "json",
+					success: function(data){
+						if (data.status == 'fail') {
+							$.ajax(this)
+							return
+						}
+
+	                    let value = $('select[name="id_outlet[]"]').val();
+	                    let all = $('select[name="id_outlet[]"]').data('all');
+	                    let convertAll=false;
+	                    if($('select[name="id_outlet[]"]').data('value')){
+	                        value=$('select[name="id_outlet[]"]').data('value');
+	                        $('select[name="id_outlet[]"]').data('value',false);
+	                        convertAll=true;
+	                    }
+	                    redrawOutlets(data,value,convertAll,all);
+					}
+				});
+            }
 
             function ajaxProduct(id_brand = null) {
             	let condition;
@@ -508,7 +567,35 @@ else{
                         }
                     }
                 });
-            };
+            }
+
+            function ajaxProductMultiBrand(id_brands = []) {
+            	$.ajax({
+					type: "GET",
+					url: "{{url('promo-campaign/step2/getData')}}",
+					data : {
+						get : 'Product',
+						brand : id_brands
+					},
+					dataType: "json",
+					success: function(data){
+						if (data.status == 'fail') {
+							$.ajax(this)
+							return
+						}
+
+                        let value = $('select[name="id_product[]"]').val();
+                        let all = $('select[name="id_product[]"]').data('all');
+                        let convertAll = false;
+                        if($('select[name="id_product[]"]').data('value')){
+                            value = $('select[name="id_product[]"]').data('value');
+                            $('select[name="id_product[]"]').data('value',false);
+                            convertAll = true;
+                        }
+                        redrawProducts(data,value,convertAll,all);
+					}
+				});
+            }
         });
     </script>
 @endsection
