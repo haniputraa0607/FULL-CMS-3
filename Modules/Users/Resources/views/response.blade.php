@@ -1301,7 +1301,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 								<i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan maka email akan melampirkan lampiran enquiry" data-container="body"></i>
 							</label>
 							<div class="col-md-9" style="margin-bottom: 10px">
-								<input type="checkbox" name="attachment_forward" class="make-switch" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" @if($data['attachment_forward']) checked @endif >
+								<input type="checkbox" name="attachment_forward" class="make-switch" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" value="1" @if($data['attachment_forward']) checked @endif >
 							</div>
 						@endif
 						<div class="input-icon right">
