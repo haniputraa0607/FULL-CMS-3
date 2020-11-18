@@ -517,6 +517,10 @@ class ProductController extends Controller
                 $post['photo']      = MyHelper::encodeImage($post['photo']);
             }
 
+            if (isset($post['product_photo_detail'])) {
+                $post['product_photo_detail']      = MyHelper::encodeImage($post['product_photo_detail']);
+            }
+
             $save = MyHelper::post('product/create', $post);
 
             if (isset($save['status']) && $save['status'] == 'success') {
@@ -751,6 +755,10 @@ class ProductController extends Controller
 
                 if (isset($post['photo'])) {
                     $post['photo'] = MyHelper::encodeImage($post['photo']);
+                }
+
+                if (isset($post['product_photo_detail'])) {
+                    $post['product_photo_detail']      = MyHelper::encodeImage($post['product_photo_detail']);
                 }
 
                 // update data
