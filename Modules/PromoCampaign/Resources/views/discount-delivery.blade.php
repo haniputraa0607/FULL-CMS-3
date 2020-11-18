@@ -1,7 +1,7 @@
 @section('discount-delivery')
 <div class="form-group">
 	<label class="control-label">Min basket size</label>
-	<i class="fa fa-question-circle tooltips" data-original-title="syarat minimum basket size / total harga product (subtotal) sebelum dikenakan promo dan biaya pengiriman. Kosongkan jika tidak ada syarat jumlah minimum basket size" data-container="body" data-html="true"></i>
+	<i class="fa fa-question-circle tooltips" data-original-title="Syarat minimum basket size atau total harga product (subtotal) sebelum dikenakan promo dan biaya pengiriman. Subtotal diambil dari subtotal dari brand yang dipilih. Kosongkan jika tidak ada syarat jumlah minimum basket size" data-container="body" data-html="true"></i>
 	<div class="row">
 		<div class="col-md-3">
 			<div class="input-group" >
