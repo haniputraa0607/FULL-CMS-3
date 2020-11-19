@@ -14,7 +14,7 @@ $configs = session('configs');
                         </div>
                         <div class="col-md-5">
                             <div class="input-icon right">
-                                <input type="text" class="form-control" name="subscription_title" value="{{ old('subscription_title')??$subscription['subscription_title']??'' }}" placeholder="Title" required maxlength="20" autocomplete="off">
+                                <input type="text" class="form-control" name="subscription_title" value="{{ old('subscription_title')??$subscription['subscription_title']??'' }}" placeholder="Title" required autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@ $configs = session('configs');
                         </div>
                         <div class="col-md-5">
                             <div class="input-icon right">
-                                <input type="text" class="form-control" name="subscription_sub_title" value="{{ old('subscription_sub_title')??$subscription['subscription_sub_title']??'' }}" placeholder="Sub Title" maxlength="20" autocomplete="off">
+                                <input type="text" class="form-control" name="subscription_sub_title" value="{{ old('subscription_sub_title')??$subscription['subscription_sub_title']??'' }}" placeholder="Sub Title" autocomplete="off">
                             </div>
                         </div>
                     </div>
