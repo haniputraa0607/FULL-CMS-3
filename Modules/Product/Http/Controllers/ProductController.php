@@ -1029,6 +1029,7 @@ class ProductController extends Controller
             $data['product_name'] = Session::get('search_product_name');
         }
 
+        $data['update_price'] = 1;
         if(isset($page)){
             $product = MyHelper::post('product/be/list?page='.$page, $data);
         }else{
