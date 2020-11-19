@@ -589,6 +589,32 @@ class ProductController extends Controller
         return view('product::product.image', $data);
     }
 
+    function addImageDetail(Request $request) {
+        $post = $request->except('_token');
+        if (!empty($post)) {
+            $name = explode('.',$request->file('file')->getClientOriginalName())[0];
+            $post = MyHelper::encodeImage($request->file('file'));
+            $save = MyHelper::post('product/photo/createAjax', ['name' => $name, 'photo' => $post, 'detail' => 1]);
+            return $save;
+        }
+        $data = [
+            'title'          => 'Product',
+            'sub_title'      => 'List Product',
+            'menu_active'    => 'product',
+            'submenu_active' => 'product-image',
+            'child_active'   => 'product-image-detail',
+        ];
+        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1]);
+
+        if (isset($product['status']) && $product['status'] == "success") {
+            $data['product'] = $product['result'];
+        }
+        else {
+            $data['product'] = [];
+        }
+        return view('product::product.image_detail', $data);
+    }
+
     function listImage(Request $request) {
         $post = $request->except('_token');
         if (!empty($post)) {

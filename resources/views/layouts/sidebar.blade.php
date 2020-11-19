@@ -538,6 +538,11 @@
 									<span class="title">Upload Image</span>
 								</a>
 							</li>
+							<li class="nav-item {{(isset($child_active) && $child_active == 'product-image-detail') ? 'active open' : ''}}">
+								<a href="{{url('product/image/detail')}}" class="nav-link ">
+									<span class="title">Upload Image Detail</span>
+								</a>
+							</li>
 							<li class="nav-item {{(isset($child_active) && $child_active == 'product-image-list') ? 'active open' : ''}}">
 								<a href="{{url('product/image/list')}}" class="nav-link ">
 									<span class="title">Image List</span>
