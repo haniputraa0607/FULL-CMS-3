@@ -1425,11 +1425,17 @@ class ProductController extends Controller
             ];
 
             $data['photo'] = env('STORAGE_URL_API').'img/product/item/default.png?';
+            $data['photo_detail'] = env('STORAGE_URL_API').'img/product/item/detail/default.png?';
 
             return view('product::product.photo-default', $data);
         }else{
-            $post['photo'] = MyHelper::encodeImage($post['photo']);
-            $default = MyHelper::post('product/photo/default', ['photo' => $post['photo']]);
+            if(isset($post['photo'])){
+                $post['photo'] = MyHelper::encodeImage($post['photo']);
+            }
+            if(isset($post['photo_detail'])){
+                $post['photo_detail'] = MyHelper::encodeImage($post['photo_detail']);
+            }
+            $default = MyHelper::post('product/photo/default', $post);
             if (isset($default['status']) && $default['status'] == 'success') {
                 return parent::redirect($default, 'Product Photo Default has been updated.', 'product/photo/default');
             } elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
