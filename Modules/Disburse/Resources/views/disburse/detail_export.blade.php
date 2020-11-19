@@ -41,8 +41,8 @@
 <table style="border: 1px solid black">
     <thead>
     @if(!empty($config) && $config['is_active'] == 1)
-        <tr><td style="background-color: #ff9933;" colspan="4">Sub Total = Gross Sales + Discount - Delivery</td></tr>
-        <tr><td style="background-color: #ff9933;" colspan="4">Net Sale (Income Outlet) = Sub Total - Fee Item - Fee Payment - Fee Promo - Fee Subscription</td></tr>
+        <tr><td style="background-color: #ff9933;" colspan="4">Sub Total = Gross Sales + delivery - discount delivery - discount</td></tr>
+        <tr><td style="background-color: #ff9933;" colspan="4">Net Sale (Income Outlet) = Sub Total - Fee Item - Fee Discount Delivery - Fee Payment - Fee Promo - Fee Subscription</td></tr>
         <tr></tr>
     @endif
     <tr>
@@ -53,6 +53,7 @@
         <th style="background-color: #dcdcdc;" width="20"> Delivery </th>
         <th style="background-color: #dcdcdc;" width="20"> Sub Total </th>
         <th style="background-color: #dcdcdc;" width="20"> Fee Item </th>
+        <th style="background-color: #dcdcdc;" width="20"> Fee Discount Delivery </th>
         <th style="background-color: #dcdcdc;" width="20"> Fee Payment </th>
         <th style="background-color: #dcdcdc;" width="20"> Fee Promo </th>
         <th style="background-color: #dcdcdc;" width="20"> Fee Subcription </th>
@@ -73,6 +74,7 @@
                 <td style="text-align: left">{{$val['transaction_shipment_go_send']}}</td>
                 <td style="text-align: left">{{$val['transaction_subtotal']}}</td>
                 <td style="text-align: left">{{$val['fee_item']}}</td>
+                <td style="text-align: left">{{$val['discount_delivery_outlet']}}</td>
                 <td style="text-align: left">{{$val['payment_charge']}}</td>
                 <td style="text-align: left">{{$val['discount']}}</td>
                 <td style="text-align: left">{{$val['subscription']}}</td>
