@@ -7,6 +7,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 */
 	Route::get('/', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProduct']);
 	Route::any('/image/add', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@addImage']);
+	Route::any('/image/detail', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@addImageDetail']);
 	Route::any('/image/list', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listImage']);
 	Route::any('/image/override', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@overrideImage']);
 	Route::any('/visible/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
