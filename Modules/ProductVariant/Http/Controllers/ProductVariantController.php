@@ -26,27 +26,58 @@ class ProductVariantController extends Controller
             'submenu_active' => 'product-variant-list',
         ];
 
-        if ($request->wantsJson()) {
-            $draw = $request->draw;
+        $data['get_variant'] = MyHelper::post('product-variant',$request->all())['result']??[];
 
-            $list = MyHelper::post('product-variant',$request->all());
+        $data['variants'] = [];
+        if(!empty($data['get_variant'])){
+            $data['variants'] = json_encode($this->buildTree($data['get_variant']));
+        }
+        return view('productvariant::index', $data);
+    }
 
-            if(isset($list['status']) && $list['status'] == 'success'){
-                $arr_result['draw'] = $draw;
-                $arr_result['recordsTotal'] = $list['result']['total'];
-                $arr_result['recordsFiltered'] = $list['result']['total'];
-                $arr_result['data'] = $list['result']['data'];
-            }else{
-                $arr_result['draw'] = $draw;
-                $arr_result['recordsTotal'] = 0;
-                $arr_result['recordsFiltered'] = 0;
-                $arr_result['data'] = array();
+    public function position(Request $request)
+    {
+        $post = $request->all();
+        $data = [
+            'title'          => 'Variant',
+            'sub_title'      => 'Variant Position',
+            'menu_active'    => 'product-variant',
+            'submenu_active' => 'product-variant-position',
+        ];
+
+        if(empty($post)){
+            $data['get_variant'] = MyHelper::post('product-variant',$request->all())['result']??[];
+
+            $data['variants'] = [];
+            if(!empty($data['get_variant'])){
+                $data['variants'] = json_encode($this->buildTree($data['get_variant']));
             }
+            return view('productvariant::position', $data);
+        }else{
+            $update_potition = MyHelper::post('product-variant/position', $post);
 
-            return response()->json($arr_result);
+            if(($update_potition['status']??'')=='success'){
+                return redirect('product-variant/position')->with('success', ['Update position success']);
+            }else{
+                return redirect('product-variant/position')->withErrors($update_potition['messages'] ?? ['Something went wrong']);
+            }
+        }
+    }
+
+    function buildTree(array $elements, $parentId = 0) {
+        $branch = array();
+
+        foreach ($elements as $element) {
+            if ($element['id_parent'] == $parentId) {
+                $children = $this->buildTree($elements, $element['id_product_variant']);
+                if ($children) {
+                    $element['children'] = $children;
+                }
+                $branch[] = $element;
+            }
         }
 
-        return view('productvariant::index', $data);
+        return $branch;
     }
 
     /**
@@ -153,10 +184,7 @@ class ProductVariantController extends Controller
     public function destroy($id)
     {
         $result = MyHelper::post('product-variant/delete', ['id_product_variant' => $id]);
-         if (isset($result['status']) && $result['status'] == 'success') {
-            return redirect('product-variant')->with('success', ['Success delete product variant']);
-        }
-        return redirect('product-variant')->withErrors(['Fail delete product variant, product variant already to use in transaction']);
+        return $result;
     }
 
     public function export(Request $request) {
