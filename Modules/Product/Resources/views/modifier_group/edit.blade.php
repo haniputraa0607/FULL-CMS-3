@@ -19,6 +19,7 @@
         $(document).ready(function()
         {
             $(".default-visibility").bootstrapSwitch();
+            $('#list_modifier').sortable();
         });
         function changeAssign(val) {
             if($('#select_product').val()){
@@ -223,7 +224,7 @@
                         <?php $i=0;?>
                         @foreach($result['product_modifier'] as $pm)
                             <div class="form-group" id="mod_{{$i}}">
-                                <label class="col-md-3 control-label"></label>
+                                <label class="col-md-3 control-label"><i class="fa fa-arrows"></i></label>
                                 <div class="col-md-3">
                                     <input type="text" placeholder="Modifier group Name" class="form-control" name="data_modifier[{{$i}}][name]" required value="{{$pm['text']}}">
                                 </div>

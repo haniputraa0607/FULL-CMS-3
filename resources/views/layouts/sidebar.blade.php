@@ -725,11 +725,16 @@
 									<span class="title">Variant List</span>
 								</a>
 							</li>
-								<li class="nav-item {{($submenu_active == 'product-variant-group-list') ? 'active open' : ''}}">
-									<a href="{{url('product-variant-group/list')}}" class="nav-link ">
-										<span class="title">Product Variant List</span>
-									</a>
-								</li>
+							<li class="nav-item {{($submenu_active == 'product-variant-position') ? 'active open' : ''}}">
+								<a href="{{url('product-variant/position')}}" class="nav-link ">
+									<span class="title">Variant Position</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'product-variant-group-list') ? 'active open' : ''}}">
+								<a href="{{url('product-variant-group/list')}}" class="nav-link ">
+									<span class="title">Product Variant List</span>
+								</a>
+							</li>
 							<li class="nav-item {{($submenu_active == 'product-variant-group-price') ? 'active open' : ''}}">
 								<a href="{{url('product-variant-group/price')}}" class="nav-link ">
 									<span class="title">Product Variant Price</span>
