@@ -93,7 +93,7 @@ class EnquiriesController extends Controller
             return back();
         }
         else {
-            return "fail";
+            return redirect('enquiries')->withErrors(['Failed to reply']);
         } 
     }
 

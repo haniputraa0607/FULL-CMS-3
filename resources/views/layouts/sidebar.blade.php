@@ -136,6 +136,7 @@
 			</li>
 
 			@if(MyHelper::hasAccess([5], $configs))
+			@if(MyHelper::hasAccess([9], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'admin-outlet') ? 'active open' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
 					<i class="icon-eye"></i>
@@ -159,6 +160,7 @@
 					@endif
 				</ul>
 			</li>
+			@endif
 			@endif
 
 		@endif
@@ -2475,7 +2477,7 @@
 			@endif
 		@endif
 
-		@if(MyHelper::hasAccess([125,126,127,128,129,261], $grantedFeature))
+		@if(MyHelper::hasAccess([125,126,127,128,129,271], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #0F444C;font-weight: 600;">Report</h3>
 			</li>
@@ -2523,7 +2525,7 @@
 				</a>
 			</li>
 			@endif
-			@if(MyHelper::hasAccess([261], $grantedFeature))
+			@if(MyHelper::hasAccess([271], $grantedFeature))
 			<li class="nav-item {{($submenu_active == 'report-shift') ? 'active' : ''}}">
 				<a href="{{url('report/shift/summary')}}" class="nav-link nav-toggle">
 					<i class="icon-graph"></i>

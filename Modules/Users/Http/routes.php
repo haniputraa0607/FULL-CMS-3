@@ -11,7 +11,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', '
 	Route::get('ajax/verify_token', 'UsersController@verifyToken');
 	Route::post('ajax/address/{phone}', 'UsersController@listAddressUser');
 
-	Route::any('/', ['middleware' => 'feature_control:1', 'uses' => 'UsersController@index']);
+	Route::any('/', ['middleware' => 'feature_control:2', 'uses' => 'UsersController@index']);
 
 	Route::group(['middleware' => 'config_control:5', 'prefix' => 'adminoutlet'], function()
 	{

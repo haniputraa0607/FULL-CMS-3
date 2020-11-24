@@ -647,6 +647,15 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 							</div>
 						</div>
 						<div class="form-group" id="div_email_content" @if($data['autocrm_email_toogle'] == 0) style="display:none;" @endif>
+							@if(isset($attachment))
+								<label class="col-md-3 control-label">
+								Send Attachment
+								<i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan maka email akan melampirkan lampiran enquiry" data-container="body"></i>
+								</label>
+								<div class="col-md-9" style="margin-bottom: 10px">
+									<input type="checkbox" name="attachment_mail" class="make-switch" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" value="1" @if($data['attachment_mail']) checked @endif >
+								</div>
+							@endif
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 								Content
@@ -1286,6 +1295,15 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 						</div>
 					</div>
 					<div class="form-group" id="div_forward_content" @if($data['autocrm_forward_toogle'] == 0) style="display:none;" @endif>
+						@if(isset($attachment))
+							<label class="col-md-3 control-label">
+								Send Attachment
+								<i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan maka email akan melampirkan lampiran enquiry" data-container="body"></i>
+							</label>
+							<div class="col-md-9" style="margin-bottom: 10px">
+								<input type="checkbox" name="attachment_forward" class="make-switch" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" value="1" @if($data['attachment_forward']) checked @endif >
+							</div>
+						@endif
 						<div class="input-icon right">
 							<label class="col-md-3 control-label">
 							Content
