@@ -29,7 +29,7 @@ Route::prefix('product-variant')->group(function() {
 
 Route::prefix('product-variant-group')->group(function() {
     Route::group(['middleware' => 'validate_session'], function(){
-        Route::any('list', ['uses' => 'ProductVariantGroupController@listProductVariant']);
+        Route::any('list', ['uses' => 'ProductVariantGroupController@listProduct']);
         Route::any('edit/{product_code}', ['uses' => 'ProductVariantGroupController@editProductVariant']);
         Route::any('delete/{product_code}', ['uses' => 'ProductVariantGroupController@deleteProductVariant']);
 
@@ -44,5 +44,8 @@ Route::prefix('product-variant-group')->group(function() {
         Route::post('export-price', ['middleware' => ['feature_control:279,281'], 'uses' => 'ProductVariantGroupController@exportPrice']);
         Route::get('import-price', ['middleware' => ['feature_control:279,281'], 'uses' => 'ProductVariantGroupController@importPrice']);
         Route::post('import-price/save', ['middleware' => ['feature_control:279,281'], 'uses' => 'ProductVariantGroupController@importPriceSave']);
+
+        Route::any('list-group', ['uses' => 'ProductVariantGroupController@listProductVariant']);
+        Route::post('remove', ['uses' => 'ProductVariantGroupController@removeProductVariant']);
     });
 });

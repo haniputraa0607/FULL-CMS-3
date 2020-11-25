@@ -732,6 +732,11 @@
 									<span class="title">Variant Position</span>
 								</a>
 							</li>
+							<li class="nav-item {{($submenu_active == 'product-variant-group-remove') ? 'active open' : ''}}">
+								<a href="{{url('product-variant-group/list-group')}}" class="nav-link ">
+									<span class="title">Remove Product Variant</span>
+								</a>
+							</li>
 							<li class="nav-item {{($submenu_active == 'product-variant-group-list') ? 'active open' : ''}}">
 								<a href="{{url('product-variant-group/list')}}" class="nav-link ">
 									<span class="title">Product Variant List</span>
