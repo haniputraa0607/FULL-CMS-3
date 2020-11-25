@@ -53,7 +53,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<label class="control-label">Min basket size</label>
-			<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
+			<i class="fa fa-question-circle tooltips" data-original-title="Syarat minimum basket size atau total harga product (subtotal) sebelum dikenakan promo dan biaya pengiriman. Subtotal diambil dari subtotal dari brand yang dipilih. Kosongkan jika tidak ada syarat jumlah minimum basket size" data-container="body" data-html="true"></i>
 			<div class="row">
 				<div class="col-md-3">
 					<div class="input-group" >

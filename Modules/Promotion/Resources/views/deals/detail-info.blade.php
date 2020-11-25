@@ -196,6 +196,22 @@
             <div class="portlet-title"> 
             <span class="caption font-blue sbold uppercase">Voucher Online Rules : {{ $deals['promo_type']??'' }}</span>
             </div>
+            @if ( !empty($deals['product_rule'])
+            	&& ((isset($deals['deals_promotion_product_discount_rules']['is_all_product']) 
+            			&& $deals['deals_promotion_product_discount_rules']['is_all_product'] == 0)
+                	|| !empty($deals['deals_promotion_tier_discount_rules'])
+                	|| !empty($deals['deals_promotion_buyxgety_rules'])
+                	|| (isset($deals['deals_promotion_discount_bill_rules']['is_all_product']) 
+	                    && $deals['deals_promotion_discount_bill_rules']['is_all_product'] == 0)
+                )
+            )
+            <div class="row static-info">
+                <div class="col-md-4 name">Product Rule</div>
+                <div class="col-md-8 value">: 
+                    {{ $deals['product_rule'] && $deals['product_rule'] == 'and' ? 'All items must be present' : 'One of the items must exist' }}
+                </div>
+            </div>
+            @endif
             @include('promocampaign::template.promo-global-requirement-detail', ['promo_source' => 'deals_promotion'])
             @if ( 
             		!empty($deals['deals_promotion_product_discount_rules']) 
@@ -449,6 +465,30 @@
                         <div class="col-md-8 value">: 
                                 {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
                         </div>
+                    </div>
+                    <div class="mt-comments">
+                        @if ($deals['deals_promotion_discount_bill_rules'] != null)
+                            @if(isset($deals['deals_promotion_discount_bill_rules']['is_all_product']) && $deals['deals_promotion_discount_bill_rules']['is_all_product'] == '0')
+                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
+                                    <thead>
+                                        <tr>
+                                            <th>Brand</th>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($deals['deals_promotion_discount_bill_products'] as $res)
+                                            <tr>
+                                                <td>{{ $res['brand']['name_brand']??$deals['brand']['name_brand']??'' }}</td>
+                                                <td>{{ $res['product']['product_code'] }}</td>
+                                                <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
+                        @endif
                     </div>
                 {{-- Delivery Discount --}}
                 @elseif (!empty($deals['deals_promotion_discount_delivery_rules'])) 
