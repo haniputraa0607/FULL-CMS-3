@@ -103,7 +103,11 @@ $configs    		= session('configs');
 					updateStep();
 				}
 			});
-
+			$('#brand-selector').on('change',function(){
+				const selector = $(this);
+				$('.brand-readonly').html(`<option value="${selector.val()}">${selector.find('option:selected').text()}</option>`);
+				$('.id_brand_hidden').val(selector.val());
+			});
 			$("#form-upload").on('submit', function(e){
 				e.preventDefault();
 				const container = $(this).parents('.upload-container');
@@ -130,15 +134,15 @@ $configs    		= session('configs');
 						$(".progress-bar").width('0%');
 					},
 					error:function(){
-						$('.step3').addClass('upload-fail');
-						$('.step3').removeClass('upload-success');
+						$('.step4').addClass('upload-fail');
+						$('.step4').removeClass('upload-success');
 						$('#result-list').html('<li>Check your internet connection</li>');
 					},
 					success: function(resp){
 						let msg = '';
 						if(resp.status == 'success'){
-							$('.step3').addClass('upload-success');
-							$('.step3').removeClass('upload-fail');
+							$('.step4').addClass('upload-success');
+							$('.step4').removeClass('upload-fail');
 							$('#result-list').html('<li>Check your internet connection</li>');
 							if(resp.result){
 								if(resp.result.length > 1){
@@ -152,8 +156,8 @@ $configs    		= session('configs');
 								msg = '<li>Success import product</li>';
 							}
 						}else{
-							$('.step3').addClass('upload-fail');
-							$('.step3').removeClass('upload-success');
+							$('.step4').addClass('upload-fail');
+							$('.step4').removeClass('upload-success');
 							if(resp.messages){
 								if(resp.messages.length > 1){
 									resp.messages.forEach(message => {
@@ -169,7 +173,7 @@ $configs    		= session('configs');
 						$('#result-list').html(msg);
 					}
 				}).always(function(){
-					$('.switcher').data('current-step',3);
+					$('.switcher').data('current-step',4);
 					updateStep();
 					container.removeClass('uploading');
 					$('#form-upload')[0].reset();
@@ -206,17 +210,22 @@ $configs    		= session('configs');
 		<div class="col-md-12">
 			<div class="mt-element-step">
 				<div class="row step-line">
-					<div class="col-md-4 mt-step-col first active" data-step="1">
+					<div class="col-md-3 mt-step-col first active" data-step="1">
 						<div class="mt-step-number bg-white">1</div>
+						<div class="mt-step-title uppercase font-grey-cascade">Select Brand</div>
+						<div class="mt-step-content font-grey-cascade">Select brand</div>
+					</div>
+					<div class="col-md-3 mt-step-col" data-step="2">
+						<div class="mt-step-number bg-white">2</div>
 						<div class="mt-step-title uppercase font-grey-cascade">Download Template Product Variant</div>
 						<div class="mt-step-content font-grey-cascade">Download current product variant</div>
 					</div>
-					<div class="col-md-4 mt-step-col" data-step="2">
-						<div class="mt-step-number bg-white">2</div>
+					<div class="col-md-3 mt-step-col" data-step="3">
+						<div class="mt-step-number bg-white">3</div>
 						<div class="mt-step-title uppercase font-grey-cascade">Upload Data Product Variant</div>
 						<div class="mt-step-content font-grey-cascade">Import from modified product variant list</div>
 					</div>
-					<div class="col-md-4 mt-step-col last" data-step="3">
+					<div class="col-md-3 mt-step-col last" data-step="4">
 						<div class="mt-step-number bg-white">#</div>
 						<div class="mt-step-title uppercase font-grey-cascade">Result Product Variant</div>
 						<div class="mt-step-content font-grey-cascade">Report imported product variant</div>
@@ -288,12 +297,55 @@ $configs    		= session('configs');
 			<div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption">
+						<span class="caption-subject font-dark sbold uppercase font-green">Select Brand</span>
+					</div>
+				</div>
+				<div class="portlet-body form">
+					@if(MyHelper::hasAccess([56], $grantedFeature))
+						<form class="form-horizontal" role="form" action="#" method="post" id="form1">
+							<div class="form-body">
+								<div class="form-group text-center">
+									<div class="col-md-offset-4 col-md-4">
+										<select name="id_brand" data-placeholder="Select Brand" id="brand-selector" class="select2 form-control input-lg" required>
+											<option></option>
+											@foreach($brands as $brand)
+												<option value="{{$brand['id_brand']}}">{{$brand['name_brand']}}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-actions" style="padding-bottom: 5px">
+								{{ csrf_field() }}
+								<div class="row">
+									<div class="col-md-offset-4 col-md-4 text-center">
+										<button type="button" class="btn yellow btn-wizard" data-target-step="1"><i class="fa fa-arrow-left"></i> Prev</button>
+										<button type="button" data-target-step="2"  class="btn green btn-wizard" data-target-form="#form1">Next <i class="fa fa-arrow-right"></i></button>
+									</div>
+								</div>
+							</div>
+						</form>
+				</div>
+				@endif
+			</div>
+		</div>
+		<div class="switcher-item" data-step="2">
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption">
 						<span class="caption-subject font-dark sbold uppercase font-green">Download Template Product Variant</span>
 					</div>
 				</div>
 				<div class="portlet-body form">
 					<form class="form-horizontal" role="form" action="{{ url('product-variant-group/export') }}" method="post">
 						<div class="form-body">
+							<div class="form-group text-center">
+								<div class="col-md-offset-4 col-md-4">
+									<select name="id_brandx" data-placeholder="Select Brand" class="select2 form-control input-lg brand-readonly" disabled>
+									</select>
+									<input type="hidden" class="id_brand_hidden" name="id_brand">
+								</div>
+							</div>
 							<div class="form-group text-center">
 								<div class="col-md-offset-4 col-md-4">
 									<button class="btn blue btn-block text-center">Download</button>
@@ -304,8 +356,8 @@ $configs    		= session('configs');
 							{{ csrf_field() }}
 							<div class="row">
 								<div class="col-md-offset-4 col-md-4 text-center">
-									<button type="button" class="btn yellow btn-wizard" data-target-step="-1"><i class="fa fa-arrow-left"></i> Prev</button>
-									<button type="button" class="btn green btn-wizard" data-target-step="2">Next <i class="fa fa-arrow-right"></i></button>
+									<button type="button" class="btn yellow btn-wizard" data-target-step="2"><i class="fa fa-arrow-left"></i> Prev</button>
+									<button type="button" class="btn green btn-wizard" data-target-step="3">Next <i class="fa fa-arrow-right"></i></button>
 								</div>
 							</div>
 						</div>
@@ -313,7 +365,7 @@ $configs    		= session('configs');
 				</div>
 			</div>
 		</div>
-		<div class="switcher-item" data-step="2">
+		<div class="switcher-item" data-step="3">
 			<div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption">
@@ -346,7 +398,7 @@ $configs    		= session('configs');
 									{{ csrf_field() }}
 									<div class="row">
 										<div class="col-md-offset-4 col-md-4 text-center">
-											<button type="button" class="btn yellow btn-wizard" data-target-step="1"><i class="fa fa-arrow-left"></i> Prev</button>
+											<button type="button" class="btn yellow btn-wizard" data-target-step="2"><i class="fa fa-arrow-left"></i> Prev</button>
 											<button type="submit" class="btn green" id="import-btn"><i class="fa fa-import"></i> Import</button>
 										</div>
 									</div>
@@ -367,14 +419,14 @@ $configs    		= session('configs');
 				</div>
 			</div>
 		</div>
-		<div class="switcher-item" data-step="3">
+		<div class="switcher-item" data-step="4">
 			<div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption">
 						<span class="caption-subject font-dark sbold uppercase font-green">Import Result Product Variant</span>
 					</div>
 				</div>
-				<div class="portlet-body step3 form">
+				<div class="portlet-body step4 form">
 					<form class="form-horizontal" role="form" action="{{ url('product-variant-group/export') }}" method="post">
 						<div class="row">
 							<div class="col-md-offset-3 col-md-6">
@@ -396,7 +448,7 @@ $configs    		= session('configs');
 							{{ csrf_field() }}
 							<div class="row">
 								<div class="col-md-offset-4 col-md-4 text-center">
-									<button type="button" class="btn yellow btn-wizard" data-target-step="1"><i class="fa fa-arrow-left"></i> Upload Again</button>
+									<button type="button" class="btn yellow btn-wizard" data-target-step="3"><i class="fa fa-arrow-left"></i> Upload Again</button>
 									<button type="button" class="btn green btn-wizard" data-target-step="-1"><i class="fa fa-check"></i> Done</button>
 								</div>
 							</div>

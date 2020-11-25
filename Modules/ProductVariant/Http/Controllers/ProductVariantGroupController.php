@@ -3,6 +3,8 @@
 namespace Modules\ProductVariant\Http\Controllers;
 
 use App\Exports\MultisheetExport;
+use App\Exports\ProductExport;
+use App\Imports\ProductImport;
 use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -10,14 +12,71 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller;
 use Excel;
 use App\Imports\FirstSheetOnlyImport;
+use Session;
 
 class ProductVariantGroupController extends Controller
 {
     public function listProductVariant(Request $request){
-        $post = $request->except('_token');
+        $post = $request->all();
         $data = [
             'title'          => 'Product Variant',
             'sub_title'      => 'Product Variant List',
+            'menu_active'    => 'product-variant',
+            'submenu_active' => 'product-variant-group-remove'
+        ];
+
+        if(Session::has('filter-product-variant-group') && !empty($post) && !isset($post['filter'])){
+            $post = Session::get('filter-product-variant-group');
+        }else{
+            Session::forget('filter-product-variant-group');
+        }
+
+        if ($request->wantsJson()) {
+            $draw = $request->draw;
+
+            $list = MyHelper::post('product-variant-group/list-group',$post);
+
+            if(isset($list['status']) && $list['status'] == 'success'){
+                $arr_result['draw'] = $draw;
+                $arr_result['recordsTotal'] = $list['result']['total'];
+                $arr_result['recordsFiltered'] = $list['result']['total'];
+                $arr_result['data'] = $list['result']['data'];
+            }else{
+                $arr_result['draw'] = $draw;
+                $arr_result['recordsTotal'] = 0;
+                $arr_result['recordsFiltered'] = 0;
+                $arr_result['data'] = array();
+            }
+            return response()->json($arr_result);
+        }
+
+        if($post){
+            Session::put('filter-product-variant-group',$post);
+        }
+
+        $data['conditions'] = $post['conditions']??[];
+        return view('productvariant::group.product_variant_list', $data);
+    }
+
+    public function removeProductVariant(Request $request){
+        $post = $request->all();
+        if(Session::has('filter-product-variant-group')){
+            $post['conditions'] = Session::get('filter-product-variant-group')['conditions']??[];
+        }
+        $remove = MyHelper::post('product-variant-group/remove',$post);
+
+        if(isset($remove['fail']) && !empty($remove['fail'])){
+            return redirect('product-variant-group/list-group')->withErrors($remove['messages'] ?? ['Something went wrong']);
+        }else{
+            return redirect('product-variant-group/list-group')->with('success',['Success remove product variant']);
+        }
+    }
+
+    public function listProduct(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Product Variant',
+            'sub_title'      => 'Product List',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-list'
         ];
@@ -42,7 +101,7 @@ class ProductVariantGroupController extends Controller
             return response()->json($arr_result);
         }
 
-        return view('productvariant::group.product_variant_list', $data);
+        return view('productvariant::group.product_list', $data);
     }
 
     public function editProductVariant(Request $request, $product_code){
@@ -60,7 +119,7 @@ class ProductVariantGroupController extends Controller
             $data['product_variant_group'] = MyHelper::post('product-variant-group',  ['product_code' => $product_code])['result'] ?? [];
             $data['count'] = count($data['product_variant_group']);
             $data['product_code'] = $product_code;
-            return view('productvariant::group.product_variant_detail', $data);
+            return view('productvariant::group.product_detail', $data);
         }else{
             $post = $request->all();
             $post['product_code'] = $product_code;
@@ -237,11 +296,12 @@ class ProductVariantGroupController extends Controller
 
     public function export(Request $request) {
         $post = $request->except('_token');
-        $data = MyHelper::get('product-variant-group/export')['result']??[];
+        $data = MyHelper::post('product-variant-group/export', $post)['result']??[];
         $tab_title = 'List Product Variant';
 
         if(empty($data)){
-            $datas['All Type'] = [
+            $datas['brand'] = [];
+            $datas['products'] = [
                 [
                     'product_name' => 'Product 1',
                     'product_code' => 'P1',
@@ -258,9 +318,11 @@ class ProductVariantGroupController extends Controller
                 ]
             ];
         }else{
-            $datas['All Type'] = $data;
+            $datas = $data;
         }
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product variant.xlsx');
+
+        $tab_title = 'List Products';
+        return Excel::download(new ProductExport($datas['products'],$datas['brand'],$tab_title),date('YmdHi').'_product variant_'.$datas['brand']['name_brand'].'.xlsx');
     }
 
     public function import(Request $request){
@@ -271,6 +333,7 @@ class ProductVariantGroupController extends Controller
             'submenu_active' => 'product-variant-group-import-global'
         ];
 
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
         return view('productvariant::group.import', $data);
     }
 
@@ -280,18 +343,38 @@ class ProductVariantGroupController extends Controller
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
+            $excel = \Excel::toCollection(new ProductImport(),$request->file('import_file'));
+            $data = [];
+            $head = [];
+            foreach ($excel[0]??[] as $key => $value) {
+                $value = json_decode($value);
+                if($key == 2){
+                    $head = $value;
+                }elseif($key > 2){
+                    $data[] = array_combine($head, $value);
+                }
+            }
+
             if(!empty($data)){
                 $import = MyHelper::post('product-variant-group/import', ['data' => $data]);
+                return $import;
+            }else{
+                return [
+                    'status'=>'fail',
+                    'messages'=>['File empty']
+                ];
             }
+        }else{
+            return [
+                'status'=>'fail',
+                'messages'=>['File empty']
+            ];
         }
-
-        return $import;
     }
 
     public function exportPrice(Request $request){
         $post = $request->except('_token');
-        $data = MyHelper::post('product-variant-group/export-price', [])['result']??[];
+        $data = MyHelper::post('product-variant-group/export-price', $post)['result']??[];
         $tab_title = 'List Product Variant Price';
 
         if(empty($data)){
@@ -325,9 +408,11 @@ class ProductVariantGroupController extends Controller
                 ]
             ];
         }else{
-            $datas['All Type'] = $data;
+            $datas = $data;
         }
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product variant price.xlsx');
+
+        $tab_title = 'List Product Variant';
+        return Excel::download(new ProductExport($datas['products_variant'],$datas['brand'],$tab_title),date('YmdHi').'_product variant price_'.$datas['brand']['name_brand'].'.xlsx');
     }
 
     public function importPrice(Request $request){
@@ -337,7 +422,7 @@ class ProductVariantGroupController extends Controller
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-import-price'
         ];
-
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
         return view('productvariant::group.import_price', $data);
     }
 
@@ -347,13 +432,33 @@ class ProductVariantGroupController extends Controller
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
+            $excel = \Excel::toCollection(new ProductImport(),$request->file('import_file'));
+            $data = [];
+            $head = [];
+            foreach ($excel[0]??[] as $key => $value) {
+                $value = json_decode($value);
+                if($key == 2){
+                    $head = $value;
+                }elseif($key > 2){
+                    $data[] = array_combine($head, $value);
+                }
+            }
+
             if(!empty($data)){
                 $import = MyHelper::post('product-variant-group/import-price', ['data' => $data]);
+                return $import;
+            }else{
+                return [
+                    'status'=>'fail',
+                    'messages'=>['File empty']
+                ];
             }
+        }else{
+            return [
+                'status'=>'fail',
+                'messages'=>['File empty']
+            ];
         }
-
-        return $import;
     }
 
     public function productVariantGroupList(Request $request){
