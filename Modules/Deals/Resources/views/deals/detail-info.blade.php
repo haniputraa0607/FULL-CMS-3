@@ -258,6 +258,8 @@ $grantedFeature     = session('granted_features');
             			&& $deals['deals_product_discount_rules']['is_all_product'] == 0)
                 	|| !empty($deals['deals_tier_discount_rules'])
                 	|| !empty($deals['deals_buyxgety_rules'])
+                	|| (isset($deals['deals_discount_bill_rules']['is_all_product']) 
+	                    && $deals['deals_discount_bill_rules']['is_all_product'] == 0)
                 )
             )
             <div class="row static-info">
@@ -515,6 +517,30 @@ $grantedFeature     = session('granted_features');
                         <div class="col-md-8 value">: 
                                 {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
                         </div>
+                    </div>
+                    <div class="mt-comments">
+                        @if ($deals['deals_discount_bill_rules'] != null)
+                            @if(isset($deals['deals_discount_bill_rules']['is_all_product']) && $deals['deals_discount_bill_rules']['is_all_product'] == '0')
+                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
+                                    <thead>
+                                        <tr>
+                                            <th>Brand</th>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($deals['deals_discount_bill_products'] as $res)
+                                            <tr>
+                                                <td>{{ $res['brand']['name_brand']??$deals['brand']['name_brand']??'' }}</td>
+                                                <td>{{ $res['product']['product_code'] }}</td>
+                                                <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
+                        @endif
                     </div>
                 {{-- Delivery Discount --}}
                 @elseif (!empty($deals['deals_discount_delivery_rules'])) 
