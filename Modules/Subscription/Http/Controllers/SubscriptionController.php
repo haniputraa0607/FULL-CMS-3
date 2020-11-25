@@ -494,6 +494,8 @@ class SubscriptionController extends Controller
             }, $data['rule']);
             $data['rule'] = $filter;
         }
+
+        $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
         
         $data['operator']=$post['operator']??'and';
 

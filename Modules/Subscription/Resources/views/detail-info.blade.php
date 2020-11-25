@@ -167,7 +167,7 @@ $grantedFeature     = session('granted_features');
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Product</div>
-                    <div class="col-md-8 value">: {{ !empty($subscription['is_all_product']) ? 'All product' : (!empty($subscription['products']) ? 'Selected product' : '') }}</div>
+                    <div class="col-md-8 value">: @if ( ($subscription['is_all_product']??false) == 1 ) All product @elseif( ($subscription['is_all_product']??false) === 0 ) Selected product @endif </div>
                 </div>
                 <div class="row static-info">
 				    <div class="col-md-4 name">Shipment Method</div>
@@ -185,6 +185,12 @@ $grantedFeature     = session('granted_features');
 				    </div>
 				</div>
 
+				@php
+					$payment_list_text = [];
+					foreach ($payment_list??[] as $key => $value) {
+						$payment_list_text[$value['payment_method']] = $value['text'];
+					}
+				@endphp
 				<div class="row static-info">
 				    <div class="col-md-4 name">Payment Method</div>
 				    <div class="col-md-1 value">:</div>
@@ -193,7 +199,7 @@ $grantedFeature     = session('granted_features');
 				            <div>All Payment Method</div>
 				        @elseif ($subscription['is_all_payment'] == '0')
 				        	@foreach ($subscription['subscription_payment_method'] as $val)
-				        		<div style="margin-bottom: 10px">{{ '- '.$val['payment_method'] }}</div>
+				        		<div style="margin-bottom: 10px">{{ '- '.($payment_list_text[$val['payment_method']] ?? $val['payment_method']) }}</div>
 				        	@endforeach
 				        @else
 				            -

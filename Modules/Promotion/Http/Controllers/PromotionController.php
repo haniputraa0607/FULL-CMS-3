@@ -507,6 +507,7 @@ class PromotionController extends Controller
 		if (isset($deals['status']) && $deals['status'] == "success") {
 			$data['deals'] = $deals['result'];
 			$data['deals']['id_deals_promotion_template'] = $id_encrypt;
+			$data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
 
 			$promotion = $this->dealsPromotionParticipantList($id, $request->get('page'));
 			foreach ($promotion as $key => $value) {
