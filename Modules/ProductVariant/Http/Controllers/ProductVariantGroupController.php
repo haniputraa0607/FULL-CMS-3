@@ -4,6 +4,8 @@ namespace Modules\ProductVariant\Http\Controllers;
 
 use App\Exports\MultisheetExport;
 use App\Exports\ProductExport;
+use App\Exports\ProductVariantPriceArrayExport;
+use App\Exports\ProductVariantPriceMultisheetExport;
 use App\Imports\ProductImport;
 use App\Lib\MyHelper;
 use Illuminate\Http\Request;
@@ -419,7 +421,7 @@ class ProductVariantGroupController extends Controller
         }
 
         $tab_title = 'List Product Variant';
-        return Excel::download(new ProductExport($datas['products_variant'],$datas['brand'],$tab_title),date('YmdHi').'_product variant price_'.$datas['brand']['name_brand'].'.xlsx');
+        return Excel::download(new ProductVariantPriceArrayExport($datas['products_variant'], $datas['brand'], $tab_title),date('YmdHi').'_product variant price_'.$datas['brand']['name_brand'].'.xlsx');
     }
 
     public function importPrice(Request $request){

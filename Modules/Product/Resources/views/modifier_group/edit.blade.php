@@ -183,8 +183,6 @@
                     </div>
                     <div class="form-group" id="div_list_product">
                         <label for="multiple" class="control-label col-md-3">Product
-                            <span class="required" aria-required="true"> *
-                            </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih product untuk menetapkan modifier" data-container="body"></i>
                         </label>
                         <div class="col-md-6">
@@ -199,9 +197,7 @@
                         </div>
                     </div>
                     <div class="form-group" id="div_list_product_variant">
-                        <label for="multiple" class="control-label col-md-3">Product Variant
-                            <span class="required" aria-required="true"> *
-                            </span>
+                        <label for="multiple" class="control-label col-md-3">Variant
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih product variant untuk menetapkan modifier" data-container="body"></i>
                         </label>
                         <div class="col-md-5">
