@@ -179,6 +179,7 @@ class PromoCampaignController extends Controller
                 $data['rule2'] = $filter;
             }
             $outlets = MyHelper::post('outlet/list', $post);
+            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
             $outlets = isset($outlets['status'])&&isset($outlets['status'])=='success'?$outlets['result']:[];
             $data['outlets'] = array_map(function($x){return [$x['id_outlet'],$x['outlet_name']];},$outlets);
             $data['operator']=$post['operator']??'and';
@@ -462,6 +463,26 @@ class PromoCampaignController extends Controller
                 return redirect('promo-campaign/detail/'.$id_encrypt.'?modal=1#coupon')->withErrors(['Failed to Download file']);
             }
         }
+    }
 
+    public function extendPeriod(Request $request)
+    {
+    	$post = $request->except('_token');
+    	$id_deals_encrypt = $post['id_deals'];
+    	$id_promo_campaign_encrypt = $post['id_promo_campaign'];
+    	$id_subscription_encrypt = $post['id_subscription'];
+    	$post['id_deals'] = MyHelper::explodeSlug($id_deals_encrypt)[0] ?? null;
+    	$post['id_promo_campaign'] = MyHelper::explodeSlug($id_promo_campaign_encrypt)[0] ?? null;
+    	$post['id_subscription'] = MyHelper::explodeSlug($id_subscription_encrypt)[0] ?? null;
+
+    	$action = MyHelper::post('promo-campaign/extend-period', $post);
+
+    	$redirect = redirect()->back();
+    	if (($action['status']??false) == 'success') {
+    		$redirect->withSuccess(['Period has been extended']);
+    	}else{
+    		$redirect->withErrors($action['messages'] ?? ['Failed to extend period']);
+    	}
+    	return $redirect;
     }
 }

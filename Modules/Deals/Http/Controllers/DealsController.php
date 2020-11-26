@@ -653,6 +653,8 @@ class DealsController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 
+		$data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
+
 		// $getProduct = MyHelper::get('product/be/list?log_save=0');
 		// if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 
