@@ -46,9 +46,12 @@
         function addModifier() {
             var html = '';
             html += '<div class="form-group" id="mod_'+i+'">';
-            html += '<label class="col-md-3 control-label"></label>';
+            html += '<label class="col-md-1 control-label"></label>';
             html += '<div class="col-md-4">';
-            html += '<input type="text" placeholder="Product Modifier Name" class="form-control" name="data_modifier['+i+'][name]" required>';
+            html += '<input type="text" placeholder="Name (detail product)" class="form-control" name="data_modifier['+i+'][name]" required>';
+            html += '</div>';
+            html += '<div class="col-md-4">';
+            html += '<input type="text" placeholder="Name (detail transaction)" class="form-control" name="data_modifier['+i+'][name_detail_trx]" required>';
             html += '</div>';
             html += '<div class="col-md-2">';
             html += '<input type="checkbox" class="make-switch default-visibility" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-off-text="Hidden" name="data_modifier['+i+'][visibility]" checked>';
