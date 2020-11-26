@@ -238,33 +238,37 @@ $configs    		= session('configs');
                             <li>Product modifier group hanya bisa di tetapkan pada salah satu tipe yaitu product atau variant</li>
                             <li>Jika product modifier group di tetapkan untuk product, isi kolom product dengan memasukkan kode produk</li>
                             <li>Jika product modifier group di tetapkan untuk variant, isi kolom variant dengan <br>memasukkan nama variant.<br>Untuk variant hanya bisa memilih satu variant untuk tiap product modifier group.</li>
+                            <li>Modifier memiliki 2 tipe nama yaitu nama yang akan ditampilkan pada detail produk dan nama yang <br>akan ditampilkan pada detail transaction.  </li>
+                            <li>Tipe nama modifier akan dibedakan dengan tanda '-' <br>nama sebelum tanda '-' akan disimpan sebagai nama detail produk dan <br>nama setelah tanda '-' akan disimpan sebagai nama detail transaksi.</li>
                             <li>Modifier diidentifikasi berdasarkan code yang ada pada tanda '()' seperti contoh dibawah.<br>Jika kode tidak ada pada database maka modifier akan ditambahkan secara otomatis.</li>
                         </ul>
                         <p>
                             Contoh data :
                             <br>
-                        <table class="table table-striped table-bordered table-hover table-responsive" width="100%">
-                            <thead>
-                            <th>product_modifier_group_name</th>
-                            <th>product</th>
-                            <th>product_variant</th>
-                            <th>modifier</th>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Ice</td>
-                                <td></td>
-                                <td>Ice</td>
-                                <td>Less Ice,More Ice(A0001)</td>
-                            </tr>
-                            <tr>
-                                <td>Level Pedas</td>
-                                <td>P0001,P0002,P0006</td>
-                                <td></td>
-                                <td>Level 1(A0002),Level2,Level3</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div style="overflow-x:auto;">
+                            <table class="table table-striped table-bordered table-hover table-responsive" width="100%">
+                                <thead>
+                                <th>product_modifier_group_name</th>
+                                <th>product</th>
+                                <th>product_variant</th>
+                                <th>modifier</th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Ice</td>
+                                    <td></td>
+                                    <td>Ice</td>
+                                    <td>Less-Less Ice,More-More Ice(A0001)</td>
+                                </tr>
+                                <tr>
+                                    <td>Level Pedas</td>
+                                    <td>P0001,P0002,P0006</td>
+                                    <td></td>
+                                    <td>1-Level Pedas 1(A0002),2-Level Pedas 2,3-Level Pedas 3</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         </p>
                         <br>
                         <p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor produk modifier group</p>

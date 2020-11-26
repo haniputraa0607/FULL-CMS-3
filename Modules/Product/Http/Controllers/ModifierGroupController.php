@@ -285,13 +285,13 @@ class ModifierGroupController extends Controller
                     'product_modifier_group_name' => 'Ice',
                     'product' => '',
                     'variant' => 'Ice',
-                    'modifier' => 'Less Ice,More Ice(A0001)'
+                    'modifier' => 'Less-Less Ice,More-More Ice(A0001)'
                 ],
                 [
                     'product_name' => 'Level Pedas',
                     'product' => 'P0001,P0002,P0006',
                     'variant' => '',
-                    'modifier' => 'Level 1(A0002),Level2,Level3'
+                    'modifier' => '1-Level Pedas 1(A0002),2-Level Pedas 2,3-Level Pedas 3'
                 ]
             ];
         }else{

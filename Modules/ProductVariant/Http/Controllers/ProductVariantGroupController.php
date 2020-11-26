@@ -300,7 +300,10 @@ class ProductVariantGroupController extends Controller
         $tab_title = 'List Product Variant';
 
         if(empty($data)){
-            $datas['brand'] = [];
+            $datas['brand'] = [
+                'name_brand' => '',
+                'code_brand' => ''
+            ];
             $datas['products'] = [
                 [
                     'product_name' => 'Product 1',
@@ -378,12 +381,16 @@ class ProductVariantGroupController extends Controller
         $tab_title = 'List Product Variant Price';
 
         if(empty($data)){
-            $datas['All Type'] = $data['products'] = [
+            $datas['brand'] = [
+                'name_brand' => '',
+                'code_brand' => ''
+            ];
+            $datas['products_variant'] = [
                 [
                     'product' => 'P1 - Kopi Susu',
                     'current_product_variant_code' => 'PVG001',
                     'new_product_variant_code' => '',
-                    'product_variant' => 'Hot, S',
+                    'product_variant' => 'Hot,S',
                     'global_price' => 10000,
                     'price_PP001' => 15000,
                     'price_PP002' =>13500
@@ -392,7 +399,7 @@ class ProductVariantGroupController extends Controller
                     'product' => 'P2 - Kopi',
                     'current_product_variant_code' => 'PVG002',
                     'new_product_variant_code' => 'PVG002A',
-                    'product_variant' => 'Hot, L',
+                    'product_variant' => 'Hot,L',
                     'global_price' => 15000,
                     'price_PP001' => 20000,
                     'price_PP002' =>23000

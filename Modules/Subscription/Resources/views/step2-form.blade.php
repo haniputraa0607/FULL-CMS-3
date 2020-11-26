@@ -417,7 +417,7 @@ $configs = session('configs');
                         		@if( in_array($payment['payment_method'], $selected_payment) ) selected 
                         		@endif 
                         	@endif
-                        >{{ $payment['payment_method'] }}</option>
+                        >{{ $payment['text'] }}</option>
                     @endforeach
                 @endif
 			</select>
