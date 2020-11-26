@@ -666,6 +666,9 @@
 	                    	<a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Deals</a>
 	                    @endif
 	                @endif
+	                @if ( (isset($deals['deals_type']) && ($deals['deals_type'] == "Deals" || $deals['deals_type'] == "WelcomeVoucher")) )
+	                	@include('promocampaign::template.promo-extend-period', ['promo_source' => 'deals'])
+	                @endif
                 	<ul class="nav nav-tabs" id="tab-header">
                         <li class="active" id="infoOutlet">
                             <a href="#basic" data-toggle="tab" > Basic Info </a>
