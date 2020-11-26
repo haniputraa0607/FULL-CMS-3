@@ -41,8 +41,8 @@
 <table style="border: 1px solid black">
     <thead>
     @if(!empty($config) && $config['is_active'] == 1)
-        <tr><td style="background-color: #ff9933;" colspan="4">Sub Total = Gross Sales + Discount - Delivery</td></tr>
-        <tr><td style="background-color: #ff9933;" colspan="4">Net Sale (Income Outlet) = Sub Total - Fee Item - Fee Payment - Fee Promo - Fee Subscription</td></tr>
+        <tr><td style="background-color: #ff9933;" colspan="4">Sub Total = Gross Sales + delivery - discount delivery - discount</td></tr>
+        <tr><td style="background-color: #ff9933;" colspan="4">Net Sale (Income Outlet) = Sub Total - Fee Item - Fee Discount Delivery - Fee Payment - Fee Promo - Fee Subscription</td></tr>
         <tr></tr>
     @endif
     <tr>

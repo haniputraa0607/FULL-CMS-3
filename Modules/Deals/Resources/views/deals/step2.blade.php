@@ -59,6 +59,9 @@
 			padding-left: 0px;
 			padding-right: 0px;
 		}
+		.select2-results__option[aria-selected=true] {
+		    display: none;
+		}
 	</style>
 @endsection
 
@@ -105,6 +108,34 @@
 			}
 		}
 
+		if ((isset($result['deals_product_discount_rules']['is_all_product']) && $result['deals_product_discount_rules']['is_all_product'] == "0")
+			|| (isset($result['deals_promotion_product_discount_rules']['is_all_product']) && $result['deals_promotion_product_discount_rules']['is_all_product'] == "0")
+		) {
+			$is_all_product = $result['deals_product_discount_rules']['is_all_product']??$result['deals_promotion_product_discount_rules']['is_all_product'];
+			$product = [];
+			for ($i=0; $i < count($result['deals_product_discount']??$result['deals_promotion_product_discount']); $i++) { 
+				if (isset($result['deals_product_discount'][$i]['id_product'])) {
+					$product[] = $result['deals_product_discount'][$i]['id_brand'].'-'.$result['deals_product_discount'][$i]['id_product'];
+				}else{
+					$product[] = $result['deals_promotion_product_discount'][$i]['id_brand'].'-'.$result['deals_promotion_product_discount'][$i]['id_product'];
+				}
+			}
+		}elseif (!empty($result['deals_tier_discount_product']) || !empty($result['deals_promotion_tier_discount_product'])) {
+			$product = [];
+			foreach ($result['deals_tier_discount_product']??$result['deals_promotion_tier_discount_product']??[] as $key => $value) {
+				$product[] = $value['id_brand'].'-'.$value['id_product'];
+			}
+		}elseif (!empty($result['deals_buyxgety_product_requirement']) || !empty($result['deals_promotion_buyxgety_product_requirement'])) {
+			foreach ($result['deals_buyxgety_product_requirement']??$result['deals_promotion_buyxgety_product_requirement']??[] as $key => $value) {
+				$product[] = $value['id_brand'].'-'.$value['id_product'];
+			}
+		}elseif (!empty($result['deals_discount_bill_products']) || !empty($result['deals_promotion_discount_bill_products'])) {
+			$product = [];
+			foreach ($result['deals_discount_bill_products']??$result['deals_promotion_discount_bill_products']??[] as $key => $value) {
+				$product[] = $value['id_brand'].'-'.$value['id_product'];
+			}
+		}
+
 		$datenow = date("Y-m-d H:i:s");
 		if ($result??false) {
             $date_start = $result['deals_start'];
@@ -116,6 +147,7 @@
             $date_start = null;
             $date_end   = null;
         }
+        $brands = array_column($result['brands'], 'id_brand');
 	@endphp
 	<script>
 	$(document).ready(function() {
@@ -123,10 +155,12 @@
 		productLoad = 0;
 
 		var is_all_product = '{!!$is_all_product!!}';
-		var brand = '{!!$result['id_brand']!!}';
+		var brand = JSON.parse('{!!json_encode($brands)!!}');
+		var selectedProduct = JSON.parse('{!!json_encode($product)!!}');
+		
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
-			$('#selectProduct').show()
+			$('#selectProduct, #product-rule-option').show()
 			if (productLoad == 0) {
 				$.ajax({
 					type: "GET",
@@ -144,8 +178,8 @@
 						productLoad = 1;
 						listProduct=data;
 						$.each(data, function( key, value ) {
-							$('#multipleProduct').append("<option id='product"+value.id_product+"' value='"+value.id_product+"'>"+value.product+"</option>");
-							$('#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
 						});
 						$('#multipleProduct').prop('required', true)
 						$('#multipleProduct').prop('disabled', false)
@@ -165,7 +199,7 @@
 			}
 		}
 
-		$('#selectProduct').hide()
+		$('#selectProduct, #product-rule-option').hide()
 		function loadProduct(selector,callback){
 			if (productLoad == 0) {
 				var valuee=$(selector).data('value');
@@ -185,12 +219,16 @@
 						listProduct=data;
 						productLoad = 1;
 						$.each(data, function( key, value ) {
-							if(valuee.indexOf(value.id_product)>-1){
-								var more='selected';
-							}else{
-								var more='';
-							}
-							$('#multipleProduct,#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_product+"' "+more+">"+value.product+"</option>");
+							// if(valuee.indexOf(value.id_product)>-1){
+							// 	var more='selected';
+							// }else{
+							// 	var more='';
+							// }
+							let more='';
+							$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option class='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"' "+more+">"+value.product+"</option>");
+						});
+						$.each(selectedProduct, function( key, value ) {
+							$(".product"+value+"").attr('selected', true)
 						});
 						$(selector).prop('required', true)
 						$(selector).prop('disabled', false)
@@ -226,7 +264,14 @@
 			}
 			else if(promo_type == 'Discount bill'){
 
+				product = $('select[name=filter_product_bill] option:selected').val();
+				loadProduct('#multiple-product-bill');
 				$('#discount-bill').show().find('input, textarea, select').prop('disabled', false);
+				if (product == 'All Product') {
+					$('#multiple-product-bill').find('select').prop('disabled', true);
+				}else {
+					$('#multiple-product-bill').prop('disabled', false);
+				}
 			}
 			else if(promo_type == 'Discount delivery'){
 
@@ -240,7 +285,7 @@
 			$('#multipleProduct').prop('required', false)
 			$('#multipleProduct').prop('disabled', true)
 			if (product == 'Selected') {
-				$('#selectProduct').show()
+				$('#selectProduct, #product-rule-option').show()
 				if (productLoad == 0) {
 					$.ajax({
 						type: "GET",
@@ -254,7 +299,7 @@
 							productLoad = 1;
 							listProduct=data;
 							$.each(data, function( key, value ) {
-								$('#multipleProduct,#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_product+"'>"+value.product+"</option>");
+								$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
 							});
 							$('#multipleProduct').prop('required', true)
 							$('#multipleProduct').prop('disabled', false)
@@ -265,7 +310,7 @@
 					$('#multipleProduct').prop('disabled', false)
 				}
 			} else {
-				$('#selectProduct').hide()
+				$('#selectProduct, #product-rule-option').hide()
 			}
 		});
 		$('input[name=discount_type]').change(function() {
@@ -310,7 +355,7 @@
 		var is_all_product = '{!!$is_all_product!!}'
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
-			$('#selectProduct').show()
+			$('#selectProduct, #product-rule-option').show()
 			if (productLoad == 0) {
 				$.ajax({
 					type: "GET",
@@ -328,8 +373,9 @@
 						productLoad = 1;
 						listProduct=data;
 						$.each(data, function( key, value ) {
-							$('#multipleProduct').append("<option id='product"+value.id_product+"' value='"+value.id_product+"'>"+value.product+"</option>");
-							$('#multipleProduct2,#multipleProduct3').append("<option value='"+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
+
 						});
 						$('#multipleProduct').prop('required', true)
 						$('#multipleProduct').prop('disabled', false)
@@ -529,9 +575,7 @@
         @if( ($result['is_online']??false) == 1)
 
         	{{-- Global Requirement --}}
-			{{-- @yield('global-requirement') --}}
-			<input type="hidden" name="filter_shipment" value="all_shipment">
-			<input type="hidden" name="filter_payment" value="all_payment">
+			@yield('global-requirement')
 
 	        <div class="portlet light bordered">
 				<div class="portlet-title">
@@ -552,10 +596,10 @@
 								</br> Bulk/Tier Product : Promo hanya berlaku untuk suatu product setelah melakukan pembelian dalam jumlah yang telah ditentukan
 								</br>
 								</br> Buy X get Y : Promo hanya berlaku untuk product tertentu
-								{{-- </br>
+								</br>
 								</br> Discount Bill : Promo berupa potongan harga untuk total transaksi / bill
 								</br>
-								</br> Discount Delivery : Promo berupa potongan harga untuk biaya pengiriman --}}
+								</br> Discount Delivery : Promo berupa potongan harga untuk biaya pengiriman
 								" data-container="body" data-html="true"></i>
 								<select class="form-control" name="promo_type" required>
 									<option value="" disabled {{ 
@@ -602,7 +646,7 @@
 										}} 
 										@endif
 										title="Promo hanya berlaku untuk product tertentu"> Buy X Get Y </option>
-									{{-- <option value="Discount bill" 
+									<option value="Discount bill" 
 										@if ( old('promo_type') && old('promo_type') == 'Discount bill' ) selected 
 										@elseif ( !empty($result['deals_discount_bill_rules']) || !empty($result['deals_promotion_discount_bill_rules']) ) selected 
 										@endif
@@ -613,7 +657,7 @@
 											@elseif ( !empty($result['deals_discount_delivery_rules']) || !empty($result['deals_promotion_discount_delivery_rules']) ) selected 
 											@endif
 											title="Promo berupa potongan harga untuk total transaksi / delivery"
-											> Discount Delivery </option> --}}
+											> Discount Delivery </option>
 		                        </select>
 							</div>
 						</div>
@@ -663,9 +707,37 @@
 									</div>
 								</div>
 							</div>
-							{{-- <div class="form-group">
+
+							<div id="product-rule-option">
+								<label class="control-label">Product Rule</label>
+								<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
+								<div class="mt-radio-list">
+									<label class="mt-radio mt-radio-outline"> All items must be present
+										<input type="radio" value="and" name="product_rule" 
+											@if(isset($result['product_rule']) 
+												&& $result['product_rule'] === 'and' 
+												&& (!empty($result['deals_product_discount_rules']) || !empty($result['deals_promotion_product_discount_rules']))
+												) checked 
+											@endif/>
+										<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>semua</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+										<span></span>
+									</label>
+									<label class="mt-radio mt-radio-outline"> One of the items must exist
+										<input type="radio" value="or" name="product_rule" 
+											@if(isset($result['product_rule']) 
+												&& $result['product_rule'] === 'or' 
+												&& (!empty($result['deals_product_discount_rules']) || !empty($result['deals_promotion_product_discount_rules']))
+												) checked 
+											@endif/>
+										<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>salah satu</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+										<span></span>
+									</label>
+								</div>
+							</div>
+
+							<div class="form-group">
 								<label class="control-label">Min basket size</label>
-								<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
+								<i class="fa fa-question-circle tooltips" data-original-title="Syarat minimum basket size atau total harga product (subtotal) sebelum dikenakan promo dan biaya pengiriman. Subtotal diambil dari subtotal dari brand yang dipilih. Kosongkan jika tidak ada syarat jumlah minimum basket size" data-container="body" data-html="true"></i>
 								<div class="row">
 									<div class="col-md-3">
 										<div class="input-group" >
@@ -677,7 +749,7 @@
 										</div>
 									</div>
 								</div>
-							</div> --}}
+							</div>
 							<div class="form-group">
 								<label class="control-label">Max product discount per transaction</label>
 								<i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal masing-masing produk yang dapat dikenakan diskon dalam satu transaksi </br></br>Note : Kosongkan jika jumlah maksimal produk tidak dibatasi" data-container="body" data-html="true"></i>
@@ -735,7 +807,7 @@
 									<div class="col-md-3">
 										<label class="control-label" id="product-discount-value">Discount Value</label>
 										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon yang diberikan. Persentase akan dihitung dari harga produk + harga modifier" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="Besar diskon yang akan diberikan untuk setiap produk. Diskon akan dihitung dari harga produk tanpa harga modifier" data-container="body"></i>
 										<div class="input-group 
 											@if(
 												(	isset($result['deals_product_discount_rules']['discount_type']) && 
@@ -795,12 +867,12 @@
 						<div id="buyXgetYProduct" class="p-t-10px">
 							@yield('buyXgetYForm')
 						</div>
-						{{-- <div id="discount-bill" class="p-t-10px">
+						<div id="discount-bill" class="p-t-10px">
 							@yield('discount-bill')
 						</div>
 						<div id="discount-delivery" class="p-t-10px">
 							@yield('discount-delivery')
-						</div> --}}
+						</div>
 					</div>
 				</div>
 			</div>

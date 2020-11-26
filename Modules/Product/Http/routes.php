@@ -6,13 +6,14 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 * product
 	 */
 	Route::get('/', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProduct']);
-	Route::any('/image/add', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addImage']);
+	Route::any('/image/add', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@addImage']);
+	Route::any('/image/detail', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@addImageDetail']);
 	Route::any('/image/list', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listImage']);
-	Route::any('/image/override', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@overrideImage']);
+	Route::any('/image/override', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@overrideImage']);
 	Route::any('/visible/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::any('/hidden/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::post('/id_visibility', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addIdVisibility']);
-	Route::post('update/visible', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@updateVisibilityProduct']);
+	Route::post('update/visible', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@updateVisibilityProduct']);
 	Route::get('import/{type}', ['middleware' => ['feature_control:56,57', 'config_control:10,11,or'], 'uses' => 'ProductController@importProduct']);
 	Route::post('import/save', ['middleware' => ['feature_control:56', 'config_control:10'], 'uses' => 'ProductController@importProductSave']);
 	Route::get('ajax', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProductAjax']);
@@ -88,9 +89,32 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	});
 
     /**
-     * modifier
+     * modifier group
+     */
+    Route::group(['prefix' => 'modifier-group'], function() {
+        Route::get('/', ['middleware' => 'feature_control:283', 'uses' => 'ModifierGroupController@index']);
+        Route::get('create', ['middleware' => 'feature_control:284', 'uses' => 'ModifierGroupController@create']);
+        Route::post('/', ['middleware' => 'feature_control:284', 'uses' => 'ModifierGroupController@store']);
+        Route::get('edit/{id}', ['middleware' => 'feature_control:286', 'uses' => 'ModifierGroupController@update']);
+        Route::post('update/{id}', ['middleware' => 'feature_control:286', 'uses' => 'ModifierGroupController@update']);
+        Route::post('delete/{id}', ['middleware' => 'feature_control:286', 'uses' => 'ModifierGroupController@destroy']);
+        Route::get('price/{id_outlet?}', ['middleware' => 'feature_control:286', 'uses' => 'ModifierGroupController@listPrice']);
+        Route::post('price/{id_outlet}', ['middleware' => 'feature_control:286', 'uses' => 'ModifierGroupController@updatePrice']);
+        Route::get('detail/{id_outlet?}', ['middleware' => 'feature_control:286', 'uses' => 'ModifierGroupController@listDetail']);
+        Route::post('detail/{id_outlet}', ['middleware' => 'feature_control:286', 'uses' => 'ModifierGroupController@updateDetail']);
+        Route::post('export', ['middleware' => ['feature_control:286'], 'uses' => 'ModifierGroupController@export']);
+        Route::get('import', ['middleware' => ['feature_control:286'], 'uses' => 'ModifierGroupController@import']);
+        Route::post('import/save', ['middleware' => ['feature_control:286'], 'uses' => 'ModifierGroupController@importSave']);
+        Route::post('export-price', ['middleware' => ['feature_control:286'], 'uses' => 'ModifierGroupController@exportPrice']);
+        Route::get('import-price', ['middleware' => ['feature_control:286'], 'uses' => 'ModifierGroupController@importPrice']);
+        Route::post('import-price/save', ['middleware' => ['feature_control:286'], 'uses' => 'ModifierGroupController@importSavePrice']);
+    });
+
+    /**
+     * product_variant_group
      */
     Route::group(['prefix' => 'product-variant-group'], function() {
+        Route::post('delete', ['uses' => 'ProductController@deleteProductVarianGroup']);
         Route::post('{product_code}', ['uses' => 'ProductController@productVarianGroup']);
     });
 

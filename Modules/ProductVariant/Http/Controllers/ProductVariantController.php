@@ -2,10 +2,14 @@
 
 namespace Modules\ProductVariant\Http\Controllers;
 
+use App\Exports\MultisheetExport;
 use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Excel;
+
+use App\Imports\FirstSheetOnlyImport;
 
 class ProductVariantController extends Controller
 {
@@ -16,33 +20,64 @@ class ProductVariantController extends Controller
     public function index(Request $request)
     {
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'Product Variant List',
+            'title'          => 'Variant',
+            'sub_title'      => 'Variant List',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-list',
         ];
 
-        if ($request->wantsJson()) {
-            $draw = $request->draw;
+        $data['get_variant'] = MyHelper::post('product-variant',$request->all())['result']??[];
 
-            $list = MyHelper::post('product-variant',$request->all());
+        $data['variants'] = [];
+        if(!empty($data['get_variant'])){
+            $data['variants'] = json_encode($this->buildTree($data['get_variant']));
+        }
+        return view('productvariant::index', $data);
+    }
 
-            if(isset($list['status']) && $list['status'] == 'success'){
-                $arr_result['draw'] = $draw;
-                $arr_result['recordsTotal'] = $list['result']['total'];
-                $arr_result['recordsFiltered'] = $list['result']['total'];
-                $arr_result['data'] = $list['result']['data'];
-            }else{
-                $arr_result['draw'] = $draw;
-                $arr_result['recordsTotal'] = 0;
-                $arr_result['recordsFiltered'] = 0;
-                $arr_result['data'] = array();
+    public function position(Request $request)
+    {
+        $post = $request->all();
+        $data = [
+            'title'          => 'Variant',
+            'sub_title'      => 'Variant Position',
+            'menu_active'    => 'product-variant',
+            'submenu_active' => 'product-variant-position',
+        ];
+
+        if(empty($post)){
+            $data['get_variant'] = MyHelper::post('product-variant',$request->all())['result']??[];
+
+            $data['variants'] = [];
+            if(!empty($data['get_variant'])){
+                $data['variants'] = json_encode($this->buildTree($data['get_variant']));
             }
+            return view('productvariant::position', $data);
+        }else{
+            $update_potition = MyHelper::post('product-variant/position', $post);
 
-            return response()->json($arr_result);
+            if(($update_potition['status']??'')=='success'){
+                return redirect('product-variant/position')->with('success', ['Update position success']);
+            }else{
+                return redirect('product-variant/position')->withErrors($update_potition['messages'] ?? ['Something went wrong']);
+            }
+        }
+    }
+
+    function buildTree(array $elements, $parentId = 0) {
+        $branch = array();
+
+        foreach ($elements as $element) {
+            if ($element['id_parent'] == $parentId) {
+                $children = $this->buildTree($elements, $element['id_product_variant']);
+                if ($children) {
+                    $element['children'] = $children;
+                }
+                $branch[] = $element;
+            }
         }
 
-        return view('productvariant::index', $data);
+        return $branch;
     }
 
     /**
@@ -52,8 +87,8 @@ class ProductVariantController extends Controller
     public function create()
     {
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'New Product Variant',
+            'title'          => 'Variant',
+            'sub_title'      => 'New Variant',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-new',
         ];
@@ -71,7 +106,7 @@ class ProductVariantController extends Controller
         $store = MyHelper::post('product-variant/store', $post);
 
         if(($store['status']??'')=='success'){
-            return redirect('product-variant')->with('success',['Create Product Variant Success']);
+            return redirect('product-variant')->with('success',['Create Variant Success']);
         }else{
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
@@ -95,8 +130,8 @@ class ProductVariantController extends Controller
     public function edit($id)
     {
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'Update Product Variant',
+            'title'          => 'Variant',
+            'sub_title'      => 'Update Variant',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant',
         ];
@@ -135,7 +170,7 @@ class ProductVariantController extends Controller
         $update = MyHelper::post('product-variant/update', $post);
 
         if(($update['status']??'')=='success'){
-            return redirect('product-variant/edit/'.$id)->with('success',['Updated Product Variant Success']);
+            return redirect('product-variant/edit/'.$id)->with('success',['Updated Variant Success']);
         }else{
             return back()->withInput()->withErrors($update['messages'] ?? ['Something went wrong']);
         }
@@ -149,9 +184,64 @@ class ProductVariantController extends Controller
     public function destroy($id)
     {
         $result = MyHelper::post('product-variant/delete', ['id_product_variant' => $id]);
-        if ($result['status'] == 'success') {
-            return redirect('product-variant')->with('success', ['Success delete product variant']);
+        return $result;
+    }
+
+    public function export(Request $request) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('product-variant', [])['result']??[];
+        $tab_title = 'List Variant';
+
+        if(empty($data)){
+            $datas['All Type'] = [
+                [
+                    'product_variant_name' => 'Size',
+                    'product_variant_child' => 'S,M,L,XL'
+                ],
+                [
+                    'product_variant_name' => 'Type',
+                    'product_variant_child' => 'Hot,Ice'
+                ]
+            ];
+        }else{
+            $arr = [];
+            foreach ($data as $dt){
+                $child = array_column($dt['product_variant_child'], 'product_variant_name');
+                if(!empty($dt['product_variant_child'])){
+                    $arr[] = [
+                        'product_variant_name' => $dt['product_variant_name'],
+                        'product_variant_child' => implode(",",$child)
+                    ];
+                }
+            }
+            $datas['All Type'] = $arr;
         }
-        return redirect('product-variant')->withErrors(['Fail delete product variant']);
+        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_variant.xlsx');
+    }
+
+    public function import(){
+        $data = [
+            'title'          => 'Variant',
+            'sub_title'      => 'Import Variant',
+            'menu_active'    => 'product-variant',
+            'submenu_active' => 'product-variant-import-global'
+        ];
+
+        return view('productvariant::import', $data);
+    }
+
+    public function importSave(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
+            if(!empty($data)){
+                $import = MyHelper::post('product-variant/import', ['data' => $data]);
+            }
+        }
+
+        return $import;
     }
 }

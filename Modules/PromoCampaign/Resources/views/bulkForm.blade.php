@@ -5,12 +5,30 @@
 			<div class="col-md-6">
 				<label for="multipleProduct2" class="control-label">Select Product <span class="required" aria-required="true"> * </span>
 				<i class="fa fa-question-circle tooltips" data-original-title="Pilih produk yang akan diberikan diskon" data-container="body"></i></label>
-				<select id="multipleProduct2" name="product" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" data-value="{{$result['promo_campaign_tier_discount_product']?json_encode([$result['promo_campaign_tier_discount_product']['id_product']]):''}}" style="width: 100%!important">
+				<select id="multipleProduct2" name="product[]" class="form-control select2 select2-hidden-accessible" multiple tabindex="-1" aria-hidden="true" data-value="{{$result['promo_campaign_tier_discount_product']?json_encode([$result['promo_campaign_tier_discount_product']]):''}}" style="width: 100%!important">
 				</select>
 			</div>
 		</div>
 	</div>
 </div>
+
+<div>
+	<label class="control-label">Product Rule</label>
+	<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
+	<div class="mt-radio-list">
+		<label class="mt-radio mt-radio-outline"> All items must be present
+			<input type="radio" value="and" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'and' && !empty($result['promo_campaign_tier_discount_rules'])) checked @endif />
+			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>semua</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+			<span></span>
+		</label>
+		<label class="mt-radio mt-radio-outline"> One of the items must exist
+			<input type="radio" value="or" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'or' && !empty($result['promo_campaign_tier_discount_rules'])) checked @endif />
+			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>salah satu</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
+			<span></span>
+		</label>
+	</div>
+</div>
+
 <div id="selectProduct2" class="form-group" style="height: 90px;">
 	<div class="row">
 		<div class=" col-md-6">
@@ -31,11 +49,11 @@
 		</div>
 	</div>
 </div>
-{{-- <div class="form-group">
+<div class="form-group">
 	<div class="row">
 		<div class="col-md-12">
 			<label class="control-label">Min basket size</label>
-			<i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal subtotal dari pembelian semua produk di keranjang. Kosongkan jika tidak ada syarat jumlah minimal subtotal" data-container="body" data-html="true"></i>
+			<i class="fa fa-question-circle tooltips" data-original-title="Syarat minimum basket size atau total harga product (subtotal) sebelum dikenakan promo dan biaya pengiriman. Subtotal diambil dari subtotal dari brand yang dipilih. Kosongkan jika tidak ada syarat jumlah minimum basket size" data-container="body" data-html="true"></i>
 			<div class="row">
 				<div class="col-md-3">
 					<div class="input-group" >
@@ -49,7 +67,7 @@
 			</div>
 		</div>
 	</div>
-</div> --}}
+</div>
 <div id="ruleSection">
 	<div class="row">
 		<div class="col-md-12">
@@ -66,7 +84,7 @@
 				<label>Max. Qty <i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal pembelian produk untuk mendapatkan diskon" data-container="body"></i></label>
 			</div>
 			<div class="{{ (($result['promo_campaign_tier_discount_rules'][0]['discount_type']??'') == 'Percent') ? 'col-md-3' : 'col-md-5'}}  text-center" id="bulk-label-div">
-				<label id="bulk-label" class="control-label"> {{ (($result['promo_campaign_tier_discount_rules'][0]['discount_type']??'') == 'Percent') ? 'Percent value' : 'Nominal value'}} </label><span class="required" aria-required="true">  </span><i class="fa fa-question-circle tooltips" data-original-title="Besar diskon yang diberikan. Persentase akan dihitung dari harga produk + harga modifier" data-container="body"></i><br>
+				<label id="bulk-label" class="control-label"> {{ (($result['promo_campaign_tier_discount_rules'][0]['discount_type']??'') == 'Percent') ? 'Percent value' : 'Nominal value'}} </label><span class="required" aria-required="true">  </span><i class="fa fa-question-circle tooltips" data-original-title="Besar diskon yang akan diberikan untuk setiap produk. Diskon akan dihitung dari harga produk tanpa harga modifier" data-container="body"></i><br>
 				<div class="form-group">
 				</div>
 			</div>

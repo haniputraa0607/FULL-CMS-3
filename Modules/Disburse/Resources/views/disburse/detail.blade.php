@@ -126,7 +126,8 @@ $idUserFrenchisee = session('id_user_franchise');
                             Subtotal = {{number_format($val['transaction_subtotal'], 2)}}<br>
                             Grandtotal = {{number_format($val['transaction_grandtotal'], 2)}}<br>
                             Discount = {{number_format($val['transaction_discount'], 2)}}<br>
-                            Gosend Price = {{number_format($val['transaction_shipment_go_send'], 2)}}<br>
+                            Delivery Price = {{number_format($val['transaction_shipment_go_send'], 2)}}<br>
+                            Discount Delivery = {{number_format($val['transaction_discount_delivery'], 2)}}<br>
                             Point Use = {{number_format($val['balance_nominal'], 2)}}<br>
                         </td>
                         <td>{{number_format($val['income_outlet'], 2)}}</td>

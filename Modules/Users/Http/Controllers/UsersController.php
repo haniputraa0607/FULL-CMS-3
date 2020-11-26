@@ -439,9 +439,10 @@ class UsersController extends Controller
 			$data['jumlah'] = count($data['content']);
 		else $data['jumlah'] = 0;
 		foreach($post as $key => $row){
-			$data[$key] = $row;
+		    if($key !== 'page'){
+                $data[$key] = $row;
+            }
 		}
-		
 		
 		$getCity = MyHelper::get('city/list?log_save=0');
 		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];

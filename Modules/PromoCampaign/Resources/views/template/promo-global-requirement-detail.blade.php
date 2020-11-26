@@ -8,6 +8,11 @@
 			$data_global = $deals;
 			break;
 	}
+
+	$payment_list_text = [];
+	foreach ($payment_list??[] as $key => $value) {
+		$payment_list_text[$value['payment_method']] = $value['text'];
+	}
 @endphp
 
 <div class="row static-info">
@@ -34,7 +39,7 @@
             <div style="margin-left: -5px">All Payment Method</div>
         @elseif ($data_global['is_all_payment'] == '0')
         	@foreach ($data_global[$promo_source.'_payment_method'] as $val)
-        		<div style="margin-bottom: 10px">{{ '- '.$val['payment_method'] }}</div>
+        		<div style="margin-bottom: 10px">{{ '- '.($payment_list_text[$val['payment_method']] ?? $val['payment_method']) }}</div>
         	@endforeach
         @else
             -

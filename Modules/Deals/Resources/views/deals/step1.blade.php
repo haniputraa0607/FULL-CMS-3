@@ -4,6 +4,7 @@ if(isset($deals['is_all_outlet'])){
 }else{
     $is_all_outlet = 0;
 }
+$brand_rule = $deals['brand_rule']??'and';
 ?>
 @extends('layouts.main')
 
@@ -188,6 +189,28 @@ if(isset($deals['is_all_outlet'])){
         var oldOutlet=[];
         var value=$('select[name="id_outlet[]"]').val();
         var convertAll=false;
+        var id_brands = [];
+        var brand_rule = '{!!$brand_rule!!}';
+
+        function redrawOutlets2(list,selected,convertAll, all){
+            var html="";
+            if(list.length){
+                html+="<option value=\"all\">All Outlets</option>";
+            }
+            list.forEach(function(outlet){
+            	// single brand
+                // html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet_code+" - "+outlet.outlet_name+"</option>";
+
+                // multi brand
+                html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet+"</option>";
+            });
+            $('select[name="id_outlet[]"]').html(html);
+            $('select[name="id_outlet[]"]').val(selected);
+            if( all == 1 || ( convertAll && $('select[name="id_outlet[]"]').val() != null && $('select[name="id_outlet[]"]').val().length==list.length ) ){
+                $('select[name="id_outlet[]"]').val(['all']);
+            }
+            oldOutlet=list;
+        }
 
         function redrawOutlets(list,selected,convertAll){
             var html="";
@@ -206,8 +229,51 @@ if(isset($deals['is_all_outlet'])){
             oldOutlet=list;
         }
 
+        function ajaxOutletMultiBrand(id_brands = []) {
+        	$.ajax({
+				type: "GET",
+				url: "{{url('promo-campaign/step2/getData')}}",
+				data : {
+					"get" : 'Outlet',
+					"brand" : id_brands,
+					"brand_rule" : brand_rule
+				},
+				dataType: "json",
+				success: function(data){
+					if (data.status == 'fail') {
+						$.ajax(this)
+						return
+					}
+
+                    let value = $('select[name="id_outlet[]"]').val();
+                    let all = $('select[name="id_outlet[]"]').data('all');
+                    let convertAll=false;
+                    if($('select[name="id_outlet[]"]').data('value')){
+                        value=$('select[name="id_outlet[]"]').data('value');
+                        $('select[name="id_outlet[]"]').data('value',false);
+                        convertAll=true;
+                    }
+                    redrawOutlets2(data,value,convertAll,all);
+				}
+			});
+        }
+
         $(document).ready(function() {
             token = '<?php echo csrf_token();?>';
+
+			$('input[name="brand_rule"]').on('click',function(){
+				brand_rule = $(this).val();
+				ajaxOutletMultiBrand(id_brands);
+
+            });            
+
+            $('select[name="id_brand[]"]').on('change',function(){
+                id_brands = $('select[name="id_brand[]"]').val();
+                ajaxOutletMultiBrand(id_brands);
+
+            });
+
+			$('select[name="id_brand[]"]').change();
 
             $('.digit-mask').inputmask({
 				removeMaskOnSubmit: true, 
@@ -605,6 +671,7 @@ if(isset($deals['is_all_outlet'])){
 				                @endif
 				            </div>
 				            <input type="hidden" name="id_deals" value="{{ $deals['id_deals']??'' }}">
+				            <input type="hidden" name="id_deals_promotion_template" value="{{ $deals['id_deals_promotion_template']??'' }}">
 				            <input type="hidden" name="slug" value="{{ $deals['slug']??'' }}">
 				            <input type="hidden" name="deals_type" value="{{ $deals['deals_type']??$deals_type??'' }}">
 				            <input type="hidden" name="template" value="{{ $deals['template']??0 }}">

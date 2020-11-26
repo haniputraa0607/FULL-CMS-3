@@ -653,6 +653,8 @@ class DealsController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 
+		$data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
+
 		// $getProduct = MyHelper::get('product/be/list?log_save=0');
 		// if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
 
@@ -680,8 +682,6 @@ class DealsController extends Controller
         $id = MyHelper::explodeSlug($id)[0]??'';
 
         $identifier             = $this->identifier();
-
-        // print_r($identifier); exit();
         $dataDeals              = $this->dataDeals($identifier);
         $data                   = $dataDeals['data'];
         $post                   = $dataDeals['post'];
@@ -689,6 +689,7 @@ class DealsController extends Controller
         $post['web'] = 1;
         $post['step'] = 1;
         // DEALS
+
         $data['deals']   = parent::getData(MyHelper::post('deals/be/detail', $post));
         if (empty($data['deals'])) {
             return back()->withErrors(['Data deals not found.']);
@@ -773,7 +774,13 @@ class DealsController extends Controller
 	                $rpage = $post['deals_type']=='Deals'?'deals':'inject-voucher';
 	            }
 
-                return redirect($rpage.'/step3/' . $slug)->withSuccess(['Deals has been updated']);
+                $redirect = redirect($rpage.'/step3/' . $slug)->withSuccess(['Deals has been updated']);
+
+	            if (isset($action['brand_product_error'])) {
+                	$redirect = redirect($rpage.'/step2/' . $slug)->withSuccess(['Deals has been updated'])->withErrors($action['brand_product_error']??[]);
+	            }
+
+	            return $redirect;
             }
             elseif($action['messages']??$action['message']??false) {
                 return back()->withErrors($action['messages']??$action['message'])->withInput();
@@ -823,7 +830,6 @@ class DealsController extends Controller
             $post['id_deals'] = $id;
 
 			$action = MyHelper::post('deals/update-content', $post);
-
 
             if (isset($action['status']) && $action['status'] == 'success') {
 

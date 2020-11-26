@@ -10,6 +10,15 @@ $grantedFeature     = session('granted_features');
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-nestable/jquery.nestable.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .dd-handle:hover{
+            background: #fafafa;
+            color: #333;
+            cursor: context-menu;
+        }
+    </style>
 @endsection
 
 @section('page-script')
@@ -21,72 +30,91 @@ $grantedFeature     = session('granted_features');
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-nestable/jquery.nestable.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
     <script>
-        var table;
-        $(document).ready(function() {
-            // library initialization
-            $('[data-switch=true]').bootstrapSwitch();
-            table = $('#kt_datatable').DataTable({serverSide: true, ordering: false,
-                ajax: {
-                    url : "{{url('product-variant')}}",
-                    type: 'GET',
-                    data: function (data) {
-                        const info = $('#kt_datatable').DataTable().page.info();
-                        data.page = (info.start / info.length) + 1;
-                    },
-                    dataSrc: 'data'
-                },
-                columns: [
-                    {data: 'product_variant_name'},
-                    {data: 'product_variant_parent'},
-                    {data: 'product_variant_child'},
-                    {data: 'id_product_variant'},
-                ],
-                columnDefs: [
-                    {
-                        'targets': 1,
-                        render: function ( data, type, row, meta ) {
-                            var html = '';
-                            if(data){
-                                html += data.product_variant_name
-                            }
-                            return html;
-                        }
-                    },
-                    {
-                        'targets': 2,
-                        render: function ( data, type, row, meta ) {
-                            var html = '<ul>';
-                            if(data){
-                                for(var i=0;i<data.length;i++){
-                                    html += ' <li>'+data[i].product_variant_name+'</li>'
-                                }
-                            }
-                            html += '</ul>';
-                            return html;
-                        }
-                    },
-                    {
-                        'targets': 3,
-                        render: function ( data, type, row, meta ) {
-                            var status = '{{MyHelper::hasAccess([281,282], $grantedFeature)}}';
-                            var html = '';
 
-                            if(status == 1){
-                                html += '<form action="{{url('product-variant/delete')}}/'+data+'" method="POST" class="form-inline">';
-                                html += '{{method_field('DELETE')}}';
-                                html += '{{csrf_field()}}';
-                                html += '<button class="btn btn-sm red btnDelete" type="submit" data-toggle="confirmation"><i class="fa fa-trash"></i></button>';
-                                html += '<a href="{{ url("product-variant/edit") }}/'+data+'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>';
-                                html += '</form>';
-                            }
-                            $('[data-toggle=confirmation]').confirmation({ btnOkClass: 'btn btn-sm btn-success submit', btnCancelClass: 'btn btn-sm btn-danger'});
-                            return html;
-                        }
-                    }
-                ]
+        $(document).ready(function() {
+            var obj = {!! $variants !!};
+            var output = '';
+            var output_action = '';
+
+            function buildItem(item) {
+
+                var html = "<li class='dd-item' data-id='" + item.id_product_variant + "' data-parent='"+item.id_parent+"'>";
+                html += "<div class='dd-handle dd-nodrag'>" + item.product_variant_name + "</div>";
+                html += '<input type="hidden" name="position[]" value="'+item.id_product_variant+'">';
+
+                if (item.children) {
+
+                    html += "<ol class='dd-list'>";
+                    $.each(item.children, function (index, sub) {
+                        html += buildItem(sub);
+                    });
+                    html += "</ol>";
+
+                }
+                html += "</li>";
+
+                return html;
+            }
+
+            function buildItemAction(item) {
+
+                var html = "<li style='margin-top:1.2%;margin-bottom:1%;list-style-type:none;'>";
+                html += '<div class="row">' +
+                    '<a href="{{ url("product-variant/edit") }}/'+item.id_product_variant+'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>' +
+                    '<a onclick="deleteVariant(\'' + item.id_product_variant + '\',\'' + item.product_variant_name + '\')" class="btn btn-sm btn-danger sweetalert-delete" style="margin-left:0.5%"><i class="fa fa-trash"></i></a>' +
+                    '<div>';
+
+                if (item.children) {
+
+                    $.each(item.children, function (index, sub) {
+                        html += buildItemAction(sub);
+                    });
+
+                }
+                html += "</li>";
+
+                return html;
+            }
+
+            $.each(obj, function (index, item) {
+                output += buildItem(item);
+                output_action += buildItemAction(item);
             });
+
+            $('#variants').html(output);
+            $('#variants_action').html(output_action);
         });
+
+        function deleteVariant(id_product_variant, product_variant_name) {
+            swal({
+                    title: "Are you sure want to delete variant \n" + product_variant_name + " ?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, delete!",
+                    closeOnConfirm: false
+                },
+                function () {
+                    var token  	= "{{ csrf_token() }}";
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ url('product-variant/delete') }}/"+id_product_variant,
+                        data: "_token=" + token + "&id_product_variant=" + id_product_variant,
+                        success: function (result) {
+                            if (result.status == "success") {
+                                swal("Success!", "Processing Syncron sales mode.", "success")
+                                location.reload();
+                            } else {
+                                swal("Error!", "Fail delete product variant, product variant already to use in transaction", "error")
+                            }
+                        }
+                    });
+                });
+        }
     </script>
 @endsection
 
@@ -120,24 +148,19 @@ $grantedFeature     = session('granted_features');
             </div>
         </div>
         <div class="portlet-body form">
-            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="kt_datatable">
-                <thead>
-                <tr>
-                <tr>
-                    <th>Product Variant Name</th>
-                    <th>Product Variant Parent</th>
-                    <th>Product Variant Child</th>
-                    @if(MyHelper::hasAccess([281], $grantedFeature))
-                        <th>Action</th>
-                    @endif
-                </tr>
-                </tr>
-                </thead>
-                <tbody id="kt_datatable_tbody">
-            </table>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="dd" id="nestable3">
+                        <ol class='dd-list dd3-list'>
+                            <div id="variants"></div>
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="variants_action"></div>
+                </div>
+            </div>
         </div>
     </div>
-
-
 
 @endsection

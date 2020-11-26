@@ -78,6 +78,7 @@
             <div class="col-md-8">
                 <div class="input-icon right">
                     <input type="text" class="form-control price" name="product_global_price" value="@if(isset($syu['global_price'][0]['product_global_price'])) {{number_format($syu['global_price'][0]['product_global_price'])}} @endif"  @if($product[0]['product_variant_status'] == 1) disabled @endif required>
+                    <input type="hidden" id="old_global_price" value="@if(isset($syu['global_price'][0]['product_global_price'])) {{number_format($syu['global_price'][0]['product_global_price'])}} @endif">
                 </div>
             </div>
         </div>
@@ -154,6 +155,29 @@
                         <span class="fileinput-new"> Select image </span>
                         <span class="fileinput-exists"> Change </span>
                         <input type="file" class="file" id="fieldphoto" accept="image/*" name="photo">
+                        </span>
+
+                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-md-3 control-label">
+                Photo Detail<span class="required" aria-required="true">* <br>(720*360) </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk Detail" data-container="body"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                     <img src="@if(isset($syu['product_photo_detail'])){{ env('STORAGE_URL_API') }}{{$syu['product_photo_detail']}}@endif" alt="">
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail" id="imageproductDetail" style="max-width: 200px; max-height: 200px;"></div>
+                    <div>
+                        <span class="btn default btn-file">
+                        <span class="fileinput-new"> Select image </span>
+                        <span class="fileinput-exists"> Change </span>
+                        <input type="file" class="filePhotoDetail" id="fieldphotodetail" accept="image/*" name="product_photo_detail">
                         </span>
 
                         <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>

@@ -1,9 +1,15 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 <div class="tab-pane" id="featured_subscription">
+	@if(MyHelper::hasAccess([242], $grantedFeature))
     <div style="margin:20px 0">
         <a class="btn blue btn-outline sbold" data-toggle="modal" href="#modalFeaturedSubscription"> New Featured Subscription
         	<i class="fa fa-question-circle tooltips" data-original-title="Membuat featured subscription di halaman home aplikasi mobile" data-container="body"></i>
         </a>
     </div>
+	@endif
 
 	<div class="row" style="margin-top:20px">
 		<div class="col-md-12">
@@ -32,8 +38,12 @@
 				 				  			<span class="caption-subject bold" style="font-size: 12px !important;">{{ $key + 1 }}</span>
 										</div>
 										<div class="col-md-10 text-right">
+											@if(MyHelper::hasAccess([243], $grantedFeature))
 												<a class="btn blue btn-circle btn-edit" href="#modalFeaturedSubscriptionUpdate" data-toggle="modal" data-start-date="{{ date('d M Y H:i',strtotime($featured_subscription['date_start'])) }}" data-end-date="{{ date('d M Y H:i',strtotime($featured_subscription['date_end'])) }}" data-id-subscription="{{ $featured_subscription['id_subscription'] }}" data-subscription-title="{{ $featured_subscription['subscription']['subscription_title'] }}" data-id="{{ $featured_subscription['id_featured_subscription'] }}"><i class="fa fa-pencil"></i> </a>
+											@endif
+											@if(MyHelper::hasAccess([244], $grantedFeature))
 												<a class="btn red-mint btn-circle btn-delete" data-id="{{ $featured_subscription['id_featured_subscription'] }}"><i class="fa fa-trash-o"></i> </a>
+											@endif
 										</div>
 									</div>
 				 				</div>
@@ -48,10 +58,12 @@
 				 			</div>
 				 			@endforeach
 						</div>
+						@if(MyHelper::hasAccess([243], $grantedFeature))
 						<div class="text-center">
 							{{ csrf_field() }}
 							<input type="submit" value="Update Sorting" class="btn blue">
 						</div>
+						@endif
 					</form>
 					@endif
 				</div>

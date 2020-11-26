@@ -323,7 +323,11 @@ class SubscriptionController extends Controller
             $save = MyHelper::post('subscription/step2', $post);
 
             if ( ($save['status']??false) == "success") {
-                return redirect($data['rpage'].'/step3/'.$slug)->with('success', ['Subscription has been updated']);
+            	$redirect = redirect($data['rpage'].'/step3/'.$slug)->with('success', ['Subscription has been updated']);
+            	if (isset($save['brand_product_error'])) {
+            		$redirect = redirect($data['rpage'].'/step2/'.$slug)->with('success', ['Subscription has been updated'])->withErrors($save['brand_product_error']??[]);
+            	}
+                return $redirect;
             }else{
                 return back()->withErrors($save['messages']??['Something went wrong'])->withInput();
             }
@@ -332,6 +336,7 @@ class SubscriptionController extends Controller
 
             $post['select'] = ['id_outlet','outlet_code','outlet_name'];
             $outlets = MyHelper::post('outlet/ajax_handler', $post);
+            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
             
             if (!empty($outlets['result'])) {
                 $data['outlets'] = $outlets['result'];
@@ -489,6 +494,8 @@ class SubscriptionController extends Controller
             }, $data['rule']);
             $data['rule'] = $filter;
         }
+
+        $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
         
         $data['operator']=$post['operator']??'and';
 

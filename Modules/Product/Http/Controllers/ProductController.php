@@ -517,6 +517,10 @@ class ProductController extends Controller
                 $post['photo']      = MyHelper::encodeImage($post['photo']);
             }
 
+            if (isset($post['product_photo_detail'])) {
+                $post['product_photo_detail']      = MyHelper::encodeImage($post['product_photo_detail']);
+            }
+
             $save = MyHelper::post('product/create', $post);
 
             if (isset($save['status']) && $save['status'] == 'success') {
@@ -583,6 +587,32 @@ class ProductController extends Controller
             $data['product'] = [];
         }
         return view('product::product.image', $data);
+    }
+
+    function addImageDetail(Request $request) {
+        $post = $request->except('_token');
+        if (!empty($post)) {
+            $name = explode('.',$request->file('file')->getClientOriginalName())[0];
+            $post = MyHelper::encodeImage($request->file('file'));
+            $save = MyHelper::post('product/photo/createAjax', ['name' => $name, 'photo' => $post, 'detail' => 1]);
+            return $save;
+        }
+        $data = [
+            'title'          => 'Product',
+            'sub_title'      => 'List Product',
+            'menu_active'    => 'product',
+            'submenu_active' => 'product-image',
+            'child_active'   => 'product-image-detail',
+        ];
+        $product = MyHelper::post('product/be/list/image', ['admin_list' => 1]);
+
+        if (isset($product['status']) && $product['status'] == "success") {
+            $data['product'] = $product['result'];
+        }
+        else {
+            $data['product'] = [];
+        }
+        return view('product::product.image_detail', $data);
     }
 
     function listImage(Request $request) {
@@ -753,6 +783,10 @@ class ProductController extends Controller
                     $post['photo'] = MyHelper::encodeImage($post['photo']);
                 }
 
+                if (isset($post['product_photo_detail'])) {
+                    $post['product_photo_detail']      = MyHelper::encodeImage($post['product_photo_detail']);
+                }
+
                 // update data
                 $save = MyHelper::post('product/update', $post);
 
@@ -865,6 +899,11 @@ class ProductController extends Controller
         }
     }
 
+    public function deleteProductVarianGroup(Request $request){
+        $post = $request->all();
+        $delete = MyHelper::post('product-variant-group/delete', $post);
+        return $delete;
+    }
     /**
      * delete photo
      */
@@ -990,6 +1029,7 @@ class ProductController extends Controller
             $data['product_name'] = Session::get('search_product_name');
         }
 
+        $data['update_price'] = 1;
         if(isset($page)){
             $product = MyHelper::post('product/be/list?page='.$page, $data);
         }else{
@@ -1386,11 +1426,17 @@ class ProductController extends Controller
             ];
 
             $data['photo'] = env('STORAGE_URL_API').'img/product/item/default.png?';
+            $data['photo_detail'] = env('STORAGE_URL_API').'img/product/item/detail/default.png?';
 
             return view('product::product.photo-default', $data);
         }else{
-            $post['photo'] = MyHelper::encodeImage($post['photo']);
-            $default = MyHelper::post('product/photo/default', ['photo' => $post['photo']]);
+            if(isset($post['photo'])){
+                $post['photo'] = MyHelper::encodeImage($post['photo']);
+            }
+            if(isset($post['photo_detail'])){
+                $post['photo_detail'] = MyHelper::encodeImage($post['photo_detail']);
+            }
+            $default = MyHelper::post('product/photo/default', $post);
             if (isset($default['status']) && $default['status'] == 'success') {
                 return parent::redirect($default, 'Product Photo Default has been updated.', 'product/photo/default');
             } elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {

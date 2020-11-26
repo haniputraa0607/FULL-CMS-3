@@ -41,34 +41,6 @@
                 <input class="form-control price" maxlength="11" id="product-variant-group-price" placeholder="Price Product Variant Group">
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-md-3 control-label">Product Variant Visible <span class="text-danger">*</span>
-            </label>
-            <div class="input-icon right">
-                <div class="col-md-2">
-                    <div class="md-radio-inline">
-                        <div class="md-radio">
-                            <input type="radio" id="radio-variant-visibility1" name="product_variant_group_visibility" class="md-radiobtn req-type" value="Visible" checked>
-                            <label for="radio-variant-visibility1">
-                                <span></span>
-                                <span class="check"></span>
-                                <span class="box"></span> Visible</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="md-radio-inline">
-                        <div class="md-radio">
-                            <input type="radio" id="radio-variant-visibility2" name="product_variant_group_visibility" class="md-radiobtn req-type" value="Hidden">
-                            <label for="radio-variant-visibility2">
-                                <span></span>
-                                <span class="check"></span>
-                                <span class="box"></span> Hidden </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <input type="hidden" id="product-variant-group-id" value="">
         <input type="hidden" id="product-variant-group-code" name="product_variant_group_code" value="">
         <input type="hidden" id="product-variant-group-visibility" name="product_variant_group_visibility" value="">
@@ -83,10 +55,9 @@
         <div style="margin-top: 5%">
             <table class="table table-bordered table-hover" style="width: 70%" id="table-product-variant">
                 <thead>
-                <th>Product Variant Group</th>
+                <th>Product Variant</th>
                 <th>Code</th>
                 <th>Price</th>
-                <th>Visibility</th>
                 <th>Action</th>
                 </thead>
                 <tbody id="product-variant-group-body">
@@ -101,7 +72,6 @@
                         </td>
                         <td>{{$val['product_variant_group_code']}}</td>
                         <td>{{number_format($val['product_variant_group_price'],0,",",".")}}</td>
-                        <td>{{$val['product_variant_group_visibility']}}</td>
                         <td>
                             <a  onclick="deleteRowProductVariant(this, {{$val['id_product_variant_group']}})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
                             <a  onclick="editRowProductVariant(this,{{$key}})" class="btn btn-sm btn-primary" style="margin-left: 2%"><i class="fa fa-pen"></i> Edit</a>

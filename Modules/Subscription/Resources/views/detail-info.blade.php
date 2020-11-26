@@ -1,3 +1,7 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 @section('detail-info')
 @php
     $datenow = date("Y-m-d H:i:s");
@@ -71,7 +75,7 @@
                     </div>
                 </div>
                 
-            @if( $subscription['subscription_bought'] == 0 )
+            @if( $subscription['subscription_bought'] == 0 && MyHelper::hasAccess([175], $grantedFeature))
             <div class="row static-info text-center">
                 <div class="col-md-11 value">
                     <a class="btn blue" href="{{ url('/'.$rpage)}}/step1/{{$subscription['id_subscription']}}">Edit Detail</a>
@@ -86,20 +90,22 @@
 	            <span class="caption font-blue sbold uppercase"> Selected Product </span>
 	        </div>
 	        <div class="mt-comments">
-                @if ($subscription['products'] != null)
+                @if (!empty($subscription['subscription_products']))
                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
                         <thead>
                             <tr>
+                                <th>Brand</th>
                                 <th>Code</th>
                                 <th>Name</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($subscription['products'] as $res)
+                            @foreach($subscription['subscription_products'] as $res)
                                 <tr>
-                                    <td>{{ $res['product_code']??'' }}</td>
+                                    <td>{{ $res['brand']['name_brand']??'' }}</td>
+                                    <td>{{ $res['product']['product_code']??'' }}</td>
                                     <td>
-                                    	<a href="{{ url('product/detail/'.($res['product_code']??'')) }}">{{ $res['product_name']??'' }}</a>	
+                                    	<a href="{{ url('product/detail/'.($res['product']['product_code']??'')) }}">{{ $res['product']['product_name']??'' }}</a>	
                                     </td>
                                 </tr>
                             @endforeach
@@ -132,7 +138,28 @@
                 </div>
 	            <div class="row static-info">
                     <div class="col-md-4 name">Brand</div>
-                    <div class="col-md-8 value">: {{ $subscription['brand']['name_brand']??'' }}</div>
+                    <div class="col-md-8 value">: 
+                    	@if (!empty($subscription['id_brand']))
+                    		{{ $subscription['brand']['name_brand'] }}
+                    	@else
+                        	@php
+                        		foreach ($subscription['brands'] as $key => $value) {
+                            		if ($key == 0) {
+                            			$comma = '';
+                            		}else{
+                            			$comma = ', ';
+                            		}
+                            		echo $comma.$value['name_brand'];
+                        		}
+                        	@endphp
+                    	@endif
+                    </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-4 name">Brand Rule</div>
+                    <div class="col-md-8 value">: 
+                        {{ $subscription['brand_rule'] && $subscription['brand_rule'] == 'and' ? 'All selected brands' : 'One of the selected brands' }}
+                    </div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Outlet</div>
@@ -140,8 +167,45 @@
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Product</div>
-                    <div class="col-md-8 value">: {{ !empty($subscription['is_all_product']) ? 'All product' : (!empty($subscription['products']) ? 'Selected product' : '') }}</div>
+                    <div class="col-md-8 value">: @if ( ($subscription['is_all_product']??false) == 1 ) All product @elseif( ($subscription['is_all_product']??false) === 0 ) Selected product @endif </div>
                 </div>
+                <div class="row static-info">
+				    <div class="col-md-4 name">Shipment Method</div>
+				    <div class="col-md-1 value">:</div>
+				    <div class="col-md-7 value" style="margin-left: -31px">
+				    	@if ($subscription['is_all_shipment'] == '1')
+				            <div>All Shipment</div>
+				        @elseif ($subscription['is_all_shipment'] == '0')
+				        	@foreach ($subscription['subscription_shipment_method'] as $val)
+				        		<div style="margin-bottom: 10px">{{ '- '.$val['shipment_method'] }}</div>
+				        	@endforeach
+				        @else
+				            -
+				        @endif
+				    </div>
+				</div>
+
+				@php
+					$payment_list_text = [];
+					foreach ($payment_list??[] as $key => $value) {
+						$payment_list_text[$value['payment_method']] = $value['text'];
+					}
+				@endphp
+				<div class="row static-info">
+				    <div class="col-md-4 name">Payment Method</div>
+				    <div class="col-md-1 value">:</div>
+				    <div class="col-md-7 value" style="margin-left: -31px">
+				    	@if ($subscription['is_all_payment'] == '1')
+				            <div>All Payment Method</div>
+				        @elseif ($subscription['is_all_payment'] == '0')
+				        	@foreach ($subscription['subscription_payment_method'] as $val)
+				        		<div style="margin-bottom: 10px">{{ '- '.($payment_list_text[$val['payment_method']] ?? $val['payment_method']) }}</div>
+				        	@endforeach
+				        @else
+				            -
+				        @endif
+				    </div>
+				</div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Subscription Total</div>
                     <div class="col-md-8 value">: {{ !empty($subscription['subscription_total']) ? number_format($subscription['subscription_total']).' Subscriptions' : (($subscription['subscription_total']==0) ? 'unlimited' : '') }}</div>
@@ -162,7 +226,7 @@
                     <div class="col-md-4 name">Voucher Total</div>
                     <div class="col-md-8 value">: {{ !empty($subscription['subscription_voucher_total']) ? number_format($subscription['subscription_voucher_total']).' Vouchers' : '' }}</div>
                 </div>
-                {{-- <div class="row static-info">
+                <div class="row static-info">
                     <div class="col-md-4 name">Discount Type</div>
                     <div class="col-md-8 value">: 
                     	@switch($subscription['subscription_discount_type'])
@@ -176,7 +240,7 @@
                             Payment Method
                     	@endswitch
                 	</div>
-                </div> --}}
+                </div>
                 @if(!empty($subscription['subscription_voucher_nominal']))
                 <div class="row static-info">
                     <div class="col-md-4 name">Voucher Discount</div>
@@ -194,7 +258,7 @@
                 </div>
                 @endif
                 <div class="row static-info">
-                    <div class="col-md-4 name">Minimal Transaction (Subtotal)</div>
+                    <div class="col-md-4 name">Min Basket Size</div>
                     <div class="col-md-8 value">: {{ !empty($subscription['subscription_minimal_transaction']) ? number_format($subscription['subscription_minimal_transaction']) : '' }}</div>
                 </div>
                 <div class="row static-info">
@@ -211,7 +275,7 @@
                     <div class="col-md-8 value">: {{ ($subscription['new_purchase_after'] == 'Empty Expired') ? 'Empty/Expired' : $subscription['new_purchase_after']}}</div>
                 </div>
                 @endif
-	            @if( $subscription['subscription_bought'] == 0 )
+	            @if( $subscription['subscription_bought'] == 0 && MyHelper::hasAccess([175], $grantedFeature))
 	                <div class="row static-info">
 	                    <div class="col-md-11 value">
 	                        <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$subscription['id_subscription']}}">Edit Rule</a>
@@ -408,7 +472,7 @@
                                         </div>
                                         @endif
                                     @endif
-                                    @if( $subscription_type == 'Promotion' || $subscription['deals_total_claimed'] == 0 )
+                                    @if( $subscription_type == 'Promotion' || $subscription['deals_total_claimed'] == 0 && MyHelper::hasAccess([175], $grantedFeature))
                                     <div class="row static-info">
                                         <div class="col-md-11 value">
                                             <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$subscription['id_deals']}}">Edit Rule</a>
@@ -419,11 +483,13 @@
             <span class="sale-num font-red sbold">
                 No Deals Rules
             </span>
+            @if(MyHelper::hasAccess([175], $grantedFeature))
             <div class="row static-info">
                 <div class="col-md-11 value">
                     <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$subscription['id_deals']}}">Create Rule</a>
                 </div>
             </div>
+            @endif
             @endif
         </div>
         @endif

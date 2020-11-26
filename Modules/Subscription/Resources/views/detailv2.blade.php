@@ -634,6 +634,7 @@ $grantedFeature     = session('granted_features');
         <div class="portlet-body form">
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
+                	@include('promocampaign::template.promo-extend-period', ['promo_source' => 'subscription'])
                 	@if(MyHelper::hasAccess([270], $grantedFeature))
 	                    @if ($subscription['subscription_step_complete'] != 1)
 	                    	<a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Subscription</a>

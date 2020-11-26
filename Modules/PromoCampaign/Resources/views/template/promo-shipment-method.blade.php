@@ -47,12 +47,16 @@
 	                <span></span>
 	            </label>
 	            <label class="mt-checkbox mt-checkbox-outline">
-	                <input class="input-selected-shipment" type="checkbox" value="Delivery"	 id="checkbox-shipment-delivery" @if ($is_delivery) checked @endif> Delivery
+	                <input class="input-selected-shipment" type="checkbox" value="GO-SEND" name="shipment_method[]" @if (in_array('GO-SEND', $shipment_method)) checked @endif> GO-SEND
 	                <span></span>
 	            </label>
+	            {{-- <label class="mt-checkbox mt-checkbox-outline">
+	                <input class="input-selected-shipment" type="checkbox" value="Delivery"	 id="checkbox-shipment-delivery" @if ($is_delivery) checked @endif> Delivery
+	                <span></span>
+	            </label> --}}
 	        </div>
         </div>
-        <div id="shipment-delivery"
+        {{-- <div id="shipment-delivery"
         	@if ( !$is_delivery && !in_array('GO-SEND', $shipment_method) )
         		style="display: none;" 
         	@endif
@@ -64,12 +68,12 @@
 	                <input class="input-shipment-delivery" type="checkbox" value="GO-SEND" name="shipment_method[]" @if (in_array('GO-SEND', $shipment_method)) checked @endif> GO-SEND
 	                <span></span>
 	            </label>
-	            {{-- <label class="mt-checkbox mt-checkbox-outline">
+	            <label class="mt-checkbox mt-checkbox-outline">
 	                <input class="input-shipment-delivery" type="checkbox" value="GRAB" name="shipment_method[]" @if (in_array('GRAB', $shipment_method)) checked @endif> GRAB
 	                <span></span>
-	            </label> --}}
+	            </label>
 	        </div>
-        </div>
+        </div> --}}
 	</div>
 </div>
 @endsection
@@ -130,7 +134,7 @@
 			$('#selected-shipment').show();
 		}
 		else {
-			$('#selected-shipment').hide().prop('required', false);
+			$('#selected-shipment').hide().find('input').prop('required', false);
 		}
 		$('#selected-shipment').find('input').prop('checked',false);
 		$('#shipment-delivery').hide().prop('required', false);
