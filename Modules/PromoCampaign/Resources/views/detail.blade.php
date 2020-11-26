@@ -201,6 +201,13 @@
 			$('#formSuspend').submit();
 		}
 	})
+
+	$(".form_datetime").datetimepicker({
+        format: "d-M-yyyy hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        minuteStep:1
+    });
 	</script>
     @yield('more_script')
     @yield('more_script2')
@@ -298,6 +305,7 @@
                     <li class="">
                         <a href="#detail-information" data-toggle="tab"> Detail Information </a>
                     </li>
+            		@include('promocampaign::template.promo-extend-period', ['promo_source' => 'promo_campaign'])
                 </ul>
             </div>
 
