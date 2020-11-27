@@ -175,19 +175,6 @@
                         </div>
                     </div>
                     <div class="form-group" id="div_list_product">
-                        <label for="multiple" class="control-label col-md-3">Brand
-                            </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih product untuk menetapkan modifier" data-container="body"></i>
-                        </label>
-                        <div class="col-md-6">
-                            <select  class="form-control select2" name="id_product[]" multiple id="select_product" disabled>
-                                @foreach($brands as $b)
-                                    <option value="{{$b['id_brand']}}">{{$b['code_brand']}} - {{$b['name_brand']}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group" id="div_list_product">
                         <label for="multiple" class="control-label col-md-3">Product
                             </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih product untuk menetapkan modifier" data-container="body"></i>
