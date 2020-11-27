@@ -28,7 +28,7 @@ class ProductVariantController extends Controller
 
         $data['get_variant'] = MyHelper::post('product-variant',$request->all())['result']??[];
 
-        $data['variants'] = [];
+        $data['variants'] = json_encode([]);
         if(!empty($data['get_variant'])){
             $data['variants'] = json_encode($this->buildTree($data['get_variant']));
         }
@@ -48,7 +48,7 @@ class ProductVariantController extends Controller
         if(empty($post)){
             $data['get_variant'] = MyHelper::post('product-variant',$request->all())['result']??[];
 
-            $data['variants'] = [];
+            $data['variants'] = json_encode([]);
             if(!empty($data['get_variant'])){
                 $data['variants'] = json_encode($this->buildTree($data['get_variant']));
             }
