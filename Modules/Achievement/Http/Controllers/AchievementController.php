@@ -376,7 +376,7 @@ class AchievementController extends Controller
 
     public function getOutlet($id_province)
     {
-        $data = MyHelper::post('achievement/getOutlet', ['id_province' => $id_province])['data'];
+        $data = MyHelper::post('achievement/getOutlet?log_save=0', ['id_province' => $id_province])['data'];
         return $data;
     }
 

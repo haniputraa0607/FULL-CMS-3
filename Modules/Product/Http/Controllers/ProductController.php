@@ -673,6 +673,18 @@ class ProductController extends Controller
         }
 		return response()->json($data);
     }
+    
+	function listProductAjaxSimple(Request $request) {
+        $product = MyHelper::get('product/list/ajax?log_save=0');
+
+        if (isset($product['status']) && $product['status'] == "success") {
+            $data = $product['result'];
+        }
+        else {
+            $data = [];
+        }
+		return response()->json($data);
+    }
 
     /**
      * detail
