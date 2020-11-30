@@ -536,11 +536,13 @@
                         @if(isset($prod['product']['product_modifiers']))
                             <div class="col-2 text-13px WorkSans-SemiBold text-grey-light"></div>
                             <div class="col-6 text-13px WorkSans-Regular text-grey-light" style="margin-left: -30px;margin-right: 20px;padding-bottom:5px">
-                            @php $modTotal = count($prod['product']['product_modifiers']); @endphp
-                            @foreach($prod['product']['product_modifiers'] as $index => $mod)
-                                {{$mod['product_modifier_name']}}
-                                @if($index < $modTotal-1), @endif
-                            @endforeach
+                                <?php
+                                    $modVar = '';
+                                    $dataMod = array_column($prod['product']['product_modifiers'], 'product_modifier_name');
+                                    $dataVar = array_column($prod['product']['product_variants'], 'product_variant_name');
+                                    $modVar  = implode(',', array_merge($dataMod,$dataVar));
+                                ?>
+                                {{$modVar}}
                             </div>
                             <div class="col-4 text-13-3px text-right WorkSans-SemiBold text-black"></div>
                         @endif
