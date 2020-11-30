@@ -212,7 +212,9 @@ $grantedFeature     = session('granted_features');
                     }else{
                         var option = new Option(value.product_variant_group_name, value.id_product_variant_group, true, false);
                     }
+                    $('.id_product_variant').append(option).trigger('change');
                 });
+                $('.id_product_variant').val("").trigger("change")
             });
 
 
@@ -344,7 +346,6 @@ $grantedFeature     = session('granted_features');
         });
         $('#use_variant').change(function() {
             if ($(this).is(':checked')) {
-                console.log($(this).is(':checked'))
                 $('#editAchievement').find('.product_variant_rule_option').show()
             }else{
                 $('#editAchievement').find('.product_variant_rule_option').hide()
