@@ -1056,6 +1056,19 @@
                                                                     <div class="col-md-5 name">Product</div>
                                                                     <div class="col-md-7 value">: {{$item['product']['product_name']}}</div>
                                                                 @endif
+                                                                @if (!is_null($item['id_product_variant_group']))
+                                                                    <div class="col-md-5 name">Product Variant</div>
+                                                                    @php
+                                                                        $variantName = '';
+                                                                        foreach($item['product_variant_group']['product_variant_pivot_simple'] as $key => $variant){
+                                                                            if($key > 0){
+                                                                                $variantName=$variantName.' ';
+                                                                            }
+                                                                            $variantName=$variantName.$variant['product_variant_name'];
+                                                                        } 
+                                                                    @endphp
+                                                                    <div class="col-md-7 value">: {{$variantName}}</div>
+                                                                @endif
                                                                 @if (!is_null($item['product_total']))
                                                                     <div class="col-md-5 name">Product Total</div>
                                                                     <div class="col-md-7 value">: {{$item['product_total']}}</div>

@@ -246,8 +246,17 @@
                 $('.rule_product').change(function() {
                     var form = $(this).parents()[4]
                     $(form).find('.product_rule_form').hide()
+                    $(form).find('.product_variant_rule_form').hide()
                     if ($(this).is(':checked')) {
                         $(form).find('.product_rule_form').show()
+                        $(form).find('.product_variant_rule_form').show()
+                    }
+                });
+                $('.use_variant').change(function() {
+                    var form = $(this).parents()[4]
+                    $(form).find('.product_variant_rule_option').hide()
+                    if ($(this).is(':checked')) {
+                        $(form).find('.product_variant_rule_option').show()
                     }
                 });
                 $('.rule_total').change(function() {
@@ -333,9 +342,20 @@
                 $(form).find('.id_product').val("").trigger("change")
                 $(form).find('.total_product').val("").trigger("change")
                 $(form).find('.product_rule_form').hide()
+                $(form).find('.product_variant_rule_form').hide()
                 $('#product_total_rule').val("")
                 if ($(this).is(':checked')) {
                     $(form).find('.product_rule_form').show()
+                    $(form).find('.product_variant_rule_form').show()
+                }
+            });
+            $('.use_variant').change(function() {
+                var form = $(this).parents()[4]
+                $(form).find('.product_variant_rule_option').hide()
+                var idProduct = $(form).find('.id_product_variant').val()
+                $
+                if ($(this).is(':checked')) {
+                    $(form).find('.product_variant_rule_option').show()
                 }
             });
             $('.rule_total').change(function() {
@@ -367,6 +387,21 @@
                         $('.id_outlet').append(option).trigger('change');
                     });
                     $('.id_outlet').val("").trigger("change")
+                });
+            });
+            $('.id_product').change(function() {
+                var id_product = $(this).val()
+                $.ajax({
+                    type: 'GET',
+                    url: "{{url('product-variant-group/ajax')}}/" + id_product
+                }).then(function (data) {
+                    // create the option and append to Select2
+                    $('.id_product_variant').empty()
+                    $.each( data, function( key, value ) {
+                        var option = new Option(value.product_variant_group_name, value.id_product_variant_group, true, true);
+                        $('.id_product_variant').append(option).trigger('change');
+                    });
+                    $('.id_product_variant').val("").trigger("change")
                 });
             });
         });
@@ -671,6 +706,29 @@
                                                     </button>
                                                 </span>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group product_variant_rule_form" hidden>
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Achievement Product Variant Rule
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Select a product variant. leave blank, if the achievement is not based on the product variant" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="mt-checkbox-inline">
+                                            <label class="mt-checkbox" style="margin-left: 15px;" id="rule_product_variant">
+                                                <input type="checkbox" class="use_variant"> Use Variant
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-offset-3 col-md-4 product_variant_rule_option" hidden>
+                                        <div class="input-icon right">
+                                            <select class="form-control select2-multiple id_product_variant" data-placeholder="Select Variant" name="rule[id_product_variant_group]">
+                                                <option></option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

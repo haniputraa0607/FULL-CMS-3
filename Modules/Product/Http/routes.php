@@ -17,6 +17,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	Route::get('import/{type}', ['middleware' => ['feature_control:56,57', 'config_control:10,11,or'], 'uses' => 'ProductController@importProduct']);
 	Route::post('import/save', ['middleware' => ['feature_control:56', 'config_control:10'], 'uses' => 'ProductController@importProductSave']);
 	Route::get('ajax', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProductAjax']);
+	Route::get('ajax/simple', ['uses' => 'ProductController@listProductAjaxSimple']);
 	Route::any('create', ['middleware' => 'feature_control:50', 'uses' => 'ProductController@create']);
 	Route::any('update', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@update']);
 	Route::post('update/allow_sync', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@updateAllowSync']);
@@ -79,7 +80,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 		Route::get('detail/{id_outlet?}', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@listDetail']);
 		Route::post('detail/{id_outlet}', ['middleware' => 'feature_control:186', 'uses' => 'ModifierController@updateDetail']);
 
-		Route::get('/', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@index']);
+		Route::get('/', ['middleware' => 'feature_control:180', 'uses' => 'ModifierController@index']);
 		Route::get('/create', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@create']);
 		Route::post('/', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@store']);
 		Route::get('/{id}', ['middleware' => 'feature_control:182', 'uses' => 'ModifierController@show']);

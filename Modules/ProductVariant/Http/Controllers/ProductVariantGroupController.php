@@ -475,4 +475,13 @@ class ProductVariantGroupController extends Controller
         $get = MyHelper::post('product-variant-group',$post);
         return '';
     }
+
+    public function ajaxProductvariantGroup($idProduct)
+    {
+        $productVariant=MyHelper::get('product-variant-group/ajax/'.$idProduct.'?log_save=0');
+        if(isset($productVariant['result'])){
+            return $productVariant['result'];
+        }
+        return [];
+    }
 }
