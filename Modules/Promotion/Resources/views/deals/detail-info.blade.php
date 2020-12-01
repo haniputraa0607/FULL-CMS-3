@@ -220,6 +220,24 @@
             		|| !empty($deals['deals_promotion_discount_bill_rules']) 
             		|| !empty($deals['deals_promotion_discount_delivery_rules']) 
             	)
+
+            	@php
+                	$promo_product = $deals['deals_promotion_product_discount'] ?: $deals['deals_promotion_tier_discount_product'] ?: $deals['deals_promotion_buyxgety_product_requirement'] ?: $deals['deals_promotion_discount_bill_products'] ?: [];
+                	$promo_product_simple = [];
+                	foreach ($promo_product as $value) {
+                		$variant = [];
+						foreach ($value['product_variant_pivot'] as $val) {
+							$variant[] = $val['product_variant']['product_variant_name'];
+						}
+						$variant = implode(', ',$variant);
+                		$promo_product_simple[] = [
+                			'brand' => $value['brand']['name_brand']??$deals['brand']['name_brand']??'',
+                			'product_code' => $value['product']['product_code'],
+                			'product_name' => $value['product']['product_name'],
+                			'variant' => $variant
+                		];
+                	}
+                @endphp
             	{{-- Product Discount --}}
                 @if (isset($deals['deals_promotion_product_discount_rules']) && $deals['deals_promotion_product_discount_rules'] != null)
                     <div class="row static-info">
@@ -275,20 +293,16 @@
                                             <th>Brand</th>
                                             <th>Code</th>
                                             <th>Name</th>
+                                            <th>Variant</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($deals['deals_promotion_product_discount'] as $res)
+                                        @foreach($promo_product_simple as $res)
                                             <tr>
-                                            	<td>{{ $res['brand']['name_brand']??$deals['brand']['name_brand']??'' }}</td>
-                                                <td>{{ $res['product']['product_code']??$res['product_group']['product_group_code']??'' }}</td>
-                                                <td>
-                                                @if (!empty($res['product_group']))
-                                                	<a href="{{ url('product-variant/group/'.($res['product_group']['id_product_group']??'')) }}">{{ $res['product_group']['product_group_name']??'' }}</a>
-                                                @else
-                                                	<a href="{{ url('product/detail/'.($res['product']['product_code']??'')) }}">{{ $res['product']['product_name']??'' }}</a>	
-                                                @endif
-                                                </td>
+                                                <td>{{ $res['brand'] }}</td>
+                                                <td>{{ $res['product_code'] }}</td>
+                                                <td><a href="{{ url('product/detail/'.$res['product_code']??'') }}" target="_blank">{{ $res['product_name']??'' }}</a></td>
+                                                <td>{{ $res['variant'] }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -321,17 +335,19 @@
                             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
                                 <thead>
                                     <tr>
-                                        <th class="col-md-3">Brand</th>
-                                        <th class="col-md-3">Code</th>
-                                        <th class="col-md-6">Name</th>
+                                        <th>Brand</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Variant</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($deals['deals_promotion_tier_discount_product'] as $res)
+                                    @foreach($promo_product_simple as $res)
                                         <tr>
-                                            <td>{{ $res['brand']['name_brand']??$deals['brand']['name_brand']??'' }}</td>
-                                            <td>{{ $res['product']['product_code'] }}</td>
-                                            <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                            <td>{{ $res['brand'] }}</td>
+                                            <td>{{ $res['product_code'] }}</td>
+                                            <td><a href="{{ url('product/detail/'.$res['product_code']??'') }}" target="_blank">{{ $res['product_name']??'' }}</a></td>
+                                            <td>{{ $res['variant'] }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -386,17 +402,19 @@
                             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_5">
                                 <thead>
                                     <tr>
-                                        <th class="col-md-3">Brand</th>
-                                        <th class="col-md-3">Code</th>
-                                        <th class="col-md-6">Name</th>
+                                        <th>Brand</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Variant</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($deals['deals_promotion_buyxgety_product_requirement'] as $res)
+                                    @foreach($promo_product_simple as $res)
                                         <tr>
-                                            <td>{{ $res['brand']['name_brand']??$deals['brand']['name_brand']??'' }}</td>
-                                            <td>{{ $res['product']['product_code'] }}</td>
-                                            <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                            <td>{{ $res['brand'] }}</td>
+                                            <td>{{ $res['product_code'] }}</td>
+                                            <td><a href="{{ url('product/detail/'.$res['product_code']??'') }}" target="_blank">{{ $res['product_name']??'' }}</a></td>
+                                            <td>{{ $res['variant'] }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -414,17 +432,26 @@
                                 <th>Min Qty</th>
                                 <th>Max Qty</th>
                                 <th>Product Benefit</th>
+                                <th>Product Benefit Variant</th>
                                 <th>Benefit Qty</th>
                                 <th>Benefit Discount</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($deals['deals_promotion_buyxgety_rules'] as $res)
+                            	@php
+			                    	$variant = [];
+									foreach ($res['product_variant_pivot'] as $val) {
+										$variant[] = $val['product_variant']['product_variant_name'];
+									}
+									$variant = implode(', ',$variant);
+			                    @endphp
                                 <tr>
                                     <td>{{ $res['min_qty_requirement'] }}</td>
                                     <td>{{ $res['max_qty_requirement'] }}</td>
                                     <td>
                                     	<a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}">{{ $res['product']['product_code'].' - '.$res['product']['product_name'] }}</a>
+                                    <td>{{ $variant }}</td>
                                     <td>{{ $res['benefit_qty'] }}</td>
                                     <td>
                                     @if( ($res['discount_type']??false) == 'nominal' )
@@ -475,14 +502,16 @@
                                             <th>Brand</th>
                                             <th>Code</th>
                                             <th>Name</th>
+                                            <th>Variant</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($deals['deals_promotion_discount_bill_products'] as $res)
+                                        @foreach($promo_product_simple as $res)
                                             <tr>
-                                                <td>{{ $res['brand']['name_brand']??$deals['brand']['name_brand']??'' }}</td>
-                                                <td>{{ $res['product']['product_code'] }}</td>
-                                                <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                                <td>{{ $res['brand'] }}</td>
+                                                <td>{{ $res['product_code'] }}</td>
+                                                <td><a href="{{ url('product/detail/'.$res['product_code']??'') }}" target="_blank">{{ $res['product_name']??'' }}</a></td>
+                                                <td>{{ $res['variant'] }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

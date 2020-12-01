@@ -136,6 +136,46 @@
         </div>
         @endif
 
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                Product Type
+                <span class="required" aria-required="true"> * </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe produk yang akan dikenakan promo jika promo yang dipilih menggunakan syarat produk" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9" style="margin-left: -15px;">
+            	<div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="product_type" id="product_type_radio_single" value="single" class="md-radiobtn" required 
+	                    		@if ( (old('product_type')??$deals['product_type']??false) == "single" ) checked 
+	                    		@endif>
+	                        <label for="product_type_radio_single">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> Product only </label>
+	                        	<i class="fa fa-question-circle tooltips" data-original-title="Syarat produk yang dapat dipilih hanya produk saja tanpa variant" data-container="body"></i>
+	                    </div>
+	                </div>
+            	</div>
+	            <div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="product_type" id="product_type_radio_variant" value="variant" class="md-radiobtn" required 
+	                        	@if ( (old('product_type')??$deals['product_type']??false) == "variant" ) checked 
+	                    		@endif>
+	                        <label for="product_type_radio_variant">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> Product + variant </label>
+	                            <i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dengan variant" data-container="body"></i>
+	                    </div>
+	                </div>
+	            </div>
+            </div>
+        </div>
+
         {{-- Title --}}
         <div class="form-group">
             <div class="input-icon right">

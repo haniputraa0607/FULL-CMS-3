@@ -518,6 +518,24 @@
 						</div>
 					</div>
 
+					<div class="form-group" style="height: 90px;">
+						<label class="control-label">Product Type</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe produk yang akan dikenakan promo jika promo yang dipilih menggunakan syarat produk" data-container="body"></i>
+						<div class="mt-radio-list">
+							<label class="mt-radio mt-radio-outline"> Product only
+								<input type="radio" value="single" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "single") checked @elseif(old('product_type') == "single") checked @endif required/>
+								<i class="fa fa-question-circle tooltips" data-original-title="Syarat produk yang dapat dipilih hanya produk saja tanpa variant" data-container="body"></i>
+								<span></span>
+							</label>
+							<label class="mt-radio mt-radio-outline"> Product + variant
+								<input type="radio" value="variant" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "variant") checked  @elseif(old('product_type') == "variant") checked @endif required/>
+								<i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dengan variant" data-container="body"></i>
+								<span></span>
+							</label>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<label class="control-label">Start Date</label>
 						<span class="required" aria-required="true"> * </span>

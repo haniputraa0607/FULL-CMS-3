@@ -179,12 +179,13 @@
 						url: "{{url('promo-campaign/step2/getData')}}",
 						data : {
 							"get" : 'Product',
-							"brand" : brand
+							"brand" : brand,
+							"product_type" : product_type
 						},
 						dataType: "json",
 						success: function(data){
 							productLoad = 1;
-							listProduct=data;
+							// listProduct=data;
 							$.each(data, function( key, value ) {
 								$('#multipleProduct,#multipleProduct2,#multipleProduct3','multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
 							});

@@ -151,7 +151,8 @@
 						url: "getData",
 						data : {
 							"get" : 'Product',
-							"brand" : brand
+							"brand" : brand,
+							"product_type" : product_type
 						},
 						dataType: "json",
 						success: function(data){
