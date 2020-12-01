@@ -356,7 +356,7 @@ $configs    		= session('configs');
 							{{ csrf_field() }}
 							<div class="row">
 								<div class="col-md-offset-4 col-md-4 text-center">
-									<button type="button" class="btn yellow btn-wizard" data-target-step="2"><i class="fa fa-arrow-left"></i> Prev</button>
+									<button type="button" class="btn yellow btn-wizard" data-target-step="1"><i class="fa fa-arrow-left"></i> Prev</button>
 									<button type="button" class="btn green btn-wizard" data-target-step="3">Next <i class="fa fa-arrow-right"></i></button>
 								</div>
 							</div>
