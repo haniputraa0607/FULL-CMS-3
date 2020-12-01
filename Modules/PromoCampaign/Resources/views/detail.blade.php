@@ -719,7 +719,7 @@
                                                 @foreach($result['promo_campaign_buyxgety_rules'] as $res)
                                                 @php
                                                 	$variant = [];
-													foreach ($value['product_variant_pivot'] as $val) {
+													foreach ($res['product_variant_pivot'] as $val) {
 														$variant[] = $val['product_variant']['product_variant_name'];
 													}
 													$variant = implode(', ',$variant);

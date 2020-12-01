@@ -130,7 +130,7 @@
 				}
 			}
 		}
-// dd($product, $promo_product, get_defined_vars());
+
 		if (isset($result['is_all_outlet']) && $result['is_all_outlet'] == "0") {
 			$is_all_outlet = $result['is_all_outlet'];
 			$outlet = [];
@@ -182,7 +182,7 @@
 					$.ajax(this)
 					return
 				}
-				productLoad = 1;
+				// productLoad = 1;
 				listProduct=data;
 			}
 		});
