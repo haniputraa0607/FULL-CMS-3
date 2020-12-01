@@ -1,11 +1,12 @@
-@include('subscription::detail-info')
-@include('subscription::detail-info-content')
-@include('subscription::participate')
 <?php
 use App\Lib\MyHelper;
 $configs = session('configs');
 $grantedFeature     = session('granted_features');
 ?>
+@include('subscription::detail-info')
+@include('subscription::detail-info-content')
+@include('subscription::participate')
+@include('promocampaign::template.promo-extend-period', ['promo_source' => 'subscription'])
 @extends('layouts.main-closed')
 
 @section('page-style')
@@ -535,6 +536,7 @@ $grantedFeature     = session('granted_features');
 @endif
 
     @yield('child-script')
+    @yield('extend-period-script')
 @endsection
 
 @section('content')
@@ -634,7 +636,7 @@ $grantedFeature     = session('granted_features');
         <div class="portlet-body form">
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
-                	@include('promocampaign::template.promo-extend-period', ['promo_source' => 'subscription'])
+                	@yield('extend-period-form')
                 	@if(MyHelper::hasAccess([270], $grantedFeature))
 	                    @if ($subscription['subscription_step_complete'] != 1)
 	                    	<a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Subscription</a>
