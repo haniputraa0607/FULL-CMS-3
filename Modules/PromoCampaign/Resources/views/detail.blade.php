@@ -7,6 +7,7 @@
 @extends('layouts.main-closed')
 @include('promocampaign::report')
 @include('promocampaign::coupon')
+@include('promocampaign::template.promo-extend-period', ['promo_source' => 'promo_campaign'])
 @section('page-style')
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
@@ -211,6 +212,7 @@
 	</script>
     @yield('more_script')
     @yield('more_script2')
+    @yield('extend-period-script')
 @endsection
 
 @section('content')
@@ -305,7 +307,7 @@
                     <li class="">
                         <a href="#detail-information" data-toggle="tab"> Detail Information </a>
                     </li>
-            		@include('promocampaign::template.promo-extend-period', ['promo_source' => 'promo_campaign'])
+            		@yield('extend-period-form')
                 </ul>
             </div>
 

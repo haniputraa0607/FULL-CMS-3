@@ -13,6 +13,7 @@
 @include('deals::deals.detail-info')
 @include('deals::deals.detail-info-content')
 @include('deals::deals.participate')
+@include('promocampaign::template.promo-extend-period', ['promo_source' => 'deals'])
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
@@ -550,6 +551,7 @@
 	@yield('child-script2')
 	@yield('detail-script')
 	@yield('participate-script')
+	@yield('extend-period-script')
 @endsection
 
 @section('content')
@@ -667,7 +669,8 @@
 	                    @endif
 	                @endif
 	                @if ( (isset($deals['deals_type']) && ($deals['deals_type'] == "Deals" || $deals['deals_type'] == "WelcomeVoucher")) )
-	                	@include('promocampaign::template.promo-extend-period', ['promo_source' => 'deals'])
+	                	{{-- @include('promocampaign::template.promo-extend-period', ['promo_source' => 'deals']) --}}
+	                	@yield('extend-period-form')
 	                @endif
                 	<ul class="nav nav-tabs" id="tab-header">
                         <li class="active" id="infoOutlet">

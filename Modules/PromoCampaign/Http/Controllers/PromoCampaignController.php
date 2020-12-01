@@ -481,7 +481,7 @@ class PromoCampaignController extends Controller
     	if (($action['status']??false) == 'success') {
     		$redirect->withSuccess(['Period has been extended']);
     	}else{
-    		$redirect->withErrors($action['messages'] ?? ['Failed to extend period']);
+    		$redirect->withInput()->withErrors($action['messages'] ?? ['Failed to extend period']);
     	}
     	return $redirect;
     }
