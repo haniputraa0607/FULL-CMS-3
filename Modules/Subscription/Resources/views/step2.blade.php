@@ -1,13 +1,14 @@
 @include('subscription::step2-form')
 <?php
-use App\Lib\MyHelper;
-$configs = session('configs');
-if ($subscription_type == 'welcome') {
-	$redirect = 'welcome-subscription';
-}
-else{
-	$redirect = 'subscription';
-}
+	use App\Lib\MyHelper;
+	$configs = session('configs');
+	if ($subscription_type == 'welcome') {
+		$redirect = 'welcome-subscription';
+	}
+	else{
+		$redirect = 'subscription';
+	}
+	$product_type 	= $subscription['product_type'] ?? 'single';
 ?>
 @extends('layouts.main-closed')
 
@@ -101,6 +102,7 @@ else{
 
     <script type="text/javascript">        
         var oldOutlet=[];
+        var product_type = '{!!$product_type!!}';
         let id_brand = null;
         let id_brands = [];
 
@@ -574,8 +576,9 @@ else{
 					type: "GET",
 					url: "{{url('promo-campaign/step2/getData')}}",
 					data : {
-						get : 'Product',
-						brand : id_brands
+						"get" : 'Product',
+						"brand" : id_brands,
+						"product_type" : product_type
 					},
 					dataType: "json",
 					success: function(data){
