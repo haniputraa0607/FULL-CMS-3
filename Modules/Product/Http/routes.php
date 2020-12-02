@@ -6,10 +6,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 * product
 	 */
 	Route::get('/', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProduct']);
-	Route::any('/image/add', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@addImage']);
-	Route::any('/image/detail', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@addImageDetail']);
-	Route::any('/image/list', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listImage']);
-	Route::any('/image/override', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@overrideImage']);
+	Route::any('/image/add', ['middleware' => 'feature_control:54', 'uses' => 'ProductController@addImage']);
+	Route::any('/image/detail', ['middleware' => 'feature_control:53', 'uses' => 'ProductController@addImageDetail']);
+	Route::any('/image/list', ['middleware' => 'feature_control:53', 'uses' => 'ProductController@listImage']);
+	Route::any('/image/override', ['middleware' => 'feature_control:53', 'uses' => 'ProductController@overrideImage']);
 	Route::any('/visible/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::any('/hidden/{key?}', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@visibility']);
 	Route::post('/id_visibility', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@addIdVisibility']);
@@ -39,8 +39,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 * photo
 	 */
 	Route::group(['prefix' => 'photo'], function() {
-    	Route::any('delete', ['middleware' => 'feature_control:55', 'uses' => 'ProductController@deletePhoto']);
-    	Route::any('default', ['middleware' => 'feature_control:55', 'uses' => 'ProductController@photoDefault']);
+    	Route::any('delete', ['middleware' => 'feature_control:53', 'uses' => 'ProductController@deletePhoto']);
+    	Route::any('default', ['middleware' => 'feature_control:53', 'uses' => 'ProductController@photoDefault']);
 	});
 
 	/**
@@ -80,7 +80,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 		Route::get('detail/{id_outlet?}', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@listDetail']);
 		Route::post('detail/{id_outlet}', ['middleware' => 'feature_control:186', 'uses' => 'ModifierController@updateDetail']);
 
-		Route::get('/', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@index']);
+		Route::get('/', ['middleware' => 'feature_control:180', 'uses' => 'ModifierController@index']);
 		Route::get('/create', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@create']);
 		Route::post('/', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@store']);
 		Route::get('/{id}', ['middleware' => 'feature_control:182', 'uses' => 'ModifierController@show']);
