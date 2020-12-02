@@ -637,12 +637,12 @@ $grantedFeature     = session('granted_features');
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
 
-                	@yield('extend-period-form')
                 	@if(MyHelper::hasAccess([270], $grantedFeature))
 	                    @if ($subscription['subscription_step_complete'] != 1)
 	                    	<a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right;">Start Subscription</a>
 	                    @endif
                     @endif
+                	@yield('extend-period-form')
                 	{{-- @include('promocampaign::template.promo-extend-period', ['promo_source' => 'subscription']) --}}
                 	<ul class="nav nav-tabs" id="tab-header">
                         <li class="active" id="infoOutlet">
