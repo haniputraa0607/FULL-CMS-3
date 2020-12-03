@@ -407,6 +407,14 @@
 	                                        {{ $result['brand_rule'] && $result['brand_rule'] == 'and' ? 'All selected brands' : 'One of the selected brands' }}
 	                                    </div>
 	                                </div>
+	                                <div class="row static-info">
+					                    <div class="col-md-4 name">Charged Central</div>
+					                    <div class="col-md-8 value">: {{$result['charged_central']}} %</div>
+					                </div>
+					                <div class="row static-info">
+					                    <div class="col-md-4 name">Charged Outlet</div>
+					                    <div class="col-md-8 value">: {{$result['charged_outlet']}} %</div>
+					                </div>
                                     <div class="row static-info">
                                         <div class="col-md-4 name">Tag</div>
                                         @if (count($result['promo_campaign_have_tags']) > 1)
@@ -557,7 +565,7 @@
                                             <div class="col-md-4 name">Discount</div>
                                             <div class="col-md-8 value">: 
                                                 @if ($result['promo_campaign_product_discount_rules']['discount_type'] == 'Percent')
-                                                    {{$result['promo_campaign_product_discount_rules']['discount_value']}} %
+                                                    {{$result['promo_campaign_product_discount_rules']['discount_value']}}% (max : {{ !empty($result['promo_campaign_product_discount_rules']['max_percent_discount']) ? 'IDR '.number_format($result['promo_campaign_product_discount_rules']['max_percent_discount']) : '-' }} )
                                                 @elseif ($result['promo_campaign_product_discount_rules']['discount_type'] == 'Nominal')
                                                     {{ 'IDR '.number_format($result['promo_campaign_product_discount_rules']['discount_value']) }}
                                                 @else
@@ -659,7 +667,13 @@
                                                     <tr>
                                                         <td>{{ number_format($res['min_qty']) }}</td>
                                                         <td>{{ number_format($res['max_qty']) }}</td>
-                                                        <td>{{ ($result['promo_campaign_tier_discount_rules'][0]['discount_type'] == 'Percent') ? ( $res['discount_value'].' %' ) : ('IDR '.number_format($res['discount_value'])) }}</td>
+                                                        <td>
+                                                        	@if ($res['discount_type'] == 'Percent')
+	                                                        	{{ ( $res['discount_value'].'%' ) }} (max : {{ !empty($res['max_percent_discount']) ? 'IDR '.number_format($res['max_percent_discount']) : '-' }})
+	                                                        @else
+	                                                        	{{ 'IDR '.number_format($res['discount_value']) }}
+	                                                        @endif
+	                                                    </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -739,7 +753,7 @@
                                                         	@if( ($res['discount_value']??false) == 100 )
                                                         		Free
                                                         	@else
-                                                        		{{ ($res['discount_value']??false).'%' }}
+                                                        		{{ ($res['discount_value']??false).'%' }} (max : {{ !empty($res['max_percent_discount']) ? 'IDR '.number_format($res['max_percent_discount']) : '-' }})
                                                         	@endif
                                                         @endif
                                                         </td>
@@ -755,10 +769,7 @@
                                             <div class="col-md-4 name">Discount</div>
                                             <div class="col-md-8 value">: 
                                                 @if ($result['promo_campaign_discount_bill_rules']['discount_type'] == 'Percent')
-                                                    {{ $result['promo_campaign_discount_bill_rules']['discount_value'] }} % 
-                                                    @if (!empty($result['promo_campaign_discount_bill_rules']['max_percent_discount']))
-                                                    	(max: IDR {{ number_format($result['promo_campaign_discount_bill_rules']['max_percent_discount']) }})
-                                                    @endif
+                                                    {{ $result['promo_campaign_discount_bill_rules']['discount_value'] }}% (max : {{ !empty($result['promo_campaign_discount_bill_rules']['max_percent_discount']) ? 'IDR '.number_format($result['promo_campaign_discount_bill_rules']['max_percent_discount']) : '-' }})
                                                 @elseif ($result['promo_campaign_discount_bill_rules']['discount_type'] == 'Nominal')
                                                     {{ 'IDR '.number_format($result['promo_campaign_discount_bill_rules']['discount_value']) }}
                                                 @else
@@ -802,10 +813,7 @@
                                             <div class="col-md-4 name">Discount</div>
                                             <div class="col-md-8 value">: 
                                                 @if ($result['promo_campaign_discount_delivery_rules']['discount_type'] == 'Percent')
-                                                    {{ $result['promo_campaign_discount_delivery_rules']['discount_value'] }} % 
-                                                    @if (!empty($result['promo_campaign_discount_delivery_rules']['max_percent_discount']))
-                                                    	(max: IDR {{ number_format($result['promo_campaign_discount_delivery_rules']['max_percent_discount']) }})
-                                                    @endif
+                                                    {{ $result['promo_campaign_discount_delivery_rules']['discount_value'] }}% (max : {{ !empty($result['promo_campaign_discount_delivery_rules']['max_percent_discount']) ? 'IDR '.number_format($result['promo_campaign_discount_delivery_rules']['max_percent_discount']) : '-' }})
                                                 @elseif ($result['promo_campaign_discount_delivery_rules']['discount_type'] == 'Nominal')
                                                     {{ 'IDR '.number_format($result['promo_campaign_discount_delivery_rules']['discount_value']) }}
                                                 @else
