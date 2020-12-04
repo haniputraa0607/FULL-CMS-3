@@ -430,63 +430,6 @@ $configs = session('configs');
         </div>
     </div>
 
-    <div class="form-group" id="selected-shipment" 
-        @if ( old('is_all_shipment')) 
-            @if ( old('is_all_shipment') == 0 ) 
-                style="display: none;"
-            @endif
-        @elseif ( !isset($subscription['is_all_shipment']) || (isset($subscription['is_all_shipment']) && $subscription['is_all_shipment'] == 0) )
-            style="display: none;"
-        @endif>
-        <div class="input-icon right">
-            <label class="col-md-3 control-label">
-            Select Selected Shipment
-            <span class="required" aria-required="true"> * </span>  
-            <i class="fa fa-question-circle tooltips" data-original-title="Pilih shipment yang akan menjadi syarat berlakunya promo" data-container="body"></i>
-            </label>
-        </div>
-        <div class="col-md-9" style="padding-left: 0px">
-            <div class="input-icon right">
-                <div class="col-md-3">
-                    <select class="form-control" name="new_purchase_after" @if( ($subscription['new_purchase_after']??'No Limit') != 'No Limit') required @endif>
-                        <option value="" disabled 
-                            @if ( old('new_purchase_after')) 
-                                @if ( old('new_purchase_after') == "" ) 
-                                    selected
-                                @endif
-                            @elseif ( empty($subscription['new_purchase_after']) ) 
-                                selected
-                            @endif>Select Type</option>
-                        <option value="Empty" 
-                            @if ( old('new_purchase_after')) 
-                                @if ( old('new_purchase_after') == "Empty" ) 
-                                    selected
-                                @endif
-                            @elseif ( ($subscription['new_purchase_after']??'') == 'Empty') ) 
-                                selected
-                            @endif>Empty</option>
-                        <option value="Expired" 
-                            @if ( old('new_purchase_after')) 
-                                @if ( old('new_purchase_after') == "Expired" ) 
-                                    selected
-                                @endif
-                            @elseif ( ($subscription['new_purchase_after']??'') == 'Expired') ) 
-                                selected
-                            @endif>Expired</option>
-                        <option value="Empty Expired" 
-                            @if ( old('new_purchase_after')) 
-                                @if ( old('new_purchase_after') == "Empty Expired" ) 
-                                    selected
-                                @endif
-                            @elseif ( ($subscription['new_purchase_after']??'') == 'Empty Expired') ) 
-                                selected
-                            @endif>Empty/Expired</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="form-group">
         <div class="input-icon right">
             <label class="col-md-3 control-label">
