@@ -190,9 +190,10 @@
 
                             var city           = result['result'];
                             var selectCity = '<option value=""></option>';
-
+                            var tmpCity = '';
                             for (var i = 0; i < city.length; i++) {
                                 if(old_city == city[i]['id_city']){
+                                    tmpCity = city[i]['id_city']+'|'+city[i]['city_postal_code'];
                                     selectCity += '<option value="'+city[i]['id_city']+'|'+city[i]['city_postal_code']+'" selected>'+city[i]['city_name']+'</option>';
                                 }else{
                                     selectCity += '<option value="'+city[i]['id_city']+'|'+city[i]['city_postal_code']+'" >'+city[i]['city_name']+'</option>';
@@ -200,6 +201,7 @@
                             }
 
                             $('#city').html(selectCity);
+                            $('#city').val(tmpCity).trigger("change");
                         }
                         else {
                             $('#city').prop('disabled', true);
@@ -312,6 +314,19 @@
         console.log(long)
         initialize(lat, long);
     })
+
+    function changeValueIsClose(key) {
+        if($('#is_closed_value_'+key).prop("checked") == true){
+            $('#is_closed_'+key).val("1");
+        }else{
+            $('#is_closed_'+key).val("0");
+        }
+    }
+
+    setTimeout(
+        function() { $(':password').val(''); },
+        1000  //1,000 milliseconds = 1 second
+    );
   </script>
 
 @endsection
@@ -401,7 +416,7 @@
                             <select class="select2 form-control" multiple="multiple" name="outlet_brands[]">
                                 <option value="*">All Brand</option>
                                 @foreach($brands as $brand)
-                                <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],old('brands',[]))) selected @endif>{{$brand['name_brand']}}</option>
+                                <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],old('outlet_brands',[]))) selected @endif>{{$brand['name_brand']}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -439,14 +454,14 @@
                         <div class="col-md-9">
                                 <div class="md-radio-inline">
                                 <div class="md-radio">
-                                    <input type="radio" id="radio14" name="outlet_status" class="md-radiobtn" value="Active" required>
+                                    <input type="radio" id="radio14" name="outlet_status" class="md-radiobtn" @if(old('outlet_status') == 'Active') checked @endif value="Active" required>
                                     <label for="radio14">
                                         <span></span>
                                         <span class="check"></span>
                                         <span class="box"></span> Active </label>
                                 </div>
                                 <div class="md-radio">
-                                    <input type="radio" id="radio16" name="outlet_status" class="md-radiobtn" value="Inactive" required>
+                                    <input type="radio" id="radio16" name="outlet_status" class="md-radiobtn" value="Inactive" @if(old('outlet_status') == 'Inactive') checked @endif required>
                                     <label for="radio16">
                                         <span></span>
                                         <span class="check"></span>
@@ -589,7 +604,7 @@
                                 $sch = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
                             @endphp
 
-                            @foreach ($sch as $val)
+                            @foreach ($sch as $key=>$val)
                                 <div class="row">
                                     <div class="col-md-1">
                                         <label style="margin-top: 5px;margin-left: 15px;">{{ $val }}</label>
@@ -599,10 +614,10 @@
                                         <label style="margin-top: 5px;margin-left: 15px;">:</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open timepicker timepicker-no-seconds" name="open[]" @if (old('open') != '') value="{{ old('open') }}" @else value="07:00" @endif data-show-meridian="false" readonly>
+                                        <input type="text" data-placeholder="select time start" class="form-control mt-repeater-input-inline kelas-open timepicker timepicker-no-seconds" name="open[]" @if (old('open')[$key] != '') value="{{ old('open')[$key] }}" @else value="07:00" @endif data-show-meridian="false" readonly>
                                     </div>
                                     <div class="col-md-3" style="padding-bottom: 5px">
-                                        <input type="text" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close timepicker timepicker-no-seconds" name="close[]" @if (old('close') != '') value="{{ old('close') }}" @else value="22:00" @endif data-show-meridian="false" readonly>
+                                        <input type="text" data-placeholder="select time end" class="form-control mt-repeater-input-inline kelas-close timepicker timepicker-no-seconds" name="close[]" @if (old('close')[$key] != '') value="{{ old('close')[$key] }}" @else value="22:00" @endif data-show-meridian="false" readonly>
                                     </div>
                                     <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
                                         <label class="mt-checkbox mt-checkbox-outline"> Same all
@@ -612,8 +627,8 @@
                                     </div>
                                     <div class="col-md-2" style="padding-bottom: 5px;margin-top: 5px;">
                                         <label class="mt-checkbox mt-checkbox-outline"> Closed
-                                            <input type="checkbox" class="is_closed" data-id="is_closed"/>
-                                            <input type="hidden" name="is_closed[]" id="is_closed" value="0"/>
+                                            <input type="checkbox" class="is_closed"  id="is_closed_value_{{$key}}" onchange="changeValueIsClose({{$key}})" data-id="is_closed" @if (old('is_closed')[$key] == '1') checked @endif/>
+                                            <input type="hidden" name="is_closed[]" id="is_closed_{{$key}}" @if (old('is_closed')[$key] == '1') value="1" @else value="0" @endif/>
                                             <span></span>
                                         </label>
                                     </div>
