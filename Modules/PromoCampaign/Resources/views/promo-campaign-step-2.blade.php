@@ -58,7 +58,15 @@
 			padding-right: 0px;
 		}
 		.select2-results__option[aria-selected=true] {
-		    display: none;
+		    /*display: none;*/
+		}
+		.select2-selection--single {
+		  height: 100% !important;
+		}
+		.select2-selection__rendered{
+		  word-wrap: break-word !important;
+		  text-overflow: inherit !important;
+		  white-space: normal !important;
 		}
 	</style>
 @endsection
@@ -124,7 +132,14 @@
 			$product = [];
 			foreach ($promo_product as $key => $value) {
 				if ($product_type == 'variant') {
-					$product[] = $value['id_brand'].'-'.$value['id_product_variant_group'];
+					if ($result['promo_type'] == 'Buy X Get Y' && isset($value['promo_campaign_buyxgety_product_modifiers'])) {
+						$extra_modifier = array_column($value['promo_campaign_buyxgety_product_modifiers'], 'id_product_modifier');
+						$text_product[] = $value['id_brand'].'-'.$value['id_product_variant_group'];
+						$text_product[] = implode('-', $extra_modifier);
+						$product[] = implode('-', $text_product);
+					}else{
+						$product[] = $value['id_brand'].'-'.$value['id_product_variant_group'];
+					}
 				}else{
 					$product[] = $value['id_brand'].'-'.$value['id_product'];
 				}
