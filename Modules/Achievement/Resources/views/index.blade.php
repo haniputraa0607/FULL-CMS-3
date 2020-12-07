@@ -199,6 +199,7 @@ $grantedFeature     = session('granted_features');
 
             if(data.id_product_variant_group != null){
                 $("#use_variant").attr('checked', 'checked');
+                $('#editAchievement').find('.product_variant_rule_option').show()
             }
             $.ajax({
                 type: 'GET',
@@ -214,7 +215,7 @@ $grantedFeature     = session('granted_features');
                     }
                     $('.id_product_variant').append(option).trigger('change');
                 });
-                $('.id_product_variant').val("").trigger("change")
+                $('.id_product_variant').val(data.id_product_variant_group).trigger("change")
             });
 
 
