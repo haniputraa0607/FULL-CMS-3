@@ -104,6 +104,26 @@ $configs = session('configs');
 				url : "{{ url('enquiries/ajax') }}",
 				data : "_token="+token+"&id_enquiry="+idnya,
 				success : function(result) {
+					//show detail
+					if(result[0]['id_brand'] != null){
+						$('#detail-brand').val(result[0]['brand']['brand_name'])
+					}
+					$('#detail-subject').val(result[0]['enquiry_subject'])
+					if(result[0]['id_outlet'] != null){
+						$('#detail-outlet').val(result[0]['outlet']['outlet_name'])
+					}
+					$('#detail-visit').val(result[0]['enquiry_visiting_time'])
+					$('#detail-message').val(result[0]['enquiry_content'])
+					$('#detail-message').val(result[0]['enquiry_content'])
+
+					if (typeof result[0]['files'][0] !== 'undefined') {
+						$.each( result[0]['files'], function( key, value ) {
+							$('#detail-attachment').append(
+								'<a href="'+value.url_enquiry_file+'">Attachment '+(key+1)+'</a>'
+							)
+						})
+					}
+
 					if(result[0]['reply_email_subject'] != "" && result[0]['reply_email_subject'] != null){
 						document.getElementById('reply_email_subject').value = result[0]['reply_email_subject'];
 
@@ -231,7 +251,7 @@ $configs = session('configs');
                     }*/
                     details: false
                 },
-                order: [0, "asc"],
+                order: [],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
                     [5, 10, 15, 20, "All"]
@@ -595,7 +615,7 @@ $configs = session('configs');
 		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" width="100%" id="tablesDataCustomerFeedback">
 		    	        	    <thead>
 		    	        	        <tr>
-		    	        	            <th> No </th>
+		    	        	            <th> Enquiry ID </th>
 		    	        	            <th> Date </th>
 		    	        	            <th> Name </th>
 		    	        	            <th> Phone </th>
@@ -610,7 +630,7 @@ $configs = session('configs');
    		    	        	            @foreach($enquiries as $key=>$value)
    		    	        	            	@if ($value['enquiry_subject'] == "Kritik, Saran & Keluhan")
    		    	        	                <tr>
-   		    	        	                    <td>{{ $no }}</td>
+   		    	        	                    <td>{{ $value['id_enquiry'] }}</td>
    		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
 
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
@@ -726,7 +746,7 @@ $configs = session('configs');
 		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataMarketingPartnership" width="100%">
 		    	        	    <thead>
 		    	        	        <tr>
-		    	        	            <th> No </th>
+		    	        	            <th> Enquiry ID </th>
 		    	        	            <th> Date </th>
 		    	        	            <th> Name </th>
 		    	        	            <th> Phone </th>
@@ -741,7 +761,7 @@ $configs = session('configs');
 		    	        	            @foreach($enquiries as $key => $value)
 		    	        	            	@if ($value['enquiry_subject'] == "Pengubahan Data Diri")
 		    	        	                 <tr>
-												<td>{{ $no }}</td>
+												<td>{{ $value['id_enquiry'] }}</td>
    		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
@@ -838,7 +858,7 @@ $configs = session('configs');
 		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataBusinessDevelopment" width="100%">
 		    	        	    <thead>
 		    	        	        <tr>
-		    	        	            <th> No </th>
+		    	        	            <th> Enquiry ID </th>
 		    	        	            <th> Date </th>
 		    	        	            <th> Name </th>
 		    	        	            <th> Phone </th>
@@ -853,7 +873,7 @@ $configs = session('configs');
 		    	        	            @foreach($enquiries as $key => $value)
 		    	        	            	@if ($value['enquiry_subject'] == "Lain - Lain")
 		    	        	                 <tr>
-												<td>{{ $no }}</td>
+												<td>{{ $value['id_enquiry'] }}</td>
    		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
@@ -950,7 +970,7 @@ $configs = session('configs');
 		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataCareer" width="100%">
 		    	        	    <thead>
 		    	        	        <tr>
-		    	        	            <th> No </th>
+		    	        	            <th> Enquiry ID </th>
 		    	        	            <th> Date </th>
 		    	        	            <th> Name </th>
 		    	        	            <th> Phone </th>
@@ -965,7 +985,7 @@ $configs = session('configs');
 		    	        	            @foreach($enquiries as $key => $value)
 		    	        	            	@if ($value['enquiry_subject'] == "Career")
 		    	        	                 <tr>
-   		    	        	                    <td>{{ $no }}</td>
+												<td>{{ $value['id_enquiry'] }}</td>
    		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
    		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
    		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
@@ -1070,6 +1090,64 @@ $configs = session('configs');
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 				<h4 class="modal-title">Reply Enquiry</h4>
+			</div>
+			<div class="col-md-12" style="margin-top: 10px">
+				<div class="portlet light portlet-fit">
+				<div class="portlet-body form">
+					<h4>Detail</h4>
+					<div class="form-horizontal">
+						<div class="form-body">
+							<div class="form-group">
+								<label class="control-label col-md-3">
+									Brand
+								</label>
+								<div class="col-md-9">
+									<input type="text" readonly id="detail-brand" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">
+									Subject
+								</label>
+								<div class="col-md-9">
+									<input type="text" readonly id="detail-subject" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">
+									Outlet
+								</label>
+								<div class="col-md-9">
+									<input type="text" readonly id="detail-outlet" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">
+									Visiting Time
+								</label>
+								<div class="col-md-9">
+									<input type="text" readonly id="detail-visit" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">
+									Message
+								</label>
+								<div class="col-md-9">
+									<textarea class="form-control" readonly id="detail-message"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">
+									Attachment
+								</label>
+								<div class="col-md-9" id="detail-attachment">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
 			</div>
 			<div class="modal-body form">
 				<form class="form-horizontal" role="form" action="{{ url('enquiries/reply') }}" method="post" enctype="multipart/form-data">
