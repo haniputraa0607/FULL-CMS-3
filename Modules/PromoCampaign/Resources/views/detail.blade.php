@@ -70,6 +70,7 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js') }}" type="text/javascript"></script>
 
 	<script>
 	
@@ -737,6 +738,9 @@
                                                 	$variant = [];
 													foreach ($res['product_variant_pivot'] as $val) {
 														$variant[] = $val['product_variant']['product_variant_name'];
+													}
+													foreach ($res['promo_campaign_buyxgety_product_modifiers'] as $mod) {
+														$variant[] = $mod['modifier']['text_detail_trx'];
 													}
 													$variant = implode(', ',$variant);
                                                 @endphp
