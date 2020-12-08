@@ -139,7 +139,7 @@
 					<div class="col-md-4 p-l-0 text-right">\
 						<label>Variant<span class="required" aria-required="true"> * </span></label>\
 					</div>\
-					<div class="col-md-8 p-l-r-0">\
+					<div class="col-md-8 p-l-r-0" style="margin-bottom:15px;">\
 						<select name="promo_rule[::n::][id_product_variant_group]" class="form-control variant-selector select2" placeholder="Select Variant" style="width: 100%!important; " ::variant_required::>::variantList::</select>\
 					</div>\
 				</div>\
@@ -389,7 +389,27 @@
 					var htmlProduct='';
 					listVariant[id_product].forEach(function(i){
 						var addthis='';
-						if(it['id_product_variant_group'] && it['id_product_variant_group'] == i['id_product_variant_group']){
+						var id_product_variant_group = '';
+						if(it['id_product_variant_group'] && it['id_product_variant_group']){
+							id_product_variant_group = it['id_product_variant_group'].toString();
+						}
+
+						if (it['deals_buyxgety_product_modifiers'] && id_product_variant_group.indexOf('-') === -1) {
+							let extra_mod = [];
+							if (true) {}
+							// extra_mod = it['deals_buyxgety_product_modifiers'].map(function(val){ return val['id_product_modifier']});
+							it['deals_buyxgety_product_modifiers'].forEach(function(val){
+								extra_mod.push(val['id_product_modifier']);
+							});
+
+							if (extra_mod.length != 0) {
+								extra_mod = extra_mod.join('-');
+								id_product_variant_group = id_product_variant_group+'-'+extra_mod;
+							}
+						}
+
+						// if(it['id_product_variant_group'] && it['id_product_variant_group'] == i['id_product_variant_group']){
+						if(id_product_variant_group == i['id_product_variant_group']){
 							addthis = 'selected';
 						}
 						htmlProduct+='<option value="'+i['id_product_variant_group']+'" '+addthis+'>'+i['product_variant_group_name']+'</option>';

@@ -60,8 +60,17 @@
 			padding-right: 0px;
 		}
 		.select2-results__option[aria-selected=true] {
-		    display: none;
+		    /*display: none;*/
 		}
+		.select2-selection--single {
+		  	height: 100% !important;
+		}
+		.select2-selection__rendered{
+			word-wrap: break-word !important;
+			text-overflow: inherit !important;
+			white-space: normal !important;
+		}
+
 	</style>
 @endsection
 
