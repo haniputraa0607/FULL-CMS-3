@@ -501,6 +501,9 @@ $grantedFeature     = session('granted_features');
 									foreach ($res['product_variant_pivot'] as $val) {
 										$variant[] = $val['product_variant']['product_variant_name'];
 									}
+									foreach ($res['deals_buyxgety_product_modifiers'] as $mod) {
+										$variant[] = $mod['modifier']['text_detail_trx'];
+									}
 									$variant = implode(', ',$variant);
 			                    @endphp
                                 <tr>
