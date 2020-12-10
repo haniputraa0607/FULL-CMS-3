@@ -320,12 +320,33 @@ class SubscriptionController extends Controller
             if($post['id_subscription']){
                 $post['id_subscription'] = MyHelper::explodeSlug($post['id_subscription'])[0];
             }
+
+            $msg_success = ['Subscription has been updated'];
+	        if ($post['subscription_discount_type'] == 'discount_delivery') {
+            	$shipment = [];
+
+            	if (isset($post['shipment_method'])) {
+            		if(in_array('all', $post['shipment_method'])){
+            			$shipment[] = 'GO-SEND';
+            		}else{
+	            		$shipment = $post['shipment_method'];
+	            		$shipment = array_flip($shipment);
+	            		unset($shipment['Pickup Order']);
+	            		$shipment = array_flip($shipment);
+	            		if (empty($shipment)) $shipment[] = 'GO-SEND';
+            		}
+            	}
+            	$shipment_text 	= implode(', ', $shipment);
+            	$msg_shipment 	= 'Tipe shipment yang tersimpan adalah delivery '.$shipment_text.' karena tipe promo yang dipilih merupakan diskon delivery';
+            	$msg_success[] 	= $msg_shipment;
+            }
+
             $save = MyHelper::post('subscription/step2', $post);
 
             if ( ($save['status']??false) == "success") {
-            	$redirect = redirect($data['rpage'].'/step3/'.$slug)->with('success', ['Subscription has been updated']);
+            	$redirect = redirect($data['rpage'].'/step3/'.$slug)->with('success', $msg_success);
             	if (isset($save['brand_product_error'])) {
-            		$redirect = redirect($data['rpage'].'/step2/'.$slug)->with('success', ['Subscription has been updated'])->withErrors($save['brand_product_error']??[]);
+            		$redirect = redirect($data['rpage'].'/step2/'.$slug)->with('success', $msg_success)->withErrors($save['brand_product_error']??[]);
             	}
                 return $redirect;
             }else{
