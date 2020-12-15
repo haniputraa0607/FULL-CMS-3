@@ -370,8 +370,6 @@ class AchievementController extends Controller
         $data['is_start'] = ($data['date_start']??false) < date('Y-m-d H:i:s');
         $data['date_start'] = $data['date_start']??false?date('d-M-Y H:i',strtotime($data['date_start'])):'';
         $data['date_end'] = $data['date_end']??false?date('d-M-Y H:i',strtotime($data['date_end'])):'';
-        $data['publish_start'] = $data['publish_start']??false?date('d-M-Y H:i',strtotime($data['publish_start'])):'';
-        $data['publish_end'] = $data['publish_end']??false?date('d-M-Y H:i',strtotime($data['publish_end'])):'';
         $data['logo_badge_default'] = env('STORAGE_URL_API') . $data['logo_badge_default'];
         return $data;
     }
@@ -397,7 +395,6 @@ class AchievementController extends Controller
             }
         }
 
-      
         if (isset($post['group']['date_end'])) {
             $post['group']['date_end'] = date('Y-m-d H:i:s', strtotime($post['group']['date_end']));
             if ($post['group']['date_end'] < date('Y-m-d H:i:s')) {
@@ -405,13 +402,6 @@ class AchievementController extends Controller
             }
         }
 
-        if (isset($post['group']['publish_start'])) {
-            $post['group']['publish_start'] = date('Y-m-d H:i:s', strtotime($post['group']['publish_start']));
-        }
-
-        if (isset($post['group']['publish_end'])) {
-            $post['group']['publish_end'] = date('Y-m-d H:i:s', strtotime($post['group']['publish_end']));
-        }
         $save = MyHelper::post('achievement/update', $post);
         
         if (isset($save['status']) && $save['status'] == "success") {

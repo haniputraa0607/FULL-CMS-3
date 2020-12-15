@@ -274,6 +274,7 @@ $configs    		= session('configs');
 					</div>
 				</div>
 				<div class="portlet-body form">
+					@if(MyHelper::hasAccess([56], $grantedFeature))
 						<form class="form-horizontal" role="form" action="#" method="post" id="form1">
 							<div class="form-body">
 								<div class="form-group text-center">
@@ -298,6 +299,7 @@ $configs    		= session('configs');
 							</div>
 						</form>
 				</div>
+				@endif
 			</div>
 		</div>
 		<div class="switcher-item" data-step="2">
