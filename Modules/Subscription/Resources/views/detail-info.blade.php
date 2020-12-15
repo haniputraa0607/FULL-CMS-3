@@ -97,16 +97,25 @@ $grantedFeature     = session('granted_features');
                                 <th>Brand</th>
                                 <th>Code</th>
                                 <th>Name</th>
+                                <th>Variant</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($subscription['subscription_products'] as $res)
+                        	@php
+                        		$variant = [];
+								foreach ($res['product_variant_pivot'] as $val) {
+									$variant[] = $val['product_variant']['product_variant_name'];
+								}
+								$variant = implode(', ',$variant);
+                        	@endphp
                                 <tr>
                                     <td>{{ $res['brand']['name_brand']??'' }}</td>
                                     <td>{{ $res['product']['product_code']??'' }}</td>
                                     <td>
                                     	<a href="{{ url('product/detail/'.($res['product']['product_code']??'')) }}">{{ $res['product']['product_name']??'' }}</a>	
                                     </td>
+                                    <td>{{ $variant }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

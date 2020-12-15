@@ -60,8 +60,17 @@
 			padding-right: 0px;
 		}
 		.select2-results__option[aria-selected=true] {
-		    display: none;
+		    /*display: none;*/
 		}
+		.select2-selection--single {
+		  	height: 100% !important;
+		}
+		.select2-selection__rendered{
+			word-wrap: break-word !important;
+			text-overflow: inherit !important;
+			white-space: normal !important;
+		}
+
 	</style>
 @endsection
 
@@ -99,8 +108,57 @@
 		$product 			= null;
 		$is_all_outlet 		= null;
 		$outlet			 	= null;
+		$product_type 		= $result['product_type'] ?? 'single';
 
-		if (isset($result['deals_product_discount_rules']['is_all_product']) && $result['deals_product_discount_rules']['is_all_product'] == "0") {
+		if ($deals_type == 'Promotion') {
+			$promo_product = $result['deals_promotion_product_discount'] ?: $result['deals_promotion_tier_discount_product'] ?: $result['deals_promotion_buyxgety_product_requirement'] ?: $result['deals_promotion_discount_bill_products'] ?: [];
+
+			if (isset($result['deals_promotion_product_discount_rules']['is_all_product']) && $result['deals_promotion_product_discount_rules']['is_all_product'] == "0") {
+				$is_all_product = $result['deals_promotion_product_discount_rules']['is_all_product'];
+				$product = [];
+				for ($i=0; $i < count($result['deals_promotion_product_discount']); $i++) { 
+					if ($product_type == 'variant') {
+						$product[] = $result['deals_promotion_product_discount'][$i]['id_brand'].'-'.$result['deals_promotion_product_discount'][$i]['id_product_variant_group'];
+					}else{
+						$product[] = $result['deals_promotion_product_discount'][$i]['id_brand'].'-'.$result['deals_promotion_product_discount'][$i]['id_product'];
+					}
+				}
+			}else{
+				$product = [];
+				foreach ($promo_product as $key => $value) {
+					if ($product_type == 'variant') {
+						$product[] = $value['id_brand'].'-'.$value['id_product_variant_group'];
+					}else{
+						$product[] = $value['id_brand'].'-'.$value['id_product'];
+					}
+				}
+			}
+		}else{
+			$promo_product = $result['deals_product_discount'] ?: $result['deals_tier_discount_product'] ?: $result['deals_buyxgety_product_requirement'] ?: $result['deals_discount_bill_products'] ?: [];
+
+			if (isset($result['deals_product_discount_rules']['is_all_product']) && $result['deals_product_discount_rules']['is_all_product'] == "0") {
+				$is_all_product = $result['deals_product_discount_rules']['is_all_product'];
+				$product = [];
+				for ($i=0; $i < count($result['deals_product_discount']); $i++) { 
+					if ($product_type == 'variant') {
+						$product[] = $result['deals_product_discount'][$i]['id_brand'].'-'.$result['deals_product_discount'][$i]['id_product_variant_group'];
+					}else{
+						$product[] = $result['deals_product_discount'][$i]['id_brand'].'-'.$result['deals_product_discount'][$i]['id_product'];
+					}
+				}
+			}else{
+				$product = [];
+				foreach ($promo_product as $key => $value) {
+					if ($product_type == 'variant') {
+						$product[] = $value['id_brand'].'-'.$value['id_product_variant_group'];
+					}else{
+						$product[] = $value['id_brand'].'-'.$value['id_product'];
+					}
+				}
+			}
+		}
+
+		/*if (isset($result['deals_product_discount_rules']['is_all_product']) && $result['deals_product_discount_rules']['is_all_product'] == "0") {
 			$is_all_product = $result['deals_product_discount_rules']['is_all_product'];
 			$product = [];
 			for ($i=0; $i < count($result['deals_product_discount']); $i++) { 
@@ -134,7 +192,7 @@
 			foreach ($result['deals_discount_bill_products']??$result['deals_promotion_discount_bill_products']??[] as $key => $value) {
 				$product[] = $value['id_brand'].'-'.$value['id_product'];
 			}
-		}
+		}*/
 
 		$datenow = date("Y-m-d H:i:s");
 		if ($result??false) {
@@ -148,6 +206,7 @@
             $date_end   = null;
         }
         $brands = array_column($result['brands'], 'id_brand');
+        $is_all_product_bill = $result['deals_promotion_discount_bill_rules']['is_all_product'] ?? $result['deals_discount_bill_rules']['is_all_product'] ?? 1;
 	@endphp
 	<script>
 	$(document).ready(function() {
@@ -155,9 +214,31 @@
 		productLoad = 0;
 
 		var is_all_product = '{!!$is_all_product!!}';
+		var is_all_product_bill = {{ $is_all_product_bill }};
 		var brand = JSON.parse('{!!json_encode($brands)!!}');
 		var selectedProduct = JSON.parse('{!!json_encode($product)!!}');
-		
+		var product_type = '{!!$product_type!!}';
+
+		// load product benefit for promo buy x get y
+		$.ajax({
+			type: "GET",
+			url: "{{url('promo-campaign/step2/getData')}}",
+			data : {
+				"get" : 'Product',
+				"brand" : brand,
+				"product_type" : 'single'
+			},
+			dataType: "json",
+			success: function(data){
+				if (data.status == 'fail') {
+					$.ajax(this)
+					return
+				}
+				// productLoad = 1;
+				listProduct=data;
+			}
+		});
+
 		if (is_all_product == 0 && is_all_product.length != 0) {
 			$('#productDiscount').show()
 			$('#selectProduct, #product-rule-option').show()
@@ -166,8 +247,9 @@
 					type: "GET",
 					url: "{{url('promo-campaign/step2/getData')}}",
 					data : {
-						get : 'Product',
-						brand : brand
+						"get" : 'Product',
+						"brand" : brand,
+						"product_type" : product_type
 					},
 					dataType: "json",
 					success: function(data){
@@ -176,7 +258,7 @@
 							return
 						}
 						productLoad = 1;
-						listProduct=data;
+						// listProduct=data;
 						$.each(data, function( key, value ) {
 							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
 							$('#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
@@ -207,8 +289,9 @@
 					type: "GET",
 					url: "{{url('promo-campaign/step2/getData')}}",
 					data : {
-						get : 'Product',
-						brand : brand
+						"get" : 'Product',
+						"brand" : brand,
+						"product_type" : product_type
 					},
 					dataType: "json",
 					success: function(data){
@@ -216,7 +299,7 @@
 							$.ajax(this)
 							return
 						}
-						listProduct=data;
+						// listProduct=data;
 						productLoad = 1;
 						$.each(data, function( key, value ) {
 							// if(valuee.indexOf(value.id_product)>-1){
@@ -230,7 +313,9 @@
 						$.each(selectedProduct, function( key, value ) {
 							$(".product"+value+"").attr('selected', true)
 						});
-						$(selector).prop('required', true)
+						if(is_all_product_bill != 1){
+							$(selector).prop('required', true)
+						}
 						$(selector).prop('disabled', false)
 						if(callback){callback()}
 					}
@@ -242,7 +327,6 @@
 			promo_type = $('select[name=promo_type] option:selected').val();
 			// $('#tabContainer input:not(input[name="promo_type"]),#tabContainer select').prop('disabled',true);
 			$('#productDiscount, #bulkProduct, #buyXgetYProduct, #discount-bill, #discount-delivery').hide().find('input, textarea, select').prop('disabled', true);
-
 			if (promo_type == 'Product discount') {
 				product = $('select[name=filter_product] option:selected').val();
 				$('#productDiscount').show().find('input, textarea, select').prop('disabled', false);
@@ -265,8 +349,8 @@
 			else if(promo_type == 'Discount bill'){
 
 				product = $('select[name=filter_product_bill] option:selected').val();
-				loadProduct('#multiple-product-bill');
 				$('#discount-bill').show().find('input, textarea, select').prop('disabled', false);
+				loadProduct('#multiple-product-bill');
 				if (product == 'All Product') {
 					$('#multiple-product-bill').find('select').prop('disabled', true);
 				}else {
@@ -291,13 +375,14 @@
 						type: "GET",
 						url: "{{url('promo-campaign/step2/getData')}}",
 						data : {
-							get : 'Product',
-							brand : brand
+							"get" : 'Product',
+							"brand" : brand,
+							"product_type" : product_type
 						},
 						dataType: "json",
 						success: function(data){
 							productLoad = 1;
-							listProduct=data;
+							// listProduct=data;
 							$.each(data, function( key, value ) {
 								$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
 							});
@@ -361,8 +446,9 @@
 					type: "GET",
 					url: "{{url('promo-campaign/step2/getData')}}",
 					data : {
-						get : 'Product',
-						brand : brand
+						"get" : 'Product',
+						"brand" : brand,
+						"product_type" : product_type
 					},
 					dataType: "json",
 					success: function(data){
@@ -371,7 +457,7 @@
 							return
 						}
 						productLoad = 1;
-						listProduct=data;
+						// listProduct=data;
 						$.each(data, function( key, value ) {
 							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
 							$('#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
@@ -423,7 +509,6 @@
                     $('input[name=deals_promo_id_nominal]').hide().removeAttr('required', true);
                 }
                 else {
-                	console.log(0);
                     $('input[name=deals_promo_id_nominal]').show().prop('required', true);
                     $('#promoid-inputgroup').show().prop('required', true);
 
@@ -448,7 +533,6 @@
 	@if( strtotime($datenow) > strtotime($date_start) && isset($result['campaign_complete']))
 	<script type="text/javascript">
 		$(document).ready(function() {
-			console.log('ok');
 			$('#promotype-form').find('input, textarea').prop('disabled', true);
 			$('#user-search-form').find('input, textarea').prop('disabled', true);
 		});

@@ -354,14 +354,33 @@ class PromoCampaignController extends Controller
         }else{
 
             $post['id_promo_campaign'] = $id_promo_campaign;
+            $msg_success = ['Promo Campaign has been updated'];
+            if ($post['promo_type'] == 'Discount delivery') {
+            	$shipment = [];
+            	if ($post['filter_shipment'] == 'all_shipment') {
+            		$shipment[] = 'GO-SEND';
+            	}
+
+            	if (isset($post['shipment_method'])) {
+            		$shipment = $post['shipment_method'];
+            		$shipment = array_flip($shipment);
+            		unset($shipment['Pickup Order']);
+            		$shipment = array_flip($shipment);
+            		if (empty($shipment)) $shipment[] = 'GO-SEND';
+            	}
+            	$shipment_text 	= implode(', ', $shipment);
+            	$msg_shipment 	= 'Tipe shipment yang tersimpan adalah delivery '.$shipment_text.' karena tipe promo yang dipilih merupakan diskon delivery';
+            	$msg_success[] 	= $msg_shipment;
+            }
+
             $action = MyHelper::post('promo-campaign/step2', $post);
 
             if (isset($action['status']) && $action['status'] == 'success') {
 
-                $redirect = redirect('promo-campaign/detail/' . $slug)->withSuccess(['Promo Campaign has been updated']);
+                $redirect = redirect('promo-campaign/detail/' . $slug)->withSuccess($msg_success);
 
 	            if (isset($action['brand_product_error'])) {
-	            	$redirect = redirect('promo-campaign/step2/' . $slug)->withSuccess(['Promo Campaign has been updated'])->withErrors($action['brand_product_error']??[]);
+	            	$redirect = redirect('promo-campaign/step2/' . $slug)->withSuccess($msg_success)->withErrors($action['brand_product_error']??[]);
 	            }
 
 	            return $redirect;

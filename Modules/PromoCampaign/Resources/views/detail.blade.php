@@ -70,6 +70,7 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js') }}" type="text/javascript"></script>
 
 	<script>
 	
@@ -407,6 +408,14 @@
 	                                        {{ $result['brand_rule'] && $result['brand_rule'] == 'and' ? 'All selected brands' : 'One of the selected brands' }}
 	                                    </div>
 	                                </div>
+	                                <div class="row static-info">
+					                    <div class="col-md-4 name">Charged Central</div>
+					                    <div class="col-md-8 value">: {{$result['charged_central']}} %</div>
+					                </div>
+					                <div class="row static-info">
+					                    <div class="col-md-4 name">Charged Outlet</div>
+					                    <div class="col-md-8 value">: {{$result['charged_outlet']}} %</div>
+					                </div>
                                     <div class="row static-info">
                                         <div class="col-md-4 name">Tag</div>
                                         @if (count($result['promo_campaign_have_tags']) > 1)
@@ -505,6 +514,24 @@
 	                                			&& $result['promo_campaign_discount_bill_rules']['is_all_product'] == 0)
 	                                	)
                                 	)
+                                @php
+                                	$promo_product = $result['promo_campaign_product_discount'] ?: $result['promo_campaign_tier_discount_product'] ?: $result['promo_campaign_buyxgety_product_requirement'] ?: $result['promo_campaign_discount_bill_products'] ?: [];
+                                	$promo_product_simple = [];
+                                	foreach ($promo_product as $value) {
+                                		$variant = [];
+										foreach ($value['product_variant_pivot'] as $val) {
+											$variant[] = $val['product_variant']['product_variant_name'];
+										}
+										$variant = implode(', ',$variant);
+                                		$promo_product_simple[] = [
+                                			'brand' => $value['brand']['name_brand']??$result['brand']['name_brand']??'',
+                                			'product_code' => $value['product']['product_code'],
+                                			'product_name' => $value['product']['product_name'],
+                                			// 'product_name' => '<a href="'.url('product/detail/'.$value['product']['product_code']??'').'" target="_blank">'.($value['product']['product_name']??'').'</a>',
+                                			'variant' => $variant
+                                		];
+                                	}
+                                @endphp
                                 <div class="row static-info">
                                     <div class="col-md-4 name">Product Rule</div>
                                     <div class="col-md-8 value">: 
@@ -539,7 +566,7 @@
                                             <div class="col-md-4 name">Discount</div>
                                             <div class="col-md-8 value">: 
                                                 @if ($result['promo_campaign_product_discount_rules']['discount_type'] == 'Percent')
-                                                    {{$result['promo_campaign_product_discount_rules']['discount_value']}} %
+                                                    {{$result['promo_campaign_product_discount_rules']['discount_value']}}% (max : {{ !empty($result['promo_campaign_product_discount_rules']['max_percent_discount']) ? 'IDR '.number_format($result['promo_campaign_product_discount_rules']['max_percent_discount']) : '-' }} )
                                                 @elseif ($result['promo_campaign_product_discount_rules']['discount_type'] == 'Nominal')
                                                     {{ 'IDR '.number_format($result['promo_campaign_product_discount_rules']['discount_value']) }}
                                                 @else
@@ -569,14 +596,16 @@
                                                                 <th>Brand</th>
                                                                 <th>Code</th>
                                                                 <th>Name</th>
+                                                                <th>Variant</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach($result['promo_campaign_product_discount'] as $res)
+                                                            @foreach($promo_product_simple as $res)
                                                                 <tr>
-                                                                    <td>{{ $res['brand']['name_brand']??$result['brand']['name_brand']??'' }}</td>
-                                                                    <td>{{ $res['product']['product_code'] }}</td>
-                                                                    <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                                                    <td>{{ $res['brand'] }}</td>
+                                                                    <td>{{ $res['product_code'] }}</td>
+                                                                    <td><a href="{{ url('product/detail/'.$res['product_code']??'') }}" target="_blank">{{ $res['product_name']??'' }}</a></td>
+                                                                    <td>{{ $res['variant'] }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
@@ -605,14 +634,16 @@
                                                             <th  class="col-md-3">Brand</th>
                                                             <th  class="col-md-3">Code</th>
                                                             <th  class="col-md-6">Name</th>
+                                                            <th  class="col-md-6">Variant</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($result['promo_campaign_tier_discount_product'] as $res)
+                                                        @foreach($promo_product_simple as $res)
                                                             <tr>
-                                                                <td>{{ $res['brand']['name_brand']??$result['brand']['name_brand']??'' }}</td>
-                                                                <td>{{ $res['product']['product_code'] }}</td>
-                                                                <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                                                <td>{{ $res['brand'] }}</td>
+                                                                <td>{{ $res['product_code'] }}</td>
+                                                                <td><a href="{{ url('product/detail/'.$res['product_code']??'') }}" target="_blank">{{ $res['product_name']??'' }}</a></td>
+                                                                <td>{{ $res['variant'] }}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -637,7 +668,13 @@
                                                     <tr>
                                                         <td>{{ number_format($res['min_qty']) }}</td>
                                                         <td>{{ number_format($res['max_qty']) }}</td>
-                                                        <td>{{ ($result['promo_campaign_tier_discount_rules'][0]['discount_type'] == 'Percent') ? ( $res['discount_value'].' %' ) : ('IDR '.number_format($res['discount_value'])) }}</td>
+                                                        <td>
+                                                        	@if ($res['discount_type'] == 'Percent')
+	                                                        	{{ ( $res['discount_value'].'%' ) }} (max : {{ !empty($res['max_percent_discount']) ? 'IDR '.number_format($res['max_percent_discount']) : '-' }})
+	                                                        @else
+	                                                        	{{ 'IDR '.number_format($res['discount_value']) }}
+	                                                        @endif
+	                                                    </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -663,14 +700,16 @@
                                                             <th class="col-md-3">Brand</th>
                                                             <th class="col-md-3">Code</th>
                                                             <th class="col-md-6">Name</th>
+                                                            <th class="col-md-6">Variant</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($result['promo_campaign_buyxgety_product_requirement'] as $res)
+                                                    	@foreach($promo_product_simple as $res)
                                                             <tr>
-                                                                <td>{{ $res['brand']['name_brand']??$result['brand']['name_brand']??'' }}</td>
-                                                                <td>{{ $res['product']['product_code'] }}</td>
-                                                                <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                                                <td>{{ $res['brand'] }}</td>
+                                                                <td>{{ $res['product_code'] }}</td>
+                                                                <td><a href="{{ url('product/detail/'.$res['product_code']??'') }}" target="_blank">{{ $res['product_name']??'' }}</a></td>
+                                                                <td>{{ $res['variant'] }}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -688,16 +727,28 @@
                                                     <th>Min Qty</th>
                                                     <th>Max Qty</th>
                                                     <th>Product Benefit</th>
+                                                    <th>Product Benefit Variant</th>
                                                     <th>Benefit Qty</th>
                                                     <th>Benefit Discount</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($result['promo_campaign_buyxgety_rules'] as $res)
+                                                @php
+                                                	$variant = [];
+													foreach ($res['product_variant_pivot'] as $val) {
+														$variant[] = $val['product_variant']['product_variant_name'];
+													}
+													foreach ($res['promo_campaign_buyxgety_product_modifiers'] as $mod) {
+														$variant[] = $mod['modifier']['text_detail_trx'];
+													}
+													$variant = implode(', ',$variant);
+                                                @endphp
                                                     <tr>
                                                         <td>{{ $res['min_qty_requirement'] }}</td>
                                                         <td>{{ $res['max_qty_requirement'] }}</td>
                                                         <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['brand']['name_brand'].' - '.$res['product']['product_code'].' - '.$res['product']['product_name'] }}</a></td>
+                                                        <td>{{ $variant }}</td>
                                                         <td>{{ $res['benefit_qty'] }}</td>
                                                         <td>
                                                         @if( ($res['discount_type']??false) == 'nominal' )
@@ -706,7 +757,7 @@
                                                         	@if( ($res['discount_value']??false) == 100 )
                                                         		Free
                                                         	@else
-                                                        		{{ ($res['discount_value']??false).'%' }}
+                                                        		{{ ($res['discount_value']??false).'%' }} (max : {{ !empty($res['max_percent_discount']) ? 'IDR '.number_format($res['max_percent_discount']) : '-' }})
                                                         	@endif
                                                         @endif
                                                         </td>
@@ -722,10 +773,7 @@
                                             <div class="col-md-4 name">Discount</div>
                                             <div class="col-md-8 value">: 
                                                 @if ($result['promo_campaign_discount_bill_rules']['discount_type'] == 'Percent')
-                                                    {{ $result['promo_campaign_discount_bill_rules']['discount_value'] }} % 
-                                                    @if (!empty($result['promo_campaign_discount_bill_rules']['max_percent_discount']))
-                                                    	(max: IDR {{ number_format($result['promo_campaign_discount_bill_rules']['max_percent_discount']) }})
-                                                    @endif
+                                                    {{ $result['promo_campaign_discount_bill_rules']['discount_value'] }}% (max : {{ !empty($result['promo_campaign_discount_bill_rules']['max_percent_discount']) ? 'IDR '.number_format($result['promo_campaign_discount_bill_rules']['max_percent_discount']) : '-' }})
                                                 @elseif ($result['promo_campaign_discount_bill_rules']['discount_type'] == 'Nominal')
                                                     {{ 'IDR '.number_format($result['promo_campaign_discount_bill_rules']['discount_value']) }}
                                                 @else
@@ -769,10 +817,7 @@
                                             <div class="col-md-4 name">Discount</div>
                                             <div class="col-md-8 value">: 
                                                 @if ($result['promo_campaign_discount_delivery_rules']['discount_type'] == 'Percent')
-                                                    {{ $result['promo_campaign_discount_delivery_rules']['discount_value'] }} % 
-                                                    @if (!empty($result['promo_campaign_discount_delivery_rules']['max_percent_discount']))
-                                                    	(max: IDR {{ number_format($result['promo_campaign_discount_delivery_rules']['max_percent_discount']) }})
-                                                    @endif
+                                                    {{ $result['promo_campaign_discount_delivery_rules']['discount_value'] }}% (max : {{ !empty($result['promo_campaign_discount_delivery_rules']['max_percent_discount']) ? 'IDR '.number_format($result['promo_campaign_discount_delivery_rules']['max_percent_discount']) : '-' }})
                                                 @elseif ($result['promo_campaign_discount_delivery_rules']['discount_type'] == 'Nominal')
                                                     {{ 'IDR '.number_format($result['promo_campaign_discount_delivery_rules']['discount_value']) }}
                                                 @else
