@@ -115,15 +115,20 @@ $grantedFeature     = session('granted_features');
                 $('#editAchievement').find("input[name='group[date_start]']").attr('disabled', 'disabled');
             }
 
-            // $('#editAchievement').find("input[name='group[date_end]']").val(data.date_end).trigger('change')
+            $('#editAchievement').find("input[name='group[date_end]']").val(data.date_end).trigger('change')
             // if (!data.is_start || data.date_end.length === 0) {
             //     $('#editAchievement').find("input[name='group[date_end]']").removeAttr('disabled');
             // } else {
             //     $('#editAchievement').find("input[name='group[date_end]']").attr('disabled', 'disabled');
             // }
 
-            // $('#editAchievement').find("input[name='group[publish_start]']").val(data.publish_start).trigger('change')
-            // $('#editAchievement').find("input[name='group[publish_end]']").val(data.publish_end).trigger('change')
+            $('#editAchievement').find("input[name='group[publish_start]']").val(data.publish_start).trigger('change')
+            if (!data.is_start) {
+                $('#editAchievement').find("input[name='group[publish_start]']").removeAttr('disabled');
+            } else {
+                $('#editAchievement').find("input[name='group[publish_start]']").attr('disabled', 'disabled');
+            }
+            $('#editAchievement').find("input[name='group[publish_end]']").val(data.publish_end).trigger('change')
             // $('#editAchievement').find("input[name='group[date_start]']").val(data.date_start).trigger('change')
             // $('#editAchievement').find("input[name='group[date_end]']").val(data.date_end).trigger('change')
             // var desc = `<textarea name="group[description]" id="field_content_long" class="form-control summernote" placeholder="Achievement Description">${data.description}</textarea>`
@@ -618,6 +623,42 @@ $grantedFeature     = session('granted_features');
                                                 </button>
                                                 <button class="btn default" type="button">
                                                     <i class="fa fa-question-circle tooltips" data-original-title="End Peroide Achievement (Leave this column, if the achievement is active forever)" data-container="body"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"> Achievement Publish Start Periode <span class="required" aria-required="true"> * </span> </label>
+                                <div class="col-md-5">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <input type="text" class="form_datetime form-control" name="group[publish_start]" value="{{ old('group.publish_start') }}" autocomplete="off">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Publish Start Peroide Achievement" data-container="body"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"> Achievement Publish End Periode </label>
+                                <div class="col-md-5">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <input type="text" class="form_datetime form-control" name="group[publish_end]" value="{{ old('group.publish_end') }}" autocomplete="off">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Publish End Peroide Achievement (Leave this column, if the achievement is active forever)" data-container="body"></i>
                                                 </button>
                                             </span>
                                         </div>
