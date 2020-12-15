@@ -135,8 +135,7 @@
 				</ul>
 			</li>
 
-			@if(MyHelper::hasAccess([5], $configs))
-			@if(MyHelper::hasAccess([9], $grantedFeature))
+			@if(MyHelper::hasAccess([9], $configs))
 			<li class="nav-item {{($menu_active == 'admin-outlet') ? 'active open' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
 					<i class="icon-eye"></i>
@@ -160,7 +159,6 @@
 					@endif
 				</ul>
 			</li>
-			@endif
 			@endif
 
 		@endif
