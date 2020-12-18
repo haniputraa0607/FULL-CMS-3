@@ -218,7 +218,7 @@
            </label>
            <div class="col-md-8">
                <div class="input-icon right">
-                   <textarea name="product_description" id="pro_text" class="form-control summernote">{{ $syu['product_description'] }}</textarea>
+                   <textarea name="product_description" id="pro_text" class="form-control">{{ $syu['product_description'] }}</textarea>
                </div>
            </div>
         </div>
