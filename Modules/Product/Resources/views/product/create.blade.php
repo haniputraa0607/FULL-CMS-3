@@ -449,7 +449,7 @@
                        </label>
                        <div class="col-md-8">
                            <div class="input-icon right">
-                               <textarea name="product_description" id="text_pro" class="form-control summernote">{{ old('product_description') }}</textarea>
+                               <textarea name="product_description" id="text_pro" class="form-control">{{ old('product_description') }}</textarea>
                            </div>
                        </div>
                     </div>
