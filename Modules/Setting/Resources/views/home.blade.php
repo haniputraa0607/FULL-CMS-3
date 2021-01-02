@@ -239,7 +239,7 @@
     // banner: edit
     $('#banner .btn-edit').click(function() {
 		var id      = $(this).data('id');
-		var id_reference = $(this).data('news');
+		var id_reference = $(this).data('reference');
 		var url     = $(this).data('url');
 		var image   = $(this).data('img');
 		var type    = $(this).data('type');
@@ -263,6 +263,9 @@
 			$('#time_end').val(time_end);
 			$('#click-to-type').val(type);
 			$('#modalBannerUpdate [name="id_reference"]').val(reference);
+			if(id_reference){
+				$('.click-to-news').val(id_reference).trigger('change');
+			}
 
 			// reset var
 			url = "";
@@ -348,7 +351,7 @@
 		// $('#id_banner').val('');
 		$('#modalBannerUpdate .click-to-news').val('').trigger('change');
 		$('#modalBannerUpdate .click-to-url').val('');
-		$('#edit-banner-img').attr('src', '');
+		// $('#edit-banner-img').attr('src', '');
 		// hide all click to input
 		$('#modalBannerUpdate .click-to-type').children().hide();
 	});
@@ -429,7 +432,6 @@
 					$('#field_splash').val("");
 					$('#div_splash').children('img').attr('src', 'https://www.placehold.it/500x250/EFEFEF/AAAAAA&amp;text=no+image');
 
-					console.log($(this).val())
 					// console.log(document.getElementsByName('news_image_luar'))
 				}
 			};
