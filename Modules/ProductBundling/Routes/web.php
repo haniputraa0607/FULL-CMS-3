@@ -11,10 +11,6 @@
 |
 */
 
-// Route::prefix('productbundling')->group(function() {
-//     Route::get('/', 'ProductBundlingController@index');
-// });
-
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-bundling'], function()
 {
 	/**
@@ -22,10 +18,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-
 	 */
 	Route::get('/', 'ProductBundlingController@index');
 	Route::get('create', 'ProductBundlingController@create');
-
-	/**
-	 * Get Brand Product
-	 */
-	Route::get('get_product', 'ProductBundlingController@get_product')->name('brand.product');
-	Route::post('getAjax', 'ProductBundlingController@getAjax');
+    Route::post('store', 'ProductBundlingController@store');
+    Route::get('detail/{id}', 'ProductBundlingController@detail');
+    Route::post('update/{id}', 'ProductBundlingController@update');
+    Route::post('product-brand', 'ProductBundlingController@productBrand');
+    Route::post('outlet-available', 'ProductBundlingController@outletAvailable');
 });

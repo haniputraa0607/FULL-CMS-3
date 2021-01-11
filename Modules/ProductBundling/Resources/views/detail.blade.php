@@ -91,7 +91,8 @@
 
         });
 
-        var i=1;
+        var tmpBrand = new Map();
+        var i='{{$count_list_product}}';
         function addProduct() {
             var brands = <?php echo json_encode($brands)?>;
             var html = '';
@@ -196,7 +197,6 @@
             i++;
         }
 
-        var tmpBrand = new Map();
         function deleteProduct(id) {
             var check = $("#available_outlet").select2("val");
 
@@ -345,7 +345,7 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal" role="form" action="{{url('product-bundling/store')}}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" role="form" action="{{url('product-bundling/update')}}/{{$result['id_bundling']}}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
                         <label class="col-md-3 control-label">Bundling Name <span class="required" aria-required="true"> * </span>
@@ -353,7 +353,7 @@
                         </label>
                         <div class="col-md-8">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Bundling name" class="form-control" name="bundling_name" value="{{ old('bundling_name') }}" required>
+                                <input type="text" placeholder="Bundling name" class="form-control" name="bundling_name" value="{{ $result['bundling_name']}}" required>
                             </div>
                         </div>
                     </div>
@@ -363,7 +363,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="bundling_start" required>
+                                    <input type="text" class="form_datetime form-control" name="bundling_start" value="{{date('d-M-Y H:i', strtotime($result['start_date']))}}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -378,7 +378,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="bundling_end" required>
+                                    <input type="text" class="form_datetime form-control" name="bundling_end" value="{{date('d-M-Y H:i', strtotime($result['end_date']))}}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -399,14 +399,14 @@
                         <div class="col-md-8">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                <img src="https://www.placehold.it/300x300/EFEFEF/AAAAAA" alt="">
+                                    <img src="@if(isset($result['image'])){{$result['image']}}@endif" alt="">
                                 </div>
                                 <div class="fileinput-preview fileinput-exists thumbnail" id="imageproduct" style="max-width: 200px; max-height: 200px;"></div>
                                 <div>
                                     <span class="btn default btn-file">
                                     <span class="fileinput-new"> Select image </span>
                                     <span class="fileinput-exists"> Change </span>
-                                    <input type="file" class="file" id="fieldphoto" accept="image/*" name="photo" required>
+                                    <input type="file" class="file" id="fieldphoto" accept="image/*" name="photo" @if(empty($result['image'])) required @endif>
                                     </span>
 
                                     <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -422,14 +422,14 @@
                         <div class="col-md-8">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail" style="height: 150px;">
-                                    <img id="preview_image" src="https://www.placehold.it/720x360/EFEFEF/AAAAAA"/>
+                                    <img src="@if(isset($result['image_detail'])){{$result['image_detail']}}@endif" alt="">
                                 </div>
                                 <div class="fileinput-preview fileinput-exists thumbnail" id="imageproductDetail" style="max-height: 2000px;max-width: 250px;"></div>
                                 <div>
                                     <span class="btn default btn-file">
                                     <span class="fileinput-new"> Select image </span>
                                     <span class="fileinput-exists"> Change </span>
-                                    <input type="file" class="file" id="fieldphotoDetail" accept="image/*" name="photo_detail" required>
+                                    <input type="file" class="file" id="fieldphotoDetail" accept="image/*" name="photo_detail" @if(empty($result['image_detail'])) required @endif>
                                     </span>
 
                                     <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
@@ -443,7 +443,7 @@
                         </label>
                         <div class="col-md-8">
                             <div class="input-icon right">
-                                <textarea name="bundling_description" id="text_pro" class="form-control">{{ old('product_description') }}</textarea>
+                                <textarea name="bundling_description" id="text_pro" class="form-control">{{$result['bundling_description']}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -451,102 +451,114 @@
                     <div style="text-align: center"><h3>List Product</h3></div>
                     <hr>
                     <div id="list_product">
-                        <div id="product_0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="multiple" class="control-label col-md-4">Brand <span class="required" aria-required="true"> * </span>
-                                        </label>
-                                        <div class="col-md-8">
-                                            <div class="input-icon right">
-                                                <select  class="form-control select2 brands select2-multiple-product" name="data_product[0][id_brand]" id="brand_0" data-placeholder="Select brand" required onchange="loadProduct(this.value, 0)">
-                                                    <option></option>
-                                                    @foreach($brands as $brand)
-                                                        <option value="{{$brand['id_brand']}}">{{$brand['name_brand']}}</option>
-                                                    @endforeach
-                                                </select>
+
+                        @foreach($result['bundling_product'] as $index=>$bp)
+                            <div id="product_"{{$index}}>
+                                @if($index > 0) <hr style="border-top: 2px dashed;"> @endif
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="multiple" class="control-label col-md-4">Brand <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <select  class="form-control select2 brands select2-multiple-product" name="data_product[{{$index}}][id_brand]" id="brand_{{$index}}" data-placeholder="Select brand" required onchange="loadProduct(this.value, '{{$index}}')">
+                                                        <option></option>
+                                                        @foreach($brands as $brand)
+                                                            <option value="{{$brand['id_brand']}}" @if($brand['id_brand'] == $bp['id_brand']) selected @endif>{{$brand['name_brand']}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>
-                                        <div class="col-md-8">
-                                            <div class="input-icon right">
-                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product]" id="select_product_0" data-placeholder="Select product" required onchange="loadProductVariant(this.value, 0)">
-                                                    <option></option>
-                                                </select>
+                                        <div class="form-group">
+                                            <label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][id_product]" id="select_product_{{$index}}" data-placeholder="Select product" required onchange="loadProductVariant(this.value, '{{$index}}')">
+                                                        <option></option>
+                                                        @foreach($bp['products'] as $product)
+                                                            <option value="{{$product['id_product']}}" @if($product['id_product'] == $bp['id_product']) selected @endif>{{$product['product_code']}} - {{$product['product_name']}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="multiple" class="control-label col-md-4">Product Variant</label>
-                                        <div class="col-md-8">
-                                            <div class="input-icon right">
-                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product_variant_group]" id="product_variant_0" data-placeholder="Select product variant" disabled>
-                                                    <option></option>
-                                                </select>
+                                        <div class="form-group">
+                                            <label for="multiple" class="control-label col-md-4">Product Variant</label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][id_product_variant_group]" id="product_variant_{{$index}}" data-placeholder="Select product variant" @if(empty($bp['id_product_variant_group'])) disabled @endif>
+                                                        <option></option>
+                                                        @foreach($bp['product_variant'] as $pv)
+                                                            <option value="{{$pv['id_product_variant_group']}}" @if($pv['id_product_variant_group'] == $bp['id_product_variant_group']) selected @endif>{{$pv['product_variant_group_name']}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Quantity <span class="required" aria-required="true"> * </span>
-                                        </label>
-                                        <div class="col-md-8">
-                                            <div class="input-icon right">
-                                                <input type="text" placeholder="Quantity" class="form-control" name="data_product[0][qty]" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="multiple" class="control-label col-md-5">Discount Type <span class="required" aria-required="true"> * </span></label>
-                                        <div class="col-md-7">
-                                            <div class="input-icon right">
-                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][discount_type]" data-placeholder="Select discount type" required>
-                                                    <option></option>
-                                                    <option value="Percent">Percent</option>
-                                                    <option value="Nominal">Nominal</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-5 control-label">Discount <span class="required" aria-required="true"> * </span>
-                                        </label>
-                                        <div class="col-md-7">
-                                            <div class="input-icon right">
-                                                <input type="text" placeholder="Discount" class="form-control" name="data_product[0][discount]" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-5 control-label">Charged Central <span class="required" aria-required="true"> * </span>
-                                        </label>
-                                        <div class="col-md-7">
-                                            <div class="input-icon right">
-                                                <div class="input-group">
-                                                    <input type="text" placeholder="Charged Central" class="form-control" name="data_product[0][charged_central]" required>
-                                                    <span class="input-group-addon">%</span>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Quantity <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <input type="text" placeholder="Quantity" class="form-control" name="data_product[{{$index}}][qty]" value="{{$bp['bundling_product_qty']}}" required>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-5 control-label">Charged Outlet <span class="required" aria-required="true"> * </span>
-                                        </label>
-                                        <div class="col-md-7">
-                                            <div class="input-icon right">
-                                                <div class="input-group">
-                                                    <input type="text" placeholder="Charged Outlet" class="form-control" name="data_product[0][charged_outlet]" required>
-                                                    <span class="input-group-addon">%</span>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="multiple" class="control-label col-md-5">Discount Type <span class="required" aria-required="true"> * </span></label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][discount_type]" data-placeholder="Select discount type" required>
+                                                        <option></option>
+                                                        <option value="Percent" @if($bp['bundling_product_discount_type'] == 'Percent') selected @endif>Percent</option>
+                                                        <option value="Nominal" @if($bp['bundling_product_discount_type'] == 'Nominal') selected @endif>Nominal</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-5 control-label">Discount <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <input type="text" placeholder="Discount" class="form-control" name="data_product[{{$index}}][discount]" value="{{$bp['bundling_product_discount']}}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-5 control-label">Charged Central <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <div class="input-group">
+                                                        <input type="text" placeholder="Charged Central" class="form-control" name="data_product[{{$index}}][charged_central]" value="{{$bp['charged_central']}}" required>
+                                                        <span class="input-group-addon">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-5 control-label">Charged Outlet <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <div class="input-group">
+                                                        <input type="text" placeholder="Charged Outlet" class="form-control" name="data_product[{{$index}}][charged_outlet]" value="{{$bp['charged_outlet']}}" required>
+                                                        <span class="input-group-addon">%</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div style="text-align: right"><a class="btn red" onclick="deleteProduct('+i+')">Delete Product <i class="fa fa-trash"></i></a></div>
+                                <input type="hidden" name="data_product[{{$index}}][id_bundling_product]" value="{{$bp['id_bundling_product']}}">
                             </div>
-                        </div>
+                        @endforeach
                     </div>
                     <hr>
                     <div style="text-align: right">
@@ -565,6 +577,9 @@
                         </div>
                         <div class="col-md-8">
                             <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" id="available_outlet" multiple required>
+                                @foreach($outlets as $o)
+                                    <option value="{{$o['id_outlet']}}" @if(in_array($o['id_outlet'], $selected_outlet)) selected @endif>{{$o['outlet_code']}} - {{$o['outlet_name']}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

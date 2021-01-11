@@ -33,6 +33,7 @@ class ProductVariantPriceArrayExport implements FromArray, WithTitle, ShouldAuto
             'z'
         );
         $this->length = 0;
+        $this->until = '';
     }
 
     public function array(): array
@@ -60,19 +61,29 @@ class ProductVariantPriceArrayExport implements FromArray, WithTitle, ShouldAuto
     {
         $arr = [];
         $name = $this->datas[0]['product'];
-        $this->length = count($this->datas[0])-1;
+        $this->length = count($this->datas[0]);
+        $num = $this->length;
+
+        //get alphabet
+        $letter = '';
+        while ($num > 0) {
+            $code = ($num % 26 == 0) ? 26 : $num % 26;
+            $letter .= chr($code + 64);
+            $num = ($num - $code) / 26;
+        }
+        $this->until = $letter;
         $count = 1;
         $i = 4;
         foreach ($this->datas as $key => $value) {
             if($value['product'] !== $name){
                 $count = $count + 1;
                 if($count % 2 != 0){
-                    array_push($arr, 'A'.$i.':'.strtoupper($this->alphabet[$this->length]).$i);
+                    array_push($arr, 'A'.$i.':'.strtoupper($this->until).$i);
                 }
             }elseif($count == 1){
-                array_push($arr, 'A'.$i.':'.strtoupper($this->alphabet[$this->length]).$i);
+                array_push($arr, 'A'.$i.':'.strtoupper($this->until).$i);
             }elseif($count % 2 != 0){
-                array_push($arr, 'A'.$i.':'.strtoupper($this->alphabet[$this->length]).$i);
+                array_push($arr, 'A'.$i.':'.strtoupper($this->until).$i);
             }
 
             $name = $value['product'];
@@ -109,8 +120,8 @@ class ProductVariantPriceArrayExport implements FromArray, WithTitle, ShouldAuto
                     ],
                 ];
 
-                $event->sheet->getStyle('A3:'.strtoupper($this->alphabet[$this->length]).($last+3))->applyFromArray($styleArray);
-                $headRange = 'A3:'.strtoupper($this->alphabet[$this->length]).'3';
+                $event->sheet->getStyle('A3:'.strtoupper($this->until).($last+3))->applyFromArray($styleArray);
+                $headRange = 'A3:'.strtoupper($this->until).'3';
                 $event->sheet->getStyle($headRange)->applyFromArray($styleHead);
 
                 foreach($arr as $dt){

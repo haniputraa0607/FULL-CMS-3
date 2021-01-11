@@ -459,7 +459,7 @@
                             <div class="col-12 text-14px"><b>PICK UP</b></div>
                             <div class="col-12 text-14px WorkSans-Bold" style="color: #a6ba35;">
                                 @if ($data['detail']['pickup_type'] == 'set time')
-                                    {{ date('H:i', strtotime(str_replace(' ', '', $data['detail']['pickup_time'])))}}
+                                    {{ $data['detail']['pickup_time']}}
                                 @elseif($data['detail']['pickup_type'] == 'at arrival')
                                     SAAT KEDATANGAN
                                 @else
