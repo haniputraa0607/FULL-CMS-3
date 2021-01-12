@@ -126,9 +126,17 @@
             html += '<label for="multiple" class="control-label col-md-4">Product Variant</label>';
             html += '<div class="col-md-8">';
             html += '<div class="input-icon right">';
-            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product_variant_group]" id="product_variant_'+i+'" data-placeholder="Select product variant" disabled>';
+            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product_variant_group]" id="product_variant_'+i+'" data-placeholder="Select product variant" disabled onchange="loadPrice(null, this.value)">';
             html += '<option></option>';
             html += '</select>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<label class="col-md-4 control-label">Global Price</label>';
+            html += '<div class="col-md-8">';
+            html += '<div class="input-icon right">';
+            html += '<input type="text" placeholder="Global Price" id="global_price_'+i+'" class="form-control" disabled>';
             html += '</div>';
             html += '</div>';
             html += '</div>';
@@ -155,7 +163,7 @@
             html += '</div>';
             html += '</div>';
             html += '<div class="form-group">';
-            html += '<label class="col-md-5 control-label">Discount <span class="required" aria-required="true"> * </span></label>';
+            html += '<label class="col-md-5 control-label">Discount Per Item<span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Diskon berlaku untuk 1 item" data-container="body"></i></label>';
             html += '<div class="col-md-7">';
             html += '<div class="input-icon right">';
             html += '<input type="text" placeholder="Discount" class="form-control" name="data_product['+i+'][discount]" required>';
@@ -218,6 +226,8 @@
             var list_count = id.split('_')[1];
             var check = $("#available_outlet").select2("val");
             var prev_id_brand = $("#brand_"+list_count).val();
+            $("#global_price_"+id).val('');
+            $("#product_variant_"+id).empty();
 
             if(check !== 'null' && check !== null && check !== ""){
                 if(confirm("Are you sure change this brand? \nIf you change this brand, field outlet available will be reset?")){
@@ -231,6 +241,7 @@
         function loadOutlet() {
             $("#available_outlet").empty();
             $("#available_outlet").append('<option></option>');
+            $("#available_outlet").append('<option value="all">All Outlet</option>');
             var token  = "{{ csrf_token() }}";
             var brands = Array.from(tmpBrand, ([name, value]) => ({ value }));
 
@@ -259,6 +270,7 @@
         }
 
         function loadProduct(id_brand, list_count) {
+            $("#global_price_"+list_count).val('');
             $("#select_product_"+list_count).empty();
             $("#select_product_"+list_count).append('<option></option>');
             var token  = "{{ csrf_token() }}";
@@ -290,6 +302,7 @@
         }
 
         function loadProductVariant(id_product, list_count) {
+            $("#global_price_"+list_count).val('');
             $("#product_variant_"+list_count).empty();
             $("#product_variant_"+list_count).append('<option></option>');
             $.ajax({
@@ -303,12 +316,38 @@
                             $("#product_variant_"+list_count).append('<option value="'+result[i].id_product_variant_group+'">'+result[i].product_variant_group_name+'</option>');
                         }
                     }else{
+                        loadPrice(list_count, id_product, null);
                         $("#product_variant_"+list_count).prop('disabled', true);
                     }
                 },
                 error : function(result) {
                     $("#product_variant_"+list_count).prop('disabled', true);
                     toastr.warning("Failed get data product variant.");
+                }
+            });
+        }
+        
+        function loadPrice(id_element, id_product, id_product_variant_group) {
+            $("#global_price_"+id_element).val('');
+            var token  = "{{ csrf_token() }}";
+
+            $.ajax({
+                type: "POST",
+                url: "{{url('product-bundling/global-price')}}",
+                data : {
+                    "_token" : token,
+                    "id_product" : id_product,
+                    "id_product_variant_group" : id_product_variant_group
+                },
+                success: function(result){
+                    if(result.status == 'success'){
+                        $("#global_price_"+id_element).val(result.result.price);
+                    }else{
+                        toastr.warning("Failed get global price.");
+                    }
+                },
+                error : function(result) {
+                    toastr.warning("Failed get global price.");
                 }
             });
         }
@@ -347,6 +386,16 @@
         <div class="portlet-body form">
             <form class="form-horizontal" role="form" action="{{url('product-bundling/store')}}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Bundling ID <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Bundling ID (unique)" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <input type="text" placeholder="Bundling ID" class="form-control" name="bundling_code" value="{{ old('bundling_code') }}" required>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Bundling Name <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama Produk" data-container="body"></i>
@@ -482,9 +531,18 @@
                                         <label for="multiple" class="control-label col-md-4">Product Variant</label>
                                         <div class="col-md-8">
                                             <div class="input-icon right">
-                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product_variant_group]" id="product_variant_0" data-placeholder="Select product variant" disabled>
+                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product_variant_group]" id="product_variant_0" data-placeholder="Select product variant" onchange="loadPrice(0, null, this.value)" disabled>
                                                     <option></option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Global Price
+                                        </label>
+                                        <div class="col-md-8">
+                                            <div class="input-icon right">
+                                                <input type="text" placeholder="Global Price" id="global_price_0" class="form-control" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -512,7 +570,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-5 control-label">Discount <span class="required" aria-required="true"> * </span>
+                                        <label class="col-md-5 control-label">Discount Per Item <span class="required" aria-required="true"> * </span>
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Diskon berlaku untuk 1 item" data-container="body"></i>
                                         </label>
                                         <div class="col-md-7">
                                             <div class="input-icon right">

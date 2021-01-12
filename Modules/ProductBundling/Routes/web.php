@@ -23,4 +23,5 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-
     Route::post('update/{id}', 'ProductBundlingController@update');
     Route::post('product-brand', 'ProductBundlingController@productBrand');
     Route::post('outlet-available', 'ProductBundlingController@outletAvailable');
+    Route::post('global-price', 'ProductBundlingController@getGlobalPrice');
 });
