@@ -156,4 +156,9 @@ class ProductBundlingController extends Controller
         $outlets = MyHelper::post('product-bundling/outlet-available', $post);
         return $outlets;
     }
+    public function getGlobalPrice(Request $request){
+        $post = $request->except('_token');
+        $outlets = MyHelper::post('product-bundling/global-price', $post);
+        return $outlets;
+    }
 }
