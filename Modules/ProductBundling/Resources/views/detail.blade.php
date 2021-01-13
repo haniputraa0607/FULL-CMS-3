@@ -172,6 +172,16 @@
             html += '</div>';
             html += '</div>';
             html += '<div class="form-group">';
+            html += '<label class="col-md-5 control-label">Max Discount Per Item <span class="required" aria-required="true"> * </span>';
+            html += '<i class="fa fa-question-circle tooltips" data-original-title="Maksimum diskon untuk setiap item" data-container="body"></i>';
+            html += '</label>';
+            html += '<div class="col-md-7">';
+            html += '<div class="input-icon right">';
+            html += '<input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_'+i+'" name="data_product['+i+'][maximum_discount]" disabled>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="form-group">';
             html += '<label class="col-md-5 control-label">Charged Central <span class="required" aria-required="true"> * </span></label>';
             html += '<div class="col-md-7">';
             html += '<div class="input-icon right">';
@@ -205,14 +215,37 @@
             i++;
         }
 
-        function deleteProduct(id) {
+        function deleteProduct(id, id_bundling_product = null) {
             var check = $("#available_outlet").select2("val");
 
             if(check !== 'null' && check !== null && check !== ""){
                 if(confirm("Are you sure delete this product? \nIf you delete this product, field outlet available will be reset?")){
-                    $("#product_"+id).remove();
-                    tmpBrand.delete('brand_'+id);
-                    loadOutlet();
+                    if(id_bundling_product){
+                        var token  = "{{ csrf_token() }}";
+                        $.ajax({
+                            type: "POST",
+                            url: "{{url('product-bundling/delete-product')}}",
+                            data : {
+                                "_token" : token,
+                                "id_bundling_product" : id_bundling_product
+                            },
+                            success: function(result){
+                                if(result.status == 'success'){
+                                    $("#product_"+id).remove();
+                                    toastr.info("Success delete bundling product.");
+                                }else{
+                                    toastr.warning("Failed delete bundling product, bundling product already use.");
+                                }
+                            },
+                            error : function(result) {
+                                toastr.warning("Failed delete bundling product.");
+                            }
+                        });
+                    }else{
+                        $("#product_"+id).remove();
+                        tmpBrand.delete('brand_'+id);
+                        loadOutlet();
+                    }
                 }
             }else{
                 if(confirm("Are you sure delete this product?")) {
@@ -244,13 +277,15 @@
             $("#available_outlet").append('<option value="all">All Outlet</option>');
             var token  = "{{ csrf_token() }}";
             var brands = Array.from(tmpBrand, ([name, value]) => ({ value }));
+            var brand_tmp  = <?php echo $brand_tmp?>;
 
             $.ajax({
                 type: "POST",
                 url: "{{url('product-bundling/outlet-available')}}",
                 data : {
                     "_token" : token,
-                    "brands" : brands
+                    "brands" : brands,
+                    "brand_tmp" : brand_tmp
                 },
                 success: function(result){
                     if(result.status == 'success'){
@@ -351,6 +386,16 @@
                 }
             });
         }
+
+        function changeDisableMaxDiscoint(value, list_count) {
+            if(value == 'Percent'){
+                $("#maximum_discount_"+list_count).prop('disabled', false);
+                $("#maximum_discount_"+list_count).prop('required', true);
+            }else{
+                $("#maximum_discount_"+list_count).prop('disabled', true);
+                $("#maximum_discount_"+list_count).prop('required', false);
+            }
+        }
     </script>
 @endsection
 
@@ -374,6 +419,8 @@
             @endif
         </ul>
     </div><br>
+
+    <a href="{{url('product-bundling')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
 
     @include('layouts.notifications')
 
@@ -502,7 +549,7 @@
                     <div id="list_product">
 
                         @foreach($result['bundling_product'] as $index=>$bp)
-                            <div id="product_"{{$index}}>
+                            <div id="product_{{$index}}">
                                 @if($index > 0) <hr style="border-top: 2px dashed;"> @endif
                                 <div class="row">
                                     <div class="col-md-6">
@@ -511,7 +558,7 @@
                                             </label>
                                             <div class="col-md-8">
                                                 <div class="input-icon right">
-                                                    <select  class="form-control select2 brands select2-multiple-product" name="data_product[{{$index}}][id_brand]" id="brand_{{$index}}" data-placeholder="Select brand" required onchange="loadProduct(this.value, '{{$index}}')">
+                                                    <select  class="form-control select2 brands select2-multiple-product" name="data_product[{{$index}}][id_brand]" id="brand_{{$index}}" data-placeholder="Select brand" required onchange="loadProduct(this.value, '{{$index}}')" disabled>
                                                         <option></option>
                                                         @foreach($brands as $brand)
                                                             <option value="{{$brand['id_brand']}}" @if($brand['id_brand'] == $bp['id_brand']) selected @endif>{{$brand['name_brand']}}</option>
@@ -524,20 +571,21 @@
                                             <label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>
                                             <div class="col-md-8">
                                                 <div class="input-icon right">
-                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][id_product]" id="select_product_{{$index}}" data-placeholder="Select product" required onchange="loadProductVariant(this.value, '{{$index}}')">
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][id_product]" id="select_product_{{$index}}" data-placeholder="Select product" required onchange="loadProductVariant(this.value, '{{$index}}')" disabled>
                                                         <option></option>
                                                         @foreach($bp['products'] as $product)
                                                             <option value="{{$product['id_product']}}" @if($product['id_product'] == $bp['id_product']) selected @endif>{{$product['product_code']}} - {{$product['product_name']}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                <input type="hidden" name="data_product[{{$index}}][id_product]" value="{{$bp['id_product']}}">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="multiple" class="control-label col-md-4">Product Variant</label>
                                             <div class="col-md-8">
                                                 <div class="input-icon right">
-                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][id_product_variant_group]" id="product_variant_{{$index}}" data-placeholder="Select product variant" @if(empty($bp['id_product_variant_group'])) disabled @endif onchange="loadPrice('{{$index}}', null, this.value)">
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][id_product_variant_group]" id="product_variant_{{$index}}" data-placeholder="Select product variant" @if(empty($bp['id_product_variant_group'])) disabled @endif onchange="loadPrice('{{$index}}', null, this.value)" disabled>
                                                         <option></option>
                                                         @foreach($bp['product_variant'] as $pv)
                                                             <option value="{{$pv['id_product_variant_group']}}" @if($pv['id_product_variant_group'] == $bp['id_product_variant_group']) selected @endif>{{$pv['product_variant_group_name']}}</option>
@@ -570,7 +618,7 @@
                                             <label for="multiple" class="control-label col-md-5">Discount Type <span class="required" aria-required="true"> * </span></label>
                                             <div class="col-md-7">
                                                 <div class="input-icon right">
-                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][discount_type]" data-placeholder="Select discount type" required>
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][discount_type]" data-placeholder="Select discount type" required onchange="changeDisableMaxDiscoint(this.value, 0)">
                                                         <option></option>
                                                         <option value="Percent" @if($bp['bundling_product_discount_type'] == 'Percent') selected @endif>Percent</option>
                                                         <option value="Nominal" @if($bp['bundling_product_discount_type'] == 'Nominal') selected @endif>Nominal</option>
@@ -585,6 +633,16 @@
                                             <div class="col-md-7">
                                                 <div class="input-icon right">
                                                     <input type="text" placeholder="Discount" class="form-control" name="data_product[{{$index}}][discount]" value="{{$bp['bundling_product_discount']}}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-5 control-label">Max Discount Per Item <span class="required" aria-required="true"> * </span>
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Maksimum diskon untuk setiap item, silahkan isi dengan angka 0 jika tidak ingin menggunakan maximum discount" data-container="body"></i>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_0" name="data_product[{{$index}}][maximum_discount]" @if($bp['bundling_product_discount_type'] != 'Percent') disabled @endif value="{{(int)$bp['bundling_product_maximum_discount']}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -614,7 +672,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="text-align: right"><a class="btn red" onclick="deleteProduct('+i+')">Delete Product <i class="fa fa-trash"></i></a></div>
+                                <div style="text-align: right"><a class="btn red" onclick="deleteProduct('{{$index}}', '{{$bp['id_bundling_product']}}')">Delete Product <i class="fa fa-trash"></i></a></div>
                                 <input type="hidden" name="data_product[{{$index}}][id_bundling_product]" value="{{$bp['id_bundling_product']}}">
                             </div>
                         @endforeach

@@ -16,7 +16,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-
 	/**
 	 * Bundling
 	 */
-	Route::get('/', 'ProductBundlingController@index');
+	Route::any('/', 'ProductBundlingController@index');
 	Route::get('create', 'ProductBundlingController@create');
     Route::post('store', 'ProductBundlingController@store');
     Route::get('detail/{id}', 'ProductBundlingController@detail');
@@ -24,4 +24,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-
     Route::post('product-brand', 'ProductBundlingController@productBrand');
     Route::post('outlet-available', 'ProductBundlingController@outletAvailable');
     Route::post('global-price', 'ProductBundlingController@getGlobalPrice');
+    Route::post('delete', 'ProductBundlingController@destroy');
+    Route::post('delete-product', 'ProductBundlingController@destroyBundlingProduct');
 });

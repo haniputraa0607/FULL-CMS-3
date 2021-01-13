@@ -171,6 +171,16 @@
             html += '</div>';
             html += '</div>';
             html += '<div class="form-group">';
+            html += '<label class="col-md-5 control-label">Max Discount Per Item <span class="required" aria-required="true"> * </span>';
+            html += '<i class="fa fa-question-circle tooltips" data-original-title="Maksimum diskon untuk setiap item" data-container="body"></i>';
+            html += '</label>';
+            html += '<div class="col-md-7">';
+            html += '<div class="input-icon right">';
+            html += '<input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_'+i+'" name="data_product['+i+'][maximum_discount]" disabled>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="form-group">';
             html += '<label class="col-md-5 control-label">Charged Central <span class="required" aria-required="true"> * </span></label>';
             html += '<div class="col-md-7">';
             html += '<div class="input-icon right">';
@@ -350,6 +360,16 @@
                     toastr.warning("Failed get global price.");
                 }
             });
+        }
+        
+        function changeDisableMaxDiscoint(value, list_count) {
+            if(value == 'Percent'){
+                $("#maximum_discount_"+list_count).prop('disabled', false);
+                $("#maximum_discount_"+list_count).prop('required', true);
+            }else{
+                $("#maximum_discount_"+list_count).prop('disabled', true);
+                $("#maximum_discount_"+list_count).prop('required', false);
+            }
         }
     </script>
 @endsection
@@ -561,7 +581,7 @@
                                         <label for="multiple" class="control-label col-md-5">Discount Type <span class="required" aria-required="true"> * </span></label>
                                         <div class="col-md-7">
                                             <div class="input-icon right">
-                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][discount_type]" data-placeholder="Select discount type" required>
+                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][discount_type]" data-placeholder="Select discount type" required onchange="changeDisableMaxDiscoint(this.value, 0)">
                                                     <option></option>
                                                     <option value="Percent">Percent</option>
                                                     <option value="Nominal">Nominal</option>
@@ -576,6 +596,16 @@
                                         <div class="col-md-7">
                                             <div class="input-icon right">
                                                 <input type="text" placeholder="Discount" class="form-control" name="data_product[0][discount]" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label">Max Discount Per Item <span class="required" aria-required="true"> * </span>
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Maksimum diskon untuk setiap item, silahkan isi dengan angka 0 jika tidak ingin menggunakan maximum discount" data-container="body"></i>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <div class="input-icon right">
+                                                <input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_0" name="data_product[0][maximum_discount]" disabled>
                                             </div>
                                         </div>
                                     </div>
