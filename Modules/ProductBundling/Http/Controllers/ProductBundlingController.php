@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
+use Session;
 
 class ProductBundlingController extends Controller
 {
@@ -15,16 +16,28 @@ class ProductBundlingController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $post = $request->all();
         $data = [
             'title'          => 'Product Bundling',
             'sub_title'      => 'Product Bundling List',
             'menu_active'    => 'product-bundling',
             'submenu_active' => 'product-bundling-list',
         ];
-        
-        $bundling = MyHelper::get('product-bundling/list');
+
+        if(Session::has('filter-list-bundling') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-list-bundling');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-list-bundling');
+        }
+
+        $bundling = MyHelper::post('product-bundling/list', $post);
 
         if (isset($bundling['status']) && $bundling['status'] == "success") {
             $data['data']          = $bundling['result']['data'];
@@ -39,6 +52,13 @@ class ProductBundlingController extends Controller
             $data['dataUpTo']      = 0;
             $data['dataPaginator'] = false;
         }
+
+        $data['order_field'] = $post['order_field']??'id_bundling';
+        $data['order_method'] = $post['order_method']??'asc';
+        if($post){
+            Session::put('filter-list-bundling',$post);
+        }
+
         return view('productbundling::index', $data);
     }
 
@@ -99,8 +119,9 @@ class ProductBundlingController extends Controller
             $data['result'] = $detail['result']['detail'];
             $data['outlets'] = $detail['result']['outlets']??[];
             $data['selected_outlet'] = $detail['result']['selected_outlet']??[];
-            $data['count_list_product'] = count($detail['result']['bundling_product']??[]);
+            $data['count_list_product'] = count($detail['result']['detail']['bundling_product']??[]);
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+            $data['brand_tmp'] = json_encode($detail['result']['brand_tmp'])??[];
 
             return view('productbundling::detail', $data);
         }else{
@@ -140,9 +161,18 @@ class ProductBundlingController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $post = $request->except('_token');
+        $delete = MyHelper::post('product-bundling/delete', $post);
+        return $delete;
+    }
+
+    public function destroyBundlingProduct(Request $request)
+    {
+        $post = $request->except('_token');
+        $delete = MyHelper::post('product-bundling/delete-product', $post);
+        return $delete;
     }
 
     public function productBrand(Request $request){
