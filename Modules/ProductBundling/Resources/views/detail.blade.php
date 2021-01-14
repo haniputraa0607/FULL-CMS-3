@@ -127,7 +127,7 @@
             html += '<label for="multiple" class="control-label col-md-4">Product Variant</label>';
             html += '<div class="col-md-8">';
             html += '<div class="input-icon right">';
-            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product_variant_group]" id="product_variant_'+i+'" data-placeholder="Select product variant" disabled onchange="loadPrice(null, this.value)">';
+            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product_variant_group]" id="product_variant_'+i+'" data-placeholder="Select product variant" disabled onchange="loadPrice('+i+', null, this.value)">';
             html += '<option></option>';
             html += '</select>';
             html += '</div>';
@@ -155,7 +155,7 @@
             html += '<label for="multiple" class="control-label col-md-5">Discount Type <span class="required" aria-required="true"> * </span></label>';
             html += '<div class="col-md-7">';
             html += '<div class="input-icon right">';
-            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][discount_type]" data-placeholder="Select discount type" required>';
+            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][discount_type]" data-placeholder="Select discount type" required onchange="changeDisableMaxDiscoint(this.value, '+i+')">';
             html += '<option></option>';
             html += '<option value="Percent">Percent</option>';
             html += '<option value="Nominal">Nominal</option>';
@@ -618,7 +618,7 @@
                                             <label for="multiple" class="control-label col-md-5">Discount Type <span class="required" aria-required="true"> * </span></label>
                                             <div class="col-md-7">
                                                 <div class="input-icon right">
-                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][discount_type]" data-placeholder="Select discount type" required onchange="changeDisableMaxDiscoint(this.value, 0)">
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][discount_type]" data-placeholder="Select discount type" required onchange="changeDisableMaxDiscoint(this.value, '{{$index}}')">
                                                         <option></option>
                                                         <option value="Percent" @if($bp['bundling_product_discount_type'] == 'Percent') selected @endif>Percent</option>
                                                         <option value="Nominal" @if($bp['bundling_product_discount_type'] == 'Nominal') selected @endif>Nominal</option>
@@ -642,7 +642,7 @@
                                             </label>
                                             <div class="col-md-7">
                                                 <div class="input-icon right">
-                                                    <input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_0" name="data_product[{{$index}}][maximum_discount]" @if($bp['bundling_product_discount_type'] != 'Percent') disabled @endif value="{{(int)$bp['bundling_product_maximum_discount']}}">
+                                                    <input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_{{$index}}" name="data_product[{{$index}}][maximum_discount]" @if($bp['bundling_product_discount_type'] != 'Percent') disabled @endif value="{{(int)$bp['bundling_product_maximum_discount']}}">
                                                 </div>
                                             </div>
                                         </div>
