@@ -35,6 +35,22 @@ $configs    		= session('configs');
                 operator:[],
                 opsi:[]
             },
+            product_code :{
+                display:'Product Code',
+                operator:[
+                    ['=','='],
+                    ['like','like']
+                ],
+                opsi:[]
+            },
+            product_name :{
+                display:'Product Name',
+                operator:[
+                    ['=','='],
+                    ['like','like']
+                ],
+                opsi:[]
+            },
             product_variant_group_code :{
                 display:'Product Variant Code',
                 operator:[
