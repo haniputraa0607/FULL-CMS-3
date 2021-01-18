@@ -26,6 +26,163 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
     <script>
+        var i = 0;
+        var outlet_selected = <?php echo json_encode(old('id_outlet'))?>;
+        $(document).ready(function() {
+            var data_product = <?php echo json_encode((empty(old('data_product')) ? [] : array_values(old('data_product'))))?>;
+            if(data_product && data_product.length > 0){
+                i=data_product.length + 1;
+                for(var a=0;a<data_product.length;a++){
+                    var brands = <?php echo json_encode($brands)?>;
+                    var html = '';
+                    html += '<div id="product_'+i+'">';
+                    html += '<hr style="border-top: 2px dashed;">';
+                    html += '<div class="row">';
+                    html += '<div class="col-md-6">';
+                    html += '<div class="form-group">';
+                    html += '<label for="multiple" class="control-label col-md-4">Brand <span class="required" aria-required="true"> * </span></label>';
+                    html += '<div class="col-md-8">';
+                    html += '<div class="input-icon right">';
+                    html += '<select  class="form-control select2 select2-multiple-product brands" name="data_product['+i+'][id_brand]" id="brand_'+i+'" data-placeholder="Select brand" required onchange="loadProduct(this.value, '+i+')">';
+                    html += '<option></option>';
+                    for(var j=0;j<brands.length;j++){
+                        if(data_product[a].id_brand == brands[j].id_brand){
+                            html += '<option value='+brands[j].id_brand+' selected>'+brands[j].name_brand+'</option>';
+                        }else{
+                            html += '<option value='+brands[j].id_brand+'>'+brands[j].name_brand+'</option>';
+                        }
+                    }
+                    html += '</select>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="form-group">';
+                    html += '<label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>';
+                    html += '<div class="col-md-8">';
+                    html += '<div class="input-icon right">';
+                    html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product]" id="select_product_'+i+'" data-placeholder="Select product" required disabled onchange="loadProductVariant(this.value, '+i+')">';
+                    html += '<option></option>';
+                    html += '</select>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="form-group">';
+                    html += '<label for="multiple" class="control-label col-md-4">Product Variant</label>';
+                    html += '<div class="col-md-8">';
+                    html += '<div class="input-icon right">';
+                    html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product_variant_group]" id="product_variant_'+i+'" data-placeholder="Select product variant" disabled onchange="loadPrice('+i+', null, this.value)">';
+                    html += '<option></option>';
+                    html += '</select>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="form-group">';
+                    html += '<label class="col-md-4 control-label">Global Price</label>';
+                    html += '<div class="col-md-8">';
+                    html += '<div class="input-icon right">';
+                    html += '<input type="text" placeholder="Global Price" id="global_price_'+i+'" class="form-control" disabled>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="form-group">';
+                    html += '<label class="col-md-4 control-label">Quantity <span class="required" aria-required="true"> * </span></label>';
+                    html += '<div class="col-md-8">';
+                    html += '<div class="input-icon right">';
+                    html += '<input type="text" placeholder="Quantity" class="form-control" name="data_product['+i+'][qty]" value="'+data_product[a].qty+'" required>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="col-md-6">';
+                    html += '<div class="form-group">';
+                    html += '<label for="multiple" class="control-label col-md-5">Discount Type <span class="required" aria-required="true"> * </span></label>';
+                    html += '<div class="col-md-7">';
+                    html += '<div class="input-icon right">';
+                    html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][discount_type]" data-placeholder="Select discount type" required onchange="changeDisableMaxDiscoint(this.value, '+i+')">';
+                    html += '<option></option>';
+                    if(data_product[a].discount_type == 'Percent'){
+                        html += '<option value="Percent" selected>Percent</option>';
+                        html += '<option value="Nominal">Nominal</option>';
+                    }else{
+                        html += '<option value="Percent">Percent</option>';
+                        html += '<option value="Nominal" selected>Nominal</option>';
+                    }
+
+                    html += '</select>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="form-group">';
+                    html += '<label class="col-md-5 control-label">Discount Per Item<span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Diskon berlaku untuk 1 item" data-container="body"></i></label>';
+                    html += '<div class="col-md-7">';
+                    html += '<div class="input-icon right">';
+                    html += '<input type="text" placeholder="Discount" class="form-control" name="data_product['+i+'][discount]" value="'+data_product[a].discount+'" required>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="form-group">';
+                    html += '<label class="col-md-5 control-label">Max Discount Per Item <span class="required" aria-required="true"> * </span>';
+                    html += '<i class="fa fa-question-circle tooltips" data-original-title="Maksimum diskon untuk setiap item" data-container="body"></i>';
+                    html += '</label>';
+                    html += '<div class="col-md-7">';
+                    html += '<div class="input-icon right">';
+                    if(data_product[a].discount_type == 'Percent'){
+                        html += '<input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_'+i+'" name="data_product['+i+'][maximum_discount]" value="'+data_product[a].maximum_discount+'">';
+                    }else{
+                        html += '<input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_'+i+'" name="data_product['+i+'][maximum_discount]" disabled>';
+                    }
+
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="form-group">';
+                    html += '<label class="col-md-5 control-label">Charged Central <span class="required" aria-required="true"> * </span></label>';
+                    html += '<div class="col-md-7">';
+                    html += '<div class="input-icon right">';
+                    html += '<div class="input-group">';
+                    html += '<input type="text" placeholder="Charged Central" class="form-control" name="data_product['+i+'][charged_central]" value="'+data_product[a].charged_central+'" required>';
+                    html += '<span class="input-group-addon">%</span>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="form-group">';
+                    html += '<label class="col-md-5 control-label">Charged Outlet <span class="required" aria-required="true"> * </span></label>';
+                    html += '<div class="col-md-7">';
+                    html += '<div class="input-icon right">';
+                    html += '<div class="input-group">';
+                    html += '<input type="text" placeholder="Charged Outlet" class="form-control" name="data_product['+i+'][charged_outlet]" value="'+data_product[a].charged_outlet+'" required>';
+                    html += '<span class="input-group-addon">%</span>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div style="text-align: right"><a class="btn red" onclick="deleteProduct('+i+')">Delete Product <i class="fa fa-trash"></i></a></div>';
+                    html += '</div>';
+
+                    $("#list_product").append(html);
+                    $('.select2-multiple-product').select2({
+                        'placeholder':$(this).data('placeholder')
+                    });
+                    loadProduct(data_product[a].id_brand, i, data_product[a].id_product);
+                    loadProductVariant(data_product[a].id_product, i, data_product[a].id_product_variant_group);
+                    if(data_product[a].id_product_variant_group){
+                        loadPrice(i, null, data_product[a].id_product_variant_group);
+                    }else{
+                        loadPrice(i, data_product[a].id_product, null);
+                    }
+                    var key_name = "brand_"+i;
+                    tmpBrand.set(key_name, data_product[a].id_brand);
+                    i++;
+                }
+                loadOutlet(outlet_selected);
+            }else{
+                i=1;
+            }
+        });
+
         $('.datepicker').datepicker({
             'format' : 'd-M-yyyy',
             'todayHighlight' : true,
@@ -91,7 +248,6 @@
 
         });
 
-        var i=1;
         function addProduct() {
             var brands = <?php echo json_encode($brands)?>;
             var html = '';
@@ -166,7 +322,7 @@
             html += '<label class="col-md-5 control-label">Discount Per Item<span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Diskon berlaku untuk 1 item" data-container="body"></i></label>';
             html += '<div class="col-md-7">';
             html += '<div class="input-icon right">';
-            html += '<input type="text" placeholder="Discount" class="form-control" name="data_product['+i+'][discount]" required>';
+            html += '<input type="text" placeholder="Discount" class="form-control" name="data_product['+i+'][discount]" id="discount_per_item_'+i+'" required>';
             html += '</div>';
             html += '</div>';
             html += '</div>';
@@ -248,10 +404,14 @@
             }
         });
 
-        function loadOutlet() {
+        function loadOutlet(selected_outlet = []) {
             $("#available_outlet").empty();
             $("#available_outlet").append('<option></option>');
-            $("#available_outlet").append('<option value="all">All Outlet</option>');
+            if(selected_outlet.length > 0 && selected_outlet.indexOf('all') >= 0){
+                $("#available_outlet").append('<option value="all" selected>All Outlet</option>');
+            }else{
+                $("#available_outlet").append('<option value="all">All Outlet</option>');
+            }
             var token  = "{{ csrf_token() }}";
             var brands = Array.from(tmpBrand, ([name, value]) => ({ value }));
 
@@ -267,7 +427,11 @@
                         var data = result.result;
                         var length = result.result.length;
                         for(var i=0;i<length;i++){
-                            $("#available_outlet").append('<option value="'+data[i].id_outlet+'">'+data[i].outlet_code+' - '+data[i].outlet_name+'</option>');
+                            if(selected_outlet.length > 0 && selected_outlet.indexOf(data[i].id_outlet.toString()) >= 0){
+                                $("#available_outlet").append('<option value="'+data[i].id_outlet+'" selected>'+data[i].outlet_code+' - '+data[i].outlet_name+'</option>');
+                            }else{
+                                $("#available_outlet").append('<option value="'+data[i].id_outlet+'">'+data[i].outlet_code+' - '+data[i].outlet_name+'</option>');
+                            }
                         }
                     }else{
                         toastr.warning("Failed get data outlet.");
@@ -279,7 +443,8 @@
             });
         }
 
-        function loadProduct(id_brand, list_count) {
+        function loadProduct(id_brand, list_count, id_product = null) {
+            $("#select_product_"+list_count).prop('disabled', true);
             $("#global_price_"+list_count).val('');
             $("#select_product_"+list_count).empty();
             $("#select_product_"+list_count).append('<option></option>');
@@ -296,25 +461,29 @@
                         var data = result.result;
                         var length = result.result.length;
                         for(var i=0;i<length;i++){
-                            $("#select_product_"+list_count).append('<option value="'+data[i].id_product+'">'+data[i].product_code+' - '+data[i].product_name+'</option>');
+                            if(data[i].id_product == id_product){
+                                $("#select_product_"+list_count).append('<option value="'+data[i].id_product+'" selected>'+data[i].product_code+' - '+data[i].product_name+'</option>');
+                            }else{
+                                $("#select_product_"+list_count).append('<option value="'+data[i].id_product+'">'+data[i].product_code+' - '+data[i].product_name+'</option>');
+                            }
                         }
                         $("#select_product_"+list_count).prop('disabled', false);
                     }else{
-                        $("#select_product_"+list_count).prop('disabled', true);
                         toastr.warning("Failed get data product.");
                     }
                     var key_name = "brand_"+list_count;
                     tmpBrand.set(key_name, id_brand);
-                    loadOutlet();
+                    if(!id_product){
+                        loadOutlet();
+                    }
                 },
                 error : function(result) {
-                    $("#select_product_"+list_count).prop('disabled', true);
                     toastr.warning("Failed get data product.");
                 }
             });
         }
 
-        function loadProductVariant(id_product, list_count) {
+        function loadProductVariant(id_product, list_count, id_product_variant_group) {
             $("#global_price_"+list_count).val('');
             $("#product_variant_"+list_count).empty();
             $("#product_variant_"+list_count).append('<option></option>');
@@ -326,7 +495,11 @@
                     if(length > 0){
                         $("#product_variant_"+list_count).prop('disabled', false);
                         for(var i=0;i<length;i++){
-                            $("#product_variant_"+list_count).append('<option value="'+result[i].id_product_variant_group+'">'+result[i].product_variant_group_name+'</option>');
+                            if(result[i].id_product_variant_group == id_product_variant_group){
+                                $("#product_variant_"+list_count).append('<option value="'+result[i].id_product_variant_group+'" selected>'+result[i].product_variant_group_name+'</option>');
+                            }else{
+                                $("#product_variant_"+list_count).append('<option value="'+result[i].id_product_variant_group+'">'+result[i].product_variant_group_name+'</option>');
+                            }
                         }
                     }else{
                         loadPrice(list_count, id_product, null);
@@ -365,6 +538,8 @@
         }
         
         function changeDisableMaxDiscoint(value, list_count) {
+            $("#discount_per_item_"+list_count).val('');
+            $("#maximum_discount_"+list_count).val('');
             if(value == 'Percent'){
                 $("#maximum_discount_"+list_count).prop('disabled', false);
                 $("#maximum_discount_"+list_count).prop('required', true);
@@ -434,7 +609,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="bundling_start" required>
+                                    <input type="text" class="form_datetime form-control" name="bundling_start" value="{{ old('bundling_start') }}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -449,7 +624,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="bundling_end" required>
+                                    <input type="text" class="form_datetime form-control" name="bundling_end" value="{{ old('bundling_end') }}" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -514,7 +689,7 @@
                         </label>
                         <div class="col-md-8">
                             <div class="input-icon right">
-                                <textarea name="bundling_description" id="text_pro" class="form-control">{{ old('product_description') }}</textarea>
+                                <textarea name="bundling_description" id="text_pro" class="form-control">{{ old('bundling_description') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -522,122 +697,124 @@
                     <div style="text-align: center"><h3>List Product</h3></div>
                     <hr>
                     <div id="list_product">
-                        <div id="product_0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="multiple" class="control-label col-md-4">Brand <span class="required" aria-required="true"> * </span>
-                                        </label>
-                                        <div class="col-md-8">
-                                            <div class="input-icon right">
-                                                <select  class="form-control select2 brands select2-multiple-product" name="data_product[0][id_brand]" id="brand_0" data-placeholder="Select brand" required onchange="loadProduct(this.value, 0)">
-                                                    <option></option>
-                                                    @foreach($brands as $brand)
-                                                        <option value="{{$brand['id_brand']}}">{{$brand['name_brand']}}</option>
-                                                    @endforeach
-                                                </select>
+                        @if(empty(old('data_product')))
+                            <div id="product_0">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="multiple" class="control-label col-md-4">Brand <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <select  class="form-control select2 brands select2-multiple-product" name="data_product[0][id_brand]" id="brand_0" data-placeholder="Select brand" required onchange="loadProduct(this.value, 0)">
+                                                        <option></option>
+                                                        @foreach($brands as $brand)
+                                                            <option value="{{$brand['id_brand']}}">{{$brand['name_brand']}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>
-                                        <div class="col-md-8">
-                                            <div class="input-icon right">
-                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product]" id="select_product_0" data-placeholder="Select product" required disabled onchange="loadProductVariant(this.value, 0)">
-                                                    <option></option>
-                                                </select>
+                                        <div class="form-group">
+                                            <label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product]" id="select_product_0" data-placeholder="Select product" required disabled onchange="loadProductVariant(this.value, 0)">
+                                                        <option></option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="multiple" class="control-label col-md-4">Product Variant</label>
-                                        <div class="col-md-8">
-                                            <div class="input-icon right">
-                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product_variant_group]" id="product_variant_0" data-placeholder="Select product variant" onchange="loadPrice(0, null, this.value)" disabled>
-                                                    <option></option>
-                                                </select>
+                                        <div class="form-group">
+                                            <label for="multiple" class="control-label col-md-4">Product Variant</label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product_variant_group]" id="product_variant_0" data-placeholder="Select product variant" onchange="loadPrice(0, null, this.value)" disabled>
+                                                        <option></option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Global Price
-                                        </label>
-                                        <div class="col-md-8">
-                                            <div class="input-icon right">
-                                                <input type="text" placeholder="Global Price" id="global_price_0" class="form-control" disabled>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Global Price
+                                            </label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <input type="text" placeholder="Global Price" id="global_price_0" class="form-control" disabled>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Quantity <span class="required" aria-required="true"> * </span>
-                                        </label>
-                                        <div class="col-md-8">
-                                            <div class="input-icon right">
-                                                <input type="text" placeholder="Quantity" class="form-control" name="data_product[0][qty]" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="multiple" class="control-label col-md-5">Discount Type <span class="required" aria-required="true"> * </span></label>
-                                        <div class="col-md-7">
-                                            <div class="input-icon right">
-                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][discount_type]" data-placeholder="Select discount type" required onchange="changeDisableMaxDiscoint(this.value, 0)">
-                                                    <option></option>
-                                                    <option value="Percent">Percent</option>
-                                                    <option value="Nominal">Nominal</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-5 control-label">Discount Per Item <span class="required" aria-required="true"> * </span>
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Diskon berlaku untuk 1 item" data-container="body"></i>
-                                        </label>
-                                        <div class="col-md-7">
-                                            <div class="input-icon right">
-                                                <input type="text" placeholder="Discount" class="form-control" name="data_product[0][discount]" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-5 control-label">Max Discount Per Item <span class="required" aria-required="true"> * </span>
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Maksimum diskon untuk setiap item, silahkan isi dengan angka 0 jika tidak ingin menggunakan maximum discount" data-container="body"></i>
-                                        </label>
-                                        <div class="col-md-7">
-                                            <div class="input-icon right">
-                                                <input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_0" name="data_product[0][maximum_discount]" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-5 control-label">Charged Central <span class="required" aria-required="true"> * </span>
-                                        </label>
-                                        <div class="col-md-7">
-                                            <div class="input-icon right">
-                                                <div class="input-group">
-                                                    <input type="text" placeholder="Charged Central" class="form-control" name="data_product[0][charged_central]" required>
-                                                    <span class="input-group-addon">%</span>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Quantity <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <input type="text" placeholder="Quantity" class="form-control" name="data_product[0][qty]" required>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-5 control-label">Charged Outlet <span class="required" aria-required="true"> * </span>
-                                        </label>
-                                        <div class="col-md-7">
-                                            <div class="input-icon right">
-                                                <div class="input-group">
-                                                    <input type="text" placeholder="Charged Outlet" class="form-control" name="data_product[0][charged_outlet]" required>
-                                                    <span class="input-group-addon">%</span>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="multiple" class="control-label col-md-5">Discount Type <span class="required" aria-required="true"> * </span></label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[0][discount_type]" data-placeholder="Select discount type" required onchange="changeDisableMaxDiscoint(this.value, 0)">
+                                                        <option></option>
+                                                        <option value="Percent">Percent</option>
+                                                        <option value="Nominal">Nominal</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-5 control-label">Discount Per Item <span class="required" aria-required="true"> * </span>
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Diskon berlaku untuk 1 item" data-container="body"></i>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <input type="text" placeholder="Discount" class="form-control" name="data_product[0][discount]" id="discount_per_item_0" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-5 control-label">Max Discount Per Item <span class="required" aria-required="true"> * </span>
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Maksimum diskon untuk setiap item, silahkan isi dengan angka 0 jika tidak ingin menggunakan maximum discount" data-container="body"></i>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <input type="text" placeholder="Max Discount Per Item" class="form-control" id="maximum_discount_0" name="data_product[0][maximum_discount]" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-5 control-label">Charged Central <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <div class="input-group">
+                                                        <input type="text" placeholder="Charged Central" class="form-control" name="data_product[0][charged_central]" required>
+                                                        <span class="input-group-addon">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-5 control-label">Charged Outlet <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-icon right">
+                                                    <div class="input-group">
+                                                        <input type="text" placeholder="Charged Outlet" class="form-control" name="data_product[0][charged_outlet]" required>
+                                                        <span class="input-group-addon">%</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                     <hr>
                     <div style="text-align: right">

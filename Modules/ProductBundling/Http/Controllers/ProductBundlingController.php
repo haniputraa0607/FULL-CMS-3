@@ -95,7 +95,7 @@ class ProductBundlingController extends Controller
         if(isset($store['status']) && $store['status'] == 'success'){
             return redirect('product-bundling')->withSuccess(['Success create product bundling']);
         }else{
-            return redirect('product-bundling/create')->withErrors($store['messages']??['Failed create product bundling']);
+            return redirect('product-bundling/create')->withErrors($store['messages']??['Failed create product bundling'])->withInput();
         }
     }
 

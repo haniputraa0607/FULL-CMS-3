@@ -167,7 +167,7 @@
             html += '<label class="col-md-5 control-label">Discount Per Item<span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Diskon berlaku untuk 1 item" data-container="body"></i></label>';
             html += '<div class="col-md-7">';
             html += '<div class="input-icon right">';
-            html += '<input type="text" placeholder="Discount" class="form-control" name="data_product['+i+'][discount]" required>';
+            html += '<input type="text" placeholder="Discount" class="form-control" name="data_product['+i+'][discount]" id="discount_per_item_'+i+'" required>';
             html += '</div>';
             html += '</div>';
             html += '</div>';
@@ -305,6 +305,7 @@
         }
 
         function loadProduct(id_brand, list_count) {
+            ("#select_product_"+list_count).prop('disabled', true);
             $("#global_price_"+list_count).val('');
             $("#select_product_"+list_count).empty();
             $("#select_product_"+list_count).append('<option></option>');
@@ -391,6 +392,8 @@
         }
 
         function changeDisableMaxDiscoint(value, list_count) {
+            $("#discount_per_item_"+list_count).val('');
+            $("#maximum_discount_"+list_count).val('');
             if(value == 'Percent'){
                 $("#maximum_discount_"+list_count).prop('disabled', false);
                 $("#maximum_discount_"+list_count).prop('required', true);
@@ -636,7 +639,7 @@
                                             </label>
                                             <div class="col-md-7">
                                                 <div class="input-icon right">
-                                                    <input type="text" placeholder="Discount" class="form-control" name="data_product[{{$index}}][discount]" value="{{$bp['bundling_product_discount']}}" required>
+                                                    <input type="text" placeholder="Discount" class="form-control" name="data_product[{{$index}}][discount]" id="discount_per_item_{{$index}}" @if($bp['bundling_product_discount_type'] == 'Nominal') value="{{(int)$bp['bundling_product_discount']}}" @else value="{{$bp['bundling_product_discount']}}" @endif required>
                                                 </div>
                                             </div>
                                         </div>
