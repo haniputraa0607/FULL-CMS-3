@@ -116,7 +116,7 @@
             html += '<label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>';
             html += '<div class="col-md-8">';
             html += '<div class="input-icon right">';
-            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product]" id="select_product_'+i+'" data-placeholder="Select product" required onchange="loadProductVariant(this.value, '+i+')">';
+            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product]" id="select_product_'+i+'" data-placeholder="Select product" required disabled onchange="loadProductVariant(this.value, '+i+')">';
             html += '<option></option>';
             html += '</select>';
             html += '</div>';
@@ -298,7 +298,9 @@
                         for(var i=0;i<length;i++){
                             $("#select_product_"+list_count).append('<option value="'+data[i].id_product+'">'+data[i].product_code+' - '+data[i].product_name+'</option>');
                         }
+                        $("#select_product_"+list_count).prop('disabled', false);
                     }else{
+                        $("#select_product_"+list_count).prop('disabled', true);
                         toastr.warning("Failed get data product.");
                     }
                     var key_name = "brand_"+list_count;
@@ -306,6 +308,7 @@
                     loadOutlet();
                 },
                 error : function(result) {
+                    $("#select_product_"+list_count).prop('disabled', true);
                     toastr.warning("Failed get data product.");
                 }
             });
@@ -540,7 +543,7 @@
                                         <label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>
                                         <div class="col-md-8">
                                             <div class="input-icon right">
-                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product]" id="select_product_0" data-placeholder="Select product" required onchange="loadProductVariant(this.value, 0)">
+                                                <select  class="form-control select2 select2-multiple-product" name="data_product[0][id_product]" id="select_product_0" data-placeholder="Select product" required disabled onchange="loadProductVariant(this.value, 0)">
                                                     <option></option>
                                                 </select>
                                             </div>

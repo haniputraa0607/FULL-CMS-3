@@ -117,7 +117,7 @@
             html += '<label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>';
             html += '<div class="col-md-8">';
             html += '<div class="input-icon right">';
-            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product]" id="select_product_'+i+'" data-placeholder="Select product" required onchange="loadProductVariant(this.value, '+i+')">';
+            html += '<select  class="form-control select2 select2-multiple-product" name="data_product['+i+'][id_product]" id="select_product_'+i+'" data-placeholder="Select product" required disabled onchange="loadProductVariant(this.value, '+i+')">';
             html += '<option></option>';
             html += '</select>';
             html += '</div>';
@@ -323,7 +323,9 @@
                         for(var i=0;i<length;i++){
                             $("#select_product_"+list_count).append('<option value="'+data[i].id_product+'">'+data[i].product_code+' - '+data[i].product_name+'</option>');
                         }
+                        $("#select_product_"+list_count).prop('disabled', false);
                     }else{
+                        $("#select_product_"+list_count).prop('disabled', true);
                         toastr.warning("Failed get data product.");
                     }
                     var key_name = "brand_"+list_count;
@@ -331,6 +333,7 @@
                     loadOutlet();
                 },
                 error : function(result) {
+                    $("#select_product_"+list_count).prop('disabled', true);
                     toastr.warning("Failed get data product.");
                 }
             });
@@ -571,7 +574,7 @@
                                             <label for="multiple" class="control-label col-md-4">Product <span class="required" aria-required="true"> * </span></label>
                                             <div class="col-md-8">
                                                 <div class="input-icon right">
-                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][id_product]" id="select_product_{{$index}}" data-placeholder="Select product" required onchange="loadProductVariant(this.value, '{{$index}}')" disabled>
+                                                    <select  class="form-control select2 select2-multiple-product" name="data_product[{{$index}}][id_product]" id="select_product_{{$index}}" data-placeholder="Select product" required disabled onchange="loadProductVariant(this.value, '{{$index}}')" disabled>
                                                         <option></option>
                                                         @foreach($bp['products'] as $product)
                                                             <option value="{{$product['id_product']}}" @if($product['id_product'] == $bp['id_product']) selected @endif>{{$product['product_code']}} - {{$product['product_name']}}</option>
@@ -592,6 +595,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                <input type="hidden" name="data_product[{{$index}}][id_product_variant_group]" value="{{$bp['id_product_variant_group']}}">
                                             </div>
                                         </div>
                                         <div class="form-group">
