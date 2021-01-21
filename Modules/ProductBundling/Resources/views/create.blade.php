@@ -188,7 +188,12 @@
             'todayHighlight' : true,
             'autoclose' : true
         });
-        $('.timepicker').timepicker();
+        $('.timepicker-24').timepicker({
+            autoclose: true,
+            minuteStep: 5,
+            showSeconds: false,
+            showMeridian: false
+        });
 
         $(".form_datetime").datetimepicker({
             format: "d-M-yyyy hh:ii",
@@ -548,6 +553,30 @@
                 $("#maximum_discount_"+list_count).prop('required', false);
             }
         }
+        
+        function changeSpecificDay(value) {
+            $("#day").prop('disabled', true);
+            $("#day").empty();
+            $("#day").append('<option></option>');
+            if(value == 'Day'){
+                $("#day").append('<option value="Sunday">Sunday</option>');
+                $("#day").append('<option value="Monday">Monday</option>');
+                $("#day").append('<option value="Tuesday">Tuesday</option>');
+                $("#day").append('<option value="Wednesday">Wednesday</option>');
+                $("#day").append('<option value="Thursday">Thursday</option>');
+                $("#day").append('<option value="Friday">Friday</option>');
+                $("#day").append('<option value="Saturday">Saturday</option>');
+                $("#day").prop('disabled', false);
+            }else if(value == 'Date'){
+                for (var i= 1;i<=31;i++){
+                    $("#day").append('<option value="'+i+'">'+i+'</option>');
+                }
+                $("#day").prop('disabled', false);
+            }
+            $("#day").prop('required', true);
+            $("#time_start").prop('required', true);
+            $("#time_end").prop('required', true);
+        }
     </script>
 @endsection
 
@@ -604,6 +633,20 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Bundling Promo Status <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Nama Produk" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product" name="bundling_promo_status" data-placeholder="Select discount type" required>
+                                    <option></option>
+                                    <option value="1" @if(old('bundling_promo_status') == "1") selected @endif>Include For Promo</option>
+                                    <option value="0" @if(old('bundling_promo_status') == "0") selected @endif>Not Include For Promo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label"> Bundling Periode <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Produk bandling akan muncul pada aplikasi berdasarkan periode yang dipilih" data-container="body"></i></label>
                         <div class="col-md-4">
@@ -631,6 +674,72 @@
                                         </button>
                                         <button class="btn default" type="button">
                                             <i class="fa fa-question-circle tooltips" data-original-title="Tanggal berakhir Product Bundling" data-container="body"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="multiple" class="control-label col-md-3">Specific Day Type
+                            <i class="fa fa-question-circle tooltips" data-original-title="Produk bundling akan tampil berdasarkan hari yang dipilih sesuai periode, jika 'specific date' tidak diisi, maka bundling akan muncul selama periode berlangsung" data-container="body"></i></label>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product"  name="bundling_specific_day_type" data-placeholder="Select day type" onchange="changeSpecificDay(this.value)">
+                                    <option></option>
+                                    <option value="Day" @if(old('bundling_specific_day_type') == "Day") selected @endif>Day</option>
+                                    <option value="Date" @if(old('bundling_specific_day_type') == "Date") selected @endif>Date</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="multiple" class="control-label col-md-3">Day / Date</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product"  multiple data-placeholder="Select day or date" name="day_date[]" id="day"  @if(empty(old('day_date'))) disabled @else required @endif>
+                                    <option></option>
+                                    @if(!empty(old('day_date')))
+                                        @if(old('bundling_specific_day_type') == "Day")
+                                            <option value="Sunday" @if(in_array("Sunday", old('day_date'))) selected @endif>Sunday</option>
+                                            <option value="Monday" @if(in_array("Monday", old('day_date'))) selected @endif>Monday</option>
+                                            <option value="Tuesday" @if(in_array("Tuesday", old('day_date'))) selected @endif>Tuesday</option>
+                                            <option value="Wednesday" @if(in_array("Wednesday", old('day_date'))) selected @endif>Wednesday</option>
+                                            <option value="Thursday" @if(in_array("Thursday", old('day_date'))) selected @endif>Thursday</option>
+                                            <option value="Friday" @if(in_array("Friday", old('day_date'))) selected @endif>Friday</option>
+                                            <option value="Saturday" @if(in_array("Saturday", old('day_date'))) selected @endif>Saturday</option>
+                                        @else
+                                            @for($i=1;$i<=31;$i++)
+                                                <option value="{{$i}}" @if(in_array($i, old('day_date'))) selected @endif>{{$i}}</option>
+                                            @endfor
+                                        @endif
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="multiple" class="control-label col-md-3"></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input type="text" class="timepicker-24 form-control" name="time_start" id="time_start">
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button">
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Waktu mulai Product Bundling" data-container="body"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <input type="text" class="timepicker-24 form-control" name="time_end" id="time_end">
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button">
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Waktu berakhir Product Bundling" data-container="body"></i>
                                         </button>
                                     </span>
                                 </div>
