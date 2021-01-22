@@ -26,4 +26,11 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-
     Route::post('global-price', 'ProductBundlingController@getGlobalPrice');
     Route::post('delete', 'ProductBundlingController@destroy');
     Route::post('delete-product', 'ProductBundlingController@destroyBundlingProduct');
+
+    //Product Bundling Category
+    Route::get('category', 'ProductBundlingController@indexBundlingCategory');
+    Route::get('category/create', 'ProductBundlingController@createBundlingCategory');
+    Route::post('category/store', 'ProductBundlingController@storeBundlingCategory');
+    Route::any('category/edit/{id}', 'ProductBundlingController@updateBundlingCategory');
+    Route::any('category/delete', 'ProductBundlingController@deleteBundlingCategory');
 });

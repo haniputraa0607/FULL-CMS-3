@@ -310,7 +310,7 @@
         }
 
         function loadProduct(id_brand, list_count) {
-            ("#select_product_"+list_count).prop('disabled', true);
+            $("#select_product_"+list_count).prop('disabled', true);
             $("#global_price_"+list_count).val('');
             $("#select_product_"+list_count).empty();
             $("#select_product_"+list_count).append('<option></option>');
@@ -485,6 +485,21 @@
                         <div class="col-md-8">
                             <div class="input-icon right">
                                 <input type="text" placeholder="Bundling name" class="form-control" name="bundling_name" value="{{ $result['bundling_name']}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Bundling Category <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Category bundling" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product" name="id_bundling_category" data-placeholder="Select discount type" required>
+                                    <option></option>
+                                    @foreach($category as $c)
+                                        <option value="{{$c['id_bundling_category']}}" @if($result['id_bundling_category'] == $c['id_bundling_category']) selected @endif>{{$c['bundling_category_name']}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
