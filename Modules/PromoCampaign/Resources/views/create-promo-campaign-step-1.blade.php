@@ -640,15 +640,15 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label">Limit Usage</label>
+							<label class="control-label">Limit Usage (Penggunaan Per User)</label>
 							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo" data-container="body"></i>
+							<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo untuk tiap user" data-container="body"></i>
 							<div class="input-group col-md-12">
 								<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" @if(isset($result['limitation_usage']) && $result['limitation_usage'] != "") value="{{$result['limitation_usage']}}" @elseif(old('limitation_usage') != "") value="{{old('limitation_usage')}}" @endif autocomplete="off">
 							</div>
 						</div>
 						<div class="form-group" id="totalCoupon">
-							<label class="control-label">Total Coupon</label>
+							<label class="control-label">Total Coupon (Jumlah Total Voucher)</label>
 							<span class="required" aria-required="true"> * </span>
 							<i class="fa fa-question-circle tooltips" data-original-title="Total kode kupon yang dibuat" data-container="body"></i>
 							<div class="input-group col-md-12">
