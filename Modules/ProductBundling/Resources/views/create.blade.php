@@ -633,6 +633,21 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Bundling Category <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Category bundling" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product" name="id_bundling_category" data-placeholder="Select discount type" required>
+                                    <option></option>
+                                    @foreach($category as $c)
+                                        <option value="{{$c['id_bundling_category']}}" @if(old('id_bundling_category') == $c['id_bundling_category']) selected @endif>{{$c['bundling_category_name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Bundling Promo Status <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama Produk" data-container="body"></i>
                         </label>

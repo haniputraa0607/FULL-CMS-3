@@ -1377,6 +1377,20 @@
 						</a>
 						<ul class="sub-menu">
 							@if(MyHelper::hasAccess([290], $grantedFeature))
+								<li class="nav-item {{($submenu_active == 'product-bundling-category-new') ? 'active open' : ''}}">
+									<a href="{{url('product-bundling/category/create')}}" class="nav-link ">
+										<span class="title">New Bundling Category</span>
+									</a>
+								</li>
+							@endif
+							@if(MyHelper::hasAccess([288], $grantedFeature))
+								<li class="nav-item {{($submenu_active == 'product-bundling-category') ? 'active open' : ''}}">
+									<a href="{{url('product-bundling/category')}}" class="nav-link ">
+										<span class="title">Bundling Category List</span>
+									</a>
+								</li>
+							@endif
+							@if(MyHelper::hasAccess([290], $grantedFeature))
 								<li class="nav-item {{($submenu_active == 'product-bundling-create') ? 'active open' : ''}}">
 									<a href="{{url('product-bundling/create')}}" class="nav-link ">
 										<span class="title">New Product Bundling</span>
