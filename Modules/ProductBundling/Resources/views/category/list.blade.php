@@ -84,24 +84,14 @@
                 <tbody>
                     @if(!empty($data))
                         @foreach($data as $key => $res)
-                            <tr style="background-color: #fbfbfb;font-weight:bold">
-                                <td class="clickable" data-toggle="collapse" data-target=".{{ str_replace(' ', '_', $res['bundling_category_name']) }}" style="background-color:  #fbfbfb !important"> <i class="glyphicon glyphicon-plus" style="padding-top: 5px">{{ ++$key }}. </td>
+                            <tr style="background-color: #fbfbfb;">
+                                <td> {{ ++$key }} </td>
                                 <td > {{ $res['bundling_category_name'] }} </td>
                                 <td style="width: 80px;">
                                     <a href="{{ url('product-bundling/category/edit', $res['id_bundling_category']) }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
                                     <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $res['id_bundling_category'] }}"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
-                            @foreach($res['child'] as $row => $child)
-                                <tr class="collapse {{ str_replace(' ', '_', $res['bundling_category_name']) }}" style="background-color: white !important">
-                                    <td style="background-color:  white !important"> {{ $key }}.{{ ++$row }} </td>
-                                    <td > {{ $child['product_category_name'] }} </td>
-                                    <td style="width: 80px;">
-                                        <a href="{{ url('product-bundling/category/edit', $child['id_bundling_category']) }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
-                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $child['id_bundling_category'] }}"><i class="fa fa-trash-o"></i></a>
-                                    </td>
-                                </tr>
-                            @endforeach
                         @endforeach
                     @endif
                 </tbody>

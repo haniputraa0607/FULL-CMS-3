@@ -1403,6 +1403,11 @@
 										<span class="title">Product Bundling List</span>
 									</a>
 								</li>
+								<li class="nav-item {{($submenu_active == 'product-bundling-position') ? 'active open' : ''}}">
+									<a href="{{url('product-bundling/position/assign')}}" class="nav-link ">
+										<span class="title">Manage Position</span>
+									</a>
+								</li>
 							@endif
 						</ul>
 					</li>
