@@ -26,11 +26,14 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-
     Route::post('global-price', 'ProductBundlingController@getGlobalPrice');
     Route::post('delete', 'ProductBundlingController@destroy');
     Route::post('delete-product', 'ProductBundlingController@destroyBundlingProduct');
+    Route::get('position/assign', 'ProductBundlingController@positionAssign');
+    Route::post('position/assign', 'ProductBundlingController@updatePositionAssign');
 
     //Product Bundling Category
-    Route::get('category', 'ProductBundlingController@indexBundlingCategory');
-    Route::get('category/create', 'ProductBundlingController@createBundlingCategory');
-    Route::post('category/store', 'ProductBundlingController@storeBundlingCategory');
-    Route::any('category/edit/{id}', 'ProductBundlingController@updateBundlingCategory');
-    Route::any('category/delete', 'ProductBundlingController@deleteBundlingCategory');
+    Route::get('category', 'BundlingCategoryController@indexBundlingCategory');
+    Route::get('category/create', 'BundlingCategoryController@createBundlingCategory');
+    Route::post('category/store', 'BundlingCategoryController@storeBundlingCategory');
+    Route::any('category/edit/{id}', 'BundlingCategoryController@updateBundlingCategory');
+    Route::any('category/delete', 'BundlingCategoryController@deleteBundlingCategory');
+    Route::post('category/position/assign', 'BundlingCategoryController@positionCategoryAssign');
 });

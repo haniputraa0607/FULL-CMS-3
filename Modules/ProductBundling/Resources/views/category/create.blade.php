@@ -78,36 +78,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3">Parent
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih Parent Kategori Jika Ada" data-container="body"></i>
-                        </label>
-                        <div class="col-md-7">
-                            <div class="input-icon right">
-                                <select id="multiple" class="form-control select2-multiple" name="id_parent_category" data-placeholder="select parent category">
-                                <optgroup label="Parent List">
-                                    <option value="0">Parent</option>
-                                    @if (!empty($parent))
-                                        @foreach($parent as $suw)
-                                            <option value="{{ $suw['id_bundling_category'] }}">{{ $suw['bundling_category_name'] }}</option>
-                                        @endforeach
-                                    @endif
-                                </optgroup>
-                            </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3">Description
-                            <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Kategori Produk" data-container="body"></i>
-                        </label>
-                        <div class="col-md-7">
-                            <div class="input-icon right">
-                                <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Kategori Produk" data-container="body"></i>
-                                <textarea name="bundling_category_description" class="form-control summernote">{{ old('bundling_category_description') }}</textarea>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}
