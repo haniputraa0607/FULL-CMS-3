@@ -137,7 +137,7 @@
              	// html+="<option value=\""+product.id_product+"\">"+product.product_code+" - "+product.product_name+"</option>";
 
                 // multi brand
-                html+="<option value=\""+product.id_brand+"-"+product.id_product+"\">"+product.product+"</option>";
+                html+="<option value=\""+product.id_brand+"-"+product.id_product+'-'+product.id_product_variant_group+"\">"+product.product+"</option>";
             });
             $('select[name="id_product[]"]').html(html);
             $('select[name="id_product[]"]').val(selected);

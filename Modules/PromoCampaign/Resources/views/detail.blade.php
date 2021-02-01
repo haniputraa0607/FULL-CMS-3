@@ -796,14 +796,16 @@
                                                                 <th>Brand</th>
                                                                 <th>Code</th>
                                                                 <th>Name</th>
+                                                                <th>Variant</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach($result['promo_campaign_discount_bill_products'] as $res)
+                                                            @foreach($promo_product_simple as $res)
                                                                 <tr>
-                                                                    <td>{{ $res['brand']['name_brand']??$result['brand']['name_brand']??'' }}</td>
-                                                                    <td>{{ $res['product']['product_code'] }}</td>
-                                                                    <td><a href="{{ url('product/detail/'.$res['product']['product_code']??'') }}" target="_blank">{{ $res['product']['product_name']??'' }}</a></td>
+                                                                	<td>{{ $res['brand'] }}</td>
+	                                                                <td>{{ $res['product_code'] }}</td>
+	                                                                <td><a href="{{ url('product/detail/'.$res['product_code']??'') }}" target="_blank">{{ $res['product_name']??'' }}</a></td>
+	                                                                <td>{{ $res['variant'] }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>

@@ -187,7 +187,7 @@
 							productLoad = 1;
 							// listProduct=data;
 							$.each(data, function( key, value ) {
-								$('#multipleProduct,#multipleProduct2,#multipleProduct3','multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
+								$('#multipleProduct,#multipleProduct2,#multipleProduct3','multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"'>"+value.product+"</option>");
 							});
 							$('#multiple-product-bill').prop('required', true)
 							$('#multiple-product-bill').prop('disabled', false)
