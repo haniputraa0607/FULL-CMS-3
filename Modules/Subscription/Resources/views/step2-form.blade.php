@@ -265,14 +265,8 @@ $configs = session('configs');
     @php
     	$productselected = [];
         if (!empty($subscription['subscription_products'])) {
-        	if ($subscription['product_type'] == 'variant') {
-	        	foreach ($subscription['subscription_products'] as $key => $value) {
-	    			$productselected[] = $value['id_brand'].'-'.$value['id_product_variant_group'];
-	        	}
-        	}else{
-        		foreach ($subscription['subscription_products'] as $key => $value) {
-	    			$productselected[] = $value['id_brand'].'-'.$value['id_product'];
-	        	}
+        	foreach ($subscription['subscription_products'] as $key => $value) {
+    			$productselected[] = $value['id_brand'].'-'.$value['id_product'].'-'.$value['id_product_variant_group'];
         	}
         }
         else {

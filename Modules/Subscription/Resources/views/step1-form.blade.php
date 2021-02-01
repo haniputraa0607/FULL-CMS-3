@@ -172,7 +172,16 @@ $configs = session('configs');
                                 @endif
                             @elseif(isset($subscription['product_type']) && $subscription['product_type'] === 'variant')
                                 selected
-                            @endif>Product + variant<i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dengan variant" data-container="body"></i>
+                            @endif>Product variant<i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dengan variant" data-container="body"></i>
+                        </option>
+                        <option value="single + variant" 
+                            @if ( old('product_type')) 
+                                @if ( old('product_type') == "single + variant" ) 
+                                    selected
+                                @endif
+                            @elseif(isset($subscription['product_type']) && $subscription['product_type'] === 'single + variant')
+                                selected
+                            @endif>Product + Product variant<i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dan product dengan variant" data-container="body"></i>
                         </option>
                     </select>
                 </div>

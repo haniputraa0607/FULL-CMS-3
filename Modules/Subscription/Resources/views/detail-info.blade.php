@@ -178,6 +178,14 @@ $grantedFeature     = session('granted_features');
                     <div class="col-md-4 name">Product</div>
                     <div class="col-md-8 value">: @if ( ($subscription['is_all_product']??false) == 1 ) All product @elseif( ($subscription['is_all_product']??false) === 0 ) Selected product @endif </div>
                 </div>
+                @if (empty($subscription['is_all_product']))
+	                <div class="row static-info">
+	                    <div class="col-md-4 name">Product Rule</div>
+	                    <div class="col-md-8 value">: 
+	                        {{ $subscription['product_rule'] && $subscription['product_rule'] == 'and' ? 'All items must be present' : 'One of the items must exist' }}
+	                    </div>
+	                </div>
+                @endif
                 <div class="row static-info">
 				    <div class="col-md-4 name">Shipment Method</div>
 				    <div class="col-md-1 value">:</div>
