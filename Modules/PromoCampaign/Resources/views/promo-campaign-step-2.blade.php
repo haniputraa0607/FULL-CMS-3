@@ -299,7 +299,6 @@
 							$.ajax(this)
 							return
 						}
-						console.log(data);
 						// listProduct=data;
 						productLoad = 1;
 						$.each(data, function( key, value ) {

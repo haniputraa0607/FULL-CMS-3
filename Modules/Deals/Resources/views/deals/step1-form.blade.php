@@ -95,6 +95,7 @@
             </div>
         </div>
 
+        {{-- Brand Rule --}}
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -136,6 +137,7 @@
         </div>
         @endif
 
+        {{-- Product Type --}}
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -168,8 +170,22 @@
 	                        <label for="product_type_radio_variant">
 	                            <span></span>
 	                            <span class="check"></span>
-	                            <span class="box"></span> Product + variant </label>
+	                            <span class="box"></span> Product variant only </label>
 	                            <i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dengan variant" data-container="body"></i>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="product_type" id="product_type_radio_product_and_variant" value="single + variant" class="md-radiobtn" required 
+	                        	@if ( (old('product_type')??$deals['product_type']??false) == "single + variant" ) checked 
+	                    		@endif>
+	                        <label for="product_type_radio_product_and_variant">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> Product + Product variant </label>
+	                            <i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dan product dengan variant" data-container="body"></i>
 	                    </div>
 	                </div>
 	            </div>

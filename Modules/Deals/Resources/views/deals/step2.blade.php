@@ -117,19 +117,15 @@
 				$is_all_product = $result['deals_promotion_product_discount_rules']['is_all_product'];
 				$product = [];
 				for ($i=0; $i < count($result['deals_promotion_product_discount']); $i++) { 
-					if ($product_type == 'variant') {
-						$product[] = $result['deals_promotion_product_discount'][$i]['id_brand'].'-'.$result['deals_promotion_product_discount'][$i]['id_product_variant_group'];
-					}else{
-						$product[] = $result['deals_promotion_product_discount'][$i]['id_brand'].'-'.$result['deals_promotion_product_discount'][$i]['id_product'];
-					}
+					$product[] = $result['deals_promotion_product_discount'][$i]['id_brand'].'-'.$result['deals_promotion_product_discount'][$i]['id_product'].'-'.$result['deals_promotion_product_discount'][$i]['id_product_variant_group'];
 				}
 			}else{
 				$product = [];
 				foreach ($promo_product as $key => $value) {
 					if ($product_type == 'variant') {
-						$product[] = $value['id_brand'].'-'.$value['id_product_variant_group'];
+						$product[] = $value['id_brand'].'-'.$value['id_product'].'-'.$value['id_product_variant_group'];
 					}else{
-						$product[] = $value['id_brand'].'-'.$value['id_product'];
+						$product[] = $value['id_brand'].'-'.$value['id_product'].'-'.$value['id_product_variant_group'];
 					}
 				}
 			}
@@ -140,59 +136,19 @@
 				$is_all_product = $result['deals_product_discount_rules']['is_all_product'];
 				$product = [];
 				for ($i=0; $i < count($result['deals_product_discount']); $i++) { 
-					if ($product_type == 'variant') {
-						$product[] = $result['deals_product_discount'][$i]['id_brand'].'-'.$result['deals_product_discount'][$i]['id_product_variant_group'];
-					}else{
-						$product[] = $result['deals_product_discount'][$i]['id_brand'].'-'.$result['deals_product_discount'][$i]['id_product'];
-					}
+					$product[] = $result['deals_product_discount'][$i]['id_brand'].'-'.$result['deals_product_discount'][$i]['id_product'].'-'.$result['deals_product_discount'][$i]['id_product_variant_group'];
 				}
 			}else{
 				$product = [];
 				foreach ($promo_product as $key => $value) {
 					if ($product_type == 'variant') {
-						$product[] = $value['id_brand'].'-'.$value['id_product_variant_group'];
+						$product[] = $value['id_brand'].'-'.$value['id_product'].'-'.$value['id_product_variant_group'];
 					}else{
-						$product[] = $value['id_brand'].'-'.$value['id_product'];
+						$product[] = $value['id_brand'].'-'.$value['id_product'].'-'.$value['id_product_variant_group'];
 					}
 				}
 			}
 		}
-
-		/*if (isset($result['deals_product_discount_rules']['is_all_product']) && $result['deals_product_discount_rules']['is_all_product'] == "0") {
-			$is_all_product = $result['deals_product_discount_rules']['is_all_product'];
-			$product = [];
-			for ($i=0; $i < count($result['deals_product_discount']); $i++) { 
-				$product[] = $result['deals_product_discount'][$i]['id_product'];
-			}
-		}
-
-		if ((isset($result['deals_product_discount_rules']['is_all_product']) && $result['deals_product_discount_rules']['is_all_product'] == "0")
-			|| (isset($result['deals_promotion_product_discount_rules']['is_all_product']) && $result['deals_promotion_product_discount_rules']['is_all_product'] == "0")
-		) {
-			$is_all_product = $result['deals_product_discount_rules']['is_all_product']??$result['deals_promotion_product_discount_rules']['is_all_product'];
-			$product = [];
-			for ($i=0; $i < count($result['deals_product_discount']??$result['deals_promotion_product_discount']); $i++) { 
-				if (isset($result['deals_product_discount'][$i]['id_product'])) {
-					$product[] = $result['deals_product_discount'][$i]['id_brand'].'-'.$result['deals_product_discount'][$i]['id_product'];
-				}else{
-					$product[] = $result['deals_promotion_product_discount'][$i]['id_brand'].'-'.$result['deals_promotion_product_discount'][$i]['id_product'];
-				}
-			}
-		}elseif (!empty($result['deals_tier_discount_product']) || !empty($result['deals_promotion_tier_discount_product'])) {
-			$product = [];
-			foreach ($result['deals_tier_discount_product']??$result['deals_promotion_tier_discount_product']??[] as $key => $value) {
-				$product[] = $value['id_brand'].'-'.$value['id_product'];
-			}
-		}elseif (!empty($result['deals_buyxgety_product_requirement']) || !empty($result['deals_promotion_buyxgety_product_requirement'])) {
-			foreach ($result['deals_buyxgety_product_requirement']??$result['deals_promotion_buyxgety_product_requirement']??[] as $key => $value) {
-				$product[] = $value['id_brand'].'-'.$value['id_product'];
-			}
-		}elseif (!empty($result['deals_discount_bill_products']) || !empty($result['deals_promotion_discount_bill_products'])) {
-			$product = [];
-			foreach ($result['deals_discount_bill_products']??$result['deals_promotion_discount_bill_products']??[] as $key => $value) {
-				$product[] = $value['id_brand'].'-'.$value['id_product'];
-			}
-		}*/
 
 		$datenow = date("Y-m-d H:i:s");
 		if ($result??false) {
@@ -260,8 +216,8 @@
 						productLoad = 1;
 						// listProduct=data;
 						$.each(data, function( key, value ) {
-							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
-							$('#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"'>"+value.product+"</option>");
+							$('#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"'>"+value.product+"</option>");
 						});
 						$('#multipleProduct').prop('required', true)
 						$('#multipleProduct').prop('disabled', false)
@@ -308,7 +264,7 @@
 							// 	var more='';
 							// }
 							let more='';
-							$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option class='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"' "+more+">"+value.product+"</option>");
+							$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option class='product"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' "+more+">"+value.product+"</option>");
 						});
 						$.each(selectedProduct, function( key, value ) {
 							$(".product"+value+"").attr('selected', true)
@@ -384,7 +340,7 @@
 							productLoad = 1;
 							// listProduct=data;
 							$.each(data, function( key, value ) {
-								$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
+								$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"'>"+value.product+"</option>");
 							});
 							$('#multipleProduct').prop('required', true)
 							$('#multipleProduct').prop('disabled', false)
@@ -459,8 +415,8 @@
 						productLoad = 1;
 						// listProduct=data;
 						$.each(data, function( key, value ) {
-							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+"' value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
-							$('#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+"'>"+value.product+"</option>");
+							$('#multipleProduct').append("<option id='product"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"'>"+value.product+"</option>");
+							$('#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"'>"+value.product+"</option>");
 
 						});
 						$('#multipleProduct').prop('required', true)
