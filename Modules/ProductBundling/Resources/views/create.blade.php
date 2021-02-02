@@ -188,12 +188,6 @@
             'todayHighlight' : true,
             'autoclose' : true
         });
-        $('.timepicker-24').timepicker({
-            autoclose: true,
-            minuteStep: 5,
-            showSeconds: false,
-            showMeridian: false
-        });
 
         $(".form_datetime").datetimepicker({
             format: "d-M-yyyy hh:ii",
@@ -574,6 +568,14 @@
                 $("#day").prop('disabled', false);
             }
             $("#day").prop('required', true);
+            $('.timepicker-24').timepicker({
+                autoclose: true,
+                minuteStep: 5,
+                showSeconds: false,
+                showMeridian: false
+            });
+            $("#time_start").prop('readonly', false);
+            $("#time_end").prop('readonly', false);
             $("#time_start").prop('required', true);
             $("#time_end").prop('required', true);
         }
@@ -739,7 +741,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="timepicker-24 form-control" name="time_start" id="time_start">
+                                    <input type="text" class="timepicker-24 form-control" name="time_start" id="time_start" readonly>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-question-circle tooltips" data-original-title="Waktu mulai Product Bundling" data-container="body"></i>
@@ -751,7 +753,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="timepicker-24 form-control" name="time_end" id="time_end">
+                                    <input type="text" class="timepicker-24 form-control" name="time_end" id="time_end" readonly>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-question-circle tooltips" data-original-title="Waktu berakhir Product Bundling" data-container="body"></i>
