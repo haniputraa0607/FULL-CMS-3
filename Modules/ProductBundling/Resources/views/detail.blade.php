@@ -26,16 +26,18 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
     <script>
+        @if(isset($result['bundling_periode_day'][0]['time_start']))
+            $('.timepicker-24').timepicker({
+                autoclose: true,
+                minuteStep: 5,
+                showSeconds: false,
+                showMeridian: false
+            });
+        @endif
         $('.datepicker').datepicker({
             'format' : 'd-M-yyyy',
             'todayHighlight' : true,
             'autoclose' : true
-        });
-        $('.timepicker-24').timepicker({
-            autoclose: true,
-            minuteStep: 5,
-            showSeconds: false,
-            showMeridian: false
         });
 
         $(".form_datetime").datetimepicker({
@@ -428,6 +430,14 @@
                 $("#day").prop('disabled', false);
             }
             $("#day").prop('required', true);
+            $('.timepicker-24').timepicker({
+                autoclose: true,
+                minuteStep: 5,
+                showSeconds: false,
+                showMeridian: false
+            });
+            $("#time_start").prop('readonly', false);
+            $("#time_end").prop('readonly', false);
             $("#time_start").prop('required', true);
             $("#time_end").prop('required', true);
         }
@@ -462,7 +472,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">New Product Bundling</span>
+                <span class="caption-subject sbold uppercase font-blue">{{$sub_title}}</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -598,7 +608,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="timepicker-24 form-control" name="time_start" value="{{(isset($result['bundling_periode_day'][0]['time_start']) ? date('H:i', strtotime($result['bundling_periode_day'][0]['time_start'])) : "")}}" id="time_start">
+                                    <input type="text" class="timepicker-24 form-control" name="time_start" value="{{(isset($result['bundling_periode_day'][0]['time_start']) ? date('H:i', strtotime($result['bundling_periode_day'][0]['time_start'])) : "")}}" id="time_start" @if(!isset($result['bundling_periode_day'][0]['time_start'])) readonly @endif>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-question-circle tooltips" data-original-title="Waktu mulai Product Bundling" data-container="body"></i>
@@ -610,7 +620,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="timepicker-24 form-control" name="time_end" value="{{(isset($result['bundling_periode_day'][0]['time_end']) ? date('H:i', strtotime($result['bundling_periode_day'][0]['time_end'])) : "")}}" id="time_end">
+                                    <input type="text" class="timepicker-24 form-control" name="time_end" value="{{(isset($result['bundling_periode_day'][0]['time_end']) ? date('H:i', strtotime($result['bundling_periode_day'][0]['time_end'])) : "")}}" id="time_end" @if(!isset($result['bundling_periode_day'][0]['time_end'])) readonly @endif>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-question-circle tooltips" data-original-title="Waktu berakhir Product Bundling" data-container="body"></i>
