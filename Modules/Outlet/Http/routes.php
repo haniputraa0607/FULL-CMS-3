@@ -77,3 +77,13 @@ Route::group(['prefix' => 'outlet', 'namespace' => 'Modules\Outlet\Http\Controll
     Route::any('webview/gofood/list', 'WebviewGofoodController@listOutletGofood');
     Route::any('webview/gofood/list/v2', 'WebviewGofoodController@listOutletGofood');
 });
+
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet-group-filter', 'namespace' => 'Modules\Outlet\Http\Controllers'], function()
+{
+    Route::any('/', ['middleware' => 'feature_control:294,295,297,298', 'uses' =>'OutletGroupFilterController@index']);
+    Route::get('create', ['middleware' => 'feature_control:296', 'uses' =>'OutletGroupFilterController@create']);
+    Route::post('store', ['middleware' => 'feature_control:296', 'uses' =>'OutletGroupFilterController@store']);
+    Route::get('detail/{id}', ['middleware' => 'feature_control:295,297', 'uses' =>'OutletGroupFilterController@detail']);
+    Route::post('update/{id}', ['middleware' => 'feature_control:297', 'uses' =>'OutletGroupFilterController@update']);
+    Route::post('delete', ['middleware' => 'feature_control:298', 'uses' =>'OutletGroupFilterController@destroy']);
+});

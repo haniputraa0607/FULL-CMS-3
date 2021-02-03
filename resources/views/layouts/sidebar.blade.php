@@ -442,6 +442,28 @@
 							</a>
 						</li>
 					@endif
+					@if(MyHelper::hasAccess([294,295,296,297,298], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'outlet-group-filter') ? 'active open' : ''}}">
+							<a href="javascript:;" class="nav-link nav-toggle">
+								<span class="title">Outlet Group Filter</span>
+								<span class="arrow"></span>
+							</a>
+							<ul class="sub-menu">
+								<li class="nav-item {{(isset($child_active) && $child_active == 'outlet-group-filter-new') ? 'active open' : ''}}">
+									<a href="{{url('outlet-group-filter/create')}}" class="nav-link ">
+										<span class="title">Outlet Group Filter New</span>
+									</a>
+								</li>
+								@if(MyHelper::hasAccess([294,295,297,298], $grantedFeature))
+								<li class="nav-item {{(isset($child_active) && $child_active == 'outlet-group-filter-list') ? 'active open' : ''}}">
+									<a href="{{url('outlet-group-filter')}}" class="nav-link ">
+										<span class="title">Outlet Group Filter List</span>
+									</a>
+								</li>
+								@endif
+							</ul>
+						</li>
+					@endif
 				</ul>
 			</li>
 			@endif
