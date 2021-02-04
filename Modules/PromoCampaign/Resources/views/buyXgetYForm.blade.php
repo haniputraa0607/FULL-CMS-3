@@ -1,30 +1,9 @@
+@include('promocampaign::template.promo-product', ['promo_type' => 'bxgy'])
+
 @section('buyXgetYForm')
-<div class="row">
-	<div class="col-md-6">
-		<div id="selectProduct2" class="form-group" style="width: 100%!important">
-			<label for="multipleProduct2" class="control-label">Product Utama<span class="required" aria-required="true"> * </span>
-			<i class="fa fa-question-circle tooltips" data-original-title="Pilih produk X yang akan menjadi syarat untuk mendapatkan promo </br></br>X : Produk utama </br>Y : Produk benefit" data-container="body" data-html="true"></i></label>
-			<select id="multipleProduct3" name="product[]" class="form-control select2 select2-hidden-accessible" multiple tabindex="-1" aria-hidden="true" data-value="{{ ($result['promo_campaign_buyxgety_product_requirement']??false) ? json_encode( ([$result['promo_campaign_buyxgety_product_requirement']] ?? ([$result['promo_campaign_buyxgety_product_requirement']]??'') ) ) :''}}" style="width: 100%!important">
-			</select>
-		</div>
-	</div>
-</div>
-<div>
-	<label class="control-label">Product Rule</label>
-	<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang berlaku ketika transaksi menggunakan syarat product" data-container="body" data-html="true"></i>
-	<div class="mt-radio-list">
-		<label class="mt-radio mt-radio-outline"> All items must be present
-			<input type="radio" value="and" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'and' && !empty($result['promo_campaign_buyxgety_rules'])) checked @endif />
-			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>semua</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
-			<span></span>
-		</label>
-		<label class="mt-radio mt-radio-outline"> One of the items must exist
-			<input type="radio" value="or" name="product_rule" @if(isset($result['product_rule']) && $result['product_rule'] === 'or' && !empty($result['promo_campaign_buyxgety_rules'])) checked @endif />
-			<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku ketika <b>salah satu</b> syarat product ada dalam transaksi" data-container="body" data-html="true"></i>
-			<span></span>
-		</label>
-	</div>
-</div>
+
+@yield('promo-product')
+
 <div class="form-group">
 	<label class="control-label">Min basket size</label>
 	<i class="fa fa-question-circle tooltips" data-original-title="Syarat minimum basket size atau total harga product (subtotal) sebelum dikenakan promo dan biaya pengiriman. Subtotal diambil dari subtotal dari brand yang dipilih. Kosongkan jika tidak ada syarat jumlah minimum basket size" data-container="body" data-html="true"></i>
@@ -400,6 +379,7 @@
 		})
 		if(lastErrorReal!=lastError2||(status&&drawIfTrue)){
 			lastError2=lastErrorReal;
+			$('.product-selector, .variant-selector').select2('destroy');
 			$('#ruleSectionBody2').html(html);
 			$('.product-selector').select2({ width: '100%' ,placeholder:'Select product'});
 			$('.variant-selector').select2({ width: '100%' ,placeholder:'Select variant'});
@@ -497,6 +477,6 @@
 			}
 		});
 	});
-
 </script>
+@yield('promo-product-script')
 @endSection

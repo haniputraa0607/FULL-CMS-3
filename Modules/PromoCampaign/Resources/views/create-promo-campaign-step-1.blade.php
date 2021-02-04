@@ -649,7 +649,7 @@
 							<span class="required" aria-required="true"> * </span>
 							<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo untuk tiap user" data-container="body"></i>
 							<div class="input-group col-md-12">
-								<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" @if(isset($result['limitation_usage']) && $result['limitation_usage'] != "") value="{{$result['limitation_usage']}}" @elseif(old('limitation_usage') != "") value="{{old('limitation_usage')}}" @endif autocomplete="off">
+								<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" value="{{ old('limitation_usage') ?? $result['limitation_usage'] ?? null }}" autocomplete="off">
 							</div>
 						</div>
 						<div class="form-group" id="totalCoupon">
@@ -657,7 +657,7 @@
 							<span class="required" aria-required="true"> * </span>
 							<i class="fa fa-question-circle tooltips" data-original-title="Total kode kupon yang dibuat" data-container="body"></i>
 							<div class="input-group col-md-12">
-								<input required type="text" class="form-control digit_mask" name="total_coupon" placeholder="Total Coupon" @if(isset($result['total_coupon']) && $result['total_coupon'] != "") value="{{$result['total_coupon']}}" @elseif(old('total_coupon') != "") value="{{old('total_coupon')}}" @endif autocomplete="off">
+								<input required type="text" class="form-control digit_mask" name="total_coupon" placeholder="Total Coupon" value="{{ old('total_coupon') ?? $result['total_coupon'] ?? null }}" autocomplete="off">
 								<p id="alertTotalCoupon" style="display: none;" class="help-block">Generate Random Total Coupon sangat tidak memungkinkan!</p>
 							</div>
 						</div>
