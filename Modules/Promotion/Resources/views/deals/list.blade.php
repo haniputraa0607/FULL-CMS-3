@@ -188,7 +188,13 @@ $configs    		= session('configs');
                             	</td>
                                 <td>{{ $value['deals_title'] }}</td>
                                 @if(MyHelper::hasAccess([95], $configs))
-                                <td>{{ $value['brand']['name_brand']??'Not Set' }}</td>
+                                <td nowrap>
+                                	<ul style="margin-left: -20px">
+                                	@foreach($value['brands'] ?? [] as $brand)
+                                		<li>{{ $brand['name_brand'] ?? '' }}</li>
+                                	@endforeach
+                                	</ul>
+                                <td>
                                 @endif
                                 <td class="middle-center">
 	                                @if ( empty($value['step_complete']) )

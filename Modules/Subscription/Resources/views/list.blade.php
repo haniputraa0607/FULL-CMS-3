@@ -3,7 +3,7 @@
 use App\Lib\MyHelper;
 $grantedFeature     = session('granted_features');
 ?>
-@extends('layouts.main')
+@extends('layouts.main-closed')
 
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -220,7 +220,13 @@ $grantedFeature     = session('granted_features');
                                     @endphp
                                 </td>
                                 @endif
-                                <td class="middle-center" >{{ $value['brand']['name_brand']??'' }}</td>
+                                <td nowrap>
+                                	<ul style="margin-left: -20px">
+                                	@foreach($value['brands'] ?? [] as $brand)
+                                		<li>{{ $brand['name_brand'] ?? '' }}</li>
+                                	@endforeach
+                                	</ul>
+                                <td>
                                 <td class="middle-center">
                                 	@php
                                 		$date_start = $value['subscription_start'];
