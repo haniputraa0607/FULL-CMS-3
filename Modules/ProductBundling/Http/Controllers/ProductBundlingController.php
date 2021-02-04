@@ -71,6 +71,7 @@ class ProductBundlingController extends Controller
             'submenu_active' => 'product-bundling-new',
         ];
 
+        $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result']??[];
         $data['category'] = MyHelper::get('product-bundling-category/list')['result']??[];
         $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
         return view('productbundling::create', $data);
@@ -124,6 +125,8 @@ class ProductBundlingController extends Controller
             $data['count_list_product'] = count($detail['result']['detail']['bundling_product']??[]);
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
             $data['brand_tmp'] = json_encode($detail['result']['brand_tmp'])??[];
+            $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result']??[];
+            $data['selected_outlet_group_filter'] = array_column($detail['result']['detail']['bundling_outlet_group']??[], 'id_outlet_group');
 
             return view('productbundling::detail', $data);
         }else{
