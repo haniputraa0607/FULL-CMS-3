@@ -1,35 +1,37 @@
 @php
-	$promo_product = $result['promo_campaign_product_discount'] ?: $result['promo_campaign_tier_discount_product'] ?: $result['promo_campaign_buyxgety_product_requirement'] ?: $result['promo_campaign_discount_bill_products'] ?: [];
 
-	if (isset($result['promo_campaign_product_discount_rules']['is_all_product']) && $result['promo_campaign_product_discount_rules']['is_all_product'] == "0") {
-		$is_all_product = $result['promo_campaign_product_discount_rules']['is_all_product'];
-		$product = [];
-		for ($i=0; $i < count($result['promo_campaign_product_discount']); $i++) { 
-			$product[] = $result['promo_campaign_product_discount'][$i]['id_brand'].'-'.$result['promo_campaign_product_discount'][$i]['id_product'].'-'.$result['promo_campaign_product_discount'][$i]['id_product_variant_group'];
-		}
-	}else{
-		$product = [];
-		foreach ($promo_product as $key => $value) {
-			if ($result['promo_type'] == 'Buy X Get Y' && isset($value['promo_campaign_buyxgety_product_modifiers'])) {
-				$extra_modifier = array_column($value['promo_campaign_buyxgety_product_modifiers'], 'id_product_modifier');
-				$text_product[] = $value['id_brand'].'-'.$value['id_product'].'-'.$value['id_product_variant_group'];
-				$text_product[] = implode('-', $extra_modifier);
-				$product[] = implode('-', $text_product);
-			}else{
-				$product[] = $value['id_brand'].'-'.$value['id_product'].'-'.$value['id_product_variant_group'];
-			}
-		}
+	switch ($promo_source) {
+		case 'promo_campaign':
+			$data = $result;
+			$promo_rules = $result['promo_campaign_tier_discount_rules'] ?: null;
+			break;
+		
+		case 'Promotion':
+			$data = $result;
+			$promo_source = 'deals_promotion';
+			break;
+
+		default:
+			$data = $result;
+			$promo_source = 'deals';
+			break;
 	}
 
 	switch ($promo_type) {
 		case 'tier-discount':
-			$promo_rules = $result['promo_campaign_tier_discount_rules'] ?: null;
-			$is_all_product = $result['promo_campaign_tier_discount_rules'][0]['is_all_product'] ?? 1;
+			$promo_rules 	= ($result['promo_campaign_tier_discount_rules'] ?? $result['deals_tier_discount_rules'] ?? $result['deals_promotion_tier_discount_rules']) ?: null;
+			$is_all_product = $result['promo_campaign_tier_discount_rules'][0]['is_all_product'] 
+								?? $result['deals_tier_discount_rules'][0]['is_all_product'] 
+								?? $result['deals_promotion_tier_discount_rules'][0]['is_all_product'] 
+								?? 1;
 			break;
 		
 		case 'bxgy':
-			$promo_rules = $result['promo_campaign_buyxgety_rules'] ?: null;
-			$is_all_product = $result['promo_campaign_buyxgety_rules'][0]['is_all_product'] ?? 1;
+			$promo_rules 	= ($result['promo_campaign_buyxgety_rules'] ?? $result['deals_buyxgety_rules'] ?? $result['deals_promotion_buyxgety_rules']) ?: null;
+			$is_all_product = $result['promo_campaign_buyxgety_rules'][0]['is_all_product'] 
+								?? $result['deals_buyxgety_rules'][0]['is_all_product'] 
+								?? $result['deals_promotion_buyxgety_rules'][0]['is_all_product'] 
+								?? 1;
 			break;
 
 		default:
@@ -109,7 +111,7 @@
 					if (true) {
 						$.ajax({
 							type: "GET",
-							url: "getData",
+							url: "{{url('promo-campaign/step2/getData')}}",
 							data : {
 								"get" : 'Product',
 								"brand" : brand,

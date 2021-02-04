@@ -1,5 +1,9 @@
+@include('promocampaign::template.promo-product', ['promo_source' => ($result['deals_type'] ?? $deals_type), 'promo_type' => 'tier-discount'])
 @section('bulkForm')
-<div class="">
+
+@yield('promo-product')
+
+{{-- <div class="">
 	<div id="selectProduct2" class="form-group" style="width: 100%!important">
 		<div class="row">
 			<div class="col-md-6">
@@ -50,7 +54,7 @@
 			<span></span>
 		</label>
 	</div>
-</div>
+</div> --}}
 
 <div id="selectProduct2" class="form-group" style="height: 90px;">
 	<div class="row">
@@ -366,4 +370,5 @@
 		reOrder();
 	});
 </script>
+@yield('promo-product-script')
 @endSection

@@ -1,4 +1,4 @@
-@include('promocampaign::template.promo-product', ['promo_type' => 'tier-discount'])
+@include('promocampaign::template.promo-product', ['promo_source' => 'promo_campaign', 'promo_type' => 'tier-discount'])
 @section('bulkForm')
 
 @yield('promo-product')

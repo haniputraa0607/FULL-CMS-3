@@ -1,4 +1,4 @@
-@include('promocampaign::template.promo-product', ['promo_type' => 'bxgy'])
+@include('promocampaign::template.promo-product', ['promo_source' => 'promo_campaign', 'promo_type' => 'bxgy'])
 
 @section('buyXgetYForm')
 

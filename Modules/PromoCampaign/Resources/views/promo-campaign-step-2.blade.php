@@ -348,7 +348,7 @@
 				reOrder2();
 				$('#buyXgetYProduct').show().find('input, textarea, select').prop('disabled', false);
 				// loadProduct('#multipleProduct3',reOrder2);
-				loadProduct('#multiple-product-bxgy');
+				loadProduct('#multiple-product-bxgy',reOrder2);
 			}
 			else if(promo_type == 'Discount bill'){
 				product = $('select[name=filter_product_bill] option:selected').val();
