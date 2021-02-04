@@ -8,6 +8,7 @@
 @include('deals::deals.discount-bill')
 @include('deals::deals.discount-delivery')
 @include('promocampaign::template.promo-global-requirement', ['promo_source' => $result['deals_type'] ?? $deals_type])
+@include('deals::deals.step2-info')
 @section('page-style')
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
@@ -615,6 +616,8 @@
 
 	    {{-- ONLINE RULE --}}
         @if( ($result['is_online']??false) == 1)
+        	{{-- Deals Info --}}
+        	@yield('deals-info')
 
         	{{-- Global Requirement --}}
 			@yield('global-requirement')

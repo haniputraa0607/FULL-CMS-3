@@ -561,6 +561,16 @@ $grantedFeature     = session('granted_features');
                                 {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
                         </div>
                     </div>
+                    <div class="row static-info">
+                        <div class="col-md-4 name">Product Requirement</div>
+                        <div class="col-md-8 value">: 
+                        	@if ( ($deals['deals_discount_bill_rules']['is_all_product'] ?? false) == '1' )
+                                All Product
+                            @elseif ( ($deals['deals_discount_bill_rules']['is_all_product'] ?? false) == '0' )
+                                Selected Product
+                            @endif
+                        </div>
+                    </div>
                     <div class="mt-comments">
                         @if ($deals['deals_discount_bill_rules'] != null)
                             @if(isset($deals['deals_discount_bill_rules']['is_all_product']) && $deals['deals_discount_bill_rules']['is_all_product'] == '0')

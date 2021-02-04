@@ -647,7 +647,31 @@
                             <div class="col-md-8 value">: 
                                 {{ $result['brand_rule'] && $result['brand_rule'] == 'and' ? 'All selected brands' : 'One of the selected brands' }}
                             </div>
-                        </div>
+                        </div>						
+						<div class="row static-info">
+							<div class="col-md-4 name">Product Type</div>
+							<div class="col-md-8 value">: 
+								@php
+									$product_type = $result['product_type'] ?? 'single';
+									$echo = "";
+									switch ($product_type) {
+										case 'single + variant':
+											$echo = 'Product + Product variant';
+											break;
+
+										case 'variant':
+											$echo = 'Product variant only';
+											break;
+										
+										default:
+											$echo = 'Product only';
+											break;
+									}
+
+									echo $echo;
+								@endphp
+							</div>
+						</div>
 						<div class="row static-info">
 							<div class="col-md-4 name">Tag</div>
 							@if(isset($result['promo_campaign_have_tags']))
