@@ -139,6 +139,18 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
     	Route::post('create/product-tag', ['middleware' => 'feature_control:47', 'uses' => 'TagController@createTagProduct']);
 	});
 
+    /**
+     * plastic
+     */
+    Route::group(['prefix' => 'plastic'], function() {
+        Route::get('/', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@index']);
+        Route::get('create', ['middleware' => 'feature_control:50', 'uses' => 'ProductPlasticController@create']);
+        Route::post('store', ['middleware' => 'feature_control:50', 'uses' => 'ProductPlasticController@store']);
+        Route::get('detail/{id}', ['middleware' => 'feature_control:49,51', 'uses' => 'ProductPlasticController@detail']);
+        Route::post('update/{id}', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@update']);
+        Route::post('delete', ['middleware' => 'feature_control:52', 'uses' => 'ProductPlasticController@destroy']);
+        Route::post('visibility', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@visibility']);
+    });
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product', 'namespace' => 'Modules\Advert\Http\Controllers'], function()
