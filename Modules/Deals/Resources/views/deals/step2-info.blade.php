@@ -93,26 +93,30 @@
 					</div>
 				</div>
 				<div class="col-md-6">
-					<div class="row static-info">
-	                    <div class="col-md-4 name">Total Voucher</div>
-	                    <div class="col-md-8 value">: {{ !empty($result['deals_total_voucher']) ? number_format($result['deals_total_voucher']).' Vouchers' : (isset($result['deals_total_voucher']) ? 'unlimited' : '') }}</div>
-	                </div>
-	                <div class="row static-info">
-	                    <div class="col-md-4 name">Used Voucher</div>
-	                    <div class="col-md-8 value">: {{ number_format($result['deals_total_used']??0).' Vouchers' }}</div>
-	                </div>
+					@if($deals_type != 'Promotion')
+						<div class="row static-info">
+		                    <div class="col-md-4 name">Total Voucher</div>
+		                    <div class="col-md-8 value">: {{ !empty($result['deals_total_voucher']) ? number_format($result['deals_total_voucher']).' Vouchers' : (isset($result['deals_total_voucher']) ? 'unlimited' : '') }}</div>
+		                </div>
+		                <div class="row static-info">
+		                    <div class="col-md-4 name">Used Voucher</div>
+		                    <div class="col-md-8 value">: {{ number_format($result['deals_total_used']??0).' Vouchers' }}</div>
+		                </div>
+		            @endif
 	                <div class="row static-info">
 	                    <div class="col-md-4 name">User Limit</div>
 	                    <div class="col-md-8 value">: {{ $result['user_limit']??false ? number_format($result['user_limit']).' Times usage' : 'Unlimited' }}</div>
 	                </div>
-	                <div class="row static-info">
-	                    <div class="col-md-4 name">Voucher Expiry</div>
-	                    <div class="col-md-8 value">: {{ ($result['deals_voucher_duration']??false) ? 'By Duration ( '.number_format($result['deals_voucher_duration']).' Days )' : (($result['deals_voucher_expired']??false) ? 'By Date ( '.date("d M Y", strtotime($result['deals_voucher_expired'])).' '.date("H:i", strtotime($result['deals_voucher_expired'])).' )' : '-') }}</div>
-	                </div>
-	                <div class="row static-info">
-	                    <div class="col-md-4 name">Voucher Start</div>
-	                    <div class="col-md-8 value">: {{ $result['deals_voucher_start']??false ? date("d M Y", strtotime($result['deals_voucher_start'])) : '-' }}</div>
-	                </div>
+	                @if($deals_type != 'Promotion')
+		                <div class="row static-info">
+		                    <div class="col-md-4 name">Voucher Expiry</div>
+		                    <div class="col-md-8 value">: {{ ($result['deals_voucher_duration']??false) ? 'By Duration ( '.number_format($result['deals_voucher_duration']).' Days )' : (($result['deals_voucher_expired']??false) ? 'By Date ( '.date("d M Y", strtotime($result['deals_voucher_expired'])).' '.date("H:i", strtotime($result['deals_voucher_expired'])).' )' : '-') }}</div>
+		                </div>
+		                <div class="row static-info">
+		                    <div class="col-md-4 name">Voucher Start</div>
+		                    <div class="col-md-8 value">: {{ $result['deals_voucher_start']??false ? date("d M Y", strtotime($result['deals_voucher_start'])) : '-' }}</div>
+		                </div>
+		            @endif
 	                <div class="row static-info">
 	                    <div class="col-md-4 name">Image</div>
 	                    <div class="col-md-8 value">
