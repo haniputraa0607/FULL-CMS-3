@@ -432,8 +432,6 @@
                                 $("#available_outlet").append('<option value="'+data[i].id_outlet+'">'+data[i].outlet_code+' - '+data[i].outlet_name+'</option>');
                             }
                         }
-                    }else{
-                        toastr.warning("Failed get data outlet.");
                     }
                 },
                 error : function(result) {
@@ -578,6 +576,20 @@
             $("#time_end").prop('readonly', false);
             $("#time_start").prop('required', true);
             $("#time_end").prop('required', true);
+        }
+
+        function changeOutletType(value) {
+            if(value == 'Selected Outlet'){
+                document.getElementById('div_selected_outlet').style.display = 'block';
+                document.getElementById('div_outlet_group_filter').style.display = 'none';
+                $("#available_outlet_group_filter").prop('required', false);
+                $("#available_outlet").prop('required', true);
+            }else if(value == 'Outlet Group Filter'){
+                document.getElementById('div_selected_outlet').style.display = 'none';
+                document.getElementById('div_outlet_group_filter').style.display = 'block';
+                $("#available_outlet_group_filter").prop('required', true);
+                $("#available_outlet").prop('required', false);
+            }
         }
     </script>
 @endsection
@@ -951,14 +963,58 @@
                     <hr>
                     <div class="form-group">
                         <div class="input-icon right">
+                            <label class="col-md-4 control-label">
+                                Type
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Pilih apakah outlet available mau berdasarkan selected outlet atau outlet group filter" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="md-radio-inline">
+                                <div class="md-radio">
+                                    <input type="radio" id="optionsRadios4" name="outlet_available_type" class="md-radiobtn filterType" value="Selected Outlet" required onclick="changeOutletType(this.value)" @if(old('outlet_available_type') == 'Selected Outlet') checked @endif>
+                                    <label for="optionsRadios4">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> Selected Outlet</label>
+                                </div>
+                                <div class="md-radio">
+                                    <input type="radio" id="optionsRadios5" name="outlet_available_type" class="md-radiobtn filterType" value="Outlet Group Filter" required onclick="changeOutletType(this.value)" @if(old('outlet_available_type') == 'Outlet Group Filter') checked @endif>
+                                    <label for="optionsRadios5">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> Outlet Group Filter</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" @if(old('outlet_available_type') == 'Outlet Group Filter') style="display:none;" @endif  id="div_selected_outlet">
+                        <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                                Outlet Available
+                                Selected Outlet
                                 <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang available untuk product bundling yang akan dibuat" data-container="body"></i>
                             </label>
                         </div>
-                        <div class="col-md-8">
-                            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" id="available_outlet" multiple required>
+                        <div class="col-md-7">
+                            <select class="form-control select2-multiple" data-placeholder="Select" name="id_outlet[]" id="available_outlet" multiple>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" @if(old('outlet_available_type') == 'Selected Outlet') style="display:none;" @endif id="div_outlet_group_filter">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                                Outlet Group Filter
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet group filter untuk product bundling yang akan dibuat" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-7">
+                            <select class="form-control select2-multiple" data-placeholder="Select" name="id_outlet_group[]" id="available_outlet_group_filter" multiple>
+                                <option></option>
+                                @foreach($outlet_group_filter as $ogf)
+                                    <option value="{{$ogf['id_outlet_group']}}" @if(in_array($ogf['id_outlet_group'], old('id_outlet_group'))) selected @endif>{{$ogf['outlet_group_name']}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
