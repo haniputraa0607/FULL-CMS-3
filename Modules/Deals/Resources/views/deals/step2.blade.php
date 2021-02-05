@@ -7,7 +7,8 @@
 @include('deals::deals.buyxgety-discount')
 @include('deals::deals.discount-bill')
 @include('deals::deals.discount-delivery')
-@include('promocampaign::template.promo-global-requirement', ['promo_source' => $result['deals_type']??$deals_type])
+@include('promocampaign::template.promo-global-requirement', ['promo_source' => $result['deals_type'] ?? $deals_type])
+@include('deals::deals.step2-info')
 @section('page-style')
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ secure_url('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
@@ -264,7 +265,7 @@
 							// 	var more='';
 							// }
 							let more='';
-							$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill').append("<option class='product"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' "+more+">"+value.product+"</option>");
+							$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill,'+selector).append("<option class='product"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' "+more+">"+value.product+"</option>");
 						});
 						$.each(selectedProduct, function( key, value ) {
 							$(".product"+value+"").attr('selected', true)
@@ -295,12 +296,14 @@
 
 				reOrder();
 				$('#bulkProduct').show().find('input, textarea, select').prop('disabled', false);
-				loadProduct('#multipleProduct2');
+				// loadProduct('#multipleProduct2');
+				loadProduct('#multiple-product-tier-discount');
 			}else if(promo_type=='Buy X Get Y'){
 
 				reOrder2();
 				$('#buyXgetYProduct').show().find('input, textarea, select').prop('disabled', false);
-				loadProduct('#multipleProduct3',reOrder2);
+				// loadProduct('#multipleProduct3',reOrder2);
+				loadProduct('#multiple-product-bxgy', reOrder2);
 			}
 			else if(promo_type == 'Discount bill'){
 
@@ -613,6 +616,8 @@
 
 	    {{-- ONLINE RULE --}}
         @if( ($result['is_online']??false) == 1)
+        	{{-- Deals Info --}}
+        	@yield('deals-info')
 
         	{{-- Global Requirement --}}
 			@yield('global-requirement')

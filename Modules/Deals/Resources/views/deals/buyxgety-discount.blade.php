@@ -1,5 +1,9 @@
+@include('promocampaign::template.promo-product', ['promo_source' => ($result['deals_type'] ?? $deals_type), 'promo_type' => 'bxgy'])
+
 @section('buyXgetYForm')
-<div class="row">
+
+@yield('promo-product')
+{{-- <div class="row">
 		<div class="col-md-6">
 	<div id="selectProduct2" class="form-group" style="width: 100%!important">
 			<label for="multipleProduct2" class="control-label">Product Utama<span class="required" aria-required="true"> * </span>
@@ -47,7 +51,7 @@
 			<span></span>
 		</label>
 	</div>
-</div>
+</div> --}}
 
 <div class="form-group">
 	<label class="control-label">Min basket size</label>
@@ -425,6 +429,7 @@
 		})
 		if(lastErrorReal!=lastError2||(status&&drawIfTrue)){
 			lastError2=lastErrorReal;
+			$('.product-selector, .variant-selector').select2('destroy');
 			$('#ruleSectionBody2').html(html);
 			$('.product-selector').select2({ width: '100%' ,placeholder:'Select product'});
 			$('.variant-selector').select2({ width: '100%' ,placeholder:'Select variant'});
@@ -524,4 +529,5 @@
 	});
 
 </script>
+@yield('promo-product-script')
 @endSection

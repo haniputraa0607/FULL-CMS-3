@@ -313,7 +313,7 @@ class PromoCampaignController extends Controller
             } 
             else 
             {
-                return back()->withErrors($action['messages']??$action['result']??['Something went wrong'])->withInput();
+                return back()->withErrors($action['message']??$action['messages']??$action['result']??['Something went wrong'])->withInput();
             }
 
             

@@ -624,6 +624,11 @@
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Product Requirement</div>
                                             <div class="col-md-8 value">: 
+                                                @if ( ($result['promo_campaign_tier_discount_rules'][0]['is_all_product'] ?? false) == '1' )
+                                                    All Product
+                                                @elseif ( ($result['promo_campaign_tier_discount_rules'][0]['is_all_product'] ?? false) == '0' )
+                                                    Selected Product
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="mt-comments">
@@ -690,6 +695,11 @@
                                         <div class="row static-info">
                                             <div class="col-md-4 name">Product Requirement</div>
                                             <div class="col-md-8 value">: 
+                                                @if ( ($result['promo_campaign_buyxgety_rules'][0]['is_all_product'] ?? false) == '1' )
+                                                    All Product
+                                                @elseif ( ($result['promo_campaign_buyxgety_rules'][0]['is_all_product'] ?? false) == '0' )
+                                                    Selected Product
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="mt-comments">
@@ -787,6 +797,16 @@
                                                     {{ ($result['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($result['min_basket_size']) }}
                                             </div>
                                         </div>
+                                        <div class="row static-info">
+					                        <div class="col-md-4 name">Product Requirement</div>
+					                        <div class="col-md-8 value">: 
+					                        	@if ( ($deals['promo_campaign_discount_bill_rules']['is_all_product'] ?? false) == '1' )
+					                                All Product
+					                            @elseif ( ($deals['promo_campaign_discount_bill_rules']['is_all_product'] ?? false) == '0' )
+					                                Selected Product
+					                            @endif
+					                        </div>
+					                    </div>
                                         <div class="mt-comments">
                                             @if ($result['promo_campaign_discount_bill_rules'] != null)
                                                 @if(isset($result['promo_campaign_discount_bill_rules']['is_all_product']) && $result['promo_campaign_discount_bill_rules']['is_all_product'] == '0')

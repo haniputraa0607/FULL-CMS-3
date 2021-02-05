@@ -196,9 +196,14 @@ $grantedFeature     = session('granted_features');
                             	</td>
                                 <td>{{ $value['deals_title'] }}</td>
                                 @if(MyHelper::hasAccess([95], $configs))
-                                <td>{{ $value['brand']['name_brand']??'Not Set' }}</td>
-                                @endif
+                                <td nowrap>
+                                	<ul style="margin-left: -20px">
+                                	@foreach($value['brands'] ?? [] as $brand)
+                                		<li>{{ $brand['name_brand'] ?? '' }}</li>
+                                	@endforeach
+                                	</ul>
                                 <td>
+                                @endif
                                 	@if($value['deals_voucher_price_type'] == 'free')
                                 		{{ $value['deals_voucher_price_type'] }}
                                 	@elseif(!empty($value['deals_voucher_price_point']))

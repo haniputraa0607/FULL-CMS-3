@@ -380,6 +380,11 @@ $grantedFeature     = session('granted_features');
                     <div class="row static-info">
                         <div class="col-md-4 name">Product Requirement</div>
                         <div class="col-md-8 value">: 
+                        	@if ( ($deals['deals_tier_discount_rules'][0]['is_all_product'] ?? false) == '1' )
+                                All Product
+                            @elseif ( ($deals['deals_tier_discount_rules'][0]['is_all_product'] ?? false) == '0' )
+                                Selected Product
+                            @endif
                             {{-- @if ( isset($deals['deals_tier_discount_product']) )
                             	@if (!empty($deals['deals_tier_discount_product']['product_group']))
                                 	<a href="{{ url('product-variant/group/'.$deals['deals_tier_discount_product']['product_group']['id_product_group']??'') }}">{{ ($deals['deals_tier_discount_product']['product_group']['product_group_code']??'').' - '.($deals['deals_tier_discount_product']['product_group']['product_group_name']??'') }}</a>
@@ -452,7 +457,13 @@ $grantedFeature     = session('granted_features');
                     </div>
                     <div class="row static-info">
                         <div class="col-md-4 name">Product Requirement</div>
-                        <div class="col-md-8 value">: </div>
+                        <div class="col-md-8 value">: 
+                        	@if ( ($deals['deals_buyxgety_rules'][0]['is_all_product'] ?? false) == '1' )
+                                All Product
+                            @elseif ( ($deals['deals_buyxgety_rules'][0]['is_all_product'] ?? false) == '0' )
+                                Selected Product
+                            @endif
+                        </div>
                     </div>
                     <div class="mt-comments">
                         @if(!empty($deals['deals_buyxgety_product_requirement']))
@@ -548,6 +559,16 @@ $grantedFeature     = session('granted_features');
                         <div class="col-md-4 name">Min Basket Size</div>
                         <div class="col-md-8 value">: 
                                 {{ ($deals['min_basket_size'] == 0) ? 'no min basket size' : 'IDR '.number_format($deals['min_basket_size']) }}
+                        </div>
+                    </div>
+                    <div class="row static-info">
+                        <div class="col-md-4 name">Product Requirement</div>
+                        <div class="col-md-8 value">: 
+                        	@if ( ($deals['deals_discount_bill_rules']['is_all_product'] ?? false) == '1' )
+                                All Product
+                            @elseif ( ($deals['deals_discount_bill_rules']['is_all_product'] ?? false) == '0' )
+                                Selected Product
+                            @endif
                         </div>
                     </div>
                     <div class="mt-comments">
