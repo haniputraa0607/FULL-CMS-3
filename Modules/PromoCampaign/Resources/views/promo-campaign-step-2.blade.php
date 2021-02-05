@@ -104,6 +104,7 @@
 		$product 			= null;
 		$is_all_outlet 		= null;
 		$outlet			 	= null;
+		$outlet_groups		= null;
 		$payment_method		= null;
 		$shipment_method	= null;
         $product_type 		= $result['product_type'] ?? 'single';
@@ -113,6 +114,11 @@
 			$outlet = [];
 			for ($i=0; $i < count($result['outlets']); $i++) { 
 				$outlet[] = $result['outlets'][$i]['id_outlet'];
+			}
+
+			$outlet_groups = [];
+			foreach (($result['outlet_groups'] ?? []) as $value) {
+				$outlet_groups[] = $value['id_outlet_group'];
 			}
 		}
 
@@ -270,12 +276,42 @@
 			}
 		});
 
+		$.ajax({
+			type: "GET",
+			url: "getData",
+			data : {
+				"get" : 'Outlet Group',
+				"brand" : brand,
+				'brand_rule' : brand_rule
+			},
+			dataType: "json",
+			success: function(data){
+				if (data.status == 'fail') {
+					$.ajax(this)
+					return
+				}
+				list_outlet_group = data;
+				$.each(data, function( key, value ) {
+					$('#multiple-outlet-group').append("<option id='outlet-group-"+value.id_outlet_group+"' value='"+value.id_outlet_group+"'>"+value.outlet_group_name+"</option>");
+				});
+
+			},
+			complete: function(data){
+				if (data.responseJSON.status != 'fail') {
+					selected_outlet_group = JSON.parse('{!!json_encode($outlet_groups)!!}')
+					$.each(selected_outlet_group, function( key, value ) {
+						$("#outlet-group-"+value+"").attr('selected', true)
+					});
+				}
+			}
+		});
+
 		$('input[name=filter_user]').change(function() {
 			user = $('input[name=filter_user]:checked').val()
 			$('input[name=specific_user]').prop('required', false)
 			$('input[name=specific_user]').prop('disabled', true)
 			if (user == 'Specific User') {
-				$('#specific-user').show()				
+				$('#specific-user').show()
  
 			} else {
 				$('#specific-user').hide()
@@ -502,9 +538,14 @@
 
 			if(outlet == 'Selected') {
 				$('#selectOutlet').show();
+				$('#select-outlet-group').hide();
+			}
+			else if (outlet == 'Outlet Group') {
+				$('#select-outlet-group').show();
+				$('#selectOutlet').hide();
 			}
 			else {
-				$('#selectOutlet').hide();
+				$('#selectOutlet, #select-outlet-group').hide();
 			}
 		});
 	});
@@ -766,7 +807,7 @@
 							<label class="control-label">Filter Outlet</label>
 							<span class="required" aria-required="true"> * </span>
 							<i class="fa fa-question-circle tooltips" data-original-title="Outlet yang dapat menggunakan promo code" data-container="body"></i>
-							<div class="mt-radio-inline">
+							<div class="mt-radio-list">
 								<label class="mt-radio mt-radio-outline">
 									<i class="fa fa-question-circle tooltips" data-original-title="Promo code berlaku di semua outlet" data-container="body"></i> All Outlet
 									<input type="radio" value="All Outlet" name="filter_outlet" @if(isset($result['is_all_outlet']) && $result['is_all_outlet'] == "1") checked @endif required/>
@@ -777,15 +818,29 @@
 									<input type="radio" value="Selected" name="filter_outlet" @if(empty($result['is_all_outlet']) && !empty($result['outlets'])) checked @endif required/>
 									<span></span>
 								</label>
+								<label class="mt-radio mt-radio-outline">
+									<i class="fa fa-question-circle tooltips" data-original-title="Promo code hanya berlaku untuk outlet yang terdapat dalam outlet group filter" data-container="body"></i> Outlet Group Filter
+									<input type="radio" value="Outlet Group" name="filter_outlet" @if(empty($result['is_all_outlet']) && !empty($result['outlet_groups'])) checked @endif required/>
+									<span></span>
+								</label>
+
+								{{-- list outlet --}}
+								<div id="selectOutlet" class="form-group" @if($result['is_all_outlet'] == 1  || empty($result['outlets']) ) style="display: none;" @endif>
+									<label for="multipleOutlet" class="control-label">Select Outlet</label>
+									<select id="multipleOutlet" name="multiple_outlet[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true"></select>
+								</div>
+
+								{{-- list outlet group --}}
+								<div id="select-outlet-group" class="form-group" @if($result['is_all_outlet'] == 1  || empty($result['outlet_groups']) ) style="display: none;" @endif>
+									<label for="multiple-outlet-group" class="control-label">Select Outlet Group</label>
+									<select id="multiple-outlet-group" name="multiple_outlet_group[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true"></select>
+								</div>
 							</div>
 						</div>
-						
-						<div id="selectOutlet" class="form-group" @if($result['is_all_outlet'] == 1  || empty($result['outlets']) ) style="display: none;" @endif>
-							<label for="multipleOutlet" class="control-label">Select Outlet</label>
-							<select id="multipleOutlet" name="multiple_outlet[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true"></select>
-						</div>
-
+					<div class="form-group" style="height: 55px;">
 					</div>
+					</div>
+
 				</div>
 			</div>
 

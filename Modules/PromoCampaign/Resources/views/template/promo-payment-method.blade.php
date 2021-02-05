@@ -68,13 +68,10 @@
 <script type="text/javascript">
 	$('input[name=filter_payment]').on('click', function(){
 		let payment = $(this).val();
-		console.log(payment);
 		if(payment == 'selected_payment') {
 			$('#select-payment').show().prop('required', false);
-			console.log(1);
 		}
 		else {
-			console.log(0);
 			$('#select-payment').hide().prop('required', false);
 		}
 	});

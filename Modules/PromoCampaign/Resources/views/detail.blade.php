@@ -895,7 +895,7 @@
                                     <a href="#outlet" data-toggle="tab"> Outlet </a>
                                 </li>
                                 @endif
-                                @if (($result['product_discount_rule']??false) != null)
+                                @if ( ($result['product_discount_rule']??false) != null)
                                     @if (isset($result['product_discount_rule']['is_all_product']) && $result['product_discount_rule']['is_all_product'] == '0')
                                     <li>
                                         <a href="#product" data-toggle="tab"> Product </a>
@@ -918,28 +918,55 @@
                                 <!-- BEGIN: Comments -->
                                 <div class="mt-comments">
                                     @if(isset($result['is_all_outlet']) && $result['is_all_outlet'] == '0')
-                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
-                                            <thead>
-                                                <tr>
-                                                    <th>Code</th>
-                                                    <th>Name</th>
-                                                    <th>Address</th>
-                                                    <th>Phone</th>
-                                                    <th>Email</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($result['outlets'] as $res)
-                                                    <tr>
-                                                        <td>{{ $res['outlet_code'] }}</td>
-                                                        <td>{{ $res['outlet_name'] }}</td>
-                                                        <td>{{ $res['outlet_address'] }}</td>
-                                                        <td>{{ $res['outlet_phone'] }}</td>
-                                                        <td>{{ $res['outlet_email'] }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                    	@if ($result['outlet_groups'])
+	                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
+	                                            <thead>
+	                                                <tr>
+	                                                    <th width="10"> No </th>
+									                    <th > Outlet Group Filter Name</th>
+									                    <th> Filter Type </th>
+	                                                </tr>
+	                                            </thead>
+	                                            <tbody>
+	                                            	@foreach($result['outlet_groups'] as $key => $res)
+								                        <tr style="background-color: #fbfbfb;">
+								                            <td> {{ ++$key }} </td>
+								                            <td > 
+								                            	@if(MyHelper::hasAccess([295,297], $grantedFeature))
+									                                <a class="" target="_blank" href="{{url('outlet-group-filter/detail', $res['id_outlet_group'])}}">{{ $res['outlet_group_name'] }}</a>
+									                            @else
+									                            	{{ $res['outlet_group_name'] }} 
+									                            @endif
+									                        </td>
+								                            <td > {{ $res['outlet_group_type'] }} </td>
+								                        </tr>
+								                    @endforeach
+	                                            </tbody>
+	                                        </table>
+	                                    @else
+	                                    	<table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
+	                                            <thead>
+	                                                <tr>
+	                                                    <th>Code</th>
+	                                                    <th>Name</th>
+	                                                    <th>Address</th>
+	                                                    <th>Phone</th>
+	                                                    <th>Email</th>
+	                                                </tr>
+	                                            </thead>
+	                                            <tbody>
+	                                                @foreach($result['outlets'] as $res)
+	                                                    <tr>
+	                                                        <td>{{ $res['outlet_code'] }}</td>
+	                                                        <td>{{ $res['outlet_name'] }}</td>
+	                                                        <td>{{ $res['outlet_address'] }}</td>
+	                                                        <td>{{ $res['outlet_phone'] }}</td>
+	                                                        <td>{{ $res['outlet_email'] }}</td>
+	                                                    </tr>
+	                                                @endforeach
+	                                            </tbody>
+	                                        </table>
+                                    	@endif
                                     @else
                                         This promo for all outlet
                                     @endif
