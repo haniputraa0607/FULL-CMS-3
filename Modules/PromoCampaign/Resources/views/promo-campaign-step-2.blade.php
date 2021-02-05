@@ -806,7 +806,7 @@
 						<div class="form-group" style="height: 55px;">
 							<label class="control-label">Filter Outlet</label>
 							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Outlet yang dapat menggunakan promo code" data-container="body"></i>
+							<i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang dapat menggunakan promo code" data-container="body"></i>
 							<div class="mt-radio-list">
 								<label class="mt-radio mt-radio-outline">
 									<i class="fa fa-question-circle tooltips" data-original-title="Promo code berlaku di semua outlet" data-container="body"></i> All Outlet

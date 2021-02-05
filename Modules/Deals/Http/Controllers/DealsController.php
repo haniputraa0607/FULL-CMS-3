@@ -712,6 +712,7 @@ class DealsController extends Controller
 
         // DATA OUTLET
         $data['outlets'] = parent::getData(MyHelper::get('outlet/be/list'));
+        $data['outlet_groups'] = MyHelper::post('promo-campaign/getData', ['get' => 'Outlet Group']) ?? [];
 
         if(!empty(Session::get('filter_user'))){
             $data['conditions'] = Session::get('filter_user');
