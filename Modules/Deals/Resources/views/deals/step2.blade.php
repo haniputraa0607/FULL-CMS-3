@@ -894,9 +894,8 @@
 							<div class="form-group" id="product-discount-percent-max-div" style="{{ ($result['deals_product_discount_rules']['discount_type']??$result['deals_promotion_product_discount_rules']['discount_type']??false) == "Percent" ? '' : "display: none" }}">
 								<div class="row">
 									<div class="col-md-3">
-										<label class="control-label" id="product-discount-value">Max Percent Discount</label>
-										<i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon maksimal yang bisa didapatkan ketika menggunakan promo. </br></br>Note : Kosongkan jika maksimal persen mengikuti harga produk " data-container="body" data-html="true"></i>
-										<div class="input-group col-md-12">
+										<label class="control-label" id="product-discount-value">Max Percent Discount (untuk 1 qty) <i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon maksimal yang bisa didapatkan ketika menggunakan promo. </br></br>Note : Kosongkan jika maksimal persen mengikuti harga produk " data-container="body" data-html="true"></i>
+										<div class="input-group col-md-12"></label>
 
 											<div class="input-group-addon">IDR</div>
 

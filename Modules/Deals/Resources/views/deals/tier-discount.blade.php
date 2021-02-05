@@ -132,7 +132,7 @@
 				</div>
 			</div>
 			<div class="col-md-4 text-center" id="max-percent-discount-div" style="{{ (($result['deals_tier_discount_rules'][0]['discount_type']??$result['deals_promotion_tier_discount_rules'][0]['discount_type']??'') == 'Percent') ? '' : 'display: none'}}">
-				<label class="control-label"> Max Percent Discount </label><span class="required" aria-required="true">  </span><i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon maksimal yang bisa didapatkan ketika menggunakan promo. Kosongkan jika maksimal persen mengikuti harga produk" data-container="body"></i><br>
+				<label class="control-label"> Max Percent Discount (untuk 1 qty) <span class="required" aria-required="true">  </span><i class="fa fa-question-circle tooltips" data-original-title="Jumlah diskon maksimal yang bisa didapatkan ketika menggunakan promo. Kosongkan jika maksimal persen mengikuti harga produk" data-container="body"></i></label><br>
 				<div class="form-group">
 				</div>
 			</div>

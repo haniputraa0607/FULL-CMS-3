@@ -178,7 +178,7 @@
 				</div>\
 				<div class="col-md-6">\
 					<div class="col-md-6 p-l-0 text-right">\
-						<label>Max Discount</label>\
+						<label>Max Discount <br> (untuk 1 qty)</label>\
 					</div>\
 					<div class="col-md-6 p-l-r-0">\
 						<div class="form-group">\
