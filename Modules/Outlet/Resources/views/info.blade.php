@@ -243,6 +243,18 @@
         </div>
         @endif
 
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    Plastic Use
+                    <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman checkout pada aplikasi akan menampilkan informasi harga plastik" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <input type="checkbox" name="plastic_used_status" @if(old('plastic_used_status',$val['plastic_used_status']) == 'Active') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="Active">
+            </div>
+        </div>
+
         <hr>
         <h4>Maps</h4>
 
