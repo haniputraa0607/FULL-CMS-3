@@ -152,6 +152,29 @@
                     <button type="submit" class="btn blue">Submit</button>
                 </div>
                 @endif
+                <br>
+                <div style="text-align: center"><h3>List Outlet Preview</h3></div>
+                <hr style="border-top: 2px dashed;">
+                <table class="table table-striped table-bordered table-hover dt-responsive">
+                    <thead>
+                    <tr>
+                        <th> No </th>
+                        <th > Outlet Code</th>
+                        <th> Outlet Name </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(!empty($detail['outlets']))
+                        @foreach($detail['outlets'] as $key => $res)
+                            <tr style="background-color: #fbfbfb;">
+                                <td> {{$key+1}} </td>
+                                <td > {{ $res['outlet_code'] }} </td>
+                                <td > {{ $res['outlet_name'] }} </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
             </form>
         </div>
     </div>
