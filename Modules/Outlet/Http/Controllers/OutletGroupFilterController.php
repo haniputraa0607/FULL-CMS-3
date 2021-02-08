@@ -76,9 +76,8 @@ class OutletGroupFilterController extends Controller
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
             $data['outlets'] = MyHelper::post('outlet/be/list', ['all_outlet' => 1])['result']??[];
             $data['detail'] = $detail['result'];
-            $data['conditions'] = $detail['result']['outlet_group_filter_condition']??[];
+            $data['conditions'] = $detail['result']['conditions']??[];
             $data['outlets_selected'] = array_column($detail['result']['outlet_group_filter_outlet']??[],'id_outlet');
-            $data['rule'] = $detail['result']['outlet_group_filter_rule']??'and';
 
             return view('outlet::outlet_group_filter.detail', $data);
         }else{
