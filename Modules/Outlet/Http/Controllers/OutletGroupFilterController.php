@@ -78,7 +78,6 @@ class OutletGroupFilterController extends Controller
             $data['detail'] = $detail['result'];
             $data['conditions'] = $detail['result']['conditions']??[];
             $data['outlets_selected'] = array_column($detail['result']['outlet_group_filter_outlet']??[],'id_outlet');
-            $data['rule'] = $detail['result']['outlet_group_filter_rule']??'and';
 
             return view('outlet::outlet_group_filter.detail', $data);
         }else{

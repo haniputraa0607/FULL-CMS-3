@@ -436,7 +436,7 @@ $show=$show??false;
 									</div>
 									<div class="col-md-4">
 										<div class="input-group">
-											<select id="select200"  name="conditions[0][0][subject]" class="form-control input-sm select2 subject" placeholder="Search Subject" onChange="changeSubject(this.name, 0)" style="width:100%" required>
+											<select id="select200"  name="conditions[0][0][subject]" class="form-control input-sm select2 subject" placeholder="Search Subject" onChange="changeSubject(this.name, 0)" style="width:100%">
 												<option value="outlet_code">Outlet Code</option>
 												<option value="outlet_name">Outlet Name</option>
 												<option value="province">Province</option>
@@ -453,7 +453,7 @@ $show=$show??false;
 									<div id="normalCondition00">
 										<div class="col-md-4">
 											<div class="input-group">
-												<select name="conditions[0][0][operator]" class="form-control input-sm select2" placeholder="Search Operator" style="width:100%" required>
+												<select name="conditions[0][0][operator]" class="form-control input-sm select2" placeholder="Search Operator" style="width:100%">
 													<option value="=" selected>=</option>
 													<option value="like">Like</option>
 												</select>
@@ -467,7 +467,7 @@ $show=$show??false;
 										</div>
 										<div class="col-md-3">
 											<div class="input-group">
-												<input type="text" placeholder="Parameter" class="form-control" name="conditions[0][0][parameter]" required/>
+												<input type="text" placeholder="Parameter" class="form-control" name="conditions[0][0][parameter]"/>
 												<span class="input-group-addon">
 													<i  style="color:#333" class="fa fa-question-circle tooltips" data-original-title="keyword untuk pencarian" data-container="body"></i>
 												</span>
@@ -521,7 +521,7 @@ $show=$show??false;
 					<div class="form-action col-md-12" style="margin-top:15px">
 						<div class="col-md-7">
 							<div class="input-group">
-								<select name="conditions[0][rule]" class="form-control" placeholder="Search Rule" required>
+								<select name="conditions[0][rule]" class="form-control" placeholder="Search Rule">
 									<option value="and">Valid when all conditions are met</option>
 									<option value="or">Valid when minimum one condition is met</option>
 								</select>
@@ -538,7 +538,7 @@ $show=$show??false;
 			</div>
 			<div class="col-md-3">
 				<div class="input-group">
-					<select name="conditions[0][rule_next]" class="form-control" placeholder="Search Rule" required>
+					<select name="conditions[0][rule_next]" class="form-control" placeholder="Search Rule">
 						<option value="and">And</option>
 						<option value="or">Or</option>
 					</select>
@@ -566,17 +566,17 @@ $show=$show??false;
 							<?php
 							$indexnya = 0;
 							?>
-							@foreach($cond as $row)
+							@foreach($cond['condition_child']??[] as $row)
 								@if(isset($row['outlet_group_filter_subject']))
 									<?php
 									if($row['outlet_group_filter_subject'] != '' && $row['outlet_group_filter_subject'] != 'all_user'){
 										$arrayOp = ['=','like','<','<=','>','>='];
-										if(!in_array($row['operator'],$arrayOp)){
-											$row['parameter'] = $row['operator'];
+										if(!in_array($row['outlet_group_filter_operator'],$arrayOp)){
+											$row['outlet_group_filter_parameter'] = $row['outlet_group_filter_operator'];
 										}
 									}else{
-										$row['operator'] = "";
-										$row['parameter'] = $row['operator'];
+										$row['outlet_group_filter_operator'] = "";
+										$row['outlet_group_filter_parameter'] = $row['outlet_group_filter_operator'];
 
 									}
 									?>
@@ -590,14 +590,14 @@ $show=$show??false;
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<select id="select2{{$q}}{{$indexnya}}" name="conditions[{{$q}}][{{$indexnya}}][subject]" class="form-control input-sm select2 subject" placeholder="Search Subject" onChange="changeSubject(this.name, {{$indexnya}})" style="width:100%" required>
-															<option value="outlet_code" @if ($con['outlet_group_filter_subject'] == 'outlet_code') selected @endif>Outlet Code</option>
-															<option value="outlet_name" @if ($con['outlet_group_filter_subject'] == 'outlet_name') selected @endif>Outlet Name</option>
-															<option value="province" @if ($con['outlet_group_filter_subject'] == 'Province') selected @endif>Province</option>
-															<option value="city" @if ($con['outlet_group_filter_subject'] == 'city') selected @endif>City</option>
-															<option value="status_franchise" @if ($con['outlet_group_filter_subject'] == 'status_franchise') selected @endif>Status Franchise</option>
-															<option value="delivery_order" @if ($con['outlet_group_filter_subject'] == 'delivery_order') selected @endif>Status Delivery</option>
-															<option value="brand" @if ($con['outlet_group_filter_subject'] == 'brand') selected @endif>Brand</option>
+														<select id="select2{{$q}}{{$indexnya}}" name="conditions[{{$q}}][{{$indexnya}}][subject]" class="form-control input-sm select2 subject" placeholder="Search Subject" onChange="changeSubject(this.name, {{$indexnya}})" style="width:100%">
+															<option value="outlet_code" @if ($row['outlet_group_filter_subject'] == 'outlet_code') selected @endif>Outlet Code</option>
+															<option value="outlet_name" @if ($row['outlet_group_filter_subject'] == 'outlet_name') selected @endif>Outlet Name</option>
+															<option value="province" @if ($row['outlet_group_filter_subject'] == 'Province') selected @endif>Province</option>
+															<option value="city" @if ($row['outlet_group_filter_subject'] == 'city') selected @endif>City</option>
+															<option value="status_franchise" @if ($row['outlet_group_filter_subject'] == 'status_franchise') selected @endif>Status Franchise</option>
+															<option value="delivery_order" @if ($row['outlet_group_filter_subject'] == 'delivery_order') selected @endif>Status Delivery</option>
+															<option value="brand" @if ($row['outlet_group_filter_subject'] == 'brand') selected @endif>Brand</option>
 														</select>
 														<span class="input-group-addon">
 															<i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Pilih field yang akan dijadikan condition filter" data-container="body"></i>
@@ -613,37 +613,37 @@ $show=$show??false;
 
 												if($row['outlet_group_filter_subject'] == 'city'){
 													foreach($cities as $city){
-														$operator .= '<option value="="'.($row['operator'] == $city['id_city'] ? 'selected' : '').'>'.$city['city_name'].'</option>';
-														$parameter .= '<input type="text" placeholder="Parameter" class="form-control name="conditions['.$q.']['.$indexnya.'][parameter]" value = "'.$row['parameter'].'" required/>';
+														$operator .= '<option value="'.$city['id_city'].'" '.($row['outlet_group_filter_operator'] == $city['id_city'] ? 'selected' : '').'>'.$city['city_name'].'</option>';
 													}
+													$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]" />';
 												}elseif($row['outlet_group_filter_subject'] == 'province'){
 													foreach($provinces as $province){
-														$operator .= '<option value="="'.($row['operator'] == $province['id_province'] ? 'selected' : '').'>'.$province['province_name'].'</option>';
-														$parameter .= '<input type="text" placeholder="Parameter" class="form-control  name="conditions['.$q.']['.$indexnya.'][parameter]" value = "'.$row['parameter'].'" required/>';
+														$operator .= '<option value="'.$province['id_province'].'" '.($row['outlet_group_filter_operator'] == $province['id_province'] ? 'selected' : '').'>'.$province['province_name'].'</option>';
 													}
+													$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]" />';
 												}elseif($row['outlet_group_filter_subject'] == 'brand'){
 													foreach($brands as $brand){
-														$operator .= '<option value="="'.($row['operator'] == $brand['id_brand'] ? 'selected' : '').'>'.$brand['name_brand'].'</option>';
-														$parameter .= '<input type="text" placeholder="Parameter" class="form-control  name="conditions['.$q.']['.$indexnya.'][parameter]" value = "'.$row['parameter'].'" required/>';
+														$operator .= '<option value="'.$brand['id_brand'].'" '.($row['outlet_group_filter_operator'] == $brand['id_brand'] ? 'selected' : '').'>'.$brand['name_brand'].'</option>';
 													}
+													$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]" />';
 												}elseif($row['outlet_group_filter_subject'] == 'status_franchise'){
-													$operator .= '<option value="="'.($row['operator'] == 1 ? 'selected' : '').'>Mitra</option>';
-													$operator .= '<option value="="'.($row['operator'] == 0 ? 'selected' : '').'>Pusat</option>';
-													$parameter .= '<input type="text" placeholder="Parameter" class="form-control  name="conditions['.$q.']['.$indexnya.'][parameter]" value = "'.$row['parameter'].'" required/>';
+													$operator .= '<option value="1" '.($row['outlet_group_filter_operator'] == 1 ? 'selected' : '').'>Mitra</option>';
+													$operator .= '<option value="0" '.($row['outlet_group_filter_operator'] == 0 ? 'selected' : '').'>Pusat</option>';
+													$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]" />';
 												}elseif($row['outlet_group_filter_subject'] == 'delivery_order'){
-													$operator .= '<option value="="'.($row['operator'] == 1 ? 'selected' : '').'>Active</option>';
-													$operator .= '<option value="="'.($row['operator'] == 0 ? 'selected' : '').'>Inactive</option>';
-													$parameter .= '<input type="text" placeholder="Parameter" class="form-control  name="conditions['.$q.']['.$indexnya.'][parameter]" value = "'.$row['parameter'].'" required/>';
+													$operator .= '<option value="1" '.($row['outlet_group_filter_operator'] == 1 ? 'selected' : '').'>Active</option>';
+													$operator .= '<option value="0" '.($row['outlet_group_filter_operator'] == 0 ? 'selected' : '').'>Inavtive</option>';
+													$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]" />';
 												}else{
-													$operator .= '<option value="="'.($row['operator'] == '=' ? 'selected' : '').'>=</option>';
-													$operator .= '<option value="like"'.($row['operator'] == 'like' ? 'selected' : '').'>Like</option>';
-													$parameter .= '<input type="text" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]" value="'.$row['parameter'].'" '.($row['outlet_group_filter_subject'] != 'all_user' ? 'required' : '').' required/>';
+													$operator .= '<option value="="'.($row['outlet_group_filter_operator'] == '=' ? 'selected' : '').'>=</option>';
+													$operator .= '<option value="like"'.($row['outlet_group_filter_operator'] == 'like' ? 'selected' : '').'>Like</option>';
+													$parameter .= '<input type="text" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]" value="'.$row['outlet_group_filter_parameter'].'" />';
 												}
 												?>
 												<div id="normalCondition{{$q}}{{$indexnya}}" style="display: {{$display_normal_condition}};">
 													<div class="col-md-4">
 														<div class="input-group">
-															<select name="conditions[{{$q}}][{{$indexnya}}][operator]" class="form-control input-sm select2" placeholder="Search Operator" style="width:100%" @if($display_normal_condition != 'none') required @endif>
+															<select name="conditions[{{$q}}][{{$indexnya}}][operator]" class="form-control input-sm select2" placeholder="Search Operator" style="width:100%">
 																@if($display_normal_condition != 'none')
 																	<?php echo $operator ?>
 																@else
@@ -725,8 +725,8 @@ $show=$show??false;
 							<div class="col-md-7">
 								<div class="input-group">
 									<select name="conditions[{{$q}}][rule]" class="form-control" placeholder="Search Rule" required>
-										<option value="and" @if($conditions[$key]['rule'] == 'and') selected @endif>Valid when all conditions are met</option>
-										<option value="or" @if($conditions[$key]['rule'] == 'or') selected @endif>Valid when minimum one condition is met</option>
+										<option value="and" @if($conditions[$key]['condition_parent_rule'] == 'and') selected @endif>Valid when all conditions are met</option>
+										<option value="or" @if($conditions[$key]['condition_parent_rule'] == 'or') selected @endif>Valid when minimum one condition is met</option>
 									</select>
 									<span class="input-group-addon">
 										<i  style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Valid when all conditions are met = melakukan filter pencarian dengan semua kondisi.
@@ -742,8 +742,8 @@ $show=$show??false;
 				<div class="col-md-3">
 					<div class="input-group">
 						<select name="conditions[{{$q}}][rule_next]" class="form-control" placeholder="Search Rule" required>
-							<option @if($conditions[$key]['rule_next'] == 'and') selected @endif value="and">And</option>
-							<option @if($conditions[$key]['rule_next'] == 'or') selected @endif value="or">Or</option>
+							<option @if($conditions[$key]['condition_parent_rule_next'] == 'and') selected @endif value="and">And</option>
+							<option @if($conditions[$key]['condition_parent_rule_next'] == 'or') selected @endif value="or">Or</option>
 						</select>
 						<span class="input-group-addon">
 							<i  style="color:#333" class="fa fa-question-circle tooltips" data-original-title="And = melakukan filter pencarian dengan semua kondisi.

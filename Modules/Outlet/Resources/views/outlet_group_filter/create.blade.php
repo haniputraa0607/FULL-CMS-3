@@ -127,7 +127,7 @@
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <select  class="form-control select2 select2-multiple-product"  multiple data-placeholder="Select outlets"  id="select-outlet" name="outlets[]">
+                                <select  class="form-control select2 select2-multiple-product"  multiple data-placeholder="Outlets"  id="select-outlet" name="outlets[]">
                                     @foreach($outlets as $outlet)
                                         <option value="{{$outlet['id_outlet']}}">{{$outlet['outlet_code']}} - {{$outlet['outlet_name']}}</option>
                                     @endforeach
