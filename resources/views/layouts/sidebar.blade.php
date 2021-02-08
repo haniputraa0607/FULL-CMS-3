@@ -1454,6 +1454,11 @@
 										<span class="title">Manage Position</span>
 									</a>
 								</li>
+									<li class="nav-item {{($submenu_active == 'product-bundling-setting') ? 'active open' : ''}}">
+										<a href="{{url('product-bundling/setting')}}" class="nav-link ">
+											<span class="title">Setting Name Brand Bundling</span>
+										</a>
+									</li>
 							@endif
 						</ul>
 					</li>
