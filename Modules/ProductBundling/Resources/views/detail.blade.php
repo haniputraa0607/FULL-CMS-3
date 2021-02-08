@@ -876,7 +876,7 @@
                             </label>
                         </div>
                         <div class="col-md-7">
-                            <select class="form-control select2-multiple" data-placeholder="Select" name="id_outlet[]" id="available_outlet" multiple required>
+                            <select class="form-control select2-multiple" data-placeholder="Select" name="id_outlet[]" id="available_outlet" multiple>
                                 @if($result['all_outlet'])
                                     <option value="all" selected>All Outlet</option>
                                     @foreach($outlets as $o)
