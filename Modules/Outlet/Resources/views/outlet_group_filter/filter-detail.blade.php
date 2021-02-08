@@ -593,7 +593,7 @@ $show=$show??false;
 														<select id="select2{{$q}}{{$indexnya}}" name="conditions[{{$q}}][{{$indexnya}}][subject]" class="form-control input-sm select2 subject" placeholder="Search Subject" onChange="changeSubject(this.name, {{$indexnya}})" style="width:100%">
 															<option value="outlet_code" @if ($row['outlet_group_filter_subject'] == 'outlet_code') selected @endif>Outlet Code</option>
 															<option value="outlet_name" @if ($row['outlet_group_filter_subject'] == 'outlet_name') selected @endif>Outlet Name</option>
-															<option value="province" @if ($row['outlet_group_filter_subject'] == 'Province') selected @endif>Province</option>
+															<option value="province" @if ($row['outlet_group_filter_subject'] == 'province') selected @endif>Province</option>
 															<option value="city" @if ($row['outlet_group_filter_subject'] == 'city') selected @endif>City</option>
 															<option value="status_franchise" @if ($row['outlet_group_filter_subject'] == 'status_franchise') selected @endif>Status Franchise</option>
 															<option value="delivery_order" @if ($row['outlet_group_filter_subject'] == 'delivery_order') selected @endif>Status Delivery</option>
