@@ -36,4 +36,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-
     Route::any('category/edit/{id}', 'BundlingCategoryController@updateBundlingCategory');
     Route::any('category/delete', 'BundlingCategoryController@deleteBundlingCategory');
     Route::post('category/position/assign', 'BundlingCategoryController@positionCategoryAssign');
+
+    //setting name brand
+    Route::any('setting', 'ProductBundlingController@settings');
 });

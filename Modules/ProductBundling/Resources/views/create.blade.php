@@ -972,7 +972,7 @@
                         <div class="col-md-8">
                             <div class="md-radio-inline">
                                 <div class="md-radio">
-                                    <input type="radio" id="optionsRadios4" name="outlet_available_type" class="md-radiobtn filterType" value="Selected Outlet" required onclick="changeOutletType(this.value)" @if(old('outlet_available_type') == 'Selected Outlet') checked @endif>
+                                    <input type="radio" id="optionsRadios4" name="outlet_available_type" class="md-radiobtn filterType" value="Selected Outlet" required onclick="changeOutletType(this.value)" @if(old('outlet_available_type') == 'Selected Outlet' || empty(old('outlet_available_type'))) checked @endif>
                                     <label for="optionsRadios4">
                                         <span></span>
                                         <span class="check"></span>
@@ -1001,7 +1001,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" @if(old('outlet_available_type') == 'Selected Outlet') style="display:none;" @endif id="div_outlet_group_filter">
+                    <div class="form-group" @if(old('outlet_available_type') == 'Selected Outlet' || empty(old('outlet_available_type'))) style="display:none;" @endif id="div_outlet_group_filter">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                                 Outlet Group Filter
@@ -1013,7 +1013,7 @@
                             <select class="form-control select2-multiple" data-placeholder="Select" name="id_outlet_group[]" id="available_outlet_group_filter" multiple>
                                 <option></option>
                                 @foreach($outlet_group_filter as $ogf)
-                                    <option value="{{$ogf['id_outlet_group']}}" @if(in_array($ogf['id_outlet_group'], old('id_outlet_group'))) selected @endif>{{$ogf['outlet_group_name']}}</option>
+                                    <option value="{{$ogf['id_outlet_group']}}" @if(in_array($ogf['id_outlet_group'], old('id_outlet_group')??[])) selected @endif>{{$ogf['outlet_group_name']}}</option>
                                 @endforeach
                             </select>
                         </div>

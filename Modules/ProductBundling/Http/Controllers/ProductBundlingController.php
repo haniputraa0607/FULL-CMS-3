@@ -238,4 +238,27 @@ class ProductBundlingController extends Controller
 
         return $result;
     }
+
+    function settings(Request $request){
+        $post = $request->except('_token');
+
+        if(empty($post)){
+            $data = [
+                'title'          => 'Product Bundling',
+                'sub_title'      => 'Setting Name Brand Product Bundling',
+                'menu_active'    => 'product-bundling',
+                'submenu_active' => 'product-bundling-setting'
+            ];
+            $data['result'] = MyHelper::get('product-bundling/setting')['result']??[];
+            return view('productbundling::setting', $data);
+        }else{
+            $update = MyHelper::post('product-bundling/setting', $post);
+
+            if(isset($update['status']) && $update['status'] == 'success'){
+                return redirect('product-bundling/setting')->withSuccess(['Success update product bundling']);
+            }else{
+                return redirect('product-bundling/setting')->withErrors($update['messages']??['Failed update product bundling']);
+            }
+        }
+    }
 }

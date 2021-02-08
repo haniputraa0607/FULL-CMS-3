@@ -451,7 +451,7 @@
 							<ul class="sub-menu">
 								<li class="nav-item {{(isset($child_active) && $child_active == 'outlet-group-filter-new') ? 'active open' : ''}}">
 									<a href="{{url('outlet-group-filter/create')}}" class="nav-link ">
-										<span class="title">Outlet Group Filter New</span>
+										<span class="title">New Outlet Group Filter</span>
 									</a>
 								</li>
 								@if(MyHelper::hasAccess([294,295,297,298], $grantedFeature))
@@ -608,6 +608,30 @@
 							<span class="title">Product Photo Default</span>
 						</a>
 					</li>
+					@if(MyHelper::hasAccess([48,49,50,51,52], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'product-plastic') ? 'active open' : ''}}">
+						<a href="javascript:;" class="nav-link nav-toggle">
+							<span class="title">Product Plactic</span>
+							<span class="arrow"></span>
+						</a>
+						<ul class="sub-menu">
+							@if(MyHelper::hasAccess([50], $grantedFeature))
+							<li class="nav-item {{(isset($child_active) && $child_active == 'product-plastic-new') ? 'active open' : ''}}">
+								<a href="{{url('product/plastic/create')}}" class="nav-link ">
+									<span class="title">New Product Plactic</span>
+								</a>
+							</li>
+							@endif
+							@if(MyHelper::hasAccess([48,49,51,52], $grantedFeature))
+								<li class="nav-item {{(isset($child_active) && $child_active == 'product-plastic-list') ? 'active open' : ''}}">
+									<a href="{{url('product/plastic')}}" class="nav-link ">
+										<span class="title">Product Plactic List</span>
+									</a>
+								</li>
+							@endif
+						</ul>
+					</li>
+					@endif
 				</ul>
 			</li>
 			@endif
@@ -1430,6 +1454,11 @@
 										<span class="title">Manage Position</span>
 									</a>
 								</li>
+									<li class="nav-item {{($submenu_active == 'product-bundling-setting') ? 'active open' : ''}}">
+										<a href="{{url('product-bundling/setting')}}" class="nav-link ">
+											<span class="title">Setting Name Brand Bundling</span>
+										</a>
+									</li>
 							@endif
 						</ul>
 					</li>
