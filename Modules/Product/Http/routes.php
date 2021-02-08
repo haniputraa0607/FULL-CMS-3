@@ -150,6 +150,16 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
         Route::post('update/{id}', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@update']);
         Route::post('delete', ['middleware' => 'feature_control:52', 'uses' => 'ProductPlasticController@destroy']);
         Route::post('visibility', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@visibility']);
+        Route::get('import', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@importUsePlastic']);
+        Route::post('import/save', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@imporSavetUsePlastic']);
+        Route::post('export', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@exportUsePlastic']);
+        Route::get('import-product-variant', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@imporProductVariantUsePlastic']);
+        Route::post('import-product-variant/save', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@imporProductVariantSavetUsePlastic']);
+        Route::post('export-product-variant', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@exportProductVariantUsePlastic']);
+
+        Route::get('import-price', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@importPlasticPrice']);
+        Route::post('import-price/save', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@imporSavePlasticPrice']);
+        Route::post('export-price', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@exportPlasticPrice']);
     });
 });
 

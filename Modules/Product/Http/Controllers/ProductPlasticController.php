@@ -2,10 +2,15 @@
 
 namespace Modules\Product\Http\Controllers;
 
+use App\Exports\ProductExport;
+use App\Exports\ProductVariantPriceArrayExport;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-// use Illuminate\Routing\Controller;
+use App\Exports\MultisheetExport;
+use App\Imports\ProductImport;
+use App\Imports\FirstSheetOnlyImport;
 use App\Http\Controllers\Controller;
+use Excel;
 
 use App\Lib\MyHelper;
 
@@ -97,5 +102,219 @@ class ProductPlasticController extends Controller
         $post = $request->except('_token');
         $delete = MyHelper::post('product-plastic/delete', $post);
         return $delete;
+    }
+
+    public function exportUsePlastic(Request $request) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('product-plastic/export-product', $post)['result']??[];
+
+        if(empty($data)){
+            $datas['brand'] = [
+                'name_brand' => '',
+                'code_brand' => ''
+            ];
+            $datas['products'] = [
+                [
+                    'product_name' => 'Product 1',
+                    'product_code' => 'P1',
+                    'total_use_plastic' => 2
+                ],
+                [
+                    'product_name' => 'Product 2',
+                    'product_code' => 'P2',
+                    'total_use_plastic' => 5
+                ]
+            ];
+        }else{
+            $datas = $data;
+        }
+
+        $tab_title = 'List Products';
+        return Excel::download(new ProductExport($datas['products'],$datas['brand'],$tab_title),date('YmdHi').'_product_'.$datas['brand']['name_brand'].'.xlsx');
+    }
+
+    public function importUsePlastic(){
+        $data = [
+            'title'          => 'Product Plactic',
+            'sub_title'      => 'Import Product',
+            'menu_active'    => 'product',
+            'submenu_active' => 'product-plastic',
+            'child_active' => 'product-plastic-import'
+        ];
+
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+        return view('product::product_plastic.import', $data);
+    }
+
+    public function imporSavetUsePlastic(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $excel = \Excel::toCollection(new ProductImport(),$request->file('import_file'));
+            $data = [];
+            $head = [];
+            foreach ($excel[0]??[] as $key => $value) {
+                $value = json_decode($value);
+                if($key == 2){
+                    $head = $value;
+                }elseif($key > 2){
+                    $data[] = array_combine($head, $value);
+                }
+            }
+
+            if(!empty($data)){
+                $import = MyHelper::post('product-plastic/import-product', ['data' => $data]);
+                return $import;
+            }else{
+                return [
+                    'status'=>'fail',
+                    'messages'=>['File empty']
+                ];
+            }
+        }else{
+            return [
+                'status'=>'fail',
+                'messages'=>['File empty']
+            ];
+        }
+    }
+
+    public function exportProductVariantUsePlastic(Request $request){
+        $post = $request->except('_token');
+        $data = MyHelper::post('product-plastic/export-product-variant', $post)['result']??[];
+
+        if(empty($data)){
+            $datas['brand'] = [
+                'name_brand' => '',
+                'code_brand' => ''
+            ];
+            $datas['products_variant'] = [
+                [
+                    'product' => 'P1 - Kopi Susu',
+                    'product_variant_code' => 'PVG001',
+                    'product_variant' => 'Hot,Large',
+                    'total_use_plastic' => 1
+                ],
+                [
+                    'product' => 'P2 - Kopi',
+                    'product_variant_code' => 'PVG002',
+                    'product_variant' => 'Hot,Large',
+                    'total_use_plastic' => 0
+                ],
+                [
+                    'product' => 'P3 - Es Milo',
+                    'product_variant_code' => 'PVG003',
+                    'product_variant' => 'Hot,Reguler',
+                    'total_use_plastic' => 5
+                ]
+            ];
+        }else{
+            $datas = $data;
+        }
+
+        $tab_title = 'List Product Variant Group';
+        return Excel::download(new ProductExport($datas['products_variant'],$datas['brand'],$tab_title),date('YmdHi').'_product variant group_'.$datas['brand']['name_brand'].'.xlsx');
+    }
+
+    function imporProductVariantUsePlastic(){
+        $data = [
+            'title'          => 'Product Plactic',
+            'sub_title'      => 'Import Product Variant',
+            'menu_active'    => 'product',
+            'submenu_active' => 'product-plastic',
+            'child_active' => 'product-plastic-import-product-variant'
+        ];
+
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+        return view('product::product_plastic.import_product_variant', $data);
+    }
+
+    public function imporProductVariantSavetUsePlastic(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $excel = \Excel::toCollection(new ProductImport(),$request->file('import_file'));
+            $data = [];
+            $head = [];
+            foreach ($excel[0]??[] as $key => $value) {
+                $value = json_decode($value);
+                if($key == 2){
+                    $head = $value;
+                }elseif($key > 2){
+                    $data[] = array_combine($head, $value);
+                }
+            }
+
+            if(!empty($data)){
+                $import = MyHelper::post('product-plastic/import-product-variant', ['data' => $data]);
+                return $import;
+            }else{
+                return [
+                    'status'=>'fail',
+                    'messages'=>['File empty']
+                ];
+            }
+        }else{
+            return [
+                'status'=>'fail',
+                'messages'=>['File empty']
+            ];
+        }
+    }
+
+    public function exportPlasticPrice(Request $request) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('product-plastic/export-price', $post)['result']['products']??[];
+
+        if(empty($data)){
+            $datas['All Type'] = [
+                [
+                    'product_plastic_name' => 'Product 1',
+                    'product_plastic_code' => 'P1',
+                    'global_price' => 1000,
+                    'price_0002' => 2000
+                ],
+                [
+                    'product_plastic_name' => 'Product 2',
+                    'product_plastic_code' => 'P2',
+                    'global_price' => 1000,
+                    'price_0002' => 2000
+                ]
+            ];
+        }else{
+            $datas['All Type'] = $data;
+        }
+
+        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product plastic price.xlsx');
+    }
+
+    function importPlasticPrice(){
+        $data = [
+            'title'          => 'Product Plactic',
+            'sub_title'      => 'Import Plastic Price',
+            'menu_active'    => 'product',
+            'submenu_active' => 'product-plastic',
+            'child_active' => 'product-plastic-import-product-variant'
+        ];
+        return view('product::product_plastic.import_price', $data);
+    }
+
+    public function imporSavePlasticPrice(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
+            if(!empty($data)){
+                $import = MyHelper::post('product-plastic/import-price', ['data' => $data]);
+            }
+        }
+
+        return $import;
     }
 }

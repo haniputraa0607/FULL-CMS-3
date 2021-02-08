@@ -629,6 +629,23 @@
 									</a>
 								</li>
 							@endif
+							@if(MyHelper::hasAccess([48,49,51], $grantedFeature))
+									<li class="nav-item {{($submenu_active == 'product-plastic-import-price') ? 'active open' : ''}}">
+										<a href="{{url('product/plastic/import-price')}}" class="nav-link ">
+											<span class="title">Export & Import Product Plastic Price</span>
+										</a>
+									</li>
+								<li class="nav-item {{(isset($child_active) && $child_active == 'product-plastic-import') ? 'active open' : ''}}">
+									<a href="{{url('product/plastic/import')}}" class="nav-link ">
+										<span class="title">Export & Import Use Plastic Product</span>
+									</a>
+								</li>
+								<li class="nav-item {{(isset($child_active) && $child_active == 'product-plastic-import-product-variant') ? 'active open' : ''}}">
+									<a href="{{url('product/plastic/import-product-variant')}}" class="nav-link ">
+										<span class="title">Export & Import Use Plastic Product Variant</span>
+									</a>
+								</li>
+							@endif
 						</ul>
 					</li>
 					@endif
