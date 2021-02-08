@@ -922,7 +922,6 @@
 	                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
 	                                            <thead>
 	                                                <tr>
-	                                                    <th width="10"> No </th>
 									                    <th > Outlet Group Filter Name</th>
 									                    <th> Filter Type </th>
 	                                                </tr>
@@ -930,7 +929,6 @@
 	                                            <tbody>
 	                                            	@foreach($result['outlet_groups'] as $key => $res)
 								                        <tr style="background-color: #fbfbfb;">
-								                            <td> {{ ++$key }} </td>
 								                            <td > 
 								                            	@if(MyHelper::hasAccess([295,297], $grantedFeature))
 									                                <a class="" target="_blank" href="{{url('outlet-group-filter/detail', $res['id_outlet_group'])}}">{{ $res['outlet_group_name'] }}</a>

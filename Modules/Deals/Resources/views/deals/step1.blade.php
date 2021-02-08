@@ -195,7 +195,7 @@ $brand_rule = $deals['brand_rule']??'and';
         function redrawOutlets2(list,selected,convertAll, all){
             var html="";
             if(list.length){
-                html+="<option value=\"all\">All Outlets</option>";
+                // html+="<option value=\"all\">All Outlets</option>";
             }
             list.forEach(function(outlet){
             	// single brand
