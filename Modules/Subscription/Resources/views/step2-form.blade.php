@@ -198,6 +198,9 @@ $configs = session('configs');
         else {
             $outletselected = old('id_outlet[]',[]);
         }
+
+        $selected_outlet_groups = [];
+        $selected_outlet_groups = old('id_outlet_group[]', array_pluck(($subscription['outlet_groups'] ?? []), 'id_outlet_group'));
     @endphp
 
     <div class="form-group" id="brand-rule">
@@ -251,13 +254,79 @@ $configs = session('configs');
     <div class="form-group">
         <div class="input-icon right">
             <label class="col-md-3 control-label">
+            Filter Outlet
+            <span class="required" aria-required="true"> * </span>  
+            <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang dapat menggunakan subscription" data-container="body"></i>
+            </label>
+        </div>
+        <div class="col-md-9" style="padding-left: 0px">
+            <div class="input-icon right">
+                <div class="col-md-4">
+                    <select class="form-control" name="filter_outlet" required>
+                        <option value="" disabled 
+                            @if ( old('filter_outlet')) 
+                                @if ( old('filter_outlet') == "" ) 
+                                    selected
+                                @endif
+                            @elseif ( empty($subscription['is_all_outlet']) && !empty($subscription['outlets']) && !empty($subscription['outlet_groups']) ) 
+                                selected
+                            @endif>Select Type</option>
+                        <option value="all_outlet" 
+                            @if ( old('filter_outlet')) 
+                                @if ( old('filter_outlet') == "all_outlet" ) 
+                                    selected
+                                @endif
+                            @elseif ( !empty($subscription['is_all_outlet']) ) 
+                                selected
+                            @endif> All Outlet </option>
+                        <option value="selected_outlet" 
+                            @if ( old('filter_outlet')) 
+                                @if ( old('filter_outlet') == "selected_outlet" ) 
+                                    selected
+                                @endif
+                            @elseif ( empty($subscription['is_all_outlet']) && !empty($subscription['outlets']))
+                                selected
+                            @endif> Selected Outlet </option>
+                        <option value="outlet_group" 
+                            @if ( old('filter_outlet')) 
+                                @if ( old('filter_outlet') == "outlet_group" )
+                                    selected
+                                @endif
+                            @elseif ( empty($subscription['is_all_outlet']) && !empty($subscription['outlet_groups']))
+                                selected
+                            @endif> Outlet Group Filter </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" id="select-outlet" @if( ($subscription['is_all_outlet'] ?? false) == 1  || empty($subscription['outlets']) ) style="display: none;" @endif >
+        <div class="input-icon right">
+            <label class="col-md-3 control-label">
             Outlet Available
             <span class="required" aria-required="true"> * </span>
             <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang memberlakukan subscription tersebut" data-container="body"></i>
             </label>
         </div>
         <div class="col-md-9">
-            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" data-brand-rule="{{ $subscription['brand_rule']??'and' }}" required>
+            <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode($outletselected)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" data-brand-rule="{{ $subscription['brand_rule']??'and' }}" @if (empty($subscription['is_all_outlet']) && !empty($subscription['outlets'])) required @endif>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group" id="select-outlet-group" @if( ($subscription['is_all_outlet'] ?? false) == 1  || empty($subscription['outlet_groups']) ) style="display: none;" @endif>
+        <div class="input-icon right">
+            <label class="col-md-3 control-label">
+            Outlet Group Filter
+            <span class="required" aria-required="true"> * </span>
+            <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet group filter" data-container="body"></i>
+            </label>
+        </div>
+        <div class="col-md-9">
+            <select class="form-control select2-multiple" id="input-select-outlet-group" data-placeholder="Select Outlet Group Filter" name="id_outlet_group[]" multiple data-value="{{json_encode($selected_outlet_groups)}}" data-all="{{ $subscription['is_all_outlet']??0 }}" data-brand-rule="{{ $subscription['brand_rule']??'and' }}" @if (empty($subscription['is_all_outlet']) && !empty($subscription['outlet_groups'])) required @endif>
             </select>
         </div>
     </div>
