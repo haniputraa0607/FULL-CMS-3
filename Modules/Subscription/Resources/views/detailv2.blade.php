@@ -665,34 +665,67 @@ $grantedFeature     = session('granted_features');
                 			@yield('detail-info-content')
                         </div>
                         @if($subscription['is_all_outlet'] != 1)
-                        <div class="tab-pane" id="outlet">
-                            <!-- BEGIN: Comments -->
-                            <div class="mt-comments">
-                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
-                                    <thead>
-                                        <tr>
-                                            <th>Code</th>
-                                            <th>Name</th>
-                                            <th>Address</th>
-                                            <th>Phone</th>
-                                            <th>Email</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach(($promotion_outlets??$subscription['outlets']) as $res)
-                                            <tr>
-                                                <td>{{ $res['outlet_code'] }}</td>
-                                                <td>{{ $res['outlet_name'] }}</td>
-                                                <td>{{ $res['outlet_address'] }}</td>
-                                                <td>{{ $res['outlet_phone'] }}</td>
-                                                <td>{{ $res['outlet_email'] }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- END: Comments -->
-                        </div>
+                        	@if ($subscription['outlet_groups'])
+                        		<div class="tab-pane" id="outlet">
+		                            <!-- BEGIN: Comments -->
+		                            <div class="mt-comments">
+		                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
+		                                    <thead>
+		                                        <tr>
+								                    <th > Outlet Group Filter Name</th>
+								                    <th> Filter Type </th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                    	@foreach($subscription['outlet_groups'] as $key => $res)
+							                        <tr style="background-color: #fbfbfb;">
+							                            <td > 
+							                            	@if(MyHelper::hasAccess([295,297], $grantedFeature))
+								                                <a class="" target="_blank" href="{{url('outlet-group-filter/detail', $res['id_outlet_group'])}}">{{ $res['outlet_group_name'] }}</a>
+								                            @else
+								                            	{{ $res['outlet_group_name'] }} 
+								                            @endif
+								                        </td>
+							                            <td > {{ $res['outlet_group_type'] }} </td>
+							                        </tr>
+							                    @endforeach
+		                                    </tbody>
+		                                </table>
+		                            </div>
+		                            <!-- END: Comments -->
+		                        </div>
+                            @else
+		                        <div class="tab-pane" id="outlet">
+		                            <!-- BEGIN: Comments -->
+		                            <div class="mt-comments">
+		                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_2">
+		                                    <thead>
+		                                        <tr>
+		                                            <th>Code</th>
+		                                            <th>Name</th>
+		                                            <th>Address</th>
+		                                            <th>Phone</th>
+		                                            <th>Email</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                        @foreach( ($promotion_outlets??$subscription['outlets']) as $res)
+		                                            <tr>
+		                                                <td>{{ $res['outlet_code'] }}</td>
+		                                                <td>{{ $res['outlet_name'] }}</td>
+		                                                <td>{{ $res['outlet_address'] }}</td>
+		                                                <td>{{ $res['outlet_phone'] }}</td>
+		                                                <td>{{ $res['outlet_email'] }}</td>
+		                                            </tr>
+		                                        @endforeach
+		                                    </tbody>
+		                                </table>
+		                            </div>
+		                            <!-- END: Comments -->
+		                        </div>
+		                    @endif
+		                @else
+		                	This promo for all outlet
                         @endif
                     </div>
                 </div>
