@@ -361,7 +361,9 @@ class SubscriptionController extends Controller
             
             if (!empty($outlets['result'])) {
                 $data['outlets'] = $outlets['result'];
+                $data['outlet_groups'] = MyHelper::post('promo-campaign/getData', ['get' => 'Outlet Group']) ?? [];
             }
+
             if (isset($id_subscription)) {
                 $data['subscription'] = $this->getData(MyHelper::post('subscription/show-step2', ['id_subscription' => $id_subscription]));
                 if (empty($data['subscription'])) {

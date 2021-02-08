@@ -195,7 +195,7 @@ $brand_rule = $deals['brand_rule']??'and';
         function redrawOutlets2(list,selected,convertAll, all){
             var html="";
             if(list.length){
-                html+="<option value=\"all\">All Outlets</option>";
+                // html+="<option value=\"all\">All Outlets</option>";
             }
             list.forEach(function(outlet){
             	// single brand
@@ -214,9 +214,9 @@ $brand_rule = $deals['brand_rule']??'and';
 
         function redrawOutlets(list,selected,convertAll){
             var html="";
-            if(list.length){
+            /*if(list.length){
                 html+="<option value=\"all\">All Outlets</option>";
-            }
+            }*/
             list.forEach(function(outlet){
                 html+="<option value=\""+outlet.id_outlet+"\">"+outlet.outlet_code+" - "+outlet.outlet_name+"</option>";
             });
@@ -227,6 +227,17 @@ $brand_rule = $deals['brand_rule']??'and';
                 $('select[name="id_outlet[]"]').val(['all']);
             }
             oldOutlet=list;
+        }
+
+        function redrawOutletGroups(list,selected,convertAll, all){
+            var html="";
+
+            list.forEach(function(val){
+                html+="<option value=\""+val.id_outlet_group+"\">"+val.outlet_group_name+"</option>";
+
+            });
+            $('#input-select-outlet-group').html(html);
+            $('#input-select-outlet-group').val(selected);
         }
 
         function ajaxOutletMultiBrand(id_brands = []) {
@@ -258,8 +269,39 @@ $brand_rule = $deals['brand_rule']??'and';
 			});
         }
 
+        function ajaxOutletGroup() {
+        	$.ajax({
+				type: "GET",
+				url: "{{url('promo-campaign/step2/getData')}}",
+				data : {
+					"get" : 'Outlet Group',
+					"brand" : id_brands,
+					"brand_rule" : brand_rule
+				},
+				dataType: "json",
+				success: function(data){
+					if (data.status == 'fail') {
+						$.ajax(this)
+						return
+					}
+
+                    let value = $('#input-select-outlet-group').val();
+                    let all = $('#input-select-outlet-group').data('all');
+                    let convertAll=false;
+                    if($('#input-select-outlet-group').data('value')){
+                        value = $('#input-select-outlet-group').data('value');
+                        $('#input-select-outlet-group').data('value',false);
+                        convertAll = true;
+                    }
+                    redrawOutletGroups(data,value,convertAll,all);
+				}
+			});
+        }
+
         $(document).ready(function() {
             token = '<?php echo csrf_token();?>';
+
+            ajaxOutletGroup(id_brands);
 
 			$('input[name="brand_rule"]').on('click',function(){
 				brand_rule = $(this).val();
@@ -522,7 +564,7 @@ $brand_rule = $deals['brand_rule']??'and';
                     }
                 };
             })
-            @if(($conditions[0][0]['operator']??false)=="WHERE IN")
+            @if( ($conditions[0][0]['operator']??false)=="WHERE IN")
                 var collapsed=false;
             @else
                 var collapsed=true;
@@ -590,6 +632,30 @@ $brand_rule = $deals['brand_rule']??'and';
 	            }
 	            redrawOutlets($('select[name="id_outlet[]"]').data('all-outlet'),value,convertAll);
 	        }
+
+	        $('input[name=filter_outlet]').on('click', function(){
+				outlet = $(this).val();
+
+				if(outlet == 'selected_outlet') {
+					$('#select-outlet').show();
+					$('#select-outlet-group').hide();
+					$("select[name='id_outlet[]']").prop('required', true);
+					$("select[name='id_outlet_group[]']").prop('required', false);
+				}
+				else if (outlet == 'outlet_group') {
+					$('#select-outlet-group').show();
+					$('#select-outlet').hide();
+					$("select[name='id_outlet[]']").prop('required', false);
+					$("select[name='id_outlet_group[]']").prop('required', true);
+
+				}
+				else {
+					$('#select-outlet, #select-outlet-group').hide();
+					$("select[name='id_outlet[]']").prop('required', false);
+					$("select[name='id_outlet_group[]']").prop('required', false);
+
+				}
+			});
         });
     </script>
 @endsection

@@ -101,7 +101,6 @@
 				$('#select-product-'+promo_type).hide();
 			}
 
-			console.log(promo_type);
 			$('#filter-product-'+promo_type).change(function() {
 				product = $('#filter-product-'+promo_type+' option:selected').val()
 				$('#multiple-product-'+promo_type).prop('required', false)

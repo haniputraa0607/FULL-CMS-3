@@ -341,9 +341,70 @@
                 $outletselected = [];
             }
 
+            $selected_outlet_groups = [];
+            $selected_outlet_groups = array_pluck(($deals['outlet_groups'] ?? []), 'id_outlet_group');
+
         @endphp
 
+        {{-- Filter Outlet --}}
         <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                Filter Outlet
+                <span class="required" aria-required="true"> * </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet yang dapat menggunakan deals" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9" style="margin-left: -15px;">
+            	<div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="filter_outlet" id="filter_outlet_radio_single" value="all_outlet" class="md-radiobtn" required 
+	                    		@if ( (old('filter_outlet') ?? false) == "all_outlet" ) checked 
+	                    		@elseif (isset($deals['is_all_outlet']) && $deals['is_all_outlet'] == "1") checked 
+	                    		@endif>
+	                        <label for="filter_outlet_radio_single">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> All Outlet </label>
+	                        	<i class="fa fa-question-circle tooltips" data-original-title="Deals berlaku di semua outlet" data-container="body"></i>
+	                    </div>
+	                </div>
+            	</div>
+	            <div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="filter_outlet" id="filter_outlet_radio_variant" value="selected_outlet" class="md-radiobtn" required 
+	                        	@if ( (old('filter_outlet') ?? false) == "selected_outlet" ) checked 
+	                        	@elseif (empty($deals['is_all_outlet']) && !empty($deals['outlets'])) checked
+	                    		@endif>
+	                        <label for="filter_outlet_radio_variant">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> Selected Outlet </label>
+	                            <i class="fa fa-question-circle tooltips" data-original-title="Deals hanya berlaku untuk outlet tertentu" data-container="body"></i>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-md-12">
+	                <div class="md-radio-inline">
+	                    <div class="md-radio">
+	                        <input type="radio" name="filter_outlet" id="filter_outlet_radio_product_and_variant" value="outlet_group" class="md-radiobtn" required 
+	                        	@if ( (old('filter_outlet') ?? false) == "outlet_group" ) checked 
+	                        	@elseif (empty($deals['is_all_outlet']) && !empty($deals['outlet_groups'])) checked
+	                    		@endif>
+	                        <label for="filter_outlet_radio_product_and_variant">
+	                            <span></span>
+	                            <span class="check"></span>
+	                            <span class="box"></span> Outlet Group Filter </label>
+	                            <i class="fa fa-question-circle tooltips" data-original-title="Deals hanya berlaku untuk outlet yang terdapat dalam outlet group filter" data-container="body"></i>
+	                    </div>
+	                </div>
+	            </div>
+            </div>
+        </div>
+
+        <div class="form-group" id="select-outlet" @if( ($deals['is_all_outlet'] ?? false) == 1  || empty($deals['outlets']) ) style="display: none;" @endif >
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Outlet Available
@@ -352,11 +413,37 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet')??$outletselected??[])}}" data-all-outlet="{{json_encode($outlets??[])}}" data-all="{{ $deals['is_all_outlet']??0 }}">
+                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet')??$outletselected??[])}}" data-all-outlet="{{json_encode($outlets??[])}}" data-all="{{ $deals['is_all_outlet']??0 }}" 
+                	@if ( (old('filter_outlet') ?? false) == "selected_outlet" ) required 
+                	@elseif (empty($deals['is_all_outlet']) && !empty($deals['outlets'])) required
+            		@endif >
+
                 	@if(!empty($outlets))
-                        <option value="all">All Outlets</option>
                         @foreach($outlets as $row)
                             <option value="{{$row['id_outlet']}}">{{$row['outlet_code']}} - {{$row['outlet_name']}}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group" id="select-outlet-group" @if( ($deals['is_all_outlet'] ?? false) == 1  || empty($deals['outlet_groups']) ) style="display: none;" @endif>
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                Outlet Group Filter
+                <span class="required" aria-required="true"> * </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet group filter" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <select class="form-control select2-multiple" id="input-select-outlet-group" data-placeholder="Select Outlet Group Filter" name="id_outlet_group[]" multiple data-value="{{ json_encode(old('id_outlet_group') ?? $selected_outlet_groups ?? []) }}" data-all-outlet="{{ json_encode($outlet_groups ?? []) }}" data-all="{{ $deals['is_all_outlet'] ?? 0 }}"
+                	@if ( (old('filter_outlet') ?? false) == "outlet_group" ) required 
+	            	@elseif (empty($deals['is_all_outlet']) && !empty($deals['outlet_groups'])) required
+	        		@endif >
+
+                	@if(!empty($outlet_groups))
+                        @foreach($outlet_groups as $row)
+                            <option value="{{$row['id_outlet_group']}}">{{$row['outlet_group_name']}}</option>
                         @endforeach
                     @endif
                 </select>

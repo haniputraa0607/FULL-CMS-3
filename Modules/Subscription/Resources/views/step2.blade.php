@@ -109,7 +109,7 @@
         function redrawOutlets(list,selected,convertAll, all){
             var html="";
             if(list.length){
-                html+="<option value=\"all\">All Outlets</option>";
+                // html+="<option value=\"all\">All Outlets</option>";
             }
             list.forEach(function(outlet){
             	// single brand
@@ -123,6 +123,19 @@
             if( all == 1 || ( convertAll && $('select[name="id_outlet[]"]').val() != null && $('select[name="id_outlet[]"]').val().length==list.length ) ){
                 $('select[name="id_outlet[]"]').val(['all']);
             }
+            oldOutlet=list;
+        }
+
+        function redrawOutletGroups(list,selected,convertAll, all){
+            var html="";
+
+            list.forEach(function(val){
+                html+="<option value=\""+val.id_outlet_group+"\">"+val.outlet_group_name+"</option>";
+            });
+
+            $('select[name="id_outlet_group[]"]').html(html);
+            $('select[name="id_outlet_group[]"]').val(selected);
+
             oldOutlet=list;
         }
 
@@ -294,6 +307,30 @@
                 }
             });
 
+            /* FILTER OUTLET */
+            $('select[name=filter_outlet]').change(function() {
+                outlet = $('select[name=filter_outlet] option:selected').val();
+
+                if(outlet == 'selected_outlet') {
+					$('#select-outlet').show();
+					$('#select-outlet-group').hide();
+                	$("select[name='id_outlet[]']").prop('required', true);
+                	$("select[name='id_outlet_group[]']").prop('required', false);
+				}
+				else if (outlet == 'outlet_group') {
+					$('#select-outlet-group').show();
+					$('#select-outlet').hide();
+                	$("select[name='id_outlet[]']").prop('required', false);
+                	$("select[name='id_outlet_group[]']").prop('required', true);
+				}
+				else {
+					$('#select-outlet, #select-outlet-group').hide();
+                	$("select[name='id_outlet[]']").prop('required', false);
+                	$("select[name='id_outlet_group[]']").prop('required', false);
+				}
+
+            });
+
             // upload & delete image on summernote
             $('.summernote').summernote({
                 placeholder: true,
@@ -441,6 +478,7 @@
 
             ajaxProductMultiBrand();
             ajaxOutletMultiBrand();
+            ajaxOutletGroup();
 
             $('select[name="brand_rule"]').on('change',function(){
                 brand_rule = $('select[name="brand_rule"]').val();
@@ -504,6 +542,35 @@
                     }
                 });
             }
+
+            function ajaxOutletGroup() {
+	        	$.ajax({
+					type: "GET",
+					url: "{{url('promo-campaign/step2/getData')}}",
+					data : {
+						"get" : 'Outlet Group',
+						"brand" : id_brands,
+						"brand_rule" : brand_rule
+					},
+					dataType: "json",
+					success: function(data){
+						if (data.status == 'fail') {
+							$.ajax(this)
+							return
+						}
+
+	                    let value = $('#input-select-outlet-group').val();
+	                    let all = $('#input-select-outlet-group').data('all');
+	                    let convertAll=false;
+	                    if($('#input-select-outlet-group').data('value')){
+	                        value = $('#input-select-outlet-group').data('value');
+	                        $('#input-select-outlet-group').data('value',false);
+	                        convertAll = true;
+	                    }
+	                    redrawOutletGroups(data,value,convertAll,all);
+					}
+				});
+	        }
 
             function ajaxOutletMultiBrand(id_brands = []) {
             	$.ajax({

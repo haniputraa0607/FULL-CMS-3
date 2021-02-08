@@ -129,7 +129,6 @@
 
 	$('input[name=filter_shipment]').on('click', function(){
 		let shipment = $(this).val();
-		console.log(shipment);
 		if(shipment == 'selected_shipment') {
 			$('#selected-shipment').show();
 		}
