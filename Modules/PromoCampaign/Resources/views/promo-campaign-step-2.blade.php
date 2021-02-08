@@ -539,13 +539,19 @@
 			if(outlet == 'Selected') {
 				$('#selectOutlet').show();
 				$('#select-outlet-group').hide();
+				$("select[name='multiple_outlet[]']").prop('required', true);
+                $("select[name='multiple_outlet_group[]']").prop('required', false);
 			}
 			else if (outlet == 'Outlet Group') {
 				$('#select-outlet-group').show();
 				$('#selectOutlet').hide();
+				$("select[name='multiple_outlet[]']").prop('required', false);
+                $("select[name='multiple_outlet_group[]']").prop('required', true);
 			}
 			else {
 				$('#selectOutlet, #select-outlet-group').hide();
+				$("select[name='multiple_outlet[]']").prop('required', false);
+                $("select[name='multiple_outlet_group[]']").prop('required', false);
 			}
 		});
 	});
@@ -827,13 +833,13 @@
 								{{-- list outlet --}}
 								<div id="selectOutlet" class="form-group" @if($result['is_all_outlet'] == 1  || empty($result['outlets']) ) style="display: none;" @endif>
 									<label for="multipleOutlet" class="control-label">Select Outlet</label>
-									<select id="multipleOutlet" name="multiple_outlet[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true"></select>
+									<select id="multipleOutlet" name="multiple_outlet[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true" @if(empty($result['is_all_outlet']) && !empty($result['outlets'])) required @endif ></select>
 								</div>
 
 								{{-- list outlet group --}}
 								<div id="select-outlet-group" class="form-group" @if($result['is_all_outlet'] == 1  || empty($result['outlet_groups']) ) style="display: none;" @endif>
 									<label for="multiple-outlet-group" class="control-label">Select Outlet Group</label>
-									<select id="multiple-outlet-group" name="multiple_outlet_group[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true"></select>
+									<select id="multiple-outlet-group" name="multiple_outlet_group[]" class="form-control select2-multiple select2-hidden-accessible" multiple="multiple" tabindex="-1" aria-hidden="true" @if(empty($result['is_all_outlet']) && !empty($result['outlet_groups'])) required @endif ></select>
 								</div>
 							</div>
 						</div>

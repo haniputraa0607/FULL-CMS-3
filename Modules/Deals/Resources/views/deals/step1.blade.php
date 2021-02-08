@@ -639,13 +639,21 @@ $brand_rule = $deals['brand_rule']??'and';
 				if(outlet == 'selected_outlet') {
 					$('#select-outlet').show();
 					$('#select-outlet-group').hide();
+					$("select[name='id_outlet[]']").prop('required', true);
+					$("select[name='id_outlet_group[]']").prop('required', false);
 				}
 				else if (outlet == 'outlet_group') {
 					$('#select-outlet-group').show();
 					$('#select-outlet').hide();
+					$("select[name='id_outlet[]']").prop('required', false);
+					$("select[name='id_outlet_group[]']").prop('required', true);
+
 				}
 				else {
 					$('#select-outlet, #select-outlet-group').hide();
+					$("select[name='id_outlet[]']").prop('required', false);
+					$("select[name='id_outlet_group[]']").prop('required', false);
+
 				}
 			});
         });

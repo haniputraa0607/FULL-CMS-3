@@ -413,7 +413,11 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet')??$outletselected??[])}}" data-all-outlet="{{json_encode($outlets??[])}}" data-all="{{ $deals['is_all_outlet']??0 }}">
+                <select class="form-control select2-multiple" data-placeholder="Select Outlet" name="id_outlet[]" multiple data-value="{{json_encode(old('id_outlet')??$outletselected??[])}}" data-all-outlet="{{json_encode($outlets??[])}}" data-all="{{ $deals['is_all_outlet']??0 }}" 
+                	@if ( (old('filter_outlet') ?? false) == "selected_outlet" ) required 
+                	@elseif (empty($deals['is_all_outlet']) && !empty($deals['outlets'])) required
+            		@endif >
+
                 	@if(!empty($outlets))
                         @foreach($outlets as $row)
                             <option value="{{$row['id_outlet']}}">{{$row['outlet_code']}} - {{$row['outlet_name']}}</option>
@@ -432,7 +436,11 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <select class="form-control select2-multiple" id="input-select-outlet-group" data-placeholder="Select Outlet Group Filter" name="id_outlet_group[]" multiple data-value="{{ json_encode(old('id_outlet_group') ?? $selected_outlet_groups ?? []) }}" data-all-outlet="{{ json_encode($outlet_groups ?? []) }}" data-all="{{ $deals['is_all_outlet'] ?? 0 }}">
+                <select class="form-control select2-multiple" id="input-select-outlet-group" data-placeholder="Select Outlet Group Filter" name="id_outlet_group[]" multiple data-value="{{ json_encode(old('id_outlet_group') ?? $selected_outlet_groups ?? []) }}" data-all-outlet="{{ json_encode($outlet_groups ?? []) }}" data-all="{{ $deals['is_all_outlet'] ?? 0 }}"
+                	@if ( (old('filter_outlet') ?? false) == "outlet_group" ) required 
+	            	@elseif (empty($deals['is_all_outlet']) && !empty($deals['outlet_groups'])) required
+	        		@endif >
+
                 	@if(!empty($outlet_groups))
                         @foreach($outlet_groups as $row)
                             <option value="{{$row['id_outlet_group']}}">{{$row['outlet_group_name']}}</option>
