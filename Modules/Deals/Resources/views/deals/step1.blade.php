@@ -23,6 +23,16 @@ $brand_rule = $deals['brand_rule']??'and';
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		.select2-search--inline {
+		    display: contents; /*this will make the container disappear, making the child the one who sets the width of the element*/
+		}
+
+		.select2-search__field:placeholder-shown {
+		    width: 100% !important; /*makes the placeholder to be 100% of the width while there are no options selected*/
+		}
+
+	</style>
 @endsection
 
 @section('page-script')
