@@ -106,7 +106,7 @@
 				<div class="col-md-6 p-l-r-0">\
 					<div class="form-group ::hide_qty::">\
 						<div class="input-group">\
-							<input type="text" class="form-control benefit_qty text-center digit_mask" min="0" name="promo_rule[::n::][benefit_qty]" value="::benefit_qty::" ::required_qty:: placeholder="Benefit Qty" autocomplete="off">\
+							<input type="text" class="form-control benefit_qty text-center digit_mask" min="0" name="promo_rule[::n::][benefit_qty]" value="::benefit_qty::" ::required_qty:: placeholder="Benefit Qty" autocomplete="off" required>\
 							<div class="input-group-addon">qty</div>\
 						</div>\
 					</div>\
