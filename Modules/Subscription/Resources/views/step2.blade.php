@@ -58,9 +58,18 @@
         .text-decoration-none {
             text-decoration: none!important;
         }
-        .select2-results__option[aria-selected=true] {
+        /*.select2-results__option[aria-selected=true] {
 		    display: none;
+		}*/
+
+		.select2-search--inline {
+		    display: contents; /*this will make the container disappear, making the child the one who sets the width of the element*/
 		}
+
+		.select2-search__field:placeholder-shown {
+		    width: 100% !important; /*makes the placeholder to be 100% of the width while there are no options selected*/
+		}
+
     </style>
 @endsection
 
