@@ -465,8 +465,6 @@
                             }
                         }
                         $("#select_product_"+list_count).prop('disabled', false);
-                    }else{
-                        toastr.warning("Failed get data product.");
                     }
                     var key_name = "brand_"+list_count;
                     tmpBrand.set(key_name, id_brand);
@@ -550,7 +548,18 @@
             $("#day").prop('disabled', true);
             $("#day").empty();
             $("#day").append('<option></option>');
-            if(value == 'Day'){
+            if(value == 'not_specific_day'){
+                $("#day").prop('disabled', true);
+                $("#day").prop('required', false);
+                $("#time_start").prop('readonly', true);
+                $("#time_end").prop('readonly', true);
+                $("#time_start").prop('required', false);
+                $("#time_end").prop('required', false);
+                $("#time_start").val('');
+                $("#time_end").val('');
+                $('#time_start').data('timepicker').remove();
+                $('#time_end').data('timepicker').remove();
+            }else if(value == 'Day'){
                 $("#day").append('<option value="Sunday">Sunday</option>');
                 $("#day").append('<option value="Monday">Monday</option>');
                 $("#day").append('<option value="Tuesday">Tuesday</option>');
@@ -559,23 +568,34 @@
                 $("#day").append('<option value="Friday">Friday</option>');
                 $("#day").append('<option value="Saturday">Saturday</option>');
                 $("#day").prop('disabled', false);
+                $("#day").prop('required', true);
+                $('.timepicker-24').timepicker({
+                    autoclose: true,
+                    minuteStep: 5,
+                    showSeconds: false,
+                    showMeridian: false
+                });
+                $("#time_start").prop('readonly', false);
+                $("#time_end").prop('readonly', false);
+                $("#time_start").prop('required', true);
+                $("#time_end").prop('required', true);
             }else if(value == 'Date'){
                 for (var i= 1;i<=31;i++){
                     $("#day").append('<option value="'+i+'">'+i+'</option>');
                 }
                 $("#day").prop('disabled', false);
+                $("#day").prop('required', true);
+                $('.timepicker-24').timepicker({
+                    autoclose: true,
+                    minuteStep: 5,
+                    showSeconds: false,
+                    showMeridian: false
+                });
+                $("#time_start").prop('readonly', false);
+                $("#time_end").prop('readonly', false);
+                $("#time_start").prop('required', true);
+                $("#time_end").prop('required', true);
             }
-            $("#day").prop('required', true);
-            $('.timepicker-24').timepicker({
-                autoclose: true,
-                minuteStep: 5,
-                showSeconds: false,
-                showMeridian: false
-            });
-            $("#time_start").prop('readonly', false);
-            $("#time_end").prop('readonly', false);
-            $("#time_start").prop('required', true);
-            $("#time_end").prop('required', true);
         }
 
         function changeOutletType(value) {
@@ -652,7 +672,7 @@
                         </label>
                         <div class="col-md-8">
                             <div class="input-icon right">
-                                <select  class="form-control select2 select2-multiple-product" name="id_bundling_category" data-placeholder="Select discount type" required>
+                                <select  class="form-control select2 select2-multiple-product" name="id_bundling_category" data-placeholder="Select category" required>
                                     <option></option>
                                     @foreach($category as $c)
                                         <option value="{{$c['id_bundling_category']}}" @if(old('id_bundling_category') == $c['id_bundling_category']) selected @endif>{{$c['bundling_category_name']}}</option>
@@ -716,7 +736,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <select  class="form-control select2 select2-multiple-product"  name="bundling_specific_day_type" data-placeholder="Select day type" onchange="changeSpecificDay(this.value)">
-                                    <option></option>
+                                    <option value="not_specific_day" @if(old('bundling_specific_day_type') == "not_specific_day") selected @endif>Not Specific Day/Date</option>
                                     <option value="Day" @if(old('bundling_specific_day_type') == "Day") selected @endif>Day</option>
                                     <option value="Date" @if(old('bundling_specific_day_type') == "Date") selected @endif>Date</option>
                                 </select>
