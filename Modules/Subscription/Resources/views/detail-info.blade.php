@@ -171,8 +171,19 @@ $grantedFeature     = session('granted_features');
                     </div>
                 </div>
                 <div class="row static-info">
+                	@php
+                		$outlet_type = null;
+                		if ( !empty($subscription['is_all_outlet']) ) {
+                			$outlet_type ='All outlet';
+                		} elseif ( !empty($subscription['outlets']) ){
+                			$outlet_type = 'Selected outlet';
+                		} elseif ( !empty($subscription['outlet_groups']) ){
+                			$outlet_type = 'Outlet group filter';
+                		}
+
+                	@endphp
                     <div class="col-md-4 name">Outlet</div>
-                    <div class="col-md-8 value">: {{ !empty($subscription['is_all_outlet']) ? 'All outlet' : (!empty($subscription['outlets']) ? 'Selected outlet' : '') }}</div>
+                    <div class="col-md-8 value">: {{ $outlet_type }}</div>
                 </div>
                 <div class="row static-info">
                     <div class="col-md-4 name">Product</div>

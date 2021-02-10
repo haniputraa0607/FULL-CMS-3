@@ -494,16 +494,19 @@
                                 </div>
                                 @endif
                                 <div class="row static-info">
-                                    <div class="col-md-4 name">Outlet Target</div>
-                                    <div class="col-md-7 value">: 
-                                        @if ($result['is_all_outlet'] == '1')
-                                            All Outlet
-                                        @elseif ($result['is_all_outlet'] == '0')
-                                        	<a href="{{ url('#outlet') }}" target="_blank"> Selected Outlet </a>
-                                        @else
-                                            No Outlet Target
-                                        @endif
-                                    </div>
+                                	@php
+				                		$outlet_type = null;
+				                		if ( !empty($result['is_all_outlet']) ) {
+				                			$outlet_type ='All outlet';
+				                		} elseif ( !empty($result['outlets']) ){
+				                			$outlet_type = 'Selected outlet';
+				                		} elseif ( !empty($result['outlet_groups']) ){
+				                			$outlet_type = 'Outlet group filter';
+				                		}
+
+				                	@endphp
+				                    <div class="col-md-4 name">Outlet Target</div>
+				                    <div class="col-md-8 value">: <a href="{{ url('#outlet') }}" target="_blank"> {{ $outlet_type }} </a></div>
                                 </div>
                                 @if ( !empty($result['product_rule'])
 	                                	&& ( (isset($result['promo_campaign_product_discount_rules']['is_all_product']) 
