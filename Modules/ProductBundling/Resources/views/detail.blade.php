@@ -332,7 +332,6 @@
                         $("#select_product_"+list_count).prop('disabled', false);
                     }else{
                         $("#select_product_"+list_count).prop('disabled', true);
-                        toastr.warning("Failed get data product.");
                     }
                     var key_name = "brand_"+list_count;
                     tmpBrand.set(key_name, id_brand);
@@ -408,36 +407,85 @@
             }
         }
 
+        var period_type = '{{$result['bundling_specific_day_type']}}';
+        var tmp_day = <?php echo json_encode(array_column($result['bundling_periode_day'], 'day'))?>;
+        var tmp_date = <?php echo json_encode(array_column($result['bundling_periode_day'], 'day'))?>;
         function changeSpecificDay(value) {
             $("#day").prop('disabled', true);
             $("#day").empty();
             $("#day").append('<option></option>');
-            if(value == 'Day'){
-                $("#day").append('<option value="Sunday">Sunday</option>');
-                $("#day").append('<option value="Monday">Monday</option>');
-                $("#day").append('<option value="Tuesday">Tuesday</option>');
-                $("#day").append('<option value="Wednesday">Wednesday</option>');
-                $("#day").append('<option value="Thursday">Thursday</option>');
-                $("#day").append('<option value="Friday">Friday</option>');
-                $("#day").append('<option value="Saturday">Saturday</option>');
-                $("#day").prop('disabled', false);
-            }else if(value == 'Date'){
-                for (var i= 1;i<=31;i++){
-                    $("#day").append('<option value="'+i+'">'+i+'</option>');
+            if(value == 'not_specific_day'){
+                $("#day").prop('disabled', true);
+                $("#day").prop('required', false);
+                $("#time_start").prop('readonly', true);
+                $("#time_end").prop('readonly', true);
+                $("#time_start").prop('required', false);
+                $("#time_end").prop('required', false);
+                $("#time_start").val('');
+                $("#time_end").val('');
+                $('#time_start').data('timepicker').remove();
+                $('#time_end').data('timepicker').remove();
+            }else if(value == 'Day'){
+
+                if(tmp_day.length > 0 && period_type == 'Day'){
+                    var day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                    for(var j=0;j<day.length;j++){
+                        if(tmp_day.indexOf(day[j]) >= 0){
+                            $("#day").append('<option value="'+day[j]+'" selected>'+day[j]+'</option>');
+                        }else{
+                            $("#day").append('<option value="'+day[j]+'">'+day[j]+'</option>');
+                        }
+                    }
+                }else{
+                    $("#day").append('<option value="Sunday">Sunday</option>');
+                    $("#day").append('<option value="Monday">Monday</option>');
+                    $("#day").append('<option value="Tuesday">Tuesday</option>');
+                    $("#day").append('<option value="Wednesday">Wednesday</option>');
+                    $("#day").append('<option value="Thursday">Thursday</option>');
+                    $("#day").append('<option value="Friday">Friday</option>');
+                    $("#day").append('<option value="Saturday">Saturday</option>');
                 }
+
                 $("#day").prop('disabled', false);
+                $("#day").prop('required', true);
+                $('.timepicker-24').timepicker({
+                    autoclose: true,
+                    minuteStep: 5,
+                    showSeconds: false,
+                    showMeridian: false
+                });
+                $("#time_start").prop('readonly', false);
+                $("#time_end").prop('readonly', false);
+                $("#time_start").prop('required', true);
+                $("#time_end").prop('required', true);
+            }else if(value == 'Date'){
+                if(tmp_date.length > 0 && period_type == 'Date'){
+                    for (var i= 1;i<=31;i++){
+                        if(tmp_date.indexOf(i.toString()) >= 0){
+                            $("#day").append('<option value="'+i+'" selected>'+i+'</option>');
+                        }else{
+                            $("#day").append('<option value="'+i+'">'+i+'</option>');
+                        }
+                    }
+                }else{
+                    for (var i= 1;i<=31;i++){
+                        $("#day").append('<option value="'+i+'">'+i+'</option>');
+                    }
+                }
+
+                $("#day").prop('disabled', false);
+                $("#day").prop('required', true);
+                $('.timepicker-24').timepicker({
+                    autoclose: true,
+                    minuteStep: 5,
+                    showSeconds: false,
+                    showMeridian: false
+                });
+                $("#time_start").prop('readonly', false);
+                $("#time_end").prop('readonly', false);
+                $("#time_start").prop('required', true);
+                $("#time_end").prop('required', true);
             }
-            $("#day").prop('required', true);
-            $('.timepicker-24').timepicker({
-                autoclose: true,
-                minuteStep: 5,
-                showSeconds: false,
-                showMeridian: false
-            });
-            $("#time_start").prop('readonly', false);
-            $("#time_end").prop('readonly', false);
-            $("#time_start").prop('required', true);
-            $("#time_end").prop('required', true);
         }
 
         function changeOutletType(value) {
@@ -516,7 +564,7 @@
                         </label>
                         <div class="col-md-8">
                             <div class="input-icon right">
-                                <select  class="form-control select2 select2-multiple-product" name="id_bundling_category" data-placeholder="Select discount type" required>
+                                <select  class="form-control select2 select2-multiple-product" name="id_bundling_category" data-placeholder="Select category" required>
                                     <option></option>
                                     @foreach($category as $c)
                                         <option value="{{$c['id_bundling_category']}}" @if($result['id_bundling_category'] == $c['id_bundling_category']) selected @endif>{{$c['bundling_category_name']}}</option>
@@ -581,6 +629,7 @@
                             <div class="input-icon right">
                                 <select  class="form-control select2 select2-multiple-product"  name="bundling_specific_day_type" data-placeholder="Select day type" onchange="changeSpecificDay(this.value)">
                                     <option></option>
+                                    <option value="not_specific_day" @if(empty($result['bundling_specific_day_type'])) selected @endif>Not Specific Day/Date</option>
                                     <option value="Day" @if($result['bundling_specific_day_type'] == "Day") selected @endif>Day</option>
                                     <option value="Date" @if($result['bundling_specific_day_type'] == "Date") selected @endif>Date</option>
                                 </select>
@@ -595,7 +644,7 @@
                                     <option></option>
                                     @if(!empty($result['bundling_periode_day']))
                                         <?php
-                                            $arr = array_column($result['bundling_periode_day'], 'day');
+                                        $arr = array_column($result['bundling_periode_day'], 'day');
                                         ?>
                                         @if($result['bundling_specific_day_type'] == "Day")
                                             <option value="Sunday" @if(in_array("Sunday", $arr)) selected @endif>Sunday</option>
@@ -622,10 +671,10 @@
                                 <div class="input-group">
                                     <input type="text" class="timepicker-24 form-control" name="time_start" value="{{(isset($result['bundling_periode_day'][0]['time_start']) ? date('H:i', strtotime($result['bundling_periode_day'][0]['time_start'])) : "")}}" id="time_start" @if(!isset($result['bundling_periode_day'][0]['time_start'])) readonly @endif>
                                     <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Waktu mulai Product Bundling" data-container="body"></i>
-                                        </button>
-                                    </span>
+                                            <button class="btn default" type="button">
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Waktu mulai Product Bundling" data-container="body"></i>
+                                            </button>
+                                        </span>
                                 </div>
                             </div>
                         </div>
@@ -634,10 +683,10 @@
                                 <div class="input-group">
                                     <input type="text" class="timepicker-24 form-control" name="time_end" value="{{(isset($result['bundling_periode_day'][0]['time_end']) ? date('H:i', strtotime($result['bundling_periode_day'][0]['time_end'])) : "")}}" id="time_end" @if(!isset($result['bundling_periode_day'][0]['time_end'])) readonly @endif>
                                     <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Waktu berakhir Product Bundling" data-container="body"></i>
-                                        </button>
-                                    </span>
+                                            <button class="btn default" type="button">
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Waktu berakhir Product Bundling" data-container="body"></i>
+                                            </button>
+                                        </span>
                                 </div>
                             </div>
                         </div>
