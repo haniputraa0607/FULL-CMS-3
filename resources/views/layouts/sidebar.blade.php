@@ -869,6 +869,11 @@
 							<span class="title">List Export</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'transactions-send-report-to-outlet') ? 'active open' : ''}}">
+						<a href="{{url('transaction/send-report-outlet')}}" class="nav-link ">
+							<span class="title">Send Report to Outlet</span>
+						</a>
+					</li>
 					@endif
 				{{-- <!-- <li class="nav-item {{($submenu_active == 'transaction-offline') ? 'active open' : ''}}">
                     <a href="{{url('transaction/offline/'.date('YmdHis'))}}" class="nav-link ">
