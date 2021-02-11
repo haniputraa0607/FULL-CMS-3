@@ -524,14 +524,49 @@
         </div>
         <div class="kotak" style="margin: 0px;border-radius: 10px;">
             <div class="row">
+                @if(!empty($data['product_bundling_transaction']))
+                <div class="col-2 text-14px WorkSans text-grey-light">
+                    <div class="round-grey bg-grey" style="background: #aaaaaa;"></div>
+                </div>
+                <div class="col-10 text-13-3px WorkSans-SemiBold text-grey-light" style="margin-left: -30px;margin-bottom: 10px;">{{$data['name_brand_bundling']}}</div>
+
+                @foreach ($data['product_bundling_transaction'] as $trx)
+                    <div class="col-2 text-13-3px WorkSans-SemiBold text-grey-light space-text"><b>{{$trx['bundling_qty']}}x</b></div>
+                    <div class="col-7 text-13-3px WorkSans-SemiBold text-grey-light space-text" style="margin-left: -30px;margin-right: 20px;"><b>{{$trx['bundling_name']}}</b></div>
+                    <div class="col-3 text-13-3px text-right WorkSans-SemiBold text-black space-text">{{$trx['bundling_price_no_discount']}}</div>
+                    @foreach ($trx['products'] as $prod)
+                        <div class="col-2 text-13-3px WorkSans-SemiBold text-grey-light space-text"></div>
+                        <div class="col-10 text-13-3px WorkSans-SemiBold text-grey-light space-text" style="margin-left: -30px;margin-right: 20px;">{{$prod['product_name']}} {{$prod['product_qty']}}x</div>
+                        <div class="col-2 text-13px WorkSans-SemiBold text-grey-light"></div>
+                        <div class="col-6 text-13px WorkSans-Regular text-grey-light" style="margin-left: -30px;margin-right: 20px;padding-bottom:5px">
+                            <?php
+                            $modVar = '';
+                            $dataMod = array_column($prod['modifiers'], 'text');
+                            $dataVar = array_column($prod['variants'], 'product_variant_name');
+                            $modVar  = implode(',', array_merge($dataMod,$dataVar));
+                            ?>
+                            {{$modVar}}
+                        </div>
+                        <div class="col-4 text-13-3px text-right WorkSans-SemiBold text-black"></div>
+                        @if($prod['note'])
+                            <div class="col-2 text-13px WorkSans-Regular text-black"></div>
+                            <div class="col-7 text-13px WorkSans-Regular text-medium-grey" style="margin-left: -30px;margin-right: 20px;">{{$prod['note']}}</div>
+                            <div class="col-3 text-13px text-right WorkSans-Regular text-black"></div>
+                        @endif
+                    @endforeach
+                @endforeach
+                <div class="col-12">
+                    <hr style="border-top: 1px solid #eeeeee;">
+                </div>
+                @endif
                 @foreach ($data['product_transaction'] as $trx)
                     <div class="col-2 text-14px WorkSans text-grey-light">
                         <div class="round-grey bg-grey" style="background: #aaaaaa;"></div>
                     </div>
                     <div class="col-10 text-13-3px WorkSans-SemiBold text-grey-light" style="margin-left: -30px;margin-bottom: 10px;">{{$trx['brand']}}</div>
                     @foreach ($trx['product'] as $prod)
-                        <div class="col-2 text-13-3px WorkSans-SemiBold text-grey-light space-text">{{$prod['transaction_product_qty']}}x</div>
-                        <div class="col-7 text-13-3px WorkSans-SemiBold text-grey-light space-text" style="margin-left: -30px;margin-right: 20px;">{{$prod['product']['product_name']}}</div>
+                        <div class="col-2 text-13-3px WorkSans-SemiBold text-grey-light space-text"><b>{{$prod['transaction_product_qty']}}x</b></div>
+                        <div class="col-7 text-13-3px WorkSans-SemiBold text-grey-light space-text" style="margin-left: -30px;margin-right: 20px;"><b>{{$prod['product']['product_name']}}</b></div>
                         <div class="col-3 text-13-3px text-right WorkSans-SemiBold text-black space-text">{{$prod['transaction_product_subtotal']}}</div>
                         @if(isset($prod['product']['product_modifiers']))
                             <div class="col-2 text-13px WorkSans-SemiBold text-grey-light"></div>
