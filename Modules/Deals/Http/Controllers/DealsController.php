@@ -163,29 +163,50 @@ class DealsController extends Controller
     /* IMPORT DATA FROM EXCEL */
     function importDataExcel($fileExcel, $redirect=null) {
 
-        $path = $fileExcel->getRealPath();
-        // $data = \Excel::load($path)->get()->toArray();
-        $data = \Excel::toArray(new \App\Imports\FirstSheetOnlyImport(),$path);
-        $data = array_map(function($x){return (Object)$x;}, $data[0]??[]);
+        // $path = $fileExcel->getRealPath();
+        // // $data = \Excel::load($path)->get()->toArray();
+        // $data = \Excel::toArray(new \App\Imports\FirstSheetOnlyImport(),$path);
+        // $data = array_map(function($x){return (Object)$x;}, $data[0]??[]);
 
-        if (!empty($data)) {
-            $data = array_unique(array_pluck($data, 'phone'));
-            $data = implode(",", $data);
+        // if (!empty($data)) {
+        //     $data = array_unique(array_pluck($data, 'phone'));
+        //     $data = implode(",", $data);
 
-            // SET SESSION
-            Session::flash('deals_recipient', $data);
+        //     // SET SESSION
+        //     Session::flash('deals_recipient', $data);
 
-            if (is_null($redirect)) {
-                return back()->with('success', ['Data customer has been added.']);
+        //     if (is_null($redirect)) {
+        //         return back()->with('success', ['Data customer has been added.']);
+        //     }
+        //     else {
+        //         return redirect($redirect)->with('success', ['Data customer has been added.']);
+        //     }
+
+        // }
+        // else {
+        //     return back()->withErrors(['Data customer is empty.']);
+        // }
+
+        $path1 = $fileExcel->store('temp'); 
+        $path=storage_path('app').'/'.$path1;  
+        $string = file_get_contents($path);
+        $delimiter=',';
+        $first=explode(PHP_EOL, $string);
+        $second=array_map(function($x) use ($delimiter){
+            return explode($delimiter,str_replace("\r", '', $x));
+        },$first);
+        $data=array_filter(array_map(function($y){
+            $x=$y[0];
+            if(is_numeric($x)){
+                if(substr($x, 0, 1) == '8'){
+                    $x = '0'.$x;
+                }
+                return $x;
             }
-            else {
-                return redirect($redirect)->with('success', ['Data customer has been added.']);
-            }
+        },$second));
 
-        }
-        else {
-            return back()->withErrors(['Data customer is empty.']);
-        }
+        $data = implode(",", $data);
+        return $data;
     }
 
     function dataDeals($identifier, $type="") {
