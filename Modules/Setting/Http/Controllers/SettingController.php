@@ -1361,7 +1361,6 @@ class SettingController extends Controller
             'id_featured_subscription'    => 'required'
         ]);
         $result = MyHelper::post('setting/featured_subscription/update', $post);
-        dd($result);
         return parent::redirect($result, 'Featured Subscription has been updated.', 'setting/home#featured_subscription',[],true);
     }
 
