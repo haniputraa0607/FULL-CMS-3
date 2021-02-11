@@ -96,5 +96,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
 
     Route::any('list-export', [ 'uses' => 'TransactionController@listExport']);
     Route::any('export-action/{action}/{id}', [ 'uses' => 'TransactionController@actionExport']);
+    Route::any('send-report-outlet', [ 'uses' => 'TransactionController@sendReportToOutlet']);
 });
 

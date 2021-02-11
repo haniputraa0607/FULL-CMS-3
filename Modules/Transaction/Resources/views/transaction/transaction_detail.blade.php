@@ -533,7 +533,7 @@
                 @foreach ($data['product_bundling_transaction'] as $trx)
                     <div class="col-2 text-13-3px WorkSans-SemiBold text-grey-light space-text"><b>{{$trx['bundling_qty']}}x</b></div>
                     <div class="col-7 text-13-3px WorkSans-SemiBold text-grey-light space-text" style="margin-left: -30px;margin-right: 20px;"><b>{{$trx['bundling_name']}}</b></div>
-                    <div class="col-3 text-13-3px text-right WorkSans-SemiBold text-black space-text">{{$trx['bundling_price_no_discount']}}</div>
+                    <div class="col-3 text-13-3px text-right WorkSans-SemiBold text-black space-text">{{$trx['bundling_subtotal']}}</div>
                     @foreach ($trx['products'] as $prod)
                         <div class="col-2 text-13-3px WorkSans-SemiBold text-grey-light space-text"></div>
                         <div class="col-10 text-13-3px WorkSans-SemiBold text-grey-light space-text" style="margin-left: -30px;margin-right: 20px;">{{$prod['product_name']}} {{$prod['product_qty']}}x</div>

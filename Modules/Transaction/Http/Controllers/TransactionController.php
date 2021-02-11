@@ -1746,4 +1746,34 @@ class TransactionController extends Controller
 
         return $data;
     }
+
+    public function sendReportToOutlet(Request $request){
+        $post = $request->except('_token');
+
+        if(empty($post)){
+            $data = [
+                'title'          => 'Transaction',
+                'menu_active'    => 'transaction',
+                'sub_title'      => 'Send Report To Outlet',
+                'submenu_active' => 'transactions-send-report-to-outlet'
+            ];
+            $data['outlets'] = MyHelper::get('outlet/be/list?log_save=0')['result'] ?? [];
+            return view('transaction::transaction.transaction_send_report_outlet', $data);
+        }else{
+            if($post['outlet_available_type'] == 'no_all'){
+                unset($post['outlet_available_type']);
+            }else{
+                unset($post['outlet_available_type']);
+                $post['all_outlet'] = 1;
+            }
+
+            $data = MyHelper::post('disburse/sendRecapTransactionEachOultet',$post);
+
+            if(isset($data['status']) && $data['status'] == 'success'){
+                return redirect('transaction/send-report-outlet')->withSuccess(['Success triger send report transaction']);
+            }else{
+                return redirect('transaction/send-report-outlet')->withErrors(['Failed triger send report transaction']);
+            }
+        }
+    }
 }
