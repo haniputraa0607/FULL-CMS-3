@@ -120,7 +120,7 @@
                             </label>
                         </div>
                         <div class="col-md-7">
-                            <select class="form-control select2-multiple" data-placeholder="Select" name="outlet_code" id="available_outlet_group_filter" multiple>
+                            <select class="form-control select2-multiple" data-placeholder="Select" name="outlet_code" id="available_outlet_group_filter">
                                 <option></option>
                                 @foreach($outlets as $o)
                                     <option value="{{$o['outlet_code']}}">{{$o['outlet_code']}} - {{$o['outlet_name']}}</option>
