@@ -140,7 +140,6 @@ class UserFeedbackController extends Controller
         if(($update['status']??false)=='success'){
             return back()->with('success',['Success update setting']);
         }else{
-            dd($update);
             return back()->withInput()->withErrors(['Failed update setting']);
         }
     }
