@@ -206,6 +206,7 @@ class DealsController extends Controller
         },$second));
 
         $data = implode(",", $data);
+        Session::flash('deals_recipient', $data);
         return $data;
     }
 
@@ -1008,7 +1009,7 @@ class DealsController extends Controller
             'amount'        => $amount
         ];
 
-        Session::put('filter_user',$post['conditions']);
+        // Session::put('filter_user',$post['conditions']);
 
         $save = MyHelper::post('hidden-deals/create/autoassign', $post);
 
