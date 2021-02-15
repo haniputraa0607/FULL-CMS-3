@@ -629,7 +629,7 @@
                             <div class="input-icon right">
                                 <select  class="form-control select2 select2-multiple-product"  name="bundling_specific_day_type" data-placeholder="Select day type" onchange="changeSpecificDay(this.value)">
                                     <option></option>
-                                    <option value="not_specific_day" @if(empty($result['bundling_specific_day_type'])) selected @endif>Not Specific Day/Date</option>
+                                    <option value="not_specific_day" @if(empty($result['bundling_specific_day_type'])) selected @endif>All Day</option>
                                     <option value="Day" @if($result['bundling_specific_day_type'] == "Day") selected @endif>Day</option>
                                     <option value="Date" @if($result['bundling_specific_day_type'] == "Date") selected @endif>Date</option>
                                 </select>

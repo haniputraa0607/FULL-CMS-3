@@ -736,7 +736,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <select  class="form-control select2 select2-multiple-product"  name="bundling_specific_day_type" data-placeholder="Select day type" onchange="changeSpecificDay(this.value)">
-                                    <option value="not_specific_day" @if(old('bundling_specific_day_type') == "not_specific_day") selected @endif>Not Specific Day/Date</option>
+                                    <option value="not_specific_day" @if(old('bundling_specific_day_type') == "not_specific_day") selected @endif>All Day</option>
                                     <option value="Day" @if(old('bundling_specific_day_type') == "Day") selected @endif>Day</option>
                                     <option value="Date" @if(old('bundling_specific_day_type') == "Date") selected @endif>Date</option>
                                 </select>
