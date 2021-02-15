@@ -127,20 +127,20 @@
                                 @endif
                             </td>
                             <td>
-                                @if(empty($res['receive_at']))
-                                    <span class="badge" style="background-color: #FD6437">Pending</span>
-                                @elseif(!empty($res['receive_at']) && empty($res['ready_at']))
-                                    <span class="badge" style="background-color: #006451">Received</span>
-                                @elseif(!empty($res['ready_at']) && empty($res['taken_at']))
-                                    <span class="badge" style="background-color: #7DB8B2">Ready</span>
+                                @if(!empty($res['reject_at']))
+                                    <span class="badge" style="background-color: #EF1E31">{{$res['reject_reason']}}</span>
+                                @elseif(!empty($res['taken_by_system_at']))
+                                    <span class="badge bg-green-jungle">Taken by System</span>
                                 @elseif(!empty($res['taken_at']) && $res['pickup_by'] == 'Customer')
                                     <span class="badge bg-green-jungle">Taken by Customer</span>
                                 @elseif(!empty($res['taken_at']) && $res['pickup_by'] != 'Customer')
                                     <span class="badge bg-green-jungle">Taken by Driver</span>
-                                @elseif(!empty($res['taken_by_system_at']))
-                                    <span class="badge bg-green-jungle">Taken by System</span>
-                                @elseif(!empty($res['reject_at']))
-                                    <span class="badge" style="background-color: #EF1E31">Reject</span>
+                                @elseif(!empty($res['ready_at']) && empty($res['taken_at']))
+                                    <span class="badge" style="background-color: #7DB8B2">Ready</span>
+                                @elseif(!empty($res['receive_at']) && empty($res['ready_at']))
+                                    <span class="badge" style="background-color: #006451">Received</span>
+                                @elseif(empty($res['receive_at']))
+                                    <span class="badge" style="background-color: #FD6437">Pending</span>
                                 @endif
                             </td>
                             @if(strtolower($key) == 'delivery')
