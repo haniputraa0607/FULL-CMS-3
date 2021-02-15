@@ -593,7 +593,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="bundling_start" value="{{date('d-M-Y H:i', strtotime($result['start_date']))}}" required>
+                                    <input type="text" class="form_datetime form-control" name="bundling_start" value="{{date('d-M-Y H:i', strtotime($result['start_date']))}}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -608,7 +608,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="bundling_end" value="{{date('d-M-Y H:i', strtotime($result['end_date']))}}" required>
+                                    <input type="text" class="form_datetime form-control" name="bundling_end" value="{{date('d-M-Y H:i', strtotime($result['end_date']))}}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>

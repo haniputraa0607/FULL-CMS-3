@@ -701,7 +701,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="bundling_start" value="{{ old('bundling_start') }}" required>
+                                    <input type="text" class="form_datetime form-control" name="bundling_start" value="{{ old('bundling_start') }}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -716,7 +716,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control" name="bundling_end" value="{{ old('bundling_end') }}" required>
+                                    <input type="text" class="form_datetime form-control" name="bundling_end" value="{{ old('bundling_end') }}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
