@@ -79,6 +79,7 @@
                             </div>
                         </div>
                     </div>
+                    {{--
                     <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Parent
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih Parent Kategori Jika Ada" data-container="body"></i>
@@ -98,6 +99,7 @@
                             </div>
                         </div>
                     </div>
+                    --}}
                     <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Description
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Kategori Produk" data-container="body"></i>
