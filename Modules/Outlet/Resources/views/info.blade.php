@@ -246,7 +246,7 @@
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
-                    Plastic Use
+                    Plastic Status
                     <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman checkout pada aplikasi akan menampilkan informasi harga plastik" data-container="body"></i>
                 </label>
             </div>

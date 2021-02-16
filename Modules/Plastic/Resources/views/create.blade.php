@@ -83,8 +83,6 @@
         </ul>
     </div><br>
 
-    <a href="{{url('product/plastic')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
-
     @include('layouts.notifications')
 
     <div class="portlet light bordered">
@@ -94,7 +92,7 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal" role="form" action="{{url('product/plastic/update')}}/{{$detail['id_product']}}" method="post">
+            <form class="form-horizontal" role="form" action="{{url('product-plastic/store')}}" method="post">
                 <div class="form-body">
                     <div class="form-group">
                         <div class="input-icon right">
@@ -105,7 +103,22 @@
                             </label>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="product_code" value="{{ $detail['product_code'] }}" placeholder="Plastic Code" disabled>
+                            <input type="text" class="form-control" name="product_code" value="{{ old('product_code') }}" placeholder="Plastic Code" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Plastic Type <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tipe plastik" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product" name="id_plastic_type" data-placeholder="Select type" required>
+                                    <option></option>
+                                    @foreach($plastic_type as $pt)
+                                        <option value="{{$pt['id_plastic_type']}}" @if(old('id_plastic_type') == $pt['id_plastic_type']) selected @endif>{{$pt['plastic_type_name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -117,7 +130,7 @@
                             </label>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="product_name" value="{{ $detail['product_name'] }}" placeholder="Plastic Name" required>
+                            <input type="text" class="form-control" name="product_name" value="{{ old('product_name') }}" placeholder="Plastic Name" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -131,7 +144,7 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-addon"> Max </span>
-                                <input type="text" class="form-control" id="capacity" name="product_capacity" value="{{ $detail['product_capacity'] }}" placeholder="Capacity Plastic" required>
+                                <input type="text" class="form-control" id="capacity" name="product_capacity" value="{{ old('product_capacity') }}" placeholder="Capacity Plastic" required>
                                 <span class="input-group-addon"> Item </span>
                             </div>
                         </div>
@@ -145,7 +158,7 @@
                             </label>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control price" name="global_price" value="{{ $detail['global_price'] }}" placeholder="Plastic Price" required>
+                            <input type="text" class="form-control price" name="global_price" value="{{ old('global_price') }}" placeholder="Plastic Price" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -156,7 +169,7 @@
                             <div class="col-md-2">
                                 <div class="md-radio-inline">
                                     <div class="md-radio">
-                                        <input type="radio" id="radio1" name="product_visibility" class="md-radiobtn req-type" value="Visible" @if($detail['product_visibility'] == 'Visible') checked @endif required>
+                                        <input type="radio" id="radio1" name="product_visibility" class="md-radiobtn req-type" value="Visible" @if(old('product_visibility') == 'Visible' || empty(old('product_visibility'))) checked @endif required>
                                         <label for="radio1">
                                             <span></span>
                                             <span class="check"></span>
@@ -167,7 +180,7 @@
                             <div class="col-md-2">
                                 <div class="md-radio-inline">
                                     <div class="md-radio">
-                                        <input type="radio" id="radio2" name="product_visibility" class="md-radiobtn req-type" value="Hidden" @if($detail['product_visibility'] == 'Hidden') checked @endif required>
+                                        <input type="radio" id="radio2" name="product_visibility" class="md-radiobtn req-type" value="Hidden" @if(old('product_visibility') == 'Hidden') checked @endif required>
                                         <label for="radio2">
                                             <span></span>
                                             <span class="check"></span>
@@ -179,12 +192,10 @@
                     </div>
                     <input type="hidden" name="product_type" value="plastic">
                 </div>
-                @if(MyHelper::hasAccess([51], $grantedFeature))
                 <div class="form-actions" style="text-align: center">
                     {{ csrf_field() }}
                     <button type="submit" class="btn blue">Submit</button>
                 </div>
-                @endif
             </form>
         </div>
     </div>

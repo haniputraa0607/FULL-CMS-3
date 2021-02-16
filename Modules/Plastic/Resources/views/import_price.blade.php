@@ -259,7 +259,7 @@ $configs    		= session('configs');
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form class="form-horizontal" role="form" action="{{ url('product/plastic/export-price') }}" method="post">
+				<form class="form-horizontal" role="form" action="{{ url('product-plastic/export-price') }}" method="post">
 					<div class="form-body">
 						<div class="form-group text-center">
 							<div class="col-md-offset-4 col-md-4">
@@ -289,7 +289,7 @@ $configs    		= session('configs');
 			</div>
 			<div class="portlet-body form upload-container">
 				<div id="upload-form">
-					<form class="form-horizontal" role="form" action="{{ url('product/plastic/import-price/save') }}" method="post" enctype="multipart/form-data" id="form-upload">
+					<form class="form-horizontal" role="form" action="{{ url('product-plastic/import-price/save') }}" method="post" enctype="multipart/form-data" id="form-upload">
 						<div class="form-body">
 							<div class="form-group text-center">
 								<div class="col-md-offset-3 col-md-6 text-center">
@@ -342,7 +342,7 @@ $configs    		= session('configs');
 				</div>
 			</div>
 			<div class="portlet-body step3 form">
-				<form class="form-horizontal" role="form" action="{{ url('product/plastic/export-price') }}" method="post">
+				<form class="form-horizontal" role="form" action="{{ url('product-plastic/export-price') }}" method="post">
 					<div class="row">
 						<div class="col-md-offset-3 col-md-6">
 							<div class="text-center if-success">

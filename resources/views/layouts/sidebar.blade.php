@@ -608,49 +608,85 @@
 							<span class="title">Product Photo Default</span>
 						</a>
 					</li>
-					@if(MyHelper::hasAccess([48,49,50,51,52], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'product-plastic') ? 'active open' : ''}}">
-						<a href="javascript:;" class="nav-link nav-toggle">
-							<span class="title">Product Plastic</span>
-							<span class="arrow"></span>
-						</a>
-						<ul class="sub-menu">
-							@if(MyHelper::hasAccess([50], $grantedFeature))
-							<li class="nav-item {{(isset($child_active) && $child_active == 'product-plastic-new') ? 'active open' : ''}}">
-								<a href="{{url('product/plastic/create')}}" class="nav-link ">
-									<span class="title">New Product Plastic</span>
-								</a>
-							</li>
-							@endif
-							@if(MyHelper::hasAccess([48,49,51,52], $grantedFeature))
-								<li class="nav-item {{(isset($child_active) && $child_active == 'product-plastic-list') ? 'active open' : ''}}">
-									<a href="{{url('product/plastic')}}" class="nav-link ">
-										<span class="title">Product Plastic List</span>
-									</a>
-								</li>
-							@endif
-							@if(MyHelper::hasAccess([48,49,51], $grantedFeature))
-									<li class="nav-item {{($submenu_active == 'product-plastic-import-price') ? 'active open' : ''}}">
-										<a href="{{url('product/plastic/import-price')}}" class="nav-link ">
-											<span class="title">Export & Import Product Plastic Price</span>
-										</a>
-									</li>
-								<li class="nav-item {{(isset($child_active) && $child_active == 'product-plastic-import') ? 'active open' : ''}}">
-									<a href="{{url('product/plastic/import')}}" class="nav-link ">
-										<span class="title">Export & Import Use Plastic Product</span>
-									</a>
-								</li>
-								<li class="nav-item {{(isset($child_active) && $child_active == 'product-plastic-import-product-variant') ? 'active open' : ''}}">
-									<a href="{{url('product/plastic/import-product-variant')}}" class="nav-link ">
-										<span class="title">Export & Import Use Plastic Product Variant</span>
-									</a>
-								</li>
-							@endif
-						</ul>
-					</li>
-					@endif
 				</ul>
 			</li>
+			@endif
+
+			@if(MyHelper::hasAccess([48,49,50,51,52], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'product-plastic') ? 'active' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="icon-wallet"></i>
+						<span class="title">Product Plastic</span>
+						<span class="arrow {{($menu_active == 'product-plastic') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						<li class="nav-item {{($submenu_active == 'plastic-type') ? 'active open' : ''}}">
+							<a href="javascript:;" class="nav-link nav-toggle">
+								<span class="title">Plastic Type</span>
+								<span class="arrow"></span>
+							</a>
+							<ul class="sub-menu">
+								@if(MyHelper::hasAccess([50], $grantedFeature))
+								<li class="nav-item {{(isset($child_active) && $child_active == 'plastic-type-new') ? 'active open' : ''}}">
+									<a href="{{url('plastic-type/create')}}" class="nav-link ">
+										<span class="title">New Plastic Type</span>
+									</a>
+								</li>
+								@endif
+								@if(MyHelper::hasAccess([48,49,51,52], $grantedFeature))
+								<li class="nav-item {{(isset($child_active) && $child_active == 'plastic-type-list') ? 'active open' : ''}}">
+									<a href="{{url('plastic-type')}}" class="nav-link ">
+										<span class="title">Plastic Type List</span>
+									</a>
+								</li>
+								@endif
+								@if(MyHelper::hasAccess([48,51], $grantedFeature))
+								<li class="nav-item {{(isset($child_active) && $child_active == 'plastic-type-position') ? 'active open' : ''}}">
+									<a href="{{url('plastic-type/position')}}" class="nav-link ">
+										<span class="title">Plastic Type Position</span>
+									</a>
+								</li>
+								@endif
+							</ul>
+						</li>
+						@if(MyHelper::hasAccess([50], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'product-plastic-new') ? 'active open' : ''}}">
+							<a href="{{url('product-plastic/create')}}" class="nav-link ">
+								<span class="title">New Product Plastic</span>
+							</a>
+						</li>
+						@endif
+						@if(MyHelper::hasAccess([48,49,51,52], $grantedFeature))
+							<li class="nav-item {{($submenu_active  == 'product-plastic-list') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic')}}" class="nav-link ">
+									<span class="title">Product Plastic List</span>
+								</a>
+							</li>
+						@endif
+						@if(MyHelper::hasAccess([48,49,51], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'product-plastic-import-price') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/import-price')}}" class="nav-link ">
+									<span class="title">Export & Import Product Plastic Price</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'product-plastic-import') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/import')}}" class="nav-link ">
+									<span class="title">Export & Import Use Plastic Product</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'product-plastic-import-product-variant') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/import-product-variant')}}" class="nav-link ">
+									<span class="title">Export & Import Use Plastic Product Variant</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'import-plastic-status') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/import-plastic-status-outlet')}}" class="nav-link ">
+									<span class="title">Export & Import Plastic Status Outlet</span>
+								</a>
+							</li>
+						@endif
+					</ul>
+				</li>
 			@endif
 
 			@if(MyHelper::hasAccess([91], $configs)&&MyHelper::hasAccess([180,181,182,183,184,185,186], $grantedFeature))

@@ -37,7 +37,7 @@ $grantedFeature     = session('granted_features');
                         let name    = $(this).data('name');
                         $(this).click(function() {
                             swal({
-                                    title: name+"\n\nAre you sure want to delete this product plastic?",
+                                    title: name+"\n\nAre you sure want to delete this plastic type?",
                                     text: "Your will not be able to recover this data!",
                                     type: "warning",
                                     showCancelButton: true,
@@ -48,19 +48,19 @@ $grantedFeature     = session('granted_features');
                                 function(){
                                     $.ajax({
                                         type : "POST",
-                                        url : "{{ url('product/plastic/delete') }}",
-                                        data : "_token="+token+"&id_product="+id,
+                                        url : "{{ url('plastic-type/delete') }}",
+                                        data : "_token="+token+"&id_plastic_type="+id,
                                         success : function(result) {
                                             if (result.status == "success") {
-                                                swal("Deleted!", "product plastic has been deleted.", "success")
+                                                swal("Deleted!", "plastic type has been deleted.", "success")
                                                 SweetAlert.init()
-                                                location.href = "{{url('product/plastic')}}";
+                                                location.href = "{{url('plastic-type')}}";
                                             }
                                             else if(result.status == "fail"){
-                                                swal("Error!", "Failed to delete product plastic. Product plastic has been used.", "error")
+                                                swal("Error!", "Failed to delete plastic type. Plastic type has been used.", "error")
                                             }
                                             else {
-                                                swal("Error!", "Something went wrong. Failed to delete product plastic.", "error")
+                                                swal("Error!", "Something went wrong. Failed to delete plastic type.", "error")
                                             }
                                         }
                                     });
@@ -73,32 +73,6 @@ $grantedFeature     = session('granted_features');
 
         jQuery(document).ready(function() {
             SweetAlert.init()
-        });
-
-        $('#list_product_plastic').on('switchChange.bootstrapSwitch', 'input[name="product_visibility"]', function(event, state) {
-            var id     = $(this).data('id');
-            var token  = "{{ csrf_token() }}";
-            if(state == true){
-                state = 'Visible'
-            }else{
-                state = 'Hidden'
-            }
-            $.ajax({
-                type : "POST",
-                url : "{{ url('product/plastic/visibility') }}",
-                data : "_token="+token+"&id_product="+id+"&product_visibility="+state,
-                success : function(result) {
-                    if (result.status == "success") {
-                        document.getElementById('atr-'+id).innerHTML = state;
-                        $('#list_product_plastic').DataTable().rows().invalidate()
-                            .draw();
-                        toastr.info("Product plastic visibility has been updated.");
-                    }
-                    else {
-                        toastr.warning(result.messages);
-                    }
-                }
-            });
         });
     </script>
 @endsection
@@ -136,11 +110,9 @@ $grantedFeature     = session('granted_features');
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="list_product_plastic">
                 <thead>
                 <tr>
-                    <th > Code</th>
-                    <th> Plastic Name </th>
-                    <th> Capacity </th>
-                    <th> Price </th>
-                    <th> Visibility </th>
+                    <th width="10"> No</th>
+                    <th> Name </th>
+                    <th> Outlet Group </th>
                     @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
                     <th> Action </th>
                     @endif
@@ -148,27 +120,24 @@ $grantedFeature     = session('granted_features');
                 </thead>
                 <tbody>
                 @if(!empty($data))
-                    @foreach($data as $res)
+                    @foreach($data as $key=>$res)
                         <tr style="background-color: #fbfbfb;">
-                            <td > {{ $res['product_code'] }} </td>
-                            <td > {{ $res['product_name'] }} </td>
-                            <td > {{ $res['product_capacity'] }} </td>
-                            <td > {{ $res['global_price'] }} </td>
-                            <td >
-                                @if(MyHelper::hasAccess([51], $grantedFeature))
-                                    <input type="checkbox" name="product_visibility" @if($res['product_visibility'] == 'Visible') checked @endif data-id="{{ $res['id_product'] }}" class="make-switch switch-change" data-size="small" data-on-text="Visible" data-off-text="Hidden">
-                                    <p style="display: none" id="atr-{{$res['id_product']}}">{{$res['product_visibility']}}</p>
-                                @else
-                                    {{ $res['product_visibility'] }}
-                                @endif
+                            <td > {{ $key+1 }} </td>
+                            <td > {{ $res['plastic_type_name'] }} </td>
+                            <td>
+                                <ul>
+                                    @foreach($res['outlet_group'] as $group)
+                                    <li>{{$group['outlet_group_name']}}</li>
+                                    @endforeach
+                                </ul>
                             </td>
                             @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
                             <td style="width: 80px;">
                                 @if(MyHelper::hasAccess([295,297], $grantedFeature))
-                                    <a class="btn btn-sm green" href="{{url('product/plastic/detail', $res['id_product'])}}"><i class="fa fa-pencil"></i></a>
+                                    <a class="btn btn-sm green" href="{{url('plastic-type/detail', $res['id_plastic_type'])}}"><i class="fa fa-pencil"></i></a>
                                 @endif
                                 @if(MyHelper::hasAccess([298], $grantedFeature))
-                                    <a class="btn btn-sm red sweetalert-delete btn-primary" data-id="{{ $res['id_product'] }}" data-name="{{ $res['product_name'] }}"><i class="fa fa-trash-o"></i></a>
+                                    <a class="btn btn-sm red sweetalert-delete btn-primary" data-id="{{ $res['id_plastic_type'] }}" data-name="{{ $res['plastic_type_name'] }}"><i class="fa fa-trash-o"></i></a>
                                 @endif
                             </td>
                             @endif

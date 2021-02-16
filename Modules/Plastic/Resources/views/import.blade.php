@@ -217,18 +217,18 @@ $configs    		= session('configs');
                     </div>
                     <div class="col-md-3 mt-step-col" data-step="2">
                         <div class="mt-step-number bg-white">2</div>
-                        <div class="mt-step-title uppercase font-grey-cascade">Download Template Product Variant Group</div>
-                        <div class="mt-step-content font-grey-cascade">Download current Product Variant Group</div>
+                        <div class="mt-step-title uppercase font-grey-cascade">Download Template Product</div>
+                        <div class="mt-step-content font-grey-cascade">Download current Product</div>
                     </div>
                     <div class="col-md-3 mt-step-col" data-step="3">
                         <div class="mt-step-number bg-white">3</div>
-                        <div class="mt-step-title uppercase font-grey-cascade">Upload Data Product Variant Group</div>
-                        <div class="mt-step-content font-grey-cascade">Import from modified product variant group list</div>
+                        <div class="mt-step-title uppercase font-grey-cascade">Upload Data Product</div>
+                        <div class="mt-step-content font-grey-cascade">Import from modified product list</div>
                     </div>
                     <div class="col-md-3 mt-step-col last" data-step="4">
                         <div class="mt-step-number bg-white">#</div>
-                        <div class="mt-step-title uppercase font-grey-cascade">Result Product Variant Group</div>
-                        <div class="mt-step-content font-grey-cascade">Report imported product variant group</div>
+                        <div class="mt-step-title uppercase font-grey-cascade">Result Product</div>
+                        <div class="mt-step-content font-grey-cascade">Report imported product</div>
                     </div>
                 </div>
             </div>
@@ -244,10 +244,10 @@ $configs    		= session('configs');
                 </div>
                 <div class="portlet-body form">
                     <div class="m-heading-1 border-green m-bordered">
-                        <p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor total penggunaan plastik untuk setiap produk variant group.</p>
-                        <p style="white-space: pre-wrap;">Product diidentifikasi berdasarkan <b>product variant code</b>. Apabila product code tidak tersedia maka data tersebut akan <b>dilewati</b>.</p>
+                        <p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor total penggunaan plastik untuk setiap produk.</p>
+                        <p style="white-space: pre-wrap;">Product diidentifikasi berdasarkan <b>product code</b>. Apabila product code tidak tersedia maka data tersebut akan <b>dilewati</b>.</p>
                         <br>
-                        <p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor produk variant</p>
+                        <p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor produk</p>
                     </div>
                     <div class="form-actions" style="padding-bottom: 5px">
                         {{ csrf_field() }}
@@ -302,7 +302,7 @@ $configs    		= session('configs');
                     </div>
                 </div>
                 <div class="portlet-body form">
-                    <form class="form-horizontal" role="form" action="{{ url('product/plastic/export-product-variant') }}" method="post">
+                    <form class="form-horizontal" role="form" action="{{ url('product-plastic/export') }}" method="post">
                         <div class="form-body">
                             <div class="form-group text-center">
                                 <div class="col-md-offset-4 col-md-4">
@@ -339,7 +339,7 @@ $configs    		= session('configs');
                 </div>
                 <div class="portlet-body form upload-container">
                     <div id="upload-form">
-                        <form class="form-horizontal" role="form" action="{{ url('product/plastic/import-product-variant/save') }}" method="post" enctype="multipart/form-data" id="form-upload">
+                        <form class="form-horizontal" role="form" action="{{ url('product-plastic/import/save') }}" method="post" enctype="multipart/form-data" id="form-upload">
                             <div class="form-body">
                                 <div class="form-group text-center">
                                     <div class="col-md-offset-3 col-md-6 text-center">
@@ -392,7 +392,7 @@ $configs    		= session('configs');
                     </div>
                 </div>
                 <div class="portlet-body step4 form">
-                    <form class="form-horizontal" role="form" action="{{ url('product/plastic/export-product-variant') }}" method="post">
+                    <form class="form-horizontal" role="form" action="{{ url('product-plastic/export') }}" method="post">
                         <div class="row">
                             <div class="col-md-offset-3 col-md-6">
                                 <div class="text-center if-success">

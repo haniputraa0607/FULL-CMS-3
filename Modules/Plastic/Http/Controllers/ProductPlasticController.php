@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Product\Http\Controllers;
+namespace Modules\Plastic\Http\Controllers;
 
 use App\Exports\ProductExport;
 use App\Exports\ProductVariantPriceArrayExport;
@@ -24,25 +24,24 @@ class ProductPlasticController extends Controller
         $data = [
             'title'          => 'Product Plactic',
             'sub_title'      => 'Product Plastic List',
-            'menu_active'    => 'product',
-            'submenu_active' => 'product-plastic',
-            'child_active' => 'product-plastic-list'
+            'menu_active'    => 'product-plastic',
+            'submenu_active' => 'product-plastic-list'
         ];
 
         $data['data'] = MyHelper::get('product-plastic/list')['result']??[];
 
-        return view('product::product_plastic.list',$data);
+        return view('plastic::list',$data);
     }
 
     function create() {
         $data = [
             'title'          => 'Product Plactic',
             'sub_title'      => 'New Product Plastic',
-            'menu_active'    => 'product',
-            'submenu_active' => 'product-plastic',
-            'child_active' => 'product-plastic-new'
+            'menu_active'    => 'product-plastic',
+            'submenu_active' => 'product-plastic-new'
         ];
-        return view('product::product_plastic.create',$data);
+        $data['plastic_type'] = MyHelper::get('plastic-type/list')['result']??[];
+        return view('plastic::create',$data);
     }
 
     function store(Request $request){
@@ -51,9 +50,9 @@ class ProductPlasticController extends Controller
         $store = MyHelper::post('product-plastic/store', $post);
 
         if(isset($store['status']) && $store['status'] == 'success'){
-            return redirect('product/plastic')->withSuccess(['Success create product plastic']);
+            return redirect('product-plastic')->withSuccess(['Success create product plastic']);
         }else{
-            return redirect('product/plastic/create')->withErrors($store['messages']??['Failed create product plastic'])->withInput();
+            return redirect('product-plastic/create')->withErrors($store['messages']??['Failed create product plastic'])->withInput();
         }
     }
 
@@ -64,16 +63,16 @@ class ProductPlasticController extends Controller
             $data = [
                 'title'          => 'Product Plactic',
                 'sub_title'      => 'Product Plastic Detail',
-                'menu_active'    => 'product',
-                'submenu_active' => 'product-plastic',
-                'child_active' => 'product-plastic-list'
+                'menu_active'    => 'product-plastic',
+                'submenu_active' => 'product-plastic-list'
             ];
 
             $data['detail'] = $detail['result'];
+            $data['plastic_type'] = MyHelper::get('plastic-type/list')['result']??[];
 
-            return view('product::product_plastic.detail', $data);
+            return view('plastic::detail', $data);
         }else{
-            return redirect('product/plastic')->withErrors($store['messages']??['Failed get detail outlet group filter']);
+            return redirect('product-plastic')->withErrors($store['messages']??['Failed get detail outlet group filter']);
         }
     }
 
@@ -85,9 +84,9 @@ class ProductPlasticController extends Controller
         $update = MyHelper::post('product-plastic/update', $post);
 
         if(isset($update['status']) && $update['status'] == 'success'){
-            return redirect('product/plastic/detail/'.$id)->withSuccess(['Success update product plastic']);
+            return redirect('product-plastic/detail/'.$id)->withSuccess(['Success update product plastic']);
         }else{
-            return redirect('product/plastic/detail/'.$id)->withErrors($update['messages']??['Failed update product plastic']);
+            return redirect('product-plastic/detail/'.$id)->withErrors($update['messages']??['Failed update product plastic']);
         }
     }
 
@@ -137,13 +136,12 @@ class ProductPlasticController extends Controller
         $data = [
             'title'          => 'Product Plactic',
             'sub_title'      => 'Import Product',
-            'menu_active'    => 'product',
-            'submenu_active' => 'product-plastic',
-            'child_active' => 'product-plastic-import'
+            'menu_active'    => 'product-plastic',
+            'submenu_active' => 'product-plastic-import'
         ];
 
         $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-        return view('product::product_plastic.import', $data);
+        return view('plastic::import', $data);
     }
 
     public function imporSavetUsePlastic(Request $request)
@@ -222,13 +220,12 @@ class ProductPlasticController extends Controller
         $data = [
             'title'          => 'Product Plactic',
             'sub_title'      => 'Import Product Variant',
-            'menu_active'    => 'product',
-            'submenu_active' => 'product-plastic',
-            'child_active' => 'product-plastic-import-product-variant'
+            'menu_active'    => 'product-plastic',
+            'submenu_active' => 'product-plastic-import-product-variant'
         ];
 
         $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-        return view('product::product_plastic.import_product_variant', $data);
+        return view('plastic::import_product_variant', $data);
     }
 
     public function imporProductVariantSavetUsePlastic(Request $request)
@@ -296,11 +293,10 @@ class ProductPlasticController extends Controller
         $data = [
             'title'          => 'Product Plactic',
             'sub_title'      => 'Import Plastic Price',
-            'menu_active'    => 'product',
-            'submenu_active' => 'product-plastic',
-            'child_active' => 'product-plastic-import-product-variant'
+            'menu_active'    => 'product-plastic',
+            'submenu_active' => 'product-plastic-import-price'
         ];
-        return view('product::product_plastic.import_price', $data);
+        return view('plastic::import_price', $data);
     }
 
     public function imporSavePlasticPrice(Request $request)
@@ -317,4 +313,54 @@ class ProductPlasticController extends Controller
 
         return $import;
     }
+
+    public function exportPlasticStatusOutlet(Request $request) {
+        $post = $request->except('_token');
+        $data = MyHelper::post('product-plastic/export-plastic-status-outlet', $post)['result']??[];
+
+        if(empty($data)){
+            $datas['All Type'] = [
+                [
+                    'outlet_code' => '0001',
+                    'outlet_name' => 'Outlet 1',
+                    'plastic_status' => 'Active'
+                ],
+                [
+                    'outlet_code' => '0002',
+                    'outlet_name' => 'Outlet 2',
+                    'plastic_status' => 'Inactive'
+                ]
+            ];
+        }else{
+            $datas['All Type'] = $data;
+        }
+
+        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_plastic status outlet.xlsx');
+    }
+
+    public function importPlasticStatusOutlet(Request $request){
+        $data = [
+            'title'          => 'Product Plactic',
+            'sub_title'      => 'Import Plastic Price',
+            'menu_active'    => 'product-plastic',
+            'submenu_active' => 'import-plastic-status'
+        ];
+        return view('plastic::import_plastic_status_outlet', $data);
+    }
+
+    public function importSavePlasticStatusOutlet(Request $request)
+    {
+        $post = $request->except('_token');
+
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
+            if(!empty($data)){
+                $import = MyHelper::post('product-plastic/import-plastic-status-outlet', ['data' => $data]);
+            }
+        }
+
+        return $import;
+    }
+
 }
