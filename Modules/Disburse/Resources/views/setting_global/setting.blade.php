@@ -371,6 +371,9 @@
                 <a data-toggle="tab" href="#fee">Fee Global </a>
             </li>
             <li>
+                <a data-toggle="tab" href="#fee-product-plastic">Fee Plastic </a>
+            </li>
+            <li>
                 <a data-toggle="tab" href="#special-outlet">Special Outlet</a>
             </li>
             <li>
@@ -433,6 +436,14 @@
                     </form>
                 </div>
             </div>
+        </div>
+
+        <div id="fee-product-plastic" class="tab-pane">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Setting ini digunakan untuk mengatur perhitungan fee pada product plastic. Jika active maka product plastic akan dikenakan fee.</p>
+            </div>
+            <br>
+            @include('disburse::setting_global.setting_fee_product_plastic')
         </div>
 
         <div id="special-outlet" class="tab-pane">
