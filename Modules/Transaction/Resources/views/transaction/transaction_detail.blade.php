@@ -605,6 +605,21 @@
 
     <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
         <div class="row space-bottom">
+            <div class="col-12 text-14px WorkSans-Bold text-black">Kantung Plastik</div>
+        </div>
+        <div class="kotak" style="margin: 0px;margin-top: 10px;border-radius: 10px;">
+            @foreach($data['plastic_transaction_detail'] as $dt)
+                <div class="row">
+                    <div class="col-2 text-13-3px WorkSans-Medium text-grey-light space-text"><b>{{$dt['plasctic_qty']}}x</b></div>
+                    <div class="col-7 text-13-3px WorkSans-Medium text-grey-light space-text" style="margin-left: -30px;margin-right: 20px;">{{$dt['plastic_name']}}</div>
+                    <div class="col-3 text-13-3px text-right WorkSans-Medium text-grey-light space-text">{{$dt['plasctic_subtotal']}}</div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
+        <div class="row space-bottom">
             <div class="col-12 text-14px WorkSans-Bold text-black">Detail Pembayaran</div>
         </div>
         <div class="kotak" style="margin: 0px;margin-top: 10px;border-radius: 10px;">

@@ -62,6 +62,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('setting/fee-outlet-special/update', 'DisburseSettingController@settingFeeOutletSpecial');
         Route::any('setting/outlet-special', 'DisburseSettingController@settingSpecialOutlet');
         Route::any('setting/approver', 'DisburseSettingController@settingApprover');
+        Route::any('setting/fee-product-plastic', 'DisburseSettingController@settingFeeProductPlastic');
         Route::any('setting/time-to-sent', 'DisburseSettingController@settingTimeToSent');
         Route::any('setting/fee-disburse', 'DisburseSettingController@settingFeeDisburse');
         Route::any('setting/send-email-to', 'DisburseSettingController@settingSendEmailTo');

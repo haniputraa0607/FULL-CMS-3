@@ -298,6 +298,13 @@ class DisburseSettingController extends Controller
             $data['approver'] = [];
         }
 
+        $feePorductPlastic = MyHelper::get('disburse/setting/fee-product-plastic');
+        if(isset($feePorductPlastic['status']) && $feePorductPlastic['status'] == 'success'){
+            $data['fee_product_plastic'] = $feePorductPlastic['result'];
+        }else{
+            $data['fee_product_plastic'] = [];
+        }
+
         $timeToSent = MyHelper::get('disburse/setting/time-to-sent');
         if(isset($timeToSent['status']) && $timeToSent['status'] == 'success'){
             $data['time_to_sent'] = $timeToSent['result'];
@@ -423,6 +430,21 @@ class DisburseSettingController extends Controller
             return redirect('disburse/setting/global#approver')->withSuccess(['Success Update Data']);
         }else{
             return redirect('disburse/setting/global#approver')->withErrors(['Failed Update Data']);
+        }
+    }
+
+    function settingFeeProductPlastic(Request $request){
+        $post = $request->except('_token');
+        if(isset($post['fee_product_plastic'])){
+            $data['value'] = 1;
+        }else{
+            $data['value'] = 0;
+        }
+        $save = MyHelper::post('disburse/setting/fee-product-plastic', $data);
+        if (isset($save['status']) && $save['status'] == "success") {
+            return redirect('disburse/setting/global#fee-product-plastic')->withSuccess(['Success Update Data']);
+        }else{
+            return redirect('disburse/setting/global#fee-product-plastic')->withErrors(['Failed Update Data']);
         }
     }
 

@@ -255,7 +255,7 @@ $configs    		= session('configs');
 		<div class="portlet light bordered">
 			<div class="portlet-title">
 				<div class="caption">
-					<span class="caption-subject font-dark sbold uppercase font-green">Download Template Variant</span>
+					<span class="caption-subject font-dark sbold uppercase font-green">Download Template </span>
 				</div>
 			</div>
 			<div class="portlet-body form">
@@ -284,7 +284,7 @@ $configs    		= session('configs');
 		<div class="portlet light bordered">
 			<div class="portlet-title">
 				<div class="caption">
-					<span class="caption-subject font-dark sbold uppercase font-green">Upload Data Variant</span>
+					<span class="caption-subject font-dark sbold uppercase font-green">Upload Data </span>
 				</div>
 			</div>
 			<div class="portlet-body form upload-container">
@@ -338,7 +338,7 @@ $configs    		= session('configs');
 		<div class="portlet light bordered">
 			<div class="portlet-title">
 				<div class="caption">
-					<span class="caption-subject font-dark sbold uppercase font-green">Import Result Variant</span>
+					<span class="caption-subject font-dark sbold uppercase font-green">Import Result </span>
 				</div>
 			</div>
 			<div class="portlet-body step3 form">
