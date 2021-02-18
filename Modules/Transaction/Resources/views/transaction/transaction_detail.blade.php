@@ -605,7 +605,7 @@
 
     <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
         <div class="row space-bottom">
-            <div class="col-12 text-14px WorkSans-Bold text-black">Kantung Plastik</div>
+            <div class="col-12 text-14px WorkSans-Bold text-black">{{$data['plastic_name']??'Kantong Plastik'}}</div>
         </div>
         <div class="kotak" style="margin: 0px;margin-top: 10px;border-radius: 10px;">
             @foreach($data['plastic_transaction_detail'] as $dt)
