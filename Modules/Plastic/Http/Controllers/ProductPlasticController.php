@@ -22,7 +22,7 @@ class ProductPlasticController extends Controller
 
     function index(){
         $data = [
-            'title'          => 'Product Plactic',
+            'title'          => 'Product Plastic',
             'sub_title'      => 'Product Plastic List',
             'menu_active'    => 'product-plastic',
             'submenu_active' => 'product-plastic-list'
@@ -35,7 +35,7 @@ class ProductPlasticController extends Controller
 
     function create() {
         $data = [
-            'title'          => 'Product Plactic',
+            'title'          => 'Product Plastic',
             'sub_title'      => 'New Product Plastic',
             'menu_active'    => 'product-plastic',
             'submenu_active' => 'product-plastic-new'
@@ -61,7 +61,7 @@ class ProductPlasticController extends Controller
 
         if(isset($detail['status']) && $detail['status'] == 'success'){
             $data = [
-                'title'          => 'Product Plactic',
+                'title'          => 'Product Plastic',
                 'sub_title'      => 'Product Plastic Detail',
                 'menu_active'    => 'product-plastic',
                 'submenu_active' => 'product-plastic-list'
@@ -134,7 +134,7 @@ class ProductPlasticController extends Controller
 
     public function importUsePlastic(){
         $data = [
-            'title'          => 'Product Plactic',
+            'title'          => 'Product Plastic',
             'sub_title'      => 'Import Product',
             'menu_active'    => 'product-plastic',
             'submenu_active' => 'product-plastic-import'
@@ -218,7 +218,7 @@ class ProductPlasticController extends Controller
 
     function imporProductVariantUsePlastic(){
         $data = [
-            'title'          => 'Product Plactic',
+            'title'          => 'Product Plastic',
             'sub_title'      => 'Import Product Variant',
             'menu_active'    => 'product-plastic',
             'submenu_active' => 'product-plastic-import-product-variant'
@@ -291,7 +291,7 @@ class ProductPlasticController extends Controller
 
     function importPlasticPrice(){
         $data = [
-            'title'          => 'Product Plactic',
+            'title'          => 'Product Plastic',
             'sub_title'      => 'Import Plastic Price',
             'menu_active'    => 'product-plastic',
             'submenu_active' => 'product-plastic-import-price'
@@ -340,7 +340,7 @@ class ProductPlasticController extends Controller
 
     public function importPlasticStatusOutlet(Request $request){
         $data = [
-            'title'          => 'Product Plactic',
+            'title'          => 'Product Plastic',
             'sub_title'      => 'Import Plastic Price',
             'menu_active'    => 'product-plastic',
             'submenu_active' => 'import-plastic-status'
