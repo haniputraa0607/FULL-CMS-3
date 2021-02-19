@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'plastic-
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-plastic'], function()
 {
     Route::get('/', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@index']);
+    Route::any('stock-outlet/{key?}', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@productPlasticStockOutlet']);
     Route::get('create', ['middleware' => 'feature_control:50', 'uses' => 'ProductPlasticController@create']);
     Route::post('store', ['middleware' => 'feature_control:50', 'uses' => 'ProductPlasticController@store']);
     Route::get('detail/{id}', ['middleware' => 'feature_control:49,51', 'uses' => 'ProductPlasticController@detail']);

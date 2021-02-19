@@ -664,6 +664,11 @@
 							</li>
 						@endif
 						@if(MyHelper::hasAccess([48,49,51], $grantedFeature))
+							<li class="nav-item {{($submenu_active  == 'product-plastic-stock') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/stock-outlet')}}" class="nav-link ">
+									<span class="title">Product Plastic Update Stock</span>
+								</a>
+							</li>
 							<li class="nav-item {{($submenu_active == 'product-plastic-import-price') ? 'active open' : ''}}">
 								<a href="{{url('product-plastic/import-price')}}" class="nav-link ">
 									<span class="title">Export & Import Product Plastic Price</span>
