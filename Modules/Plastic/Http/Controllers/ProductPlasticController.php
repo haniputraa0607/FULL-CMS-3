@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Excel;
 
 use App\Lib\MyHelper;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductPlasticController extends Controller
 {
@@ -363,4 +364,85 @@ class ProductPlasticController extends Controller
         return $import;
     }
 
+    public function productPlasticStockOutlet(Request $request, $key = null)
+    {
+        $data = [
+            'title'          => 'Product Plastic',
+            'sub_title'      => 'Stock Product Plastic',
+            'menu_active'    => 'product-plastic',
+            'submenu_active' => 'product-plastic-stock',
+            'filter_title'   => 'Filter Product Plastic',
+            'product_setting_type' => 'product_plastic_stock_outlet'
+        ];
+
+        $post = $request->except('_token');
+
+        if ($post && (!isset($post['rule']) || !isset($post['operator'])) && !isset($post['clear'])) {
+            if(isset($post['sameall']) && !empty($post['sameall'])){
+                $dataToUpdate = [
+                    'product_stock_status'  => $post['product_stock_status'][0],
+                    'id_outlet'             => $post['id_outlet'],
+                    'id_user'               => session('id_user'),
+                    'sameall'               => $post['sameall']
+                ];
+                $update = MyHelper::post('product-plastic/update-stock', $dataToUpdate);
+
+                if (isset($update['status']) && $update['status'] == 'success') {
+                    return redirect('product-plastic/stock-outlet/'.$post['id_outlet'])->withSuccess(['Success update stock']);
+                } else {
+                    return back()->witherrors([$update['messages']]);
+                }
+            }else{
+                foreach ($post['product_stock_status'] as $key => $value) {
+                    $data = [
+                        'id_product'            => $post['id_product'][$key],
+                        'product_stock_status'  => $post['product_stock_status'][$key],
+                        'id_outlet'             => $post['id_outlet'],
+                        'id_user'               => session('id_user')
+                    ];
+                    $save = MyHelper::post('product-plastic/update-stock', $data);
+                    if (isset($save['status']) && $save['status'] != "success") {
+                        return back()->witherrors(['Product price failed to update']);
+                    }
+                }
+
+                if (isset($save['status']) && $save['status'] == 'success') {
+                    return redirect('product-plastic/stock-outlet/'.$post['id_outlet'])->withSuccess(['Success update stock']);
+                }
+            }
+        }
+        $data['admin'] = 1;
+        $outlet = MyHelper::post('outlet/be/list', $data);
+
+        if (isset($outlet['status']) && $outlet['status'] == 'success') {
+            $data['outlets'] = $outlet['result'];
+        } elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
+            return back()->witherrors([$outlet['messages']??'Outlet no found']);
+        }
+
+        if (!is_null($key)) {
+            $data['key'] = $key;
+            $post['id_outlet'] = $key;
+        } else {
+            $data['key'] = $data['outlets'][0]['id_outlet'];
+            $post['id_outlet'] = $data['outlets'][0]['id_outlet'];
+        }
+
+        if(isset($page)){
+            $product = MyHelper::post('product-plastic/list-by-outlet?page='.$page, $post);
+        }else{
+            $product = MyHelper::post('product-plastic/list-by-outlet', $post);
+        }
+
+        if (isset($product['status']) && $product['status'] == 'success') {
+            $data['product'] = $product['result']['data'];
+            $data['total'] = $product['result']['total'];
+            $data['paginator'] = new LengthAwarePaginator($product['result']['data'], $product['result']['total'], $product['result']['per_page'], $product['result']['current_page'], ['path' => url()->current()]);
+        } elseif (isset($product['status']) && $product['status'] == 'fail') {
+            $data['product'] = [];
+            $data['total'] = 0;
+        }
+
+        return view('plastic::stock_outlet', $data);
+    }
 }
