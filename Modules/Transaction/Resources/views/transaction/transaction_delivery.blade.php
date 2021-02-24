@@ -128,7 +128,7 @@
                             </td>
                             <td>
                                 @if(!empty($res['reject_at']))
-                                    <span class="badge" style="background-color: #EF1E31">{{$res['reject_reason']}}</span>
+                                    <span class="badge" style="background-color: #EF1E31">Reject : {{$res['reject_reason']}}</span>
                                 @elseif(!empty($res['taken_by_system_at']))
                                     <span class="badge bg-green-jungle">Taken by System</span>
                                 @elseif(!empty($res['taken_at']) && $res['pickup_by'] == 'Customer')

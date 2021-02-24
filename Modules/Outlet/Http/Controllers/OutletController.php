@@ -288,6 +288,10 @@ class OutletController extends Controller
 
                 $save = MyHelper::post('outlet/update', $post);
 
+                if(isset($post['outlet_code'])){
+                    $code = $post['outlet_code'];
+                }
+
                 if (isset($save['status']) && $save['status'] == "success") {
                     return parent::redirect($save, 'Outlet has been updated.', 'outlet/detail/'.$code.'#info');
                 }else {
