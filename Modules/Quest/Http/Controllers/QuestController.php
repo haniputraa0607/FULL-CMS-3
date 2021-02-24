@@ -13,9 +13,27 @@ class QuestController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('quest::index');
+        $data = [
+            'title'          => 'Quest',
+            'sub_title'      => 'Quest List',
+            'menu_active'    => 'quest',
+            'submenu_active' => 'quest-list'
+        ];
+        if ($request->method() == 'POST') {
+            $post = $request->except('_token');
+            $raw_data = MyHelper::post('quest', $post)['result'] ?? [];
+            $data['data'] = $raw_data['data'];
+            $data['total'] = $raw_data['total'] ?? 0;
+            $data['from'] = $raw_data['from'] ?? 0;
+            $data['order_by'] = $raw_data['order_by'] ?? 0;
+            $data['order_sorting'] = $raw_data['order_sorting'] ?? 0;
+            $data['last_page'] = !($raw_data['next_page_url'] ?? false);
+            return $data;
+        }
+
+        return view('quest::index', $data);
     }
 
     /**
@@ -24,10 +42,59 @@ class QuestController extends Controller
      */
     public function create(Request $request)
     {
+        $data = [
+            'title'          => 'Quest',
+            'sub_title'      => 'Quest Create',
+            'menu_active'    => 'quest',
+            'submenu_active' => 'quest-create'
+        ];
+
+        $data['category']   = MyHelper::get('product/category/be/list')['result'];
+        $data['product']    = MyHelper::get('product/be/list')['result'];
+        $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
+        $data['province']   = MyHelper::get('province/list')['result'];
+
+        return view('quest::create', $data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
         $post = $request->except('_token');
 
-        if (!empty($post)) {
-            if (isset($post['id_quest'])) {
+        if (isset($post['id_quest'])) {
+            foreach ($post['detail'] as $key => $value) {
+                $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
+                switch ($value['rule_total']) {
+                    case 'total_transaction':
+                        $post['detail'][$key]['trx_total'] = $value['value_total'];
+                        break;
+                    case 'total_outlet':
+                        $post['detail'][$key]['different_outlet'] = $value['value_total'];
+                        break;
+                    case 'total_province':
+                        $post['detail'][$key]['different_province'] = $value['value_total'];
+                        break;
+                }
+                unset($post['detail'][$key]['rule_total']);
+                unset($post['detail'][$key]['value_total']);
+            }
+            
+            $save = MyHelper::post('quest/create', $post);
+
+            if (isset($save['status']) && $save['status'] == "success") {
+                return redirect('quest/detail/' . $save['data']);
+            } else {
+                return back()->with('error', $save['errors'])->withInput();
+            }
+        } else {
+            $post['quest']['image'] = MyHelper::encodeImage($post['quest']['image']);
+
+            if (isset($post['detail'])) {
                 foreach ($post['detail'] as $key => $value) {
                     $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
                     switch ($value['rule_total']) {
@@ -44,69 +111,15 @@ class QuestController extends Controller
                     unset($post['detail'][$key]['rule_total']);
                     unset($post['detail'][$key]['value_total']);
                 }
-                
-                $save = MyHelper::post('quest/create', $post);
-
-                if (isset($save['status']) && $save['status'] == "success") {
-                    return redirect('quest/detail/' . $save['data']);
-                } else {
-                    return back()->with('error', $save['errors'])->withInput();
-                }
-            } else {
-                $post['quest']['image'] = MyHelper::encodeImage($post['quest']['image']);
-
-                if (isset($post['detail'])) {
-                    foreach ($post['detail'] as $key => $value) {
-                        $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
-                        switch ($value['rule_total']) {
-                            case 'total_transaction':
-                                $post['detail'][$key]['trx_total'] = $value['value_total'];
-                                break;
-                            case 'total_outlet':
-                                $post['detail'][$key]['different_outlet'] = $value['value_total'];
-                                break;
-                            case 'total_province':
-                                $post['detail'][$key]['different_province'] = $value['value_total'];
-                                break;
-                        }
-                        unset($post['detail'][$key]['rule_total']);
-                        unset($post['detail'][$key]['value_total']);
-                    }
-                }
-
-                $save = MyHelper::post('quest/create', $post);
-
-                if (isset($save['status']) && $save['status'] == "success") {
-                    return redirect('quest/detail/' . $save['data']);
-                } else {
-                    return back()->with('error', $save['errors'])->withInput();
-                }
             }
-        } else {
-            $data = [
-                'title'          => 'Quest',
-                'sub_title'      => 'Quest Create',
-                'menu_active'    => 'quest',
-                'submenu_active' => 'quest-create'
-            ];
 
-            $data['category']   = MyHelper::get('product/category/be/list')['result'];
-            $data['product']    = MyHelper::get('product/be/list')['result'];
-            $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
-            $data['province']   = MyHelper::get('province/list')['result'];
-
-            return view('quest::create', $data);
+            $save = MyHelper::post('quest/create', $post);
+            if (isset($save['status']) && $save['status'] == "success") {
+                return redirect('quest/detail/' . $save['data']);
+            } else {
+                return back()->with('error', $save['errors'] ?? ['Something went wrong'])->withInput();
+            }
         }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
