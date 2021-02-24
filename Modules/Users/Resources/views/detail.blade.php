@@ -702,32 +702,26 @@
 																	@foreach($profile['on_going'] as $res)
 																		<tr>
 																			<td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
-																			<td>{{ $res['trasaction_type'] }}</td>
-																			<td>{{ $res['transaction_receipt_number'] }}</td>
 																			<td>{{ $res['outlet_name']['outlet_name'] }}</td>
+																			<td><span class="badge bg-{{$res['pickup_by'] == 'Customer' ? 'green-jungle':'blue'}}">{{$res['pickup_by'] == 'Customer' ? 'Pickup Order':'Delivery'}}</span></td>
+																			<td>{{ $res['transaction_receipt_number'] }}</td>
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
 																			<td>
-																			    @if($res['reject_at'] != null)
-																					<span class="label label-danger label-sm">
-																			        Rejected
-																					</span>
-																			    @elseif($res['taken_at'] != null)
-																					<span class="label label-sm" style="background-color:#28a745;">
-																			        Taken
-																					</span>
-																			    @elseif($res['ready_at'] != null)
-																					<span class="label label-success label-sm">
-																			        Ready
-																					</span>
-																			    @elseif($res['receive_at'] != null)
-																					<span class="label label-info label-sm">
-																			        Accepted
-																					</span>
-																			    @else
-																					<span class="label label-sm" style="background-color: #95A5A6">
-																			        Pending
-																					</span>
-																			    @endif
+																				@if(!empty($res['reject_at']))
+																					<span class="badge" style="background-color: #EF1E31">Reject : {{$res['reject_reason']}}</span>
+																				@elseif(!empty($res['taken_by_system_at']))
+																					<span class="badge bg-green-jungle">Taken by System</span>
+																				@elseif(!empty($res['taken_at']) && $res['pickup_by'] == 'Customer')
+																					<span class="badge bg-green-jungle">Taken by Customer</span>
+																				@elseif(!empty($res['taken_at']) && $res['pickup_by'] != 'Customer')
+																					<span class="badge bg-green-jungle">Taken by Driver</span>
+																				@elseif(!empty($res['ready_at']) && empty($res['taken_at']))
+																					<span class="badge" style="background-color: #7DB8B2">Ready</span>
+																				@elseif(!empty($res['receive_at']) && empty($res['ready_at']))
+																					<span class="badge" style="background-color: #006451">Received</span>
+																				@elseif(empty($res['receive_at']))
+																					<span class="badge" style="background-color: #FD6437">Pending</span>
+																				@endif
 																			</td>
 																			<td>
 																				<a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail/'.$res['id_transaction'].'/'.$res['trasaction_type']) }}"><i class="icon-pencil"></i> Detail </a>
@@ -755,6 +749,7 @@
 																	  <th>Receipt Number</th>
 																	  <th>Total Price</th>
 																	  <th>Payment Status</th>
+																	  <th>Order Status</th>
 																	  <th>Actions</th>
 																  </tr>
 																</thead>
@@ -763,7 +758,7 @@
 																		<tr>
 																			<td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
 																			<td>{{ $res['outlet_name']['outlet_name'] }}</td>
-																			<td>{{ $res['trasaction_type'] }}</td>
+																			<td><span class="badge bg-{{$res['transaction_pickup']['pickup_by'] == 'Customer' ? 'green-jungle':'blue'}}">{{$res['transaction_pickup']['pickup_by'] == 'Customer' ? 'Pickup Order':'Delivery'}}</span></td>
 																			<td>{{ $res['transaction_receipt_number'] }}</td>
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
 																			<td>
@@ -783,6 +778,23 @@
 																					<span class="label label-primary label-sm">
 																						{{$res['transaction_payment_status']}}
 																					</span>
+																				@endif
+																			</td>
+																			<td>
+																				@if(!empty($res['transaction_pickup']['reject_at']))
+																					<span class="badge" style="background-color: #EF1E31">Reject : {{$res['transaction_pickup']['reject_reason']}}</span>
+																				@elseif(!empty($res['transaction_pickup']['taken_by_system_at']))
+																					<span class="badge bg-green-jungle">Taken by System</span>
+																				@elseif(!empty($res['transaction_pickup']['taken_at']) && $res['transaction_pickup']['pickup_by'] == 'Customer')
+																					<span class="badge bg-green-jungle">Taken by Customer</span>
+																				@elseif(!empty($res['transaction_pickup']['taken_at']) && $res['transaction_pickup']['pickup_by'] != 'Customer')
+																					<span class="badge bg-green-jungle">Taken by Driver</span>
+																				@elseif(!empty($res['transaction_pickup']['ready_at']) && empty($res['transaction_pickup']['taken_at']))
+																					<span class="badge" style="background-color: #7DB8B2">Ready</span>
+																				@elseif(!empty($res['transaction_pickup']['receive_at']) && empty($res['transaction_pickup']['ready_at']))
+																					<span class="badge" style="background-color: #006451">Received</span>
+																				@elseif(empty($res['transaction_pickup']['receive_at']))
+																					<span class="badge" style="background-color: #FD6437">Pending</span>
 																				@endif
 																			</td>
 																			<td>
