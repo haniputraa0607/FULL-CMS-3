@@ -511,9 +511,11 @@ class PromoCampaignController extends Controller
     	$id_deals_encrypt = $post['id_deals'];
     	$id_promo_campaign_encrypt = $post['id_promo_campaign'];
     	$id_subscription_encrypt = $post['id_subscription'];
+    	$id_deals_promotion_encrypt = $post['id_deals_promotion_template'];
     	$post['id_deals'] = MyHelper::explodeSlug($id_deals_encrypt)[0] ?? null;
     	$post['id_promo_campaign'] = MyHelper::explodeSlug($id_promo_campaign_encrypt)[0] ?? null;
     	$post['id_subscription'] = MyHelper::explodeSlug($id_subscription_encrypt)[0] ?? null;
+    	$post['id_deals_promotion_template'] = MyHelper::explodeSlug($id_deals_promotion_encrypt)[0] ?? null;
 
     	$action = MyHelper::post('promo-campaign/promo-description', $post);
 

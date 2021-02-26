@@ -659,9 +659,11 @@
                 <li>
                     <a href="#participate" data-toggle="tab"> Participate </a>
                 </li>
-                <li>
-                    <a href="#promo-description" data-toggle="tab"> Promo Description </a>
-                </li>
+                @if ($deals_type != 'promotion-deals')
+	                <li>
+	                    <a href="#promo-description" data-toggle="tab"> Promo Description </a>
+	                </li>
+                @endif
 
             </ul>
         </div>
