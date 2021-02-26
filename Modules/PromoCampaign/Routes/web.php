@@ -29,6 +29,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:93'], 
     Route::post('export-code', ['uses' => 'PromoCampaignController@exportPromoCode']);
     Route::any('export-action/{action}/{id}', [ 'uses' => 'PromoCampaignController@actionExport']);
     Route::post('extend-period', 'PromoCampaignController@extendPeriod');
+    Route::post('promo-description', 'PromoCampaignController@updatePromoDescription');
     
     Route::any('step1/{slug}', 'PromoCampaignController@step1');
     Route::any('step2/{slug}', 'PromoCampaignController@step2');
