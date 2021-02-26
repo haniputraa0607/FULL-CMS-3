@@ -18,6 +18,10 @@ $grantedFeature     = session('granted_features');
 				$data_promo = $subscription;
 				break;
 
+			case 'deals_promotion':
+				$data_promo = $deals;
+				break;
+
 			default:
 				$data_promo = [];
 				break;
@@ -55,6 +59,7 @@ $grantedFeature     = session('granted_features');
 									<input type="hidden" value="{{ $data_promo['id_deals'] ?? null }}" name="id_deals" />
 				                    <input type="hidden" value="{{ $data_promo['id_promo_campaign'] ?? null }}" name="id_promo_campaign" />
 				                    <input type="hidden" value="{{ $data_promo['id_subscription'] ?? null }}" name="id_subscription" />
+				                    <input type="hidden" value="{{ $data_promo['id_deals_promotion_template'] ?? null }}" name="id_deals_promotion_template" />
 								</div>
 							</div>
 			                <button type="submit" class="btn green">update</button>

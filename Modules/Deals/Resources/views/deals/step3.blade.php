@@ -390,7 +390,7 @@
                     }
                 };
             })
-            @if(($conditions[0][0]['operator']??false)=="WHERE IN")
+            @if( ($conditions[0][0]['operator']??false)=="WHERE IN")
                 var collapsed=false;
             @else
                 var collapsed=true;
