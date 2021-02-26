@@ -7,6 +7,7 @@ $grantedFeature     = session('granted_features');
 @include('subscription::detail-info-content')
 @include('subscription::participate')
 @include('promocampaign::template.promo-extend-period', ['promo_source' => 'subscription'])
+@include('promocampaign::template.promo-description', ['promo_source' => 'subscription'])
 @extends('layouts.main-closed')
 
 @section('page-style')
@@ -537,6 +538,7 @@ $grantedFeature     = session('granted_features');
 
     @yield('child-script')
     @yield('extend-period-script')
+    @yield('promo-description-script')
 @endsection
 
 @section('content')
@@ -630,6 +632,9 @@ $grantedFeature     = session('granted_features');
                 </li>
                 <li>
                     <a href="#participate" data-toggle="tab"> Participate </a>
+                </li>
+                <li class="">
+                    <a href="#promo-description" data-toggle="tab"> Promo Description </a>
                 </li>
             </ul>
         </div>
@@ -732,6 +737,9 @@ $grantedFeature     = session('granted_features');
                 <div class="tab-pane" id="participate">
                 	<input type="hidden" name="id_subscription" value="{{ $subscription['id_subscription']??'' }}">
                     @yield('participate')
+                </div>
+                <div class="tab-pane" id="promo-description">
+                    @yield('promo-description')
                 </div>
             </div>
         </div>

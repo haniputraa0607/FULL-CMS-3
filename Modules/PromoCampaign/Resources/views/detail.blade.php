@@ -8,6 +8,7 @@
 @include('promocampaign::report')
 @include('promocampaign::coupon')
 @include('promocampaign::template.promo-extend-period', ['promo_source' => 'promo_campaign'])
+@include('promocampaign::template.promo-description', ['promo_source' => 'promo_campaign'])
 @section('page-style')
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
@@ -214,6 +215,7 @@
     @yield('more_script')
     @yield('more_script2')
     @yield('extend-period-script')
+    @yield('promo-description-script')
 @endsection
 
 @section('content')
@@ -307,6 +309,9 @@
                     </li>
                     <li class="">
                         <a href="#detail-information" data-toggle="tab"> Detail Information </a>
+                    </li>
+                    <li class="">
+                        <a href="#promo-description" data-toggle="tab"> Promo Description </a>
                     </li>
             		@yield('extend-period-form')
                 </ul>
@@ -1009,6 +1014,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="tab-pane" id="promo-description">
+                    @yield('promo-description')
                 </div>
             </div>
 
