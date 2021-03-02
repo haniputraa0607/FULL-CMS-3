@@ -399,11 +399,28 @@
                     if(!isset($bg[$data['transaction_status']])){
                         $html = '<div class="kotak-full" style="background-color: #ffffff;padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
                     }else{
-                        $html = '<div class="kotak-full" style="background-color: '.$bg[$data['transaction_status']].';padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
+                        $data['transaction_status_text'] = str_replace('PESANAN', 'ORDER', $data['transaction_status_text']);
+                        if(isset($data['detail']['reject_reason'])){
+                            switch($data['detail']['reject_reason']){
+                                case 'auto reject order by system [no driver]':
+                                    $data['transaction_status_text'] = $data['transaction_status_text'].' OTOMATIS<br>GAGAL MENEMUKAN DRIVER';
+                                break;
+                                case 'auto reject order by system':
+                                    $data['transaction_status_text'] = $data['transaction_status_text'].' OTOMATIS<br>OUTLET GAGAL MENERIMA ORDER';
+                                break;
+                                case 'auto reject order by system [not ready]':
+                                    $data['transaction_status_text'] = $data['transaction_status_text'].' OTOMATIS<br>STATUS ORDER TIDAK DIPROSES READY';
+                                break;
+                                default:
+                                    $data['transaction_status_text'] = $data['transaction_status_text'].'<br>'.strtoupper($data['detail']['reject_reason']);
+                                break;
+                            }
+                        }
+                        $html = '<div class="kotak-full" style="background-color: '.$bg[$data['transaction_status']].';padding: 20px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
                     }
 
                     $html .= '<div class="row text-center">';
-                    $html .= '<div class="col-12 text-16-7px WorkSans-Bold" style="color: #ffffff"><b>'.$data['transaction_status_text'].'</b></div>';
+                    $html .= '<div class="col-12 text-16-7px WorkSans" style="color: #ffffff"><b>'.$data['transaction_status_text'].'</b></div>';
                     $html .= '</div>';
                     $html .= '</div>';
 
@@ -420,7 +437,7 @@
                     </div>
 
                     @if(isset($data['detail']['order_id_qrcode']))
-                        <div class="col-12 WorkSans-Bold text-14px space-text text-black-grey-light">Kode Pickup Anda</div>
+                        <div class="col-12 WorkSans-Bold text-14px space-text text-black-grey-light">Kode Pickup</div>
 
                         <div style="width: 135px;height: 135px;margin: 0 auto;" data-toggle="modal" data-target="#exampleModal">
                             <div class="col-12 text-14-3px space-top"><img class="img-responsive" style="display: block; max-width: 100%; padding-top: 10px" src="{{ $data['detail']['order_id_qrcode'] }}"></div>
@@ -430,7 +447,7 @@
                 </div>
             </div>
         </div>
-        @if(isset($data['detail']['order_id_qrcode']))
+        
             <div class="kotak-biasa" style="background-color: #FFFFFF;box-shadow: 0 0.7px 3.3px #eeeeee;">
                 <div class="container" style="padding: 10px;margin-top: 10px;">
                     <div class="text-center">
@@ -442,6 +459,7 @@
                             {{$data['user']['phone']??''}}<br>
                             {{$data['user']['email']??''}}
                         </div>
+                        @if($data['trasaction_type'] != 'Delivery')
                         <div class="col-12 text-13px space-text text-medium-grey WorkSans-Regular">
                             @if ($data['detail']['pickup_type'] == 'set time')
                                 Pesanan Anda akan siap pada
@@ -449,11 +467,13 @@
                                 Pesanan Anda akan diproses pada
                             @endif
                         </div>
+                        @endif
                         <div class="col-12 text-13-3px" style="padding-bottom: 25px;color: #000000">{{ date('d', strtotime($data['transaction_date'])) }} {{ $bulan[date('n', strtotime($data['transaction_date']))] }} {{ date('Y', strtotime($data['transaction_date'])) }}</div>
-                        @if(isset($data['delivery_info']))
+                        @if($data['trasaction_type'] == 'Delivery')
                             <div class="col-12 text-14px"><b>DELIVERY</b></div>
                             <div class="col-12 text-12px WorkSans-Regular" style="color: #707070;">
-                                @if(isset($data['delivery_info']['delivery_address'])) {{ $data['delivery_info']['delivery_address'] }} @endif
+                                @if(isset($data['delivery_info_be']['delivery_address'])) {{ $data['delivery_info_be']['delivery_address'] }} @endif
+                                @if(isset($data['delivery_info_be']['delivery_address_note']))<br>Catatan: {{ $data['delivery_info_be']['delivery_address_note'] }} @endif
                             </div>
                         @else
                             <div class="col-12 text-14px"><b>PICK UP</b></div>
@@ -470,7 +490,6 @@
                     </div>
                 </div>
             </div>
-        @endif
 
         @if($data['trasaction_type'] == 'Delivery')
         <div class="kotak-biasa" style="background-color: #FFFFFF;padding: 15px;margin-top: 10px;box-shadow: 0 0.7px 3.3px #eeeeee;">
