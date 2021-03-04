@@ -31,6 +31,10 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
 
     <script>
+        $(document).ready(function() {
+            $('#data_list').DataTable({ordering: false, "lengthChange": false, "pageLength": 30});
+        });
+
         function changeFilterType(value) {
             $('#select-outlet').val('').trigger('change');
             if(value == 'Outlets'){
@@ -130,6 +134,7 @@
                             </div>
                             <div class="col-md-6">
                                 <select  class="form-control select2 select2-multiple-product"  multiple data-placeholder="Outlets"  id="select-outlet" name="outlets[]">
+                                    <option value="all" @if($detail['is_all_outlet'] == 1) selected @endif>All Outlet</option>
                                     @foreach($outlets as $outlet)
                                         <option value="{{$outlet['id_outlet']}}" @if(in_array($outlet['id_outlet'], $outlets_selected)) selected @endif>{{$outlet['outlet_code']}} - {{$outlet['outlet_name']}}</option>
                                     @endforeach
@@ -155,7 +160,7 @@
                 <br>
                 <div style="text-align: center"><h3>List Outlet Preview</h3></div>
                 <hr style="border-top: 2px dashed;">
-                <table class="table table-striped table-bordered table-hover dt-responsive">
+                <table class="table table-striped table-bordered table-hover dt-responsive" id="data_list">
                     <thead>
                     <tr>
                         <th> No </th>
