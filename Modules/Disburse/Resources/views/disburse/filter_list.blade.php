@@ -33,6 +33,7 @@
             operator_value.options[operator_value.options.length] = new Option('Queued', 'Queued');
             operator_value.options[operator_value.options.length] = new Option('Processed', 'Processed');
             operator_value.options[operator_value.options.length] = new Option('Fail', 'Fail');
+            operator_value.options[operator_value.options.length] = new Option('Failed Create Payouts', 'Failed Create Payouts');
             operator_value.options[operator_value.options.length] = new Option('Rejected', 'Rejected');
             operator_value.options[operator_value.options.length] = new Option('Approved', 'Approved');
             operator_value.options[operator_value.options.length] = new Option('Retry From Failed', 'Retry From Failed');
@@ -152,6 +153,7 @@
                                                         <option value="Queued" @if ($con['operator']  == 'Queued') selected @endif>Queued</option>
                                                         <option value="Processed" @if ($con['operator']  == 'Processed') selected @endif>Processed</option>
                                                         <option value="Fail" @if ($con['operator']  == 'Fail') selected @endif>Fail</option>
+                                                        <option value="Failed Create Payouts" @if ($con['operator']  == 'Failed Create Payouts') selected @endif>Fail</option>
                                                         <option value="Rejected" @if ($con['operator']  == 'Rejected') selected @endif>Rejected</option>
                                                         <option value="Approved" @if ($con['operator']  == 'Approved') selected @endif>Approved</option>
                                                         <option value="Approved" @if ($con['operator']  == 'Retry From Failed') selected @endif>Retry From Failed</option>
