@@ -75,10 +75,10 @@
 	<div class="row">
 		<div class="col-md-3">
 			<div class="col-md-6 text-center">
-				<label>Min. Qty <span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk X minimal untuk mendapatkan diskon produk Y" data-container="body"></i></label>
+				<label>Min. Qty <span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal produk X agar diskon dapat berlaku pada produk Y" data-container="body"></i></label>
 			</div>
 			<div class="col-md-6 text-center">
-				<label>Max. Qty <span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk X maksimal untuk mendapatkan diskon produk Y" data-container="body"></i></label>
+				<label>Max. Qty <span class="required" aria-required="true"> * </span><i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal produk X agar diskon dapat berlaku pada produk Y" data-container="body"></i></label>
 			</div>
 		</div>
 		<div class="col-md-9">

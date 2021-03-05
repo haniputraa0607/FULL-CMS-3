@@ -602,7 +602,7 @@
 						</div>
 						<div id="singleCode">
 							<div class="form-group">
-								<label class="control-label">Promo Code</label>
+								<label class="control-label">Promo Code (Max 15 characters)</label>
 								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Kode promo yang dibuat" data-container="body"></i>
 								<div class="input-group col-md-12">
