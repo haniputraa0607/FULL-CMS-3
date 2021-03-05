@@ -660,7 +660,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group">
-                                    <input type="text" id="field_post_date" class="datepicker form-control" name="news_post_date" value="{{ old('news_post_date') }}" style="background-color:#fff" required>
+                                    <input type="text" id="field_post_date" class="datepicker form-control" name="news_post_date" value="{{ old('news_post_date') }}" style="background-color:#fff" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -712,7 +712,7 @@
                             <label class="col-md-3 control-label"> </label>
                             <div class="col-md-4">
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control field_publish_date" name="news_publish_date" value="{{ old('news_publish_date') }}" required>
+                                    <input type="text" class="datepicker form-control field_publish_date" name="news_publish_date" value="{{ old('news_publish_date') }}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -722,7 +722,7 @@
                             </div>
                             <div class="col-md-4 always">
                                 <div class="input-group">
-                                    <input type="text" class="datepicker form-control always field_publish_date" name="news_expired_date" value="{{ old('news_expired_date') }}">
+                                    <input type="text" class="datepicker form-control always field_publish_date" name="news_expired_date" value="{{ old('news_expired_date') }}" autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -888,7 +888,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="input-group">
-                                        <input type="text" id="field_event_date_start" class="datepicker form-control featureDateForm field_event" name="news_event_date_start" value="{{ old('news_event_date_start') }}" style="background-color:#fff" readonly>
+                                        <input type="text" id="field_event_date_start" class="datepicker form-control featureDateForm field_event" name="news_event_date_start" value="{{ old('news_event_date_start') }}" style="background-color:#fff" readonly autocomplete="off">
                                         <span class="input-group-btn">
                                             <button class="btn default" type="button">
                                                 <i class="fa fa-calendar"></i>
@@ -907,7 +907,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="input-group">
-                                        <input type="text" id="field_event_date_end" class="datepicker form-control featureDateForm field_event" name="news_event_date_end" value="{{ old('news_event_date_end') }}" style="background-color:#fff" readonly>
+                                        <input type="text" id="field_event_date_end" class="datepicker form-control featureDateForm field_event" name="news_event_date_end" value="{{ old('news_event_date_end') }}" style="background-color:#fff" readonly autocomplete="off">
                                         <span class="input-group-btn">
                                             <button class="btn default" type="button">
                                                 <i class="fa fa-calendar"></i>
@@ -1240,7 +1240,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="input-group">
-                                            <input type="text" class="datepicker form-control featureFormForm field_event" name="news_button_form_expired" value="@if(!empty(old('news_button_form_expired'))){{ date('d-M-Y',strtotime(old('news_button_form_expired'))) }}@endif">
+                                            <input type="text" class="datepicker form-control featureFormForm field_event" name="news_button_form_expired" value="@if(!empty(old('news_button_form_expired'))){{ date('d-M-Y',strtotime(old('news_button_form_expired'))) }}@endif" autocomplete="off">
                                             <span class="input-group-btn">
                                                 <button class="btn default" type="button">
                                                     <i class="fa fa-calendar"></i>
