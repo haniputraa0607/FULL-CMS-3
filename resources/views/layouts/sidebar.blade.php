@@ -669,6 +669,16 @@
 									<span class="title">Product Plastic Update Stock</span>
 								</a>
 							</li>
+							<li class="nav-item {{($submenu_active  == 'product-plastic-use-product') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/use/product')}}" class="nav-link ">
+									<span class="title">Use Plastic Product</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active  == 'product-plastic-use-product-variant') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/use/product-variant')}}" class="nav-link ">
+									<span class="title">Use Plastic Product Variant</span>
+								</a>
+							</li>
 							<li class="nav-item {{($submenu_active == 'product-plastic-import-price') ? 'active open' : ''}}">
 								<a href="{{url('product-plastic/import-price')}}" class="nav-link ">
 									<span class="title">Export & Import Product Plastic Price</span>
