@@ -445,4 +445,155 @@ class ProductPlasticController extends Controller
 
         return view('plastic::stock_outlet', $data);
     }
+
+    public function usePlastiProduct(Request $request){
+        $post = $request->except('_token');
+
+        $page = $post['page']??1;
+        $data = [
+            'title'          => 'Product Plastic',
+            'sub_title'      => 'Use Plastic Product',
+            'menu_active'    => 'product-plastic',
+            'submenu_active' => 'product-plastic-use-product',
+            'filter_title'   => 'Filter Use Plastic Product'
+        ];
+
+
+        if(isset($post['total_use_plastic']) && !empty($post['total_use_plastic'])){
+            if(isset($post['sameall']) && !empty($post['sameall'])){
+                $dataToUpdate = [
+                    'plastic_used'  => $post['total_use_plastic'][0],
+                    'sameall'            => 1
+                ];
+                $update = MyHelper::post('product-plastic/update-use-plastic-product', $dataToUpdate);
+
+                if (isset($update['status']) && $update['status'] == 'success') {
+                    return redirect('product-plastic/use/product')->withSuccess(['Success update use plastic product']);
+                } else {
+                    return back()->witherrors([$update['messages']]);
+                }
+            }else{
+                foreach ($post['total_use_plastic'] as $key => $value) {
+                    $data = [
+                        'id_product'    => $post['id_product'][$key],
+                        'plastic_used'  => $post['total_use_plastic'][$key]
+                    ];
+                    $save = MyHelper::post('product-plastic/update-use-plastic-product', $data);
+                    if (isset($save['status']) && $save['status'] != "success") {
+                        return back()->witherrors(['Use plastic product failed to update']);
+                    }
+                }
+
+                if (isset($save['status']) && $save['status'] == 'success') {
+                    return redirect('product-plastic/use/product')->withSuccess(['Success update use plastic product']);
+                }
+            }
+        }
+
+
+        if ($post['rule'] ?? false) {
+            session(['use_plastic_product' => $post]);
+        }
+        if ($post['clear'] ?? false) {
+            session(['use_plastic_product' => null]);
+            return redirect('product-plastic/use/product');
+        }
+
+        if (session('use_plastic_product')) {
+            $post             = session('use_plastic_product');
+            $data['rule']     = array_map('array_values', $post['rule']);
+            $data['operator'] = $post['operator'];
+            $post['page'] = $page;
+        } else {
+            $post = [];
+        }
+
+        $product = MyHelper::post('product-plastic/list-use-plastic-product?page='.$page, $post);
+        if (isset($product['status']) && $product['status'] == 'success') {
+            $data['product'] = $product['result']['data'];
+            $data['total'] = $product['result']['total'];
+            $data['paginator'] = new LengthAwarePaginator($product['result']['data'], $product['result']['total'], $product['result']['per_page'], $product['result']['current_page'], ['path' => url()->current()]);
+        } elseif (isset($product['status']) && $product['status'] == 'fail') {
+            $data['product'] = [];
+            $data['total'] = 0;
+        }
+
+        return view('plastic::use_plastic_product', $data);
+    }
+
+    public function usePlastiProductVariant(Request $request){
+        $post = $request->except('_token');
+
+        $page = $post['page']??1;
+        $data = [
+            'title'          => 'Product Plastic',
+            'sub_title'      => 'Use Plastic Product Variant',
+            'menu_active'    => 'product-plastic',
+            'submenu_active' => 'product-plastic-use-product-variant',
+            'filter_title'   => 'Filter Use Plastic Product Variant'
+        ];
+
+
+        if(isset($post['total_use_plastic']) && !empty($post['total_use_plastic'])){
+            if(isset($post['sameall']) && !empty($post['sameall'])){
+                $dataToUpdate = [
+                    'product_variant_groups_plastic_used'  => $post['total_use_plastic'][0],
+                    'sameall'            => 1
+                ];
+                $update = MyHelper::post('product-plastic/update-use-plastic-product-variant', $dataToUpdate);
+
+                if (isset($update['status']) && $update['status'] == 'success') {
+                    return redirect('product-plastic/use/product-variant')->withSuccess(['Success update use plastic product variant']);
+                } else {
+                    return back()->witherrors([$update['messages']]);
+                }
+            }else{
+                foreach ($post['total_use_plastic'] as $key => $value) {
+                    $data = [
+                        'id_product_variant_group'    => $post['id_product_variant_group'][$key],
+                        'product_variant_groups_plastic_used'  => $post['total_use_plastic'][$key]
+                    ];
+                    $save = MyHelper::post('product-plastic/update-use-plastic-product-variant', $data);
+                    if (isset($save['status']) && $save['status'] != "success") {
+                        return back()->witherrors(['Use plastic product variant failed to update']);
+                    }
+                }
+
+                if (isset($save['status']) && $save['status'] == 'success') {
+                    return redirect('product-plastic/use/product-variant')->withSuccess(['Success update use plastic product variant']);
+                }
+            }
+        }
+
+
+        if ($post['rule'] ?? false) {
+            session(['use_plastic_product_variant' => $post]);
+        }
+        if ($post['clear'] ?? false) {
+            session(['use_plastic_product_variant' => null]);
+            return redirect('product-plastic/use/product-variant');
+        }
+
+        if (session('use_plastic_product_variant')) {
+            $post             = session('use_plastic_product_variant');
+            $data['rule']     = array_map('array_values', $post['rule']);
+            $data['operator'] = $post['operator'];
+            $post['page'] = $page;
+        } else {
+            $post = [];
+        }
+
+        $product = MyHelper::post('product-plastic/list-use-plastic-product-variant?page='.$page, $post);
+
+        if (isset($product['status']) && $product['status'] == 'success') {
+            $data['product'] = $product['result']['data'];
+            $data['total'] = $product['result']['total'];
+            $data['paginator'] = new LengthAwarePaginator($product['result']['data'], $product['result']['total'], $product['result']['per_page'], $product['result']['current_page'], ['path' => url()->current()]);
+        } elseif (isset($product['status']) && $product['status'] == 'fail') {
+            $data['product'] = [];
+            $data['total'] = 0;
+        }
+
+        return view('plastic::use_plastic_product_variant', $data);
+    }
 }
