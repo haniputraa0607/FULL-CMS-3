@@ -44,6 +44,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
 {
     Route::get('/setting/cashback', 'TransactionSettingController@list');
     Route::post('/setting/cashback/update', 'TransactionSettingController@update');
+    Route::get('/setting/cashback-calculation', 'TransactionSettingController@cashbackCalculation');
+    Route::post('/setting/cashback-calculation', 'TransactionSettingController@cashbackCalculationUpdate');
     Route::any('/setting/free-delivery', 'TransactionController@freeDelivery');
     Route::any('/setting/go-send-package-detail', 'TransactionController@goSendPackageDetail');
     Route::get('/setting/available-payment', 'TransactionController@availablePayment');
