@@ -74,8 +74,8 @@ class TransactionSettingController extends Controller
             'refund_ipay88' => ['value', $request->refund_ipay88?1:0],
             'refund_shopeepay' => ['value', $request->refund_shopeepay?1:0],
         ];
-        $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
-        if ($data['status']??false == 'success') {
+        $data = MyHelper::post('setting/update2', ['update' => $sendData]);
+        if (($data['status']??false) == 'success') {
             return back()->withSuccess(['Success update']);
         } else{
             return back()->withErrors(['Update failed']);
@@ -101,12 +101,40 @@ class TransactionSettingController extends Controller
         $sendData = [
             'auto_reject_time' => ['value', $request->auto_reject_time?:15]
         ];
-        $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
-        if ($data['status']??false == 'success') {
+        $data = MyHelper::post('setting/update2', ['update' => $sendData]);
+        if (($data['status']??false) == 'success') {
             return back()->withSuccess(['Success update']);
         } else{
             return back()->withErrors(['Update failed']);
         }
     }
 
+    public function cashbackCalculation(Request $request)
+    {
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Cashback Calculation',
+            'submenu_active' => 'setting-cashback-calculation'
+        ];
+
+        $data['status'] = [
+            'cashback_include_bundling' => MyHelper::post('setting', ['key' => 'cashback_include_bundling'])['result']['value']??0,
+        ];
+
+        return view('transaction::setting.cashback_calculation', $data);
+    }
+
+    public function cashbackCalculationUpdate(Request $request)
+    {
+        $sendData = [
+            'cashback_include_bundling' => ['value', $request->cashback_include_bundling?:0]
+        ];
+        $data = MyHelper::post('setting/update2', ['update' => $sendData]);
+        if (($data['status']??false) == 'success') {
+            return back()->withSuccess(['Success update']);
+        } else{
+            return back()->withErrors(['Update failed']);
+        }
+    }
 }

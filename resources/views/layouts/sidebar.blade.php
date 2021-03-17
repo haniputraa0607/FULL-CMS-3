@@ -1070,6 +1070,11 @@
 							<span class="title">Calculation Rule</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'setting-cashback-calculation') ? 'active open' : ''}}">
+						<a href="{{url('transaction/setting/cashback-calculation')}}" class="nav-link ">
+							<span class="title">Cashback Calculation Rule</span>
+						</a>
+					</li>
 					@endif
 					@if(MyHelper::hasAccess([13], $configs))
 						@if(MyHelper::hasAccess([14], $configs))
