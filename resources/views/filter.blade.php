@@ -78,6 +78,12 @@ $show=$show??false;
 				'<option value="register_date">Register Date</option>'+
 				'<option value="register_today">Register Today</option>'+
 				'</optgroup>'+
+				'<optgroup label="CRM">'+
+				'<option value="r_quartile">r_quartile</option>'+
+				'<option value="f_quartile">f_quartile</option>'+
+				'<option value="m_quartile">m_quartile</option>'+
+				'<option value="RFMScore">RFMScore</option>'+
+				'</optgroup>'+
 				'<optgroup label="Transaction">'+
 				'<option value="trx_type">Transaction Type</option>'+
 				'<option value="trx_outlet">Transaction Outlet</option>'+
@@ -268,6 +274,12 @@ $show=$show??false;
 				'<option value="register_date">Register Date</option>'+
 				'<option value="register_today">Register Today</option>'+
 				'</optgroup>'+
+				'<optgroup label="CRM">'+
+				'<option value="r_quartile">r_quartile</option>'+
+				'<option value="f_quartile">f_quartile</option>'+
+				'<option value="m_quartile">m_quartile</option>'+
+				'<option value="RFMScore">RFMScore</option>'+
+				'</optgroup>'+
 				'<optgroup label="Transaction">'+
 				'<option value="trx_type">Transaction Type</option>'+
 				'<option value="trx_outlet">Transaction Outlet</option>'+
@@ -424,7 +436,8 @@ $show=$show??false;
 			$('[name="'+operator+'"]').closest('.input-group').show()
 		}
 
-		if(subject_value == 'name' || subject_value == 'email' || subject_value == 'phone'){
+		if(subject_value == 'name' || subject_value == 'email' || subject_value == 'phone' ||
+				subject_value == 'r_quartile' || subject_value == 'f_quartile' || subject_value == 'm_quartile' || subject_value == 'RFMScore'){
 			var operator = "conditions["+index+"][operator]";
 
 			var operator_value = document.getElementsByName(operator)[0];
@@ -1107,6 +1120,12 @@ $show=$show??false;
 														<option value="register_date">Register Date</option>
 														<option value="register_today">Register Today</option>
 													</optgroup>
+													<optgroup label="CRM">
+														<option value="r_quartile">r_quartile</option>
+														<option value="f_quartile">f_quartile</option>
+														<option value="m_quartile">m_quartile</option>
+														<option value="RFMScore">RFMScore</option>
+													</optgroup>
 													<optgroup label="Transaction">
 														<option value="trx_type">Transaction Type</option>
 														<option value="trx_outlet">Transaction Outlet</option>
@@ -1331,6 +1350,12 @@ $show=$show??false;
 																	<option value="register_date" @if($row['subject'] == 'register_date') selected @endif>Register Date</option>
 																	<option value="register_today" @if($row['subject'] == 'register_today') selected @endif>Register Today</option>
 																</optgroup>
+																<optgroup label="CRM">
+																	<option value="r_quartile" @if($row['subject'] == 'r_quartile') selected @endif>r_quartile</option>
+																	<option value="f_quartile" @if($row['subject'] == 'f_quartile') selected @endif>f_quartile</option>
+																	<option value="m_quartile" @if($row['subject'] == 'm_quartile') selected @endif>m_quartile</option>
+																	<option value="RFMScore" @if($row['subject'] == 'RFMScore') selected @endif>RFMScore</option>
+																</optgroup>
 																<optgroup label="Transaction">
 																	<option value="trx_type" @if($row['subject'] == 'trx_type') selected @endif>Transaction Type</option>
 																	<option value="trx_outlet" @if($row['subject'] == 'trx_outlet') selected @endif>Transaction Outlet</option>
@@ -1367,7 +1392,8 @@ $show=$show??false;
 													$display_special_condition = 'none';
 													$display_normal_condition = 'block';
 
-													if($row['subject'] == 'name' || $row['subject'] == 'email' || $row['subject'] == 'phone' || $row['subject'] == 'all_user'){
+													if($row['subject'] == 'name' || $row['subject'] == 'email' || $row['subject'] == 'phone' || $row['subject'] == 'all_user' ||
+														$row['subject'] == 'r_quartile' || $row['subject'] == 'f_quartile' || $row['subject'] == 'm_quartile' || $row['subject'] == 'RFMScore'){
 														$operator .= '<option value="="'.($row['operator'] == '=' ? 'selected' : '').'>=</option>';
 														$operator .= '<option value="like"'.($row['operator'] == 'like' ? 'selected' : '').'>Like</option>';
 														$parameter .= '<input type="text" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]" value="'.$row['parameter'].'" '.($row['subject'] != 'all_user' ? 'required' : '').' required/>';
