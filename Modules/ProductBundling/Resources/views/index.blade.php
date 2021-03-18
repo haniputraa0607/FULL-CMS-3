@@ -149,6 +149,7 @@
                         <option value="bundling_price_after_discount" @if($order_field == 'bundling_price_after_discount') selected @endif>Price After Discount</option>
                         <option value="start_date" @if($order_field == 'start_date') selected @endif>Start Date</option>
                         <option value="end_date" @if($order_field == 'end_date') selected @endif>End Date</option>
+                        <option value="created_at" @if($order_field == 'created_at') selected @endif>Created Date</option>
                     </select>
                 </div>
                 <div class="col-md-2" style="padding-left:0px;padding-right:0px">

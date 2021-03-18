@@ -561,4 +561,46 @@ class NewsController extends Controller
 
         return view('news::form_data', $data);
     }
+
+    public function positionAssign() {
+        $data = [
+            'title'          => 'Manage News',
+            'sub_title'      => 'Assign News',
+            'menu_active'    => 'news',
+            'submenu_active' => 'news-manage-position'
+        ];
+
+        $catParent = MyHelper::post('news/be/category', ['admin' => '1']);
+        if (isset($catParent['status']) && $catParent['status'] == "success") {
+            $data['category'] = $catParent['result'];
+        }
+        else {
+            $data['category'] = [];
+        }
+
+        $news = MyHelper::get('news/position/list');
+
+        if (isset($news['status']) && $news['status'] == "success") {
+            $data['news'] = $news['result'];
+        }
+        else {
+            $data['news'] = [];
+        }
+
+        return view('news::position', $data);
+    }
+
+    public function updatePositionAssign(Request $request)
+    {
+        $post = $request->except('_token');
+        if (!isset($post['news_ids'])) {
+            return [
+                'status' => 'fail',
+                'messages' => ['News id is required']
+            ];
+        }
+        $result = MyHelper::post('news/position/assign', $post);
+
+        return $result;
+    }
 }

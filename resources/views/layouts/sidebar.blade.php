@@ -288,6 +288,13 @@
 							</a>
 						</li>
 						@endif
+						@if(MyHelper::hasAccess([22,166], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'news-manage-position') ? 'active open' : ''}}">
+								<a href="{{url('news/position/assign')}}" class="nav-link ">
+									<span class="title">Manage Position</span>
+								</a>
+							</li>
+						@endif
 						@if(MyHelper::hasAccess([120,122], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'news-autoresponse-create-news') ? 'active open' : ''}}">
 							<a href="{{url('autoresponse/news/create-news')}}" class="nav-link ">
