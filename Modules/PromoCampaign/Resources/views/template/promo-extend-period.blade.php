@@ -3,6 +3,7 @@
 		case 'promo_campaign':
 			$data_promo = $result;
 			$data_promo['end_period'] = $data_promo['date_end'];
+			$data_promo['start_period'] = $data_promo['date_start'];
 			$data_promo['publish_end_period'] = null;
 			$data_promo['expiry_date'] = null;
 			$data_promo['expiry_duration'] = null;
@@ -11,7 +12,9 @@
 		case 'deals':
 			$data_promo = $deals;
 			$data_promo['end_period'] = $data_promo['deals_end'];
+			$data_promo['start_period'] = $data_promo['deals_start'];
 			$data_promo['publish_end_period'] = $data_promo['deals_publish_end'];
+			$data_promo['publish_start_period'] = $data_promo['deals_publish_start'];
 			$data_promo['expiry_date'] = $data_promo['deals_voucher_expired'];
 			$data_promo['expiry_duration'] = $data_promo['deals_voucher_duration'];
 			break;
@@ -19,7 +22,9 @@
 		case 'subscription':
 			$data_promo = $subscription;
 			$data_promo['end_period'] = $data_promo['subscription_end'];
+			$data_promo['start_period'] = $data_promo['subscription_start'];
 			$data_promo['publish_end_period'] = $data_promo['subscription_publish_end'];
+			$data_promo['publish_start_period'] = $data_promo['subscription_publish_start'];
 			$data_promo['expiry_date'] = $data_promo['subscription_voucher_expired'];
 			$data_promo['expiry_duration'] = $data_promo['subscription_voucher_duration'];
 			break;
@@ -50,6 +55,21 @@
 	                    	|| (isset($data_promo['id_promo_campaign'])) 
 	                    )
 	                    <div class="form-group">
+	                        <label class="control-label"> Start Periode <span class="required" aria-required="true"> * </span> </label>
+	                        <div class="">
+	                            <div class="input-icon right">
+	                                <div class="input-group">
+	                                    <input type="text" class="extend_period_datetime form-control" name="start_period" value="{{ !empty($data_promo['start_period']) || old('start_period') ? date('d-M-Y H:i', strtotime(old('start_period')??$data_promo['start_period'])) : ''}}" required autocomplete="off">
+	                                    <span class="input-group-btn">
+	                                        <button class="btn default" type="button">
+	                                            <i class="fa fa-calendar"></i>
+	                                        </button>
+	                                    </span>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
 	                        <label class="control-label"> End Periode <span class="required" aria-required="true"> * </span> </label>
 	                        <div class="">
 	                            <div class="input-icon right">
@@ -70,6 +90,21 @@
 	                    @if ( (isset($data_promo['deals_type']) && $data_promo['deals_type'] == "Deals") 
 	                    	|| (isset($data_promo['subscription_type']) && $data_promo['subscription_type'] == "subscription")
 	                    )
+	                    <div class="form-group">
+	                        <label class="control-label"> Publish Start Periode <span class="required" aria-required="true"> * </span> </label>
+	                        <div class="">
+	                            <div class="input-icon right">
+	                                <div class="input-group">
+	                                    <input type="text" class="extend_period_datetime form-control" name="publish_start_period" value="{{ !empty($data_promo['publish_start_period']) || old('publish_start_period') ? date('d-M-Y H:i', strtotime(old('publish_start_period') ?? $data_promo['publish_start_period'])) : '' }}" required autocomplete="off">
+	                                    <span class="input-group-btn">
+	                                        <button class="btn default" type="button">
+	                                            <i class="fa fa-calendar"></i>
+	                                        </button>
+	                                    </span>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
 	                    <div class="form-group">
 	                        <label class="control-label"> Publish End Periode <span class="required" aria-required="true"> * </span> </label>
 	                        <div class="">
