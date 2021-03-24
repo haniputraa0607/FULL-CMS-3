@@ -443,6 +443,11 @@
 								<span class="title">[Response] Outlet Pin Sent</span>
 							</a>
 						</li>
+						<li class="nav-item {{($submenu_active == 'outlet-autoresponse-request-admin-user-franchise') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/outlet/request-admin-user-franchise')}}" class="nav-link ">
+								<span class="title">[Response] Request Admin User Franchise</span>
+							</a>
+						</li>
 						<li class="nav-item {{($submenu_active == 'outlet-incomplete-response') ? 'active open' : ''}}">
 							<a href="{{url('outlet/autoresponse/incomplete-outlet-data')}}" class="nav-link ">
 								<span class="title">[Forward] Incomplete Outlet Data</span>
