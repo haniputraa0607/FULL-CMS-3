@@ -185,7 +185,7 @@ $configs = session('configs');
                                                                                         <input type="hidden" name="id_content_detail[{{$key}}][]" value="0">
                                                                                     </div>
                                                                                     <div class="col-md-1">
-                                                                                        <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteDetail(<?php echo $key2+1;echo $key ?>">
+                                                                                        <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteDetail(<?php echo $key2+1;echo $key ?>)">
                                                                                             <i class="fa fa-close"></i>
                                                                                         </a>
                                                                                     </div>
