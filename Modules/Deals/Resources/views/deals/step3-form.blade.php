@@ -141,7 +141,7 @@ $configs = session('configs');
                                         </div>
                                     </div>
                                     @if( isset($deals['deals_content']) || isset($deals['deals_promotion_content']) )
-                                        @foreach(($deals['deals_content']??$deals['deals_promotion_content']) as $key => $val)
+                                        @foreach( ($deals['deals_content']??$deals['deals_promotion_content']) as $key => $val)
                                             @if($key > 1)
                                                 @php $key++ @endphp
                                                 <div class="form-group content-count bottom-border">
@@ -188,7 +188,7 @@ $configs = session('configs');
                                                                                         <input type="hidden" name="id_content_detail[{{$key}}][]" value="0">
                                                                                     </div>
                                                                                     <div class="col-md-1">
-                                                                                        <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteDetail(<?php echo $key2+1;echo $key ?>">
+                                                                                        <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteDetail(<?php echo $key2+1;echo $key ?>)">
                                                                                             <i class="fa fa-close"></i>
                                                                                         </a>
                                                                                     </div>
