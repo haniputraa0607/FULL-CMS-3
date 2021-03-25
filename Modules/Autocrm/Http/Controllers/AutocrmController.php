@@ -188,6 +188,10 @@ class AutocrmController extends Controller
 				$data['active_response'] = ['email','forward'];
 				$test['result'] = [];
 					break;
+			case 'outlet-pin-sent-user-franchise':
+				$data['active_response'] = ['email'];
+				$test['result'] = [];
+					break;
 		}
 
         $data['click_inbox'] = [
