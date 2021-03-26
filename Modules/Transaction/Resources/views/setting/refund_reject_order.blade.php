@@ -89,6 +89,22 @@
                     </select>
                 </div>
             </div>
+            <h4 style="padding-left: 20px">Failed Refund Action</h4>
+            <div class="form-group">
+                <div class="input-icon right">
+                    <label class="col-md-3 control-label">
+                        Action
+                    <span class="required" aria-required="true"> * </span>  
+                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih metode yang akan dilakukan saat void/refund pembayaran (apabila diaktifkan) gagal" data-container="body"></i>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <select class="select2 form-control" name="refund_failed_process_balance">
+                        <option value="0">Notify Admin for Manual Refund</option>
+                        <option value="1" {{$status['refund_failed_process_balance'] ? 'selected' : ''}}>Refund to {{env('POINT_NAME', 'Points')}}</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="form-actions">
             <div class="row">
