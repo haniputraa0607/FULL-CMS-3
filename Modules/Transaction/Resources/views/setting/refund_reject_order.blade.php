@@ -88,6 +88,7 @@
 
 @include('layouts.notifications')
 
+<form class="form-horizontal" action="#" method="post" id="form">
 <div class="portlet light form-fit bordered">
     <div class="portlet-title">
         <div class="caption">
@@ -96,7 +97,6 @@
         </div>
     </div>
     <div class="portlet-body form">
-        <form class="form-horizontal" action="#" method="post" id="form">
         {{ csrf_field() }}
         <div class="form-body">
             <div class="form-group">
@@ -144,7 +144,18 @@
                     </select>
                 </div>
             </div>
-            <h4 style="padding-left: 20px">Failed Refund Action</h4>
+        </div>
+    </div>
+</div>
+<div class="portlet light form-fit bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class=" icon-layers font-green"></i>
+            <span class="caption-subject font-green bold uppercase">Failed Refund Action</span>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="form-body">
             <div class="form-group">
                 <div class="input-icon right">
                     <label class="col-md-3 control-label">
@@ -234,16 +245,12 @@
                 </div>
             </div>
         </div>
-        <div class="form-actions">
-            <div class="row">
-                <div class="col-md-offset-3 col-md-10">
-                    <button class="btn green" type="submit">
-                        <i class="fa fa-check"></i> Save
-                    </button>
-                </div>
-            </div>
-        </div>
-        </form>
     </div>
 </div>
+<div class="text-center">
+    <button class="btn green" type="submit">
+        <i class="fa fa-check"></i> Save
+    </button>    
+</div>
+</form>
 @endsection
