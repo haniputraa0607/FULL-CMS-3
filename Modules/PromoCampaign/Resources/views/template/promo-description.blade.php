@@ -73,7 +73,7 @@ $grantedFeature     = session('granted_features');
 @endsection
 
 @section('promo-description-script')
-	<script type="text/javascript">
+	{{-- <script type="text/javascript">
 		$('.summernote').summernote({
 			placeholder: true,
             tabsize: 2,
@@ -87,5 +87,5 @@ $grantedFeature     = session('granted_features');
                 }
             }
 		});
-	</script>
+	</script> --}}
 @endsection
