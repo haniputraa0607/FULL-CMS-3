@@ -84,6 +84,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
         Route::any('mark-as-invalid', ['middleware' => 'feature_control:274', 'uses' => 'InvalidFlagController@markAsInvalid']);
     });
 
+    Route::get('failed-void-payment', [ 'uses' => 'TransactionController@listFailedVoidPayment']);
+    Route::get('failed-void-payment/{receipt_number}', [ 'uses' => 'TransactionController@detailFailedVoidPayment']);
+
     Route::any('/create/fake', 'TransactionController@fakeTransaction');
     Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
     Route::get('/detail/{id}/{key}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);

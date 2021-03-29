@@ -1034,6 +1034,15 @@
 			</li>
 			@endif
 
+			@if(MyHelper::hasAccess([299], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'failed-void-payment') ? 'active open' : ''}}">
+					<a href="{{url('transaction/failed-void-payment')}}" class="nav-link ">
+						<i class="fa fa-exclamation-triangle"></i>
+						<span class="title">Failed Void Payment</span>
+					</a>
+				</li>
+			@endif
+
 			@if(MyHelper::hasAccess([18], $configs))
 				@if(MyHelper::hasAccess([71], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'point') ? 'active' : ''}}">

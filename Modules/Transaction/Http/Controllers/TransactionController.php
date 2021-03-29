@@ -1776,4 +1776,31 @@ class TransactionController extends Controller
             }
         }
     }
+
+    public function listFailedVoidPayment(Request $request)
+    {
+        if ($request->wantsJson()) {
+            $data = MyHelper::post('transaction/failed-void-payment', $request->all());
+            return $data['result'];
+        }
+        $data = [
+            'title'          => 'Transaction',
+            'menu_active'    => 'failed-void-payment',
+            'sub_title'      => 'Failed Void Payment',
+            'submenu_active' => 'failed-void-payment',
+            'filter_title'   => 'Filter Transaction'
+        ];
+        return view('transaction::transaction.manual_void', $data);
+    }
+
+    public function detailFailedVoidPayment(Request $request, $receipt_number)
+    {
+        $data = [
+            'title'          => 'Transaction',
+            'menu_active'    => 'failed-void-payment',
+            'sub_title'      => 'Failed Void Payment Detail',
+            'submenu_active' => 'failed-void-payment'
+        ];
+        return view('transaction::transaction.manual_void_detail', $data);
+    }
 }
