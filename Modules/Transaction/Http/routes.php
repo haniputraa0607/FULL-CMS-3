@@ -85,6 +85,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     });
 
     Route::get('failed-void-payment', [ 'uses' => 'TransactionController@listFailedVoidPayment']);
+    Route::post('failed-void-payment', [ 'uses' => 'TransactionController@filter']);
     Route::get('failed-void-payment/{receipt_number}', [ 'uses' => 'TransactionController@detailFailedVoidPayment']);
 
     Route::any('/create/fake', 'TransactionController@fakeTransaction');

@@ -259,9 +259,9 @@
 		$('input[name=filter_type]').on('change', function() {
 			if ($(this).prop('checked')) {
 				if ($(this).val() == 'today') {
-					$('#filter-date-range').addClass('d-none');
+					$('#filter-date-range').addClass('hidden');
 				} else {
-					$('#filter-date-range').removeClass('d-none');
+					$('#filter-date-range').removeClass('hidden');
 				}
 			}
 		}).change();
@@ -284,42 +284,40 @@
 				@if($filter_date ?? false)
 				@if($filter_date_today ?? false)
 				<div class="form-group row">
-                    <label class="col-1 col-form-label"></label>
-                    <div class="col-9 col-form-label">
-                        <div class="radio-inline">
-                            <label class="radio radio-primary">
-                                <input type="radio" name="filter_type" @if($is_today ?? false) checked @endif id="filter-date-type" value="today">
-                                <span></span> Today
-                            </label>
-                            <label class="radio radio-primary">
-                                <input type="radio" name="filter_type" @if(!($is_today ?? false)) checked @endif id="filter-date-type" value="range_date">
-                                <span></span> Range Date
-                            </label>
-                        </div>
+                    <label class="col-md-1 col-form-label"></label>
+                    <div class="col-md-9 col-form-label">
+                        <label class="radio-inline">
+                            <input type="radio" name="filter_type" @if($is_today ?? false) checked @endif id="filter-date-type" value="today">
+                            <span></span> Today
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="filter_type" @if(!($is_today ?? false)) checked @endif id="filter-date-type" value="range_date">
+                            <span></span> Range Date
+                        </label>
                     </div>
                 </div>
                 @endif
 				<div class="row" id="filter-date-range">
-					<div class="col-2 text-right pt-3">Date Start:</div>
-					<div class="col-3">
+					<div class="col-md-2 text-right pt-3">Date Start:</div>
+					<div class="col-md-3">
 						<div class="input-group">
 							<input type="hidden" name="rule[9998][subject]" value="transaction_date">
 							<input type="hidden" name="rule[9998][operator]" value=">=">
 							<input type="date" name="rule[9998][parameter]" class="form-control" required id="transaction_date_boe">
 							<input type="hidden" name="rule[9998][hide]" value="1">
-							<div class="input-group-append">
+							<div class="input-group-addon">
 								<span class="input-group-text"><i class="fa fa-calendar"></i></span>
 							</div>
 						</div>
 					</div>
-					<div class="col-2 text-right pt-3">Date End:</div>
-					<div class="col-3">
+					<div class="col-md-2 text-right pt-3">Date End:</div>
+					<div class="col-md-3">
 						<div class="input-group">
 							<input type="hidden" name="rule[9999][subject]" value="transaction_date">
 							<input type="hidden" name="rule[9999][operator]" value="<=">
 							<input type="date" name="rule[9999][parameter]" class="form-control" required id="transaction_date_loe">
 							<input type="hidden" name="rule[9999][hide]" value="1">
-							<div class="input-group-append">
+							<div class="input-group-addon">
 								<span class="input-group-text"><i class="fa fa-calendar"></i></span>
 							</div>
 						</div>
@@ -359,7 +357,7 @@
 	</div>
 </form>
 @if(isset($rule) && !($hide_record_total??false))
-<div class="alert alert-block alert-info fade show">
+<div class="alert alert-block alert-info show">
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>

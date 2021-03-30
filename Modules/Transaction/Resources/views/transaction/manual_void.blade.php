@@ -19,6 +19,55 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     @yield('filter_script')
     <script type="text/javascript">
+        // range date trx, receipt, order id, outlet, customer
+        rules={
+            all_data:{
+                display:'All Data',
+                operator:[],
+                opsi:[]
+            },
+            transaction_receipt_number:{
+                display:'Receipt Number',
+                operator:[
+                    ['=', '='],
+                    ['like', 'like']
+                ],
+                opsi:[],
+                placeholder: "ex. J+123456789"
+            },
+            order_id:{
+                display:'Order Id',
+                operator:[
+                    ['=', '='],
+                    ['like', 'like']
+                ],
+                opsi:[],
+                placeholder: "ex. J3LX"
+            },
+            id_outlet:{
+                display:'Outlet',
+                operator:[],
+                opsi:{!!json_encode($outlets)!!},
+                placeholder: "ex. J3LX"
+            },
+            name:{
+                display:'Customer Name',
+                operator:[
+                    ['=', '='],
+                    ['like', 'like']
+                ],
+                opsi:[]
+            },
+            phone:{
+                display:'Customer Phone',
+                operator:[
+                    ['=', '='],
+                    ['like', 'like']
+                ],
+                opsi:[]
+            },
+        };
+
         $('#sample_1').dataTable({
             ajax: {
                 url : "{{url()->current()}}",
@@ -27,16 +76,37 @@
                     const info = $('#sample_1').DataTable().page.info();
                     data.page = (info.start / info.length) + 1;
                 },
-                dataSrc: 'data'
+                dataSrc: (res) => {
+                    $('#list-filter-result-counter').text(res.recordsTotal);
+                    return res.data;
+                }
             },
             columns: [
                 {data: 'transaction_date'},
                 {data: 'transaction_receipt_number'},
+                {
+                    data: 'outlet_name',
+                    render: function(value, type, row) {
+                        return row.outlet_code + ' - ' + value;
+                    }
+                },
+                {
+                    data: 'name',
+                    render: function(value, type, row) {
+                        return `${row.name} (${row.phone})`;
+                    }
+                },
                 // {data: 'name'},
                 // {data: 'phone'},
                 {data: 'trasaction_payment_type'},
-                {data: 'transaction_grandtotal'},
-                {data: 'manual_refund_nominal'},
+                {
+                    data: 'transaction_grandtotal',
+                    render: value => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value)
+                },
+                {
+                    data: 'manual_refund_nominal',
+                    render:  value => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value)
+                },
                 {
                     data: 'need_manual_refund',
                     render: function(value) {
@@ -115,9 +185,9 @@
               <tr>
                 <th>Transaction Date</th>
                 <th>Receipt Number</th>
-                {{-- <th>Customer Name</th>
-                <th>Phone</th> --}}
-                <th>Transaction Payment Type</th>
+                <th>Outlet</th>
+                <th>Customer</th>
+                <th>Payment Type</th>
                 <th>Grandtotal</th>
                 <th>Manual Refund</th>
                 <th>Status</th>
