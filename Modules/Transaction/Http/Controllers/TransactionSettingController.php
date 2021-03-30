@@ -79,7 +79,6 @@ class TransactionSettingController extends Controller
         }else{
             $data['result'] = [];
         }
-        $data['result'] = MyHelper::post('autocrm/list',['autocrm_title'=>'User Feedback'])['result']??[];
 
         return view('transaction::setting.refund_reject_order', $data);
     }
