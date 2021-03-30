@@ -247,7 +247,7 @@
 
 		@endif
 
-		@if(MyHelper::hasAccess([299,300,301,302,303], $grantedFeature))
+		@if(MyHelper::hasAccess([301,302,303,304,305], $grantedFeature))
 			<li class="nav-item {{($menu_active == 'user-franchise') ? 'active open' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
 					<i class="fa fa-user-plus"></i>
@@ -255,28 +255,28 @@
 					<span class="arrow {{($menu_active == 'user-franchise') ? 'open' : ''}}"></span>
 				</a>
 				<ul class="sub-menu">
-					@if(MyHelper::hasAccess([299,302], $grantedFeature))
+					@if(MyHelper::hasAccess([301,302,304], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'user-franchise-list') ? 'active open' : ''}}">
 							<a href="{{url('user/user-franchise')}}" class="nav-link ">
 								<span class="title">User Franchise List</span>
 							</a>
 						</li>
 					@endif
-					@if(MyHelper::hasAccess([301], $grantedFeature))
+					@if(MyHelper::hasAccess([303], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'user-franchise-new') ? 'active open' : ''}}">
 							<a href="{{url('user/user-franchise/create')}}" class="nav-link ">
 								<span class="title">New User Franchise</span>
 							</a>
 						</li>
 					@endif
-					@if(MyHelper::hasAccess([301,302], $grantedFeature))
+					@if(MyHelper::hasAccess([304], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'user-franchise-import') ? 'active open' : ''}}">
 							<a href="{{url('user/user-franchise/import')}}" class="nav-link ">
 								<span class="title">Export & Import</span>
 							</a>
 						</li>
 					@endif
-					@if(MyHelper::hasAccess([302], $grantedFeature))
+					@if(MyHelper::hasAccess([304], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'new-user-franchise') ? 'active open' : ''}}">
 							<a href="{{url('user/autoresponse/new-user-franchise')}}" class="nav-link ">
 								<span class="title">[Response] New User Franchise</span>
