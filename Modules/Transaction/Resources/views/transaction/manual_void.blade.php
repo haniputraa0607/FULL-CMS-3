@@ -77,10 +77,11 @@
                     data.page = (info.start / info.length) + 1;
                 },
                 dataSrc: (res) => {
-                    $('#list-filter-result-counter').text(res.recordsTotal);
+                    $('#list-filter-result-counter').text(res.total);
                     return res.data;
                 }
             },
+            serverSide: true,
             columns: [
                 {data: 'transaction_date'},
                 {data: 'transaction_receipt_number'},
