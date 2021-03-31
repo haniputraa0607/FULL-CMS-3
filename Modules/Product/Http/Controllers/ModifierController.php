@@ -351,4 +351,35 @@ class ModifierController extends Controller
             return back()->withErrors(['Fail update detail']);
         }
     }
+
+    public function position(){
+        $data = [
+            'title'          => 'Product Modifier',
+            'sub_title'      => 'Product Modifier Manage Position',
+            'menu_active'    => 'product-modifier',
+            'submenu_active' => 'product-modifier-position'
+        ];
+
+        $get = MyHelper::post('product/modifier', ['order_position' => 1]);
+
+        if(isset($get['status']) && $get['status'] == 'success'){
+            $data['list'] = $get['result'];
+            return view('product::modifier.position', $data);
+        }else{
+            return redirect('product/modifier')->withErrors(['Fail get list position']);
+        }
+    }
+
+    public function positionAssign(Request $request){
+        $post = $request->except('_token');
+        if (!isset($post['modifier_ids'])) {
+            return [
+                'status' => 'fail',
+                'messages' => ['Product modifier id is required']
+            ];
+        }
+        $result = MyHelper::post('product/modifier/position-assign', $post);
+
+        return $result;
+    }
 }

@@ -793,6 +793,13 @@
 							<span class="title">Tag List</span>
 						</a>
 					</li> -->
+					@if(MyHelper::hasAccess([183], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'product-modifier-position') ? 'active open' : ''}}">
+							<a href="{{url('product/modifier/position')}}" class="nav-link ">
+								<span class="title">Manage Position</span>
+							</a>
+						</li>
+					@endif
 					@if(MyHelper::hasAccess([185,186], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'product-modifier-price') ? 'active open' : ''}}">
 						<a href="{{url('product/modifier/price')}}" class="nav-link ">

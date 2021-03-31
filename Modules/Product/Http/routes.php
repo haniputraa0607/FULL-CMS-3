@@ -80,6 +80,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 		Route::get('detail/{id_outlet?}', ['middleware' => 'feature_control:185', 'uses' => 'ModifierController@listDetail']);
 		Route::post('detail/{id_outlet}', ['middleware' => 'feature_control:186', 'uses' => 'ModifierController@updateDetail']);
 
+        Route::get('position', ['uses' => 'ModifierController@position']);
+        Route::post('position/assign', ['middleware' => 'feature_control:183', 'uses' => 'ModifierController@positionAssign']);
+
 		Route::get('/', ['middleware' => 'feature_control:180', 'uses' => 'ModifierController@index']);
 		Route::get('/create', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@create']);
 		Route::post('/', ['middleware' => 'feature_control:181', 'uses' => 'ModifierController@store']);
