@@ -170,7 +170,7 @@
                         </label>
                         <div class="col-md-6">
                             <label class="mt-checkbox mt-checkbox-outline">
-                                <input type="checkbox" name="auto_generate_pin" class="same checkbox-product-price" onclick="changeAutoGeneratePin()"/>
+                                <input type="checkbox" name="auto_generate_pin" id="auto_generate_pin" class="same checkbox-product-price" onclick="changeAutoGeneratePin()"/>
                                 <span></span>
                             </label>
                         </div>

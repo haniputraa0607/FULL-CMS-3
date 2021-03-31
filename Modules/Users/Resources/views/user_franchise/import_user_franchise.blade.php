@@ -236,7 +236,7 @@ $configs    		= session('configs');
 			<div class="portlet-body form">
 				<div class="m-heading-1 border-green m-bordered">
 					<p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data user franchise.</p>
-					<p style="white-space: pre-wrap;">User diidentifikasi berdasarkan <b>username</b>. Apabila username tidak tersedia maka data tersebut akan <b>diatmbahkan otomatis</b>.</p>
+					<p style="white-space: pre-wrap;">User diidentifikasi berdasarkan <b>username</b>. Apabila username tidak tersedia maka data tersebut akan <b>ditambahkan otomatis</b>.</p>
 					<br>
 					<p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor user franchise</p>
 				</div>
@@ -288,6 +288,10 @@ $configs    		= session('configs');
 				</div>
 			</div>
 			<div class="portlet-body form upload-container">
+				<div class="m-heading-1 border-green m-bordered">
+					<p>Untuk user baru password akan di generate secara otomatis oleh sistem.</p>
+				</div>
+				<br>
 				<div id="upload-form">
 					<form class="form-horizontal" role="form" action="{{ url('user/user-franchise/import/save') }}" method="post" enctype="multipart/form-data" id="form-upload">
 						<div class="form-body">

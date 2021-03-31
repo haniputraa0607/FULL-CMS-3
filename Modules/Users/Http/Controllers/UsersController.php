@@ -80,6 +80,12 @@ class UsersController extends Controller
 				$data['menu_active'] = 'profile-completion';
 				$data['submenu_active'] = 'complete-user-profile-point-bonus';
 				break;
+            case 'new-user-franchise':
+                $data['menu_active'] = 'user-franchise';
+                break;
+            case 'reset-password-user-franchise':
+                $data['menu_active'] = 'user-franchise';
+                break;
 						
 			default:
 				# code...
