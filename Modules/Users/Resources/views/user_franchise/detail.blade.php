@@ -170,7 +170,7 @@
                         </label>
                         <div class="col-md-6">
                             <label class="mt-checkbox mt-checkbox-outline">
-                                <input type="checkbox" name="reset_pin" class="same checkbox-product-price" onclick="changeResetPin()"/>
+                                <input type="checkbox" name="reset_pin" id="reset_pin" class="same checkbox-product-price" onclick="changeResetPin()"/>
                                 <span></span>
                             </label>
                         </div>
@@ -192,14 +192,14 @@
                                 <input class="form-control" maxlength="6" type="password" name="pin2" id="pin2"  placeholder="Re-type pin"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="example-search-input" class="control-label col-md-3">Input Your Pin <span class="text-danger">*</span></label>
-                            <div class="col-md-6">
-                                <input class="form-control" type="password" maxlength="6" name="password_admin" required placeholder="Enter your password here"/>
-                            </div>
-                        </div>
-                        <input type="hidden" name="username" value="{{$result['username']}}">
                     </div>
+                    <div class="form-group">
+                        <label for="example-search-input" class="control-label col-md-3">Input Your Pin <span class="text-danger">*</span></label>
+                        <div class="col-md-6">
+                            <input class="form-control" type="password" maxlength="6" name="password_admin" required placeholder="Enter your password here"/>
+                        </div>
+                    </div>
+                    <input type="hidden" name="username" value="{{$result['username']}}">
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}

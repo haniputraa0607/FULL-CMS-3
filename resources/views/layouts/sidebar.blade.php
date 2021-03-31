@@ -277,12 +277,12 @@
 						</li>
 					@endif
 					@if(MyHelper::hasAccess([304], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'new-user-franchise') ? 'active open' : ''}}">
+						<li class="nav-item {{($submenu_active == 'user-autoresponse-new-user-franchise') ? 'active open' : ''}}">
 							<a href="{{url('user/autoresponse/new-user-franchise')}}" class="nav-link ">
 								<span class="title">[Response] New User Franchise</span>
 							</a>
 						</li>
-						<li class="nav-item {{($submenu_active == 'reset-password-user-franchise') ? 'active open' : ''}}">
+						<li class="nav-item {{($submenu_active == 'user-autoresponse-reset-password-user-franchise') ? 'active open' : ''}}">
 							<a href="{{url('user/autoresponse/reset-password-user-franchise')}}" class="nav-link ">
 								<span class="title">[Response] Reset Password User Franchise</span>
 							</a>
