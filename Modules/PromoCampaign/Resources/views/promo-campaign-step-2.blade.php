@@ -69,11 +69,13 @@
 		  white-space: normal !important;
 		}
 	</style>
+
 @endsection
 
 @section('page-plugin')
 	<script src="{{ secure_url('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-	<script src="{{ secure_url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+	<script src="{{ secure_url('assets/global/plugins/select2/js/custom-select2.full.js') }}" type="text/javascript"></script>
+	{{-- <script src="{{ secure_url('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script> --}}
 	<script src="{{ secure_url('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 	<script src="{{ secure_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
 	<script src="{{ secure_url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
@@ -345,7 +347,7 @@
 								var more='';
 							}*/
 							let more='';
-							$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill,'+selector).append("<option class='product"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' "+more+">"+value.product+"</option>");
+							$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill,#multiple-product-tier-discount,#multiple-product-bxgy').append("<option class='product"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' "+more+">"+value.product+"</option>");
 						});
 						$.each(selectedProduct, function( key, value ) {
 							$(".product"+value+"").attr('selected', true)
@@ -553,6 +555,18 @@
 				$("select[name='multiple_outlet[]']").prop('required', false);
                 $("select[name='multiple_outlet_group[]']").prop('required', false);
 			}
+		});
+
+		$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill,#multiple-product-tier-discount,#multiple-product-bxgy').select2({
+		    "closeOnSelect": false
+		}).on('select2:select select2:open', function(evt) {
+			var $container = $(this).data("select2").$container.find(".select2-selection__rendered");
+			var $results = $(".select2-dropdown--below");
+			$results.position({
+				my: "top",
+				at: "bottom",
+				of: $container
+			});
 		});
 	});
 	</script>
