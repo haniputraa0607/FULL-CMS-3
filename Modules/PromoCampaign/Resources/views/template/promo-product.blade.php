@@ -97,6 +97,19 @@
 			let promo_type = "{{ $promo_type }}";
 			let brand = JSON.parse('{!!json_encode($brands)!!}');
 			let product_type = '{!!$product_type!!}';
+
+			/*$('#multiple-product-'+promo_type).select2({
+			    "closeOnSelect": false
+			}).on('select2:select select2:open', function(evt) {
+				var $container = $(this).data("select2").$container.find(".select2-selection__rendered");
+				var $results = $(".select2-dropdown--below");
+				$results.position({
+					my: "top",
+					at: "bottom",
+					of: $container
+				});
+			});*/
+
 			if (is_all_product != 0) {
 				$('#select-product-'+promo_type).hide();
 			}
@@ -107,7 +120,8 @@
 				$('#multiple-product-'+promo_type).prop('disabled', true)
 				if (product == 'selected') {
 					$('#select-product-'+promo_type).show()
-					if (productLoad == 0) {
+					// if (productLoad == 0) {
+					if (productLoad) {
 						$.ajax({
 							type: "GET",
 							url: "{{url('promo-campaign/step2/getData')}}",
