@@ -106,7 +106,7 @@ $grantedFeature     = session('granted_features');
                         data: "_token=" + token + "&id_product_variant=" + id_product_variant,
                         success: function (result) {
                             if (result.status == "success") {
-                                swal("Success!", "Processing Syncron sales mode.", "success")
+                                swal("Success!", "Updated product variant.", "success")
                                 location.reload();
                             } else {
                                 swal("Error!", "Fail delete product variant, product variant already to use in transaction", "error")
