@@ -8,9 +8,7 @@
                     <?php
                         $declaration = [];
                         foreach($product_variant as $key=>$val){
-                            if(is_null($val['product_variant_parent'])){
-                                $declaration[$val['product_variant_name']] = [];
-                            }elseif(!empty($val['product_variant_parent'])){
+                            if(!empty($val['product_variant_parent'])){
                                 $declaration[$val['product_variant_parent']['product_variant_name']][] = [
                                     'id_parent' => $val['id_parent'],
                                     'id_product_variant' => $val['id_product_variant'],
