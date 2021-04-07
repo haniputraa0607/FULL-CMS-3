@@ -106,7 +106,6 @@
                     render: function(value, type, row) {
                         switch (value.toLowerCase()) {
                             case 'midtrans':
-                                console.log(row);
                                 return `${value} (${row.transaction_payment_midtrans.payment_type})`;
                                 break;
                             case 'ipay88':
@@ -114,6 +113,25 @@
                                 break;
                         }
                         return value;
+                    }
+                },
+                {
+                    data: 'trasaction_payment_type',
+                    render: function(value, type, row) {
+                        switch (value.toLowerCase()) {
+                            case 'midtrans':
+                                return row.transaction_payment_midtrans?.vt_transaction_id;
+                                break;
+
+                            case 'ipay88':
+                                return row.transaction_payment_ipay88?.trans_id;
+                                break;
+
+                            case 'shopeepay':
+                                return row.transaction_payment_shopee_pay?.transaction_sn;
+                                break;
+                        }
+                        return '';
                     }
                 },
                 {
@@ -165,14 +183,15 @@
             $('#preview-customer-name').val(`${data.name} (${data.phone})`);
             $('#preview-receipt-number').val(data.transaction_receipt_number);
             $('#preview-confirm-name').val(`${data.validator_name} (${data.validator_phone})`);
-            $('#preview-date-refund').val(data.refund_date);
+            $('#preview-confirm-at').val((new Date(data.confirm_at)).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}));
+            $('#preview-date-refund').val((new Date(data.refund_date)).toLocaleString('id-ID',{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}));
             $('#preview-note').val(data.note);
 
             let imageTag = '';
 
             if (data.images) {
                 data.images.forEach(item => {
-                    imageTag += `<img src="${item}" class="img-responsive">`;
+                    imageTag += `<img src="${item}" class="img-responsive" style="margin-bottom: 5px">`;
                 });
             }
 
@@ -231,6 +250,7 @@
                 <th>Outlet</th>
                 <th>Customer</th>
                 <th>Payment Type</th>
+                <th>Payment Reference Number</th>
                 <th>Grandtotal</th>
                 <th>Manual Refund</th>
                 <th>Failed Void Reason</th>
@@ -357,6 +377,14 @@
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="preview-confirm-name" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                Confirmed At
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="preview-confirm-at" disabled />
                             </div>
                         </div>
                         <div class="form-group">
