@@ -25,10 +25,10 @@ $brand_rule = $deals['brand_rule']??'and';
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 	<style type="text/css">
 		.select2-search--inline {
-		    display: contents; /*this will make the container disappear, making the child the one who sets the width of the element*/
+		    /*display: contents;*/ /*this will make the container disappear, making the child the one who sets the width of the element*/
 		}
 
-		.select2-search__field:placeholder-shown {
+		.select2-container .select2-search__field {
 		    width: 100% !important; /*makes the placeholder to be 100% of the width while there are no options selected*/
 		}
 
@@ -40,7 +40,8 @@ $brand_rule = $deals['brand_rule']??'and';
     <!-- <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script> --}}
+    <script src="{{ env('STORAGE_URL_VIEW').'/assets/global/plugins/select2/js/custom-select2.full.js' }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
@@ -666,6 +667,19 @@ $brand_rule = $deals['brand_rule']??'and';
 
 				}
 			});
+
+	        $("select[name='id_outlet[]'], select[name='id_outlet_group[]']").select2({
+	        	"closeOnSelect": false,
+	        	width: '100%'
+	        }).on('change', function(evt) {
+	        	var $container = $(this).data("select2").$container.find(".select2-selection__rendered");
+	        	var $results = $(".select2-dropdown--below");
+	        	$results.position({
+	        		my: "top",
+	        		at: "bottom",
+	        		of: $container
+	        	});
+	        });
         });
     </script>
 @endsection
