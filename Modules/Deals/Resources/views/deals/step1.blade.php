@@ -679,7 +679,9 @@ $brand_rule = $deals['brand_rule']??'and';
 	        		at: "bottom",
 	        		of: $container
 	        	});
-	        });
+	        })
+	        .on('select2:selecting select2:unselecting', e => $(e.currentTarget).data('scrolltop', $('.select2-results__options').scrollTop()))
+	        .on('select2:select select2:unselect', e => $('.select2-results__options').scrollTop($(e.currentTarget).data('scrolltop')));
         });
     </script>
 @endsection
