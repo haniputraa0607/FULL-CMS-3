@@ -13,6 +13,11 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    	.select2-container .select2-search__field {
+		    width: 100% !important;
+		}
+    </style>
 @endsection
 
 @section('page-plugin')
@@ -47,6 +52,23 @@
                 $("#select-outlet").prop('required', false);
             }
         }
+
+        $(document).ready(function() {
+	        $("#select-outlet").select2({
+	        	"closeOnSelect": false,
+	        	width: '100%'
+	        }).on('change', function(evt) {
+	        	var $container = $(this).data("select2").$container.find(".select2-selection__rendered");
+	        	var $results = $(".select2-dropdown--below");
+	        	$results.position({
+	        		my: "top",
+	        		at: "bottom",
+	        		of: $container
+	        	});
+	        })
+	        .on('select2:selecting select2:unselecting', e => $(e.currentTarget).data('scrolltop', $('.select2-results__options').scrollTop()))
+	        .on('select2:select select2:unselect', e => $('.select2-results__options').scrollTop($(e.currentTarget).data('scrolltop')));;
+	    });
     </script>
 @endsection
 
