@@ -10,6 +10,7 @@ $grantedFeature     = session('granted_features');
 @include('promotion::deals.detail-info')
 @include('promotion::deals.detail-info-content')
 @include('promotion::deals.participate')
+@include('promocampaign::template.promo-description', ['promo_source' => 'deals_promotion'])
 @section('page-style')
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('S3_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
@@ -552,6 +553,7 @@ $grantedFeature     = session('granted_features');
 	@yield('child-script2')
 	@yield('detail-script')
 	@yield('participate-script')
+	@yield('promo-description-script')
 @endsection
 
 @section('content')
@@ -655,6 +657,9 @@ $grantedFeature     = session('granted_features');
                 <li>
                     <a href="#promotion" data-toggle="tab"> Promotion </a>
                 </li>
+                <li class="">
+                    <a href="#promo-description" data-toggle="tab"> Promo Description </a>
+                </li>
             </ul>
         </div>
         <div class="portlet-body">
@@ -757,10 +762,13 @@ $grantedFeature     = session('granted_features');
                     @yield('detail-participate')
                 </div>
                 @endif
+                <div class="tab-pane" id="promo-description">
+                    @yield('promo-description')
+                </div>
             </div>
         </div>
     </div>
-    @if (($deals['step_complete']??false) != 1)
+    @if ( ($deals['step_complete']??false) != 1)
     <div class="modal fade bs-modal-sm" id="small" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">

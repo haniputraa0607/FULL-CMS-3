@@ -379,7 +379,7 @@ class PromoCampaignController extends Controller
 
                 $redirect = redirect('promo-campaign/detail/' . $slug)->withSuccess($msg_success);
 
-	            if (isset($action['brand_product_error'])) {
+	            if (isset($action['brand_product_error'])) {	
 	            	$redirect = redirect('promo-campaign/step2/' . $slug)->withSuccess($msg_success)->withErrors($action['brand_product_error']??[]);
 	            }
 
@@ -501,6 +501,29 @@ class PromoCampaignController extends Controller
     		$redirect->withSuccess(['Period has been extended']);
     	}else{
     		$redirect->withInput()->withErrors($action['messages'] ?? ['Failed to extend period']);
+    	}
+    	return $redirect;
+    }
+
+    public function updatePromoDescription(Request $request)
+    {
+    	$post = $request->except('_token');
+    	$id_deals_encrypt = $post['id_deals'];
+    	$id_promo_campaign_encrypt = $post['id_promo_campaign'];
+    	$id_subscription_encrypt = $post['id_subscription'];
+    	$id_deals_promotion_encrypt = $post['id_deals_promotion_template'];
+    	$post['id_deals'] = MyHelper::explodeSlug($id_deals_encrypt)[0] ?? null;
+    	$post['id_promo_campaign'] = MyHelper::explodeSlug($id_promo_campaign_encrypt)[0] ?? null;
+    	$post['id_subscription'] = MyHelper::explodeSlug($id_subscription_encrypt)[0] ?? null;
+    	$post['id_deals_promotion_template'] = MyHelper::explodeSlug($id_deals_promotion_encrypt)[0] ?? null;
+
+    	$action = MyHelper::post('promo-campaign/promo-description', $post);
+
+    	$redirect = redirect()->back();
+    	if (($action['status']??false) == 'success') {
+    		$redirect->withSuccess(['Promo description has been updated']);
+    	}else{
+    		$redirect->withInput()->withErrors($action['messages'] ?? ['Failed to update promo description']);
     	}
     	return $redirect;
     }

@@ -4,6 +4,21 @@
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', 'namespace' => 'Modules\Users\Http\Controllers'], function()
 {
+    //user franchise
+    Route::group(['prefix' => 'user-franchise'], function()
+    {
+        Route::any('/', 'UsersFranchiseController@index');
+        Route::get('create', 'UsersFranchiseController@create');
+        Route::post('store', 'UsersFranchiseController@store');
+        Route::get('detail/{user_id}', 'UsersFranchiseController@detail');
+        Route::post('update/{user_id}', 'UsersFranchiseController@update');
+        Route::post('delete/{user_id}', 'UsersFranchiseController@destroy');
+
+        Route::get('import', 'UsersFranchiseController@import');
+        Route::any('export', 'UsersFranchiseController@export');
+        Route::post('import/save', 'UsersFranchiseController@importSave');
+    });
+
 	Route::get('ajax/phone', 'UsersController@listPhoneUser');
 	Route::get('ajax/email', 'UsersController@listEmailUser');
 	Route::get('ajax/name', 'UsersController@listNameUser');

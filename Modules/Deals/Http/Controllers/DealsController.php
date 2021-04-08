@@ -1596,7 +1596,7 @@ class DealsController extends Controller
 		}
 		else
 		{
-			return ['status' => 'fail', 'messages' => 'Something went wrong'];
+			return redirect()->back()->withErrors(['Something went wrong']);
 		}
     }
 

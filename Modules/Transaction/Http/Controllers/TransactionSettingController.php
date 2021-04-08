@@ -62,7 +62,23 @@ class TransactionSettingController extends Controller
             'refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value']??0,
             'refund_ipay88' => MyHelper::post('setting', ['key' => 'refund_ipay88'])['result']['value']??0,
             'refund_shopeepay' => MyHelper::post('setting', ['key' => 'refund_shopeepay'])['result']['value']??0,
+            'refund_failed_process_balance' => MyHelper::post('setting', ['key' => 'refund_failed_process_balance'])['result']['value']??0,
         ];
+
+        $get = MyHelper::post('autocrm/list',['autocrm_title'=>'Payment Void Failed']);
+        if(isset($get['status']) && $get['status'] == 'success'){
+            $data['result'] = $get['result'];
+
+            $data['textreplaces'] = [];
+
+            $custom = [];
+            if (isset($get['result']['custom_text_replace'])) {
+                $custom = explode(';', $get['result']['custom_text_replace']);
+            }
+            $data['custom'] = $custom;
+        }else{
+            $data['result'] = [];
+        }
 
         return view('transaction::setting.refund_reject_order', $data);
     }
@@ -73,9 +89,21 @@ class TransactionSettingController extends Controller
             'refund_midtrans' => ['value', $request->refund_midtrans?1:0],
             'refund_ipay88' => ['value', $request->refund_ipay88?1:0],
             'refund_shopeepay' => ['value', $request->refund_shopeepay?1:0],
+            'refund_failed_process_balance' => ['value', $request->refund_failed_process_balance?1:0]
         ];
-        $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
-        if ($data['status']??false == 'success') {
+        $data = MyHelper::post('setting/update2', ['update' => $sendData]);
+
+        $updateAutocrm = [
+            'id_autocrm' => $request->id_autocrm,
+            'autocrm_forward_toogle' => '1',
+            'autocrm_forward_email' => $request->autocrm_forward_email,
+            'autocrm_forward_email_subject' => $request->autocrm_forward_email_subject,
+            'autocrm_forward_email_content' => $request->autocrm_forward_email_content,
+        ];
+        
+        $query = MyHelper::post('autocrm/update', $updateAutocrm);
+
+        if (($data['status']??false) == 'success') {
             return back()->withSuccess(['Success update']);
         } else{
             return back()->withErrors(['Update failed']);
@@ -101,12 +129,40 @@ class TransactionSettingController extends Controller
         $sendData = [
             'auto_reject_time' => ['value', $request->auto_reject_time?:15]
         ];
-        $data['status'] = MyHelper::post('setting/update2', ['update' => $sendData]);
-        if ($data['status']??false == 'success') {
+        $data = MyHelper::post('setting/update2', ['update' => $sendData]);
+        if (($data['status']??false) == 'success') {
             return back()->withSuccess(['Success update']);
         } else{
             return back()->withErrors(['Update failed']);
         }
     }
 
+    public function cashbackCalculation(Request $request)
+    {
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Cashback Calculation',
+            'submenu_active' => 'setting-cashback-calculation'
+        ];
+
+        $data['status'] = [
+            'cashback_include_bundling' => MyHelper::post('setting', ['key' => 'cashback_include_bundling'])['result']['value']??0,
+        ];
+
+        return view('transaction::setting.cashback_calculation', $data);
+    }
+
+    public function cashbackCalculationUpdate(Request $request)
+    {
+        $sendData = [
+            'cashback_include_bundling' => ['value', $request->cashback_include_bundling?:0]
+        ];
+        $data = MyHelper::post('setting/update2', ['update' => $sendData]);
+        if (($data['status']??false) == 'success') {
+            return back()->withSuccess(['Success update']);
+        } else{
+            return back()->withErrors(['Update failed']);
+        }
+    }
 }

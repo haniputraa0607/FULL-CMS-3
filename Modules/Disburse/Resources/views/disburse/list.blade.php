@@ -126,7 +126,7 @@
                         </td>
                         <td>{{$val['count_retry']}}</td>
                         @if($status == 'fail-action' || $status == 'all')
-                            @if($val['disburse_status'] == 'Fail')
+                            @if($val['disburse_status'] == 'Fail' || $val['disburse_status'] == 'Failed Create Payouts')
                                 <td style="color: red">{{$val['error_message']}}</td>
                             @else
                                 <td>-</td>

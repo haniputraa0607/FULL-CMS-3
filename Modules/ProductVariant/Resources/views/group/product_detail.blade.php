@@ -78,6 +78,7 @@ $configs    		= session('configs');
             var product_variant_group_code = $('#product-variant-group-code').val();
             var product_variant_group_id = $('#product-variant-group-id').val();
             var text = $('#select2-product-variant option:selected').toArray().map(item => item.text).join();
+            var visibility = $('input[name="product_variant_group_visibility"]:checked').val();
             var msg_error = '';
 
             if(product_variant.length <= 0){
@@ -131,6 +132,7 @@ $configs    		= session('configs');
                 html += '<td>'+text+'</td>';
                 html += '<td>'+product_variant_group_code+'</td>';
                 html += '<td>'+product_variant_price+'</td>';
+                html += '<td>'+visibility+'</td>';
                 if(product_variant_group_id){
                     html += '<td><a  onclick="deleteRowProductVariant(this,'+product_variant_group_id+')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>' +
                         '<a  onclick="editRowProductVariant(this,'+row+')" data-toggle="confirmation" class="btn btn-sm btn-primary" style="margin-left: 2%"><i class="fa fa-pen"></i> Edit</a></td>';
@@ -144,11 +146,13 @@ $configs    		= session('configs');
                 html += '<input type="hidden" id="product-variant-group-code-'+row+'" name="data['+row+'][code]" value="'+product_variant_group_code+'">';
                 html += '<input type="hidden" id="product-variant-price-'+row+'" name="data['+row+'][price]" value="'+product_variant_price+'">';
                 html += '<input type="hidden" id="product-variant-group-id-'+row+'" name="data['+row+'][group_id]" value="'+product_variant_group_id+'">';
+                html += '<input type="hidden" id="product-variant-group-visibility-'+row+'" name="data['+row+'][visibility]" value="'+visibility+'">';
                 html += '</tr>';
 
                 $("#select2-product-variant").val(null).trigger('change');
                 $('#product-variant-group-price').val('');
                 $('#product-variant-group-code').val('');
+                $('#product-variant-group-id').val('');
 
                 $( "#product-variant-group-body" ).append(html);
                 row++;
@@ -202,6 +206,15 @@ $configs    		= session('configs');
                 var data_price = $('#product-variant-price-'+id).val();
                 var group_id = $('#product-variant-group-id-'+id).val();
                 var code = $('#product-variant-group-code-'+id).val();
+                var visibility = $('#product-variant-group-visibility-'+id).val();
+
+                if(visibility == 'Visible'){
+                    document.getElementById("radio-variant-visibility1").checked = true;
+                    document.getElementById("radio-variant-visibility2").checked = false;
+                }else{
+                    document.getElementById("radio-variant-visibility1").checked = false;
+                    document.getElementById("radio-variant-visibility2").checked = true;
+                }
 
                 $("#select2-product-variant").val(data_id).trigger('change');
                 $('#product-variant-group-price').val(data_price);
@@ -274,9 +287,7 @@ $configs    		= session('configs');
                                 <?php
                                 $declaration = [];
                                 foreach($product_variant as $key=>$val){
-                                    if(is_null($val['product_variant_parent'])){
-                                        $declaration[$val['product_variant_name']] = [];
-                                    }elseif(!empty($val['product_variant_parent'])){
+                                    if(!empty($val['product_variant_parent'])){
                                         $declaration[$val['product_variant_parent']['product_variant_name']][] = [
                                             'id_parent' => $val['id_parent'],
                                             'id_product_variant' => $val['id_product_variant'],
@@ -307,6 +318,34 @@ $configs    		= session('configs');
                             <input class="form-control price" maxlength="11" id="product-variant-group-price" placeholder="Price Product Variant Group">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Visible <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-icon right">
+                            <div class="col-md-2">
+                                <div class="md-radio-inline">
+                                    <div class="md-radio">
+                                        <input type="radio" id="radio-variant-visibility1" name="product_variant_group_visibility" class="md-radiobtn req-type" value="Visible" checked>
+                                        <label for="radio-variant-visibility1">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> Visible</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="md-radio-inline">
+                                    <div class="md-radio">
+                                        <input type="radio" id="radio-variant-visibility2" name="product_variant_group_visibility" class="md-radiobtn req-type" value="Hidden">
+                                        <label for="radio-variant-visibility2">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> Hidden </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <input type="hidden" id="product-variant-group-id" value="">
                     <input type="hidden" id="product-variant-group-code" name="product_variant_group_code" value="">
                     <input type="hidden" id="product-variant-group-visibility" name="product_variant_group_visibility" value="">
@@ -324,6 +363,7 @@ $configs    		= session('configs');
                             <th>Product Variant</th>
                             <th>Code</th>
                             <th>Price</th>
+                            <th>Visibility</th>
                             <th>Action</th>
                             </thead>
                             <tbody id="product-variant-group-body">
@@ -338,6 +378,7 @@ $configs    		= session('configs');
                                     </td>
                                     <td>{{$val['product_variant_group_code']}}</td>
                                     <td>{{number_format($val['product_variant_group_price'],0,",",".")}}</td>
+                                    <td>{{$val['product_variant_group_visibility']}}</td>
                                     <td>
                                         <a  onclick="deleteRowProductVariant(this, {{$val['id_product_variant_group']}})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
                                         <a  onclick="editRowProductVariant(this,{{$key}})" class="btn btn-sm btn-primary" style="margin-left: 2%"><i class="fa fa-pen"></i> Edit</a>

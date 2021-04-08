@@ -8,6 +8,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', '
     Route::post('delete', ['middleware' => 'feature_control:23', 'uses' => 'NewsController@delete']);
     Route::get('detail/{id}', ['middleware' => 'feature_control:20', 'uses' => 'NewsController@detail']);
     Route::post('detail/{id}', ['middleware' => 'feature_control:22', 'uses' => 'NewsController@detail']);
+    Route::get('position/assign', 'NewsController@positionAssign');
+    Route::post('position/assign', 'NewsController@updatePositionAssign');
 
     //category
     Route::group(['prefix'=>'category'],function(){
@@ -16,6 +18,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', '
         Route::post('create', ['middleware' => 'feature_control:165', 'uses' => 'NewsCategoryController@store']);
         Route::post('delete', ['middleware' => 'feature_control:167', 'uses' => 'NewsCategoryController@delete']);
         Route::post('update', ['middleware' => 'feature_control:166', 'uses' => 'NewsCategoryController@update']);
+        Route::post('position/assign', 'NewsCategoryController@positionCategoryAssign');
     });
 
     // results of news custom form

@@ -237,11 +237,11 @@
 					@endif
 					<div class="row static-info">
 						<div class="col-md-4 name">Created</div>
-						<div class="col-md-8 value">: {{date("d F Y", strtotime($result['created_at']))}}<br>&nbsp;&nbsp;{{date("H:i", strtotime($result['created_at']))}}</div>
+						<div class="col-md-8 value">: {{date("l, d F Y", strtotime($result['created_at']))}}{{date("H:i", strtotime($result['created_at']))}}</div>
 					</div>
 					<div class="row static-info">
 						<div class="col-md-4 name">Send</div>
-						<div class="col-md-8 value">: @if($result['campaign_send_at'] != ''){{date("d F Y", strtotime($result['campaign_send_at']))}}<br>&nbsp;&nbsp;{{date("H:i", strtotime($result['campaign_send_at']))}}@else Now @endif</div>
+						<div class="col-md-8 value">: @if($result['campaign_send_at'] != ''){{date("l, d F Y", strtotime($result['campaign_send_at']))}}{{date("H:i", strtotime($result['campaign_send_at']))}}@else Now @endif</div>
 					</div>
 					<div class="row static-info">
 						<div class="col-md-4 name">Receipient generate</div>

@@ -29,7 +29,7 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
     <script>
         $('#capacity').keypress(function (e) {
-            var regex = new RegExp("^[0-9]+$");
+            var regex = new RegExp("^[0-9 .]+$");
             var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
 
             if (regex.test(str) || e.which == 8) {

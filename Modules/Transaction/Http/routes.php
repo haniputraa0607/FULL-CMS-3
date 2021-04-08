@@ -44,6 +44,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
 {
     Route::get('/setting/cashback', 'TransactionSettingController@list');
     Route::post('/setting/cashback/update', 'TransactionSettingController@update');
+    Route::get('/setting/cashback-calculation', 'TransactionSettingController@cashbackCalculation');
+    Route::post('/setting/cashback-calculation', 'TransactionSettingController@cashbackCalculationUpdate');
     Route::any('/setting/free-delivery', 'TransactionController@freeDelivery');
     Route::any('/setting/go-send-package-detail', 'TransactionController@goSendPackageDetail');
     Route::get('/setting/available-payment', 'TransactionController@availablePayment');
@@ -81,6 +83,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
         Route::any('mark-as-pending-invalid', ['middleware' => 'feature_control:274', 'uses' => 'InvalidFlagController@markAsPendingInvalid']);
         Route::any('mark-as-invalid', ['middleware' => 'feature_control:274', 'uses' => 'InvalidFlagController@markAsInvalid']);
     });
+
+    Route::get('failed-void-payment', [ 'uses' => 'ManualRefundController@listFailedVoidPayment']);
+    Route::post('failed-void-payment', [ 'uses' => 'ManualRefundController@filter']);
+    Route::post('failed-void-payment/confirm', [ 'uses' => 'ManualRefundController@confirmManualRefund']);
 
     Route::any('/create/fake', 'TransactionController@fakeTransaction');
     Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);

@@ -247,6 +247,51 @@
 
 		@endif
 
+		@if(MyHelper::hasAccess([301,302,303,304,305], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'user-franchise') ? 'active open' : ''}}">
+				<a href="javascript:;" class="nav-link nav-toggle">
+					<i class="fa fa-user-plus"></i>
+					<span class="title">User Franchise</span>
+					<span class="arrow {{($menu_active == 'user-franchise') ? 'open' : ''}}"></span>
+				</a>
+				<ul class="sub-menu">
+					@if(MyHelper::hasAccess([301,302,304], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'user-franchise-list') ? 'active open' : ''}}">
+							<a href="{{url('user/user-franchise')}}" class="nav-link ">
+								<span class="title">User Franchise List</span>
+							</a>
+						</li>
+					@endif
+					@if(MyHelper::hasAccess([303], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'user-franchise-new') ? 'active open' : ''}}">
+							<a href="{{url('user/user-franchise/create')}}" class="nav-link ">
+								<span class="title">New User Franchise</span>
+							</a>
+						</li>
+					@endif
+					@if(MyHelper::hasAccess([304], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'user-franchise-import') ? 'active open' : ''}}">
+							<a href="{{url('user/user-franchise/import')}}" class="nav-link ">
+								<span class="title">Export & Import</span>
+							</a>
+						</li>
+					@endif
+					@if(MyHelper::hasAccess([304], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'user-autoresponse-new-user-franchise') ? 'active open' : ''}}">
+							<a href="{{url('user/autoresponse/new-user-franchise')}}" class="nav-link ">
+								<span class="title">[Response] New User Franchise</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'user-autoresponse-reset-password-user-franchise') ? 'active open' : ''}}">
+							<a href="{{url('user/autoresponse/reset-password-user-franchise')}}" class="nav-link ">
+								<span class="title">[Response] Reset Password User Franchise</span>
+							</a>
+						</li>
+					@endif
+				</ul>
+			</li>
+		@endif
+
 		@if(MyHelper::hasAccess([19,21,24,26,32,33,34,43,45,48,50,56,57,164,165,166,167], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #0F444C;font-weight: 600;">Browse</h3>
@@ -287,6 +332,13 @@
 								<span class="title">New News Category</span>
 							</a>
 						</li>
+						@endif
+						@if(MyHelper::hasAccess([22,166], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'news-manage-position') ? 'active open' : ''}}">
+								<a href="{{url('news/position/assign')}}" class="nav-link ">
+									<span class="title">Manage Position</span>
+								</a>
+							</li>
 						@endif
 						@if(MyHelper::hasAccess([120,122], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'news-autoresponse-create-news') ? 'active open' : ''}}">
@@ -434,6 +486,16 @@
 						<li class="nav-item {{($submenu_active == 'outlet-autoresponse-outlet-pin-sent') ? 'active open' : ''}}">
 							<a href="{{url('autoresponse/outlet/outlet-pin-sent')}}" class="nav-link ">
 								<span class="title">[Response] Outlet Pin Sent</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'outlet-autoresponse-outlet-pin-sent-user-franchise') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/outlet/outlet-pin-sent-user-franchise')}}" class="nav-link ">
+								<span class="title">[Response] Outlet Pin Sent User Franchise</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'outlet-autoresponse-request-admin-user-franchise') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/outlet/request-admin-user-franchise')}}" class="nav-link ">
+								<span class="title">[Response] Request Admin User Franchise</span>
 							</a>
 						</li>
 						<li class="nav-item {{($submenu_active == 'outlet-incomplete-response') ? 'active open' : ''}}">
@@ -664,6 +726,21 @@
 							</li>
 						@endif
 						@if(MyHelper::hasAccess([48,49,51], $grantedFeature))
+							<li class="nav-item {{($submenu_active  == 'product-plastic-stock') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/stock-outlet')}}" class="nav-link ">
+									<span class="title">Product Plastic Update Stock</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active  == 'product-plastic-use-product') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/use/product')}}" class="nav-link ">
+									<span class="title">Use Plastic Product</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active  == 'product-plastic-use-product-variant') ? 'active open' : ''}}">
+								<a href="{{url('product-plastic/use/product-variant')}}" class="nav-link ">
+									<span class="title">Use Plastic Product Variant</span>
+								</a>
+							</li>
 							<li class="nav-item {{($submenu_active == 'product-plastic-import-price') ? 'active open' : ''}}">
 								<a href="{{url('product-plastic/import-price')}}" class="nav-link ">
 									<span class="title">Export & Import Product Plastic Price</span>
@@ -716,6 +793,13 @@
 							<span class="title">Tag List</span>
 						</a>
 					</li> -->
+					@if(MyHelper::hasAccess([183], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'product-modifier-position') ? 'active open' : ''}}">
+							<a href="{{url('product/modifier/position')}}" class="nav-link ">
+								<span class="title">Manage Position</span>
+							</a>
+						</li>
+					@endif
 					@if(MyHelper::hasAccess([185,186], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'product-modifier-price') ? 'active open' : ''}}">
 						<a href="{{url('product/modifier/price')}}" class="nav-link ">
@@ -1019,6 +1103,15 @@
 			</li>
 			@endif
 
+			@if(MyHelper::hasAccess([299], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'failed-void-payment') ? 'active open' : ''}}">
+					<a href="{{url('transaction/failed-void-payment')}}" class="nav-link ">
+						<i class="fa fa-exclamation-triangle"></i>
+						<span class="title">Failed Void Payment</span>
+					</a>
+				</li>
+			@endif
+
 			@if(MyHelper::hasAccess([18], $configs))
 				@if(MyHelper::hasAccess([71], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'point') ? 'active' : ''}}">
@@ -1053,6 +1146,11 @@
 					<li class="nav-item {{($submenu_active == 'transaction-rule') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/rule')}}" class="nav-link ">
 							<span class="title">Calculation Rule</span>
+						</a>
+					</li>
+					<li class="nav-item {{($submenu_active == 'setting-cashback-calculation') ? 'active open' : ''}}">
+						<a href="{{url('transaction/setting/cashback-calculation')}}" class="nav-link ">
+							<span class="title">Cashback Calculation Rule</span>
 						</a>
 					</li>
 					@endif

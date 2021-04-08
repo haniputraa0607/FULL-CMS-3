@@ -14,6 +14,7 @@
 @include('deals::deals.detail-info-content')
 @include('deals::deals.participate')
 @include('promocampaign::template.promo-extend-period', ['promo_source' => 'deals'])
+@include('promocampaign::template.promo-description', ['promo_source' => 'deals'])
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
@@ -552,6 +553,7 @@
 	@yield('detail-script')
 	@yield('participate-script')
 	@yield('extend-period-script')
+	@yield('promo-description-script')
 @endsection
 
 @section('content')
@@ -657,6 +659,12 @@
                 <li>
                     <a href="#participate" data-toggle="tab"> Participate </a>
                 </li>
+                @if ($deals_type != 'promotion-deals')
+	                <li>
+	                    <a href="#promo-description" data-toggle="tab"> Promo Description </a>
+	                </li>
+                @endif
+
             </ul>
         </div>
         <div class="portlet-body">
@@ -687,7 +695,7 @@
                         <div class="tab-pane active" id="basic">
                 			@yield('detail-info')
                         </div>
-                        <div class="tab-pane " id="content">
+                        <div class="tab-pane" id="content">
                 			@yield('detail-info-content')
                         </div>
                         <div class="tab-pane" id="outlet">
@@ -755,6 +763,9 @@
                 </div>
                 <div class="tab-pane" id="participate">
                     @yield('detail-participate')
+                </div>
+                <div class="tab-pane" id="promo-description">
+                    @yield('promo-description')
                 </div>
                 @endif
             </div>

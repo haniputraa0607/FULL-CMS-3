@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'plastic-
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-plastic'], function()
 {
     Route::get('/', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@index']);
+    Route::any('stock-outlet/{key?}', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@productPlasticStockOutlet']);
     Route::get('create', ['middleware' => 'feature_control:50', 'uses' => 'ProductPlasticController@create']);
     Route::post('store', ['middleware' => 'feature_control:50', 'uses' => 'ProductPlasticController@store']);
     Route::get('detail/{id}', ['middleware' => 'feature_control:49,51', 'uses' => 'ProductPlasticController@detail']);
@@ -47,4 +48,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-
     Route::get('import-plastic-status-outlet', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@importPlasticStatusOutlet']);
     Route::post('import-plastic-status-outlet/save', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@importSavePlasticStatusOutlet']);
     Route::post('export-plastic-status-outlet', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@exportPlasticStatusOutlet']);
+
+    Route::get('use/product', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@usePlastiProduct']);
+    Route::post('use/product', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@usePlastiProduct']);
+    Route::get('use/product-variant', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@usePlastiProductVariant']);
+    Route::post('use/product-variant', ['middleware' => 'feature_control:51', 'uses' => 'ProductPlasticController@usePlastiProductVariant']);
 });

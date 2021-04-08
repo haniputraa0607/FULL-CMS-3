@@ -632,7 +632,7 @@ class CampaignController extends Controller
 	public function campaignStep1Post(Request $request, $id_campaign){
 		$post = $request->except(['_token','sample_1_length','files','import_file']);
 		$id_campaign_decrypt = MyHelper::explodeSlug($id_campaign)[0]??'';
-
+        $post['id_campaign'] = $id_campaign_decrypt;
 		if(in_array($request->post('csv_content'),array('id','phone'))){
 			if($request->file('import_file')){
 				$path = $request->file('import_file')->getRealPath();
