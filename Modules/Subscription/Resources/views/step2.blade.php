@@ -63,10 +63,14 @@
 		}*/
 
 		.select2-search--inline {
-		    display: contents; /*this will make the container disappear, making the child the one who sets the width of the element*/
+		    /*display: contents;*/ /*this will make the container disappear, making the child the one who sets the width of the element*/
 		}
 
 		.select2-search__field:placeholder-shown {
+		    /*width: 100% !important;*/ /*makes the placeholder to be 100% of the width while there are no options selected*/
+		}
+
+		.select2-container .select2-search__field {
 		    width: 100% !important; /*makes the placeholder to be 100% of the width while there are no options selected*/
 		}
 
@@ -78,7 +82,8 @@
     <!-- <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> -->
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/select2/js/custom-select2.full.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script> --}}
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
@@ -675,6 +680,21 @@
 					}
 				});
             }
+
+            $("select[name='id_outlet[]'], select[name='id_outlet_group[]'], select[name='id_product[]']").select2({
+	        	"closeOnSelect": false,
+	        	width: '100%'
+	        }).on('change', function(evt) {
+	        	var $container = $(this).data("select2").$container.find(".select2-selection__rendered");
+	        	var $results = $(".select2-dropdown--below");
+	        	$results.position({
+	        		my: "top",
+	        		at: "bottom",
+	        		of: $container
+	        	});
+	        })
+	        .on('select2:selecting select2:unselecting', e => $(e.currentTarget).data('scrolltop', $('.select2-results__options').scrollTop()))
+	        .on('select2:select select2:unselect', e => $('.select2-results__options').scrollTop($(e.currentTarget).data('scrolltop')));
         });
     </script>
 @endsection

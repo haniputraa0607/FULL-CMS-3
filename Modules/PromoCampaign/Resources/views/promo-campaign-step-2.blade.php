@@ -57,11 +57,14 @@
 			padding-left: 0px;
 			padding-right: 0px;
 		}
+		.select2-container .select2-search__field {
+		    width: 100% !important;
+		}
 		.select2-results__option[aria-selected=true] {
 		    /*display: none;*/
 		}
 		.select2-selection--single {
-		  height: 100% !important;
+		  /*height: 100% !important;*/
 		}
 		.select2-selection__rendered{
 		  word-wrap: break-word !important;
@@ -557,8 +560,9 @@
 			}
 		});
 
-		$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill,#multiple-product-tier-discount,#multiple-product-bxgy').select2({
-		    "closeOnSelect": false
+		$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill,#multiple-product-tier-discount,#multiple-product-bxgy,#multipleOutlet,#multiple-outlet-group').select2({
+		    "closeOnSelect": false,
+		    "width": "100%"
 		}).on('select2:select select2:open', function(evt) {
 			var $container = $(this).data("select2").$container.find(".select2-selection__rendered");
 			var $results = $(".select2-dropdown--below");
@@ -567,7 +571,9 @@
 				at: "bottom",
 				of: $container
 			});
-		});
+		})
+		.on('select2:selecting select2:unselecting', e => $(e.currentTarget).data('scrolltop', $('.select2-results__options').scrollTop()))
+	    .on('select2:select select2:unselect', e => $('.select2-results__options').scrollTop($(e.currentTarget).data('scrolltop')));
 	});
 	</script>
 	@yield('child-script')
