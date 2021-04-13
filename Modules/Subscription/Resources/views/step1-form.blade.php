@@ -76,7 +76,7 @@ $configs = session('configs');
                             <i class="fa fa-calendar"></i>
                         </button>
                         <button class="btn default" type="button">
-                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode subscription" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal Subscription dapat mulai diklaim user. Tidak bisa sebelum dari tanggal Publish Periode" data-container="body"></i>
                         </button>
                     </span>
                 </div>
@@ -91,7 +91,7 @@ $configs = session('configs');
                             <i class="fa fa-calendar"></i>
                         </button>
                         <button class="btn default" type="button">
-                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode subscription" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Batas tanggal Subscription dapat diklaim user." data-container="body"></i>
                         </button>
                     </span>
                 </div>
@@ -111,7 +111,7 @@ $configs = session('configs');
                             <i class="fa fa-calendar"></i>
                         </button>
                         <button class="btn default" type="button">
-                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai subscription dipublish" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal Subscription akan mulai dipublish / ditayangkan pada aplikasi." data-container="body"></i>
                         </button>
                     </span>
                 </div>
@@ -127,7 +127,7 @@ $configs = session('configs');
                             <i class="fa fa-calendar"></i>
                         </button>
                         <button class="btn default" type="button">
-                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai subscription dipublish" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Batas tanggal Subscription dipublish / ditayangkan pada aplikasi." data-container="body"></i>
                         </button>
                     </span>
                 </div>
