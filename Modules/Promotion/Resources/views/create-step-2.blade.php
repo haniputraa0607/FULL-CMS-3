@@ -1194,6 +1194,7 @@ $configs    		= session('configs');
 																@if(isset($result['contents'][$x-1]['promotion_push_subject']))
 																	value="{{$result['contents'][$x-1]['promotion_push_subject']}}"
 																@endif>
+															<span class="help-block">jika lebih dari 35 karakter ada kemungkinan terpotong di layar hp</span>
 															<br>
 															You can use this variables to display user personalized information:
 															<br><br>
@@ -1710,11 +1711,19 @@ $configs    		= session('configs');
 												-->
 
 													<div class="form-group">
-														<label class="col-md-2 control-label">Nominal Voucher<span class="required" aria-required="true"> * </span></label>
+														<label class="col-md-2 control-label">
+															Nominal Voucher
+															<span class="required" aria-required="true"> * </span>
+														</label>
 														<div class="col-md-9">
 															<div class="input-icon right">
 					                                			<div class="input-group col-md-4">
 																	<input type="text" class="form-control price" name="voucher_value[]" id="voucher_value_{{$x}}" style="display:block;" value="@if(isset($result['contents'][$x-1]['voucher_value'])) {{$result['contents'][$x-1]['voucher_value']}} @endif" @if(isset($result['contents'][$x-1]['deals']['deals_promo_id_type']) && $result['contents'][$x-1]['deals']['deals_promo_id_type'] == 'nominal') readonly @endif>
+																	<span class="input-group-btn">
+																		<button class="btn default" type="button">
+																			<i class="fa fa-question-circle tooltips" data-original-title="Tiap voucher yang diberikan setara dengan nominal berapa rupiah. Berguna pada reporting untuk melihat jumlah pengeluaran dari voucher yang diberikan." data-container="body"></i>
+																		</button>
+																	</span>
 																</div>
 															</div>
 														</div>
@@ -2476,6 +2485,7 @@ $configs    		= session('configs');
 														value={{$result['contents'][0]['promotion_push_subject']}}
 													@endif
 													@endif>
+												<span class="help-block">jika lebih dari 35 karakter ada kemungkinan terpotong di layar hp</span>
 												<br>
 												You can use this variables to display user personalized information:
 												<br><br>
@@ -2982,11 +2992,19 @@ $configs    		= session('configs');
 									-->
 
 										<div class="form-group">
-											<label class="col-md-2 control-label">Nominal Voucher<span class="required" aria-required="true"> * </span></label>
+											<label class="col-md-2 control-label">
+												Nominal Voucher
+												<span class="required" aria-required="true"> * </span>
+											</label>
 											<div class="col-md-9">
 												<div class="input-icon right">
-					                                <div class="input-group col-md-4">
+													<div class="input-group col-md-4">
 														<input type="text" class="form-control price" name="voucher_value[]" id="voucher_value_0" style="display:block;" value="@if(isset($result['contents'][0]['voucher_value'])){{$result['contents'][0]['voucher_value']}}@endif">
+														<span class="input-group-btn">
+					                                        <button class="btn default" type="button">
+					                                            <i class="fa fa-question-circle tooltips" data-original-title="Tiap voucher yang diberikan setara dengan nominal berapa rupiah. Berguna pada reporting untuk melihat jumlah pengeluaran dari voucher yang diberikan." data-container="body"></i>
+					                                        </button>
+					                                    </span>
 													</div>
 												</div>
 											</div>

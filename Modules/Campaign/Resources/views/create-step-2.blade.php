@@ -535,11 +535,11 @@
 						@endif
 						<div class="row static-info">
 							<div class="col-md-4 name">Created</div>
-							<div class="col-md-8 value">: {{date("l, d F Y", strtotime($result['created_at']))}}{{date("H:i", strtotime($result['created_at']))}}</div>
+							<div class="col-md-8 value">: {{date("l, d F Y H:i", strtotime($result['created_at']))}}</div>
 						</div>
 						<div class="row static-info">
 							<div class="col-md-4 name">Send</div>
-							<div class="col-md-8 value">: @if($result['campaign_send_at'] != ''){{date("l, d F Y", strtotime($result['campaign_send_at']))}}{{date("H:i", strtotime($result['campaign_send_at']))}}@else Now @endif</div>
+							<div class="col-md-8 value">: @if($result['campaign_send_at'] != ''){{date("l, d F Y H:i", strtotime($result['campaign_send_at']))}}@else Now @endif</div>
 						</div>
 						<div class="row static-info">
 							<div class="col-md-4 name">Recipient generate</div>
@@ -831,6 +831,7 @@
 								<label class="col-md-2 control-label">Subject</label>
 								<div class="col-md-10">
 									<input type="text" placeholder="Push Notification Subject" class="form-control" name="campaign_push_subject" id="campaign_push_subject" required @if(isset($result['campaign_push_subject']) && $result['campaign_push_subject'] != "") value="{{$result['campaign_push_subject']}}" @endif>
+									<span class="help-block">jika lebih dari 35 karakter ada kemungkinan terpotong di layar hp</span>
 									<br>
 									You can use this variables to display user personalized information:
 									<br><br>
