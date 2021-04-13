@@ -808,9 +808,9 @@
                                         <div class="row static-info">
 					                        <div class="col-md-4 name">Product Requirement</div>
 					                        <div class="col-md-8 value">: 
-					                        	@if ( ($deals['promo_campaign_discount_bill_rules']['is_all_product'] ?? false) == '1' )
+					                        	@if ( ($result['promo_campaign_discount_bill_rules']['is_all_product'] ?? false) == '1' )
 					                                All Product
-					                            @elseif ( ($deals['promo_campaign_discount_bill_rules']['is_all_product'] ?? false) == '0' )
+					                            @elseif ( isset($result['promo_campaign_discount_bill_rules']['is_all_product']) && $result['promo_campaign_discount_bill_rules']['is_all_product'] == '0' )
 					                                Selected Product
 					                            @endif
 					                        </div>
