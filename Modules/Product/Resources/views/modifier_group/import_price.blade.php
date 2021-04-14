@@ -205,18 +205,18 @@ $configs    		= session('configs');
                 <div class="row step-line">
                     <div class="col-md-4 mt-step-col first active" data-step="1">
                         <div class="mt-step-number bg-white">1</div>
-                        <div class="mt-step-title uppercase font-grey-cascade">Download Template Product Modifier Group</div>
-                        <div class="mt-step-content font-grey-cascade">Download current product modifier group</div>
+                        <div class="mt-step-title uppercase font-grey-cascade">Download Template Product Variant NON PRICE (NO SKU)</div>
+                        <div class="mt-step-content font-grey-cascade">Download current product variant NON PRICE (NO SKU)</div>
                     </div>
                     <div class="col-md-4 mt-step-col" data-step="2">
                         <div class="mt-step-number bg-white">2</div>
-                        <div class="mt-step-title uppercase font-grey-cascade">Upload Data Product Modifier Group</div>
-                        <div class="mt-step-content font-grey-cascade">Import from modified product modifier group list</div>
+                        <div class="mt-step-title uppercase font-grey-cascade">Upload Data Product Variant NON PRICE (NO SKU)</div>
+                        <div class="mt-step-content font-grey-cascade">Import from modified product variant NON PRICE (NO SKU) list</div>
                     </div>
                     <div class="col-md-4 mt-step-col last" data-step="3">
                         <div class="mt-step-number bg-white">#</div>
-                        <div class="mt-step-title uppercase font-grey-cascade">Result Product Modifier Group</div>
-                        <div class="mt-step-content font-grey-cascade">Report imported product modifier group</div>
+                        <div class="mt-step-title uppercase font-grey-cascade">Result Product Variant NON PRICE (NO SKU)</div>
+                        <div class="mt-step-content font-grey-cascade">Report imported product variant NON PRICE (NO SKU)</div>
                     </div>
                 </div>
             </div>

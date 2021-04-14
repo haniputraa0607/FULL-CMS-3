@@ -29,7 +29,7 @@
     <script type="text/javascript">
         rules = {
             all_product_modifier :{
-                display:'All Product Modifier Group',
+                display:'All Product Variant NON PRICE (NO SKU)',
                 operator:[],
                 opsi:[]
             },
@@ -72,15 +72,15 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">List Product Modifier Group</span>
+                <span class="caption-subject sbold uppercase font-blue">List Product Variant NON PRICE (NO SKU)</span>
             </div>
         </div>
         <div class="portlet-body form">
             <table class="table table-striped table-bordered table-hover table-responsive" width="100%">
                 <thead>
                     <tr>
-                        <th> Product Modifier Group Name </th>
-                        <th> Product Modifier </th>
+                        <th> Product Variant NON PRICE (NO SKU) Name </th>
+                        <th> Topping </th>
                         <th> Assign Product </th>
                         <th> Assign Product Variant </th>
                         @if(MyHelper::hasAccess([287,285,286], $grantedFeature))

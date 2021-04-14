@@ -21,8 +21,8 @@ class ProductVariantGroupController extends Controller
     public function listProductVariant(Request $request){
         $post = $request->all();
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'Product Variant List',
+            'title'          => 'Product Variant (SKU)',
+            'sub_title'      => 'Product Variant (SKU) List',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-remove'
         ];
@@ -77,7 +77,7 @@ class ProductVariantGroupController extends Controller
     public function listProduct(Request $request){
         $post = $request->except('_token');
         $data = [
-            'title'          => 'Product Variant',
+            'title'          => 'Product Variant (SKU)',
             'sub_title'      => 'Product List',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-list'
@@ -109,8 +109,8 @@ class ProductVariantGroupController extends Controller
     public function editProductVariant(Request $request, $product_code){
         $post = $request->except('_token');
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'Product Variant Edit',
+            'title'          => 'Product Variant (SKU)',
+            'sub_title'      => 'Product Variant (SKU) Edit',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-list'
         ];
@@ -154,8 +154,8 @@ class ProductVariantGroupController extends Controller
         }
 
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'Product Variant Price',
+            'title'          => 'Product Variant (SKU)',
+            'sub_title'      => 'Product Variant (SKU) Price',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-price',
             'filter_title'   => 'Filter Product Variant',
@@ -233,8 +233,8 @@ class ProductVariantGroupController extends Controller
             return redirect('product-variant-group/detail/' . $outlet);
         }
         $data = [
-            'title'          => 'Product Variant',
-            'sub_title'      => 'Product Variant Detail',
+            'title'          => 'Product Variant (SKU)',
+            'sub_title'      => 'Product Variant (SKU) Detail',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-detail',
             'filter_title'   => 'Filter Product Variant',
@@ -332,7 +332,7 @@ class ProductVariantGroupController extends Controller
 
     public function import(Request $request){
         $data = [
-            'title'          => 'Product Variant',
+            'title'          => 'Product Variant (SKU)',
             'sub_title'      => 'Import Product Variant',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-import-global'
@@ -426,7 +426,7 @@ class ProductVariantGroupController extends Controller
 
     public function importPrice(Request $request){
         $data = [
-            'title'          => 'Product Variant',
+            'title'          => 'Product Variant (SKU)',
             'sub_title'      => 'Import Product Variant Price',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-import-price'

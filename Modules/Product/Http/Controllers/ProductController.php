@@ -150,14 +150,14 @@ class ProductController extends Controller
                 break;
 
             case 'modifier-price':
-                $data['sub_title'] = 'Import Product Modifier Price';
+                $data['sub_title'] = 'Import Topping Price';
                 $data['menu_active'] = 'product-modifier';
                 $data['submenu_active'] = 'product-modifier-import-price';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
                 break;
 
             case 'modifier':
-                $data['sub_title'] = 'Import Product Modifier';
+                $data['sub_title'] = 'Import Topping';
                 $data['menu_active'] = 'product-modifier';
                 $data['submenu_active'] = 'product-modifier-import-global';
                 $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
@@ -269,7 +269,7 @@ class ProductController extends Controller
                 break;
 
             case 'modifier-price':
-                $tab_title = 'Product Modifier Price';
+                $tab_title = 'Topping Price';
                 if(!$data['products']){
                     $data['products'] = [
                         [
@@ -301,7 +301,7 @@ class ProductController extends Controller
                 break;
 
             case 'modifier':
-                $tab_title = 'Product Modifier';
+                $tab_title = 'Topping';
                 if(!$data['products']){
                     $data['products'] = [
                         [
