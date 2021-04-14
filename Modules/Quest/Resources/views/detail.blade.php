@@ -316,6 +316,25 @@
         });
     }
 	</script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#benefit-selector').on('change', function() {
+                if ($(this).val() == 'point') {
+                    $('#benefit-voucher').addClass('hidden');
+                    $('#benefit-voucher :input').prop('disabled', true);
+
+                    $('#benefit-point').removeClass('hidden');
+                    $('#benefit-point :input').removeAttr('disabled');
+                } else {
+                    $('#benefit-point').addClass('hidden');
+                    $('#benefit-point :input').prop('disabled', true);
+
+                    $('#benefit-voucher').removeClass('hidden');
+                    $('#benefit-voucher :input').removeAttr('disabled');
+                }
+            }).change();
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -398,7 +417,7 @@
                 <div class="tab-pane active" id="info">
                     @if(MyHelper::hasAccess([230], $grantedFeature))
                         @if ($data['quest']['is_complete'] != 1)
-                            <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Deals</a>
+                            <a data-toggle="modal" href="#small" class="btn btn-primary blue" style="float: right; "><i class="fa fa-play"></i> Start Quest</a>
                         @endif
                     @endif
                     <ul class="nav nav-tabs">

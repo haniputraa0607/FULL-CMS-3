@@ -621,7 +621,7 @@
                                     <div class="col-md-4">
                                         <div class="input-icon right">
                                             <div class="input-group">
-                                                <input type="text" class="form_datetime form-control" name="quest[publish_end]" value="{{ old('quest.publish_end.') }}" autocomplete="off">
+                                                <input type="text" class="form_datetime form-control" name="quest[publish_end]" value="{{ old('quest.publish_end') }}" autocomplete="off">
                                                 <span class="input-group-btn">
                                                     <button class="btn default" type="button">
                                                         <i class="fa fa-calendar"></i>

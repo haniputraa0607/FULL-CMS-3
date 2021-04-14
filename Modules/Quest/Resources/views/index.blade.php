@@ -66,11 +66,6 @@ $grantedFeature     = session('granted_features');
                             </div>
                         </button>
                         <ul class="dropdown-menu dropdown">
-                            @if(MyHelper::hasAccess([224], $grantedFeature))
-                            <li style="margin: 0px;">
-                                <a href="#editQuest" data-toggle="modal" onclick="editQuest(${item.id_quest})"> Edit </a>
-                            </li>
-                            @endif
                             <li style="margin: 0px;">
                                 <a href="{{url('quest/detail/${item.id_quest}')}}/"> Detail </a>
                             </li>

@@ -146,6 +146,7 @@ class QuestController extends Controller
             $data['product']    = MyHelper::get('product/be/list')['result'];
             $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
             $data['province']   = MyHelper::get('province/list')['result'];
+            $data['deals']      = MyHelper::get('quest/list-deals')['result'];;
 
             return view('quest::detail', $data);
         } else {
@@ -200,5 +201,28 @@ class QuestController extends Controller
             return redirect('quest/detail/'.$slug.'#content')->withSuccess(['Update Success']);
         }
         return redirect('quest/detail/'.$slug.'#content')->withErrors($result['messages']??['Something went wrong']);
+    }
+
+    public function updateQuest(Request $request, $slug)
+    {
+        $post = $request->all();
+        if ($post['quest']['image']) {
+            $post['quest']['image'] = MyHelper::encodeImage($post['quest']['image']);
+        }
+        $result = MyHelper::post('quest/update-quest', $post + ['id_quest' => $slug]);
+        if (($result['status'] ?? false) == 'success') {
+            return redirect('quest/detail/'.$slug)->withSuccess(['Update Success']);
+        }
+        return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
+    }
+
+    public function updateBenefit(Request $request, $slug)
+    {
+        $post = $request->all();
+        $result = MyHelper::post('quest/update-benefit', $post + ['id_quest' => $slug]);
+        if (($result['status'] ?? false) == 'success') {
+            return redirect('quest/detail/'.$slug)->withSuccess(['Update Success']);
+        }
+        return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
     }
 }

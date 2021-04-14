@@ -1,4 +1,4 @@
-<form method="post" action="{{url('quest/detail/'.$data['quest']['id_quest'].'/update-content')}}">
+<form method="post" action="{{url('quest/detail/'.$data['quest']['id_quest'].'/update/content')}}">
     @csrf
     <div class="row form-group">
         <div class="input-icon text-right">

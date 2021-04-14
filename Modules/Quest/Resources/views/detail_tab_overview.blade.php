@@ -1,4 +1,10 @@
-                    <div class="row">
+<?php
+    use App\Lib\MyHelper;
+    $configs  = session('configs');
+    $grantedFeature     = session('granted_features');
+    date_default_timezone_set('Asia/Jakarta');
+ ?>
+                     <div class="row">
                         <div class="col-md-5">
                             <div class="portlet profile-info portlet light bordered">
                                 <div class="portlet-title" style="display: flex;"> 
@@ -14,12 +20,12 @@
                                                 <span class="sale-info"> Status 
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
-                                                @if ($data['quest']['date_start'] < date('Y-m-d H:i:s'))
+                                                @if ($data['quest']['date_start'] < date('Y-m-d H:i:s') && $data['quest']['is_complete'])
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                                                @elseif (!is_null($data['quest']['date_end']) && $data['quest']['date_end'] > date('Y-m-d H:i:s'))
+                                                @elseif (!is_null($data['quest']['date_end']) && $data['quest']['date_end'] > date('Y-m-d H:i:s') && $data['quest']['is_complete'])
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
                                                 @else
-                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
+                                                    <span class="sale-num sbold badge badge-pill secondary" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Not Started</span>
                                                 @endif
                                             </li>
                                             <li>
@@ -79,6 +85,11 @@
                                                 {!!$data['quest']['description'] ?: '<span class="text-muted">No description</span>'!!}
                                             </li>
                                         </ul>
+                                        @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
+                                        <div class="text-center">
+                                            <a data-toggle="modal" href="#modalEditQuest" class="btn btn-primary blue"><i class="fa fa-pencil"></i> Edit Quest</a>
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -130,11 +141,16 @@
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
                                                 <span class="sale-num font-black">
-                                                    {{\App\Lib\MyHelper::request_number($data['quest']['quest_benefit']['value'], '_CURRENCY')}}
+                                                    {{\App\Lib\MyHelper::thousand_number_format($data['quest']['quest_benefit']['value'], '_CURRENCY')}}
                                                 </span>
                                             </li>
                                             @endif
                                         </ul>
+                                        @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
+                                        <div class="text-center">
+                                            <a data-toggle="modal" href="#modalEditBenefit" class="btn btn-primary blue"><i class="fa fa-pencil"></i> Edit Benefit</a>
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
