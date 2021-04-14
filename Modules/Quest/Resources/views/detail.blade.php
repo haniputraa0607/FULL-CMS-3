@@ -1,6 +1,7 @@
 <?php
     use App\Lib\MyHelper;
     $configs  = session('configs');
+    $grantedFeature     = session('granted_features');
     date_default_timezone_set('Asia/Jakarta');
  ?>
 @extends('layouts.main-closed')
@@ -18,6 +19,7 @@
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
     <link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" /> 
 	
 	<style type="text/css">
 	    #sample_1_filter label, #sample_5_filter label, #sample_4_filter label, .pagination, .dataTables_filter label {
@@ -45,6 +47,15 @@
         .pull-right>.dropdown-menu{
             left: 0;
         }
+        .fa-chevron-right {
+            transition-duration: .2s;
+        }
+        a[aria-expanded=true] .fa-chevron-right {
+            transform: rotate(-90deg);
+        }
+        a[aria-expanded=false] .fa-chevron-right {
+            transform: rotate(90deg);
+        }
 	</style>
 @endsection
 
@@ -59,6 +70,7 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
@@ -104,6 +116,84 @@
                 allowClear: true,
                 width: '100%'
             });
+        });
+
+        function sendFile(file, id){
+            token = "<?php echo csrf_token(); ?>";
+            var data = new FormData();
+            data.append('image', file);
+            data.append('_token', token);
+            // document.getElementById('loadingDiv').style.display = "inline";
+            $.ajax({
+                url : "{{url('summernote/picture/upload/advert')}}",
+                data: data,
+                type: "POST",
+                processData: false,
+                contentType: false,
+                success: function(url) {
+                    if (url['status'] == "success") {
+                        console.log(url);
+                        $('#'+id).summernote('editor.saveRange');
+                        $('#'+id).summernote('editor.restoreRange');
+                        $('#'+id).summernote('editor.focus');
+                        $('#'+id).summernote('insertImage', url['result']['pathinfo'], url['result']['filename']);
+                    }
+                    // document.getElementById('loadingDiv').style.display = "none";
+                },
+                error: function(data){
+                    // document.getElementById('loadingDiv').style.display = "none";
+                }
+            })
+        }
+
+        $('.summernote').summernote({
+            placeholder: true,
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                    ['style', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                ],
+            fontNames: ['Open Sans', 'Product Sans'],
+            fontNamesIgnoreCheck: ['Product Sans'],
+            callbacks: {
+                onInit: function(e) {
+                    this.placeholder
+                    ? e.editingArea.find(".note-placeholder").html(this.placeholder)
+                    : e.editingArea.remove(".note-placeholder");
+                },
+                onImageUpload: function(files){
+                    sendFile(files[0]);
+                },
+                onMediaDelete: function(target){
+                    var name = target[0].src;
+                    token = "{{ csrf_token() }}";
+                    $.ajax({
+                        type: 'post',
+                        data: 'filename='+name+'&_token='+token,
+                        url: "{{url('summernote/picture/delete/deals')}}",
+                        success: function(data){
+                            // console.log(data);
+                        }
+                    });
+                }
+            }
+        });
+        $('#quest-content-container').on('click', '.delete-btn', function() {
+            $($(this).parents('.accordion-item')[0]).remove();
+        });
+
+        $('.sortable').sortable({
+            items: '> div:not(.unsortable)',
+            handle: ".sortable-handle",
+            connectWith: ".sortable",
+            axis: 'y',
         });
     })
     function removeBox(params) {
@@ -152,6 +242,79 @@
             btn.find('#moreBtn').show()
         });
     }
+    let detail_count = $('#quest-content-container').children().length;
+    function addCustomContent() {
+        detail_count++;
+        $('#quest-content-container').append(`
+            <div id="accordion${detail_count}" class="accordion-item" style="padding-bottom: 10px;">
+                <div class="row">
+                    <div class="col-md-6 content-title">
+                        <div class="input-group">
+                            <span class="input-group-addon sortable-handle"><a><i class="fa fa-arrows-v"></i></a></span>
+                            <input type="text" class="form-control" name="content[${detail_count}][title]"  placeholder="Content Title" required maxlength="20" value="">
+                            <input type="hidden" name="content[${detail_count}][id_quest_content]" value="0" >
+                            <input type="hidden" name="content_order[]" value="${detail_count}">
+                            <span class="input-group-addon">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion${detail_count}" aria-expanded="false" href="#collapse_${detail_count}">
+                                    <i class="fa fa-chevron-right"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="checkbox" class="make-switch visibility-switch" data-on="success" data-on-color="success" data-on-text="Visible" data-off-text="Hidden" data-size="normal" name="content[${detail_count}][is_active]">
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <button class="btn btn-danger delete-btn" type="button"><i class="fa fa-times"></i></button>
+                    </div>
+                    <div class="col-md-12 accordion-body collapse" style="margin-top: 10px; " id="collapse_${detail_count}">
+                        <textarea name="content[${detail_count}][content]" class="form-control summernote" placeholder="Content"></textarea>
+                    </div>
+                </div>
+                <hr style="border-bottom: 1px solid #F0F5F7;margin: 10px 0"/>
+            </div>
+        `);
+        $(`input[name="content[${detail_count}][is_active]"]`).bootstrapSwitch();
+        $(`textarea[name="content[${detail_count}][content]"]`).summernote({
+            placeholder: true,
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                    ['style', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                ],
+            fontNames: ['Open Sans', 'Product Sans'],
+            fontNamesIgnoreCheck: ['Product Sans'],
+            callbacks: {
+                onInit: function(e) {
+                    this.placeholder
+                    ? e.editingArea.find(".note-placeholder").html(this.placeholder)
+                    : e.editingArea.remove(".note-placeholder");
+                },
+                onImageUpload: function(files){
+                    sendFile(files[0]);
+                },
+                onMediaDelete: function(target){
+                    var name = target[0].src;
+                    token = "{{ csrf_token() }}";
+                    $.ajax({
+                        type: 'post',
+                        data: 'filename='+name+'&_token='+token,
+                        url: "{{url('summernote/picture/delete/deals')}}",
+                        success: function(data){
+                            // console.log(data);
+                        }
+                    });
+                }
+            }
+        });
+    }
 	</script>
 @endsection
 
@@ -176,439 +339,7 @@
 	</ul>
 </div>
 @include('layouts.notifications')
-<div class="modal fade bs-modal-lg" id="addBadge" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg" style="width: 800px;">
-        <form role="form" action="{{ url('quest/create') }}" method="post" enctype="multipart/form-data" class="form-horizontal modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Add New Quest Rule</h4>
-            </div>
-            <div class="modal-body box-repeat" style="padding: 20ox;display: table;width: 100%;">
-                <div class="box">
-                    <div class="col-md-2 text-right" style="text-align: -webkit-right;">
-                        <a href="javascript:;" onclick="removeBox(this)" class="remove-box btn btn-danger">
-                            <i class="fa fa-close"></i>
-                        </a>
-                    </div>
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                        Name
-                                        <span class="required" aria-required="true"> * </span>
-                                        <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
-                                    </label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Quest" required maxlength="20">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                        Short Description
-                                        <span class="required" aria-required="true"> * </span>
-                                        <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Short Description" data-container="body"></i>
-                                    </label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" name="detail[0][short_description]" placeholder="Short Description" required maxlength="20">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                    Quest Category Product Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
-                                    </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <select class="form-control select2-multiple" data-placeholder="Select Category Product" name="detail[0][id_product_category]">
-                                            <option></option>
-                                            @foreach ($category as $item)
-                                                <option value="{{$item['id_product_category']}}">{{$item['product_category_name']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
-                                            <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[0][different_category_product]">
-                                                <option></option>    
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Rule for different category product" data-container="body"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                    Quest Product Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
-                                    </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[0][id_product]">
-                                            <option></option>
-                                            @foreach ($product as $item)
-                                                <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="detail[0][product_total]" placeholder="Total Product">
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                    Quest Transaction Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
-                                    </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control digit_mask" name="detail[0][trx_nominal]" placeholder="Transaction Nominal">
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control digit_mask" name="detail[0][trx_total]" placeholder="Transaction Total">
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                    Quest Outlet Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
-                                    </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[0][id_outlet]">
-                                            <option></option>
-                                            @foreach ($outlet as $item)
-                                                <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
-                                            <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[0][different_outlet]">
-                                                <option></option>    
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Rule for different outlet" data-container="body"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                    Quest Province Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a province. leave blank, if the quest is not based on the province" data-container="body"></i>
-                                    </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <select class="form-control select2-multiple" data-placeholder="Select Province" name="detail[0][id_province]">
-                                            <option></option>
-                                            @foreach ($province as $item)
-                                                <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
-                                            <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[0][different_province]">
-                                                <option></option>    
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Rule for different province" data-container="body"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <div class="btn-rmv form-action col-md-12 text-right">
-                    <a href="javascript:;" class="btn btn-success addBox">
-                        <i class="fa fa-plus"></i> Add New Input
-                    </a>
-                </div>
-            </div>
-            <div class="modal-footer">
-                {{ csrf_field() }}
-                <input type="text" hidden name="id_quest" value="{{$data['quest']['id_quest']}}">
-                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn green">Save changes</button>
-            </div>
-        </form>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<div class="modal fade bs-modal-lg" id="editBadge" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg" style="width: 700px;">
-        <form role="form" action="{{ url('quest/update/detail') }}" method="post" enctype="multipart/form-data" class="form-horizontal modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Edit Quest Rule</h4>
-            </div>
-            <div class="modal-body" style="padding: 20ox;display: table;width: 100%;">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Name
-                                <span class="required" aria-required="true"> * </span>
-                                <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" placeholder="Detail Quest" required maxlength="20">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Short Description
-                                <span class="required" aria-required="true"> * </span>
-                                <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Short Description" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="short_description" placeholder="Short Description" required maxlength="20">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Quest Category Product Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Category Product" name="id_product_category">
-                                    <option></option>
-                                    @foreach ($category as $item)
-                                        <option value="{{$item['id_product_category']}}">{{$item['product_category_name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <select class="form-control select2-multiple" data-placeholder="Different Rule" name="different_category_product">
-                                        <option></option>    
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Rule for different category product" data-container="body"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Quest Product Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_product">
-                                    <option></option>
-                                    @foreach ($product as $item)
-                                        <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="product_total" placeholder="Total Product">
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Quest Transaction Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <input type="text" class="form-control digit_mask" name="trx_nominal" placeholder="Transaction Nominal">
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <input type="text" class="form-control digit_mask" name="trx_total" placeholder="Transaction Total">
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Quest Outlet Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_outlet">
-                                    <option></option>]
-                                    @foreach ($outlet as $item)
-                                        <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <select class="form-control select2-multiple" data-placeholder="Different Rule" name="different_outlet">
-                                        <option></option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Rule for different outlet" data-container="body"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Quest Province Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Select a province. leave blank, if the quest is not based on the province" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Province" name="id_province">
-                                    <option></option>
-                                    @foreach ($province as $item)
-                                        <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <select class="form-control select2-multiple" data-placeholder="Different Rule" name="different_province">
-                                        <option></option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Rule for different province" data-container="body"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <input type="text" hidden name='id_quest_detail'>
-                {{ csrf_field() }}
-                <input type="text" name="id_quest_detail" hidden>
-                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn green">Save changes</button>
-            </div>
-        </form>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
+@include('quest::detail_modal')
 <div class="row" style="margin-top:20px">
     {{-- <div class="col-md-12">
         <div class="row">
@@ -655,199 +386,35 @@
             </div>
         </div>
     </div> --}}
-    <div class="col-md-12">
-        <div class="col-md-12">
-            <div class="tabbable-line tabbable-full-width">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#promocampaign" data-toggle="tab"> Quest </a>
-                    </li>
-                </ul>
+    <div class="portlet light bordered">
+        <div class="portlet-title tabbable-line">
+            <div class="caption">
+                <span class="caption-subject font-blue bold uppercase">{{ $data['quest']['name'] }}</span>
             </div>
+        </div>
+        <div class="portlet-body">
 
-            <div class="tab-content" style="margin-top:20px">
-                <div class="tab-pane active" id="promocampaign">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="portlet profile-info portlet light bordered">
-                                <div class="portlet-title" style="display: flex;"> 
-                                    <img src="{{$data['quest']['image']}}" style="width: 40px;height: 40px;" class="img-responsive" alt="">
-                                    <span class="caption font-blue sbold uppercase">
-                                        &nbsp;&nbsp;{{$data['quest']['name']}}
-                                    </span>
-                                </div>
-                                <div class="portlet sale-summary">
-                                    <div class="portlet-body">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <span class="sale-info"> Status 
-                                                    <i class="fa fa-img-up"></i>
-                                                </span>
-                                                @if ($data['quest']['date_start'] < date('Y-m-d H:i:s'))
-                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                                                @elseif (!is_null($data['quest']['date_end']) && $data['quest']['date_end'] > date('Y-m-d H:i:s'))
-                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
-                                                @else
-                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not Started</span>
-                                                @endif
-                                            </li>
-                                            <li>
-                                                <span class="sale-info"> Pulished at
-                                                    <i class="fa fa-img-up"></i>
-                                                </span>
-                                                <span class="sale-num font-black">
-                                                    {{date('d F Y H:i', strtotime($data['quest']['publish_start']))}}
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span class="sale-info"> Created at
-                                                    <i class="fa fa-img-up"></i>
-                                                </span>
-                                                <span class="sale-num font-black">
-                                                    {{date('d F Y H:i', strtotime($data['quest']['created_at']))}}
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="info">
+                    @if(MyHelper::hasAccess([230], $grantedFeature))
+                        @if ($data['quest']['is_complete'] != 1)
+                            <a data-toggle="modal" href="#small" class="btn btn-primary" style="float: right; ">Start Deals</a>
+                        @endif
+                    @endif
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#overview" data-toggle="tab"> Quest Overview </a>
+                        </li>
+                        <li>
+                            <a href="#content" data-toggle="tab"> Content Info </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="margin-top:20px">
+                        <div class="tab-pane active" id="overview">
+                            @include('quest::detail_tab_overview')
                         </div>
-                        <div class="col-md-7 profile-info">
-                            <div class="profile-info portlet light bordered">
-                                <div class="portlet-title"> 
-                                    <span class="caption font-blue sbold uppercase">{{$data['quest']['name']}} Badge </span>
-                                    <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Bagde</a>
-                                </div>
-                                <div class="portlet-body row">
-                                    @foreach ($data['detail'] as $item)
-                                    <div class="col-md-12 profile-info">
-                                        <div class="profile-info portlet light bordered">
-                                            <div class="portlet-title"> 
-                                                <div class="col-md-6" style="display: flex;padding-left: 0px;">
-                                                    <span class="caption font-blue sbold uppercase" style="padding: 8px 0px;font-size: 16px;">
-                                                        {{$item['name']}}
-                                                    </span>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="btn-group btn-group-solid pull-right">
-                                                        <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                            <div id="loadingBtn" hidden>
-                                                                <i class="fa fa-spinner fa-spin"></i> Loading
-                                                            </div>
-                                                            <div id="moreBtn">
-                                                                <i class="fa fa-ellipsis-horizontal"></i> More
-                                                                <i class="fa fa-angle-down"></i>
-                                                            </div>
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li style="margin: 0px;">
-                                                                <a href="#editBadge" data-toggle="modal" onclick="editBadge({{json_encode($item)}})"> Edit </a>
-                                                            </li>
-                                                            <li style="margin: 0px;">
-                                                                <a href="javascript:;" onclick="removeBadge(this, {{$item['id_quest_detail']}})"> Remove </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="portlet-body">
-                                                <div class="row" style="padding: 5px;position: relative;">
-                                                    <div class="col-md-12">
-                                                        @if (!is_null($item['id_product_category']) || !is_null($item['different_category_product']))
-                                                            <div class="row static-info">
-                                                                <div class="col-md-5 value">Product Category Rule</div>
-                                                            </div>
-                                                            <div class="row static-info">
-                                                                @if (!is_null($item['id_product_category']))
-                                                                    <div class="col-md-5 name">Product Category</div>
-                                                                    <div class="col-md-7 value">: {{$item['product_category']['product_category_name']}}</div>
-                                                                @endif
-                                                                @if (!is_null($item['different_category_product']))
-                                                                    <div class="col-md-5 name">Product Category Different ?</div>
-                                                                    @if ($item['different_category_product'] == 0)
-                                                                        <div class="col-md-7 value">: No</div>
-                                                                    @else
-                                                                        <div class="col-md-7 value">: Yes</div>
-                                                                    @endif
-                                                                @endif
-                                                            </div>
-                                                        @endif
-                                                        @if (!is_null($item['id_product']) || !is_null($item['product_total']))
-                                                            <div class="row static-info">
-                                                                <div class="col-md-5 value">Product Rule</div>
-                                                            </div>
-                                                            <div class="row static-info">
-                                                                @if (!is_null($item['id_product']))
-                                                                    <div class="col-md-5 name">Product</div>
-                                                                    <div class="col-md-7 value">: {{$item['product']['product_name']}}</div>
-                                                                @endif
-                                                                @if (!is_null($item['product_total']))
-                                                                    <div class="col-md-5 name">Product Total</div>
-                                                                    <div class="col-md-7 value">: {{$item['product_total']}}</div>
-                                                                @endif
-                                                            </div>
-                                                        @endif
-                                                        @if (!is_null($item['id_outlet']) || !is_null($item['different_outlet']))
-                                                            <div class="row static-info">
-                                                                <div class="col-md-5 value">Outlet Rule</div>
-                                                            </div>
-                                                            <div class="row static-info">
-                                                                @if (!is_null($item['id_outlet']))
-                                                                    <div class="col-md-5 name">Outlet</div>
-                                                                    <div class="col-md-7 value">: {{$item['outlet']['outlet_name']}}</div>
-                                                                @endif
-                                                                @if (!is_null($item['different_outlet']))
-                                                                    <div class="col-md-5 name">Outlet Different ?</div>
-                                                                    @if ($item['different_outlet'] == 0)
-                                                                        <div class="col-md-7 value">: No</div>
-                                                                    @else
-                                                                        <div class="col-md-7 value">: Yes</div>
-                                                                    @endif
-                                                                @endif
-                                                            </div>
-                                                        @endif
-                                                        @if (!is_null($item['id_province']) || !is_null($item['different_province']))
-                                                            <div class="row static-info">
-                                                                <div class="col-md-5 value">Province Rule</div>
-                                                            </div>
-                                                            <div class="row static-info">
-                                                                @if (!is_null($item['id_province']))
-                                                                    <div class="col-md-5 name">Province</div>
-                                                                    <div class="col-md-7 value">: {{$item['province']['province_name']}}</div>
-                                                                @endif
-                                                                @if (!is_null($item['different_province']))
-                                                                    <div class="col-md-5 name">Province Different ?</div>
-                                                                    @if ($item['different_province'] == 0)
-                                                                        <div class="col-md-7 value">: No</div>
-                                                                    @else
-                                                                        <div class="col-md-7 value">: Yes</div>
-                                                                    @endif
-                                                                @endif
-                                                            </div>
-                                                        @endif
-                                                        @if (!is_null($item['trx_nominal']) || !is_null($item['trx_total']))
-                                                            <div class="row static-info">
-                                                                <div class="col-md-5 value">Transaction Rule</div>
-                                                            </div>
-                                                            <div class="row static-info">
-                                                                @if (!is_null($item['trx_nominal']))
-                                                                    <div class="col-md-5 name">Transaction Nominal</div>
-                                                                    <div class="col-md-7 value">: Minimum {{number_format($item['trx_nominal'])}}</div>
-                                                                @endif
-                                                                @if (!is_null($item['trx_total']))
-                                                                    <div class="col-md-5 name">Transaction Total</div>
-                                                                    <div class="col-md-7 value">: Minimum {{number_format($item['trx_total'])}}</div>
-                                                                @endif
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
+                        <div class="tab-pane" id="content">
+                            @include('quest::detail_tab_content')
                         </div>
                     </div>
                 </div>

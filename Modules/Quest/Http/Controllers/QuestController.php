@@ -53,6 +53,8 @@ class QuestController extends Controller
         $data['product']    = MyHelper::get('product/be/list')['result'];
         $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
         $data['province']   = MyHelper::get('province/list')['result'];
+        $data['deals']      = MyHelper::get('quest/list-deals')['result'];;
+        $data['details']     = (old('detail') ?? false) ?: [[]];
 
         return view('quest::create', $data);
     }
@@ -117,6 +119,7 @@ class QuestController extends Controller
             if (isset($save['status']) && $save['status'] == "success") {
                 return redirect('quest/detail/' . $save['data']);
             } else {
+                return ['error' => $save];
                 return back()->with('error', $save['errors'] ?? ['Something went wrong'])->withInput();
             }
         }
@@ -137,7 +140,6 @@ class QuestController extends Controller
         ];
 
         $getDetail = MyHelper::post('quest/detail', ['id_quest' => $id]);
-
         if (isset($getDetail['status']) && $getDetail['status'] == "success") {
             $data['data']       = $getDetail['data'];
             $data['category']   = MyHelper::get('product/category/be/list')['result'];
@@ -147,19 +149,7 @@ class QuestController extends Controller
 
             return view('quest::detail', $data);
         } else {
-            $data = [
-                'title'          => 'Quest',
-                'sub_title'      => 'Quest Create',
-                'menu_active'    => 'quest',
-                'submenu_active' => 'quest-create'
-            ];
-
-            $data['category']   = MyHelper::get('product/category/be/list')['result'];
-            $data['product']    = MyHelper::get('product/be/list')['result'];
-            $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
-            $data['province']   = MyHelper::get('province/list')['result'];
-
-            return view('quest::create', $data);
+            return abort(404);
         }
     }
 
@@ -200,5 +190,15 @@ class QuestController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateContent(Request $request, $slug)
+    {
+        $post = $request->all();
+        $result = MyHelper::post('quest/update-content', $post + ['id_quest' => $slug]);
+        if (($result['status'] ?? false) == 'success') {
+            return redirect('quest/detail/'.$slug.'#content')->withSuccess(['Update Success']);
+        }
+        return redirect('quest/detail/'.$slug.'#content')->withErrors($result['messages']??['Something went wrong']);
     }
 }
