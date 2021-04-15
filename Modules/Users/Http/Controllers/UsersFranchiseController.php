@@ -24,8 +24,8 @@ class UsersFranchiseController extends Controller
         $post = $request->all();
 
         $data = [
-            'title'          => 'User Franchise',
-            'sub_title'      => 'User Franchise List',
+            'title'          => 'User Mitra',
+            'sub_title'      => 'User Mitra List',
             'menu_active'    => 'user-franchise',
             'submenu_active' => 'user-franchise-list',
         ];
@@ -96,8 +96,8 @@ class UsersFranchiseController extends Controller
     public function create()
     {
         $data = [
-            'title'          => 'User Franchise',
-            'sub_title'      => 'New User Franchise',
+            'title'          => 'User Mitra',
+            'sub_title'      => 'New User Mitra',
             'menu_active'    => 'user-franchise',
             'submenu_active' => 'user-franchise-new',
         ];
@@ -117,7 +117,7 @@ class UsersFranchiseController extends Controller
         $result = MyHelper::post('franchise/user/store', $post);
 
         if (($result['status'] ?? false) == 'success') {
-            return redirect('user/user-franchise')->withSuccess(['Success create new user franchise']);
+            return redirect('user/user-franchise')->withSuccess(['Success create new user mitra']);
         } else {
             return back()->withInput()->withErrors($result['messages'] ?? ['Something went wrong']);
         }
@@ -132,8 +132,8 @@ class UsersFranchiseController extends Controller
     public function detail($user_id)
     {
         $data = [
-            'title'          => 'User Franchise',
-            'sub_title'      => 'User Franchise Detail',
+            'title'          => 'User Mitra',
+            'sub_title'      => 'User Mitra Detail',
             'menu_active'    => 'user-franchise',
             'submenu_active' => 'user-franchise-list',
         ];
@@ -145,7 +145,7 @@ class UsersFranchiseController extends Controller
 
             return view('users::user_franchise.detail', $data);
         }else{
-            return redirect('user/user-franchise')->withErrors($result['messages'] ?? ['Failed get detail user franchise']);
+            return redirect('user/user-franchise')->withErrors($result['messages'] ?? ['Failed get detail user mitra']);
         }
     }
 
@@ -163,9 +163,9 @@ class UsersFranchiseController extends Controller
 
         $result = MyHelper::post('franchise/user/update', $post);
         if(isset($result['status']) && $result['status'] == 'success'){
-            return redirect('user/user-franchise/detail/'.$user_id)->withSuccess(['Success update user franchise']);
+            return redirect('user/user-franchise/detail/'.$user_id)->withSuccess(['Success update user mitra']);
         }else{
-            return redirect('user/user-franchise/detail/'.$user_id)->withErrors($result['messages'] ?? ['Failed update detail user franchise']);
+            return redirect('user/user-franchise/detail/'.$user_id)->withErrors($result['messages'] ?? ['Failed update detail user mitra']);
         }
     }
 
@@ -186,9 +186,9 @@ class UsersFranchiseController extends Controller
 
         if(empty($post)){
             if($key == 'reset-pin-user'){
-                $title = 'Reset Pin User Franchise';
+                $title = 'Reset Pin User Mitra';
             }else{
-                $title = 'New User Franchise';
+                $title = 'New User Mitra';
             }
 
             $data['page_title'] = '[Response] '.$title;
@@ -212,8 +212,8 @@ class UsersFranchiseController extends Controller
 
     public function import(){
         $data = [
-            'title'          => 'User Franchise',
-            'sub_title'      => 'Import User Franchise',
+            'title'          => 'User Mitra',
+            'sub_title'      => 'Import User Mitra',
             'menu_active'    => 'user-franchise',
             'submenu_active' => 'user-franchise-import',
         ];
@@ -245,7 +245,7 @@ class UsersFranchiseController extends Controller
             $datas['All Type'] = $data;
         }
 
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_user franchise.xlsx');
+        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_user mitra.xlsx');
     }
 
     public function importSave(Request $request){

@@ -81,9 +81,11 @@ class UsersController extends Controller
 				$data['submenu_active'] = 'complete-user-profile-point-bonus';
 				break;
             case 'new-user-franchise':
+                $data['title'] = 'User Auto Response New User Mitra';
                 $data['menu_active'] = 'user-franchise';
                 break;
             case 'reset-password-user-franchise':
+                $data['title'] = 'Reset Password User Mitra';
                 $data['menu_active'] = 'user-franchise';
                 break;
 						

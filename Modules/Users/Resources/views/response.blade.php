@@ -592,7 +592,16 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 	<div class="portlet-title">
 		<div class="caption">
 			@if($subject == 'enquiry-partnership') @php $subject = 'enquiry-karir'; @endphp @endif
-			<span class="caption-subject font-dark sbold uppercase font-blue">Auto Response {{str_replace('_','-',str_replace('-',' ',$subject))}}</span>
+			<span class="caption-subject font-dark sbold uppercase font-blue">
+				@if($subject == 'new-user-franchise' || $subject == 'reset-password-user-franchise')
+					<?php
+						$string = str_replace('franchise', 'mitra', $subject);
+					?>
+					Auto Response {{str_replace('_','-',str_replace('-',' ',$string))}}
+				@else
+					Auto Response {{str_replace('_','-',str_replace('-',' ',$subject))}}
+				@endif
+			</span>
 		</div>
 	</div>
 	<div class="portlet-body form">
