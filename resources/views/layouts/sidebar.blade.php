@@ -878,7 +878,7 @@
 									</li>
 									<li class="nav-item {{($submenu_active == 'product-modifier-group-import-price') ? 'active open' : ''}}">
 										<a href="{{url('product/modifier-group/import-price')}}" class="nav-link ">
-											<span class="title">Import Modifier Group Price</span>
+											<span class="title">Import Product Variant NON PRICE (NO SKU) Price</span>
 										</a>
 									</li>
 								</ul>

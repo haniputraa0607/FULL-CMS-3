@@ -96,7 +96,7 @@ class ModifierGroupController extends Controller
         }
         $result = MyHelper::post('product/modifier-group/create', $post);
         if (($result['status'] ?? false) == 'success') {
-            return redirect('product/modifier-group')->with('success', ['Success create modifier group']);
+            return redirect('product/modifier-group')->with('success', ['Success create product variant NON PRICE (NO SKU)']);
         } else {
             return back()->withErrors($result['messages'] ?? ['Something went wrong'])->withInput();
         }
@@ -127,7 +127,7 @@ class ModifierGroupController extends Controller
             $post['id_product_modifier_group'] = $id;
             $result = MyHelper::post('product/modifier-group/update', $post);
             if (isset($result['status']) && $result['status'] == 'success') {
-                return redirect('product/modifier-group/edit/' . $id)->with('success', ['Success update modifier group']);
+                return redirect('product/modifier-group/edit/' . $id)->with('success', ['Success update product variant NON PRICE (NO SKU)']);
             } else {
                 return back()->withErrors($result['messages'] ?? [$result['message'] ?? 'Something went wrong'])->withInput();
             }
@@ -146,7 +146,7 @@ class ModifierGroupController extends Controller
             'sub_title'      => 'Modifier Group Prices',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-price',
-            'filter_title'   => 'Filter Modifier Group',
+            'filter_title'   => 'Filter Product Variant NON PRICE (NO SKU)',
         ];
         if (session('product_modifier_group_price_filter')) {
             $post             = session('product_modifier_group_price_filter');
@@ -213,7 +213,7 @@ class ModifierGroupController extends Controller
             'sub_title'      => 'Modifier Group Detail',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-detail',
-            'filter_title'   => 'Filter Modifier Group',
+            'filter_title'   => 'Filter Product Variant NON PRICE (NO SKU)',
         ];
         if (session('product_modifier_group_detail_filter')) {
             $post             = session('product_modifier_group_detail_filter');
@@ -241,8 +241,8 @@ class ModifierGroupController extends Controller
     }
 
     /**
-     * update detail product modifiers
-     * @return view list modifiers detail
+     * update detail product toppings
+     * @return view list toppings detail
      */
     public function updateDetail(Request $request, $id_outlet = null)
     {
@@ -270,9 +270,9 @@ class ModifierGroupController extends Controller
         $result = MyHelper::post('product/modifier-group/delete', ['id_product_modifier_group' => $id]);
 
         if (isset($result['status']) && $result['status'] == 'success') {
-            return redirect('product/modifier-group')->with('success', ['Success delete modifier group']);
+            return redirect('product/modifier-group')->with('success', ['Success delete product variant NON PRICE (NO SKU)']);
         }
-        return redirect('product/modifier-group')->withErrors(['Fail delete modifier group']);
+        return redirect('product/modifier-group')->withErrors(['Fail delete product variant NON PRICE (NO SKU)']);
     }
 
     public function export(Request $request) {
@@ -297,7 +297,7 @@ class ModifierGroupController extends Controller
         }else{
             $datas['All Type'] = $data;
         }
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product modifier group.xlsx');
+        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product product variant NON PRICE (NO SKU).xlsx');
     }
 
     public function import(Request $request){
@@ -354,7 +354,7 @@ class ModifierGroupController extends Controller
     public function importPrice(Request $request){
         $data = [
             'title'          => 'Modifier Group Price',
-            'sub_title'      => 'Import Modifier Group Price',
+            'sub_title'      => 'Import Product Variant NON PRICE (NO SKU) Price',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-import-price'
         ];

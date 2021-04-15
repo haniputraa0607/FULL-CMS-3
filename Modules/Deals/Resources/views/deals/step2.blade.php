@@ -871,7 +871,7 @@
 									<div class="col-md-3">
 										<label class="control-label" id="product-discount-value">Discount Value</label>
 										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Besar diskon yang akan diberikan untuk setiap produk. Diskon akan dihitung dari harga produk tanpa harga modifier" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="Besar diskon yang akan diberikan untuk setiap produk. Diskon akan dihitung dari harga produk tanpa harga topping" data-container="body"></i>
 										<div class="input-group 
 											@if(
 												(	isset($result['deals_product_discount_rules']['discount_type']) && 

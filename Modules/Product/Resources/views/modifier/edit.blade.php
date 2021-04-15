@@ -117,7 +117,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Product modifier code" class="form-control" name="code" value="{{ old('code',$modifier['code']) }}" required>
+                                <input type="text" placeholder="Topping code" class="form-control" name="code" value="{{ old('code',$modifier['code']) }}" required>
                             </div>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                         <label class="col-md-3 control-label">Default Visibility
                             <span class="required" aria-required="true"> *
                             </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Default visibility untuk modifier apabila di outlet tidak di atur" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Default visibility untuk topping apabila di outlet tidak di atur" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
@@ -150,7 +150,7 @@
                         <label for="multiple" class="control-label col-md-3">Type
                             <span class="required" aria-required="true"> *
                             </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Jenis modifier, pilih New Type jika ingin memasukkan tipe lain yang belum ada" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Jenis topping, pilih New Type jika ingin memasukkan tipe lain yang belum ada" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
@@ -173,7 +173,7 @@
                         <label for="multiple" class="control-label col-md-3">Scope
                             <span class="required" aria-required="true"> *
                             </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih modifier ini akan tersedia dimana saja. Pilih global jika ingin tampil di semua produk" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih topping ini akan tersedia dimana saja. Pilih global jika ingin tampil di semua produk" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
