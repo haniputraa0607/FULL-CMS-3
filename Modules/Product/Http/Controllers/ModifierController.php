@@ -17,11 +17,11 @@ class ModifierController extends Controller
     public function index(Request $request)
     {
         $data = [
-            'title'          => 'Product Modifier',
-            'sub_title'      => 'List Product Modifier',
+            'title'          => 'Topping',
+            'sub_title'      => 'List Topping',
             'menu_active'    => 'product-modifier',
             'submenu_active' => 'product-modifier-list',
-            'filter_title'   => 'Filter Product Modifier',
+            'filter_title'   => 'Filter Topping',
         ];
         if (session('product_modifier_filter')) {
             $post             = session('product_modifier_filter');
@@ -51,8 +51,8 @@ class ModifierController extends Controller
     public function create()
     {
         $data = [
-            'title'          => 'Product Modifier',
-            'sub_title'      => 'New Product Modifier',
+            'title'          => 'Topping',
+            'sub_title'      => 'New Topping',
             'menu_active'    => 'product-modifier',
             'submenu_active' => 'product-modifier-new',
         ];
@@ -122,8 +122,8 @@ class ModifierController extends Controller
     public function show($id)
     {
         $data = [
-            'title'          => 'Product Modifier',
-            'sub_title'      => 'Detail Product Modifier',
+            'title'          => 'Topping',
+            'sub_title'      => 'Detail Topping',
             'menu_active'    => 'product-modifier',
             'submenu_active' => 'product-modifier-list',
         ];
@@ -223,11 +223,11 @@ class ModifierController extends Controller
             return redirect('product/modifier/price/' . $outlet);
         }
         $data = [
-            'title'          => 'Product Modifier',
-            'sub_title'      => 'Product Modifier Prices',
+            'title'          => 'Topping',
+            'sub_title'      => 'Topping Prices',
             'menu_active'    => 'product-modifier',
             'submenu_active' => 'product-modifier-price',
-            'filter_title'   => 'Filter Product Modifier',
+            'filter_title'   => 'Filter Topping',
         ];
         if (session('product_modifier_price_filter')) {
             $post             = session('product_modifier_price_filter');
@@ -296,11 +296,11 @@ class ModifierController extends Controller
             return redirect('product/modifier/detail/' . $outlet);
         }
         $data = [
-            'title'          => 'Product Modifier',
-            'sub_title'      => 'Product Modifier Details',
+            'title'          => 'Topping',
+            'sub_title'      => 'Topping Details',
             'menu_active'    => 'product-modifier',
             'submenu_active' => 'product-modifier-detail',
-            'filter_title'   => 'Filter Product Modifier',
+            'filter_title'   => 'Filter Topping',
         ];
         if (session('product_modifier_detail_filter')) {
             $post             = session('product_modifier_detail_filter');
@@ -354,8 +354,8 @@ class ModifierController extends Controller
 
     public function position(){
         $data = [
-            'title'          => 'Product Modifier',
-            'sub_title'      => 'Product Modifier Manage Position',
+            'title'          => 'Topping',
+            'sub_title'      => 'Topping Manage Position',
             'menu_active'    => 'product-modifier',
             'submenu_active' => 'product-modifier-position'
         ];

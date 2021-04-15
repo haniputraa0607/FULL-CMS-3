@@ -76,7 +76,7 @@
             var check = 0;
 
             if($("input[name='text']").val() === ""){
-                msg += '-Product Modifier group name can not be empty.<br>';
+                msg += '-Topping group name can not be empty.<br>';
             }
 
             if($("#modifier_assign_type").val() === ""){
@@ -96,14 +96,14 @@
                 if(document.getElementsByName(operator)[0]){
                     check++;
                     if(document.getElementsByName(operator)[0].value === ""){
-                        msg += '-Product Modifier name can not be empty<br>';
+                        msg += '-Topping name can not be empty<br>';
                         break;
                     }
                 }
             }
 
             if(check <= 0){
-                msg += '-Please add Product Modifier one or more.<br>';
+                msg += '-Please add Topping one or more.<br>';
             }
 
             if(msg === ""){
@@ -141,7 +141,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase font-blue">New Product Modifier Group</span>
+                <span class="caption-subject font-dark sbold uppercase font-blue">New Product Variant NON PRICE (NO SKU)</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -151,11 +151,11 @@
                         <label class="col-md-3 control-label">Modifier Group Name
                             <span class="required" aria-required="true"> *
                             </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Nama product modifier group" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Nama product variant NON PRICE (NO SKU)" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Product Modifier Group Name" class="form-control" name="text" value="{{ $result['product_modifier_group_name'] }}" required>
+                                <input type="text" placeholder="Product Variant NON PRICE (NO SKU) Name" class="form-control" name="text" value="{{ $result['product_modifier_group_name'] }}" required>
                             </div>
                         </div>
                     </div>

@@ -51,7 +51,7 @@
 
         var token = "{{ csrf_token() }}";
 
-        // ajax sort product modifier
+        // ajax sort topping
         function sortProductModifier(e) {
             var ids = [];
             // get product id
@@ -68,13 +68,13 @@
                 data : data,
                 success : function(result) {
                     if (result.status == "success") {
-                        toastr.info("Product Modifier has been sorted.");
+                        toastr.info("Topping has been sorted.");
                     }
                     else if(result.messages != ""){
                         toastr.warning(result.messages);
                     }
                     else {
-                        toastr.warning("Something went wrong. Failed to sort product modifier.");
+                        toastr.warning("Something went wrong. Failed to sort topping.");
                     }
                 }
             });

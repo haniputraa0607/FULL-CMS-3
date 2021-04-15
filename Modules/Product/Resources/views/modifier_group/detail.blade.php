@@ -97,7 +97,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">List Product Modifier</span>
+                <span class="caption-subject sbold uppercase font-blue">List Topping</span>
             </div>
             <div class="actions">
                 <div class="btn-group" style="width: 300px">
