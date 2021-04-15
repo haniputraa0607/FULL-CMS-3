@@ -59,15 +59,15 @@
                                         },
                                         success : function(response) {
                                             if (response.status == 'success') {
-                                                swal("Deleted!", "User Franchise has been deleted.", "success")
+                                                swal("Deleted!", "User Mitra has been deleted.", "success")
                                                 SweetAlert.init()
                                                 location.href = "{{url('user/user-franchise')}}";
                                             }
                                             else if(response.status == "fail"){
-                                                swal("Error!", "Failed to delete user franchise.", "error")
+                                                swal("Error!", "Failed to delete user mitra.", "error")
                                             }
                                             else {
-                                                swal("Error!", "Something went wrong. Failed to delete user franchise.", "error")
+                                                swal("Error!", "Something went wrong. Failed to delete user mitra.", "error")
                                             }
                                         }
                                     });
@@ -132,7 +132,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">List User Franchise</span>
+                <span class="caption-subject font-blue sbold uppercase">List User Mitra</span>
             </div>
         </div>
         <div class="portlet-body form">

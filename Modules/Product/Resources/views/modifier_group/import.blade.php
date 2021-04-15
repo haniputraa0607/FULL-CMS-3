@@ -205,18 +205,18 @@ $configs    		= session('configs');
                 <div class="row step-line">
                     <div class="col-md-4 mt-step-col first active" data-step="1">
                         <div class="mt-step-number bg-white">1</div>
-                        <div class="mt-step-title uppercase font-grey-cascade">Download Template Product Modifier Group</div>
-                        <div class="mt-step-content font-grey-cascade">Download current product modifier group</div>
+                        <div class="mt-step-title uppercase font-grey-cascade">Download Template Product Variant NON PRICE (NO SKU)</div>
+                        <div class="mt-step-content font-grey-cascade">Download current product variant NON PRICE (NO SKU)</div>
                     </div>
                     <div class="col-md-4 mt-step-col" data-step="2">
                         <div class="mt-step-number bg-white">2</div>
-                        <div class="mt-step-title uppercase font-grey-cascade">Upload Data Product Modifier Group</div>
-                        <div class="mt-step-content font-grey-cascade">Import from modified product modifier group list</div>
+                        <div class="mt-step-title uppercase font-grey-cascade">Upload Data Product Variant NON PRICE (NO SKU)</div>
+                        <div class="mt-step-content font-grey-cascade">Import from modified product variant NON PRICE (NO SKU) list</div>
                     </div>
                     <div class="col-md-4 mt-step-col last" data-step="3">
                         <div class="mt-step-number bg-white">#</div>
-                        <div class="mt-step-title uppercase font-grey-cascade">Result Product Modifier Group</div>
-                        <div class="mt-step-content font-grey-cascade">Report imported product modifier group</div>
+                        <div class="mt-step-title uppercase font-grey-cascade">Result Product Variant NON PRICE (NO SKU)</div>
+                        <div class="mt-step-content font-grey-cascade">Report imported product variant NON PRICE (NO SKU)</div>
                     </div>
                 </div>
             </div>
@@ -236,8 +236,8 @@ $configs    		= session('configs');
                         <p style="white-space: pre-wrap;">Saat melakukan impor produk modifier group, mohon diperhatikan bahwa : </p>
                         <ul>
                             <li>Product modifier group hanya bisa di tetapkan pada salah satu tipe yaitu product atau variant</li>
-                            <li>Jika product modifier group di tetapkan untuk product, isi kolom product dengan memasukkan kode produk</li>
-                            <li>Jika product modifier group di tetapkan untuk variant, isi kolom variant dengan <br>memasukkan nama variant.<br>Untuk variant hanya bisa memilih satu variant untuk tiap product modifier group.</li>
+                            <li>Jika product variant NON PRICE (NO SKU) di tetapkan untuk product, isi kolom product dengan memasukkan kode produk</li>
+                            <li>Jika product variant NON PRICE (NO SKU) di tetapkan untuk variant, isi kolom variant dengan <br>memasukkan nama variant.<br>Untuk variant hanya bisa memilih satu variant untuk tiap product variant NON PRICE (NO SKU).</li>
                             <li>Modifier memiliki 2 tipe nama yaitu nama yang akan ditampilkan pada detail produk dan nama yang <br>akan ditampilkan pada detail transaction.  </li>
                             <li>Tipe nama modifier akan dibedakan dengan tanda '-' <br>nama sebelum tanda '-' akan disimpan sebagai nama detail produk dan <br>nama setelah tanda '-' akan disimpan sebagai nama detail transaksi.</li>
                             <li>Modifier diidentifikasi berdasarkan code yang ada pada tanda '()' seperti contoh dibawah.<br>Jika kode tidak ada pada database maka modifier akan ditambahkan secara otomatis.</li>
@@ -288,7 +288,7 @@ $configs    		= session('configs');
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
-                        <span class="caption-subject font-dark sbold uppercase font-green">Download Template Product Modifier Group</span>
+                        <span class="caption-subject font-dark sbold uppercase font-green">Download Template Product Variant NON PRICE (NO SKU)</span>
                     </div>
                 </div>
                 <div class="portlet-body form">
@@ -317,7 +317,7 @@ $configs    		= session('configs');
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
-                        <span class="caption-subject font-dark sbold uppercase font-green">Upload Data Product Modifier Group</span>
+                        <span class="caption-subject font-dark sbold uppercase font-green">Upload Data Product Variant NON PRICE (NO SKU)</span>
                     </div>
                 </div>
                 <div class="portlet-body form upload-container">
@@ -371,7 +371,7 @@ $configs    		= session('configs');
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
-                        <span class="caption-subject font-dark sbold uppercase font-green">Import Result Product Modifier Group</span>
+                        <span class="caption-subject font-dark sbold uppercase font-green">Import Result Product Variant NON PRICE (NO SKU)</span>
                     </div>
                 </div>
                 <div class="portlet-body step3 form">

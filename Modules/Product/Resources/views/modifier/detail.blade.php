@@ -31,7 +31,7 @@
     <script type="text/javascript">
         rules = {
             all_product_modifier :{
-                display:'All Product Modifier',
+                display:'All Topping',
                 operator:[],
                 opsi:[]
             },
@@ -119,7 +119,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">List Product Modifier</span>
+                <span class="caption-subject sbold uppercase font-blue">List Topping</span>
             </div>
             <div class="actions">
                 <div class="btn-group" style="width: 300px">

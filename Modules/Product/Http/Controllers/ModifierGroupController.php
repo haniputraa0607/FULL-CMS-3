@@ -20,11 +20,11 @@ class ModifierGroupController extends Controller
     public function index(Request $request)
     {
         $data = [
-            'title'          => 'Product Modifier Group',
-            'sub_title'      => 'List Product Modifier Group',
+            'title'          => 'Product Variant NON PRICE (NO SKU)',
+            'sub_title'      => 'List Product Variant NON PRICE (NO SKU)',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-list',
-            'filter_title'   => 'Filter Product Modifier Group',
+            'filter_title'   => 'Filter Product Variant NON PRICE (NO SKU)',
         ];
         if (session('product_modifier_group_filter')) {
             $post             = session('product_modifier_group_filter');
@@ -67,8 +67,8 @@ class ModifierGroupController extends Controller
     public function create()
     {
         $data = [
-            'title'          => 'Product Modifier Group',
-            'sub_title'      => 'New Product Modifier Group',
+            'title'          => 'Product Variant NON PRICE (NO SKU)',
+            'sub_title'      => 'New Product Variant NON PRICE (NO SKU)',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-new',
         ];
@@ -107,8 +107,8 @@ class ModifierGroupController extends Controller
 
         if(!$post){
             $data = [
-                'title'          => 'Product Modifier Group',
-                'sub_title'      => 'Detail Product Modifier Group',
+                'title'          => 'Product Variant NON PRICE (NO SKU)',
+                'sub_title'      => 'Detail Product Variant NON PRICE (NO SKU)',
                 'menu_active'    => 'product-modifier-group',
                 'submenu_active' => 'product-modifier-group-list',
             ];
@@ -302,8 +302,8 @@ class ModifierGroupController extends Controller
 
     public function import(Request $request){
         $data = [
-            'title'          => 'Product Modifier Group',
-            'sub_title'      => 'Import Product Modifier Group',
+            'title'          => 'Product Variant NON PRICE (NO SKU)',
+            'sub_title'      => 'Import Product Variant NON PRICE (NO SKU)',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-import-global'
         ];

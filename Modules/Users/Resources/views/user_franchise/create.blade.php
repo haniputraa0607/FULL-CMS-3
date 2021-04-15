@@ -116,7 +116,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">New User Franchise</span>
+                <span class="caption-subject sbold uppercase font-blue">New User Mitra</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -165,8 +165,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="control-label col-md-3">Auto Generate Pin <span class="required" aria-required="true">*</span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Jika di centang maka pin akan di generate otomatis oleh sistem" data-container="body"></i>
+                        <label  class="control-label col-md-3">Auto Generate Password <span class="required" aria-required="true">*</span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Jika di centang maka password akan di generate otomatis oleh sistem" data-container="body"></i>
                         </label>
                         <div class="col-md-6">
                             <label class="mt-checkbox mt-checkbox-outline">
@@ -177,19 +177,19 @@
                     </div>
                     <div id="div_password">
                         <div class="form-group">
-                            <label for="example-search-input" class="control-label col-md-3">Pin
-                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan pin yang akan digunakan untuk login" data-container="body"></i>
+                            <label for="example-search-input" class="control-label col-md-3">Password
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan password yang akan digunakan untuk login" data-container="body"></i>
                             </label>
                             <div class="col-md-6">
-                                <input class="form-control" maxlength="6" type="password" name="pin" id="pin1" value="{{old('pin')}}" placeholder="Enter pin"/>
+                                <input class="form-control" maxlength="6" type="password" name="pin" id="pin1" value="{{old('pin')}}" placeholder="Enter password"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="example-search-input" class="control-label col-md-3">Re-type Pin
-                                <i class="fa fa-question-circle tooltips" data-original-title="Ketik ulang pin yang akan digunakan untuk login" data-container="body"></i>
+                            <label for="example-search-input" class="control-label col-md-3">Re-type Password
+                                <i class="fa fa-question-circle tooltips" data-original-title="Ketik ulang password yang akan digunakan untuk login" data-container="body"></i>
                             </label>
                             <div class="col-md-6">
-                                <input class="form-control" maxlength="6" type="password" name="pin2" id="pin2" value="{{old('pin2')}}"placeholder="Re-type pin"/>
+                                <input class="form-control" maxlength="6" type="password" name="pin2" id="pin2" value="{{old('pin2')}}"placeholder="Re-type password"/>
                             </div>
                         </div>
                     </div>

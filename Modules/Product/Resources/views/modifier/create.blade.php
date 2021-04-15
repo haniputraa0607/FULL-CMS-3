@@ -101,7 +101,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-dark sbold uppercase font-blue">New Product Modifier</span>
+                <span class="caption-subject font-dark sbold uppercase font-blue">New Topping</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -111,7 +111,7 @@
                         <label class="col-md-3 control-label">Code
                             <span class="required" aria-required="true"> *
                             </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Kode Product Modifier" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Kode Topping" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
@@ -123,11 +123,11 @@
                         <label class="col-md-3 control-label">Name
                             <span class="required" aria-required="true"> *
                             </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Nama product modifier yang akan ditampilkan di aplikasi" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Nama topping yang akan ditampilkan di aplikasi" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Product Modifier Name" class="form-control" name="text" value="{{ old('text') }}" required>
+                                <input type="text" placeholder="Topping Name" class="form-control" name="text" value="{{ old('text') }}" required>
                             </div>
                         </div>
                     </div>
