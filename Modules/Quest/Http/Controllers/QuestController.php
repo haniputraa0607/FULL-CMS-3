@@ -206,8 +206,20 @@ class QuestController extends Controller
     public function updateQuest(Request $request, $slug)
     {
         $post = $request->all();
-        if ($post['quest']['image']) {
+        if ($post['quest']['image'] ?? false) {
             $post['quest']['image'] = MyHelper::encodeImage($post['quest']['image']);
+        }
+        if ($post['quest']['publish_start'] ?? false) {
+            $post['quest']['publish_start'] = date('Y-m-d H:i:s', strtotime(str_replace('-', '', $post['quest']['publish_start'])));
+        }
+        if ($post['quest']['publish_end'] ?? false) {
+            $post['quest']['publish_end'] = date('Y-m-d H:i:s', strtotime(str_replace('-', '', $post['quest']['publish_end'])));
+        }
+        if ($post['quest']['date_start'] ?? false) {
+            $post['quest']['date_start'] = date('Y-m-d H:i:s', strtotime(str_replace('-', '', $post['quest']['date_start'])));
+        }
+        if ($post['quest']['date_end'] ?? false) {
+            $post['quest']['date_end'] = date('Y-m-d H:i:s', strtotime(str_replace('-', '', $post['quest']['date_end'])));
         }
         $result = MyHelper::post('quest/update-quest', $post + ['id_quest' => $slug]);
         if (($result['status'] ?? false) == 'success') {
