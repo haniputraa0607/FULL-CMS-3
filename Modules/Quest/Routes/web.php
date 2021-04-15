@@ -19,5 +19,6 @@ Route::prefix('quest')->middleware(['web', 'validate_session'])->group(function 
     Route::post('detail/{id}/update/content', 'QuestController@updateContent');
     Route::post('detail/{id}/update/quest', 'QuestController@updateQuest');
     Route::post('detail/{id}/update/benefit', 'QuestController@updateBenefit');
+    Route::post('detail/{id}/start', 'QuestController@start');
     Route::any('update/detail', 'QuestController@update');
 });

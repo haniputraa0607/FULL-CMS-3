@@ -237,4 +237,13 @@ class QuestController extends Controller
         }
         return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
     }
+
+    public function start(Request $request, $slug)
+    {
+        $result = MyHelper::post('quest/start', ['id_quest' => $slug]);
+        if (($result['status'] ?? false) == 'success') {
+            return redirect('quest/detail/'.$slug)->withSuccess(['Quest Started']);
+        }
+        return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
+    }
 }
