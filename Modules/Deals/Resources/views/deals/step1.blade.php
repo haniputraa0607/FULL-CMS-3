@@ -6,7 +6,7 @@ if(isset($deals['is_all_outlet'])){
 }
 $brand_rule = $deals['brand_rule']??'and';
 ?>
-@extends('layouts.main')
+@extends('layouts.main-closed')
 
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
@@ -31,7 +31,14 @@ $brand_rule = $deals['brand_rule']??'and';
 		.select2-container .select2-search__field {
 		    width: 100% !important; /*makes the placeholder to be 100% of the width while there are no options selected*/
 		}
-
+		.modal-dialog{
+		    position: relative;
+		    display: table; /* This is important */ 
+		    overflow-y: auto;    
+		    overflow-x: auto;
+		    width: auto;
+		    min-width: 300px;
+		}
 	</style>
 @endsection
 
@@ -482,9 +489,7 @@ $brand_rule = $deals['brand_rule']??'and';
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                    ['misc', ['fullscreen', 'help']], ['height', ['height']]
                 ],
                 callbacks: {
                     onInit: function(e) {
@@ -506,6 +511,11 @@ $brand_rule = $deals['brand_rule']??'and';
                                 // console.log(data);
                             }
                         });
+                    },
+                    onFocus: function() {
+			            $('#image-resource').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/deals/custom_outlet_description.jpg')}}")
+			            $('#image-resource-preview').attr('data-src', "{{env('STORAGE_URL_VIEW') }}{{('img/deals/custom_outlet_description.jpg')}}")
+			            console.log('focus');
                     }
                 }
             });
@@ -683,6 +693,22 @@ $brand_rule = $deals['brand_rule']??'and';
 	        .on('select2:selecting select2:unselecting', e => $(e.currentTarget).data('scrolltop', $('.select2-results__options').scrollTop()))
 	        .on('select2:select select2:unselect', e => $('.select2-results__options').scrollTop($(e.currentTarget).data('scrolltop')));
         });
+
+		$(".img-preview").on("click", function() {
+		   $('#image-preview').attr('src', $(this).data('src')); 
+		   $('#image-modal').modal('show');
+		});
+
+		$('input[name=deals_title]').focus(function(){
+            $('#image-resource').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/deals/title.jpg')}}");
+            $('#image-resource-preview').attr('data-src', "{{env('STORAGE_URL_VIEW') }}{{('img/deals/title.jpg')}}");
+        });
+
+        $('input[name=deals_second_title]').focus(function(){
+            $('#image-resource').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/deals/second_title.jpg')}}");
+            $('#image-resource-preview').attr('data-src', "{{env('STORAGE_URL_VIEW') }}{{('img/deals/second_title.jpg')}}");
+        });
+
     </script>
 @endsection
 
@@ -743,36 +769,61 @@ $brand_rule = $deals['brand_rule']??'and';
             <div class="tab-content">
                 <div class="tab-pane active" id="info">
                 	<div class="portlet-body form">
-					    <form id="form" class="form-horizontal" role="form" action=" @if($deals_type == "Deals") {{ url('deals/update') }} @else {{ url('inject-voucher/update') }} @endif" method="post" enctype="multipart/form-data">
-                				@include('deals::deals.step1-form')
-				                <div class="form-actions">
-				                @if(empty($deals['deals_total_claimed']) || $deals['deals_total_claimed'] == 0)
-				                {{ csrf_field() }}
-				                <div class="row">
-				                    <div class="col-md-offset-3 col-md-9">
-				                        <button type="submit" class="btn green">Submit</button>
-				                        <!-- <button type="button" class="btn default">Cancel</button> -->
-				                    </div>
-				                </div>
-				                @else
-				                <div class="row">
-				                    <div class="col-md-offset-3 col-md-9">
-				                    	<a href="{{ ($deals['slug'] ?? false) ? url('deals/detail/'.$deals['slug']) : '' }}" class="btn green">Detail</a>
-				                    </div>
-				                </div>
-				                @endif
-				            </div>
-				            <input type="hidden" name="id_deals" value="{{ $deals['id_deals']??'' }}">
-				            <input type="hidden" name="id_deals_promotion_template" value="{{ $deals['id_deals_promotion_template']??'' }}">
-				            <input type="hidden" name="slug" value="{{ $deals['slug']??'' }}">
-				            <input type="hidden" name="deals_type" value="{{ $deals['deals_type']??$deals_type??'' }}">
-				            <input type="hidden" name="template" value="{{ $deals['template']??0 }}">
-					    </form>
+                		<div class="row">
+                			<div class="col-md-9">
+							    <form id="form" class="form-horizontal" role="form" action=" @if($deals_type == "Deals") {{ url('deals/update') }} @else {{ url('inject-voucher/update') }} @endif" method="post" enctype="multipart/form-data">
+		                				@include('deals::deals.step1-form')
+						                <div class="form-actions">
+						                @if(empty($deals['deals_total_claimed']) || $deals['deals_total_claimed'] == 0)
+						                {{ csrf_field() }}
+						                <div class="row">
+						                    <div class="col-md-offset-3 col-md-9">
+						                        <button type="submit" class="btn green">Submit</button>
+						                        <!-- <button type="button" class="btn default">Cancel</button> -->
+						                    </div>
+						                </div>
+						                @else
+						                <div class="row">
+						                    <div class="col-md-offset-3 col-md-9">
+						                    	<a href="{{ ($deals['slug'] ?? false) ? url('deals/detail/'.$deals['slug']) : '' }}" class="btn green">Detail</a>
+						                    </div>
+						                </div>
+						                @endif
+						            </div>
+						            <input type="hidden" name="id_deals" value="{{ $deals['id_deals']??'' }}">
+						            <input type="hidden" name="id_deals_promotion_template" value="{{ $deals['id_deals_promotion_template']??'' }}">
+						            <input type="hidden" name="slug" value="{{ $deals['slug']??'' }}">
+						            <input type="hidden" name="deals_type" value="{{ $deals['deals_type']??$deals_type??'' }}">
+						            <input type="hidden" name="template" value="{{ $deals['template']??0 }}">
+							    </form>
+                			</div>
+							<div class="fixme col-md-3" style="text-align: center; position: sticky; right: 0; top: 70px; display: unset">
+            					<a id="image-resource-preview" href="javascript:;" class="img-preview" data-src="{{ env('STORAGE_URL_VIEW') }}img/deals/default_step1.jpg">
+									<img id="image-resource" src="{{ env('STORAGE_URL_VIEW') }}img/deals/default_step1.jpg" style="width: 100%;border: 1px solid grey;" />
+								</a>
+							</div>
+                		</div>
 					</div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="image-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="myModalLabel">Image preview</h4>
+				</div>
+				<div class="modal-body">
+					<img src="" id="image-preview">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 @endsection
