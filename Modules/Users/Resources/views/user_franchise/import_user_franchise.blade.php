@@ -208,18 +208,18 @@ $configs    		= session('configs');
 			<div class="row step-line">
 				<div class="col-md-4 mt-step-col first active" data-step="1">
 					<div class="mt-step-number bg-white">1</div>
-					<div class="mt-step-title uppercase font-grey-cascade">Download Template User Franchise</div>
-					<div class="mt-step-content font-grey-cascade">Download current user franchise</div>
+					<div class="mt-step-title uppercase font-grey-cascade">Download Template User Mitra</div>
+					<div class="mt-step-content font-grey-cascade">Download current user mitra</div>
 				</div>
 				<div class="col-md-4 mt-step-col" data-step="2">
 					<div class="mt-step-number bg-white">2</div>
-					<div class="mt-step-title uppercase font-grey-cascade">Upload Data User Franchise</div>
-					<div class="mt-step-content font-grey-cascade">Import from modifie user franchise list</div>
+					<div class="mt-step-title uppercase font-grey-cascade">Upload Data User Mitra</div>
+					<div class="mt-step-content font-grey-cascade">Import from modifie user mitra list</div>
 				</div>
 				<div class="col-md-4 mt-step-col last" data-step="3">
 					<div class="mt-step-number bg-white">#</div>
-					<div class="mt-step-title uppercase font-grey-cascade">Result User Franchise</div>
-					<div class="mt-step-content font-grey-cascade">Report imported user franchise</div>
+					<div class="mt-step-title uppercase font-grey-cascade">Result User Mitra</div>
+					<div class="mt-step-content font-grey-cascade">Report imported user mitra</div>
 				</div>
 			</div>
 		</div>
@@ -235,10 +235,10 @@ $configs    		= session('configs');
 			</div>
 			<div class="portlet-body form">
 				<div class="m-heading-1 border-green m-bordered">
-					<p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data user franchise.</p>
+					<p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data user mitra.</p>
 					<p style="white-space: pre-wrap;">User diidentifikasi berdasarkan <b>username</b>. Apabila username tidak tersedia maka data tersebut akan <b>ditambahkan otomatis</b>.</p>
 					<br>
-					<p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor user franchise</p>
+					<p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor user mitra</p>
 				</div>
 				<div class="form-actions" style="padding-bottom: 5px">
 					{{ csrf_field() }}
