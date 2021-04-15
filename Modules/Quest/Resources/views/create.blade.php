@@ -125,7 +125,7 @@
             $(".select2-multiple").select2({
                 allowClear: true
             });
-            var index = 1;
+            var index = {{count($details) + 1}};
             $('.add').click(function() {
                 nomer = index++
                 $('.btn-rmv').before(`<div class="box">
@@ -144,7 +144,21 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" name="detail[`+nomer+`][name]" placeholder="Detail Quest" required maxlength="20">
+                                                    <input type="text" class="form-control" name="detail[${nomer}][name]" placeholder="Detail Quest" required maxlength="20">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-icon right">
+                                                    <label class="col-md-3 control-label">
+                                                    Short Description
+                                                    <span class="required" aria-required="true"> * </span>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat yang ditampilkan di daftar misi" data-container="body"></i>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="input-icon right">
+                                                        <textarea name="detail[${nomer}][short_description]" class="form-control" placeholder="Quest Detail Short Description"></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -168,7 +182,7 @@
                                                                 <span class="btn default btn-file">
                                                                 <span class="fileinput-new"> Select image </span>
                                                                 <span class="fileinput-exists"> Change </span>
-                                                                <input type="file" class="file" accept="image/*" name="detail[`+nomer+`][logo_badge]" required>
+                                                                <input type="file" class="file" accept="image/*" name="detail[${nomer}][logo_badge]" required>
                                                                 </span>
                                                                 <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                                             </div>
@@ -215,7 +229,7 @@
                                                 <div class="col-md-4">
                                                     <div class="input-icon right">
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[`+nomer+`][trx_nominal]" placeholder="Transaction Nominal">
+                                                            <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[${nomer}][trx_nominal]" placeholder="Transaction Nominal">
                                                             <span class="input-group-btn">
                                                                 <button class="btn default" type="button">
                                                                     <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
@@ -234,7 +248,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="input-icon right">
-                                                        <select class="form-control select2-multiple id_product" data-placeholder="Select Product" name="detail[`+nomer+`][id_product]">
+                                                        <select class="form-control select2-multiple id_product" data-placeholder="Select Product" name="detail[${nomer}][id_product]">
                                                             <option></option>
                                                             @foreach ($product as $item)
                                                                 <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
@@ -245,7 +259,7 @@
                                                 <div class="col-md-4">
                                                     <div class="input-icon right">
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control total_product" name="detail[`+nomer+`][product_total]" placeholder="Total Product">
+                                                            <input type="text" class="form-control total_product" name="detail[${nomer}][product_total]" placeholder="Total Product">
                                                             <span class="input-group-btn">
                                                                 <button class="btn default" type="button">
                                                                     <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
@@ -265,7 +279,7 @@
                                                 <div class="col-md-4">
                                                     <div class="input-icon right">
                                                         <div class="input-group">
-                                                            <select class="form-control select2-multiple rule_totalnya" name="detail[`+nomer+`][rule_total]" id="total_rule" data-placeholder="Select Total Rule By">
+                                                            <select class="form-control select2-multiple rule_totalnya" name="detail[${nomer}][rule_total]" id="total_rule" data-placeholder="Select Total Rule By">
                                                                 <option></option>
                                                                 <option value="total_transaction">Transaction</option>
                                                                 <option value="total_outlet">Outlet Different</option>
@@ -277,7 +291,7 @@
                                                 <div class="col-md-4">
                                                     <div class="input-icon right">
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control digit_mask value_totalnya" name="detail[`+nomer+`][value_total]" placeholder="Value Total">
+                                                            <input type="text" class="form-control digit_mask value_totalnya" name="detail[${nomer}][value_total]" placeholder="Value Total">
                                                             <span class="input-group-btn">
                                                                 <button class="btn default" type="button">
                                                                     <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
@@ -296,7 +310,7 @@
                                                 </div>
                                                 <div class="col-md-4" id="select_outlet">
                                                     <div class="input-icon right">
-                                                        <select class="form-control select2-multiple id_outlet" data-placeholder="Select Outlet" name="detail[`+nomer+`][id_outlet]">
+                                                        <select class="form-control select2-multiple id_outlet" data-placeholder="Select Outlet" name="detail[${nomer}][id_outlet]">
                                                             <option></option>
                                                             @foreach ($outlet as $item)
                                                                 <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
@@ -491,6 +505,25 @@
             $(params).parent().parent().remove()
         }
     </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#benefit-selector').on('change', function() {
+                if ($(this).val() == 'point') {
+                    $('#benefit-voucher').addClass('hidden');
+                    $('#benefit-voucher :input').prop('disabled', true);
+
+                    $('#benefit-point').removeClass('hidden');
+                    $('#benefit-point :input').removeAttr('disabled');
+                } else {
+                    $('#benefit-point').addClass('hidden');
+                    $('#benefit-point :input').prop('disabled', true);
+
+                    $('#benefit-voucher').removeClass('hidden');
+                    $('#benefit-voucher :input').removeAttr('disabled');
+                }
+            }).change();
+        });
+    </script>
 @endsection 
 
 @section('content')
@@ -518,7 +551,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue bold uppercase">Achivement</span>
+                <span class="caption-subject font-blue bold uppercase">New Quest</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -588,7 +621,7 @@
                                     <div class="col-md-4">
                                         <div class="input-icon right">
                                             <div class="input-group">
-                                                <input type="text" class="form_datetime form-control" name="quest[publish_end]" value="{{ old('quest.publish_end.') }}" autocomplete="off">
+                                                <input type="text" class="form_datetime form-control" name="quest[publish_end]" value="{{ old('quest.publish_end') }}" autocomplete="off">
                                                 <span class="input-group-btn">
                                                     <button class="btn default" type="button">
                                                         <i class="fa fa-calendar"></i>
@@ -637,6 +670,20 @@
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
+                                        Short Description
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat yang ditampilkan di daftar misi" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="input-icon right">
+                                            <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description">{{ old('quest.short_description') }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
                                         Description
                                         <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang quest yang dibuat" data-container="body"></i>
@@ -648,8 +695,59 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Benefit
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Hadiah yang akan didapatkan setelah menyelesaikan quest" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-control select2" id="benefit-selector" name="quest_benefit[benefit_type]" data-placeholder="Benefit Type" required>
+                                            <option value="point" {{old('quest_benefit.benefit_type') == 'point' ? 'selected' : ''}}>{{env('POINT_NAME', 'Points')}}</option>
+                                            <option value="voucher" {{old('quest_benefit.benefit_type') == 'voucher' ? 'selected' : ''}}>Voucher</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="benefit-voucher">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Benefit Voucher
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Voucher yang akan didapatkan setelah menyelesaikan quest" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <input type="number" min="1" class="form-control" name="quest_benefit[value]" placeholder="Total Voucher" required value="{{old('quest_benefit.value', 1)}}"/>
+                                            <span class="input-group-addon">Voucher</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control select2" name="quest_benefit[id_deals]" data-placeholder="Select Voucher" required>
+                                            <option></option>
+                                            @foreach($deals as $deal)
+                                            <option value="{{$deal['id_deals']}}" {{old('quest_benefit.id_deals') == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="benefit-point">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Benefit Point Nominal
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Nominal point yang akan didapatkan setelah menyelesaikan quest" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" min=0 class="form-control" name="quest_benefit[value]" placeholder="Nominal Point" required  value="{{old('quest_benefit.value', 0)}}" />
+                                    </div>
+                                </div>
                             </div>
                             <hr>
+                            @foreach($details as $index => $detail)
                             <div class="form-body box-repeat" style="display: table;width: 100%;">
                                 <div class="box">
                                     <div class="col-md-2 text-right" style="text-align: -webkit-right;">
@@ -667,7 +765,21 @@
                                                 </label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Quest" required maxlength="20">
+                                                <input type="text" class="form-control" name="detail[{{$index}}][name]" placeholder="Detail Quest" required maxlength="20" value="{{$detail['name'] ?? ''}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <label class="col-md-3 control-label">
+                                                Short Description
+                                                <span class="required" aria-required="true"> * </span>
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat yang ditampilkan di daftar misi" data-container="body"></i>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="input-icon right">
+                                                    <textarea name="detail[{{$index}}][short_description]" class="form-control" placeholder="Quest Detail Short Description">{{$detail['short_description'] ?? ''}}</textarea>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -691,7 +803,7 @@
                                                             <span class="btn default btn-file">
                                                             <span class="fileinput-new"> Select image </span>
                                                             <span class="fileinput-exists"> Change </span>
-                                                            <input type="file" class="file" accept="image/*" name="detail[0][logo_badge]" required>
+                                                            <input type="file" class="file" accept="image/*" name="detail[{{$index}}][logo_badge]" required>
                                                             </span>
                                                             <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                                         </div>
@@ -738,7 +850,7 @@
                                             <div class="col-md-4">
                                                 <div class="input-icon right">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[0][trx_nominal]" placeholder="Transaction Nominal">
+                                                        <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[{{$index}}][trx_nominal]" placeholder="Transaction Nominal" value="{{$detail['trx_nominal'] ?? ''}}">
                                                         <span class="input-group-btn">
                                                             <button class="btn default" type="button">
                                                                 <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
@@ -757,10 +869,10 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="input-icon right">
-                                                    <select class="form-control select2-multiple id_product" data-placeholder="Select Product" name="detail[0][id_product]">
+                                                    <select class="form-control select2-multiple id_product" data-placeholder="Select Product" name="detail[{{$index}}][id_product]">
                                                         <option></option>
                                                         @foreach ($product as $item)
-                                                            <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
+                                                            <option value="{{$item['id_product']}}" {{($detail['id_product'] ?? '') == $item['id_product'] ? 'selected' : ''}}>{{$item['product_name']}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -768,7 +880,7 @@
                                             <div class="col-md-4">
                                                 <div class="input-icon right">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control total_product" name="detail[0][product_total]" placeholder="Total Product">
+                                                        <input type="text" class="form-control total_product" name="detail[{{$index}}][product_total]" placeholder="Total Product">
                                                         <span class="input-group-btn">
                                                             <button class="btn default" type="button">
                                                                 <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
@@ -788,11 +900,11 @@
                                             <div class="col-md-4">
                                                 <div class="input-icon right">
                                                     <div class="input-group">
-                                                        <select class="form-control select2-multiple rule_totalnya" name="detail[0][rule_total]" id="total_rule" data-placeholder="Select Total Rule By">
+                                                        <select class="form-control select2-multiple rule_totalnya" name="detail[{{$index}}][rule_total]" id="total_rule" data-placeholder="Select Total Rule By">
                                                             <option></option>
-                                                            <option value="total_transaction">Transaction</option>
-                                                            <option value="total_outlet">Outlet Different</option>
-                                                            <option value="total_province">Province Different</option>
+                                                            <option value="total_transaction" {{($detail['rule_total'] ?? '') == 'total_transaction' ? 'selected' : ''}}>Transaction</option>
+                                                            <option value="total_outlet" {{($detail['rule_total'] ?? '') == 'total_outlet' ? 'selected' : ''}}>Outlet Different</option>
+                                                            <option value="total_province" {{($detail['rule_total'] ?? '') == 'total_province' ? 'selected' : ''}}>Province Different</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -800,7 +912,7 @@
                                             <div class="col-md-4">
                                                 <div class="input-icon right">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control digit_mask value_totalnya" name="detail[0][value_total]" placeholder="Value Total">
+                                                        <input type="text" class="form-control digit_mask value_totalnya" name="detail[{{$index}}][value_total]" placeholder="Value Total">
                                                         <span class="input-group-btn">
                                                             <button class="btn default" type="button">
                                                                 <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
@@ -819,20 +931,20 @@
                                             </div>
                                             <div class="col-md-4" id="select_outlet">
                                                 <div class="input-icon right">
-                                                    <select class="form-control select2-multiple id_outlet" data-placeholder="Select Outlet" name="detail[0][id_outlet]">
+                                                    <select class="form-control select2-multiple id_outlet" data-placeholder="Select Outlet" name="detail[{{$index}}][id_outlet]">
                                                         <option></option>
                                                         @foreach ($outlet as $item)
-                                                            <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                                            <option value="{{$item['id_outlet']}}" {{($detail['id_outlet'] ?? '') == $item['id_outlet'] ? 'selected' : ''}}>{{$item['outlet_name']}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4" id="select_province">
                                                 <div class="input-icon right">
-                                                    <select class="form-control select2-multiple id_province" data-placeholder="Select Province" name="detail[0][id_province]">
+                                                    <select class="form-control select2-multiple id_province" data-placeholder="Select Province" name="detail[{{$index}}][id_province]">
                                                         <option></option>
                                                         @foreach ($province as $item)
-                                                            <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
+                                                            <option value="{{$item['id_province']}}" {{($detail['id_province'] ?? '') == $item['id_province'] ? 'selected' : ''}}>{{$item['province_name']}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -846,6 +958,7 @@
                                     </a>
                                 </div>
                             </div>
+                            @endforeach
                             {{-- @include('deals::deals.step1-form') --}}
                             <div class="form-actions" style="margin-top: 10px;">
                                 {{ csrf_field() }}

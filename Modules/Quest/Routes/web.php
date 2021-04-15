@@ -12,8 +12,12 @@
 */
 
 Route::prefix('quest')->middleware(['web', 'validate_session'])->group(function () {
-    Route::get('/', 'QuestController@index');
-    Route::any('create', 'QuestController@create');
+    Route::any('/', 'QuestController@index');
+    Route::get('create', 'QuestController@create');
+    Route::post('create', 'QuestController@store');
     Route::any('detail/{slug}', 'QuestController@show');
+    Route::post('detail/{id}/update/content', 'QuestController@updateContent');
+    Route::post('detail/{id}/update/quest', 'QuestController@updateQuest');
+    Route::post('detail/{id}/update/benefit', 'QuestController@updateBenefit');
     Route::any('update/detail', 'QuestController@update');
 });
