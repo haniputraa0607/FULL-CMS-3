@@ -417,7 +417,10 @@
                 <div class="tab-pane active" id="info">
                     @if(MyHelper::hasAccess([230], $grantedFeature))
                         @if ($data['quest']['is_complete'] != 1)
-                            <a data-toggle="modal" href="#small" class="btn btn-primary blue" style="float: right; "><i class="fa fa-play"></i> Start Quest</a>
+                            <form action="{{url('quest/detail/'.$data['quest']['id_quest'].'/start')}}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary blue" style="float: right; "><i class="fa fa-play"></i> Start Quest</button>
+                            </form>
                         @endif
                     @endif
                     <ul class="nav nav-tabs">
