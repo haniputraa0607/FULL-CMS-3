@@ -46,6 +46,19 @@
         .text-decoration-none {
             text-decoration: none!important;
         }
+        .img-tutorial {
+        	border: 1px solid grey;
+        }
+
+		.modal-dialog{
+		    position: relative;
+		    display: table; /* This is important */ 
+		    overflow-y: auto;    
+		    overflow-x: auto;
+		    width: auto;
+		    min-width: 300px;   
+		}
+
     </style>
 @endsection
 
@@ -297,9 +310,7 @@
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+                    ['misc', ['fullscreen', 'help']], ['height', ['height']]
                 ],
                 callbacks: {
                     onInit: function(e) {
@@ -473,6 +484,11 @@
                 connectWith: '.sortable-detail-2',
                 axis: 'y'
             });
+
+            $(".img-preview").on("click", function() {
+			   $('#image-preview').attr('src', $(this).data('src')); 
+			   $('#image-modal').modal('show');
+			});
     </script>
 
 @if( isset($deals['deals_content']) )
@@ -544,6 +560,42 @@
                 <span class="caption-subject font-blue bold uppercase">{{ $deals['deals_title'] }}</span>
             </div>
         </div>
+        <div class="portlet box green">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-gear"></i>Deals Content Setting</div>
+				<div class="tools">
+					<a href="javascript:;" class="collapse"> </a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="row">
+					<div class="col-md-8">
+						<p>Menu ini digunakan untuk mengatur deskripsi dan content pada detail deals.</p>
+						<ul>
+							<li>Gambar (a) adalah contoh setting deskripsi dan content yang akan menampilkan detail deals (gambar (b)) di apps.</li>
+							<li>Gambar (b) adalah contoh tampilan detail deals di apps berdasarkan setting dari gambar (a).</li>
+							<li>Content title yang tidak memiliki content detail tidak akan ditampilkan di apps.</li>
+							<li>Penomoran content detail akan disesuaikan berdasarkan urutan yang tersimpan di setting.</li>
+						</ul>
+						<a href="javascript:;" class="img-preview" data-src="{{ env('STORAGE_URL_VIEW') }}img/deals/promo_content_be.png">
+							<div class="text-center">
+								<img class="zoom-in img-tutorial" src="{{ env('STORAGE_URL_VIEW') }}img/deals/promo_content_be.png" height="350px"/>
+								<p style="text-align: center">(a)</p>
+							</div>
+						</a>
+					</div>
+					<div class="col-md-4">
+						<a href="javascript:;" class="img-preview" data-src="{{ env('STORAGE_URL_VIEW') }}img/deals/deals_voucher_detail_3.png">
+							<div style="text-align: center;">
+								<img id="imageresource" class="zoom-in img-tutorial" src="{{ env('STORAGE_URL_VIEW') }}img/deals/deals_voucher_detail_3.png" height="550px" />
+								<p style="text-align: center">(b)</p>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
         <div class="portlet-body">
 
             <div class="tab-content">
@@ -580,5 +632,21 @@
         </div>
     </div>
 
+    <div class="modal fade" id="image-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+    		<div class="modal-content">
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    				<h4 class="modal-title" id="myModalLabel">Image preview</h4>
+    			</div>
+    			<div class="modal-body">
+    				<img src="" id="image-preview">
+    			</div>
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    			</div>
+    		</div>
+    	</div>
+    </div>
 
 @endsection
