@@ -105,3 +105,14 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::any('send-report-outlet', [ 'uses' => 'TransactionController@sendReportToOutlet']);
 });
 
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'response-with-code', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
+{
+    Route::any('/', [ 'middleware' => 'feature_control:306,308,309', 'uses' => 'AutoresponseCodeController@list']);
+    Route::get('create', [ 'middleware' => 'feature_control:307', 'uses' => 'AutoresponseCodeController@create']);
+    Route::post('store', [ 'middleware' => 'feature_control:307', 'uses' => 'AutoresponseCodeController@store']);
+    Route::get('edit/{id}', [ 'middleware' => 'feature_control:308', 'uses' => 'AutoresponseCodeController@edit']);
+    Route::post('update/{id}', [ 'middleware' => 'feature_control:308', 'uses' => 'AutoresponseCodeController@update']);
+    Route::post('delete/code', [ 'middleware' => 'feature_control:309', 'uses' => 'AutoresponseCodeController@deleteCode']);
+    Route::post('delete/autoresponse-code', [ 'middleware' => 'feature_control:309', 'uses' => 'AutoresponseCodeController@deleteAutoresponsecode']);
+});
+
