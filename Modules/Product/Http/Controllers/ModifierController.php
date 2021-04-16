@@ -108,7 +108,7 @@ class ModifierController extends Controller
 
         $result = MyHelper::post('product/modifier/create', $post);
         if (($result['status'] ?? false) == 'success') {
-            return redirect('product/modifier/create')->with('success', ['Success create modifier']);
+            return redirect('product/modifier/create')->with('success', ['Success create topping']);
         } else {
             return back()->withErrors($result['messages'] ?? ['Something went wrong'])->withInput();
         }
@@ -189,10 +189,10 @@ class ModifierController extends Controller
         }
         $result = MyHelper::post('product/modifier/update', $post);
         if (($result['status'] ?? false) == 'success') {
-            return redirect('product/modifier/' . $post['code'])->with('success', ['Success update modifier']);
+            return redirect('product/modifier/' . $post['code'])->with('success', ['Success update topping']);
         } else {
             if (stristr($result['message'] ?? '', 'SQLSTATE[23000]')) {
-                $result['message'] = 'Another modifier with code "' . $post['code'] . '" aready exist';
+                $result['message'] = 'Another topping with code "' . $post['code'] . '" aready exist';
             }
             return back()->withErrors($result['messages'] ?? [$result['message'] ?? 'Something went wrong'])->withInput();
         }
@@ -207,9 +207,9 @@ class ModifierController extends Controller
     {
         $result = MyHelper::post('product/modifier/delete', ['id_product_modifier' => $id]);
         if ($result['status'] == 'success') {
-            return redirect('product/modifier')->with('success', ['Success delete modifier']);
+            return redirect('product/modifier')->with('success', ['Success delete topping']);
         }
-        return redirect('product/modifier')->withErrors(['Fail delete modifier']);
+        return redirect('product/modifier')->withErrors(['Fail delete topping']);
     }
     /**
      * Get list product modifiers
@@ -375,7 +375,7 @@ class ModifierController extends Controller
         if (!isset($post['modifier_ids'])) {
             return [
                 'status' => 'fail',
-                'messages' => ['Product modifier id is required']
+                'messages' => ['Topping id is required']
             ];
         }
         $result = MyHelper::post('product/modifier/position-assign', $post);

@@ -75,7 +75,7 @@
             var check = 0;
 
             if($("input[name='text']").val() === ""){
-                msg += '-Topping group name can not be empty.<br>';
+                msg += '-product variant NON PRICE (NO SKU) name can not be empty.<br>';
             }
 
             if($("#modifier_assign_type").val() === ""){
@@ -162,7 +162,7 @@
                         <label for="multiple" class="control-label col-md-3">Assign To
                             <span class="required" aria-required="true"> *
                             </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih modifier ini akan di tetapkan kemana saja. Pilih produk jika mau di tetapkan ke produk dan pilih product variant jika mau di tetapkan ke product variant" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih Product Variant NON PRICE (NO SKU) ini akan di tetapkan kemana saja. Pilih produk jika mau di tetapkan ke produk dan pilih product variant jika mau di tetapkan ke product variant" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
@@ -177,7 +177,7 @@
                     <div class="form-group" id="div_list_product">
                         <label for="multiple" class="control-label col-md-3">Product
                             </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih product untuk menetapkan modifier" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih product untuk menetapkan Product Variant NON PRICE (NO SKU)" data-container="body"></i>
                         </label>
                         <div class="col-md-6">
                             <select  class="form-control select2" name="id_product[]" multiple id="select_product" disabled>
@@ -190,7 +190,7 @@
                     <div class="form-group" id="div_list_product_variant">
                         <label for="multiple" class="control-label col-md-3">Variant
                             </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih product variant untuk menetapkan modifier" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih product variant untuk menetapkan Product Variant NON PRICE (NO SKU)" data-container="body"></i>
                         </label>
                         <div class="col-md-5">
                             <select  class="form-control select2" name="id_product_variant" id="select_product_variant" disabled>
@@ -202,10 +202,10 @@
                         </div>
                     </div>
                     <div class="form-group" id="div_list_product_variant">
-                        <label for="multiple" class="control-label col-md-3">Add Modifier
+                        <label for="multiple" class="control-label col-md-3">Add Product Variant NON PRICE (NO SKU)
                         </label>
                         <div class="col-md-5">
-                            <a class="btn green" onclick="addModifier()">Add Modifier Group <i class="fa fa-plus-circle"></i></a>
+                            <a class="btn green" onclick="addModifier()">Add Product Variant NON PRICE (NO SKU) <i class="fa fa-plus-circle"></i></a>
                         </div>
                     </div>
                     <div id="list_modifier">

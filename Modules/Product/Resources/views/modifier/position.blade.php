@@ -114,7 +114,7 @@
         </div>
         <div class="portlet-body">
             <div class="alert alert-info">
-                Drag and drop the item to sort modifier
+                Drag and drop the item to sort topping
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-12 col-xs-12 product-position">

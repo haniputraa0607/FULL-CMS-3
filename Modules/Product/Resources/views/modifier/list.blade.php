@@ -177,7 +177,7 @@
                         @endforeach
                     @else
                     <tr>
-                        <td colspan="8" class="text-center"><em class="text-muted">No modifiers found</em></td>
+                        <td colspan="8" class="text-center"><em class="text-muted">No toppings found</em></td>
                     </tr>
                     @endif
                 </tbody>

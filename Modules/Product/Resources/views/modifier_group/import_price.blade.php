@@ -232,13 +232,13 @@ $configs    		= session('configs');
                 </div>
                 <div class="portlet-body form">
                     <div class="m-heading-1 border-green m-bordered">
-                        <p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data harga modifier group.</p>
-                        <p style="white-space: pre-wrap;">Saat melakukan impor modifier group price, mohon diperhatikan bahwa : </p>
+                        <p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data harga product variant NON PRICE (NO SKU).</p>
+                        <p style="white-space: pre-wrap;">Saat melakukan impor product variant NON PRICE (NO SKU) price, mohon diperhatikan bahwa : </p>
                         <ul>
                             <li>Modifier group  price diidentifikasi berdasarkan code, jika code tidak tersedia pada database maka harga tidak akan di update.</li>
                         </ul>
                         <br>
-                        <p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor modifier group price</p>
+                        <p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor product variant NON PRICE (NO SKU) price</p>
                     </div>
                     <div class="form-actions" style="padding-bottom: 5px">
                         {{ csrf_field() }}
@@ -255,7 +255,7 @@ $configs    		= session('configs');
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
-                        <span class="caption-subject font-dark sbold uppercase font-green">Download Template Modifier Group Price</span>
+                        <span class="caption-subject font-dark sbold uppercase font-green">Download Template Product Variant NON PRICE (NO SKU) Price</span>
                     </div>
                 </div>
                 <div class="portlet-body form">
@@ -284,7 +284,7 @@ $configs    		= session('configs');
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
-                        <span class="caption-subject font-dark sbold uppercase font-green">Upload Data Modifier Group Price</span>
+                        <span class="caption-subject font-dark sbold uppercase font-green">Upload Data Product Variant NON PRICE (NO SKU) Price</span>
                     </div>
                 </div>
                 <div class="portlet-body form upload-container">
@@ -338,7 +338,7 @@ $configs    		= session('configs');
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
-                        <span class="caption-subject font-dark sbold uppercase font-green">Import Result Modifier Group Price</span>
+                        <span class="caption-subject font-dark sbold uppercase font-green">Import Result Product Variant NON PRICE (NO SKU) Price</span>
                     </div>
                 </div>
                 <div class="portlet-body step3 form">

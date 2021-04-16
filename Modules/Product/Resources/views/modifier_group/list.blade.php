@@ -131,7 +131,7 @@
                         @endforeach
                     @else
                     <tr>
-                        <td colspan="8" class="text-center"><em class="text-muted">No modifiers group found</em></td>
+                        <td colspan="8" class="text-center"><em class="text-muted">No toppings group found</em></td>
                     </tr>
                     @endif
                 </tbody>
