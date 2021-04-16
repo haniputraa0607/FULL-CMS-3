@@ -117,7 +117,7 @@ class QuestController extends Controller
 
             $save = MyHelper::post('quest/create', $post);
             if (isset($save['status']) && $save['status'] == "success") {
-                return redirect('quest/detail/' . $save['data']);
+                return redirect('quest/detail/' . $save['data'] . '#content');
             } else {
                 return ['error' => $save];
                 return back()->with('error', $save['errors'] ?? ['Something went wrong'])->withInput();
@@ -177,7 +177,7 @@ class QuestController extends Controller
         $update = MyHelper::post('quest/detail/update', $post);
 
         if (isset($update['status']) && $update['status'] == "success") {
-            return back();
+            return back()->withSuccess(['Success update detail']);
         } else {
             return back()->with('error', $update['errors'])->withInput();
         }

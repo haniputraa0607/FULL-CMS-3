@@ -34,7 +34,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="detail[0][short_description]" placeholder="Short Description" required maxlength="20">
+                                    <input type="text" class="form-control" name="detail[0][short_description]" placeholder="Short Description" required maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">

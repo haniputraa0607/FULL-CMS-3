@@ -159,7 +159,9 @@
                             <div class="profile-info portlet light bordered">
                                 <div class="portlet-title"> 
                                     <span class="caption font-blue sbold uppercase">{{$data['quest']['name']}} Badge </span>
+                                    @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
                                     <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Bagde</a>
+                                    @endif
                                 </div>
                                 <div class="portlet-body row">
                                     @foreach ($data['quest']['quest_detail'] as $item)
@@ -172,6 +174,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
                                                     <div class="btn-group btn-group-solid pull-right">
                                                         <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                                             <div id="loadingBtn" hidden>
@@ -191,6 +194,7 @@
                                                             </li>
                                                         </ul>
                                                     </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="portlet-body">
