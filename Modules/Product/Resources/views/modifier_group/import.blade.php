@@ -232,15 +232,15 @@ $configs    		= session('configs');
                 </div>
                 <div class="portlet-body form">
                     <div class="m-heading-1 border-green m-bordered">
-                        <p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data produk product variant NON PRICE (NO SKU).</p>
-                        <p style="white-space: pre-wrap;">Saat melakukan impor produk product variant NON PRICE (NO SKU), mohon diperhatikan bahwa : </p>
+                        <p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data product variant NON PRICE (NO SKU).</p>
+                        <p style="white-space: pre-wrap;">Saat melakukan impor product variant NON PRICE (NO SKU), mohon diperhatikan bahwa : </p>
                         <ul>
                             <li>product variant NON PRICE (NO SKU) hanya bisa di tetapkan pada salah satu tipe yaitu product atau variant</li>
-                            <li>Jika product variant NON PRICE (NO SKU) di tetapkan untuk product, isi kolom product dengan memasukkan kode produk</li>
-                            <li>Jika product variant NON PRICE (NO SKU) di tetapkan untuk variant, isi kolom variant dengan <br>memasukkan nama variant.<br>Untuk variant hanya bisa memilih satu variant untuk tiap product variant NON PRICE (NO SKU).</li>
-                            <li>Modifier memiliki 2 tipe nama yaitu nama yang akan ditampilkan pada detail produk dan nama yang <br>akan ditampilkan pada detail transaction.  </li>
-                            <li>Tipe nama topping akan dibedakan dengan tanda '-' <br>nama sebelum tanda '-' akan disimpan sebagai nama detail produk dan <br>nama setelah tanda '-' akan disimpan sebagai nama detail transaksi.</li>
-                            <li>Modifier diidentifikasi berdasarkan code yang ada pada tanda '()' seperti contoh dibawah.<br>Jika kode tidak ada pada database maka topping akan ditambahkan secara otomatis.</li>
+                            <li>Jika product variant NON PRICE (NO SKU) di tetapkan untuk product, <br>isi kolom product dengan memasukkan kode produk</li>
+                            <li>Jika product variant NON PRICE (NO SKU) di tetapkan untuk variant, <br>isi kolom variant dengan memasukkan nama variant.<br>Untuk variant hanya bisa memilih satu variant untuk tiap product variant NON PRICE (NO SKU).</li>
+                            <li>Product variant NON PRICE (NO SKU) memiliki 2 tipe nama yaitu nama yang akan ditampilkan pada detail produk <br>dan nama yang akan ditampilkan pada detail transaction.  </li>
+                            <li>Tipe nama product variant NON PRICE (NO SKU) akan dibedakan dengan tanda '-' <br>nama sebelum tanda '-' akan disimpan sebagai nama detail produk dan <br>nama setelah tanda '-' akan disimpan sebagai nama detail transaksi.</li>
+                            <li>product variant NON PRICE (NO SKU) child diidentifikasi berdasarkan code yang ada pada tanda '()' seperti contoh dibawah.<br>Jika kode tidak ada pada database maka product variant NON PRICE (NO SKU) akan ditambahkan secara otomatis.</li>
                         </ul>
                         <p>
                             Contoh data :
@@ -248,10 +248,10 @@ $configs    		= session('configs');
                         <div style="overflow-x:auto;">
                             <table class="table table-striped table-bordered table-hover table-responsive" width="100%">
                                 <thead>
-                                <th>product_modifier_group_name</th>
+                                <th>product_variant_non_price_name</th>
                                 <th>product</th>
                                 <th>product_variant</th>
-                                <th>modifier</th>
+                                <th>product_variant_non_price_child</th>
                                 </thead>
                                 <tbody>
                                 <tr>

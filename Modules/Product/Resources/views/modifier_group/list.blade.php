@@ -79,7 +79,7 @@
             <table class="table table-striped table-bordered table-hover table-responsive" width="100%">
                 <thead>
                     <tr>
-                        <th> Product Variant NON PRICE (NO SKU) Name </th>
+                        <th> Name </th>
                         <th> Topping </th>
                         <th> Assign Product </th>
                         <th> Assign Product Variant </th>

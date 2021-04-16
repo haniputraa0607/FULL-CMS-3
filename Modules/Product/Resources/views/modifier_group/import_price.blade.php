@@ -235,7 +235,7 @@ $configs    		= session('configs');
                         <p style="white-space: pre-wrap;">Menu ini digunakan untuk melakukan impor atau ekspor data harga product variant NON PRICE (NO SKU).</p>
                         <p style="white-space: pre-wrap;">Saat melakukan impor product variant NON PRICE (NO SKU) price, mohon diperhatikan bahwa : </p>
                         <ul>
-                            <li>Modifier group  price diidentifikasi berdasarkan code, jika code tidak tersedia pada database maka harga tidak akan di update.</li>
+                            <li>Product Variant NON PRICE (NO SKU) diidentifikasi berdasarkan code,<br>jika code tidak tersedia pada database maka harga tidak akan di update.</li>
                         </ul>
                         <br>
                         <p style="white-space: pre-wrap;">Silahkan klik <span class="badge">Start</span> untuk memulai impor/ekspor product variant NON PRICE (NO SKU) price</p>

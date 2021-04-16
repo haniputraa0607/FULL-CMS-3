@@ -138,7 +138,7 @@
                     <thead>
                         <tr>
                             <th> No </th>
-                            <th> Modifier </th>
+                            <th> Topping </th>
                             <th> Price </th>
                         </tr>
                     </thead>

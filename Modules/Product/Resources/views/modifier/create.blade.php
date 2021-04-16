@@ -185,7 +185,7 @@
                     </div>
                     <div class="form-group" id="global-brand-form">
                         <div class="col-md-offset-3 col-md-8">
-                            <div class="alert alert-info" style="margin-right: -14px">Modifiers will be available on this selected brand</div>
+                            <div class="alert alert-info" style="margin-right: -14px">Topping will be available on this selected brand</div>
                         </div>
                         <div class="col-md-offset-3 col-md-2">
                             <div class="input-icon right">
@@ -206,7 +206,7 @@
                     </div>
                     <div class="form-group" id="specific-form">
                         <div class="col-md-offset-3 col-md-8">
-                            <div class="alert alert-info" style="margin-right: -14px">Modifiers will be available on the product if any of the conditions set below are met</div>
+                            <div class="alert alert-info" style="margin-right: -14px">Toppings will be available on the product if any of the conditions set below are met</div>
                         </div>
                         <div class="col-md-offset-3 col-md-2">
                             <div class="input-icon right">

@@ -31,7 +31,7 @@
     <script type="text/javascript">
         rules = {
             all_product_modifier :{
-                display:'All Modifier Group',
+                display:'All Product Variant NON PRICE (NO SKU)',
                 operator:[],
                 opsi:[]
             },
@@ -116,7 +116,7 @@
                     <thead>
                         <tr>
                             <th> No </th>
-                            <th> Modifier </th>
+                            <th> Product Variant </th>
                             <th> Price </th>
                         </tr>
                     </thead>
