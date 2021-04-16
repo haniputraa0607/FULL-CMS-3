@@ -147,7 +147,7 @@
             <form class="form-horizontal" id="form_product_modifier_group" role="form" action="{{ url('product/modifier-group') }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Modifier Group Name
+                        <label class="col-md-3 control-label">Product Variant NON PRICE (NO SKU) Name
                             <span class="required" aria-required="true"> *
                             </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama product variant NON PRICE (NO SKU)" data-container="body"></i>
@@ -202,10 +202,10 @@
                         </div>
                     </div>
                     <div class="form-group" id="div_list_product_variant">
-                        <label for="multiple" class="control-label col-md-3">Add Product Variant NON PRICE (NO SKU)
+                        <label for="multiple" class="control-label col-md-3">Add Child
                         </label>
                         <div class="col-md-5">
-                            <a class="btn green" onclick="addModifier()">Add Product Variant NON PRICE (NO SKU) <i class="fa fa-plus-circle"></i></a>
+                            <a class="btn green" onclick="addModifier()">Add Child <i class="fa fa-plus-circle"></i></a>
                         </div>
                     </div>
                     <div id="list_modifier">

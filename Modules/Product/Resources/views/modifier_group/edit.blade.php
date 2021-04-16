@@ -148,7 +148,7 @@
             <form class="form-horizontal" id="form_product_modifier_group" role="form" action="{{ url('product/modifier-group/update') }}/{{$result['id_product_modifier_group']}}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Modifier Group Name
+                        <label class="col-md-3 control-label">Product Variant NON PRICE (NO SKU) Name
                             <span class="required" aria-required="true"> *
                             </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama product variant NON PRICE (NO SKU)" data-container="body"></i>

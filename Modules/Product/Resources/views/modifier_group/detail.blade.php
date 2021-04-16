@@ -31,7 +31,7 @@
     <script type="text/javascript">
         rules = {
             all_product_modifier :{
-                display:'All Modifier Group',
+                display:'All Product Variant NON PRICE (NO SKU)',
                 operator:[],
                 opsi:[]
             },
@@ -97,7 +97,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">List Topping</span>
+                <span class="caption-subject sbold uppercase font-blue">List Product Variant NON PRICE (NO SKU)</span>
             </div>
             <div class="actions">
                 <div class="btn-group" style="width: 300px">
@@ -115,7 +115,7 @@
                     <thead>
                         <tr>
                             <th> No </th>
-                            <th> Modifier </th>
+                            <th> Product Variant </th>
                             <th> Visible </th>
                             <th> Stock </th>
                             <th> Status </th>

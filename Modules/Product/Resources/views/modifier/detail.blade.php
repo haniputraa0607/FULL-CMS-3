@@ -137,7 +137,7 @@
                     <thead>
                         <tr>
                             <th> No </th>
-                            <th> Modifier </th>
+                            <th> Topping </th>
                             <th> Visible </th>
                             <th> Stock </th>
                             <th> Status </th>

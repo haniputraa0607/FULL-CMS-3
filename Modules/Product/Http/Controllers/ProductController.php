@@ -298,6 +298,7 @@ class ProductController extends Controller
                         ],
                     ];
                 }
+                $type = 'topping-price';
                 break;
 
             case 'modifier':
@@ -321,6 +322,7 @@ class ProductController extends Controller
                         ],
                     ];
                 }
+                $type = 'topping';
                 break;
 
             default:
