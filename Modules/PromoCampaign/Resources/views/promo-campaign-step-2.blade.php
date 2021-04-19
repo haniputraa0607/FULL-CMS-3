@@ -588,7 +588,9 @@
 		margin: 0; 
 	}
 	</style>
-	@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
+	{{-- if promo campaign already used --}}
+	{{-- @if( !empty($result['promo_campaign_reports']) && isset($result['step_complete'])) --}}
+	@if(false)
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#promotype-form').find('input, textarea, select').prop('disabled', true);
@@ -662,7 +664,7 @@
 	</div>
 	<form role="form" action="" method="POST" enctype="multipart/form-data">
 		@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
-		<input type="hidden" name="used_code_update" value="1">
+			{{-- <input type="hidden" name="used_code_update" value="1"> --}}
 		@endif
 		<div class="col-md-12">
 			{{-- DETAIL CAMPAIGN INFORMATION --}}
