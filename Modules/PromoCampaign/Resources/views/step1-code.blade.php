@@ -9,6 +9,9 @@
 			</div>
 		</div>
 		<div class="portlet-body">
+			<div class="alert alert-warning">
+		        Cannot update code because promo already used.
+		    </div>
 			<div class="form-group" style="height: 90px;">
 				<label class="control-label">Code Type</label>
 				<span class="required" aria-required="true"> * </span>
@@ -79,7 +82,7 @@
 				<span class="required" aria-required="true"> * </span>
 				<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo" data-container="body"></i>
 				<div class="input-group col-md-12">
-					<input required type="text" class="form-control digit_mask" placeholder="Limit Usage" @if(isset($result['limitation_usage']) && $result['limitation_usage'] != "") value="{{$result['limitation_usage']}}" @elseif(old('limitation_usage') != "") value="{{old('limitation_usage')}}" @endif autocomplete="off">
+					<input required type="text" class="form-control digit_mask" placeholder="Limit Usage" value="{{ old('limitation_usage') ?? $result['limitation_usage'] ?? null }}" autocomplete="off">
 				</div>
 			</div>
 			<div class="form-group">

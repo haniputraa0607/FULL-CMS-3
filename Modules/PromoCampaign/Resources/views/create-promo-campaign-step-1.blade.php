@@ -361,8 +361,9 @@
 		margin: 0; 
 	}
 	</style>
-	
-	@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
+	{{-- if promo campaign already used --}}
+	{{-- @if( !empty($result['promo_campaign_reports']) && isset($result['step_complete'])) --}}
+	@if(false)
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.disable-form').find('input, textarea').prop('disabled', true);
