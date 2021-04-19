@@ -355,7 +355,7 @@ class PromoCampaignController extends Controller
 
             $post['id_promo_campaign'] = $id_promo_campaign;
             $msg_success = ['Promo Campaign has been updated'];
-            if ($post['promo_type'] == 'Discount delivery') {
+            if ( ($post['promo_type'] ?? false) == 'Discount delivery') {
             	$shipment = [];
             	if ($post['filter_shipment'] == 'all_shipment') {
             		$shipment[] = 'GO-SEND';
