@@ -144,7 +144,7 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" name="detail[${nomer}][name]" placeholder="Detail Quest" required maxlength="20">
+                                                    <input type="text" class="form-control" name="detail[${nomer}][name]" placeholder="Detail Quest" required maxlength="40">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -158,35 +158,6 @@
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
                                                         <textarea name="detail[${nomer}][short_description]" class="form-control" placeholder="Quest Detail Short Description"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="input-icon right">
-                                                    <label class="col-md-3 control-label">
-                                                    Image Default Badge
-                                                    <span class="required" aria-required="true"> * </span>
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
-                                                    <br>
-                                                    <span class="required" aria-required="true"> (500*500) </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="input-icon right">
-                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                            <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                                                            <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-                                                            </div>
-                                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 150px; max-height: 150px;"></div>
-                                                            <div>
-                                                                <span class="btn default btn-file">
-                                                                <span class="fileinput-new"> Select image </span>
-                                                                <span class="fileinput-exists"> Change </span>
-                                                                <input type="file" class="file" accept="image/*" name="detail[${nomer}][logo_badge]" required>
-                                                                </span>
-                                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -569,7 +540,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="quest[name]" value="{{ old('quest.name') }}" placeholder="Quest" required maxlength="20">
+                                        <input type="text" class="form-control" name="quest[name]" value="{{ old('quest.name') }}" placeholder="Quest" required maxlength="40">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -684,20 +655,6 @@
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
-                                        Description
-                                        <span class="required" aria-required="true"> * </span>
-                                        <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang quest yang dibuat" data-container="body"></i>
-                                        </label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="input-icon right">
-                                            <textarea name="quest[description]" id="field_content_long" class="form-control summernote" placeholder="Quest Description">{{ old('quest.description') }}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-icon right">
-                                        <label class="col-md-3 control-label">
                                         Benefit
                                         <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Hadiah yang akan didapatkan setelah menyelesaikan quest" data-container="body"></i>
@@ -765,7 +722,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" name="detail[{{$index}}][name]" placeholder="Detail Quest" required maxlength="20" value="{{$detail['name'] ?? ''}}">
+                                                <input type="text" class="form-control" name="detail[{{$index}}][name]" placeholder="Detail Quest" required maxlength="40" value="{{$detail['name'] ?? ''}}">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -779,35 +736,6 @@
                                             <div class="col-md-8">
                                                 <div class="input-icon right">
                                                     <textarea name="detail[{{$index}}][short_description]" class="form-control" placeholder="Quest Detail Short Description">{{$detail['short_description'] ?? ''}}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-icon right">
-                                                <label class="col-md-3 control-label">
-                                                Image Default Badge
-                                                <span class="required" aria-required="true"> * </span>
-                                                <i class="fa fa-question-circle tooltips" data-original-title="Gambar deals" data-container="body"></i>
-                                                <br>
-                                                <span class="required" aria-required="true"> (500*500) </span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="input-icon right">
-                                                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                        <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                                                        <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-                                                        </div>
-                                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 150px; max-height: 150px;"></div>
-                                                        <div>
-                                                            <span class="btn default btn-file">
-                                                            <span class="fileinput-new"> Select image </span>
-                                                            <span class="fileinput-exists"> Change </span>
-                                                            <input type="file" class="file" accept="image/*" name="detail[{{$index}}][logo_badge]" required>
-                                                            </span>
-                                                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

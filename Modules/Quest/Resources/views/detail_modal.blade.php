@@ -22,7 +22,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Quest" required maxlength="20">
+                                    <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Quest" required maxlength="40">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -238,7 +238,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" placeholder="Detail Quest" required maxlength="20">
+                            <input type="text" class="form-control" name="name" placeholder="Detail Quest" required maxlength="40">
                         </div>
                     </div>
                     <div class="form-group">
@@ -250,7 +250,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="short_description" placeholder="Short Description" required maxlength="20">
+                            <input type="text" class="form-control" name="short_description" placeholder="Short Description" required maxlength="255">
                         </div>
                     </div>
                     <div class="form-group">
@@ -525,7 +525,7 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="quest[name]" value="{{ old('quest.name', $data['quest']['name']) }}" placeholder="Quest" required maxlength="20">
+                            <input type="text" class="form-control" name="quest[name]" value="{{ old('quest.name', $data['quest']['name']) }}" placeholder="Quest" required maxlength="40">
                         </div>
                     </div>
                     <div class="form-group">
@@ -594,20 +594,6 @@
                         <div class="col-md-9">
                             <div class="input-icon right">
                                 <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description">{{ old('quest.short_description', $data['quest']['short_description']) }}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Description
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang quest yang dibuat" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-icon right">
-                                <textarea name="quest[description]" id="field_content_long" class="form-control summernote" placeholder="Quest Description">{{ old('quest.description', $data['quest']['description']) }}</textarea>
                             </div>
                         </div>
                     </div>

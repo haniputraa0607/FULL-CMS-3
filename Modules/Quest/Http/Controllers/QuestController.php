@@ -70,7 +70,9 @@ class QuestController extends Controller
 
         if (isset($post['id_quest'])) {
             foreach ($post['detail'] as $key => $value) {
-                $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
+                if ($post['detail'][$key]['logo_badge'] ?? false) {
+                    $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
+                }
                 switch ($value['rule_total']) {
                     case 'total_transaction':
                         $post['detail'][$key]['trx_total'] = $value['value_total'];
@@ -98,7 +100,9 @@ class QuestController extends Controller
 
             if (isset($post['detail'])) {
                 foreach ($post['detail'] as $key => $value) {
-                    $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
+                    if ($post['detail'][$key]['logo_badge'] ?? false) {
+                        $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
+                    }
                     switch ($value['rule_total']) {
                         case 'total_transaction':
                             $post['detail'][$key]['trx_total'] = $value['value_total'];

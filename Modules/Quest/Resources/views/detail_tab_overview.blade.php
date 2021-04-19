@@ -76,14 +76,6 @@
                                             <li>
                                                 <span class="{{$data['quest']['short_description'] ? '' : 'text-muted'}}">{{$data['quest']['short_description'] ?: 'No short description'}}</span>
                                             </li>
-                                            <li>
-                                                <span class="sale-info">Description
-                                                    <i class="fa fa-img-up"></i>
-                                                </span>
-                                            </li>
-                                            <li>
-                                                {!!$data['quest']['description'] ?: '<span class="text-muted">No description</span>'!!}
-                                            </li>
                                         </ul>
                                         @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
                                         <div class="text-center">
@@ -158,7 +150,7 @@
                         <div class="col-md-7 profile-info">
                             <div class="profile-info portlet light bordered">
                                 <div class="portlet-title"> 
-                                    <span class="caption font-blue sbold uppercase">{{$data['quest']['name']}} Badge </span>
+                                    <span class="caption font-blue sbold uppercase">{{$data['quest']['name']}} Rule </span>
                                     @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
                                     <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Bagde</a>
                                     @endif
