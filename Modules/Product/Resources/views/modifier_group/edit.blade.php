@@ -49,10 +49,16 @@
             html += '<div class="form-group" id="mod_'+i+'">';
             html += '<label class="col-md-1 control-label"><i class="fa fa-arrows"></i></label>';
             html += '<div class="col-md-2">';
+            html += '<div class="input-group">';
             html += '<input type="text" placeholder="Name (detail product)" class="form-control" name="data_modifier['+i+'][name]" required>';
+            html += '<span class="input-group-addon"><i class="fa fa-question-circle tooltips" data-original-title="Muncul pada laman order" data-container="body" style="color: black"></i></span>';
+            html += '</div>';
             html += '</div>';
             html += '<div class="col-md-3">';
+            html += '<div class="input-group">';
             html += '<input type="text" placeholder="Name (detail transaction)" class="form-control" name="data_modifier['+i+'][name_detail_trx]" required>';
+            html += '<span class="input-group-addon"><i class="fa fa-question-circle tooltips" data-original-title="Muncul pada laman check out, kicthen order, dan receipt" data-container="body" style="color: black"></i></span>';
+            html += '</div>';
             html += '</div>';
             html += '<div class="col-md-2">';
             html += '<input type="checkbox" class="make-switch default-visibility" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-off-text="Hidden" name="data_modifier['+i+'][visibility]" checked>';
@@ -64,6 +70,7 @@
 
             $("#list_modifier").append(html);
             $(".default-visibility").bootstrapSwitch();
+            $(".tooltips").tooltip();
             i++;
         }
 
@@ -225,10 +232,16 @@
                             <div class="form-group" id="mod_{{$i}}">
                                 <label class="col-md-1 control-label"><i class="fa fa-arrows"></i></label>
                                 <div class="col-md-2">
-                                    <input type="text" placeholder="Name (detail product)" class="form-control" name="data_modifier[{{$i}}][name]" required value="{{$pm['text']}}">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Name (detail product)" class="form-control" name="data_modifier[{{$i}}][name]" required value="{{$pm['text']}}">
+                                        <span class="input-group-addon"><i class="fa fa-question-circle tooltips" data-original-title="Muncul pada laman order" data-container="body" style="color: black"></i></span>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" placeholder="Name (detail transaction)" class="form-control" name="data_modifier[{{$i}}][name_detail_trx]" required value="{{$pm['text_detail_trx']}}">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Name (detail transaction)" class="form-control" name="data_modifier[{{$i}}][name_detail_trx]" required value="{{$pm['text_detail_trx']}}">
+                                        <span class="input-group-addon"><i class="fa fa-question-circle tooltips" data-original-title="Muncul pada laman check out, kicthen order, dan receipt" data-container="body" style="color: black"></i></span>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
                                     <input type="text" placeholder="Modifier group Code" class="form-control" name="data_modifier[{{$i}}][new_code]" required value="{{$pm['code']}}">

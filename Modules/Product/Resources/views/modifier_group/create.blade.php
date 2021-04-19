@@ -6,6 +6,11 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <style>
+        .input-group-addon{
+            color: black;
+        }
+    </style>
 @endsection
 
 @section('page-script')
@@ -46,12 +51,17 @@
         function addModifier() {
             var html = '';
             html += '<div class="form-group" id="mod_'+i+'">';
-            html += '<label class="col-md-1 control-label"></label>';
             html += '<div class="col-md-4">';
-            html += '<input type="text" placeholder="Name (detail product)" class="form-control" name="data_modifier['+i+'][name]" required>';
+            html += '<div class="input-group">';
+            html += '<input type="text" placeholder="Name (detail product)" class="form-control" name="data_modifier['+i+'][name]" required><span></span>';
+            html += '<span class="input-group-addon"><i class="fa fa-question-circle tooltips" data-original-title="Muncul pada laman order" data-container="body" style="color: black"></i></span>';
+            html += '</div>';
             html += '</div>';
             html += '<div class="col-md-4">';
+            html += '<div class="input-group">';
             html += '<input type="text" placeholder="Name (detail transaction)" class="form-control" name="data_modifier['+i+'][name_detail_trx]" required>';
+            html += '<span class="input-group-addon"><i class="fa fa-question-circle tooltips" data-original-title="Muncul pada laman check out, kicthen order, dan receipt" data-container="body" style="color: black"></i></span>';
+            html += '</div>';
             html += '</div>';
             html += '<div class="col-md-2">';
             html += '<input type="checkbox" class="make-switch default-visibility" data-size="small" data-on-color="info" data-on-text="Visible" data-off-color="default" data-off-text="Hidden" name="data_modifier['+i+'][visibility]" checked>';
@@ -63,6 +73,7 @@
 
             $("#list_modifier").append(html);
             $(".default-visibility").bootstrapSwitch();
+            $(".tooltips").tooltip();
             i++;
         }
 
