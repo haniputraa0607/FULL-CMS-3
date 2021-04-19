@@ -362,8 +362,7 @@
 	}
 	</style>
 	{{-- if promo campaign already used --}}
-	{{-- @if( !empty($result['promo_campaign_reports']) && isset($result['step_complete'])) --}}
-	@if(false)
+	@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']) && session('level') != 'Super Admin')
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.disable-form').find('input, textarea').prop('disabled', true);

@@ -589,8 +589,7 @@
 	}
 	</style>
 	{{-- if promo campaign already used --}}
-	{{-- @if( !empty($result['promo_campaign_reports']) && isset($result['step_complete'])) --}}
-	@if(false)
+	@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']) && session('level') != 'Super Admin' )
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#promotype-form').find('input, textarea, select').prop('disabled', true);
@@ -663,8 +662,8 @@
 		</div>
 	</div>
 	<form role="form" action="" method="POST" enctype="multipart/form-data">
-		@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']))
-			{{-- <input type="hidden" name="used_code_update" value="1"> --}}
+		@if( !empty($result['promo_campaign_reports']) && isset($result['step_complete']) && session('level') != 'Super Admin')
+			<input type="hidden" name="used_code_update" value="1">
 		@endif
 		<div class="col-md-12">
 			{{-- DETAIL CAMPAIGN INFORMATION --}}

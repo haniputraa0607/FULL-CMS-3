@@ -474,8 +474,7 @@
                                         <div class="col-md-8 value">: {{ $result['limitation_usage']??false ? number_format($result['limitation_usage']).' Times usage' : 'Unlimited' }}</div>
                                     </div>
                                 {{-- if promo campaign already used --}}
-                                {{-- @if( (empty($result['promo_campaign_reports']) || empty($result['step_complete'])) && MyHelper::hasAccess([203], $grantedFeature)) --}}
-                                @if(true)
+                                @if( (empty($result['promo_campaign_reports']) || empty($result['step_complete']) || session('level') == 'Super Admin' ) && MyHelper::hasAccess([203], $grantedFeature))
                                 <div class="row static-info">
                                     <div class="col-md-11 value">
                                         <a class="btn blue" href="{{ url('/')}}/promo-campaign/step1/{{$result['id_promo_campaign']}}">Edit Detail</a>
@@ -865,8 +864,7 @@
                                         </div>
                                     @endif
                                     {{-- if promo campaign already used --}}
-                                    {{-- @if( (empty($result['promo_campaign_reports']) || empty($result['step_complete'])) && MyHelper::hasAccess([203], $grantedFeature)) --}}
-                                    @if (true)
+                                    @if( (empty($result['promo_campaign_reports']) || empty($result['step_complete']) || session('level') == 'Super Admin') && MyHelper::hasAccess([203], $grantedFeature))
                                     <div class="row static-info">
                                         <div class="col-md-11 value">
                                             <a class="btn blue" href="{{ url('/')}}/promo-campaign/step2/{{$result['id_promo_campaign']}}">Edit Rule</a>
