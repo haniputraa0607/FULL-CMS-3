@@ -50,11 +50,17 @@ class QuestController extends Controller
         ];
 
         $data['category']   = MyHelper::get('product/category/be/list')['result'];
-        $data['product']    = MyHelper::get('product/be/list')['result'];
+        $data['product']    = MyHelper::get('quest/list-product')['result'];
         $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
         $data['province']   = MyHelper::get('province/list')['result'];
         $data['deals']      = MyHelper::get('quest/list-deals')['result'];;
         $data['details']     = (old('detail') ?? false) ?: [[]];
+
+        $data['product_variant_groups'] = [];
+        foreach ($data['product'] as $product) {
+            $data['product_variant_groups'][$product['id_product']] = $product['product_variant_group'];
+        }
+        $data['product_variant_groups'] = array_filter($data['product_variant_groups']);
 
         return view('quest::create', $data);
     }
@@ -103,17 +109,6 @@ class QuestController extends Controller
                     if ($post['detail'][$key]['logo_badge'] ?? false) {
                         $post['detail'][$key]['logo_badge'] = MyHelper::encodeImage($value['logo_badge']);
                     }
-                    switch ($value['rule_total']) {
-                        case 'total_transaction':
-                            $post['detail'][$key]['trx_total'] = $value['value_total'];
-                            break;
-                        case 'total_outlet':
-                            $post['detail'][$key]['different_outlet'] = $value['value_total'];
-                            break;
-                        case 'total_province':
-                            $post['detail'][$key]['different_province'] = $value['value_total'];
-                            break;
-                    }
                     unset($post['detail'][$key]['rule_total']);
                     unset($post['detail'][$key]['value_total']);
                 }
@@ -123,8 +118,7 @@ class QuestController extends Controller
             if (isset($save['status']) && $save['status'] == "success") {
                 return redirect('quest/detail/' . $save['data'] . '#content');
             } else {
-                return ['error' => $save];
-                return back()->with('error', $save['errors'] ?? ['Something went wrong'])->withInput();
+                return back()->withErrors($save['errors'] ?? ['Something went wrong'])->withInput();
             }
         }
     }
