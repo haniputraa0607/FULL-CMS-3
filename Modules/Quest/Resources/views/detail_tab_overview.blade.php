@@ -29,6 +29,16 @@
                                                 @endif
                                             </li>
                                             <li>
+                                                <span class="sale-info"> Autoclaim 
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                                @if ($data['quest']['autoclaim_quest'])
+                                                    <span class="sale-num sbold badge" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">On</span>
+                                                @else
+                                                    <span class="sale-num sbold badge secondary" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Off</span>
+                                                @endif
+                                            </li>
+                                            <li>
                                                 <span class="sale-info"> Published at
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
@@ -75,14 +85,6 @@
                                             </li>
                                             <li>
                                                 <span class="{{$data['quest']['short_description'] ? '' : 'text-muted'}}">{{$data['quest']['short_description'] ?: 'No short description'}}</span>
-                                            </li>
-                                            <li>
-                                                <span class="sale-info">Description
-                                                    <i class="fa fa-img-up"></i>
-                                                </span>
-                                            </li>
-                                            <li>
-                                                {!!$data['quest']['description'] ?: '<span class="text-muted">No description</span>'!!}
                                             </li>
                                         </ul>
                                         @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
@@ -145,6 +147,16 @@
                                                 </span>
                                             </li>
                                             @endif
+                                            <li>
+                                                <span class="sale-info"> Autoclaim 
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                                @if ($data['quest']['quest_benefit']['autoclaim_benefit'])
+                                                    <span class="sale-num sbold badge" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">On</span>
+                                                @else
+                                                    <span class="sale-num sbold badge secondary" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Off</span>
+                                                @endif
+                                            </li>
                                         </ul>
                                         @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
                                         <div class="text-center">
@@ -158,8 +170,10 @@
                         <div class="col-md-7 profile-info">
                             <div class="profile-info portlet light bordered">
                                 <div class="portlet-title"> 
-                                    <span class="caption font-blue sbold uppercase">{{$data['quest']['name']}} Badge </span>
+                                    <span class="caption font-blue sbold uppercase">{{$data['quest']['name']}} Rule </span>
+                                    @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
                                     <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Bagde</a>
+                                    @endif
                                 </div>
                                 <div class="portlet-body row">
                                     @foreach ($data['quest']['quest_detail'] as $item)
@@ -172,6 +186,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
                                                     <div class="btn-group btn-group-solid pull-right">
                                                         <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                                             <div id="loadingBtn" hidden>
@@ -191,6 +206,7 @@
                                                             </li>
                                                         </ul>
                                                     </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="portlet-body">

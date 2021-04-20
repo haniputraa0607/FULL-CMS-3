@@ -22,7 +22,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Quest" required maxlength="20">
+                                    <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Quest" required maxlength="40">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -34,7 +34,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="detail[0][short_description]" placeholder="Short Description" required maxlength="20">
+                                    <input type="text" class="form-control" name="detail[0][short_description]" placeholder="Short Description" required maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -238,7 +238,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" placeholder="Detail Quest" required maxlength="20">
+                            <input type="text" class="form-control" name="name" placeholder="Detail Quest" required maxlength="40">
                         </div>
                     </div>
                     <div class="form-group">
@@ -250,7 +250,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="short_description" placeholder="Short Description" required maxlength="20">
+                            <input type="text" class="form-control" name="short_description" placeholder="Short Description" required maxlength="255">
                         </div>
                     </div>
                     <div class="form-group">
@@ -491,6 +491,18 @@
                             <input type="number" min=0 class="form-control" name="quest_benefit[value]" placeholder="Nominal Point" required  value="{{old('quest_benefit.value', $data['quest']['quest_benefit']['value'])}}" />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-4 control-label">
+                            Autoclaim Benefit
+                            <i class="fa fa-question-circle tooltips" data-original-title="Apakah misi harus di claim manual atau otomatis" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="hidden" name="quest_benefit[autoclaim_benefit]" value="0">
+                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest_benefit[autoclaim_benefit]" {{$data['quest']['quest_benefit']['autoclaim_benefit'] ? 'checked' : ''}}>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -525,7 +537,7 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="quest[name]" value="{{ old('quest.name', $data['quest']['name']) }}" placeholder="Quest" required maxlength="20">
+                            <input type="text" class="form-control" name="quest[name]" value="{{ old('quest.name', $data['quest']['name']) }}" placeholder="Quest" required maxlength="40">
                         </div>
                     </div>
                     <div class="form-group">
@@ -600,15 +612,13 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                            Description
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang quest yang dibuat" data-container="body"></i>
+                            Autoclaim Quest
+                            <i class="fa fa-question-circle tooltips" data-original-title="Apakah misi harus di claim manual atau otomatis" data-container="body"></i>
                             </label>
                         </div>
-                        <div class="col-md-9">
-                            <div class="input-icon right">
-                                <textarea name="quest[description]" id="field_content_long" class="form-control summernote" placeholder="Quest Description">{{ old('quest.description', $data['quest']['description']) }}</textarea>
-                            </div>
+                        <div class="col-md-8">
+                            <input type="hidden" name="quest[autoclaim_quest]" value="0">
+                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest[autoclaim_quest]" {{$data['quest']['autoclaim_quest'] ? 'checked' : ''}}>
                         </div>
                     </div>
                 </div>
