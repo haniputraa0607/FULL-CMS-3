@@ -619,6 +619,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Autoclaim Quest
+                            <i class="fa fa-question-circle tooltips" data-original-title="Apakah misi harus di claim manual atau otomatis" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest[autoclaim_quest]">
+                        </div>
+                    </div>
                     <hr>
                     <h4 class="text-center" style="margin-bottom:20px">Benefit</h4>
                     <div class="form-group">
@@ -669,6 +680,17 @@
                         </div>
                         <div class="col-md-3">
                             <input type="text" class="form-control digit_mask" name="quest_benefit[value]" placeholder="Nominal Point" required  value="{{old('quest_benefit.value', 0)}}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Autoclaim Benefit
+                            <i class="fa fa-question-circle tooltips" data-original-title="Apakah hadiah langsung didapatkan ketika menyelesaikan misi atau harus klaim manual" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest_benefit[autoclaim_benefit]">
                         </div>
                     </div>
                     <hr>

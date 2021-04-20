@@ -29,6 +29,16 @@
                                                 @endif
                                             </li>
                                             <li>
+                                                <span class="sale-info"> Autoclaim 
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                                @if ($data['quest']['autoclaim_quest'])
+                                                    <span class="sale-num sbold badge" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">On</span>
+                                                @else
+                                                    <span class="sale-num sbold badge secondary" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Off</span>
+                                                @endif
+                                            </li>
+                                            <li>
                                                 <span class="sale-info"> Published at
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
@@ -137,6 +147,16 @@
                                                 </span>
                                             </li>
                                             @endif
+                                            <li>
+                                                <span class="sale-info"> Autoclaim 
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                                @if ($data['quest']['quest_benefit']['autoclaim_benefit'])
+                                                    <span class="sale-num sbold badge" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">On</span>
+                                                @else
+                                                    <span class="sale-num sbold badge secondary" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Off</span>
+                                                @endif
+                                            </li>
                                         </ul>
                                         @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
                                         <div class="text-center">

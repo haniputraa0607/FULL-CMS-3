@@ -491,6 +491,18 @@
                             <input type="number" min=0 class="form-control" name="quest_benefit[value]" placeholder="Nominal Point" required  value="{{old('quest_benefit.value', $data['quest']['quest_benefit']['value'])}}" />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-4 control-label">
+                            Autoclaim Benefit
+                            <i class="fa fa-question-circle tooltips" data-original-title="Apakah misi harus di claim manual atau otomatis" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="hidden" name="quest_benefit[autoclaim_benefit]" value="0">
+                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest_benefit[autoclaim_benefit]" {{$data['quest']['quest_benefit']['autoclaim_benefit'] ? 'checked' : ''}}>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -595,6 +607,18 @@
                             <div class="input-icon right">
                                 <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description">{{ old('quest.short_description', $data['quest']['short_description']) }}</textarea>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Autoclaim Quest
+                            <i class="fa fa-question-circle tooltips" data-original-title="Apakah misi harus di claim manual atau otomatis" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="hidden" name="quest[autoclaim_quest]" value="0">
+                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest[autoclaim_quest]" {{$data['quest']['autoclaim_quest'] ? 'checked' : ''}}>
                         </div>
                     </div>
                 </div>
