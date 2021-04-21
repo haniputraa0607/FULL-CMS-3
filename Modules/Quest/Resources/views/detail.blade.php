@@ -132,7 +132,6 @@
                 contentType: false,
                 success: function(url) {
                     if (url['status'] == "success") {
-                        console.log(url);
                         $('#'+id).summernote('editor.saveRange');
                         $('#'+id).summernote('editor.restoreRange');
                         $('#'+id).summernote('editor.focus');
@@ -197,15 +196,16 @@
         });
     })
     function removeBox(params) {
-        $(params).parent().parent().remove()
+        $(params).parents('.detail-container-item').remove()
     }
     function editBadge(params) {
-        console.log(params)
+        console.log(params);
         $('#editBadge').find("input[name='name']").val(params.name)
-        $('#editBadge').find("input[name='short_description']").val(params.short_description)
+        $('#editBadge').find("textarea[name='short_description']").val(params.short_description)
         $('#editBadge').find("select[name='id_product_category']").val(params.id_product_category).trigger('change')
         $('#editBadge').find("input[name='different_category_product']").val(params.different_category_product).trigger('change')
         $('#editBadge').find("select[name='id_product']").val(params.id_product).trigger('change')
+        $('#editBadge').find("select[name='id_product_variant_group']").val(params.id_product_variant_group).trigger('change')
         $('#editBadge').find("input[name='trx_nominal']").val(params.trx_nominal)
         $('#editBadge').find("input[name='trx_total']").val(params.trx_total)
         $('#editBadge').find("input[name='product_total']").val(params.product_total)
@@ -214,14 +214,54 @@
         $('#editBadge').find("select[name='id_province']").val(params.id_province).trigger('change')
         $('#editBadge').find("select[name='different_province']").val(params.different_province).trigger('change')
         $('#editBadge').find("input[name='id_quest_detail']").val(params.id_quest_detail)
-        $('.digit_mask').inputmask({
-            removeMaskOnSubmit: true, 
-            placeholder: "",
-            alias: "currency", 
-            digits: 0, 
+        let total_rule = null;
+
+        if (params.different_outlet) {
+            total_rule = 'total_outlet';
+        } else if (params.different_province) {
+            total_rule = 'total_province';
+        } else if (params.trx_total) {
+            total_rule = 'total_transaction';
+        } else if (params.product_total && params.id_product) {
+            total_rule = 'total_product';
+        } else (params.trx_nominal) {
+            total_rule = 'nominal_transaction';
+        }
+
+        if (params.trx_nominal) {
+            $('#editBadge .rule_trx').prop('checked', true);
+        } else {
+            $('#editBadge .rule_trx').removeAttr('checked');
+        }
+
+        if (params.id_product) {
+            $('#editBadge .rule_product').prop('checked', true);
+        } else {
+            $('#editBadge .rule_product').removeAttr('checked');
+        }
+
+        if (params.id_product_variant_group) {
+            $('#editBadge .rule_product_variant').prop('checked', true);
+        } else {
+            $('#editBadge .rule_product_variant').removeAttr('checked');
+        }
+
+        if (params.id_outlet || params.id_province) {
+            $('#editBadge .rule_additional').prop('checked', true);
+        } else {
+            $('#editBadge .rule_additional').removeAttr('checked');
+        }
+
+
+        console.log(total_rule);
+        $('#editBadge').find("select[name='quest_rule']").val(total_rule).trigger('change');
+        $('.digit_mask').inputmask("numeric", {
+            radixPoint: ",",
+            groupSeparator: ".",
+            digits: 0,
+            autoGroup: true,
             rightAlign: false,
-            min: 0,
-            max: '999999999'
+            removeMaskOnSubmit: true, 
         });
         $(".select2-multiple").select2({
             allowClear: true,
@@ -317,6 +357,271 @@
     }
 	</script>
     <script type="text/javascript">
+        const product_variants = {!!json_encode($product_variant_groups)!!};
+        let counter_rule = 1;
+        function addRule() {
+            const template = `
+                <div class="portlet light bordered detail-container-item detail-container-item-${counter_rule}">
+                    <div class="portlet-body row">
+                        <div class="col-md-1 text-right" style="text-align: -webkit-right;">
+                            <a href="javascript:;" onclick="removeBox(this)" class="remove-box btn btn-danger">
+                                <i class="fa fa-close"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    Name
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="detail[${counter_rule}][name]" placeholder="Detail Quest" required maxlength="40" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    Short Description
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat yang ditampilkan di daftar misi" data-container="body"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <div class="input-icon right">
+                                        <textarea name="detail[${counter_rule}][short_description]" class="form-control" placeholder="Quest Detail Short Description">{{$detail['short_description'] ?? ''}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Quest Total Rule
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Select quest rule" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <select class="form-control select2 quest_rule" name="detail[${counter_rule}][quest_rule]" data-placeholder="Select Quest Rule" required>
+                                                <option></option>
+                                                <option value="nominal_transaction">Transaction Nominal</option>
+                                                <option value="total_transaction">Transaction Total</option>
+                                                <option value="total_product">Product Total</option>
+                                                <option value="total_outlet">Outlet Different</option>
+                                                <option value="total_province">Province Different</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group additional_rule">
+                                <label class="col-md-3 control-label">
+                                    Quest Additional Rule
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
+                                </label>
+                                <div class="col-md-9">
+                                    <div class="mt-checkbox-inline">
+                                        <label class="mt-checkbox rule_transaction not_nominal_transaction">
+                                            <input type="checkbox" class="rule_trx"> Transaction
+                                            <span></span>
+                                        </label>
+                                        <label class="mt-checkbox rule_product_add">
+                                            <input type="checkbox" class="rule_product"> Product
+                                            <span></span>
+                                        </label>
+                                        <label class="mt-checkbox additionalnya not_total_province">
+                                            <input type="checkbox" class="rule_additional"> Additional
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group trx_rule_form">
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Quest Transaction Rule
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[${counter_rule}][trx_nominal]" placeholder="Transaction Nominal">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product_rule_form">
+                                <div class="form-group">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Quest Product Rule
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            <select class="form-control select2 id_product" data-placeholder="Select Product" name="detail[${counter_rule}][id_product]">
+                                                <option></option>
+                                                @foreach ($product as $item)
+                                                    <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 not_total_product">
+                                        <div class="input-icon right">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control total_product product_total_rule" name="detail[${counter_rule}][product_total]" placeholder="Total Product">
+                                                <span class="input-group-btn">
+                                                    <button class="btn default" type="button">
+                                                        <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group has_variant">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Quest Product Variant Rule
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Select a product variant. leave blank, if the quest is not based on the product variant" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="mt-checkbox-inline">
+                                            <label class="mt-checkbox" style="margin-left: 15px;">
+                                                <input type="checkbox" class="use_variant rule_product_variant"> Use Variant
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-offset-3 col-md-4 product_variant_rule_form">
+                                        <div class="input-icon right">
+                                            <select class="form-control select2 id_product_variant" data-placeholder="Select Variant" name="detail[${counter_rule}][id_product_variant_group]">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group additional_rule_form">
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Quest Additional Rule
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 select_province">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="detail[${counter_rule}][id_province]">
+                                            <option></option>
+                                            @foreach ($province as $item)
+                                                <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 select_outlet">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[${counter_rule}][id_outlet] outlet_total_rule">
+                                            <option></option>
+                                            @foreach ($outlet as $item)
+                                                <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form_switch nominal_transaction_form">
+                                <label class="col-md-3 control-label">
+                                    Transaction Nominal
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Transaction Nominal" data-container="body"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <div class="input-icon right">
+                                        <input type="text" class="form-control digit_mask" name="detail[${counter_rule}][trx_nominal]" placeholder="Transaction Nominal">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form_switch total_transaction_form">
+                                <label class="col-md-3 control-label">
+                                    Transaction Total
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Transaction Total" data-container="body"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <div class="input-icon right">
+                                        <input type="text" class="form-control digit_mask" name="detail[${counter_rule}][trx_total]" placeholder="Transaction Total">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form_switch total_product_form">
+                                <label class="col-md-3 control-label">
+                                    Product Total
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Product Total" data-container="body"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <div class="input-icon right">
+                                        <input type="text" class="form-control digit_mask" name="detail[${counter_rule}][product_total]" placeholder="Product Total">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form_switch total_outlet_form">
+                                <label class="col-md-3 control-label">
+                                    Outlet Total
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Outlet Total" data-container="body"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <div class="input-icon right">
+                                        <input type="text" class="form-control digit_mask" name="detail[${counter_rule}][different_outlet]" placeholder="Outlet Total">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form_switch total_province_form">
+                                <label class="col-md-3 control-label">
+                                    Province Total
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Province Total" data-container="body"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <div class="input-icon right">
+                                        <input type="text" class="form-control digit_mask" name="detail[${counter_rule}][different_province]" placeholder="Province Total">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $(this).parents('.modal').find('.detail-container').append(template);
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .quest_rule`).change();
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .rule_trx`).change();
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .rule_product`).change();
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .rule_additional`).change();
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .rule_product_variant`).change();
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .digit_mask`).inputmask("numeric", {
+                radixPoint: ",",
+                groupSeparator: ".",
+                digits: 0,
+                autoGroup: true,
+                rightAlign: false,
+                removeMaskOnSubmit: true, 
+            });
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .select2`).select2();
+
+            counter_rule++;
+        }
+
         $(document).ready(function() {
             $('#benefit-selector').on('change', function() {
                 if ($(this).val() == 'point') {
@@ -333,6 +638,129 @@
                     $('#benefit-voucher :input').removeAttr('disabled');
                 }
             }).change();
+
+            $('.detail-container').on('change', '.quest_rule', function() {
+                const parent = $(this).parents('.detail-container-item');
+                parent.find('.form_switch').hide();
+                parent.find('.form_switch :input').prop('disabled', true);
+                if ($(this).val()) {
+                    parent.find('.additional_rule').show();
+                    parent.find('.additional_rule :input').removeAttr('disabled');
+
+                    parent.find('.not_nominal_transaction').show();
+                    parent.find('.not_nominal_transaction :input').removeAttr('disabled');
+
+                    parent.find('.not_total_province').show();
+                    parent.find('.not_total_province :input').removeAttr('disabled');
+
+                    parent.find('.not_total_product').show();
+                    parent.find('.not_total_product :input').removeAttr('disabled');
+
+                    parent.find(`.${$(this).val()}_form`).show();
+                    parent.find(`.${$(this).val()}_form :input`).removeAttr('disabled');
+                    parent.find('.not_total_product :input').removeAttr('disabled');
+                    switch ($(this).val()) {
+                        case 'nominal_transaction':
+                            parent.find('.not_nominal_transaction').hide();
+                            parent.find('.not_nominal_transaction :input').prop('disabled', true);
+                            break;
+                        case 'total_transaction':
+                            break;
+                        case 'total_product':
+                            parent.find('.not_total_product').hide();
+                            parent.find('.not_total_product :input').prop('disabled', true);
+                            break;
+                        case 'total_outlet':
+                            break;
+                        case 'total_province':
+                            parent.find('.not_total_province').hide();
+                            parent.find('.not_total_province :input').prop('disabled', true);
+                            break;
+                    }
+                    $('.detail-container .rule_trx').change();
+                    $('.detail-container .rule_product').change();
+                    $('.detail-container .rule_additional').change();
+                    $('.detail-container .rule_product_variant').change();
+                } else {
+                    parent.find('.additional_rule').hide();
+                    parent.find('.additional_rule :input').prop('disabled', true);
+                }
+            });
+            $('.detail-container .quest_rule').change();
+
+            $('.detail-container').on('change', '.rule_trx', function() {
+                const parent = $(this).parents('.detail-container-item');
+                const rule_form = parent.find('.trx_rule_form');
+
+                if ($(this).is(':checked') && !$(this).prop('disabled')) {
+                    rule_form.show();
+                    rule_form.find(':input').removeAttr('disabled');
+                } else {
+                    rule_form.hide();
+                    rule_form.find(':input').prop('disabled', true);
+                }
+            });
+            $('.detail-container .rule_trx').change();
+
+            $('.detail-container').on('change', '.rule_product', function() {
+                const parent = $(this).parents('.detail-container-item');
+                const rule_form = parent.find('.product_rule_form');
+
+                if ($(this).is(':checked') && !$(this).prop('disabled')) {
+                    rule_form.show();
+                    rule_form.find(':input').removeAttr('disabled');
+                } else {
+                    rule_form.hide();
+                    rule_form.find(':input').prop('disabled', true);
+                }
+            });
+            $('.detail-container .rule_product').change();
+
+            $('.detail-container').on('change', '.rule_additional', function() {
+                const parent = $(this).parents('.detail-container-item');
+                const rule_form = parent.find('.additional_rule_form');
+
+                if ($(this).is(':checked') && !$(this).prop('disabled')) {
+                    rule_form.show();
+                    rule_form.find(':input').removeAttr('disabled');
+                } else {
+                    rule_form.hide();
+                    rule_form.find(':input').prop('disabled', true);
+                }
+            });
+            $('.detail-container .rule_additional').change();
+
+            $('.detail-container').on('change', '.rule_product_variant', function() {
+                const parent = $(this).parents('.detail-container-item');
+                const rule_form = parent.find('.product_variant_rule_form');
+
+                if ($(this).is(':checked') && !$(this).prop('disabled')) {
+                    rule_form.show();
+                    rule_form.find(':input').removeAttr('disabled');
+                } else {
+                    rule_form.hide();
+                    rule_form.find(':input').prop('disabled', true);
+                }
+            });
+            $('.detail-container .rule_product_variant').change();
+
+            $('.detail-container').on('change', '.id_product', function() {
+                const parent = $(this).parents('.detail-container-item');
+                const variants = product_variants[$(this).val()];
+                if (variants && $(this).val()) {
+                    const html = [];
+                    variants.forEach(item => {
+                        html.push(`<option value="${item.id_product_variant_group}">${item.product_variants}</option>`);
+                    });
+                    parent.find('.id_product_variant').html(html.join(''));
+                    parent.find('.has_variant').show();
+                    parent.find('.has_variant :input').removeAttr('disabled');
+                } else {
+                    parent.find('.has_variant').hide();
+                    parent.find('.has_variant :input').prop('disabled', true);
+                }
+            });
+            $('.detail-container .id_product').change();
         });
     </script>
 @endsection
@@ -419,7 +847,7 @@
                         @if ($data['quest']['is_complete'] != 1)
                             <form action="{{url('quest/detail/'.$data['quest']['id_quest'].'/start')}}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-primary blue" style="float: right; "><i class="fa fa-play"></i> Start Quest</button>
+                                <button type="submit" class="btn btn-success" style="float: right; "><i class="fa fa-play"></i> Start Quest</button>
                             </form>
                         @endif
                     @endif
