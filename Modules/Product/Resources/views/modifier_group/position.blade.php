@@ -109,7 +109,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">List Topping By Position</span>
+                <span class="caption-subject sbold uppercase font-blue">List Product Variant NON PRICE (NO SKU) By Position</span>
             </div>
         </div>
         <div class="portlet-body">

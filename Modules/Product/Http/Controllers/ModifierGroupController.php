@@ -142,8 +142,8 @@ class ModifierGroupController extends Controller
             return redirect('product/modifier-group/price/' . $outlet);
         }
         $data = [
-            'title'          => 'Modifier Group',
-            'sub_title'      => 'Modifier Group Prices',
+            'title'          => 'Product Variant NON PRICE (NO SKU)',
+            'sub_title'      => 'Product Variant NON PRICE (NO SKU) Prices',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-price',
             'filter_title'   => 'Filter Product Variant NON PRICE (NO SKU)',
@@ -209,8 +209,8 @@ class ModifierGroupController extends Controller
             return redirect('product/modifier-group/detail/' . $outlet);
         }
         $data = [
-            'title'          => 'Modifier Group',
-            'sub_title'      => 'Modifier Group Detail',
+            'title'          => 'Product Variant NON PRICE (NO SKU)',
+            'sub_title'      => 'Product Variant NON PRICE (NO SKU) Detail',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-detail',
             'filter_title'   => 'Filter Product Variant NON PRICE (NO SKU)',
@@ -353,7 +353,7 @@ class ModifierGroupController extends Controller
 
     public function importPrice(Request $request){
         $data = [
-            'title'          => 'Modifier Group Price',
+            'title'          => 'Product Variant NON PRICE (NO SKU) Price',
             'sub_title'      => 'Import Product Variant NON PRICE (NO SKU) Price',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-import-price'
@@ -380,8 +380,8 @@ class ModifierGroupController extends Controller
 
     public function position(){
         $data = [
-            'title'          => 'Modifier Group',
-            'sub_title'      => 'Modifier Group Manage Position',
+            'title'          => 'Product Variant NON PRICE (NO SKU)',
+            'sub_title'      => 'Product Variant NON PRICE (NO SKU) Position',
             'menu_active'    => 'product-modifier-group',
             'submenu_active' => 'product-modifier-group-position'
         ];
