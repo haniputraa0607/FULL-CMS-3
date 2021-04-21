@@ -181,9 +181,11 @@ class QuestController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $post = $request->except('_token');
+        $result = MyHelper::post('quest/destroy', $post);
+        return $result;
     }
 
     public function updateContent(Request $request, $slug)

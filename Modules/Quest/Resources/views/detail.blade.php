@@ -20,6 +20,7 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 	
 	<style type="text/css">
 	    #sample_1_filter label, #sample_5_filter label, #sample_4_filter label, .pagination, .dataTables_filter label {
@@ -65,6 +66,7 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
@@ -224,7 +226,7 @@
             total_rule = 'total_transaction';
         } else if (params.product_total && params.id_product) {
             total_rule = 'total_product';
-        } else (params.trx_nominal) {
+        } else {
             total_rule = 'nominal_transaction';
         }
 
@@ -272,11 +274,14 @@
         var btn = $(params).parent().parent().parent().before().children()
         btn.find('#loadingBtn').show()
         btn.find('#moreBtn').hide()
-        $.post( "{{ url('quest/remove') }}", { id_quest_detail: data, _token: "{{ csrf_token() }}" })
+        $.post( "{{ url('quest/delete') }}", { id_quest_detail: data, _token: "{{ csrf_token() }}" })
         .done(function( data ) {
             if (data.status == 'success') {
                 var removeDiv = $(params).parents()[5]
                 removeDiv.remove()
+                toastr.info("Success delete");
+            } else {
+                toastr.warning(data.messages[0]);
             }
             btn.find('#loadingBtn').hide()
             btn.find('#moreBtn').show()
