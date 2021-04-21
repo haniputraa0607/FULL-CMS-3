@@ -112,6 +112,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
         Route::post('export-price', ['middleware' => ['feature_control:286'], 'uses' => 'ModifierGroupController@exportPrice']);
         Route::get('import-price', ['middleware' => ['feature_control:286'], 'uses' => 'ModifierGroupController@importPrice']);
         Route::post('import-price/save', ['middleware' => ['feature_control:286'], 'uses' => 'ModifierGroupController@importSavePrice']);
+
+        Route::get('position', ['uses' => 'ModifierGroupController@position']);
+        Route::post('position/assign', ['uses' => 'ModifierGroupController@positionAssign']);
     });
 
     /**
