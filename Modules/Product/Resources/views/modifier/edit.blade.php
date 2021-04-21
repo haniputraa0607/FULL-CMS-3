@@ -73,6 +73,21 @@
             // trigger change
             $('#type_dropdown').change();
             $('#modifier_type').change();
+
+            $('#product_value,#category_value,#brand_value').select2({
+            	"closeOnSelect": false,
+            	"width": "100%"
+            }).on('select2:select select2:open', function(evt) {
+            	var $container = $(this).data("select2").$container.find(".select2-selection__rendered");
+            	var $results = $(".select2-dropdown--below");
+            	$results.position({
+            		my: "top",
+            		at: "bottom",
+            		of: $container
+            	});
+            })
+            .on('select2:selecting select2:unselecting', e => $(e.currentTarget).data('scrolltop', $('.select2-results__options').scrollTop()))
+            .on('select2:select select2:unselect', e => $('.select2-results__options').scrollTop($(e.currentTarget).data('scrolltop')));
         });
     </script>
 @endsection
