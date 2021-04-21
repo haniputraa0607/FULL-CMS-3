@@ -377,4 +377,35 @@ class ModifierGroupController extends Controller
 
         return $import;
     }
+
+    public function position(){
+        $data = [
+            'title'          => 'Modifier Group',
+            'sub_title'      => 'Modifier Group Manage Position',
+            'menu_active'    => 'product-modifier-group',
+            'submenu_active' => 'product-modifier-group-position'
+        ];
+
+        $get = MyHelper::post('product/modifier-group', ['order_position' => 1]);
+
+        if(isset($get['status']) && $get['status'] == 'success'){
+            $data['list'] = $get['result'];
+            return view('product::modifier_group.position', $data);
+        }else{
+            return redirect('product/modifier')->withErrors(['Fail get list position']);
+        }
+    }
+
+    public function positionAssign(Request $request){
+        $post = $request->except('_token');
+        if (!isset($post['modifier_group_ids'])) {
+            return [
+                'status' => 'fail',
+                'messages' => ['ID is required']
+            ];
+        }
+        $result = MyHelper::post('product/modifier-group/position-assign', $post);
+
+        return $result;
+    }
 }

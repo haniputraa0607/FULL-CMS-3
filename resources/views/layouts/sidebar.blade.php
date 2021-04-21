@@ -865,6 +865,11 @@
 									<span class="title">Product Variant NON PRICE (NO SKU) Detail</span>
 								</a>
 							</li>
+							<li class="nav-item {{($submenu_active == 'product-modifier-group-position') ? 'active open' : ''}}">
+								<a href="{{url('product/modifier-group/position')}}" class="nav-link ">
+									<span class="title">Manage Position Product Variant NON PRICE (NO SKU)</span>
+								</a>
+							</li>
 							<li class="nav-item {{(strpos($submenu_active , 'product-modifier-group-import') !== false) ? 'active open' : ''}}">
 								<a href="javascript:;" class="nav-link nav-toggle">
 									<span class="title">Export & Import Product Variant NON PRICE (NO SKU)</span>
