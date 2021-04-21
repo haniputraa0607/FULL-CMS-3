@@ -20,6 +20,21 @@
         {
             $(".default-visibility").bootstrapSwitch();
             $('#list_modifier').sortable();
+
+            $('#select_product').select2({
+            	"closeOnSelect": false,
+            	"width": "100%"
+            }).on('select2:select select2:open', function(evt) {
+            	var $container = $(this).data("select2").$container.find(".select2-selection__rendered");
+            	var $results = $(".select2-dropdown--below");
+            	$results.position({
+            		my: "top",
+            		at: "bottom",
+            		of: $container
+            	});
+            })
+            .on('select2:selecting select2:unselecting', e => $(e.currentTarget).data('scrolltop', $('.select2-results__options').scrollTop()))
+            .on('select2:select select2:unselect', e => $('.select2-results__options').scrollTop($(e.currentTarget).data('scrolltop')));
         });
         function changeAssign(val) {
             if($('#select_product').val()){
@@ -193,7 +208,7 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih product untuk menetapkan Product Variant NON PRICE (NO SKU)" data-container="body"></i>
                         </label>
                         <div class="col-md-6">
-                            <select  class="form-control select2" name="id_product[]" multiple id="select_product" @if($assign !='Product') disabled @endif>
+                            <select  class="form-control select2" name="id_product[]" multiple id="select_product" @if($assign !='Product') disabled @endif data-placeholder="Search..">
                                 @foreach($products as $p)
                                     <?php
                                         $check = array_search($p['id_product'], array_column($result['product_modifier_group_pivots'], 'id_product'));
