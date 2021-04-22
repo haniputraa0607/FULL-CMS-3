@@ -126,7 +126,7 @@
                         <label for="example-search-input" class="control-label col-md-3">Username <span class="required" aria-required="true">*</span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Masukkan username (unique)" data-container="body"></i></label>
                         <div class="col-md-6">
-                            <input class="form-control" type="text" id="input-username" name="username" value="{{$result['username']}}" disabled placeholder="Enter username here"/>
+                            <input class="form-control" type="text" id="input-username" name="username" value="{{$result['username']}}" placeholder="Enter username here"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -199,7 +199,6 @@
                             <input class="form-control" type="password" maxlength="6" name="password_admin" required placeholder="Enter your pin here"/>
                         </div>
                     </div>
-                    <input type="hidden" name="username" value="{{$result['username']}}">
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}
