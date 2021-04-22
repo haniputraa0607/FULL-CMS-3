@@ -172,7 +172,7 @@
                                 <div class="portlet-title"> 
                                     <span class="caption font-blue sbold uppercase">{{$data['quest']['name']}} Rule </span>
                                     @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
-                                    <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Bagde</a>
+                                    <a class="btn blue" style="float: right;" data-toggle="modal" href="#addBadge">Add Rule</a>
                                     @endif
                                 </div>
                                 <div class="portlet-body row">

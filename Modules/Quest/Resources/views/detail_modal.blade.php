@@ -5,206 +5,252 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Add New Quest Rule</h4>
             </div>
-            <div class="modal-body box-repeat" style="padding: 20ox;display: table;width: 100%;">
-                <div class="box">
-                    <div class="col-md-2 text-right" style="text-align: -webkit-right;">
-                        <a href="javascript:;" onclick="removeBox(this)" class="remove-box btn btn-danger">
-                            <i class="fa fa-close"></i>
-                        </a>
-                    </div>
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <div class="input-icon right">
+            <div class="modal-body">
+                <div class="detail-container">
+                    <div class="portlet light bordered detail-container-item">
+                        <div class="portlet-body row">
+                            <div class="col-md-1 text-right" style="text-align: -webkit-right;">
+                                <a href="javascript:;" onclick="removeBox(this)" class="remove-box btn btn-danger">
+                                    <i class="fa fa-close"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-11">
+                                <div class="form-group">
                                     <label class="col-md-3 control-label">
                                         Name
                                         <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
                                     </label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Quest" required maxlength="40" value="">
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" name="detail[0][name]" placeholder="Detail Quest" required maxlength="40">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
+                                <div class="form-group">
                                     <label class="col-md-3 control-label">
                                         Short Description
                                         <span class="required" aria-required="true"> * </span>
-                                        <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Short Description" data-container="body"></i>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat yang ditampilkan di daftar misi" data-container="body"></i>
                                     </label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" name="detail[0][short_description]" placeholder="Short Description" required maxlength="255">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                    Quest Category Product Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
-                                    </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <select class="form-control select2-multiple" data-placeholder="Select Category Product" name="detail[0][id_product_category]">
-                                            <option></option>
-                                            @foreach ($category as $item)
-                                                <option value="{{$item['id_product_category']}}">{{$item['product_category_name']}}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <textarea name="detail[0][short_description]" class="form-control" placeholder="Quest Detail Short Description"></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="form-group">
                                     <div class="input-icon right">
-                                        <div class="input-group">
-                                            <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[0][different_category_product]">
-                                                <option></option>    
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
+                                        <label class="col-md-3 control-label">
+                                        Total Rule
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Select quest rule" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            <div class="input-group">
+                                                <select class="form-control select2 quest_rule" name="detail[0][quest_rule]" data-placeholder="Select Quest Rule" required>
+                                                    <option></option>
+                                                    <option value="nominal_transaction">Transaction Nominal</option>
+                                                    <option value="total_transaction">Transaction Total</option>
+                                                    <option value="total_product">Product Total</option>
+                                                    <option value="total_outlet">Outlet Different</option>
+                                                    <option value="total_province">Province Different</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group additional_rule">
+                                    <label class="col-md-3 control-label">
+                                        Additional Rule
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <div class="mt-checkbox-inline">
+                                            <label class="mt-checkbox rule_transaction not_nominal_transaction">
+                                                <input type="checkbox" class="rule_trx"> Transaction
+                                                <span></span>
+                                            </label>
+                                            <label class="mt-checkbox rule_product_add">
+                                                <input type="checkbox" class="rule_product"> Product
+                                                <span></span>
+                                            </label>
+                                            <label class="mt-checkbox additionalnya not_total_province">
+                                                <input type="checkbox" class="rule_additional"> Additional
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group trx_rule_form">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Transaction Rule
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[0][trx_nominal]" placeholder="Transaction Nominal">
+                                                <span class="input-group-btn">
+                                                    <button class="btn default" type="button">
+                                                        <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product_rule_form">
+                                    <div class="form-group">
+                                        <div class="input-icon right">
+                                            <label class="col-md-3 control-label">
+                                            Product Rule
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-icon right">
+                                                <select class="form-control select2 id_product" data-placeholder="Select Product" name="detail[0][id_product]">
+                                                    <option></option>
+                                                    @foreach ($product as $item)
+                                                        <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 not_total_product">
+                                            <div class="input-icon right">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control total_product product_total_rule" name="detail[0][product_total]" placeholder="Total Product">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn default" type="button">
+                                                            <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has_variant">
+                                        <div class="input-icon right">
+                                            <label class="col-md-3 control-label">
+                                            Product Variant Rule
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Select a product variant. leave blank, if the quest is not based on the product variant" data-container="body"></i>
+                                            </label>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="mt-checkbox-inline">
+                                                <label class="mt-checkbox" style="margin-left: 15px;">
+                                                    <input type="checkbox" class="use_variant rule_product_variant"> Use Variant
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-offset-3 col-md-4 product_variant_rule_form">
+                                            <div class="input-icon right">
+                                                <select class="form-control select2 id_product_variant" data-placeholder="Select Variant" name="detail[0][id_product_variant_group]">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group additional_rule_form">
+                                    <div class="input-icon right">
+                                        <label class="col-md-3 control-label">
+                                        Additional Rule
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4 select_province">
+                                        <div class="input-icon right">
+                                            <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="detail[0][id_province]">
+                                                <option></option>
+                                                @foreach ($province as $item)
+                                                    <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
+                                                @endforeach
                                             </select>
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Rule for different category product" data-container="body"></i>
-                                                </button>
-                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 select_outlet">
+                                        <div class="input-icon right">
+                                            <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[0][id_outlet]">
+                                                <option></option>
+                                                @foreach ($outlet as $item)
+                                                    <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
+                                <div class="form-group form_switch nominal_transaction_form">
                                     <label class="col-md-3 control-label">
-                                    Quest Product Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                        Transaction Nominal
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Transaction Nominal" data-container="body"></i>
                                     </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[0][id_product]">
-                                            <option></option>
-                                            @foreach ($product as $item)
-                                                <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="detail[0][product_total]" placeholder="Total Product">
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                    Quest Transaction Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
-                                    </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
                                             <input type="text" class="form-control digit_mask" name="detail[0][trx_nominal]" placeholder="Transaction Nominal">
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                                </button>
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
+                                <div class="form-group form_switch total_transaction_form">
+                                    <label class="col-md-3 control-label">
+                                        Transaction Total
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Transaction Total" data-container="body"></i>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
                                             <input type="text" class="form-control digit_mask" name="detail[0][trx_total]" placeholder="Transaction Total">
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                                </button>
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
+                                <div class="form-group form_switch total_product_form">
                                     <label class="col-md-3 control-label">
-                                    Quest Outlet Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                        Product Total
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Product Total" data-container="body"></i>
                                     </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <select class="form-control select2-multiple" data-placeholder="Select Product" name="detail[0][id_outlet]">
-                                            <option></option>
-                                            @foreach ($outlet as $item)
-                                                <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
-                                            <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[0][different_outlet]">
-                                                <option></option>    
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Rule for different outlet" data-container="body"></i>
-                                                </button>
-                                            </span>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <input type="text" class="form-control digit_mask" name="detail[0][product_total]" placeholder="Product Total">
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-icon right">
+                                <div class="form-group form_switch total_outlet_form">
                                     <label class="col-md-3 control-label">
-                                    Quest Province Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a province. leave blank, if the quest is not based on the province" data-container="body"></i>
+                                        Outlet Total
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Outlet Total" data-container="body"></i>
                                     </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <select class="form-control select2-multiple" data-placeholder="Select Province" name="detail[0][id_province]">
-                                            <option></option>
-                                            @foreach ($province as $item)
-                                                <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <input type="text" class="form-control digit_mask" name="detail[0][different_outlet]" placeholder="Outlet Total">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="input-icon right">
-                                        <div class="input-group">
-                                            <select class="form-control select2-multiple" data-placeholder="Different Rule" name="detail[0][different_province]">
-                                                <option></option>    
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                            <span class="input-group-btn">
-                                                <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Rule for different province" data-container="body"></i>
-                                                </button>
-                                            </span>
+                                <div class="form-group form_switch total_province_form">
+                                    <label class="col-md-3 control-label">
+                                        Province Total
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Province Total" data-container="body"></i>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <input type="text" class="form-control digit_mask" name="detail[0][different_province]" placeholder="Province Total">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
-                <div class="btn-rmv form-action col-md-12 text-right">
-                    <a href="javascript:;" class="btn btn-success addBox">
+                <div class="text-center">
+                    <a href="javascript:;" class="btn btn-success" onclick="addRule.bind(this)()">
                         <i class="fa fa-plus"></i> Add New Input
                     </a>
                 </div>
@@ -227,192 +273,236 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Edit Quest Rule</h4>
             </div>
-            <div class="modal-body" style="padding: 20ox;display: table;width: 100%;">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="input-icon right">
+            <div class="modal-body">
+                <div class="detail-container">
+                    <div class="detail-container-item">
+                        <div class="form-group">
                             <label class="col-md-3 control-label">
                                 Name
                                 <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
                             </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="name" placeholder="Detail Quest" required maxlength="40" value="">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" placeholder="Detail Quest" required maxlength="40">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
+                        <div class="form-group">
                             <label class="col-md-3 control-label">
                                 Short Description
                                 <span class="required" aria-required="true"> * </span>
-                                <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Short Description" data-container="body"></i>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi singkat yang ditampilkan di daftar misi" data-container="body"></i>
                             </label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="short_description" placeholder="Short Description" required maxlength="255">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Quest Category Product Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Category Product" name="id_product_category">
-                                    <option></option>
-                                    @foreach ($category as $item)
-                                        <option value="{{$item['id_product_category']}}">{{$item['product_category_name']}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea name="short_description" class="form-control" placeholder="Quest Detail Short Description"></textarea>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="form-group">
                             <div class="input-icon right">
-                                <div class="input-group">
-                                    <select class="form-control select2-multiple" data-placeholder="Different Rule" name="different_category_product">
-                                        <option></option>    
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                <label class="col-md-3 control-label">
+                                Total Rule
+                                <i class="fa fa-question-circle tooltips" data-original-title="Select quest rule" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <div class="input-group">
+                                        <select class="form-control select2 quest_rule" name="quest_rule" data-placeholder="Select Quest Rule" required>
+                                            <option></option>
+                                            <option value="nominal_transaction">Transaction Nominal</option>
+                                            <option value="total_transaction">Transaction Total</option>
+                                            <option value="total_product">Product Total</option>
+                                            <option value="total_outlet">Outlet Different</option>
+                                            <option value="total_province">Province Different</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group additional_rule">
+                            <label class="col-md-3 control-label">
+                                Additional Rule
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
+                            </label>
+                            <div class="col-md-9">
+                                <div class="mt-checkbox-inline">
+                                    <label class="mt-checkbox rule_transaction not_nominal_transaction">
+                                        <input type="checkbox" class="rule_trx"> Transaction
+                                        <span></span>
+                                    </label>
+                                    <label class="mt-checkbox rule_product_add">
+                                        <input type="checkbox" class="rule_product"> Product
+                                        <span></span>
+                                    </label>
+                                    <label class="mt-checkbox additionalnya not_total_province">
+                                        <input type="checkbox" class="rule_additional"> Additional
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group trx_rule_form">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                Transaction Rule
+                                <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control digit_mask nominal_transaksi" name="trx_nominal" placeholder="Transaction Nominal">
+                                        <span class="input-group-btn">
+                                            <button class="btn default" type="button">
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product_rule_form">
+                            <div class="form-group">
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Product Rule
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2 id_product" data-placeholder="Select Product" name="id_product">
+                                            <option></option>
+                                            @foreach ($product as $item)
+                                                <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 not_total_product">
+                                    <div class="input-icon right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control total_product product_total_rule" name="product_total" placeholder="Total Product">
+                                            <span class="input-group-btn">
+                                                <button class="btn default" type="button">
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group has_variant">
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                    Product Variant Rule
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a product variant. leave blank, if the quest is not based on the product variant" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <div class="mt-checkbox-inline">
+                                        <label class="mt-checkbox" style="margin-left: 15px;">
+                                            <input type="checkbox" class="use_variant rule_product_variant"> Use Variant
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-offset-3 col-md-4 product_variant_rule_form">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2 id_product_variant" data-placeholder="Select Variant" name="id_product_variant_group">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group additional_rule_form">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                Additional Rule
+                                <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4 select_province">
+                                <div class="input-icon right">
+                                    <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="id_province">
+                                        <option></option>
+                                        @foreach ($province as $item)
+                                            <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
+                                        @endforeach
                                     </select>
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Rule for different category product" data-container="body"></i>
-                                        </button>
-                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 select_outlet">
+                                <div class="input-icon right">
+                                    <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="id_outlet">
+                                        <option></option>
+                                        @foreach ($outlet as $item)
+                                            <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
+                        <div class="form-group form_switch nominal_transaction_form">
                             <label class="col-md-3 control-label">
-                            Quest Product Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                Transaction Nominal
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Transaction Nominal" data-container="body"></i>
                             </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_product">
-                                    <option></option>
-                                    @foreach ($product as $item)
-                                        <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="product_total" placeholder="Total Product">
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Quest Transaction Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
+                            <div class="col-md-9">
+                                <div class="input-icon right">
                                     <input type="text" class="form-control digit_mask" name="trx_nominal" placeholder="Transaction Nominal">
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                        </button>
-                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
+                        <div class="form-group form_switch total_transaction_form">
+                            <label class="col-md-3 control-label">
+                                Transaction Total
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Transaction Total" data-container="body"></i>
+                            </label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
                                     <input type="text" class="form-control digit_mask" name="trx_total" placeholder="Transaction Total">
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
-                                        </button>
-                                    </span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
+                        <div class="form-group form_switch total_product_form">
                             <label class="col-md-3 control-label">
-                            Quest Outlet Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                Product Total
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Product Total" data-container="body"></i>
                             </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Product" name="id_outlet">
-                                    <option></option>]
-                                    @foreach ($outlet as $item)
-                                        <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <select class="form-control select2-multiple" data-placeholder="Different Rule" name="different_outlet">
-                                        <option></option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Rule for different outlet" data-container="body"></i>
-                                        </button>
-                                    </span>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control digit_mask" name="product_total" placeholder="Product Total">
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
+                        <div class="form-group form_switch total_outlet_form">
                             <label class="col-md-3 control-label">
-                            Quest Province Rule
-                            <i class="fa fa-question-circle tooltips" data-original-title="Select a province. leave blank, if the quest is not based on the province" data-container="body"></i>
+                                Outlet Total
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Outlet Total" data-container="body"></i>
                             </label>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <select class="form-control select2-multiple" data-placeholder="Select Province" name="id_province">
-                                    <option></option>
-                                    @foreach ($province as $item)
-                                        <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control digit_mask" name="different_outlet" placeholder="Outlet Total">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <div class="input-group">
-                                    <select class="form-control select2-multiple" data-placeholder="Different Rule" name="different_province">
-                                        <option></option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Rule for different province" data-container="body"></i>
-                                        </button>
-                                    </span>
+                        <div class="form-group form_switch total_province_form">
+                            <label class="col-md-3 control-label">
+                                Province Total
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Province Total" data-container="body"></i>
+                            </label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control digit_mask" name="different_province" placeholder="Province Total">
                                 </div>
                             </div>
                         </div>

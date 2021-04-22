@@ -85,11 +85,14 @@ $grantedFeature     = session('granted_features');
         var btn = $(params).parent().parent().parent().before().children()
         btn.find('#loadingBtn').show()
         btn.find('#moreBtn').hide()
-        $.post( "{{ url('quest/remove') }}", { id_quest: data, _token: "{{ csrf_token() }}" })
+        $.post( "{{ url('quest/delete') }}", { id_quest: data, _token: "{{ csrf_token() }}" })
         .done(function( data ) {
             if (data.status == 'success') {
                 var removeDiv = $(params).parents()[4]
                 removeDiv.remove()
+                toastr.info("Success delete");
+            } else {
+                toastr.warning(data.messages[0]);
             }
             btn.find('#loadingBtn').hide()
             btn.find('#moreBtn').show()
