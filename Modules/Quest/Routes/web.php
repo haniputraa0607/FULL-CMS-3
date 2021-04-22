@@ -22,4 +22,8 @@ Route::prefix('quest')->middleware(['web', 'validate_session'])->group(function 
     Route::post('detail/{id}/start', 'QuestController@start');
     Route::post('delete', 'QuestController@destroy');
     Route::any('update/detail', 'QuestController@update');
+
+    Route::group(['prefix' => 'report'], function () {
+    	Route::any('/', 'ReportQuestController@reportQuest');
+	});
 });
