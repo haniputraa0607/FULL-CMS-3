@@ -811,6 +811,11 @@
 							<span class="title">Topping Detail</span>
 						</a>
 					</li>
+					<li class="nav-item {{($submenu_active == 'product-modifier-inventory-brand') ? 'active open' : ''}}">
+						<a href="{{url('product/modifier/inventory-brand')}}" class="nav-link">
+							<span class="title">Topping Inventory Brand</span>
+						</a>
+					</li>
 					<li class="nav-item {{(strpos($submenu_active , 'product-modifier-import') !== false) ? 'active open' : ''}}">
 						<a href="javascript:;" class="nav-link nav-toggle">
 							<span class="title">Export & Import Topping</span>
