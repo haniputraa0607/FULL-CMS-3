@@ -53,4 +53,52 @@ class ReportQuestController extends Controller
         }
         return view('quest::report.list', $data);
     }
+
+    function reportDetail(Request $request, $id_quest){
+        $post = $request->all();
+        $post['id_quest'] = $id_quest;
+
+        $data = [
+            'title'          => 'Quest',
+            'sub_title'      => 'Report Detail Quest',
+            'menu_active'    => 'quest',
+            'submenu_active' => 'quest-report'
+        ];
+
+        $detail = MyHelper::post('quest/report/detail', $post);
+
+        if ( ($detail['status'] ?? false) == 'success') {
+        	$data['detail'] = $detail['result'];
+        }else{
+        	return redirect('quest/report')->withErrors($detail['messages'] ?? ['Detail report not found']);
+        }
+
+        return view('quest::report.detail', $data);
+    }
+
+    function reportListUser(Request $request, $id_quest){
+        $post = $request->all();
+        $post['id_quest'] = $id_quest;
+        $draw = $post['draw'] ?? 10;
+
+        $page = 1;
+        if(isset($post['start']) && isset($post['length'])){
+            $page = $post['start']/$post['length'] + 1;
+        }
+        $getDataListUser = MyHelper::post('quest/report/list/user-quest?page='.$page, $post);
+
+        if(isset($getDataListUser['status']) && $getDataListUser['status'] == 'success'){
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = $getDataListUser['result']['total'];
+            $arr_result['recordsFiltered'] = $getDataListUser['result']['total'];
+            $arr_result['data'] = $getDataListUser['result']['data'];
+        }else{
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = 0;
+            $arr_result['recordsFiltered'] = 0;
+            $arr_result['data'] = array();
+        }
+
+        return response()->json($arr_result);
+    }
 }
