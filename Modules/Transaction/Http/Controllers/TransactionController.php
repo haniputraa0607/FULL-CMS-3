@@ -97,6 +97,18 @@ class TransactionController extends Controller
                 ];
                 break;
 
+            case 'receive-quest-voucher':
+                $data['menu_active'] = 'quest';
+                $data['submenu_active'] = 'quest-voucher';
+                $data['child_active'] = 'deals-autoresponse-receive-quest-voucher';
+                $data['click_inbox'] = [
+                    ['value' => "Voucher",'title' => 'Voucher']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher','title' => 'Voucher']
+                ];
+                break;
+
             case 'redeem-voucher-success':
                 $data['menu_active'] = 'deals';
                 $data['submenu_active'] = 'deals-autoresponse-redeem-deals-success';

@@ -169,7 +169,7 @@ $grantedFeature     = session('granted_features');
                         <th> Brand </th>
                         @endif
                         <th> Price </th>
-                        @if($deals_type != "Hidden" && $deals_type !='WelcomeVoucher')
+                        @if($deals_type != "Hidden" && $deals_type !='WelcomeVoucher' && $deals_type !='Quest')
                             <th> Date Publish </th>
                             <th> Date Start </th>
                         @endif
@@ -213,7 +213,7 @@ $grantedFeature     = session('granted_features');
                                 	@endif
                                 </td>
 
-                                @if($deals_type != "Hidden" && $deals_type !='WelcomeVoucher')
+                                @if($deals_type != "Hidden" && $deals_type !='WelcomeVoucher' && $deals_type !='Quest')
                                 <td>
                                     @php
                                         $bulan   = date('m', strtotime($value['deals_publish_start']));
@@ -255,6 +255,9 @@ $grantedFeature     = session('granted_features');
                                     @if($deals_type == "Hidden" && MyHelper::hasAccess([81], $grantedFeature) && $value['deals_total_claimed'] == 0)
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
+                                    @if($deals_type == "Quest" && MyHelper::hasAccess([310], $grantedFeature) && $value['deals_total_claimed'] == 0)
+                                        <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
+                                    @endif
                                     @if($deals_type == "WelcomeVoucher" && MyHelper::hasAccess([191], $grantedFeature) && $value['deals_total_claimed'] == 0)
                                         <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_deals'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
@@ -264,6 +267,8 @@ $grantedFeature     = session('granted_features');
                                     <a href="{{ url('deals-point/detail') }}/{{ $value['id_deals'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @elseif ($deals_type == "WelcomeVoucher" && MyHelper::hasAccess([188], $grantedFeature))
                                         <a href="{{ url('welcome-voucher/detail') }}/{{ $value['id_deals'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                    @elseif ($deals_type == "Quest" && MyHelper::hasAccess([307], $grantedFeature))
+                                            <a href="{{ url('quest-voucher/detail') }}/{{ $value['id_deals'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @else
                                         @if(MyHelper::hasAccess([78], $grantedFeature))
                                             <a href="{{ url('inject-voucher/detail') }}/{{ $value['id_deals'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
