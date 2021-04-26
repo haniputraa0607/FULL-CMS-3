@@ -121,7 +121,16 @@ class AutocrmController extends Controller
 		if($subject == null){
 			$subject = $type;
 			$autocrmSubject = ucwords(str_replace('-',' ',$subject));
-		}else{
+		}elseif ($subject == 'create-quest-voucher' || $subject == 'update-quest-voucher'){
+            $data = [
+                'title'             => ucfirst($type),
+                'sub_title'         => ' Auto Response '.$autocrmSubject,
+                'menu_active'       => 'quest',
+                'submenu_active'    => 'quest-voucher',
+                'child_active'      => $type.'-autoresponse-'.$subject,
+                'type' 			    => $type
+            ];
+        }else{
 			$data = [ 'title'             => ucfirst($type),
 					  'sub_title'         => ' Auto Response '.$autocrmSubject,
 					  'menu_active'       => $type,
@@ -168,6 +177,8 @@ class AutocrmController extends Controller
 			case 'report-point-reset':
 				$data['noUser'] = true;
 				$data['customNotes'] = 'Previous user point data will be attached to the attachment';
+            case 'update-quest-voucher':
+            case 'create-quest-voucher':
 			case 'update-promo-campaign':
 			case 'create-promo-campaign':
 			case 'update-deals':

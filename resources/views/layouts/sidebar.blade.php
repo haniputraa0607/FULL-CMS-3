@@ -2054,7 +2054,7 @@
 			@endif
 
 			@if(MyHelper::hasAccess([100], $configs))
-				@if(MyHelper::hasAccess([227,228,229,230,231,232], $grantedFeature))
+				@if(MyHelper::hasAccess([227,228,229,230,231,232,306,307,308,309,310], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'quest') ? 'active open' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="fa fa-bullseye"></i>
@@ -2062,6 +2062,48 @@
 						<span class="arrow {{($menu_active == 'quest') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([306,307,308,309,310], $grantedFeature))
+							<li class="nav-item {{(strpos($submenu_active , 'quest-voucher') !== false) ? 'active open' : ''}}">
+								<a href="javascript:;" class="nav-link nav-toggle">
+									<span class="title">Quest Voucher</span>
+									<span class="arrow"></span>
+								</a>
+								<ul class="sub-menu">
+									@if(MyHelper::hasAccess([308], $grantedFeature))
+										<li class="nav-item {{(isset($child_active) && $child_active == 'quest-voucher-create') ? 'active open' : ''}}">
+											<a href="{{url('quest-voucher/create')}}" class="nav-link ">
+												<span class="title">New Quest Voucher</span>
+											</a>
+										</li>
+									@endif
+									@if(MyHelper::hasAccess([306], $grantedFeature))
+										<li class="nav-item {{(isset($child_active) && $child_active == 'quest-voucher-list') ? 'active open' : ''}}">
+											<a href="{{url('quest-voucher')}}" class="nav-link ">
+												<span class="title">Quest Voucher List</span>
+											</a>
+										</li>
+									@endif
+									@if(MyHelper::hasAccess([120,122], $grantedFeature))
+										<li class="nav-item {{(isset($child_active) && $child_active == 'deals-autoresponse-receive-quest-voucher') ? 'active open' : ''}}">
+											<a href="{{url('transaction/autoresponse/receive-quest-voucher')}}" class="nav-link ">
+												<i class="fa fa-mail-forward"></i>
+												<span class="title">[Response] Receive Quest Voucher</span>
+											</a>
+										</li>
+										<li class="nav-item {{(isset($child_active) && $child_active == 'quest-voucher-autoresponse-create-quest-voucher') ? 'active open' : ''}}">
+											<a href="{{url('autoresponse/quest-voucher/create-quest-voucher')}}" class="nav-link ">
+												<span class="title">[Forward] Create Quest Voucher</span>
+											</a>
+										</li>
+											<li class="nav-item {{(isset($child_active) && $child_active == 'quest-voucher-autoresponse-update-quest-voucher') ? 'active open' : ''}}">
+											<a href="{{url('autoresponse/quest-voucher/update-quest-voucher')}}" class="nav-link ">
+												<span class="title">[Forward] Update Quest Voucher</span>
+											</a>
+										</li>
+									@endif
+								</ul>
+							</li>
+						@endif
 						@if(MyHelper::hasAccess([229], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'quest-create') ? 'active open' : ''}}">
 							<a href="{{url('quest/create')}}" class="nav-link ">
