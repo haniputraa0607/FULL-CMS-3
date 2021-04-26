@@ -382,4 +382,31 @@ class ModifierController extends Controller
 
         return $result;
     }
+
+    public function inventoryBrand(Request $request)
+    {
+        $data = [
+            'title'          => 'Topping',
+            'sub_title'      => 'Topping Inventory Brand',
+            'menu_active'    => 'product-modifier',
+            'submenu_active' => 'product-modifier-inventory-brand'
+        ];
+        $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
+        $data['modifiers'] = MyHelper::get('product/modifier/inventory-brand')['result'] ?? [];
+        $data['modifiers'] = array_map(function($modifier) {
+            $modifier['inventory_brand'] = array_column($modifier['inventory_brand'], 'id_brand');
+            return $modifier;
+        }, $data['modifiers']);
+        return view('product::modifier.inventory_brand', $data);
+    }
+
+
+    public function inventoryBrandUpdate(Request $request)
+    {
+        $result = MyHelper::post('product/modifier/inventory-brand', $request->all());
+        if (($result['status'] ?? false) == 'success') {
+            return back()->withSuccess(['Success update']);
+        }
+        return back()->withErrors($result['messages'] ?? ['Something went wrong']);
+    }
 }
