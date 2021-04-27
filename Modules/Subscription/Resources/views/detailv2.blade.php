@@ -656,11 +656,9 @@ $grantedFeature     = session('granted_features');
                         <li>
                             <a href="#content" data-toggle="tab"> Content Info </a>
                         </li>
-                        @if($subscription['is_all_outlet'] != 1)
                         <li>
                             <a href="#outlet" data-toggle="tab"> Outlet Info </a>
                         </li>
-                        @endif
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="basic">
@@ -730,7 +728,11 @@ $grantedFeature     = session('granted_features');
 		                        </div>
 		                    @endif
 		                @else
-		                	This promo for all outlet
+		                	<div class="tab-pane" id="outlet">
+		                		<div class="alert alert-warning">
+                                    This Subscription applied to <strong>All Outlet</strong>.
+                                </div>
+		                	</div>
                         @endif
                     </div>
                 </div>
