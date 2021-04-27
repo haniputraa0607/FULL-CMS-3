@@ -120,8 +120,8 @@
 				$('#multiple-product-'+promo_type).prop('disabled', true)
 				if (product == 'selected') {
 					$('#select-product-'+promo_type).show()
-					// if (productLoad == 0) {
-					if (productLoad) {
+					if (productLoad == 0) {
+					// if (productLoad) {
 						$.ajax({
 							type: "GET",
 							url: "{{url('promo-campaign/step2/getData')}}",
@@ -135,7 +135,8 @@
 								productLoad = 1;
 								listProduct=data;
 								$.each(data, function( key, value ) {
-									$('#multiple-product-'+promo_type).append("<option value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"'>"+value.product+"</option>");
+									// $('#multiple-product-'+promo_type).append("<option value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"'>"+value.product+"</option>");
+									$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill,#multiple-product-tier-discount,#multiple-product-bxgy').append("<option class='product"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' "+more+">"+value.product+"</option>");
 								});
 								$('#multiple-product-'+promo_type).prop('required', true)
 								$('#multiple-product-'+promo_type).prop('disabled', false)

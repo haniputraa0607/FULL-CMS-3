@@ -104,6 +104,8 @@ class DealsController extends Controller
                 $rpage = 'promotion/deals';
         	}elseif($post['deals_type'] == 'WelcomeVoucher'){
                 $rpage = 'welcome-voucher';
+            }elseif($post['deals_type'] == 'Quest'){
+                $rpage = 'quest-voucher';
             }else{
                 $rpage = $post['deals_type']=='Deals'?'deals':'inject-voucher';
             }
@@ -291,6 +293,49 @@ class DealsController extends Controller
                 $post['deals_type'] = "Hidden";
                 $data['deals_type'] = "Hidden";
             break;
+
+            case 'quest-voucher':
+                if ($type == "detail") {
+                    $data = [
+                        'title'          => 'Quest Voucher',
+                        'sub_title'      => 'Quest Voucher Detail',
+                        'menu_active'    => 'quest',
+                        'submenu_active' => 'quest-voucher',
+                        'child_active'   => 'quest-voucher-list'
+                    ];
+                }
+                elseif ($type == "import") {
+                    $data = [
+                        'title'          => 'Quest Voucher',
+                        'sub_title'      => 'Quest Voucher Import',
+                        'menu_active'    => 'quest',
+                        'submenu_active' => 'quest-voucher',
+                        'child_active'   => 'quest-voucher-list'
+                    ];
+                }
+                elseif ($type == "") {
+                    $data = [
+                        'title'          => 'Quest Voucher',
+                        'sub_title'      => 'Quest Voucher List',
+                        'menu_active'    => 'quest',
+                        'submenu_active' => 'quest-voucher',
+                        'child_active'   => 'quest-voucher-list'
+                    ];
+                }
+                else {
+                    $data = [
+                        'title'          => 'Quest Voucher',
+                        'sub_title'      => 'Quest Voucher Create',
+                        'menu_active'    => 'quest',
+                        'submenu_active' => 'quest-voucher',
+                        'child_active'   => 'quest-voucher-create'
+                    ];
+                }
+
+                // IDENTIFIER
+                $post['deals_type'] = "Quest";
+                $data['deals_type'] = "Quest";
+                break;
 
             case 'deals-subscription':
                 if ($type == "") {
@@ -501,6 +546,8 @@ class DealsController extends Controller
             $rpage = 'promotion/deals';
     	}elseif($dataDeals['post']['deals_type'] == 'WelcomeVoucher'){
             $rpage = 'welcome-voucher';
+        }elseif($dataDeals['post']['deals_type'] == 'Quest'){
+            $rpage = 'quest-voucher';
         }else{
             $rpage = $dataDeals['post']['deals_type'] =='Deals'?'deals':'inject-voucher';
         }
@@ -604,6 +651,8 @@ class DealsController extends Controller
             $rpage = 'promotion/deals';
     	}elseif($post['deals_type'] == 'WelcomeVoucher'){
             $rpage = 'welcome-voucher';
+        }elseif($post['deals_type'] == 'Quest'){
+            $rpage = 'quest-voucher';
         }else{
             $rpage = $post['deals_type']=='Deals'?'deals':'inject-voucher';
         }
@@ -811,7 +860,9 @@ class DealsController extends Controller
 	                $rpage = 'promotion/deals';
 	        	}elseif($post['deals_type'] == 'WelcomeVoucher'){
 	                $rpage = 'welcome-voucher';
-	            }else{
+	            }elseif($post['deals_type'] == 'Quest'){
+                    $rpage = 'quest-voucher';
+                }else{
 	                $rpage = $post['deals_type']=='Deals'?'deals':'inject-voucher';
 	            }
 
@@ -878,7 +929,9 @@ class DealsController extends Controller
 	                $rpage = 'promotion/deals';
 	        	}elseif($post['deals_type'] == 'WelcomeVoucher'){
 	                $rpage = 'welcome-voucher';
-	            }else{
+	            }elseif($post['deals_type'] == 'Quest'){
+                    $rpage = 'quest-voucher';
+                }else{
 	                $rpage = $post['deals_type']=='Deals'?'deals':'inject-voucher';
 	            }
 
@@ -902,6 +955,8 @@ class DealsController extends Controller
             $rpage = 'promotion/deals';
     	}elseif($post['deals_type'] == 'WelcomeVoucher'){
             $rpage = 'welcome-voucher';
+        }elseif($post['deals_type'] == 'Quest'){
+            $rpage = 'quest-voucher';
         }else{
             $rpage = $post['deals_type']=='Deals'?'deals':'inject-voucher';
         }
@@ -1575,6 +1630,8 @@ class DealsController extends Controller
             $rpage = 'promotion/deals';
     	}elseif($post['deals_type'] == 'WelcomeVoucher'){
             $rpage = 'welcome-voucher';
+        }elseif($post['deals_type'] == 'Quest'){
+            $rpage = 'quest-voucher';
         }else{
             $rpage = $post['deals_type']=='Deals'?'deals':'inject-voucher';
         }

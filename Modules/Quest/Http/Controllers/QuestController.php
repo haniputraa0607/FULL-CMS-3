@@ -53,7 +53,7 @@ class QuestController extends Controller
         $data['product']    = MyHelper::get('quest/list-product')['result'];
         $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
         $data['province']   = MyHelper::get('province/list')['result'];
-        $data['deals']      = MyHelper::get('quest/list-deals')['result'] ?? [];;
+        $data['deals']      = MyHelper::get('quest/list-quest-voucher')['result'] ?? [];;
         $data['details']     = (old('detail') ?? false) ?: [[]];
 
         $data['product_variant_groups'] = [];
@@ -133,7 +133,7 @@ class QuestController extends Controller
             $data['product']    = MyHelper::get('quest/list-product')['result'];
             $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
             $data['province']   = MyHelper::get('province/list')['result'];
-            $data['deals']      = MyHelper::get('quest/list-deals')['result'] ?? [];
+            $data['deals']      = MyHelper::get('quest/list-quest-voucher')['result']??[];
 
             $data['product_variant_groups'] = [];
             foreach ($data['product'] as $product) {
