@@ -6,8 +6,10 @@ use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Session;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Exports\MultisheetExport;
+use Session;
+use Excel;
 
 class ReportQuestController extends Controller
 {
@@ -85,13 +87,39 @@ class ReportQuestController extends Controller
         if(isset($post['start']) && isset($post['length'])){
             $page = $post['start']/$post['length'] + 1;
         }
-        $getDataListUser = MyHelper::post('quest/report/list/user-quest?page='.$page, $post);
+        $list_user = MyHelper::post('quest/report/list/user-quest?page='.$page, $post);
 
-        if(isset($getDataListUser['status']) && $getDataListUser['status'] == 'success'){
+        if ($request->export) {
+        	if( ($list_user['status'] ?? false) == 'success') {
+
+        		$res = [];
+        		foreach ($list_user['result'] as $val){
+	                $res[] = [
+	                	'Name' => $val[0],
+	                	'Phone' => $val[1],
+	                	'Email' => $val[2],
+	                	'Date Claim' => $val[3],
+	                	'Date Complete' => $val[4],
+	                	'Date Claim Benefit' => $val[5],
+	                	'Status' => $val[6],
+	                	'Claim Benefit Status' => $val[7],
+	                	'Total Rule Complete' => $val[8]
+	                ];
+	            }
+
+        		$datas['Report '.$id_quest] = $res;
+        		return Excel::download(new MultisheetExport($datas),date('YmdHi').'_report '.$id_quest.'.xlsx');
+        	}else{
+        		return redirect('report/quest/detail/'.$id_quest)->withErrors($result['messages'] ?? ['Failed get data']);
+        	}	
+        }
+
+        if(isset($list_user['status']) && $list_user['status'] == 'success'){
+
             $arr_result['draw'] = $draw;
-            $arr_result['recordsTotal'] = $getDataListUser['result']['total'];
-            $arr_result['recordsFiltered'] = $getDataListUser['result']['total'];
-            $arr_result['data'] = $getDataListUser['result']['data'];
+            $arr_result['recordsTotal'] = $list_user['result']['total'];
+            $arr_result['recordsFiltered'] = $list_user['result']['total'];
+            $arr_result['data'] = $list_user['result']['data'];
         }else{
             $arr_result['draw'] = $draw;
             $arr_result['recordsTotal'] = 0;

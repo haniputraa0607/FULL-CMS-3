@@ -11,6 +11,9 @@
         td {
             height: 25px;
         }
+        .d-none {
+        	display: none;
+        }
     </style>
 @endsection
 
@@ -72,7 +75,14 @@
                     "dataSrc": function (json) {
                         return json.data;
                     }
-                }
+                },
+                fnFooterCallback: function (row, data, start, end, display) {
+				    if (display.length > 0) {
+				        $("#export-excel").removeClass('d-none');
+				    }else {
+				        $("#export-excel").addClass('d-none');
+				    }
+				},
             });
         }
 
@@ -175,6 +185,9 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <span class="caption-subject font-blue sbold uppercase">List User</span>
+                    </div>
+                    <div style="text-align: right" id="export-excel">
+                        <a class="btn btn-primary" href="{{ url('quest/report/list-user/'.$detail['info']['id_quest_enc']) }}?export=1"><i class="fa fa-file-export"></i> Export Excel</a>
                     </div>
                 </div>
                 <div class="portlet-body form">
