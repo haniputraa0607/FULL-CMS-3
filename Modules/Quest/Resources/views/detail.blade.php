@@ -644,6 +644,48 @@
                 }
             }).change();
 
+            $('#autoclaim-selector').on('switchChange.bootstrapSwitch', function(event, state) {
+                if (state) {
+                    $('.manualclaim-only').hide();
+                    $('.manualclaim-only :input').prop('disabled', true);
+                } else {
+                    $('.manualclaim-only').show();
+                    $('.manualclaim-only :input').removeAttr('disabled');
+                }
+            }).change();
+
+            if ($('#autoclaim-selector').is(':checked')) {
+                $('.manualclaim-only').hide();
+                $('.manualclaim-only :input').prop('disabled', true);
+            } else {
+                $('.manualclaim-only').show();
+                $('.manualclaim-only :input').removeAttr('disabled');
+            }
+
+            $('[value="duration"]').on('change', function() {
+                if ($(this).is(':checked')) {
+                    $('.duration-only').show();
+                    $('.duration-only :input').removeAttr('disabled');
+                    $('.dates-only').hide();
+                    $('.dates-only :input').prop('disabled', true);
+                } else {
+                    $('.duration-only').hide();
+                    $('.duration-only :input').prop('disabled', true);
+                }
+            }).change();
+
+            $('[value="dates"]').on('change', function() {
+                if ($(this).is(':checked')) {
+                    $('.dates-only').show();
+                    $('.dates-only :input').removeAttr('disabled');
+                    $('.duration-only').hide();
+                    $('.duration-only :input').prop('disabled', true);
+                } else {
+                    $('.dates-only').hide();
+                    $('.dates-only :input').prop('disabled', true);
+                }
+            }).change();
+
             $('.detail-container').on('change', '.quest_rule', function() {
                 const parent = $(this).parents('.detail-container-item');
                 parent.find('.form_switch').hide();
@@ -852,7 +894,7 @@
                         @if ($data['quest']['is_complete'] != 1)
                             <form action="{{url('quest/detail/'.$data['quest']['id_quest'].'/start')}}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-success" style="float: right; "><i class="fa fa-play"></i> Start Quest</button>
+                                <button type="submit" class="btn btn-success" style="float: right; " data-toggle="confirmation" data-title="Are you sure? Quests that have been started <b class='text-danger'>cannot be edited</b> any more. Make sure all data is correct before continuing this action." data-placement="left"><i class="fa fa-play"></i> Start Quest</button>
                             </form>
                         @endif
                     @endif

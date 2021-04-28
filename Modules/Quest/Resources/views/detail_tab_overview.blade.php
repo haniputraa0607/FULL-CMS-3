@@ -20,7 +20,9 @@
                                                 <span class="sale-info"> Status 
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
-                                                @if ($data['quest']['date_start'] < date('Y-m-d H:i:s') && $data['quest']['is_complete'])
+                                                @if ($data['quest']['stop_at'])
+                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Stopped</span>
+                                                @elseif ($data['quest']['date_start'] < date('Y-m-d H:i:s') && $data['quest']['is_complete'])
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
                                                 @elseif (!is_null($data['quest']['date_end']) && $data['quest']['date_end'] > date('Y-m-d H:i:s') && $data['quest']['is_complete'])
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
@@ -63,11 +65,23 @@
                                                 </span>
                                             </li>
                                             <li>
-                                                <span class="sale-info"> End at
+                                                <span class="sale-info"> Max Complete
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
                                                 <span class="sale-num font-black">
-                                                    {{$data['quest']['date_end'] ? date('d F Y H:i', strtotime($data['quest']['date_end'])) : '-'}}
+                                                    @if($data['quest']['date_end'])
+                                                    {{date('d F Y H:i', strtotime($data['quest']['date_end']))}}
+                                                    @else
+                                                    {{number_format($data['quest']['max_complete_day'], 0, ',', '.')}} day
+                                                    @endif
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="sale-info"> Quest Limit
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                                <span class="sale-num font-black">
+                                                    {{$data['quest']['quest_limit'] ? number_format($data['quest']['quest_limit'], 0, ',', '.') : 'Unlimited'}} claim
                                                 </span>
                                             </li>
                                             <li>
@@ -86,6 +100,24 @@
                                             <li>
                                                 <span class="{{$data['quest']['short_description'] ? '' : 'text-muted'}}">{{$data['quest']['short_description'] ?: 'No short description'}}</span>
                                             </li>
+                                            @if ($data['quest']['stop_at'])
+                                            <li>
+                                                <span class="sale-info"> Stop at
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                                <span class="sale-num font-black">
+                                                    {{date('d F Y H:i', strtotime($data['quest']['stop_at']))}}
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="sale-info"> Stop Reason
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="{{$data['quest']['short_description'] ? '' : 'text-muted'}}">{{$data['quest']['stop_reason']}}</span>
+                                            </li>
+                                            @endif
                                         </ul>
                                         @if(MyHelper::hasAccess([230], $grantedFeature) && $data['quest']['is_complete'] != 1)
                                         <div class="text-center">
@@ -212,35 +244,52 @@
                                             <div class="portlet-body">
                                                 <div class="row" style="padding: 5px;position: relative;">
                                                     <div class="col-md-12">
+                                                        <div class="row static-info">
+                                                            <div class="col-md-5 value">Quest Rule</div>
+                                                        </div>
+                                                        <div class="row static-info">
+                                                            @switch($item['quest_rule'])
+                                                            @case('nominal_transaction')
+                                                                <div class="col-md-5 name">Transaction Nominal</div>
+                                                                <div class="col-md-7 value">: Minimum {{number_format($item['trx_nominal'])}}</div>
+                                                                @break
+                                                            @case('total_transaction')
+                                                                <div class="col-md-5 name">Transaction Total</div>
+                                                                <div class="col-md-7 value">: {{$item['trx_total']}}</div>
+                                                                @break
+                                                            @case('total_product')
+                                                                <div class="col-md-5 name">Product Total</div>
+                                                                <div class="col-md-7 value">: {{$item['product_total']}}</div>
+                                                                @break
+                                                            @case('total_outlet')
+                                                                <div class="col-md-5 name">Outlet Different</div>
+                                                                <div class="col-md-7 value">: {{$item['different_outlet']}}</div>
+                                                                @break
+                                                            @case('total_province')
+                                                                <div class="col-md-5 name">Province Different</div>
+                                                                <div class="col-md-7 value">: {{$item['different_province']}}</div>
+                                                                @break
+                                                            @endswitch
+                                                        </div>
+                                                        <hr/>
+                                                        <div class="row static-info">
+                                                            <div class="col-md-5 value">Additional Rule</div>
+                                                        </div>
                                                         @if (!is_null($item['id_product_category']) || !is_null($item['different_category_product']))
-                                                            <div class="row static-info">
-                                                                <div class="col-md-5 value">Product Category Rule</div>
-                                                            </div>
                                                             <div class="row static-info">
                                                                 @if (!is_null($item['id_product_category']))
                                                                     <div class="col-md-5 name">Product Category</div>
                                                                     <div class="col-md-7 value">: {{$item['product_category']['product_category_name']}}</div>
                                                                 @endif
-                                                                @if (!is_null($item['different_category_product']))
-                                                                    <div class="col-md-5 name">Product Category Different ?</div>
-                                                                    @if ($item['different_category_product'] == 0)
-                                                                        <div class="col-md-7 value">: No</div>
-                                                                    @else
-                                                                        <div class="col-md-7 value">: Yes</div>
-                                                                    @endif
-                                                                @endif
                                                             </div>
                                                         @endif
                                                         @if (!is_null($item['id_product']) || !is_null($item['product_total']))
-                                                            <div class="row static-info">
-                                                                <div class="col-md-5 value">Product Rule</div>
-                                                            </div>
                                                             <div class="row static-info">
                                                                 @if (!is_null($item['id_product']))
                                                                     <div class="col-md-5 name">Product</div>
                                                                     <div class="col-md-7 value">: {{$item['product']['product_name']}}</div>
                                                                 @endif
-                                                                @if (!is_null($item['product_total']))
+                                                                @if (!is_null($item['product_total']) && $item['quest_rule'] != 'total_product')
                                                                     <div class="col-md-5 name">Product Total</div>
                                                                     <div class="col-md-7 value">: {{$item['product_total']}}</div>
                                                                 @endif
@@ -248,54 +297,25 @@
                                                         @endif
                                                         @if (!is_null($item['id_outlet']) || !is_null($item['different_outlet']))
                                                             <div class="row static-info">
-                                                                <div class="col-md-5 value">Outlet Rule</div>
-                                                            </div>
-                                                            <div class="row static-info">
                                                                 @if (!is_null($item['id_outlet']))
                                                                     <div class="col-md-5 name">Outlet</div>
                                                                     <div class="col-md-7 value">: {{$item['outlet']['outlet_name']}}</div>
-                                                                @endif
-                                                                @if (!is_null($item['different_outlet']))
-                                                                    <div class="col-md-5 name">Outlet Different ?</div>
-                                                                    @if ($item['different_outlet'] == 0)
-                                                                        <div class="col-md-7 value">: No</div>
-                                                                    @else
-                                                                        <div class="col-md-7 value">: Yes</div>
-                                                                    @endif
                                                                 @endif
                                                             </div>
                                                         @endif
                                                         @if (!is_null($item['id_province']) || !is_null($item['different_province']))
                                                             <div class="row static-info">
-                                                                <div class="col-md-5 value">Province Rule</div>
-                                                            </div>
-                                                            <div class="row static-info">
                                                                 @if (!is_null($item['id_province']))
                                                                     <div class="col-md-5 name">Province</div>
                                                                     <div class="col-md-7 value">: {{$item['province']['province_name']}}</div>
-                                                                @endif
-                                                                @if (!is_null($item['different_province']))
-                                                                    <div class="col-md-5 name">Province Different ?</div>
-                                                                    @if ($item['different_province'] == 0)
-                                                                        <div class="col-md-7 value">: No</div>
-                                                                    @else
-                                                                        <div class="col-md-7 value">: Yes</div>
-                                                                    @endif
                                                                 @endif
                                                             </div>
                                                         @endif
                                                         @if (!is_null($item['trx_nominal']) || !is_null($item['trx_total']))
                                                             <div class="row static-info">
-                                                                <div class="col-md-5 value">Transaction Rule</div>
-                                                            </div>
-                                                            <div class="row static-info">
-                                                                @if (!is_null($item['trx_nominal']))
+                                                                @if (!is_null($item['trx_nominal']) && $item['quest_rule'] != 'nominal_transaction')
                                                                     <div class="col-md-5 name">Transaction Nominal</div>
                                                                     <div class="col-md-7 value">: Minimum {{number_format($item['trx_nominal'])}}</div>
-                                                                @endif
-                                                                @if (!is_null($item['trx_total']))
-                                                                    <div class="col-md-5 name">Transaction Total</div>
-                                                                    <div class="col-md-7 value">: Minimum {{number_format($item['trx_total'])}}</div>
                                                                 @endif
                                                             </div>
                                                         @endif
