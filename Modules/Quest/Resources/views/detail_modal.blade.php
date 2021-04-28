@@ -660,28 +660,79 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label"> Quest Publish Periode <span class="required" aria-required="true"> * </span> </label>
+                        <label class="col-md-3 control-label"> 
+                            Quest Publish Periode 
+                            <span class="required" aria-required="true"> * </span> 
+                            <i class="fa fa-question-circle tooltips" data-original-title="Periode quest untuk ditampilkan dan dapat di klaim" data-container="body"></i>
+                        </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <input type="text" class="form_datetime form-control" name="quest[publish_start]" value="{{ old('quest.publish_start', date('d F Y - H:i', strtotime($data['quest']['publish_start']))) }}" required autocomplete="off">
                             </div>
                         </div>
+                        <div class="col-md-1 text-center"> - </div>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" class="form_datetime form-control" name="quest[publish_end]" value="{{ old('quest.publish_end', date('d F Y - H:i', strtotime($data['quest']['publish_end']))) }}" autocomplete="off">
+                                <input type="text" class="form_datetime form-control" name="quest[publish_end]" value="{{ old('quest.publish_end', date('d F Y - H:i', strtotime($data['quest']['publish_end']))) }}" autocomplete="off" required>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label"> Quest Periode <span class="required" aria-required="true"> * </span> </label>
+                        <label class="col-md-3 control-label">
+                            Quest Calculation Start Date
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode perhitungan quest" data-container="body"></i>
+                        </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" class="form_datetime form-control" name="quest[date_start]" value="{{ old('quest.date_start', date('d F Y - H:i', strtotime($data['quest']['date_start']))) }}" autocomplete="off">
+                                <input type="text" class="form_datetime form-control" name="quest[date_start]" value="{{ old('quest.date_start', date('d F Y - H:i', strtotime($data['quest']['date_start']))) }}" autocomplete="off" required="">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <input type="text" class="form_datetime form-control" name="quest[date_end]" value="{{ old('quest.date_end', date('d F Y - H:i', strtotime($data['quest']['date_end']))) }}" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-md-3 control-label">
+                            Quest Maximum Complete Periode
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Periode penyelesaian quest oleh user" data-container="body"></i>
+                            </label>
+                            <div class="col-md-3">
+                                <div class="md-radio-inline">
+                                    <div class="md-radio">
+                                        <input type="radio" name="quest[quest_period_type]" id="radio9" value="dates" class="expiry md-radiobtn" required @if (old('quest.quest_period_type') == 'dates' || $data['quest']['date_end']) checked @endif required>
+                                        <label for="radio9">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> By Date </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="md-radio-inline">
+                                    <div class="md-radio">
+                                        <input type="radio" name="quest[quest_period_type]" id="radio10" value="duration" class="expiry md-radiobtn" required @if (old('quest.quest_period_type') == 'duration' || $data['quest']['max_complete_day']) checked @endif required>
+                                        <label for="radio10">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> Duration </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-3 control-label">
+                                Complete before
+                            </div>
+                            <div class="col-md-5 dates-only">
+                                <div class="input-icon right">
+                                    <input type="text" class="form_datetime form-control" name="quest[date_end]" value="{{ old('quest.date_end', $data['quest']['date_end'] ? date('d F Y - H:i', strtotime($data['quest']['date_end'])) : '') }}" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-md-5 duration-only">
+                                <div class="input-group">
+                                    <input type="text" class="form-control digit_mask" name="quest[max_complete_day]" placeholder="Max Complete Day" required  value="{{old('quest.max_complete_day', $data['quest']['max_complete_day'])}}" />
+                                    <div class="input-group-addon">day after claimed</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -695,7 +746,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description">{{ old('quest.short_description', $data['quest']['short_description']) }}</textarea>
+                                <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description" required>{{ old('quest.short_description', $data['quest']['short_description']) }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -708,7 +759,19 @@
                         </div>
                         <div class="col-md-8">
                             <input type="hidden" name="quest[autoclaim_quest]" value="0">
-                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest[autoclaim_quest]" {{$data['quest']['autoclaim_quest'] ? 'checked' : ''}}>
+                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest[autoclaim_quest]" id="autoclaim-selector" {{$data['quest']['autoclaim_quest'] ? 'checked' : ''}}>
+                        </div>
+                    </div>
+                    <div class="form-group manualclaim-only">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Quest Claim Limit
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal klaim untuk quest. Masukan 0 untuk tidak terbatas" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control digit_mask" name="quest[quest_limit]" placeholder="Claim limit" required value="{{old('quest.quest_limit', $data['quest']['quest_limit'])}}" required />
                         </div>
                     </div>
                 </div>

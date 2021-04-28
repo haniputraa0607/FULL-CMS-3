@@ -334,6 +334,48 @@
                 }
             }).change();
 
+            $('#autoclaim-selector').on('switchChange.bootstrapSwitch', function(event, state) {
+                if (state) {
+                    $('.manualclaim-only').hide();
+                    $('.manualclaim-only :input').prop('disabled', true);
+                } else {
+                    $('.manualclaim-only').show();
+                    $('.manualclaim-only :input').removeAttr('disabled');
+                }
+            }).change();
+
+            if ($('#autoclaim-selector').is(':checked')) {
+                $('.manualclaim-only').hide();
+                $('.manualclaim-only :input').prop('disabled', true);
+            } else {
+                $('.manualclaim-only').show();
+                $('.manualclaim-only :input').removeAttr('disabled');
+            }
+
+            $('[value="duration"]').on('change', function() {
+                if ($(this).is(':checked')) {
+                    $('.duration-only').show();
+                    $('.duration-only :input').removeAttr('disabled');
+                    $('.dates-only').hide();
+                    $('.dates-only :input').prop('disabled', true);
+                } else {
+                    $('.duration-only').hide();
+                    $('.duration-only :input').prop('disabled', true);
+                }
+            }).change();
+
+            $('[value="dates"]').on('change', function() {
+                if ($(this).is(':checked')) {
+                    $('.dates-only').show();
+                    $('.dates-only :input').removeAttr('disabled');
+                    $('.duration-only').hide();
+                    $('.duration-only :input').prop('disabled', true);
+                } else {
+                    $('.dates-only').hide();
+                    $('.dates-only :input').prop('disabled', true);
+                }
+            }).change();
+
             $('.digit_mask').inputmask("numeric", {
                 radixPoint: ",",
                 groupSeparator: ".",
@@ -573,7 +615,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label"> Quest Periode <span class="required" aria-required="true"> * </span> </label>
+                        <label class="col-md-3 control-label">
+                            Quest Calculation Start Date
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tanggal mulai periode perhitungan quest" data-container="body"></i>
+                        </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
@@ -589,7 +635,40 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">
+                        Quest Maximum Complete Periode
+                        <i class="fa fa-question-circle tooltips" data-original-title="Periode penyelesaian quest oleh user" data-container="body"></i>
+                        </label>
+                        <div class="col-md-2">
+                            <div class="md-radio-inline">
+                                <div class="md-radio">
+                                    <input type="radio" name="quest[quest_period_type]" id="radio9" value="dates" class="expiry md-radiobtn" required @if (old('quest.quest_period_type') == 'dates') checked @endif required>
+                                    <label for="radio9">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> By Date </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="md-radio-inline">
+                                <div class="md-radio">
+                                    <input type="radio" name="quest[quest_period_type]" id="radio10" value="duration" class="expiry md-radiobtn" required @if (old('quest.quest_period_type') == 'duration') checked @endif required>
+                                    <label for="radio10">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> Duration </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class=" col-md-offset-3 col-md-2 control-label">
+                            Complete before
+                        </div>
+                        <div class="col-md-4 dates-only">
                             <div class="input-icon right">
                                 <div class="input-group">
                                     <input type="text" class="form_datetime form-control" name="quest[date_end]" value="{{ old('quest.date_end') }}" autocomplete="off">
@@ -598,10 +677,16 @@
                                             <i class="fa fa-calendar"></i>
                                         </button>
                                         <button class="btn default" type="button">
-                                            <i class="fa fa-question-circle tooltips" data-original-title="End Peroide Quest (Leave this column, if the quest is active forever)" data-container="body"></i>
+                                            <i class="fa fa-question-circle tooltips" data-original-title="Batas akhir user menyelesaikan quest" data-container="body"></i>
                                         </button>
                                     </span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 duration-only">
+                            <div class="input-group">
+                                <input type="text" class="form-control digit_mask" name="quest[max_complete_day]" placeholder="Max Complete Day" required  value="{{old('quest.max_complete_day', 0)}}" />
+                                <div class="input-group-addon">day after claimed</div>
                             </div>
                         </div>
                     </div>
@@ -627,7 +712,18 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest[autoclaim_quest]">
+                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest[autoclaim_quest]" id="autoclaim-selector">
+                        </div>
+                    </div>
+                    <div class="form-group manualclaim-only">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                            Quest Claim Limit
+                            <i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal klaim untuk quest. Masukan 0 untuk tidak terbatas" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control digit_mask" name="quest[quest_limit]" placeholder="Claim limit" required  value="{{old('quest.quest_limit', 0)}}" />
                         </div>
                     </div>
                     <hr>
