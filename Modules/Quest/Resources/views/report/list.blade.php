@@ -87,48 +87,50 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <table class="table table-striped table-bordered table-hover" id="tableReport">
-                <thead>
-                <tr>
-                    <th nowrap>Quest Name</th>
-                    <th nowrap>Quest Description</th>
-                    <th nowrap>Date Start</th>
-                    <th nowrap>Date End</th>
-                    <th nowrap>Status</th>
-                    <th nowrap>Benefit Type</th>
-                    <th nowrap>Total User</th>
-                    <th nowrap>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                @if(!empty($data))
-                    @foreach($data as $val)
-                        <tr>
-                            <td nowrap>{{$val['name']}}</td>
-                            <td><?php echo $val['short_description']?></td>
-                            <td nowrap>@if(!is_null($val['date_start'])){{date('d M Y H:i', strtotime($val['date_start']))}}@else Not Set @endif</td>
-                            <td nowrap>@if(!is_null($val['date_end'])){{date('d M Y H:i', strtotime($val['date_end']))}}@else Not Set @endif</td>
-                            <td nowrap>
-                            	@if ($val['status'] == 'Started')
-                            		<span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                            	@elseif ($val['status'] == 'Ended')
-                            		<span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>)
-                            	@else
-                            		<span class="sale-num sbold badge badge-pill secondary" style="font-size: 14px!important;height: 25px!important;padding: 5px 12px;color: #fff;">Not Started</span>
-                            	@endif
-                            </td>
-                            <td nowrap>{{$val['benefit_type']}}</td>
-                            <td nowrap>{{number_format($val['total_user'])}}</td>
-                            <td nowrap>
-                                <a class="btn btn-xs blue dropdown-toggle" target="_blank" href="{{url('quest/report/detail/'.$val['id_quest'])}}"> Detail </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr><td colspan="10" style="text-align: center">Data Not Available</td></tr>
-                @endif
-                </tbody>
-            </table>
+        	<div style="overflow-x: scroll;">
+	            <table class="table table-striped table-bordered table-hover" id="tableReport">
+	                <thead>
+	                <tr>
+	                    <th nowrap>Quest Name</th>
+	                    <th nowrap>Quest Description</th>
+	                    <th nowrap>Date Start</th>
+	                    <th nowrap>Date End</th>
+	                    <th nowrap>Status</th>
+	                    <th nowrap>Benefit Type</th>
+	                    <th nowrap>Total User</th>
+	                    <th nowrap>Action</th>
+	                </tr>
+	                </thead>
+	                <tbody>
+	                @if(!empty($data))
+	                    @foreach($data as $val)
+	                        <tr>
+	                            <td nowrap>{{$val['name']}}</td>
+	                            <td><?php echo $val['short_description']?></td>
+	                            <td nowrap>@if(!is_null($val['date_start'])){{date('d M Y H:i', strtotime($val['date_start']))}}@else Not Set @endif</td>
+	                            <td nowrap>@if(!is_null($val['date_end'])){{date('d M Y H:i', strtotime($val['date_end']))}}@else Not Set @endif</td>
+	                            <td nowrap>
+	                            	@if ($val['status'] == 'Started')
+	                            		<span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
+	                            	@elseif ($val['status'] == 'Ended')
+	                            		<span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>)
+	                            	@else
+	                            		<span class="sale-num sbold badge badge-pill secondary" style="font-size: 14px!important;height: 25px!important;padding: 5px 12px;color: #fff;">Not Started</span>
+	                            	@endif
+	                            </td>
+	                            <td nowrap>{{$val['benefit_type']}}</td>
+	                            <td nowrap>{{number_format($val['total_user'])}}</td>
+	                            <td nowrap>
+	                                <a class="btn btn-xs blue dropdown-toggle" target="_blank" href="{{url('quest/report/detail/'.$val['id_quest'])}}"> Detail </a>
+	                            </td>
+	                        </tr>
+	                    @endforeach
+	                @else
+	                    <tr><td colspan="10" style="text-align: center">Data Not Available</td></tr>
+	                @endif
+	                </tbody>
+	            </table>
+	        </div>
             <br>
             @if(isset($dataPerPage) && isset($dataUpTo) && isset($dataTotal))
                 Showing {{$dataPerPage}} to {{$dataUpTo}} of {{ $dataTotal }} entries<br>
