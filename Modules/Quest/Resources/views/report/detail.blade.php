@@ -124,27 +124,27 @@
                     <table>
                         <tr>
                             <td width="60%">Image</td>
-                            <td>
-                            	<img src="{{ env('STORAGE_URL_API').$detail['info']['image'] }}" style="height: 100px">
+                            <td>:&nbsp
+                            	<img src="{{ env('STORAGE_URL_API').$detail['info']['image'] }}" style="height: 100px; margin-left: -3px">
                             </td>
                         </tr>
                         <tr>
                             <td width="60%">Name</td>
-                            <td>{{ $detail['info']['name'] }}</td>
+                            <td>:&nbsp{{ $detail['info']['name'] }}</td>
                         </tr>
                         <tr>
                             <td width="60%">Short Description</td>
-                            <td>{{ $detail['info']['short_description'] }}</td>
+                            <td>:&nbsp{{ $detail['info']['short_description'] }}</td>
                         </tr>
                         <tr>
                             <td width="60%">Start Date</td>
-                            <td>
+                            <td>:&nbsp
                             	{{date('d F Y H:i', strtotime($detail['info']['date_start']))}}
                         	</td>
                         </tr>
                         <tr>
                             <td width="60%">End Date</td>
-                            <td>
+                            <td>:&nbsp
                             	{{$detail['info']['date_end'] ? date('d F Y H:i', strtotime($detail['info']['date_end'])) : '-'}}
                         	</td>
                         </tr>
@@ -162,21 +162,21 @@
                         		}
                         	@endphp
                             <td width="60%">Benefit</td>
-                            <td>
+                            <td>:&nbsp
                             	{{ $detail['info']['quest_benefit']['benefit_type'] }}&nbsp{{ $benefit }}
                             </td>
                         </tr>
                         <tr>
                             <td width="60%">Total Rule</td>
-                            <td>{{ $detail['info']['total_rule'] }}</td>
+                            <td>:&nbsp{{ $detail['info']['total_rule'] }}</td>
                         </tr>
                         <tr>
                             <td width="60%">Total User</td>
-                            <td>{{ $detail['info']['total_user'] }}</td>
+                            <td>:&nbsp{{ $detail['info']['total_user'] }}</td>
                         </tr>
                         <tr>
                             <td width="60%">Total User Complete</td>
-                            <td>{{ $detail['info']['total_user_complete'] }}</td>
+                            <td>:&nbsp{{ $detail['info']['total_user_complete'] }}</td>
                         </tr>
                     </table>
                 </div>
