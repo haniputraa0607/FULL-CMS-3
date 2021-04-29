@@ -41,6 +41,36 @@
                                                 @endif
                                             </li>
                                             <li>
+                                                <span class="sale-info"> User Rule Type
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                                <span class="sale-num font-black">
+                                                    @if(is_null($data['quest']['user_rule_subject']))
+                                                        All User
+                                                    @else
+                                                        With Rule
+                                                    @endif
+                                                </span>
+                                            </li>
+                                            @if(!is_null($data['quest']['user_rule_subject']))
+                                                <li>
+                                                <span class="sale-info"> User Rule
+                                                    <i class="fa fa-img-up"></i>
+                                                </span>
+                                                    <span class="sale-num font-black">
+                                                    <?php
+                                                        $userRuleSubject = [
+                                                            'r_quartile' => ' R',
+                                                            'f_quartile' => 'F',
+                                                            'm_quartile' => 'M',
+                                                            'RFMScore' => 'RFM'
+                                                        ];
+                                                    ?>
+                                                    {{$userRuleSubject[$data['quest']['user_rule_subject']]??''}} {{$data['quest']['user_rule_operator']}} {{$data['quest']['user_rule_parameter']}}
+                                                    </span>
+                                                </li>
+                                            @endif
+                                            <li>
                                                 <span class="sale-info"> Published at
                                                     <i class="fa fa-img-up"></i>
                                                 </span>

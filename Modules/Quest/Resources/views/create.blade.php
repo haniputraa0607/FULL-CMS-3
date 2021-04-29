@@ -535,6 +535,19 @@
         function removeBox(params) {
             $(params).parents('.detail-container-item').remove()
         }
+        function changeUserRuleType(value) {
+            if(value == 'all'){
+                document.getElementById('detail_user_rule').style.display = 'none';
+                $("#user_rule_subject").prop('required', false);
+                $("#user_rule_operator").prop('required', false);
+                $("#user_rule_parameter").prop('required', false);
+            }else{
+                document.getElementById('detail_user_rule').style.display = 'block';
+                $("#user_rule_subject").prop('required', true);
+                $("#user_rule_operator").prop('required', true);
+                $("#user_rule_parameter").prop('required', true);
+            }
+        }
     </script>
 @endsection 
 
@@ -578,6 +591,49 @@
                         </label>
                         <div class="col-md-8">
                             <input type="text" name="quest[name]" class="form-control" placeholder="Enter text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">
+                            User Rule Type
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="User Rule Type" data-container="body"></i>
+                        </label>
+                        <div class="col-md-3">
+                            <select class="form-control select2" name="quest[user_rule_type]" data-placeholder="User Rule Type" required onchange="changeUserRuleType(this.value)">
+                                <option></option>
+                                <option value="all" {{old('quest.user_rule_type') == 'all' ? 'selected' : ''}}>All User</option>
+                                <option value="with_rule" {{old('quest.user_rule_type') == 'with_rule' ? 'selected' : ''}}>With Rule</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="detail_user_rule" @if(old('quest.user_rule_type') == 'all') style="display: none" @endif>
+                        <label class="col-md-3 control-label">
+                            User Rule
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="User Rule" data-container="body"></i>
+                        </label>
+                        <div class="col-md-3">
+                            <select class="form-control select2" id="user_rule_subject" name="quest[user_rule_subject]" data-placeholder="Rule Subject">
+                                <option></option>
+                                <option value="r_quartile" {{old('quest.user_rule_subject') == 'r_quartile' ? 'selected' : ''}}>R</option>
+                                <option value="f_quartile" {{old('quest.user_rule_subject') == 'f_quartile' ? 'selected' : ''}}>F</option>
+                                <option value="m_quartile" {{old('quest.user_rule_subject') == 'm_quartile' ? 'selected' : ''}}>M</option>
+                                <option value="RFMScore" {{old('quest.user_rule_subject') == 'RFMScore' ? 'selected' : ''}}>RFM</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control select2" id="user_rule_operator" name="quest[user_rule_operator]" data-placeholder="Rule Operator">
+                                <option></option>
+                                <option value=">" {{old('quest.user_rule_operator') == '>' ? 'selected' : ''}}>></option>
+                                <option value=">=" {{old('quest.user_rule_operator') == '>=' ? 'selected' : ''}}>>=</option>
+                                <option value="=" {{old('quest.user_rule_operator') == '=' ? 'selected' : ''}}>=</option>
+                                <option value="<" {{old('quest.user_rule_operator') == '<' ? 'selected' : ''}}><</option>
+                                <option value="<=" {{old('quest.user_rule_operator') == '<=' ? 'selected' : ''}}><=</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" name="quest[user_rule_parameter]" id="user_rule_parameter" class="form-control" placeholder="Rule Param">
                         </div>
                     </div>
                     <div class="form-group">
