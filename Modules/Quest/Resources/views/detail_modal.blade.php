@@ -616,7 +616,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Edit Quest Detail</h4>
             </div>
-            <div class="modal-body" style="padding: 20ox;display: table;width: 100%;">
+            <div class="modal-body" style="padding: 20px;display: table;width: 100%;">
                 <div class="col-md-12">
                     <div class="form-group">
                         <div class="input-icon right">
@@ -628,6 +628,49 @@
                         </div>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="quest[name]" value="{{ old('quest.name', $data['quest']['name']) }}" placeholder="Quest" required maxlength="40">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">
+                            User Rule Type
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="User Rule Type" data-container="body"></i>
+                        </label>
+                        <div class="col-md-3">
+                            <select class="form-control select2" name="quest[user_rule_type]" data-placeholder="User Rule Type" required onchange="changeUserRuleType(this.value)">
+                                <option></option>
+                                <option value="all" @if(is_null($data['quest']['user_rule_subject'])) selected @endif>All User</option>
+                                <option value="with_rule" @if(!is_null($data['quest']['user_rule_subject'])) selected @endif>With Rule</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="detail_user_rule" @if(is_null($data['quest']['user_rule_subject'])) style="display: none" @endif>
+                        <label class="col-md-3 control-label">
+                            User Rule
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="User Rule" data-container="body"></i>
+                        </label>
+                        <div class="col-md-3">
+                            <select class="form-control select2" id="user_rule_subject" name="quest[user_rule_subject]" data-placeholder="Rule Subject">
+                                <option></option>
+                                <option value="r_quartile" {{$data['quest']['user_rule_subject'] == 'r_quartile' ? 'selected' : ''}}>R</option>
+                                <option value="f_quartile" {{$data['quest']['user_rule_subject'] == 'f_quartile' ? 'selected' : ''}}>F</option>
+                                <option value="m_quartile" {{$data['quest']['user_rule_subject'] == 'm_quartile' ? 'selected' : ''}}>M</option>
+                                <option value="RFMScore" {{$data['quest']['user_rule_subject'] == 'RFMScore' ? 'selected' : ''}}>RFM</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control select2" id="user_rule_operator" name="quest[user_rule_operator]" data-placeholder="Rule Operator">
+                                <option></option>
+                                <option value=">" {{$data['quest']['user_rule_operator'] == '>' ? 'selected' : ''}}>></option>
+                                <option value=">=" {{$data['quest']['user_rule_operator'] == '>=' ? 'selected' : ''}}>>=</option>
+                                <option value="=" {{$data['quest']['user_rule_operator'] == '=' ? 'selected' : ''}}>=</option>
+                                <option value="<" {{$data['quest']['user_rule_operator'] == '<' ? 'selected' : ''}}><</option>
+                                <option value="<=" {{$data['quest']['user_rule_operator'] == '<=' ? 'selected' : ''}}><=</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" name="quest[user_rule_parameter]" id="user_rule_parameter" class="form-control" placeholder="Rule Param" value="{{$data['quest']['user_rule_parameter']}}">
                         </div>
                     </div>
                     <div class="form-group">

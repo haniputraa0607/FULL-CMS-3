@@ -216,6 +216,13 @@ class QuestController extends Controller
         if ($post['quest']['date_end'] ?? false) {
             $post['quest']['date_end'] = date('Y-m-d H:i:s', strtotime(str_replace('-', '', $post['quest']['date_end'])));
         }
+
+        if($post['quest']['user_rule_type'] == 'all'){
+            $post['quest']['user_rule_subject'] = NULL;
+            $post['quest']['user_rule_operator'] = NULL;
+            $post['quest']['user_rule_parameter'] = NULL;
+        }
+
         $result = MyHelper::post('quest/update-quest', $post + ['id_quest' => $slug]);
         if (($result['status'] ?? false) == 'success') {
             return redirect('quest/detail/'.$slug)->withSuccess(['Update Success']);
