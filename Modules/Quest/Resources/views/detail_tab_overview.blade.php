@@ -303,6 +303,12 @@
                                                                 @endif
                                                             </div>
                                                         @endif
+                                                        @if (!is_null($item['id_outlet_group']))
+                                                            <div class="row static-info">
+                                                                <div class="col-md-5 name">Outlet Group Filter</div>
+                                                                <div class="col-md-7 value">: <a target="_blank" href="{{url('outlet-group-filter/detail/'.$item['outlet_group']['id_outlet_group'])}}">{{$item['outlet_group']['outlet_group_name']}}</a></div>
+                                                            </div>
+                                                        @endif
                                                         @if (!is_null($item['id_province']) || !is_null($item['different_province']))
                                                             <div class="row static-info">
                                                                 @if (!is_null($item['id_province']))

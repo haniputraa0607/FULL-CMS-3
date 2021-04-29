@@ -57,6 +57,9 @@
         a[aria-expanded=false] .fa-chevron-right {
             transform: rotate(90deg);
         }
+        .select2-container {
+            width: 100% !important;
+        }
 	</style>
 @endsection
 
@@ -211,23 +214,29 @@
         $('#editBadge').find("input[name='trx_nominal']").val(params.trx_nominal)
         $('#editBadge').find("input[name='trx_total']").val(params.trx_total)
         $('#editBadge').find("input[name='product_total']").val(params.product_total)
+        if (params.id_outlet_group) {
+            params.id_outlet = '0';
+        }
         $('#editBadge').find("select[name='id_outlet']").val(params.id_outlet).trigger('change')
+        $('#editBadge').find("select[name='id_outlet_group']").val(params.id_outlet_group).trigger('change')
         $('#editBadge').find("select[name='different_outlet']").val(params.different_outlet).trigger('change')
         $('#editBadge').find("select[name='id_province']").val(params.id_province).trigger('change')
         $('#editBadge').find("select[name='different_province']").val(params.different_province).trigger('change')
         $('#editBadge').find("input[name='id_quest_detail']").val(params.id_quest_detail)
-        let total_rule = null;
+        let total_rule = params.total_rule;
 
-        if (params.different_outlet) {
-            total_rule = 'total_outlet';
-        } else if (params.different_province) {
-            total_rule = 'total_province';
-        } else if (params.trx_total) {
-            total_rule = 'total_transaction';
-        } else if (params.product_total && params.id_product) {
-            total_rule = 'total_product';
-        } else {
-            total_rule = 'nominal_transaction';
+        if (!total_rule) {
+            if (params.different_outlet) {
+                total_rule = 'total_outlet';
+            } else if (params.different_province) {
+                total_rule = 'total_province';
+            } else if (params.trx_total) {
+                total_rule = 'total_transaction';
+            } else if (params.product_total && params.id_product) {
+                total_rule = 'total_product';
+            } else {
+                total_rule = 'nominal_transaction';
+            }
         }
 
         if (params.trx_nominal) {
@@ -236,7 +245,7 @@
             $('#editBadge .rule_trx').removeAttr('checked');
         }
 
-        if (params.id_product) {
+        if (params.id_product || (params.product_total && total_rule != 'total_product')) {
             $('#editBadge .rule_product').prop('checked', true);
         } else {
             $('#editBadge .rule_product').removeAttr('checked');
@@ -248,7 +257,7 @@
             $('#editBadge .rule_product_variant').removeAttr('checked');
         }
 
-        if (params.id_outlet || params.id_province) {
+        if (params.id_outlet || params.id_outlet_group || params.id_province) {
             $('#editBadge .rule_additional').prop('checked', true);
         } else {
             $('#editBadge .rule_additional').removeAttr('checked');
@@ -399,7 +408,7 @@
                             <div class="form-group">
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
-                                    Quest Total Rule
+                                    Total Rule
                                     <i class="fa fa-question-circle tooltips" data-original-title="Select quest rule" data-container="body"></i>
                                     </label>
                                 </div>
@@ -420,7 +429,7 @@
                             </div>
                             <div class="form-group additional_rule">
                                 <label class="col-md-3 control-label">
-                                    Quest Additional Rule
+                                    Additional Rule
                                     <span class="required" aria-required="true"> * </span>
                                     <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
                                 </label>
@@ -444,7 +453,7 @@
                             <div class="form-group trx_rule_form">
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
-                                    Quest Transaction Rule
+                                    Transaction Rule
                                     <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
                                     </label>
                                 </div>
@@ -465,7 +474,7 @@
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
-                                        Quest Product Rule
+                                        Product Rule
                                         <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
                                         </label>
                                     </div>
@@ -495,7 +504,7 @@
                                 <div class="form-group has_variant">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
-                                        Quest Product Variant Rule
+                                        Product Variant Rule
                                         <i class="fa fa-question-circle tooltips" data-original-title="Select a product variant. leave blank, if the quest is not based on the product variant" data-container="body"></i>
                                         </label>
                                     </div>
@@ -519,7 +528,7 @@
                             <div class="form-group additional_rule_form">
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
-                                    Quest Additional Rule
+                                    Additional Rule
                                     <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
                                     </label>
                                 </div>
@@ -537,8 +546,19 @@
                                     <div class="input-icon right">
                                         <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[${counter_rule}][id_outlet] outlet_total_rule">
                                             <option></option>
+                                            <option value="0">Outlet Group Filter</option>
                                             @foreach ($outlet as $item)
                                                 <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="detail[${counter_rule}][id_outlet_group]">
+                                            <option></option>
+                                            @foreach ($outlet_group_filters as $item)
+                                                <option value="{{$item['id_outlet_group']}}">{{$item['outlet_group_name']}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -614,6 +634,7 @@
             $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .rule_product`).change();
             $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .rule_additional`).change();
             $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .rule_product_variant`).change();
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .id_outlet`).change();
             $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .digit_mask`).inputmask("numeric", {
                 radixPoint: ",",
                 groupSeparator: ".",
@@ -774,6 +795,7 @@
                     rule_form.hide();
                     rule_form.find(':input').prop('disabled', true);
                 }
+                parent.find('.id_outlet').change();
             });
             $('.detail-container .rule_additional').change();
 
@@ -808,6 +830,17 @@
                 }
             });
             $('.detail-container .id_product').change();
+            $('.detail-container').on('change', '.id_outlet', function() {
+                const parent = $(this).parents('.detail-container-item');
+                if ($(this).val() === '0' && !$(this).prop('disabled')) {
+                    parent.find('.select_outlet_group_filter').show();
+                    parent.find('.select_outlet_group_filter :input').removeAttr('disabled');
+                } else {
+                    parent.find('.select_outlet_group_filter').hide();
+                    parent.find('.select_outlet_group_filter :input').prop('disabled', true);
+                }
+            });
+            $('.detail-container .id_outlet').change();
         });
     </script>
 @endsection

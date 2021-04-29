@@ -57,7 +57,7 @@
                             <div class="form-group">
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
-                                    Quest Total Rule
+                                    Total Rule
                                     <i class="fa fa-question-circle tooltips" data-original-title="Select quest rule" data-container="body"></i>
                                     </label>
                                 </div>
@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group additional_rule">
                                 <label class="col-md-3 control-label">
-                                    Quest Additional Rule
+                                    Additional Rule
                                     <span class="required" aria-required="true"> * </span>
                                     <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
                                 </label>
@@ -102,7 +102,7 @@
                             <div class="form-group trx_rule_form">
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
-                                    Quest Transaction Rule
+                                    Transaction Rule
                                     <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
                                     </label>
                                 </div>
@@ -123,7 +123,7 @@
                                 <div class="form-group">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
-                                        Quest Product Rule
+                                        Product Rule
                                         <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
                                         </label>
                                     </div>
@@ -153,7 +153,7 @@
                                 <div class="form-group has_variant">
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
-                                        Quest Product Variant Rule
+                                        Product Variant Rule
                                         <i class="fa fa-question-circle tooltips" data-original-title="Select a product variant. leave blank, if the quest is not based on the product variant" data-container="body"></i>
                                         </label>
                                     </div>
@@ -177,7 +177,7 @@
                             <div class="form-group additional_rule_form">
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
-                                    Quest Additional Rule
+                                    Additional Rule
                                     <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
                                     </label>
                                 </div>
@@ -195,8 +195,19 @@
                                     <div class="input-icon right">
                                         <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[${counter_rule}][id_outlet] outlet_total_rule">
                                             <option></option>
+                                            <option value="0">Outlet Group Filter</option>
                                             @foreach ($outlet as $item)
                                                 <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="detail[${counter_rule}][id_outlet_group]">
+                                            <option></option>
+                                            @foreach ($outlet_group_filters as $item)
+                                                <option value="{{$item['id_outlet_group']}}">{{$item['outlet_group_name']}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -473,6 +484,7 @@
                     rule_form.hide();
                     rule_form.find(':input').prop('disabled', true);
                 }
+                parent.find('.id_outlet').change();
             });
             $('#detail-container .rule_additional').change();
 
@@ -507,6 +519,18 @@
                 }
             });
             $('#detail-container .id_product').change();
+
+            $('#detail-container').on('change', '.id_outlet', function() {
+                const parent = $(this).parents('.detail-container-item');
+                if ($(this).val() === '0' && !$(this).prop('disabled')) {
+                    parent.find('.select_outlet_group_filter').show();
+                    parent.find('.select_outlet_group_filter :input').removeAttr('disabled');
+                } else {
+                    parent.find('.select_outlet_group_filter').hide();
+                    parent.find('.select_outlet_group_filter :input').prop('disabled', true);
+                }
+            });
+            $('#detail-container .id_outlet').change();
         });
         function removeBox(params) {
             $(params).parents('.detail-container-item').remove()
@@ -964,8 +988,19 @@
                                             <div class="input-icon right">
                                                 <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[{{$index}}][id_outlet]">
                                                     <option></option>
+                                                    <option value="0">Outlet Group Filter</option>
                                                     @foreach ($outlet as $item)
                                                         <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                            <div class="input-icon right">
+                                                <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="detail[{{$index}}][id_outlet_group]">
+                                                    <option></option>
+                                                    @foreach ($outlet_group_filters as $item)
+                                                        <option value="{{$item['id_outlet_group']}}">{{$item['outlet_group_name']}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
