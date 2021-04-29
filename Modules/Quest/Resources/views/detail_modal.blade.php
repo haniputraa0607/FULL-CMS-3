@@ -178,8 +178,19 @@
                                         <div class="input-icon right">
                                             <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[0][id_outlet]">
                                                 <option></option>
+                                                <option value="0">Outlet Group Filter</option>
                                                 @foreach ($outlet as $item)
                                                     <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                        <div class="input-icon right">
+                                            <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="detail[0][id_outlet_group]">
+                                                <option></option>
+                                                @foreach ($outlet_group_filters as $item)
+                                                    <option value="{{$item['id_outlet_group']}}">{{$item['outlet_group_name']}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -439,8 +450,19 @@
                                 <div class="input-icon right">
                                     <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="id_outlet">
                                         <option></option>
+                                        <option value="0">Outlet Group Filter</option>
                                         @foreach ($outlet as $item)
                                             <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                <div class="input-icon right">
+                                    <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="id_outlet_group">
+                                        <option></option>
+                                        @foreach ($outlet_group_filters as $item)
+                                            <option value="{{$item['id_outlet_group']}}">{{$item['outlet_group_name']}}</option>
                                         @endforeach
                                     </select>
                                 </div>
