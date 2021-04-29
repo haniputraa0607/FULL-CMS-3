@@ -7,6 +7,11 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    	table th{
+    		text-align: center;
+    	}
+    </style>
 @endsection
 
 @section('page-plugin')
@@ -105,15 +110,17 @@
 	                @if(!empty($data))
 	                    @foreach($data as $val)
 	                        <tr>
-	                            <td nowrap>{{$val['name']}}</td>
+	                            <td>{{$val['name']}}</td>
 	                            <td><?php echo $val['short_description']?></td>
 	                            <td nowrap>@if(!is_null($val['date_start'])){{date('d M Y H:i', strtotime($val['date_start']))}}@else Not Set @endif</td>
 	                            <td nowrap>@if(!is_null($val['date_end'])){{date('d M Y H:i', strtotime($val['date_end']))}}@else Not Set @endif</td>
-	                            <td nowrap>
-	                            	@if ($val['status'] == 'Started')
+	                            <td nowrap class="text-center">
+                                    @if ($val['status'] == 'Stopped')
+                                        <span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Stopped</span>
+	                            	@elseif ($val['status'] == 'Started')
 	                            		<span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
 	                            	@elseif ($val['status'] == 'Ended')
-	                            		<span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>)
+	                            		<span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
 	                            	@else
 	                            		<span class="sale-num sbold badge badge-pill secondary" style="font-size: 14px!important;height: 25px!important;padding: 5px 12px;color: #fff;">Not Started</span>
 	                            	@endif

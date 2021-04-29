@@ -7,12 +7,16 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" /> 
     <style>
         td {
             height: 25px;
         }
         .d-none {
         	display: none;
+        }
+        .font-black {
+            color: #333!important;
         }
     </style>
 @endsection
@@ -83,6 +87,20 @@
 				        $("#export-excel").addClass('d-none');
 				    }
 				},
+				columnDefs: [
+				    {
+				        'targets': 6,
+				        'createdCell':  function (td, cellData, rowData, row, col) {
+				           $(td).addClass('text-center');
+				        }
+				    },
+				    {
+				        'targets': 7,
+				        'createdCell':  function (td, cellData, rowData, row, col) {
+				           $(td).addClass('text-center');
+				        }
+				    }
+				],
             });
         }
 
@@ -113,72 +131,85 @@
     @include('layouts.notifications')
 
     <div class="row">
-        <div class="col-md-7">
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <span class="caption-subject font-blue sbold uppercase ">Quest Information</span>
-                    </div>
+        <div class="col-md-6">
+            <div class="portlet profile-info portlet light bordered">
+                <div class="portlet-title" style="display: flex;">
+                	<img src="{{ env('STORAGE_URL_API').$detail['info']['image'] }}" style="width: 40px;height: 40px;" class="img-responsive" alt="">
+                    <span class="caption font-blue sbold uppercase">
+                        &nbsp;&nbsp;{{$detail['info']['name']}}
+                    </span>
                 </div>
-                <div class="portlet-body form">
-                    <table>
-                        <tr>
-                            <td width="60%">Image</td>
-                            <td>:&nbsp
-                            	<img src="{{ env('STORAGE_URL_API').$detail['info']['image'] }}" style="height: 100px; margin-left: -3px">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="60%">Name</td>
-                            <td>:&nbsp{{ $detail['info']['name'] }}</td>
-                        </tr>
-                        <tr>
-                            <td width="60%">Short Description</td>
-                            <td>:&nbsp{{ $detail['info']['short_description'] }}</td>
-                        </tr>
-                        <tr>
-                            <td width="60%">Start Date</td>
-                            <td>:&nbsp
+                <div class="portlet sale-summary">
+                    <ul class="list-unstyled">
+                    	<li>
+                            <span class="sale-info"> Start Date
+                                <i class="fa fa-img-up"></i>
+                            </span>
+                            <span class="sale-num font-black">
                             	{{date('d F Y H:i', strtotime($detail['info']['date_start']))}}
-                        	</td>
-                        </tr>
-                        <tr>
-                            <td width="60%">End Date</td>
-                            <td>:&nbsp
+                            </span>
+                        </li>
+                    	<li>
+                            <span class="sale-info"> End Date
+                                <i class="fa fa-img-up"></i>
+                            </span>
+                            <span class="sale-num font-black">
                             	{{$detail['info']['date_end'] ? date('d F Y H:i', strtotime($detail['info']['date_end'])) : '-'}}
-                        	</td>
-                        </tr>
-                        <tr>
-                        	@php
-                        		$benefit = null;
-                        		switch ($detail['info']['quest_benefit']['benefit_type']) {
-                        			case 'voucher':
-                        				$benefit = '('.$detail['info']['quest_benefit']['deals']['deals_title'].')';
-                        				break;
-                        			
-                        			default:
-                        				$benefit = '('.number_format($detail['info']['quest_benefit']['value'],0,',','.').')';
-                        				break;
-                        		}
-                        	@endphp
-                            <td width="60%">Benefit</td>
-                            <td>:&nbsp
+                            </span>
+                        </li>
+                    	<li>
+                            <span class="sale-info"> Benefit
+                                <i class="fa fa-img-up"></i>
+                            </span>
+                            <span class="sale-num font-black">
+	                        	@php
+	                        		$benefit = null;
+	                        		switch ($detail['info']['quest_benefit']['benefit_type']) {
+	                        			case 'voucher':
+	                        				$benefit = '('.$detail['info']['quest_benefit']['deals']['deals_title'].')';
+	                        				break;
+	                        			
+	                        			default:
+	                        				$benefit = '('.number_format($detail['info']['quest_benefit']['value'],0,',','.').')';
+	                        				break;
+	                        		}
+	                        	@endphp
                             	{{ $detail['info']['quest_benefit']['benefit_type'] }}&nbsp{{ $benefit }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="60%">Total Rule</td>
-                            <td>:&nbsp{{ $detail['info']['total_rule'] }}</td>
-                        </tr>
-                        <tr>
-                            <td width="60%">Total User</td>
-                            <td>:&nbsp{{ $detail['info']['total_user'] }}</td>
-                        </tr>
-                        <tr>
-                            <td width="60%">Total User Complete</td>
-                            <td>:&nbsp{{ $detail['info']['total_user_complete'] }}</td>
-                        </tr>
-                    </table>
+                            </span>
+                        </li>
+                    	<li>
+                            <span class="sale-info"> Total Rule
+                                <i class="fa fa-img-up"></i>
+                            </span>
+                            <span class="sale-num font-black">
+                            	{{ $detail['info']['total_rule'] }}
+                            </span>
+                        </li>
+                    	<li>
+                            <span class="sale-info"> Total User
+                                <i class="fa fa-img-up"></i>
+                            </span>
+                            <span class="sale-num font-black">
+                            	{{ $detail['info']['total_user'] }}
+                            </span>
+                        </li>
+                    	<li>
+                            <span class="sale-info"> Total User Complete
+                                <i class="fa fa-img-up"></i>
+                            </span>
+                            <span class="sale-num font-black">
+                            	{{ $detail['info']['total_user_complete'] }}
+                            </span>
+                        </li>
+                    	<li>
+                            <span class="sale-info"> Short Description
+                                <i class="fa fa-img-up"></i>
+                            </span>
+                        </li>
+                    	<li>
+                            <span class="{{ $detail['info']['short_description'] ? '' : 'text-muted' }}">{{ $detail['info']['short_description'] ?: 'No short description' }}</span>
+                        </li>
+	                </ul>
                 </div>
             </div>
             <div class="portlet light bordered">
@@ -210,121 +241,110 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5 profile-info">
+        <div class="col-md-6 profile-info">
         	<div class="profile-info portlet light bordered">
         		<div class="portlet-title"> 
         			<span class="caption font-blue sbold uppercase">{{$detail['info']['name']}} Rule </span>
         		</div>
         		<div class="portlet-body row">
         			@foreach ($detail['rule'] as $item)
-        			<div class="col-md-12 profile-info">
-        				<div class="profile-info portlet light bordered">
-        					<div class="portlet-title"> 
-        						<div class="col-md-12" style="display: flex;padding-left: 0px;">
-        							<span class="caption font-blue sbold uppercase" style="padding: 8px 0px;font-size: 16px;">
-        								{{$item['name']}}
-        							</span>
-        						</div>
-        					</div>
-        					<div class="portlet-body">
-        						<div class="row" style="padding: 5px;position: relative;">
-        							<div class="col-md-12">
-        								@if (!is_null($item['id_product_category']) || !is_null($item['different_category_product']))
+	        			<div class="col-md-12 profile-info">
+	        				<div class="profile-info portlet light bordered">
+	        					<div class="portlet-title"> 
+	        						<div class="col-md-6" style="display: flex;padding-left: 0px;">
+	        							<span class="caption font-blue sbold uppercase" style="padding: 8px 0px;font-size: 16px;">
+	        								{{$item['name']}}
+	        							</span>
+	        						</div>
+	        					</div>
+	        					<div class="portlet-body">
+	        						<div class="row" style="padding: 5px;position: relative;">
+	        							<div class="col-md-12">
 	        								<div class="row static-info">
-	        									<div class="col-md-5 value">Product Category Rule</div>
+	        									<div class="col-md-5 value">Quest Rule</div>
 	        								</div>
 	        								<div class="row static-info">
-	        									@if (!is_null($item['id_product_category']))
-		        									<div class="col-md-5 name">Product Category</div>
-		        									<div class="col-md-7 value">: {{$item['product_category']['product_category_name']}}</div>
-	        									@endif
-	        									@if (!is_null($item['different_category_product']))
-		        									<div class="col-md-5 name">Product Category Different ?</div>
-		        									@if ($item['different_category_product'] == 0)
-		        										<div class="col-md-7 value">: No</div>
-		        									@else
-		        										<div class="col-md-7 value">: Yes</div>
+	        									@switch($item['quest_rule'])
+		        									@case('nominal_transaction')
+			        									<div class="col-md-5 name">Transaction Nominal</div>
+			        									<div class="col-md-7 value">: Minimum {{number_format($item['trx_nominal'])}}</div>
+		        										@break
+		        									@case('total_transaction')
+			        									<div class="col-md-5 name">Transaction Total</div>
+			        									<div class="col-md-7 value">: {{$item['trx_total']}}</div>
+			        									@break
+		        									@case('total_product')
+			        									<div class="col-md-5 name">Product Total</div>
+			        									<div class="col-md-7 value">: {{$item['product_total']}}</div>
+			        									@break
+		        									@case('total_outlet')
+			        									<div class="col-md-5 name">Outlet Different</div>
+			        									<div class="col-md-7 value">: {{$item['different_outlet']}}</div>
+			        									@break
+		        									@case('total_province')
+			        									<div class="col-md-5 name">Province Different</div>
+			        									<div class="col-md-7 value">: {{$item['different_province']}}</div>
+			        									@break
+	        									@endswitch
+	        								</div>
+	        								<hr/>
+	        								<div class="row static-info">
+	        									<div class="col-md-5 value">Additional Rule</div>
+	        								</div>
+	        								@if (!is_null($item['id_product_category']) || !is_null($item['different_category_product']))
+		        								<div class="row static-info">
+		        									@if (!is_null($item['id_product_category']))
+			        									<div class="col-md-5 name">Product Category</div>
+			        									<div class="col-md-7 value">: {{$item['product_category']['product_category_name']}}</div>
 		        									@endif
-	        									@endif
-	        								</div>
-        								@endif
-        								@if (!is_null($item['id_product']) || !is_null($item['product_total']))
-	        								<div class="row static-info">
-	        									<div class="col-md-5 value">Product Rule</div>
-	        								</div>
-	        								<div class="row static-info">
-	        									@if (!is_null($item['id_product']))
-		        									<div class="col-md-5 name">Product</div>
-		        									<div class="col-md-7 value">: {{$item['product']['product_name']}}</div>
-	        									@endif
-	        									@if (!is_null($item['product_total']))
-		        									<div class="col-md-5 name">Product Total</div>
-		        									<div class="col-md-7 value">: {{$item['product_total']}}</div>
-	        									@endif
-	        								</div>
-        								@endif
-        								@if (!is_null($item['id_outlet']) || !is_null($item['different_outlet']))
-	        								<div class="row static-info">
-	        									<div class="col-md-5 value">Outlet Rule</div>
-	        								</div>
-	        								<div class="row static-info">
-	        									@if (!is_null($item['id_outlet']))
-		        									<div class="col-md-5 name">Outlet</div>
-		        									<div class="col-md-7 value">: {{$item['outlet']['outlet_name']}}</div>
-	        									@endif
-	        									@if (!is_null($item['different_outlet']))
-		        									<div class="col-md-5 name">Outlet Different ?</div>
-		        									@if ($item['different_outlet'] == 0)
-			        									<div class="col-md-7 value">: No</div>
-			        								@else
-			        									<div class="col-md-7 value">: Yes</div>
-		        									@endif
-	        									@endif
-	        								</div>
-        								@endif
-        								@if (!is_null($item['id_province']) || !is_null($item['different_province']))
-        								<div class="row static-info">
-        									<div class="col-md-5 value">Province Rule</div>
-        								</div>
-        								<div class="row static-info">
-        									@if (!is_null($item['id_province']))
-	        									<div class="col-md-5 name">Province</div>
-	        									<div class="col-md-7 value">: {{$item['province']['province_name']}}</div>
+		        								</div>
 	        								@endif
-	        								@if (!is_null($item['different_province']))
-	        									<div class="col-md-5 name">Province Different ?</div>
-	        									@if ($item['different_province'] == 0)
-		        									<div class="col-md-7 value">: No</div>
-		        								@else
-		        									<div class="col-md-7 value">: Yes</div>
-	        									@endif
-        									@endif
-        								</div>
-        								@endif
-        								@if (!is_null($item['trx_nominal']) || !is_null($item['trx_total']))
+	        								@if (!is_null($item['id_product']) || !is_null($item['product_total']))
+		        								<div class="row static-info">
+		        									@if (!is_null($item['id_product']))
+			        									<div class="col-md-5 name">Product</div>
+			        									<div class="col-md-7 value">: {{$item['product']['product_name']}}</div>
+		        									@endif
+		        									@if (!is_null($item['product_total']) && $item['quest_rule'] != 'total_product')
+			        									<div class="col-md-5 name">Product Total</div>
+			        									<div class="col-md-7 value">: {{$item['product_total']}}</div>
+		        									@endif
+		        								</div>
+	        								@endif
+	        								@if (!is_null($item['id_outlet']) || !is_null($item['different_outlet']))
+		        								<div class="row static-info">
+		        									@if (!is_null($item['id_outlet']))
+			        									<div class="col-md-5 name">Outlet</div>
+			        									<div class="col-md-7 value">: {{$item['outlet']['outlet_name']}}</div>
+		        									@endif
+		        								</div>
+	        								@endif
+	        								@if (!is_null($item['id_province']) || !is_null($item['different_province']))
+		        								<div class="row static-info">
+		        									@if (!is_null($item['id_province']))
+			        									<div class="col-md-5 name">Province</div>
+			        									<div class="col-md-7 value">: {{$item['province']['province_name']}}</div>
+		        									@endif
+		        								</div>
+	        								@endif
+	        								@if (!is_null($item['trx_nominal']) || !is_null($item['trx_total']))
+		        								<div class="row static-info">
+		        									@if (!is_null($item['trx_nominal']) && $item['quest_rule'] != 'nominal_transaction')
+			        									<div class="col-md-5 name">Transaction Nominal</div>
+			        									<div class="col-md-7 value">: Minimum {{number_format($item['trx_nominal'])}}</div>
+		        									@endif
+		        								</div>
+	        								@endif
+	        								<hr>
 	        								<div class="row static-info">
-	        									<div class="col-md-5 value">Transaction Rule</div>
-	        								</div>
-	        								<div class="row static-info">
-	        									@if (!is_null($item['trx_nominal']))
-		        									<div class="col-md-5 name">Transaction Nominal</div>
-		        									<div class="col-md-7 value">: Minimum {{number_format($item['trx_nominal'])}}</div>
-		        								@endif
-		        								@if (!is_null($item['trx_total']))
-		        									<div class="col-md-5 name">Transaction Total</div>
-		        									<div class="col-md-7 value">: Minimum {{number_format($item['trx_total'])}}</div>
-	        									@endif
-	        								</div>
-        								@endif
-	        							<div class="row static-info">
-    										<div class="col-md-5 name">Total User Complete</div>
-		        							<div class="col-md-7 value">: {{$item['user_complete']}}</div>
-		        						</div>
-        							</div>
-        						</div>
-        					</div>
-        				</div>
-        			</div>
+	    										<div class="col-md-5 value">Total User Complete</div>
+			        							<div class="col-md-7 value">: {{$item['user_complete']}}</div>
+			        						</div>
+	        							</div>
+	        						</div>
+	        					</div>
+	        				</div>
+	        			</div>
         			@endforeach
         		</div>
         	</div>
