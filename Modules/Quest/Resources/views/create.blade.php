@@ -296,6 +296,13 @@
             counter_rule++;
         }
 
+        function addTextContent(target, text){
+            var textvalue = $(target).val();
+
+            var textvaluebaru = textvalue+" "+text;
+            $(target).val(textvaluebaru);
+        }
+
         $(document).ready(function() {
             $('.select2').select2();
 
@@ -765,7 +772,7 @@
                         </div>
                         <div class="col-md-4 duration-only">
                             <div class="input-group">
-                                <input type="text" class="form-control digit_mask" name="quest[max_complete_day]" placeholder="Max Complete Day" required  value="{{old('quest.max_complete_day', 0)}}" />
+                                <input type="text" class="form-control digit_mask" name="quest[max_complete_day]" placeholder="Max Complete Day" required  value="{{old('quest.max_complete_day', 1)}}" />
                                 <div class="input-group-addon">day after claimed</div>
                             </div>
                         </div>
@@ -780,7 +787,15 @@
                         </div>
                         <div class="col-md-8">
                             <div class="input-icon right">
-                                <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description">{{ old('quest.short_description') }}</textarea>
+                                <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description" id="input-quest-short-description">{{ old('quest.short_description') }}</textarea>
+                                <div class="portlet-body" style="margin-bottom: 15px">
+                                    <span style="margin-bottom: 5px">You can use this variables to display dynamic information:</span>
+                                    <div>
+                                        <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addTextContent('#input-quest-short-description', '%deals_title%')">%deals_title%</button>
+                                        <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addTextContent('#input-quest-short-description', '%voucher_qty%')">%voucher_qty%</button>
+                                        <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addTextContent('#input-quest-short-description', '%point_received%')">%point_received%</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

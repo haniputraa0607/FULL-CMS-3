@@ -89,6 +89,24 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js')}}" type="text/javascript"></script>
 
 	<script>
+    function addSummernoteContent(target, text){
+        var textvalue = $(target).val();
+
+        var textvaluebaru = textvalue+" "+text;
+        $(target).val(textvaluebaru);
+        $(target).summernote('editor.saveRange');
+        $(target).summernote('editor.restoreRange');
+        $(target).summernote('editor.focus');
+        $(target).summernote('editor.insertText', text);
+    }
+
+    function addTextContent(target, text){
+        var textvalue = $(target).val();
+
+        var textvaluebaru = textvalue+" "+text;
+        $(target).val(textvaluebaru);
+    }
+
     $(document).ready( function () {
         $('.select2-multiple').select2({
             placeholder : "Select",
@@ -322,7 +340,18 @@
                         <button class="btn btn-danger delete-btn" type="button"><i class="fa fa-times"></i></button>
                     </div>
                     <div class="col-md-12 accordion-body collapse" style="margin-top: 10px; " id="collapse_${detail_count}">
-                        <textarea name="content[${detail_count}][content]" class="form-control summernote" placeholder="Content"></textarea>
+                        <textarea name="content[${detail_count}][content]" class="form-control summernote" placeholder="Content" id="summernote${detail_count}"></textarea>
+                        <div class="portlet-body" style="margin-bottom: 15px">
+                            <span style="margin-bottom: 5px">You can use this variables to display dynamic information:</span>
+                            <div>
+                                @if($data['quest']['quest_benefit']['benefit_type'] == 'voucher')
+                                    <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addSummernoteContent('#summernote${detail_count}', '%deals_title%')">%deals_title%</button>
+                                    <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addSummernoteContent('#summernote${detail_count}', '%voucher_qty%')">%voucher_qty%</button>
+                                @else
+                                    <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addSummernoteContent('#summernote${detail_count}', '%point_received%')">%point_received%</button>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr style="border-bottom: 1px solid #F0F5F7;margin: 10px 0"/>
