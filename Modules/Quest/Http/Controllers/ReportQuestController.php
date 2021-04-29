@@ -115,6 +115,31 @@ class ReportQuestController extends Controller
         }
 
         if(isset($list_user['status']) && $list_user['status'] == 'success'){
+        	foreach ($list_user['result']['data'] ?? [] as $key => $val) {
+        		switch ($list_user['result']['data'][$key][6]) {
+        			case 'complete':
+        				$status_style = 'background-color: #26C281;color: #fff;';
+        				break;
+
+        			case 'expired':
+        				$status_style = 'background-color: #E7505A;color: #fff;';
+        				break;
+        			
+        			default:
+        				$status_style = 'background-color: #f4d03f;color: #333;';
+        				break;
+        		}
+
+        		$list_user['result']['data'][$key][6] = '<span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;padding: 5px 12px;'. $status_style .'">'. $list_user['result']['data'][$key][6] .'</span>';
+
+        		if ($list_user['result']['data'][$key][7] == 'claimed') {
+        			$status_claim_style = 'background-color: #26C281;';
+        		}else{
+        			$status_claim_style = 'background-color: #E7505A;';
+        		}
+
+        		$list_user['result']['data'][$key][7] = '<span class="sale-num sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;'. $status_claim_style .'padding: 5px 12px;color: #fff;">'. $list_user['result']['data'][$key][7] .'</span>';
+        	}
 
             $arr_result['draw'] = $draw;
             $arr_result['recordsTotal'] = $list_user['result']['total'];
