@@ -1,26 +1,7 @@
 <form method="post" action="{{url('quest/detail/'.$data['quest']['id_quest'].'/update/content')}}">
     @csrf
     <div class="row form-group">
-        <div class="input-icon text-right">
-            <label class="col-md-2 control-label">
-                Description
-                <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi lengkap tentang quest yang dibuat" data-container="body"></i>
-            </label>
-        </div>
-        <div class="col-md-10">
-            <div class="input-icon right">
-                <textarea name="quest[description]" id="field_content_long" class="form-control summernote" placeholder="Quest Description">{{ old('quest.description', $data['quest']['description']) }}</textarea>
-            </div>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="input-icon text-right" style="position: relative;">
-            <label class="col-md-2 control-label">
-            Content
-            <i class="fa fa-question-circle tooltips" data-original-title="Konten yang akan ditampilkan pada halaman detail quest" data-container="body"></i>
-            </label>
-        </div>
-        <div  class="col-md-10">
+        <div class="col-md-12">
             <div id="quest-content-container" class="sortable">
                 @foreach($data['quest']['quest_contents'] as $index => $quest_content)
                 <div id="accordion{{$index}}" class="accordion-item">
@@ -45,7 +26,18 @@
                             <button class="btn btn-danger delete-btn" type="button"><i class="fa fa-times"></i></button>
                         </div>
                         <div class="col-md-12 accordion-body collapse {{ $quest_content['is_active'] ? 'in' : '' }}" style="margin-top: 10px; margin-bottom: 0" id="collapse_{{$index}}">
-                            <textarea name="content[{{$index}}][content]" class="form-control summernote" placeholder="Content">{{$quest_content['content']}}</textarea>
+                            <textarea name="content[{{$index}}][content]" class="form-control summernote" placeholder="Content" id="summernote{{$index}}">{{$quest_content['content']}}</textarea>
+                            <div class="portlet-body" style="margin-bottom: 15px">
+                                <span style="margin-bottom: 5px">You can use this variables to display dynamic information:</span>
+                                <div>
+                                    @if($data['quest']['quest_benefit']['benefit_type'] == 'voucher')
+                                        <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addSummernoteContent('#summernote{{$index}}', '%deals_title%')">%deals_title%</button>
+                                        <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addSummernoteContent('#summernote{{$index}}', '%voucher_qty%')">%voucher_qty%</button>
+                                    @else
+                                        <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addSummernoteContent('#summernote{{$index}}', '%point_received%')">%point_received%</button>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr style="border-bottom: 1px solid #F0F5F7; margin: 10px 0"/>

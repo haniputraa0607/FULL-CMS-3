@@ -768,7 +768,18 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-icon right">
-                                <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description" required>{{ old('quest.short_description', $data['quest']['short_description']) }}</textarea>
+                                <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description" required id="input-quest-short-description">{{ old('quest.short_description', $data['quest']['short_description']) }}</textarea>
+                                <div class="portlet-body" style="margin-bottom: 15px">
+                                    <span style="margin-bottom: 5px">You can use this variables to display dynamic information:</span>
+                                    <div>
+                                        @if($data['quest']['quest_benefit']['benefit_type'] == 'voucher')
+                                            <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addTextContent('#input-quest-short-description', '%deals_title%')">%deals_title%</button>
+                                            <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addTextContent('#input-quest-short-description', '%voucher_qty%')">%voucher_qty%</button>
+                                        @else
+                                            <button type="button" class="btn btn-transparent dark btn-outline btn-xs" onclick="addTextContent('#input-quest-short-description', '%point_received%')">%point_received%</button>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
