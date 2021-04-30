@@ -138,6 +138,10 @@ class PointInjectionController extends Controller
         if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result'];
         else $data['memberships'] = [];
 
+        $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
+        $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
+        $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
+
         $getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
         if (isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']) {
             $data['api_key_whatsapp'] = $getApiKey['result']['value'];
@@ -292,6 +296,10 @@ class PointInjectionController extends Controller
         $getCity = MyHelper::get('city/list?log_save=0');
         if ($getCity['status'] == 'success') $data['city'] = $getCity['result'];
         else $data['city'] = [];
+
+        $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
+        $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
+        $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
 
         $getProvince = MyHelper::get('province/list?log_save=0');
         if ($getProvince['status'] == 'success') $data['province'] = $getProvince['result'];
