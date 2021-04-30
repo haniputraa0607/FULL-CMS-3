@@ -274,10 +274,27 @@
                                             <div class="portlet-body">
                                                 <div class="row" style="padding: 5px;position: relative;">
                                                     <div class="col-md-12">
+                                                        <p>{{$item['short_description']}}</p>
+                                                        <hr>
                                                         <div class="row static-info">
                                                             <div class="col-md-5 value">Quest Rule</div>
                                                         </div>
                                                         <div class="row static-info">
+                                                            @php
+                                                            if (!$item['quest_rule']) {
+                                                                if ($item['different_outlet']) {
+                                                                    $item['quest_rule'] = 'total_outlet';
+                                                                } elseif ($item['different_province']) {
+                                                                    $item['quest_rule'] = 'total_province';
+                                                                } elseif ($item['trx_total']) {
+                                                                    $item['quest_rule'] = 'total_transaction';
+                                                                } elseif ($item['id_product'] && $item['product_total']) {
+                                                                    $item['quest_rule'] = 'total_product';
+                                                                } else {
+                                                                    $item['quest_rule'] = 'nominal_transaction';
+                                                                }
+                                                            }
+                                                            @endphp
                                                             @switch($item['quest_rule'])
                                                             @case('nominal_transaction')
                                                                 <div class="col-md-5 name">Transaction Nominal</div>
