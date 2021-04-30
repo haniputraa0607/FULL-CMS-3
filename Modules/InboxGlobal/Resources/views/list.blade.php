@@ -213,6 +213,35 @@ $grantedFeature     = session('granted_features');
 													@endif
 												@endforeach
 												{{$name}}
+											@elseif($rule['subject'] == 'Deals')
+												<?php $name = null; ?>
+												@foreach($deals as $val)
+													@if($val['id_deals'] == $rule['parameter'])
+														<?php $name = $val['deals_title']; ?>
+													@endif
+												@endforeach
+												{{$name}}
+											@elseif($rule['subject'] == 'Quest')
+												<?php $name = null;
+												$dtSelect =[
+														'already_claim' => 'Already Claim',
+														'not_yet_claim' => 'Not Yet Claim'
+												];
+												?>
+												@foreach($quest as $val)
+													@if($val['id_quest'] == $rule['parameter'])
+														<?php $name = $val['name']; ?>
+													@endif
+												@endforeach
+												{{$name}} ({{$dtSelect[$rule['parameter_select']]??''}})
+											@elseif($rule['subject'] == 'Subscription')
+												<?php $name = null; ?>
+												@foreach($subscription as $val)
+													@if($val['id_subscription'] == $rule['parameter'])
+														<?php $name = $val['subscription_title']; ?>
+													@endif
+												@endforeach
+												{{$name}}
 											@elseif($rule['subject'] == 'membership')
 												<?php $name = null; ?>
 												@foreach($memberships as $membership)

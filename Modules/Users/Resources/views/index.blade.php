@@ -119,6 +119,35 @@ $configs     		= session('configs');
 														@endif
 													@endforeach
 													"{{$name}}" with product count {{$row['operatorSpecialCondition']}} {{$row['parameterSpecialCondition']}}
+												@elseif($row['subject'] == 'Deals')
+													<?php $name = null; ?>
+													@foreach($deals as $val)
+														@if($val['id_deals'] == $row['operator'])
+															<?php $name = $val['deals_title']; ?>
+														@endif
+													@endforeach
+													{{$row['subject']}} = "{{$name}}"
+												@elseif($row['subject'] == 'Quest')
+													<?php $name = null;
+														$dtSelect =[
+																'already_claim' => 'Already Claim',
+																'not_yet_claim' => 'Not Yet Claim'
+														];
+													?>
+													@foreach($quest as $val)
+														@if($val['id_quest'] == $row['operator'])
+															<?php $name = $val['name']; ?>
+														@endif
+													@endforeach
+													{{$row['subject']}} = "{{$name}}" ({{$dtSelect[$row['parameter_select']]??''}})
+												@elseif($row['subject'] == 'Subscription')
+													<?php $name = null; ?>
+													@foreach($subscription as $val)
+														@if($val['id_subscription'] == $row['operator'])
+															<?php $name = $val['subscription_title']; ?>
+														@endif
+													@endforeach
+													{{$row['subject']}} = "{{$name}}"
 												@elseif($row['subject'] == 'trx_outlet')
 													<?php $name = null; ?>
 													@foreach($outlets as $outlet)

@@ -542,6 +542,10 @@ class CampaignController extends Controller
 		$getMembership = MyHelper::post('membership/be/list', []);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
+        $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
+        $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
+        $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
+
 		if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
 			$data['api_key_whatsapp'] = $getApiKey['result']['value'];
 		}else{
@@ -617,6 +621,10 @@ class CampaignController extends Controller
 			$getMembership = MyHelper::post('membership/be/list',[]);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
+            $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
+            $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
+            $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
+
 			$getApiKey = MyHelper::get('setting/whatsapp');
 			if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
 				$data['api_key_whatsapp'] = $getApiKey['result']['value'];
@@ -685,6 +693,10 @@ class CampaignController extends Controller
 
 			$getMembership = MyHelper::post('membership/be/list',[]);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
+
+            $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
+            $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
+            $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
 
 			return view('campaign::create-step-2', $data);
 		} else{
@@ -814,6 +826,11 @@ class CampaignController extends Controller
 
 			$getMembership = MyHelper::post('membership/be/list',[]);
 			if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
+
+            $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
+            $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
+            $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
+
 
             $getSubcription = MyHelper::get('subscription/be/list/ajax');
             if (isset($getSubcription['status']) && $getSubcription['status'] == 'success') $data['subcription'] = $getSubcription['result']; else $data['subcription'] = [];
