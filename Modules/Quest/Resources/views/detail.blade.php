@@ -871,6 +871,20 @@
             });
             $('.detail-container .id_outlet').change();
         });
+
+        function changeUserRuleType(value) {
+            if(value == 'all'){
+                document.getElementById('detail_user_rule').style.display = 'none';
+                $("#user_rule_subject").prop('required', false);
+                $("#user_rule_operator").prop('required', false);
+                $("#user_rule_parameter").prop('required', false);
+            }else{
+                document.getElementById('detail_user_rule').style.display = 'block';
+                $("#user_rule_subject").prop('required', true);
+                $("#user_rule_operator").prop('required', true);
+                $("#user_rule_parameter").prop('required', true);
+            }
+        }
     </script>
 @endsection
 

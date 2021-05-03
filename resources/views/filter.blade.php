@@ -84,6 +84,11 @@ $show=$show??false;
 				'<option value="m_quartile">m_quartile</option>'+
 				'<option value="RFMScore">RFMScore</option>'+
 				'</optgroup>'+
+				'<optgroup label="Promo">'+
+				'<option value="Deals">Deals</option>'+
+				'<option value="Quest">Quest</option>'+
+				'<option value="Subscription">Subscription</option>'+
+				'</optgroup>'+
 				'<optgroup label="Transaction">'+
 				'<option value="trx_type">Transaction Type</option>'+
 				'<option value="trx_outlet">Transaction Outlet</option>'+
@@ -131,6 +136,12 @@ $show=$show??false;
 				'<div class="col-md-3">'+
 				'<div class="input-group">'+
 				'<input type="text" placeholder="Parameter" class="form-control" name="conditions['+noRule+'][0][parameter]" required/>'+
+				'<div id="parameter_select'+noRule+0+'" style="display: none">'+
+				'<select name="conditions['+noRule+'][0][parameter_select]" class="form-control input-sm select2"  placeholder="Search Operator" style="width:100%">'+
+				'<option value="already_claim" selected>Already Claim</option>'+
+				'<option value="not_yet_claim" selected>Not Yet Claim</option>'+
+				'</select>'+
+				'</div>'+
 				// '<span class="input-group-addon" name="conditions['+noRule+'][0][addon-days]" style="display:none">'+
 				// 	'Days Ago'+
 				// '</span>'+
@@ -280,6 +291,11 @@ $show=$show??false;
 				'<option value="m_quartile">m_quartile</option>'+
 				'<option value="RFMScore">RFMScore</option>'+
 				'</optgroup>'+
+				'<optgroup label="Promo">'+
+				'<option value="Deals">Deals</option>'+
+				'<option value="Quest">Quest</option>'+
+				'<option value="Subscription">Subscription</option>'+
+				'</optgroup>'+
 				'<optgroup label="Transaction">'+
 				'<option value="trx_type">Transaction Type</option>'+
 				'<option value="trx_outlet">Transaction Outlet</option>'+
@@ -327,6 +343,12 @@ $show=$show??false;
 				'<div class="col-md-3">'+
 				'<div class="input-group">'+
 				'<input type="text" placeholder="Parameter" class="form-control" name="conditions['+no+']['+noCond+'][parameter]" required/>'+
+				'<div id="parameter_select'+no+noCond+'" style="display: none">'+
+				'<select name="conditions['+no+']['+noCond+'][parameter_select]" class="form-control input-sm select2"  placeholder="Search Operator" style="width:100%">'+
+				'<option value="already_claim" selected>Already Claim</option>'+
+				'<option value="not_yet_claim" selected>Not Yet Claim</option>'+
+				'</select>'+
+				'</div>'+
 				// '<span class="input-group-addon" name="addon-days" style="display:none">'+
 				// 	'Days Ago'+
 				// '</span>'+
@@ -408,6 +430,13 @@ $show=$show??false;
 		var subject_value = document.getElementsByName(val)[0].value;
 		var indx = index.replace("[", "");
 		var indx = indx.replace("]", "");
+
+		//for quest
+		var indexof1 = index.indexOf("]");
+		var firstString = index.substring(0, indexof1);
+		var indexof2 = index.indexOf("[");
+		var secondString = index.substring(indexof2+1, index.length);
+		document.getElementById('parameter_select'+firstString+secondString).style.display = 'none';
 
 		if(document.getElementById('normalCondition'+indx).style.display === 'none' ){
 			var parameter = "conditions["+index+"][parameter]";
@@ -665,6 +694,70 @@ $show=$show??false;
 					foreach($city as $row){
 					?>
 					operator_value.options[operator_value.options.length] = new Option('<?php echo $row['city_postal_code']; ?>', '<?php echo $row['city_postal_code']; ?>');
+					<?php
+					}
+					?>
+			var parameter = "conditions["+index+"][parameter]";
+			if(document.getElementsByName(parameter)[0]){
+				document.getElementsByName(parameter)[0].style.display = 'none';
+				document.getElementsByName(parameter)[0].required = false;
+			} else if(document.getElementsByName(parameter)[0] != null){
+				document.getElementsByName(parameter)[0].style.display = 'block';
+				document.getElementsByName(parameter)[0].required = true;
+			}
+		}
+
+		if(subject_value == 'Deals'){
+			var operator = "conditions["+index+"][operator]";
+			var operator_value = document.getElementsByName(operator)[0];
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			<?php
+					foreach($deals??[] as $row){
+					?>
+					operator_value.options[operator_value.options.length] = new Option('<?php echo $row['deals_title']; ?>', '<?php echo $row['id_deals']; ?>');
+					<?php
+					}
+					?>
+			var parameter = "conditions["+index+"][parameter]";
+			if(document.getElementsByName(parameter)[0]){
+				document.getElementsByName(parameter)[0].style.display = 'none';
+				document.getElementsByName(parameter)[0].required = false;
+			} else if(document.getElementsByName(parameter)[0] != null){
+				document.getElementsByName(parameter)[0].style.display = 'block';
+				document.getElementsByName(parameter)[0].required = true;
+			}
+		}
+
+		if(subject_value == 'Quest'){
+			var operator = "conditions["+index+"][operator]";
+			var operator_value = document.getElementsByName(operator)[0];
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			<?php
+					foreach($quest??[] as $row){
+					?>
+					operator_value.options[operator_value.options.length] = new Option('<?php echo $row['name']; ?>', '<?php echo $row['id_quest']; ?>');
+					<?php
+					}
+					?>
+			var parameter = "conditions["+index+"][parameter]";
+			if(document.getElementsByName(parameter)[0]){
+				document.getElementsByName(parameter)[0].style.display = 'none';
+				document.getElementById('parameter_select'+firstString+secondString).style.display = 'block';
+				document.getElementsByName(parameter)[0].required = false;
+			} else if(document.getElementsByName(parameter)[0] != null){
+				document.getElementsByName(parameter)[0].style.display = 'block';
+				document.getElementsByName(parameter)[0].required = true;
+			}
+		}
+
+		if(subject_value == 'Subscription'){
+			var operator = "conditions["+index+"][operator]";
+			var operator_value = document.getElementsByName(operator)[0];
+			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+			<?php
+					foreach($subscription??[] as $row){
+					?>
+					operator_value.options[operator_value.options.length] = new Option('<?php echo $row['subscription_title']; ?>', '<?php echo $row['id_subscription']; ?>');
 					<?php
 					}
 					?>
@@ -1126,6 +1219,11 @@ $show=$show??false;
 														<option value="m_quartile">m_quartile</option>
 														<option value="RFMScore">RFMScore</option>
 													</optgroup>
+													<optgroup label="Promo">
+														<option value="Deals">Deals</option>
+														<option value="Quest">Quest</option>
+														<option value="Subscription">Subscription</option>
+													</optgroup>
 													<optgroup label="Transaction">
 														<option value="trx_type">Transaction Type</option>
 														<option value="trx_outlet">Transaction Outlet</option>
@@ -1173,9 +1271,12 @@ $show=$show??false;
 											<div class="col-md-3">
 												<div class="input-group">
 													<input type="text" placeholder="Parameter" class="form-control" name="conditions[0][0][parameter]" required/>
-													{{-- <span class="input-group-addon" name="conditions[0][0][addon-days]" style="display:none">
-                                                        Days Ago
-                                                    </span> --}}
+													<div id="parameter_select00" style="display: none">
+														<select name="conditions[0][0][parameter_select]" class="form-control input-sm select2"  placeholder="Search Operator" style="width:100%">
+															<option value="already_claim" selected>Already Claim</option>
+															<option value="not_yet_claim" selected>Not Yet Claim</option>
+														</select>
+													</div>
 													<span class="input-group-addon">
 													<i  style="color:#333" class="fa fa-question-circle tooltips" data-original-title="keyword untuk pencarian" data-container="body"></i>
 												</span>
@@ -1356,6 +1457,11 @@ $show=$show??false;
 																	<option value="m_quartile" @if($row['subject'] == 'm_quartile') selected @endif>m_quartile</option>
 																	<option value="RFMScore" @if($row['subject'] == 'RFMScore') selected @endif>RFMScore</option>
 																</optgroup>
+																<optgroup label="Promo">
+																	<option value="Deals" @if($row['subject'] == 'Deals') selected @endif>Deals</option>
+																	<option value="Quest" @if($row['subject'] == 'Quest') selected @endif>Quest</option>
+																	<option value="Subscription" @if($row['subject'] == 'Subscription') selected @endif>Subscription</option>
+																</optgroup>
 																<optgroup label="Transaction">
 																	<option value="trx_type" @if($row['subject'] == 'trx_type') selected @endif>Transaction Type</option>
 																	<option value="trx_outlet" @if($row['subject'] == 'trx_outlet') selected @endif>Transaction Outlet</option>
@@ -1391,6 +1497,7 @@ $show=$show??false;
 													$id_data = '';
 													$display_special_condition = 'none';
 													$display_normal_condition = 'block';
+													$parameterSelect = "";
 
 													if($row['subject'] == 'name' || $row['subject'] == 'email' || $row['subject'] == 'phone' || $row['subject'] == 'all_user' ||
 														$row['subject'] == 'r_quartile' || $row['subject'] == 'f_quartile' || $row['subject'] == 'm_quartile' || $row['subject'] == 'RFMScore'){
@@ -1469,6 +1576,28 @@ $show=$show??false;
 													}elseif($row['subject'] == 'province_name'){
 														foreach($province as $provinces){
 															$operator .= '<option value="'.$provinces['province_name'].'" '.($row['parameter'] == $provinces['province_name'] ? 'selected' : '').'>'.$provinces['province_name'].'</option>';
+														}
+														$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]"/>';
+													}elseif($row['subject'] == 'Deals'){
+														foreach($deals??[] as $val){
+															$operator .= '<option value="'.$val['id_deals'].'" '.($row['parameter'] == $val['id_deals'] ? 'selected' : '').'>'.$val['deals_title'].'</option>';
+														}
+														$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]"/>';
+													}elseif($row['subject'] == 'Quest'){
+														foreach($quest??[] as $val){
+															$operator .= '<option value="'.$val['id_quest'].'" '.($row['parameter'] == $val['id_quest'] ? 'selected' : '').'>'.$val['name'].'</option>';
+														}
+														$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]"/>';
+
+														$parameterSelect .= '<div id="parameter_select'.$q.$indexnya.'">';
+														$parameterSelect .= '<select name="conditions['.$q.']['.$indexnya.'][parameter_select]" class="form-control input-sm select2"  placeholder="Search Operator" style="width:100%">';
+														$parameterSelect .= '<option value="already_claim" '.($row['parameter_select'] == 'already_claim' ? 'selected' : '').'>Already Claim</option>';
+														$parameterSelect .= '<option value="not_yet_claim" '.($row['parameter_select'] == 'not_yet_claim' ? 'selected' : '').'>Not Yet Claim</option>';
+														$parameterSelect .= '</select>';
+														$parameterSelect .= '</div>';
+													}elseif($row['subject'] == 'Subscription'){
+														foreach($subscription??[] as $val){
+															$operator .= '<option value="'.$val['id_subscription'].'" '.($row['parameter'] == $val['id_subscription'] ? 'selected' : '').'>'.$val['subscription_title'].'</option>';
 														}
 														$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]"/>';
 													}elseif($row['subject'] == 'phone_verified' || $row['subject'] == 'email_verified'){
@@ -1597,6 +1726,7 @@ $show=$show??false;
 															<div class="input-group">
 																@if($display_normal_condition != 'none')
 																	<?php echo $parameter ?>
+																	<?php echo $parameterSelect ?>
 																@else
 																	<input type="text" placeholder="Parameter" class="form-control" name="conditions[{{$q}}][{{$indexnya}}][parameter]"/>
 																@endif
