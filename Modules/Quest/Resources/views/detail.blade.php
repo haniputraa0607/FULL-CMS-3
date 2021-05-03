@@ -687,7 +687,9 @@
                 rightAlign: false,
                 removeMaskOnSubmit: true, 
             });
-            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .select2`).select2();
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .select2`).select2({
+                allowClear: true,
+            });
 
             counter_rule++;
         }
@@ -901,6 +903,10 @@
                 }
             });
             $('.detail-container .additional_rule_type').change();
+
+            $('.select2').select2({
+                allowClear: true,
+            });
         });
 
         function changeUserRuleType(value) {

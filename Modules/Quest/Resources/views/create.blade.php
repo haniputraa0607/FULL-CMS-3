@@ -300,7 +300,9 @@
                 rightAlign: false,
                 removeMaskOnSubmit: true, 
             });
-            $(`#detail-container-item-${counter_rule} .select2`).select2();
+            $(`#detail-container-item-${counter_rule} .select2`).select2({
+                allowClear: true,
+            });
 
             counter_rule++;
         }
@@ -313,7 +315,9 @@
         }
 
         $(document).ready(function() {
-            $('.select2').select2();
+            $('.select2').select2({
+                allowClear: true,
+            });
 
             $(".file").change(function(e) {
                 console.log($(this))
