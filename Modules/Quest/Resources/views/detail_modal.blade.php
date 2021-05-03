@@ -868,7 +868,7 @@
                     </div>
                     <div class="preview col-md-3 pull-right" style="right: 0;top: 50px; position: sticky">
                         <img src="{{env('STORAGE_URL_VIEW').'img/setting/quest_preview1.png'}}" class="img-responsive">
-                        <img src="{{env('STORAGE_URL_VIEW').'img/setting/quest_preview1.png'}}" class="img-responsive" style="padding-top: 10px">
+                        <img src="{{env('STORAGE_URL_VIEW').'img/setting/quest_preview2.png'}}" class="img-responsive" style="padding-top: 10px">
                     </div>
                 </div>
             </div>
