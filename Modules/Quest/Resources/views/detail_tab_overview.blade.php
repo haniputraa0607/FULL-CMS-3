@@ -128,7 +128,7 @@
                                                 </span>
                                             </li>
                                             <li>
-                                                <span class="{{$data['quest']['short_description'] ? '' : 'text-muted'}}">{{$data['quest']['short_description'] ?: 'No short description'}}</span>
+                                                <span class="{{$data['quest']['short_description'] ? '' : 'text-muted'}}">{{$data['quest']['short_description_formatted'] ?: 'No short description'}}</span>
                                             </li>
                                             @if ($data['quest']['stop_at'])
                                             <li>
