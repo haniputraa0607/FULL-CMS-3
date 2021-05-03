@@ -712,7 +712,7 @@ $show=$show??false;
 			var operator_value = document.getElementsByName(operator)[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			<?php
-					foreach($deals??$dealss??[] as $row){
+					foreach($dealss??$deals??[] as $row){
 					?>
 					operator_value.options[operator_value.options.length] = new Option('<?php echo $row['deals_title']; ?>', '<?php echo $row['id_deals']; ?>');
 					<?php
@@ -1579,7 +1579,7 @@ $show=$show??false;
 														}
 														$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]"/>';
 													}elseif($row['subject'] == 'Deals'){
-														foreach($deals??$dealss??[] as $val){
+														foreach($dealss??$deals??[] as $val){
 															$operator .= '<option value="'.$val['id_deals'].'" '.($row['parameter'] == $val['id_deals'] ? 'selected' : '').'>'.$val['deals_title'].'</option>';
 														}
 														$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]"/>';
