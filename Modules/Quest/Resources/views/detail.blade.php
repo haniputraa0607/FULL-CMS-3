@@ -178,8 +178,7 @@
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
+                    ['insert', ['link']],
                     ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
                 ],
             fontNames: ['Open Sans', 'Product Sans'],
