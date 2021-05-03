@@ -607,18 +607,18 @@
                             </label>
                         </div>
                         <div class="col-md-4">
-                            <div class="input-group">
-                                <input type="number" min="1" class="form-control" name="quest_benefit[value]" placeholder="Total Voucher" required value="{{old('quest_benefit.value', $data['quest']['quest_benefit']['value'])}}"/>
-                                <span class="input-group-addon">Voucher</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
                             <select class="form-control select2" name="quest_benefit[id_deals]" data-placeholder="Select Voucher" required>
                                 <option></option>
                                 @foreach($deals as $deal)
                                 <option value="{{$deal['id_deals']}}" {{old('quest_benefit.id_deals', $data['quest']['quest_benefit']['id_deals']) == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="number" min="1" class="form-control" name="quest_benefit[value]" placeholder="Total Voucher" required value="{{old('quest_benefit.value', $data['quest']['quest_benefit']['value'])}}"/>
+                                <span class="input-group-addon">Voucher/User</span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group" id="benefit-point">

@@ -884,12 +884,6 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Voucher yang akan didapatkan setelah menyelesaikan quest" data-container="body"></i>
                             </label>
                         </div>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <input type="text" class="form-control digit_mask" name="quest_benefit[value]" placeholder="Total Voucher" required value="{{old('quest_benefit.value', 1)}}"/>
-                                <span class="input-group-addon">Voucher</span>
-                            </div>
-                        </div>
                         <div class="col-md-4">
                             <select class="form-control select2" name="quest_benefit[id_deals]" data-placeholder="Select Voucher" required>
                                 <option></option>
@@ -897,6 +891,12 @@
                                 <option value="{{$deal['id_deals']}}" {{old('quest_benefit.id_deals') == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control digit_mask" name="quest_benefit[value]" placeholder="Total Voucher" required value="{{old('quest_benefit.value', 1)}}"/>
+                                <span class="input-group-addon">Voucher/User</span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group" id="benefit-point">
