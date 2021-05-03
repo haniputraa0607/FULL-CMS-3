@@ -735,7 +735,7 @@ class DealsController extends Controller
 		$getMembership = MyHelper::post('membership/be/list?log_save=0',[]);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
 
-        $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
+        $data['dealss'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
         $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
         $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
 

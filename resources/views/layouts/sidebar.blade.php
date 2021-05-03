@@ -2084,12 +2084,6 @@
 										</li>
 									@endif
 									@if(MyHelper::hasAccess([120,122], $grantedFeature))
-										<li class="nav-item {{(isset($child_active) && $child_active == 'deals-autoresponse-receive-quest-voucher') ? 'active open' : ''}}">
-											<a href="{{url('transaction/autoresponse/receive-quest-voucher')}}" class="nav-link ">
-												<i class="fa fa-mail-forward"></i>
-												<span class="title">[Response] Receive Quest Voucher</span>
-											</a>
-										</li>
 										<li class="nav-item {{(isset($child_active) && $child_active == 'quest-voucher-autoresponse-create-quest-voucher') ? 'active open' : ''}}">
 											<a href="{{url('autoresponse/quest-voucher/create-quest-voucher')}}" class="nav-link ">
 												<span class="title">[Forward] Create Quest Voucher</span>
