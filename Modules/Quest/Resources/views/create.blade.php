@@ -181,6 +181,15 @@
                                     <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
                                     </label>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2 additional_rule_type" data-placeholder="Select Province" name="detail[${counter_rule}][additional_rule_type]">
+                                            <option value="province" class="province_option">Province</option>
+                                            <option value="outlet">Outlet</option>
+                                            <option value="outlet_group">Outlet Group Filter</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-4 select_province">
                                     <div class="input-icon right">
                                         <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="detail[${counter_rule}][id_province]">
@@ -195,14 +204,13 @@
                                     <div class="input-icon right">
                                         <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[${counter_rule}][id_outlet] outlet_total_rule">
                                             <option></option>
-                                            <option value="0">Outlet Group Filter</option>
                                             @foreach ($outlet as $item)
                                                 <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                <div class="col-md-4 select_outlet_group" style="margin-top: 10px">
                                     <div class="input-icon right">
                                         <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="detail[${counter_rule}][id_outlet_group]">
                                             <option></option>
@@ -283,6 +291,7 @@
             $(`#detail-container-item-${counter_rule} .rule_product`).change();
             $(`#detail-container-item-${counter_rule} .rule_additional`).change();
             $(`#detail-container-item-${counter_rule} .rule_product_variant`).change();
+            $(`#detail-container-item-${counter_rule} .additional_rule_type`).change();
             $(`#detail-container-item-${counter_rule} .digit_mask`).inputmask("numeric", {
                 radixPoint: ",",
                 groupSeparator: ".",
@@ -291,7 +300,9 @@
                 rightAlign: false,
                 removeMaskOnSubmit: true, 
             });
-            $(`#detail-container-item-${counter_rule} .select2`).select2();
+            $(`#detail-container-item-${counter_rule} .select2`).select2({
+                allowClear: true,
+            });
 
             counter_rule++;
         }
@@ -304,7 +315,9 @@
         }
 
         $(document).ready(function() {
-            $('.select2').select2();
+            $('.select2').select2({
+                allowClear: true,
+            });
 
             $(".file").change(function(e) {
                 console.log($(this))
@@ -491,7 +504,7 @@
                     rule_form.hide();
                     rule_form.find(':input').prop('disabled', true);
                 }
-                parent.find('.id_outlet').change();
+                $('#detail-container .additional_rule_type').change();
             });
             $('#detail-container .rule_additional').change();
 
@@ -527,17 +540,33 @@
             });
             $('#detail-container .id_product').change();
 
-            $('#detail-container').on('change', '.id_outlet', function() {
+            $('#detail-container').on('change', '.additional_rule_type', function() {
                 const parent = $(this).parents('.detail-container-item');
-                if ($(this).val() === '0' && !$(this).prop('disabled')) {
-                    parent.find('.select_outlet_group_filter').show();
-                    parent.find('.select_outlet_group_filter :input').removeAttr('disabled');
-                } else {
-                    parent.find('.select_outlet_group_filter').hide();
-                    parent.find('.select_outlet_group_filter :input').prop('disabled', true);
+                parent.find('.select_province').hide()
+                parent.find('.select_province :input').prop('disabled', true);
+                parent.find('.select_outlet').hide()
+                parent.find('.select_outlet :input').prop('disabled', true);
+                parent.find('.select_outlet_group').hide()
+                parent.find('.select_outlet_group :input').prop('disabled', true);
+                if ($(this).prop('disabled')) {
+                    return;
+                }
+                switch ($(this).val()) {
+                    case 'province':
+                        parent.find('.select_province').show();
+                        parent.find('.select_province :input').removeAttr('disabled');
+                        break;
+                    case 'outlet':
+                        parent.find('.select_outlet').show();
+                        parent.find('.select_outlet :input').removeAttr('disabled');
+                        break;
+                    case 'outlet_group':
+                        parent.find('.select_outlet_group').show();
+                        parent.find('.select_outlet_group :input').removeAttr('disabled');
+                        break;
                 }
             });
-            $('#detail-container .id_outlet').change();
+            $('#detail-container .additional_rule_type').change();
         });
         function removeBox(params) {
             $(params).parents('.detail-container-item').remove()
@@ -825,8 +854,8 @@
                             </div>
                         </div>
                         <div class="preview col-md-3 pull-right" style="right: 0;top: 70px; position: sticky">
-                            <img src="//jiwa-app.localhost/img/setting/quest_preview1.png" class="img-responsive">
-                            <img src="//jiwa-app.localhost/img/setting/quest_preview2.png" class="img-responsive" style="padding-top: 10px">
+                            <img src="{{env('STORAGE_URL_VIEW').'img/setting/quest_preview1.png'}}" class="img-responsive">
+                            <img src="{{env('STORAGE_URL_VIEW').'img/setting/quest_preview2.png'}}" class="img-responsive" style="padding-top: 10px">
                         </div>
                     </div>
 
@@ -855,12 +884,6 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Voucher yang akan didapatkan setelah menyelesaikan quest" data-container="body"></i>
                             </label>
                         </div>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <input type="text" class="form-control digit_mask" name="quest_benefit[value]" placeholder="Total Voucher" required value="{{old('quest_benefit.value', 1)}}"/>
-                                <span class="input-group-addon">Voucher</span>
-                            </div>
-                        </div>
                         <div class="col-md-4">
                             <select class="form-control select2" name="quest_benefit[id_deals]" data-placeholder="Select Voucher" required>
                                 <option></option>
@@ -868,6 +891,12 @@
                                 <option value="{{$deal['id_deals']}}" {{old('quest_benefit.id_deals') == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control digit_mask" name="quest_benefit[value]" placeholder="Total Voucher" required value="{{old('quest_benefit.value', 1)}}"/>
+                                <span class="input-group-addon">Voucher/User</span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group" id="benefit-point">
@@ -1056,6 +1085,15 @@
                                                     <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
                                                     </label>
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <div class="input-icon right">
+                                                        <select class="form-control select2 additional_rule_type" data-placeholder="Select Province" name="detail[{{$index}}][additional_rule_type]">
+                                                            <option value="province" class="province_option">Province</option>
+                                                            <option value="outlet">Outlet</option>
+                                                            <option value="outlet_group">Outlet Group Filter</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-4 select_province">
                                                     <div class="input-icon right">
                                                         <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="detail[{{$index}}][id_province]">
@@ -1070,14 +1108,13 @@
                                                     <div class="input-icon right">
                                                         <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[{{$index}}][id_outlet]">
                                                             <option></option>
-                                                            <option value="0">Outlet Group Filter</option>
                                                             @foreach ($outlet as $item)
                                                                 <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                                <div class="col-md-4 select_outlet_group">
                                                     <div class="input-icon right">
                                                         <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="detail[{{$index}}][id_outlet_group]">
                                                             <option></option>
@@ -1155,7 +1192,7 @@
                             </div>
                         </div>
                         <div class="preview col-md-3 pull-right" style="right: 0;top: 70px; position: sticky">
-                            <img src="//jiwa-app.localhost/img/setting/quest_detail_preview.png" class="img-responsive">
+                            <img src="{{env('STORAGE_URL_VIEW').'img/setting/quest_detail_preview.png'}}" class="img-responsive">
                         </div>
                     </div>
                     <div class="text-center">
