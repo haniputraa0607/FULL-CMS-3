@@ -222,7 +222,6 @@
         $(params).parents('.detail-container-item').remove()
     }
     function editBadge(params) {
-        console.log(params);
         $('#editBadge').find("input[name='name']").val(params.name)
         $('#editBadge').find("textarea[name='short_description']").val(params.short_description)
         $('#editBadge').find("select[name='id_product_category']").val(params.id_product_category).trigger('change')
@@ -241,6 +240,15 @@
         $('#editBadge').find("select[name='id_province']").val(params.id_province).trigger('change')
         $('#editBadge').find("select[name='different_province']").val(params.different_province).trigger('change')
         $('#editBadge').find("input[name='id_quest_detail']").val(params.id_quest_detail)
+
+        if (params.id_province) {
+            $('#editBadge').find(".additional_rule_type").val('province').trigger('change')
+        } else if (params.id_outlet && params.id_outlet != '0') {
+            $('#editBadge').find(".additional_rule_type").val('outlet').trigger('change')
+        } else if (params.id_outlet_group) {
+            $('#editBadge').find(".additional_rule_type").val('outlet_group').trigger('change')
+        }
+
         let total_rule = params.total_rule;
 
         if (!total_rule) {
@@ -281,8 +289,6 @@
             $('#editBadge .rule_additional').removeAttr('checked');
         }
 
-
-        console.log(total_rule);
         $('#editBadge').find("select[name='quest_rule']").val(total_rule).trigger('change');
         $('.digit_mask').inputmask("numeric", {
             radixPoint: ",",
@@ -561,6 +567,15 @@
                                     <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
                                     </label>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <select class="form-control select2 additional_rule_type" data-placeholder="Select Province" name="detail[${counter_rule}][additional_rule_type]">
+                                            <option value="province" class="province_option">Province</option>
+                                            <option value="outlet">Outlet</option>
+                                            <option value="outlet_group">Outlet Group Filter</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-4 select_province">
                                     <div class="input-icon right">
                                         <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="detail[${counter_rule}][id_province]">
@@ -575,14 +590,13 @@
                                     <div class="input-icon right">
                                         <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[${counter_rule}][id_outlet] outlet_total_rule">
                                             <option></option>
-                                            <option value="0">Outlet Group Filter</option>
                                             @foreach ($outlet as $item)
                                                 <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                <div class="col-md-offset-3 col-md-4 select_outlet_group">
                                     <div class="input-icon right">
                                         <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="detail[${counter_rule}][id_outlet_group]">
                                             <option></option>
@@ -664,6 +678,7 @@
             $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .rule_additional`).change();
             $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .rule_product_variant`).change();
             $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .id_outlet`).change();
+            $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .additional_rule_type`).change();
             $(this).parents('.modal').find(`.detail-container-item-${counter_rule} .digit_mask`).inputmask("numeric", {
                 radixPoint: ",",
                 groupSeparator: ".",
@@ -824,7 +839,7 @@
                     rule_form.hide();
                     rule_form.find(':input').prop('disabled', true);
                 }
-                parent.find('.id_outlet').change();
+                $('.detail-container .additional_rule_type').change();
             });
             $('.detail-container .rule_additional').change();
 
@@ -859,17 +874,33 @@
                 }
             });
             $('.detail-container .id_product').change();
-            $('.detail-container').on('change', '.id_outlet', function() {
+            $('.detail-container').on('change', '.additional_rule_type', function() {
                 const parent = $(this).parents('.detail-container-item');
-                if ($(this).val() === '0' && !$(this).prop('disabled')) {
-                    parent.find('.select_outlet_group_filter').show();
-                    parent.find('.select_outlet_group_filter :input').removeAttr('disabled');
-                } else {
-                    parent.find('.select_outlet_group_filter').hide();
-                    parent.find('.select_outlet_group_filter :input').prop('disabled', true);
+                parent.find('.select_province').hide()
+                parent.find('.select_province :input').prop('disabled', true);
+                parent.find('.select_outlet').hide()
+                parent.find('.select_outlet :input').prop('disabled', true);
+                parent.find('.select_outlet_group').hide()
+                parent.find('.select_outlet_group :input').prop('disabled', true);
+                if ($(this).prop('disabled')) {
+                    return;
+                }
+                switch ($(this).val()) {
+                    case 'province':
+                        parent.find('.select_province').show();
+                        parent.find('.select_province :input').removeAttr('disabled');
+                        break;
+                    case 'outlet':
+                        parent.find('.select_outlet').show();
+                        parent.find('.select_outlet :input').removeAttr('disabled');
+                        break;
+                    case 'outlet_group':
+                        parent.find('.select_outlet_group').show();
+                        parent.find('.select_outlet_group :input').removeAttr('disabled');
+                        break;
                 }
             });
-            $('.detail-container .id_outlet').change();
+            $('.detail-container .additional_rule_type').change();
         });
 
         function changeUserRuleType(value) {

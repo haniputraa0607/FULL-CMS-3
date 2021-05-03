@@ -166,6 +166,15 @@
                                                 <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
                                                 </label>
                                             </div>
+                                            <div class="col-md-4">
+                                                <div class="input-icon right">
+                                                    <select class="form-control select2 additional_rule_type" data-placeholder="Select Province" name="detail[${counter_rule}][additional_rule_type]">
+                                                        <option value="province" class="province_option">Province</option>
+                                                        <option value="outlet">Outlet</option>
+                                                        <option value="outlet_group">Outlet Group Filter</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="col-md-4 select_province">
                                                 <div class="input-icon right">
                                                     <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="detail[0][id_province]">
@@ -180,14 +189,13 @@
                                                 <div class="input-icon right">
                                                     <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[0][id_outlet]">
                                                         <option></option>
-                                                        <option value="0">Outlet Group Filter</option>
                                                         @foreach ($outlet as $item)
                                                             <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                            <div class="col-md-4 select_outlet_group">
                                                 <div class="input-icon right">
                                                     <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="detail[0][id_outlet_group]">
                                                         <option></option>
@@ -445,6 +453,15 @@
                                         <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
                                         </label>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="input-icon right">
+                                            <select class="form-control select2 additional_rule_type" data-placeholder="Select Province" name="detail[${counter_rule}][additional_rule_type]">
+                                                <option value="province" class="province_option">Province</option>
+                                                <option value="outlet">Outlet</option>
+                                                <option value="outlet_group">Outlet Group Filter</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4 select_province">
                                         <div class="input-icon right">
                                             <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="id_province">
@@ -459,14 +476,13 @@
                                         <div class="input-icon right">
                                             <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="id_outlet">
                                                 <option></option>
-                                                <option value="0">Outlet Group Filter</option>
                                                 @foreach ($outlet as $item)
                                                     <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-offset-3 col-md-4 select_outlet_group_filter" style="margin-top: 10px">
+                                    <div class="col-md-4 select_outlet_group">
                                         <div class="input-icon right">
                                             <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="id_outlet_group">
                                                 <option></option>
