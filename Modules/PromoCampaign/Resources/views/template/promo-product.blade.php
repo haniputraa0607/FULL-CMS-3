@@ -135,8 +135,11 @@
 								productLoad = 1;
 								listProduct=data;
 								$.each(data, function( key, value ) {
-									// $('#multiple-product-'+promo_type).append("<option value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"'>"+value.product+"</option>");
+									let more = '';
 									$('#multipleProduct,#multipleProduct2,#multipleProduct3,#multiple-product-bill,#multiple-product-tier-discount,#multiple-product-bxgy').append("<option class='product"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' value='"+value.id_brand+'-'+value.id_product+'-'+value.id_product_variant_group+"' "+more+">"+value.product+"</option>");
+								});
+								$.each(selectedProduct, function( key, value ) {
+									$(".product"+value+"").attr('selected', true)
 								});
 								$('#multiple-product-'+promo_type).prop('required', true)
 								$('#multiple-product-'+promo_type).prop('disabled', false)

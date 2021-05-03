@@ -368,16 +368,12 @@
 				if (it['benefit_id_product'] == 'undefined' || it['benefit_id_product'] == 'undefined-undefined') {
 					var htmlProduct = '<option value="">Select Product</option>';
 				}else{
-					console.log(it['benefit_id_product']);
 					var htmlProduct = '';
 				}
 				listProduct.forEach(function(i){
 					var addthis='';
-					// if(it['benefit_id_product'] && it['id_brand']+'-'+it['benefit_id_product'] == i['id_brand']+'-'+i['id_product']){
-					// console.log([it['benefit_id_product'] == i['id_brand']+'-'+i['id_product'], it['benefit_id_product'], i['id_brand']+'-'+i['id_product']]);
 					if(it['benefit_id_product'] && it['benefit_id_product'] == i['id_brand']+'-'+i['id_product']){
 						addthis='selected';
-						// console.log([it['benefit_id_product'] == i['id_brand']+'-'+i['id_product'], it['benefit_id_product'], i['id_brand']+'-'+i['id_product']]);
 					}
 					htmlProduct+='<option value="'+i['id_brand']+'-'+i['id_product']+'" '+addthis+'>'+i['product']+'</option>';
 				})
