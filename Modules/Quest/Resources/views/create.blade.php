@@ -825,8 +825,8 @@
                             </div>
                         </div>
                         <div class="preview col-md-3 pull-right" style="right: 0;top: 70px; position: sticky">
-                            <img src="//jiwa-app.localhost/img/setting/quest_preview1.png" class="img-responsive">
-                            <img src="//jiwa-app.localhost/img/setting/quest_preview2.png" class="img-responsive" style="padding-top: 10px">
+                            <img src="{{env('STORAGE_URL_VIEW').'img/setting/quest_preview1.png'}}" class="img-responsive">
+                            <img src="{{env('STORAGE_URL_VIEW').'img/setting/quest_preview1.png'}}" class="img-responsive" style="padding-top: 10px">
                         </div>
                     </div>
 
@@ -1155,7 +1155,7 @@
                             </div>
                         </div>
                         <div class="preview col-md-3 pull-right" style="right: 0;top: 70px; position: sticky">
-                            <img src="//jiwa-app.localhost/img/setting/quest_detail_preview.png" class="img-responsive">
+                            <img src="{{env('STORAGE_URL_VIEW').'img/setting/quest_detail_preview.png'}}" class="img-responsive">
                         </div>
                     </div>
                     <div class="text-center">
