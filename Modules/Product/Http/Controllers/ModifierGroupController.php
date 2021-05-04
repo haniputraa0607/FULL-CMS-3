@@ -408,4 +408,31 @@ class ModifierGroupController extends Controller
 
         return $result;
     }
+
+    public function inventoryBrand(Request $request)
+    {
+        $data = [
+            'title'          => 'Product Variant NON PRICE (NO SKU)',
+            'sub_title'      => 'Product Variant NON PRICE (NO SKU) Inventory Brand',
+            'menu_active'    => 'product-modifier-group',
+            'submenu_active' => 'product-modifier-group-inventory-brand'
+        ];
+        $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
+        $data['modifier_groups'] = MyHelper::get('product/modifier-group/inventory-brand')['result'] ?? [];
+        $data['modifier_groups'] = array_map(function($modifier_group) {
+            $modifier_group['inventory_brand'] = array_column($modifier_group['inventory_brand'], 'id_brand');
+            return $modifier_group;
+        }, $data['modifier_groups']);
+        return view('product::modifier_group.inventory_brand', $data);
+    }
+
+
+    public function inventoryBrandUpdate(Request $request)
+    {
+        $result = MyHelper::post('product/modifier-group/inventory-brand', $request->all());
+        if (($result['status'] ?? false) == 'success') {
+            return back()->withSuccess(['Success update']);
+        }
+        return back()->withErrors($result['messages'] ?? ['Something went wrong']);
+    }
 }

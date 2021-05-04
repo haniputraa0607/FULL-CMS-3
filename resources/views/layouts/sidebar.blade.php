@@ -893,6 +893,11 @@
 									</li>
 								</ul>
 							</li>
+							<li class="nav-item {{($submenu_active == 'product-modifier-group-inventory-brand') ? 'active open' : ''}}">
+								<a href="{{url('product/modifier-group/inventory-brand')}}" class="nav-link ">
+									<span class="title">Inventory Brand</span>
+								</a>
+							</li>
 						@endif
 					</ul>
 

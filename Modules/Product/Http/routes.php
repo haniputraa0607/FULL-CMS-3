@@ -118,6 +118,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 
         Route::get('position', ['uses' => 'ModifierGroupController@position']);
         Route::post('position/assign', ['uses' => 'ModifierGroupController@positionAssign']);
+
+        Route::get('inventory-brand', ['middleware' => 'feature_control:286', 'uses' => 'ModifierGroupController@inventoryBrand']);
+		Route::post('inventory-brand', ['middleware' => 'feature_control:286', 'uses' => 'ModifierGroupController@inventoryBrandUpdate']);
     });
 
     /**
