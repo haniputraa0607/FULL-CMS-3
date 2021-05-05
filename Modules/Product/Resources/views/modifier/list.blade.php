@@ -184,11 +184,12 @@
             </table>
             <div class="col-md-offset-8 col-md-4 text-right">
                 <div class="pagination">
-                    <ul class="pagination">
-                         <li class="page-first{{$prev_page?'':' disabled'}}"><a href="{{$prev_page?:'javascript:void(0)'}}">«</a></li>
-                        
-                         <li class="page-last{{$next_page?'':' disabled'}}"><a href="{{$next_page?:'javascript:void(0)'}}">»</a></li>
-                    </ul>
+	            	@if(isset($modPerPage) && isset($modUpTo) && isset($modTotal))
+		                Showing {{$modPerPage}} to {{$modUpTo}} of {{ $modTotal }} entries<br>
+		            @endif
+		            @if ($modPaginator)
+		                {{ $modPaginator->links() }}
+		            @endif
                 </div>
             </div>
         </div>
