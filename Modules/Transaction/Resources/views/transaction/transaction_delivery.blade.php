@@ -81,6 +81,7 @@
             <table class="table table-striped table-bordered table-hover dt-responsive">
             <thead>
               <tr>
+                  <th>Actions</th>
                   <th>Date</th>
                   <th>Outlet</th>
                   <th>Transaction Type</th>
@@ -93,13 +94,16 @@
                   @if(strtolower($key) == 'delivery')
                   <th>Shipment Status</th>
                   @endif
-                  <th>Actions</th>
               </tr>
             </thead>
             <tbody>
                 @if(!empty($trx))
                     @foreach($trx as $res)
                         <tr>
+                            <td>
+                                <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/{{ $key }}"><i class="icon-pencil"></i> Detail </a>
+                                {{-- <a class="btn btn-block red btn-xs" href="{{ url('transaction/delete', $res['transaction_receipt_number']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a> --}}
+                            </td>
                             <td>{{ date('d M Y H:i:s', strtotime($res['transaction_date'])) }}</td>
                             <td>{{ $res['outlet_code'] }} - {{ $res['outlet_name'] }}</td>
                             <td><span class="badge bg-{{$res['pickup_by'] == 'Customer' ? 'green-jungle':'blue'}}">{{$res['pickup_by'] == 'Customer' ? 'Pickup Order':'Delivery'}}</span></td>
@@ -170,10 +174,6 @@
                             @endphp
                             <td><span class="badge bg-{{$bg}}">{{$res['latest_status']??''}}</span></td>
                             @endif
-                            <td>
-                                <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/{{ $key }}"><i class="icon-pencil"></i> Detail </a>
-                                {{-- <a class="btn btn-block red btn-xs" href="{{ url('transaction/delete', $res['transaction_receipt_number']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a> --}}
-                            </td>
                         </tr>
                     @endforeach
                 @endif
