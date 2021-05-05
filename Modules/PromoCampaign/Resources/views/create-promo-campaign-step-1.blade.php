@@ -647,7 +647,7 @@
 						<div class="form-group">
 							<label class="control-label">Limit Usage (Penggunaan Per User)</label>
 							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo untuk tiap user" data-container="body"></i>
+							<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo untuk tiap user. Tulis 0 jika tidak ada limit." data-container="body"></i>
 							<div class="input-group col-md-12">
 								<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" value="{{ old('limitation_usage') ?? $result['limitation_usage'] ?? null }}" autocomplete="off">
 							</div>

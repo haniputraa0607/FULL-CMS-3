@@ -842,7 +842,7 @@
                             <label class="col-md-3 control-label">
                             Content Long
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Isi konten news" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Isi konten news. Tarik dua garis ke bawah untuk memperpanjang kotak teks." data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-9">

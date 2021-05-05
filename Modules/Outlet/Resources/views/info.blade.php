@@ -178,7 +178,7 @@
                 <input type="text" class="form-control" name="outlet_email" value="{{ $val['outlet_email'] }}" placeholder="Outlet Email">
             </div>
         </div>
-
+        {{--
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -205,6 +205,7 @@
                 </select>
             </div>
         </div>
+        --}}
         <!--<div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
