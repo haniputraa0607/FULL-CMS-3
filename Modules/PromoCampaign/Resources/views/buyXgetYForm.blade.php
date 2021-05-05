@@ -71,7 +71,7 @@
 		</div>\
 		<div class="col-md-9">\
 			<div class="col-md-5">\
-				<div class="form-group">\
+				<div class="form-group bxgy-product-benefit">\
 					<select name="promo_rule[::n::][benefit_id_product]" class="form-control product-selector select2" placeholder="Select product" style="width: 100%!important" required>::productList::</select>\
 				</div>\
 			</div>\
