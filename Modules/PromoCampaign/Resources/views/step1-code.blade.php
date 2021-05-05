@@ -78,15 +78,15 @@
 				</div>
 			@endif
 			<div class="form-group">
-				<label class="control-label">Limit Usage</label>
+				<label class="control-label">Limit Usage (Penggunaan Per User)</label>
 				<span class="required" aria-required="true"> * </span>
-				<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo" data-container="body"></i>
+				<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo. Tulis 0 jika tidak ada limit." data-container="body"></i>
 				<div class="input-group col-md-12">
 					<input disabled required type="text" class="form-control digit_mask" placeholder="Limit Usage" value="{{ old('limitation_usage') ?? $result['limitation_usage'] ?? null }}" autocomplete="off">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label">Total Coupon</label>
+				<label class="control-label">Total Coupon (Jumlah Total Voucher)</label>
 				<span class="required" aria-required="true"> * </span>
 				<i class="fa fa-question-circle tooltips" data-original-title="Total kode kupon yang dibuat" data-container="body"></i>
 				<div class="input-group col-md-12">

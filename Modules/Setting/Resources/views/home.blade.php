@@ -816,11 +816,11 @@
 					 			 	</div>
 					 			 	<div class="click-to">
 					 			 		<div>Click to:</div>
-										<div>{{ str_limit($banner['reference_title'], 18) }}</div><br>
+										<div style="height: 20px">{{ str_limit($banner['reference_title'], 18) }}</div><br>
 										<div>Date Start:</div>
 										<div>{{ ($banner['banner_start']??false)?date("d M Y H:i", strtotime($banner['banner_start'])):'-' }}</div><br>
 										<div>Date End:</div>
-					 			 		<div>{{ ($banner['banner_end']??false)?date("d M Y H:i", strtotime($banner['banner_end'])):'-' }}</div>
+					 			 		<div>{{ ($banner['banner_end']??false)?date("d M Y H:i", strtotime($banner['banner_end'])):'-' }}</div><br>
 										@if(MyHelper::hasAccess([117], $configs))
 											<div>Time Start:</div>
 											<div>{{ ($banner['time_start']??false) ? date("H:i", strtotime($banner['time_start'])):'-' }}</div><br>

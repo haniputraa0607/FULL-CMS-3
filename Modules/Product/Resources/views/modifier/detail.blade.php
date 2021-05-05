@@ -152,7 +152,7 @@
                                     <td>{{$modifier['code']}} - {{$modifier['text']}}</td>
                                     <td>
                                         <select class="form-control" name="prices[{{$modifier['id_product_modifier']}}][product_modifier_visibility]">
-                                            <option></option>
+                                            <option>Follow Visibility Master</option>
                                             <option value="Visible" @if($modifier['product_modifier_visibility']=='Visible') selected @endif>Visible</option>
                                             <option value="Hidden" @if($modifier['product_modifier_visibility']=='Hidden') selected @endif>Hidden</option>
                                         </select>

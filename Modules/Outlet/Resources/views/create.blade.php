@@ -547,8 +547,8 @@
                             <input type="text" class="form-control" name="outlet_email" value="{{ old('outlet_email') }}" placeholder="Outlet Email" required>
                         </div>
                     </div>
-
-                    <div class="form-group">
+                    {{--
+                    <div class="form-group" style="display:none">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Time Zone
@@ -557,7 +557,7 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <select class="form-control" name="time_zone_utc" required>
+                            <select class="form-control" name="time_zone_utc">
                                 <option value="" disabled @if ( old('time_zone_utc')== "" ) selected @endif>Select Time Zone</option>
                                 <option value="7" 
                                     @if ( old('time_zone_utc')) 
@@ -580,6 +580,7 @@
                             </select>
                         </div>
                     </div>
+                    --}}
 
                     <div class="form-group">
                         <div class="input-icon right">
