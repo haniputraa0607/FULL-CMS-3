@@ -108,7 +108,7 @@ class QuestController extends Controller
             if (isset($save['status']) && $save['status'] == "success") {
                 return redirect('quest/detail/' . $save['data'] . '#content');
             } else {
-                return back()->withErrors($save['errors'] ?? ['Something went wrong'])->withInput();
+                return back()->withErrors($save['messages'] ?? $save['errors'] ?? ['Something went wrong'])->withInput();
             }
         }
     }

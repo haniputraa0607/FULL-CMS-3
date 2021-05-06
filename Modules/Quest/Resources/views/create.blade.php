@@ -527,10 +527,12 @@
                 const variants = product_variants[$(this).val()];
                 if (variants && $(this).val()) {
                     const html = [];
+                    const currentVal = parent.find('.id_product_variant').data('value');
                     variants.forEach(item => {
                         html.push(`<option value="${item.id_product_variant_group}">${item.product_variants}</option>`);
                     });
                     parent.find('.id_product_variant').html(html.join(''));
+                    parent.find('.id_product_variant').val(currentVal);
                     parent.find('.has_variant').show();
                     parent.find('.has_variant :input').removeAttr('disabled');
                 } else {
@@ -628,7 +630,7 @@
                                     <i class="fa fa-question-circle tooltips" data-original-title="Quest Name" data-container="body"></i>
                                 </label>
                                 <div class="col-md-8">
-                                    <input type="text" name="quest[name]" class="form-control" placeholder="Enter text">
+                                    <input type="text" name="quest[name]" class="form-control" placeholder="Enter quest name" value="{{old('quest.name')}}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -818,7 +820,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-icon right">
-                                        <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description" id="input-quest-short-description">{{ old('quest.short_description') }}</textarea>
+                                        <textarea name="quest[short_description]" class="form-control" placeholder="Quest Short Description" id="input-quest-short-description" required="">{{ old('quest.short_description') }}</textarea>
                                         <div class="portlet-body" style="margin-bottom: 15px">
                                             <span style="margin-bottom: 5px">You can use this variables to display dynamic information:</span>
                                             <div>
@@ -838,7 +840,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest[autoclaim_quest]" id="autoclaim-selector">
+                                    <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest[autoclaim_quest]" id="autoclaim-selector" @if(old('quest.autoclaim_quest')) checked @endif>
                                 </div>
                             </div>
                             <div class="form-group manualclaim-only">
@@ -919,7 +921,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest_benefit[autoclaim_benefit]">
+                            <input type="checkbox" class="make-switch brand_status" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" name="quest_benefit[autoclaim_benefit]" @if(old('quest_benefit.autoclaim_benefit')) checked @endif>
                         </div>
                     </div>
                     <hr>
@@ -970,11 +972,11 @@
                                                         <div class="input-group">
                                                             <select class="form-control select2 quest_rule" name="detail[{{$index}}][quest_rule]" data-placeholder="Select Quest Rule" required>
                                                                 <option></option>
-                                                                <option value="nominal_transaction">Transaction Nominal</option>
-                                                                <option value="total_transaction">Transaction Total</option>
-                                                                <option value="total_product">Product Total</option>
-                                                                <option value="total_outlet">Outlet Different</option>
-                                                                <option value="total_province">Province Different</option>
+                                                                <option value="nominal_transaction" {{($detail['quest_rule'] ?? '') == 'nominal_transaction' ? 'selected' : ''}}>Transaction Nominal</option>
+                                                                <option value="total_transaction" {{($detail['quest_rule'] ?? '') == 'total_transaction' ? 'selected' : ''}}>Transaction Total</option>
+                                                                <option value="total_product" {{($detail['quest_rule'] ?? '') == 'total_product' ? 'selected' : ''}}>Product Total</option>
+                                                                <option value="total_outlet" {{($detail['quest_rule'] ?? '') == 'total_outlet' ? 'selected' : ''}}>Outlet Different</option>
+                                                                <option value="total_province" {{($detail['quest_rule'] ?? '') == 'total_province' ? 'selected' : ''}}>Province Different</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -989,15 +991,15 @@
                                                 <div class="col-md-9">
                                                     <div class="mt-checkbox-inline">
                                                         <label class="mt-checkbox rule_transaction not_nominal_transaction">
-                                                            <input type="checkbox" class="rule_trx"> Transaction
+                                                            <input type="checkbox" class="rule_trx" name="detail[{{$index}}][input_rule_trx]" {{($detail['input_rule_trx'] ?? '') ? 'checked' : ''}}/> Transaction
                                                             <span></span>
                                                         </label>
                                                         <label class="mt-checkbox rule_product_add">
-                                                            <input type="checkbox" class="rule_product"> Product
+                                                            <input type="checkbox" class="rule_product" name="detail[{{$index}}][input_rule_product]" {{($detail['input_rule_product'] ?? '') ? 'checked' : ''}}> Product
                                                             <span></span>
                                                         </label>
                                                         <label class="mt-checkbox additionalnya not_total_province">
-                                                            <input type="checkbox" class="rule_additional"> Additional
+                                                            <input type="checkbox" class="rule_additional" name="detail[{{$index}}][input_rule_additional]" {{($detail['input_rule_additional'] ?? '') ? 'checked' : ''}}> Additional
                                                             <span></span>
                                                         </label>
                                                     </div>
@@ -1013,7 +1015,7 @@
                                                 <div class="col-md-4">
                                                     <div class="input-icon right">
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[{{$index}}][trx_nominal]" placeholder="Transaction Nominal">
+                                                            <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[{{$index}}][trx_nominal]" placeholder="Transaction Nominal" value="{{$detail['trx_nominal'] ?? ''}}">
                                                             <span class="input-group-btn">
                                                                 <button class="btn default" type="button">
                                                                     <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
@@ -1036,7 +1038,7 @@
                                                             <select class="form-control select2 id_product" data-placeholder="Select Product" name="detail[{{$index}}][id_product]">
                                                                 <option></option>
                                                                 @foreach ($product as $item)
-                                                                    <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
+                                                                    <option value="{{$item['id_product']}}" {{($detail['id_product'] ?? '') == $item['id_product'] ? 'selected': ''}}>{{$item['product_name']}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -1044,7 +1046,7 @@
                                                     <div class="col-md-4 not_total_product">
                                                         <div class="input-icon right">
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control total_product product_total_rule" name="detail[{{$index}}][product_total]" placeholder="Total Product">
+                                                                <input type="text" class="form-control total_product product_total_rule" name="detail[{{$index}}][product_total]" placeholder="Total Product" value="{{$detail['product_total'] ?? ''}}">
                                                                 <span class="input-group-btn">
                                                                     <button class="btn default" type="button">
                                                                         <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
@@ -1064,14 +1066,14 @@
                                                     <div class="col-4">
                                                         <div class="mt-checkbox-inline">
                                                             <label class="mt-checkbox" style="margin-left: 15px;">
-                                                                <input type="checkbox" class="use_variant rule_product_variant"> Use Variant
+                                                                <input type="checkbox" class="use_variant rule_product_variant" {{($detail['id_product_variant_group'] ?? '') ? 'checked' : ''}}> Use Variant
                                                                 <span></span>
                                                             </label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-offset-3 col-md-4 product_variant_rule_form">
                                                         <div class="input-icon right">
-                                                            <select class="form-control select2 id_product_variant" data-placeholder="Select Variant" name="detail[{{$index}}][id_product_variant_group]">
+                                                            <select class="form-control select2 id_product_variant" data-placeholder="Select Variant" name="detail[{{$index}}][id_product_variant_group]" data-value="{{$detail['id_product_variant_group'] ?? ''}}">
                                                                 <option></option>
                                                             </select>
                                                         </div>
@@ -1088,9 +1090,9 @@
                                                 <div class="col-md-4">
                                                     <div class="input-icon right">
                                                         <select class="form-control select2 additional_rule_type" data-placeholder="Select Province" name="detail[{{$index}}][additional_rule_type]">
-                                                            <option value="province" class="province_option">Province</option>
-                                                            <option value="outlet">Outlet</option>
-                                                            <option value="outlet_group">Outlet Group Filter</option>
+                                                            <option value="province" class="province_option" {{($detail['additional_rule_type'] ?? '') == 'province' ? 'selected': ''}}>Province</option>
+                                                            <option value="outlet" {{($detail['additional_rule_type'] ?? '') == 'outlet' ? 'selected': ''}}>Outlet</option>
+                                                            <option value="outlet_group" {{($detail['additional_rule_type'] ?? '') == 'outlet_group' ? 'selected': ''}}>Outlet Group Filter</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -1099,7 +1101,7 @@
                                                         <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="detail[{{$index}}][id_province]">
                                                             <option></option>
                                                             @foreach ($province as $item)
-                                                                <option value="{{$item['id_province']}}">{{$item['province_name']}}</option>
+                                                                <option value="{{$item['id_province']}}" {{($detail['id_province'] ?? '') == $item['id_province'] ? 'selected': ''}}>{{$item['province_name']}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -1109,7 +1111,7 @@
                                                         <select class="form-control select2 id_outlet" data-placeholder="Select Outlet" name="detail[{{$index}}][id_outlet]">
                                                             <option></option>
                                                             @foreach ($outlet as $item)
-                                                                <option value="{{$item['id_outlet']}}">{{$item['outlet_name']}}</option>
+                                                                <option value="{{$item['id_outlet']}}" {{($detail['id_outlet'] ?? '') == $item['id_outlet'] ? 'selected': ''}}>{{$item['outlet_name']}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -1119,7 +1121,7 @@
                                                         <select class="form-control select2 id_outlet_group" data-placeholder="Select Outlet Group Filter" name="detail[{{$index}}][id_outlet_group]">
                                                             <option></option>
                                                             @foreach ($outlet_group_filters as $item)
-                                                                <option value="{{$item['id_outlet_group']}}">{{$item['outlet_group_name']}}</option>
+                                                                <option value="{{$item['id_outlet_group']}}" {{($detail['id_outlet_group'] ?? '') == $item['id_outlet_group'] ? 'selected': ''}}>{{$item['outlet_group_name']}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -1133,7 +1135,7 @@
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
-                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][trx_nominal]" placeholder="Transaction Nominal">
+                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][trx_nominal]" placeholder="Transaction Nominal" value="{{$detail['trx_nominal'] ?? ''}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1145,7 +1147,7 @@
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
-                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][trx_total]" placeholder="Transaction Total">
+                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][trx_total]" placeholder="Transaction Total" value="{{$detail['trx_total'] ?? ''}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1157,7 +1159,7 @@
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
-                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][product_total]" placeholder="Product Total">
+                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][product_total]" placeholder="Product Total" value="{{$detail['product_total'] ?? ''}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1169,7 +1171,7 @@
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
-                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][different_outlet]" placeholder="Outlet Total">
+                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][different_outlet]" placeholder="Outlet Total" value="{{$detail['different_outlet'] ?? ''}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1181,7 +1183,7 @@
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
-                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][different_province]" placeholder="Province Total">
+                                                        <input type="text" class="form-control digit_mask" name="detail[{{$index}}][different_province]" placeholder="Province Total" value="{{$detail['different_province'] ?? ''}}">
                                                     </div>
                                                 </div>
                                             </div>
