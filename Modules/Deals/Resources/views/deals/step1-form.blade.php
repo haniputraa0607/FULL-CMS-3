@@ -779,7 +779,7 @@
                 <div class="md-radio-inline">
                     <div class="md-radio">
                         <input type="radio" name="duration" id="radio9" value="dates" class="expiry md-radiobtn" required 
-                        	@if ( old('duration') ) checked 
+                        	@if ( old('duration') )  
                         		@if ( old('duration') == "dates" ) checked 
                         		@endif
                         	@elseif (!empty($deals['deals_voucher_expired'])) checked 
@@ -795,7 +795,7 @@
                 <div class="md-radio-inline">
                     <div class="md-radio">
                         <input type="radio" name="duration" id="radio10" value="duration" class="expiry md-radiobtn" required 
-                        	@if ( old('duration') ) checked 
+                        	@if ( old('duration') ) 
                         		@if ( old('duration') == "duration" ) checked 
                         		@endif
                         	@elseif ( !empty($deals['deals_voucher_duration']) ) checked 
