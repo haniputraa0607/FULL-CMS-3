@@ -78,5 +78,20 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('list-datatable/calculation', 'DisburseController@listCalculationDataTable');
         Route::any('detail-trx/{id}', 'DisburseController@detailDisburseTrx');
         Route::any('update-status/{id}', 'DisburseController@updateStatusDisburse');
+
+        Route::group(['prefix' => 'rule-promo-payment-gateway'], function() {
+            Route::any('/', 'RulePromoPaymentGatewayController@index');
+            Route::get('create', 'RulePromoPaymentGatewayController@create');
+            Route::post('store', 'RulePromoPaymentGatewayController@store');
+            Route::get('detail/{id}', 'RulePromoPaymentGatewayController@detail');
+            Route::post('update/{id}', 'RulePromoPaymentGatewayController@update');
+            Route::post('delete', 'RulePromoPaymentGatewayController@delete');
+            Route::post('start', 'RulePromoPaymentGatewayController@start');
+            Route::any('report/{id}', 'RulePromoPaymentGatewayController@reportListTransaction');
+
+            Route::any('validation', 'RulePromoPaymentGatewayController@validation');
+            Route::any('validation/report', 'RulePromoPaymentGatewayController@validationReport');
+            Route::get('validation/report/detail/{id}', 'RulePromoPaymentGatewayController@validationReportDetail');
+        });
     });
 });
