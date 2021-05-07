@@ -70,6 +70,7 @@ $brand_rule = $deals['brand_rule']??'and';
     });
     $('.timepicker').timepicker();
     $(".form_datetime").datetimepicker({
+        startDate: new Date(),
         format: "d-M-yyyy hh:ii",
         autoclose: true,
         todayBtn: true,
