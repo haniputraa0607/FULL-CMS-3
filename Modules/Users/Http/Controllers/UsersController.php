@@ -522,7 +522,7 @@ class UsersController extends Controller
                 unset($data[$key]['level_name']);
                 unset($data[$key]['level_parameters']);
             }
-            return Excel::download(new ArrayExport($data),'Users List-'.date('Y-m-d').'.xls');
+            return Excel::download(new ArrayExport($data, 'Users List-'.date('Y-m-d')),'Users List-'.date('Y-m-d').'.xls');
         }
     }
 

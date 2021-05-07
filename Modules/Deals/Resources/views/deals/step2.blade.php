@@ -63,8 +63,8 @@
 		.select2-results__option[aria-selected=true] {
 		    /*display: none;*/
 		}
-		.select2-selection--single {
-		  	/*height: 100% !important;*/
+		.bxgy-product-benefit .select2-selection--single {
+		  height: 100% !important;
 		}
 		.select2-selection__rendered{
 			word-wrap: break-word !important;
