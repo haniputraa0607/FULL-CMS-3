@@ -22,10 +22,10 @@
                                                 </span>
                                                 @if ($data['quest']['stop_at'])
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Stopped</span>
+                                                @elseif (!is_null($data['quest']['publish_end']) && $data['quest']['publish_end'] < date('Y-m-d H:i:s') && $data['quest']['is_complete'])
+                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
                                                 @elseif ($data['quest']['date_start'] < date('Y-m-d H:i:s') && $data['quest']['is_complete'])
                                                     <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                                                @elseif (!is_null($data['quest']['date_end']) && $data['quest']['date_end'] > date('Y-m-d H:i:s') && $data['quest']['is_complete'])
-                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
                                                 @else
                                                     <span class="sale-num sbold badge badge-pill secondary" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Not Started</span>
                                                 @endif
