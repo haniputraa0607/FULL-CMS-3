@@ -2870,7 +2870,41 @@
 				</li>
 			@endif
 		@endif
-
+		@if(MyHelper::hasAccess([311,312,313,314,315], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'disburse-promo-pg') ? 'active' : ''}}">
+				<a href="javascript:;" class="nav-link nav-toggle">
+					<i class="fa fa-tag"></i>
+					<span class="title">Rule Promo Payment Gateway</span>
+					<span class="arrow {{($menu_active == 'disburse-promo-pg') ? 'open' : ''}}"></span>
+				</a>
+				<ul class="sub-menu">
+					@if(MyHelper::hasAccess([313], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'disburse-promo-pg-new') ? 'active open' : ''}}">
+							<a href="{{url('disburse/rule-promo-payment-gateway/create')}}" class="nav-link ">
+								<span class="title">New Promo Payment Gateway</span>
+							</a>
+						</li>
+					@endif
+					@if(MyHelper::hasAccess([311,312,314,315], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'disburse-promo-pg-list') ? 'active open' : ''}}">
+							<a href="{{url('disburse/rule-promo-payment-gateway')}}" class="nav-link ">
+								<span class="title">Promo Payment Gateway List</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'disburse-promo-pg-validation') ? 'active open' : ''}}">
+							<a href="{{url('disburse/rule-promo-payment-gateway/validation')}}" class="nav-link ">
+								<span class="title">Promo Payment Gateway Validation</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'disburse-promo-pg-validation-report') ? 'active open' : ''}}">
+							<a href="{{url('disburse/rule-promo-payment-gateway/validation/report')}}" class="nav-link ">
+								<span class="title">Promo Payment Gateway Validation Report</span>
+							</a>
+						</li>
+					@endif
+				</ul>
+			</li>
+		@endif
 		@if(MyHelper::hasAccess([125,126,127,128,129,271], $grantedFeature))
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #0F444C;font-weight: 600;">Report</h3>
