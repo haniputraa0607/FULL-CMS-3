@@ -5,7 +5,7 @@
 
  ?>
  @extends('layouts.main')
-@include('list_filter')
+@include('filter-v3')
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -51,12 +51,28 @@
             },
             modifier_type :{
                 display:'Scope',
-                operator:[],
-                opsi:[
-                    ['Global','Global'],
-                    ['Global Brand','Global Brand'],
-                    ['Specific','Specific']
-                ]
+                operator:[
+                	['global','Global'],
+                    ['global_brand','Global Brand'],
+                    ['specific_product','Specific Product'],
+                    ['specific_category','Specific Category'],
+                    ['specific_brand','Specific Brand']
+                ],
+                opsi:{
+                	'specific_product': {
+                		type: 'select',
+                		opsi: {!!json_encode($products)!!}
+                	},
+                	'specific_category': {
+                		type: 'select',
+                		opsi: {!!json_encode($categories)!!}
+                	},
+                	'specific_brand': {
+                		type: 'select',
+                		opsi: {!!json_encode($brands)!!}
+                	}
+                },
+                type: 'select_operator'
             },
             type :{
                 display:'Type',

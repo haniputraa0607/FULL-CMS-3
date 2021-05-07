@@ -38,6 +38,18 @@ class ModifierController extends Controller
         $types         = MyHelper::get('product/modifier/type')['result'] ?? [];
         $data['types'] = array_map(function ($q) {return [$q, $q];}, $types);
         $data['modifiers'] = MyHelper::post('product/modifier?page=' . $page, $post)['result'] ?? [];
+        
+        $data['products'] = array_map(function ($q) {
+        	return [$q['product_code'], $q['product_code'].'-'.$q['product_name']];
+        }, MyHelper::get('product/be/list')['result'] ?? []);
+
+        $data['categories'] = array_map(function ($q) {
+        	return [$q['id_product_category'], $q['product_category_name']];
+        }, MyHelper::get('product/category/be/list')['result'] ?? []);
+
+        $data['brands'] = array_map(function ($q) {
+        	return [$q['id_brand'], $q['name_brand']];
+        }, MyHelper::get('brand')['result'] ?? []);
 
 		if (!empty($data['modifiers']['data'])) {
             $data['mod']          = $data['modifiers']['data'];
