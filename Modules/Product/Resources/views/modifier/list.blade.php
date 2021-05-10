@@ -52,22 +52,22 @@
             modifier_type :{
                 display:'Scope',
                 operator:[
-                	['global','Global'],
-                    ['global_brand','Global Brand'],
-                    ['specific_product','Specific Product'],
-                    ['specific_category','Specific Category'],
-                    ['specific_brand','Specific Brand']
+                	['Global','Global'],
+                    ['Global Brand','Global Brand'],
+                    ['id_product','Specific Product'],
+                    ['id_product_category','Specific Category'],
+                    ['id_brand','Specific Brand']
                 ],
                 opsi:{
-                	'specific_product': {
+                	'id_product': {
                 		type: 'select',
                 		opsi: {!!json_encode($products)!!}
                 	},
-                	'specific_category': {
+                	'id_product_category': {
                 		type: 'select',
                 		opsi: {!!json_encode($categories)!!}
                 	},
-                	'specific_brand': {
+                	'id_brand': {
                 		type: 'select',
                 		opsi: {!!json_encode($brands)!!}
                 	}

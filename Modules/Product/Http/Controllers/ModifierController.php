@@ -40,7 +40,7 @@ class ModifierController extends Controller
         $data['modifiers'] = MyHelper::post('product/modifier?page=' . $page, $post)['result'] ?? [];
         
         $data['products'] = array_map(function ($q) {
-        	return [$q['product_code'], $q['product_code'].'-'.$q['product_name']];
+        	return [$q['id_product'], $q['product_code'].'-'.$q['product_name']];
         }, MyHelper::get('product/be/list')['result'] ?? []);
 
         $data['categories'] = array_map(function ($q) {
@@ -66,7 +66,7 @@ class ModifierController extends Controller
             $data['modPaginator'] = false;
         }
 
-        $data['total']     = $data['modifiers']['total'];
+        $data['total']     = $data['modifiers']['total'] ?? 0;
         return view('product::modifier.list', $data);
     }
 

@@ -247,6 +247,7 @@
 						}
 					} else {
 						$(this).parents('.mt-repeater-cell').first().find('.valCol').hide();
+						$(this).parents('.mt-repeater-cell').first().find('.valCol').html('');
 					}
 				} else if (rules[value].opsi.length>0) {
 					var opsiview=selectOpsiBuilder(rules[value].opsi,'',parId,rules[value]);
