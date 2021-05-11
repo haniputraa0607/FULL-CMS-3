@@ -79,51 +79,96 @@
                     <td>: {{$detail['limit_promo_total']}}</td>
                 </tr>
                 <tr>
-                    <?php
-                        $var = [
-                            'day' => 'Limit maximum per day',
-                            'week' => 'Limit maximum per week',
-                            'month' => 'Limit maximum per month',
-                            'account' => 'Limit maximum per account'
-                        ];
-                    ?>
-                    <td>Additional Limit</td>
-                    <td>:
-                        @if(empty($detail['limit_promo_additional']))
-                            -
-                        @else
-                            {{$detail['limit_promo_additional']}} ({{$var[$detail['limit_promo_additional_type']]??""}})</td>
-                        @endif
+                    <td>Additional Limit Day</td>
+                    <td>: {{$detail['limit_promo_additional_day']}}</td>
+                </tr>
+                <tr>
+                    <td>Additional Limit Week</td>
+                    <td>: {{$detail['limit_promo_additional_week']}}</td>
+                </tr>
+                <tr>
+                    <td>Additional Limit Month</td>
+                    <td>: {{$detail['limit_promo_additional_month']}}</td>
+                </tr>
+                <tr>
+                    <td>Additional Limit Account</td>
+                    <td>: {{$detail['limit_promo_additional_account']}} @if(!empty($detail['limit_promo_additional_account'])) (User : {{$detail['limit_promo_additional_account_type']}}) @endif</td>
                 </tr>
                 <tr>
                     <td>Cashback</td>
-                    <td>: {{$detail['cashback']}} {{$detail['cashback_type']}}</td>
+                    <td>: @if($detail['cashback_type'] == 'Nominal') IDR {{number_format((int)$detail['cashback'])}} @else {{$detail['cashback']}} % @endif</td>
                 </tr>
                 <tr>
                     <td>Maximum Cashback</td>
-                    <td>: {{number_format($detail['maximum_cashback'])}}</td>
+                    <td>: @if($detail['cashback_type'] == 'Nominal') - @else IDR {{number_format($detail['maximum_cashback'])}} @endif</td>
                 </tr>
                 <tr>
                     <td>Minimum Transaction</td>
-                    <td>: {{number_format($detail['minimum_transaction'])}}</td>
+                    <td>: IDR {{number_format($detail['minimum_transaction'])}}</td>
                 </tr>
                 <tr>
                     <td>Charged Payment Gateway</td>
-                    <td>: {{$detail['charged_payment_gateway']}} {{$detail['charged_type']}}</td>
+                    <td>: @if($detail['charged_type'] == 'Nominal') IDR {{number_format((int)$detail['charged_payment_gateway'])}} @else {{$detail['charged_payment_gateway']}} % @endif</td>
                 </tr>
                 <tr>
                     <td>Charged Jiwa Group</td>
-                    <td>: {{$detail['charged_jiwa_group']}} {{$detail['charged_type']}}</td>
+                    <td>: @if($detail['charged_type'] == 'Nominal') IDR {{number_format((int)$detail['charged_jiwa_group'])}} @else {{$detail['charged_jiwa_group']}} % @endif</td>
                 </tr>
                 <tr>
                     <td>Charged Central</td>
-                    <td>: {{$detail['charged_central']}} {{$detail['charged_type']}}</td>
+                    <td>: @if($detail['charged_type'] == 'Nominal') IDR {{number_format((int)$detail['charged_outlet'])}} @else {{$detail['charged_outlet']}} % @endif</td>
                 </tr>
                 <tr>
                     <td>Charged Outlet</td>
-                    <td>: {{$detail['charged_outlet']}} {{$detail['charged_type']}}</td>
+                    <td>: @if($detail['charged_type'] == 'Nominal') IDR {{number_format((int)$detail['charged_outlet'])}} @else {{$detail['charged_outlet']}} % @endif</td>
+                </tr>
+                <tr>
+                    <td>MDR Setting</td>
+                    <td>: {{$detail['mdr_setting']}} </td>
                 </tr>
             </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 red">
+                <div class="visual">
+                    <i class="fa fa-bar-chart-o"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ $summary['total_transaction']??0 }}">{{ number_format($summary['total_transaction']??0) }}</span>
+                    </div>
+                    <div class="desc"> Total Transaction </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 green">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ $summary['total_amount']??0 }}">{{ number_format($summary['total_amount']??0) }}</span>
+                    </div>
+                    <div class="desc"> Total Amount </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 purple">
+                <div class="visual">
+                    <i class="fa fa-globe"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ $summary['total_cashback']??0 }}">{{ number_format($summary['total_cashback']??0) }}</span>
+                    </div>
+                    <div class="desc"> Total Cashback </div>
+                </div>
+            </a>
         </div>
     </div>
 
@@ -147,7 +192,7 @@
                         <th> Customer phone</th>
                         <th> Customer account PG</th>
                         <th> Receipt number </th>
-                        <th> Outlet </th>
+                        <th> Amount </th>
                         <th> Chasback Received </th>
                     </tr>
                     </thead>
@@ -159,17 +204,20 @@
                                 <td> {{ $res['customer_phone'] }} </td>
                                 <td> {{ $res['payment_gateway_user'] }} </td>
                                 <td> <a target="_blank" href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/all">{{ $res['transaction_receipt_number'] }}</a> </td>
-                                <td> {{ $res['outlet_code'] }} - {{ $res['outlet_name'] }} </td>
+                                <td> {{ number_format($res['amount'],2,",",".") }} </td>
                                 <td> {{ number_format($res['total_received_cashback'],2,",",".") }} </td>
                             </tr>
                         @endforeach
                     @else
-                        <tr style="text-align: center"><td colspan="5">Data Not Available</td></tr>
+                        <tr style="text-align: center"><td colspan="10">Data Not Available</td></tr>
                     @endif
                     </tbody>
                 </table>
             </div>
         </div>
+        @if ($dataPaginator)
+            {{ $dataPaginator->links() }}
+        @endif
     </div>
 
 @endsection

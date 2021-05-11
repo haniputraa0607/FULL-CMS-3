@@ -103,6 +103,28 @@ $grantedFeature     = session('granted_features');
 
     @include('layouts.notifications')
 
+    <?php
+    $date_start = '';
+    $date_end = '';
+
+    if(Session::has('filter-list-promo-pg-validation')){
+        $search_param = Session::get('filter-list-promo-pg-validation');
+        if(isset($search_param['rule'])){
+            $rule = $search_param['rule'];
+        }
+
+        if(isset($search_param['conditions'])){
+            $conditions = $search_param['conditions'];
+        }
+    }
+    ?>
+
+    <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
+        {{ csrf_field() }}
+        @include('disburse::promo_payment_gateway.filter_validation')
+        <br>
+    </form>
+
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
@@ -114,6 +136,7 @@ $grantedFeature     = session('granted_features');
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
+                        <th style="width: 100px"> Status </th>
                         <th style="width: 100px"> Created At </th>
                         <th style="width: 100px"> Admin Name </th>
                         <th style="width: 100px"> Promo </th>
@@ -129,6 +152,16 @@ $grantedFeature     = session('granted_features');
                     @if (!empty($data))
                         @foreach($data as $value)
                             <tr>
+                                <td>
+                                    <?php
+                                        $color = [
+                                            'In Progress' => '#f7e40f',
+                                            'Success' => '#26C281',
+                                            'Fail' => '#E7505A'
+                                        ];
+                                    ?>
+                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: {{$color[$value['processing_status']]??''}};padding: 5px 12px;color: #fff;">{{$value['processing_status']}}</span>
+                                </td>
                                 <td>{{date('d-M-Y H:i', strtotime($value['created_at']))}}</td>
                                 <td>{{$value['admin_name']}}</td>
                                 <td>{{$value['name']}}</td>
@@ -151,6 +184,9 @@ $grantedFeature     = session('granted_features');
                 </table>
             </div>
         </div>
+        @if ($dataPaginator)
+            {{ $dataPaginator->links() }}
+        @endif
     </div>
 
 @endsection

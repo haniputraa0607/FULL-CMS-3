@@ -32,7 +32,19 @@ class RulePromoPaymentGatewayController extends Controller
             'menu_active'    => 'disburse-promo-pg',
             'submenu_active' => 'disburse-promo-pg-list',
         ];
-        $list = MyHelper::post('disburse/rule-promo-payment-gateway', []);
+
+        if(Session::has('filter-list-rule-promo-pg') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-list-rule-promo-pg');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-list-rule-promo-pg');
+        }
+
+        $list = MyHelper::post('disburse/rule-promo-payment-gateway', $post);
 
         if (isset($list['result']['data']) && !empty($list['result']['data'])) {
             $data['data']          = $list['result']['data'];
@@ -46,6 +58,12 @@ class RulePromoPaymentGatewayController extends Controller
             $data['dataPerPage']   = 0;
             $data['dataUpTo']      = 0;
             $data['dataPaginator'] = false;
+        }
+
+        $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
+
+        if($post){
+            Session::put('filter-list-rule-promo-pg',$post);
         }
 
         return view('disburse::promo_payment_gateway.list', $data);
@@ -82,6 +100,7 @@ class RulePromoPaymentGatewayController extends Controller
         ];
         $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
         $data['detail'] = MyHelper::post('disburse/rule-promo-payment-gateway/detail', ['id_rule_promo_payment_gateway'=> $id])['result']??[];
+        $data['summary'] = MyHelper::post('disburse/rule-promo-payment-gateway/summary', ['id_rule_promo_payment_gateway'=> $id])['result']??[];
         return view('disburse::promo_payment_gateway.detail', $data);
     }
 
@@ -109,6 +128,12 @@ class RulePromoPaymentGatewayController extends Controller
         return $delete;
     }
 
+    public function markAsValid(Request $request){
+        $post = $request->except('_token');
+        $delete = MyHelper::post('disburse/rule-promo-payment-gateway/mark-as-valid',$post);
+        return $delete;
+    }
+
     public function reportListTransaction(Request $request, $id){
         $post = $request->except('_token');
         $data = [
@@ -123,13 +148,15 @@ class RulePromoPaymentGatewayController extends Controller
         }
 
         $data['detail'] = MyHelper::post('disburse/rule-promo-payment-gateway/detail', ['id_rule_promo_payment_gateway'=> $id])['result']??[];
-        $listTrx = MyHelper::post('disburse/rule-promo-payment-gateway/report', ['id_rule_promo_payment_gateway'=> $id, 'export' => $export])['result']??[];
+        $data['summary'] = MyHelper::post('disburse/rule-promo-payment-gateway/summary', ['id_rule_promo_payment_gateway'=> $id])['result']??[];
+        $listTrx = MyHelper::post('disburse/rule-promo-payment-gateway/report', ['id_rule_promo_payment_gateway'=> $id, 'export' => $export, 'page'=> $post['page']??1])['result']??[];
 
         if($export == 1){
             if (isset($listTrx) && !empty($listTrx)) {
                 $dt = [
                     'detail' => $data['detail'],
-                    'list_trx' => $listTrx
+                    'list_trx' => $listTrx,
+                    'summary' => $data['summary']
                 ];
                 return Excel::download(new  ReportRulePromoPaymentGatewayBladeExport($dt),'list_transaction_promo_payment_gateway_'.date('dmYHis').'.xls');
             }
@@ -178,14 +205,12 @@ class RulePromoPaymentGatewayController extends Controller
                     $path = $request->file('import_file')->getRealPath();
                     $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
                     if(!empty($data)){
-                        $import = MyHelper::post('disburse/rule-promo-payment-gateway/validation/import', ['data' => $data,
-                            'id_rule_promo_payment_gateway' => $post['id_rule_promo_payment_gateway'],
-                            'start_date_periode' => $post['start_date_periode'],
-                            'end_date_periode' => $post['end_date_periode']]);
+                        $post['data'] = $data;
+                        $import = MyHelper::post('disburse/rule-promo-payment-gateway/validation/import', $post);
                         if(isset($import['status']) && $import['status'] == 'success'){
-                            return redirect('disburse/rule-promo-payment-gateway/validation')->withSuccess($import['result']);
+                            return redirect('disburse/rule-promo-payment-gateway/validation/report')->withSuccess(['Success upload data']);
                         }else{
-                            return redirect('disburse/rule-promo-payment-gateway/validation')->withErrors(['Failed import data']);
+                            return redirect('disburse/rule-promo-payment-gateway/validation')->withErrors(['Failed import data'])->withInput();
                         }
                     }
             }
@@ -202,6 +227,17 @@ class RulePromoPaymentGatewayController extends Controller
             'menu_active'    => 'disburse-promo-pg',
             'submenu_active' => 'disburse-promo-pg-validation-report',
         ];
+        if(Session::has('filter-list-promo-pg-validation') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-list-promo-pg-validation');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-list-promo-pg-validation');
+        }
+
         $list = MyHelper::post('disburse/rule-promo-payment-gateway/validation/report', $post);
 
         if (isset($list['result']['data']) && !empty($list['result']['data'])) {
@@ -217,6 +253,12 @@ class RulePromoPaymentGatewayController extends Controller
             $data['dataUpTo']      = 0;
             $data['dataPaginator'] = false;
         }
+
+        if($post){
+            Session::put('filter-list-promo-pg-validation',$post);
+        }
+
+        $data['list_promo_payment_gateway'] = MyHelper::post('disburse/rule-promo-payment-gateway', ['all_data' => 1])['result']??[];
 
         return view('disburse::promo_payment_gateway.validation_report', $data);
     }
@@ -234,6 +276,91 @@ class RulePromoPaymentGatewayController extends Controller
             return view('disburse::promo_payment_gateway.validation_report_detail', $data);
         }else{
             return redirect('disburse/rule-promo-payment-gateway/validation/report')->withErrors($update['messages']??['Failed get detail validation']);
+        }
+    }
+
+    function validationTemplate(){
+        $arr['All Type'] = [
+            [
+                'id_reference' => '0000001',
+                'amount' => 50000,
+                'cashback' => 5000
+            ],
+            [
+                'id_reference' => '0000002',
+                'amount' => 60000,
+                'cashback' => 4000
+            ],
+            [
+                'id_reference' => '0000003',
+                'amount' => 50000,
+                'cashback' => 3000
+            ],
+            [
+                'id_reference' => '0000004',
+                'amount' => 100000,
+                'cashback' => 5000
+            ],
+        ];
+        $data = new MultisheetExport($arr);
+        return Excel::download($data,'template validation promo payment gateway.xls');
+    }
+
+    function promoPaymentGatewayListTransaction(Request $request){
+        $post = $request->except('_token');
+
+        $data = [
+            'title'          => 'Rule Promo Payment Gateway',
+            'sub_title'      => 'Rule Promo Payment Gateway List Transaction',
+            'menu_active'    => 'disburse-promo-pg',
+            'submenu_active' => 'disburse-promo-pg-list-trx'
+        ];
+        if(Session::has('filter-list-promo-pg-list-trx') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-list-promo-pg-list-trx');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-list-promo-pg-list-trx');
+        }
+
+        $list = MyHelper::post('disburse/rule-promo-payment-gateway/report', $post);
+
+        if (isset($list['result']['data']) && !empty($list['result']['data'])) {
+            $data['data']          = $list['result']['data'];
+            $data['dataTotal']     = $list['result']['total'];
+            $data['dataPerPage']   = $list['result']['from'];
+            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
+        }else {
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        if($post){
+            Session::put('filter-list-promo-pg-list-trx',$post);
+        }
+
+        $data['list_promo_payment_gateway'] = MyHelper::post('disburse/rule-promo-payment-gateway', ['all_data' => 1])['result']??[];
+
+        return view('disburse::promo_payment_gateway.list_transaction', $data);
+    }
+
+    function downloadFile($id){
+        $data = MyHelper::post('disburse/rule-promo-payment-gateway/validation/report/detail', ['id_promo_payment_gateway_validation' => $id]);
+
+        if(isset($data['status']) && $data['status'] == 'success'){
+            $filename = 'validation_promo_pg_'.strtotime(date('Ymdhis')).'.xlsx';
+            $tempImage = tempnam(sys_get_temp_dir(), $filename);
+            copy($data['result']['file'], $tempImage);
+            return response()->download($tempImage, $filename)->deleteFileAfterSend(true);
+        }else{
+            return redirect('disburse/rule-promo-payment-gateway/validation/report/detail/'.$id)->withErrors(['File not found']);
         }
     }
 }
