@@ -1151,6 +1151,10 @@ $grantedFeature     = session('granted_features');
 														<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][$x-1]['promotion_count_push'])}} </div>
 														<div class="uppercase profile-stat-text"><a onclick="modalSentList('push',{{$result['contents'][$x-1]['id_promotion_content']}})"> Push Notification Count </a></div>
 													</div>
+													<div class="col-md-12">
+														<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][$x-1]['count_push_click_at'])}} </div>
+														<div class="uppercase profile-stat-text"> Push Clicked</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -1733,6 +1737,11 @@ $grantedFeature     = session('granted_features');
 									<div class="col-md-12">
 										<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][0]['promotion_count_push'])}} </div>
 										<div class="uppercase profile-stat-text"><a onclick="modalSentList('push',{{$result['contents'][0]['id_promotion_content']}})"> Push Count </a></div>
+									</div>
+
+									<div class="col-md-12">
+										<div class="uppercase profile-stat-title font-red bold"> {{number_format($result['contents'][0]['count_push_click_at'])}} </div>
+										<div class="uppercase profile-stat-text"> Push Clicked</div>
 									</div>
 								</div>
 							</div>
