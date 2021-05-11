@@ -38,9 +38,35 @@ class ModifierController extends Controller
         $types         = MyHelper::get('product/modifier/type')['result'] ?? [];
         $data['types'] = array_map(function ($q) {return [$q, $q];}, $types);
         $data['modifiers'] = MyHelper::post('product/modifier?page=' . $page, $post)['result'] ?? [];
-        $data['total']     = $data['modifiers']['total'];
-        $data['next_page'] = $data['modifiers']['next_page_url'] ? url()->current() . '?page=' . ($page + 1) : '';
-        $data['prev_page'] = $data['modifiers']['prev_page_url'] ? url()->current() . '?page=' . ($page - 1) : '';
+        
+        $data['products'] = array_map(function ($q) {
+        	return [$q['id_product'], $q['product_code'].'-'.$q['product_name']];
+        }, MyHelper::get('product/be/list')['result'] ?? []);
+
+        $data['categories'] = array_map(function ($q) {
+        	return [$q['id_product_category'], $q['product_category_name']];
+        }, MyHelper::get('product/category/be/list')['result'] ?? []);
+
+        $data['brands'] = array_map(function ($q) {
+        	return [$q['id_brand'], $q['name_brand']];
+        }, MyHelper::get('brand')['result'] ?? []);
+
+		if (!empty($data['modifiers']['data'])) {
+            $data['mod']          = $data['modifiers']['data'];
+            $data['modTotal']     = $data['modifiers']['total'];
+            $data['modPerPage']   = $data['modifiers']['from'];
+            $data['modUpTo']      = $data['modifiers']['from'] + count($data['modifiers']['data'])-1;
+            $data['modPaginator'] = new LengthAwarePaginator($data['modifiers']['data'], $data['modifiers']['total'], $data['modifiers']['per_page'], $data['modifiers']['current_page'], ['path' => url()->current()]);
+        }
+        else {
+            $data['mod']          = [];
+            $data['modTotal']     = 0;
+            $data['modPerPage']   = 0;
+            $data['modUpTo']      = 0;
+            $data['modPaginator'] = false;
+        }
+
+        $data['total']     = $data['modifiers']['total'] ?? 0;
         return view('product::modifier.list', $data);
     }
 

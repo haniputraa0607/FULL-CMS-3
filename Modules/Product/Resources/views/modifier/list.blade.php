@@ -5,7 +5,7 @@
 
  ?>
  @extends('layouts.main')
-@include('list_filter')
+@include('filter-v3')
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -51,12 +51,28 @@
             },
             modifier_type :{
                 display:'Scope',
-                operator:[],
-                opsi:[
-                    ['Global','Global'],
+                operator:[
+                	['Global','Global'],
                     ['Global Brand','Global Brand'],
-                    ['Specific','Specific']
-                ]
+                    ['id_product','Specific Product'],
+                    ['id_product_category','Specific Category'],
+                    ['id_brand','Specific Brand']
+                ],
+                opsi:{
+                	'id_product': {
+                		type: 'select',
+                		opsi: {!!json_encode($products)!!}
+                	},
+                	'id_product_category': {
+                		type: 'select',
+                		opsi: {!!json_encode($categories)!!}
+                	},
+                	'id_brand': {
+                		type: 'select',
+                		opsi: {!!json_encode($brands)!!}
+                	}
+                },
+                type: 'select_operator'
             },
             type :{
                 display:'Type',
@@ -184,11 +200,12 @@
             </table>
             <div class="col-md-offset-8 col-md-4 text-right">
                 <div class="pagination">
-                    <ul class="pagination">
-                         <li class="page-first{{$prev_page?'':' disabled'}}"><a href="{{$prev_page?:'javascript:void(0)'}}">«</a></li>
-                        
-                         <li class="page-last{{$next_page?'':' disabled'}}"><a href="{{$next_page?:'javascript:void(0)'}}">»</a></li>
-                    </ul>
+	            	@if(isset($modPerPage) && isset($modUpTo) && isset($modTotal))
+		                Showing {{$modPerPage}} to {{$modUpTo}} of {{ $modTotal }} entries<br>
+		            @endif
+		            @if ($modPaginator)
+		                {{ $modPaginator->links() }}
+		            @endif
                 </div>
             </div>
         </div>
