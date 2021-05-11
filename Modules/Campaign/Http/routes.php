@@ -13,8 +13,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'campaign
 	Route::any('sms/outbox/page/{page}', ['middleware' => 'config_control:50,52', 'uses' => 'CampaignController@smsOutbox']);
 	Route::any('sms/outbox/detail/{id}', ['middleware' => 'config_control:50,52', 'uses' => 'CampaignController@smsOutboxDetail']);
 	
-	Route::any('push/outbox', ['middleware' => 'config_control:50,53', 'uses' => 'CampaignController@pushOutbox']);
-	Route::any('push/outbox/page/{page}', ['middleware' => 'config_control:50,53', 'uses' => 'CampaignController@pushOutbox']);
+	Route::any('push/outbox', ['middleware' => 'config_control:50,53', 'uses' => 'CampaignController@pushOutboxV2']);
+	Route::any('push/outbox/page/{page}', ['middleware' => 'config_control:50,53', 'uses' => 'CampaignController@pushOutboxV2']);
 	Route::any('push/outbox/detail/{id}', ['middleware' => 'config_control:50,53', 'uses' => 'CampaignController@pushOutboxDetail']);
 	
     Route::any('whatsapp/outbox', ['middleware' => 'config_control:50,51', 'uses' => 'CampaignController@whatsappList']);

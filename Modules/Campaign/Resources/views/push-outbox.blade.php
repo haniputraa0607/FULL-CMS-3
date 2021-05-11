@@ -76,7 +76,8 @@
 				<div class="col-md-12" style="padding-left:0px;padding-right:0px;margin-top:20px;margin-bottom:15px">
 					<div class="col-md-6" style="padding: 0px;">
 						<form action="" method="POST">
-						<input type="text" class="form-control" name="push_sent_subject" placeholder="Search Push Notitication Content" @if(isset($post['push_sent_subject']) && $post['push_sent_subject'] != "") value = "{{$post['push_sent_subject']}}" @endif>
+						<input type="text" class="form-control" name="push_sent_subject" placeholder="Search Push Notitication Subject" @if(isset($post['push_sent_subject']) && $post['push_sent_subject'] != "") value = "{{$post['push_sent_subject']}}" @endif autocomplete="off">
+						<input type="hidden" name="filter" value="1">
 					</div>
 					<div class="col-md-1" style="padding: 0px;">
 						{{ csrf_field() }}
@@ -84,32 +85,10 @@
 						</form>
 					</div>
 					<div class="col-md-1" style="padding: 0px;">
-						@if(isset($post['push_sent_subject']) && $post['push_sent_subject'] != "")<a href="{{url('campaign')}}" class="btn red">Reset Search</a>@endif
-					</div>
-					<div class="col-md-4" style="padding: 0px;">
-						<div class="pull-right pagination" style="margin-top: 0px;margin-bottom: 0px;">
-							<ul class="pagination" style="margin-top: 0px;margin-bottom: 0px;">
-							@if(isset($post['push_sent_subject']) && $post['push_sent_subject'] != "")
-							@else
-								@if($post['skip'] > 0)
-									<li class="page-first"><a href="{{url('campaign')}}/push/outbox/page/{{(($post['skip'] + $post['take'])/$post['take'])-1}}">«</a></li>
-								@else
-									<li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
-								@endif
-
-								@if(isset($count) && $count > (($post['skip']+1) * $post['take']))
-									<li class="page-last"><a href="{{url('campaign')}}/push/outbox/page/{{(($post['skip'] + $post['take'])/$post['take'])+1}}">»</a></li>
-								@else
-									<li class="page-last disabled"><a href="javascript:void(0)">»</a></li>
-								@endif
-
-							@endif
-							</ul>
-						</div>
+						@if(isset($post['push_sent_subject']) && $post['push_sent_subject'] != "")<a href="{{url('campaign/push/outbox')}}" class="btn red">Reset Search</a>@endif
 					</div>
 				</div>
 				<div class="table-scrollable">
-					@if(isset($result) && $result != '')
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
@@ -122,9 +101,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($result as $key => $data)
+						@if(!empty($campaignPush))
+							@foreach($campaignPush as $key => $data)
 							<tr>
-								<td>{{(($post['skip'] + $post['take']) - $post['take'])+($key+1)}}</td>
+								<td>{{($post['page'] - 1) * 15 + $key + 1}}</td>
 								<td>{{$data['push_sent_to']}}</td>
 								<td>{{$data['push_sent_subject']}}</td>
 								<td>@if($data['push_sent_send_at'] != "")
@@ -142,10 +122,16 @@
 								</td>
 							</tr>
 							@endforeach
+						@else
+							<tr style="text-align: center"><td colspan="6">No Data Available</td></tr>
+						@endif
 						</tbody>
 					</table>
-					@else
-						No Push Notification Outbox Found
+				</div>
+				<br>
+				<div style="text-align: right">
+					@if ($campaignPushPaginator)
+						{{ $campaignPushPaginator->links() }}
 					@endif
 				</div>
 			</div>
