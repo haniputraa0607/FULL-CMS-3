@@ -117,6 +117,7 @@
 								<th>To</th>
 								<th>Subject</th>
 								<th>Send At</th>
+								<th>Click At</th>
 								<th width=10%>Action</th>
 							</tr>
 						</thead>
@@ -131,6 +132,11 @@
 									@else
 										{{date('d F Y - H:i', strtotime($data['created_at']))}}
 									@endif</td>
+								<td>
+									@if(!empty($data['click_at']))
+										{{date('d F Y - H:i', strtotime($data['click_at']))}}
+									@endif
+								</td>
 								<td>
 									<a class="btn btn-block green btn-xs" href="{{ url('campaign/push/outbox/detail') }}/{{ $data['id_campaign_push_sent'] }}"><i class="icon-magnifier"></i> Detail </a>
 								</td>
