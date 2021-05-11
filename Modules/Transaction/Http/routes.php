@@ -35,6 +35,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
         Route::any('/confirm/{id}', ['middleware' => 'feature_control:65', 'uses' => 'TransactionController@manualPaymentConfirm']);
     });
 
+    Route::post('retry-void-payment/retry', [ 'uses' => 'TransactionController@retryRefund']);
+
     Route::get('/admin/{receipt}/{phone}', 'TransactionController@adminOutlet');
     Route::get('/admin/{type}/{status}/{receipt}/{id}', 'TransactionController@adminOutletConfirm');
 
