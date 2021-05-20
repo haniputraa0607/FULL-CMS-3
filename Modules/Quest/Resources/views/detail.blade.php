@@ -1006,10 +1006,11 @@
                         @if ($data['quest']['is_complete'] != 1)
                             <form action="{{url('quest/detail/'.$data['quest']['id_quest'].'/start')}}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-success" style="float: right; " data-toggle="confirmation" data-title="Are you sure? Quests that have been started <b class='text-danger'>cannot be edited</b> any more. Make sure all data is correct before continuing this action." data-placement="left"><i class="fa fa-play"></i> Start Quest</button>
+                                <button type="submit" class="btn btn-success" style="float: right; margin-left: 5px" data-toggle="confirmation" data-title="Are you sure? Quests that have been started <b class='text-danger'>cannot be edited</b> any more. Make sure all data is correct before continuing this action." data-placement="left"><i class="fa fa-play"></i> Start Quest</button>
                             </form>
                         @endif
                     @endif
+                    <a href="{{url('quest/report/detail/'.$data['quest']['id_quest_encripted'])}}" style="float: right; " class="btn btn-info">Report Detail Quest</a>
                     <ul class="nav nav-tabs">
                         <li class="active">
                             <a href="#overview" data-toggle="tab"> Quest Overview </a>
