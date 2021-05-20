@@ -11,9 +11,11 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
+    <script src="{{ env('S3_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
@@ -158,10 +160,14 @@
                 {
                     data: 'transaction_receipt_number',
                     render: function(value, type, row) {
-                        return `
-                        <button type="button" class="btn ${row.need_manual_void == 1 ? 'yellow confirm-btn' : 'green detail-btn'} btn-sm btn-outline" data-data='${JSON.stringify(row)}'>${row.need_manual_void == 1 ? 'Confirm Process' : 'Detail Refund'}</button>
-                        <a class="btn blue btn-sm btn-outline" href="{{url('transaction/detail')}}/${row.id_transaction}/${row.trasaction_type == 'Pickup Order' ? 'pickup order' : 'delivery'}">Detail Transaction</a>
-                        `;
+                        const buttons = [
+                            `<button type="button" class="btn ${row.need_manual_void == 1 ? 'yellow confirm-btn' : 'green detail-btn'} btn-sm btn-outline" data-data='${JSON.stringify(row)}'>${row.need_manual_void == 1 ? 'Confirm Process' : 'Detail Refund'}</button>`,
+                            `<a class="btn blue btn-sm btn-outline" href="{{url('transaction/detail')}}/${row.id_transaction}/${row.trasaction_type == 'Pickup Order' ? 'pickup order' : 'delivery'}">Detail Transaction</a>`
+                        ];
+                        if (['shopeepay', 'midtrans'].includes(row.trasaction_payment_type.toLowerCase()) && row.need_manual_void == '1') {
+                            buttons.unshift(`<button type="button" class="btn green btn-sm btn-outline retry-btn" data-data='${JSON.stringify(row)}'>Retry</button>`);
+                        }
+                        return buttons.join('');
                     }
                 },
             ],
@@ -175,6 +181,25 @@
             $('#input-customer-name').val(`${data.name} (${data.phone})`);
             $('#input-receipt-number').val(data.transaction_receipt_number);
             $('#modal-confirm').modal('show');
+        });
+
+        $('#table-failed-void').on('click', '.retry-btn', function() {
+            const parent = $(this).parents('tr');
+            const data = $(this).data('data');
+            $.blockUI({ message: '<h1>Please wait...</h1>' });
+            $.post("{{url('transaction/retry-void-payment/retry')}}", {
+                id_transaction: data.id_transaction,
+                _token: "{{csrf_token()}}"
+            }, function(response) {
+                if (response.status == 'success') {
+                    toastr.info('Success');
+                } else {
+                    toastr.error(response.messages?.join('<br />'));
+                }
+                $.blockUI({ message: '<h1>Reloading table...</h1>' });
+                $('#table-retry-failed-void').DataTable().ajax.reload(null, false);
+                $.unblockUI();
+            });
         });
 
         $('#table-failed-void').on('click', '.detail-btn', function() {

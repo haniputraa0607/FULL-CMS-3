@@ -1808,4 +1808,10 @@ class TransactionController extends Controller
         }
     }
 
+    public function retryRefund(Request $request)
+    {
+        $post = $request->except('_token');
+        $response = MyHelper::post('transaction/retry-void-payment/retry', $post);
+        return $response;
+    }
 }
