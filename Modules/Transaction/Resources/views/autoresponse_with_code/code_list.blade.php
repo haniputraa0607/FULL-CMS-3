@@ -180,10 +180,10 @@ $grantedFeature     = session('granted_features');
                                     @endif
                                 </td>
                                 <td>
-                                    @if(MyHelper::hasAccess([308], $grantedFeature))
+                                    @if(MyHelper::hasAccess([318], $grantedFeature))
                                         <a class="btn btn-sm green" href="{{url('response-with-code/edit', $value['id_autoresponse_code'])}}"><i class="fa fa-pencil"></i></a>
                                     @endif
-                                    @if(MyHelper::hasAccess([309], $grantedFeature))
+                                    @if(MyHelper::hasAccess([319], $grantedFeature))
                                         <a class="btn btn-sm red sweetalert-delete btn-primary" data-id="{{ $value['id_autoresponse_code'] }}" data-name="{{ $value['autoresponse_code_name'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
                                 </td>
