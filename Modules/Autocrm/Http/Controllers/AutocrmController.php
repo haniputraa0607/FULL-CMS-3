@@ -235,6 +235,15 @@ class AutocrmController extends Controller
                 ];
                 break;
 
+            case 'quest-completed':
+                $data['click_inbox'] = [
+                    ['value' => "Quest",'title' => 'Quest']
+                ];
+                $data['click_notification'] = [
+                    ['value' => "Quest",'title' => 'Quest']
+                ];
+            	break;
+
         	default:
         		# code...
         		break;

@@ -2163,6 +2163,11 @@
 						</li>
 						@endif
 						@if(MyHelper::hasAccess([122], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'quest-autoresponse-quest-completed') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/quest/quest-completed')}}" class="nav-link ">
+								<span class="title">[Response] Quest Completed</span>
+							</a>
+						</li>
 						<li class="nav-item {{($submenu_active == 'quest-autoresponse-receive-quest-point') ? 'active open' : ''}}">
 							<a href="{{url('autoresponse/quest/receive-quest-point')}}" class="nav-link ">
 								<span class="title">[Response] Receive Quest Point</span>
