@@ -87,11 +87,17 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
             Route::post('update/{id}', 'RulePromoPaymentGatewayController@update');
             Route::post('delete', 'RulePromoPaymentGatewayController@delete');
             Route::post('start', 'RulePromoPaymentGatewayController@start');
+            Route::post('mark-as-valid', 'RulePromoPaymentGatewayController@markAsValid');
             Route::any('report/{id}', 'RulePromoPaymentGatewayController@reportListTransaction');
 
             Route::any('validation', 'RulePromoPaymentGatewayController@validation');
+            Route::get('validation/template', 'RulePromoPaymentGatewayController@validationTemplate');
             Route::any('validation/report', 'RulePromoPaymentGatewayController@validationReport');
             Route::get('validation/report/detail/{id}', 'RulePromoPaymentGatewayController@validationReportDetail');
+            Route::get('validation/report/download/{id}', 'RulePromoPaymentGatewayController@downloadFile');
+
+            Route::any('list-trx', 'RulePromoPaymentGatewayController@promoPaymentGatewayListTransaction');
+
         });
     });
 });

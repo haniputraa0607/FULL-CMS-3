@@ -31,19 +31,6 @@
             'todayHighlight' : true,
             'autoclose' : true
         });
-        
-        function exportData() {
-            var id_promo_payment_gateway_validation = $('#id_rule_promo_payment_gateway').val();
-            var start_date_periode = $('#start_date_periode').val();
-            var end_date_periode = $('#end_date_periode').val();
-            if(id_promo_payment_gateway_validation == ""){
-                toastr.warning("Please select promo payment gateway");
-            }else{
-                $('#export').val(1);
-                $('#form-validation').submit();
-                $('#export').val(0);
-            }
-        }
     </script>
 @endsection
 
@@ -77,20 +64,21 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <div class="m-heading-1 border-green m-bordered">
-                <p>Data export yang ditampilkan adalah data berdasarkan promo dan periode promo yang telah dipilih.</p>
-            </div>
-            <br>
-
             <form class="form-horizontal" role="form" id="form-validation" action="{{url('disburse/rule-promo-payment-gateway/validation')}}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Template Excel</label>
+                        <div class="col-md-8">
+                            <a href="{{url('disburse/rule-promo-payment-gateway/validation/template')}}"><i class="fa fa-download"></i> template validation promo payment gateway.xls</a>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label"> Periode Promo
                             <i class="fa fa-question-circle tooltips" data-original-title="promo yang akan di validasi dengan tanggal tertentu" data-container="body"></i></label>
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control datepicker" id="start_date_periode" name="start_date_periode" value="{{ old('start_date_periode') }}" autocomplete="off">
+                                    <input type="text" class="form_datetime form-control datepicker" id="start_date_periode" name="start_date_periode" value="{{ old('start_date_periode') }}" autocomplete="off" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -105,7 +93,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control datepicker" id="end_date_periode" name="end_date_periode" value="{{ old('end_date_periode') }}" autocomplete="off">
+                                    <input type="text" class="form_datetime form-control datepicker" id="end_date_periode" name="end_date_periode" value="{{ old('end_date_periode') }}" autocomplete="off" required>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -119,11 +107,23 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Reference by <span class="text-danger">*</span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="pengecekan berdasarkan data receipt number atau id payment" data-container="body"></i>
+                        </label>
+                        <div class="col-md-5">
+                            <select  class="form-control select2" id="reference_by" name="reference_by" data-placeholder="Select Reference by" required>
+                                <option></option>
+                                <option value="transaction_receipt_number" @if(old('reference_by') == 'transaction_receipt_number') selected @endif>Receipt Number</option>
+                                <option value="id_payment" @if(old('reference_by') == 'id_payment') selected @endif>ID Payment Gateway</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Promo <span class="text-danger">*</span>
                             <i class="fa fa-question-circle tooltips" data-original-title="pilih promo yang akan divalidasi" data-container="body"></i>
                         </label>
                         <div class="col-md-5">
-                            <select  class="form-control select2" id="id_rule_promo_payment_gateway" name="id_rule_promo_payment_gateway" data-placeholder="Select" required>
+                            <select  class="form-control select2" id="id_rule_promo_payment_gateway" name="id_rule_promo_payment_gateway" data-placeholder="Select Promo" required>
                                 <option></option>
                                 @foreach($list_promo_payment_gateway as $value)
                                     <option value="{{$value['id_rule_promo_payment_gateway']}}" @if(old('id_rule_promo_payment_gateway') == $value['id_rule_promo_payment_gateway']) selected @endif>{{$value['name']}}</option>
@@ -158,9 +158,6 @@
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-3"></div>
-                        <div class="col-md-2">
-                            <a onclick="exportData()" class="btn green-jungle"><i class="fa fa-download"></i> Export Data</a>
-                        </div>
                         <div class="col-md-4">
                             <button type="submit" class="btn blue">Submit</button>
                         </div>

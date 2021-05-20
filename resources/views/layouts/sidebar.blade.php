@@ -2929,6 +2929,11 @@
 								<span class="title">Promo Payment Gateway List</span>
 							</a>
 						</li>
+							<li class="nav-item {{($submenu_active == 'disburse-promo-pg-list-trx') ? 'active open' : ''}}">
+								<a href="{{url('disburse/rule-promo-payment-gateway/list-trx')}}" class="nav-link ">
+									<span class="title">Promo Payment Gateway List Transaction</span>
+								</a>
+							</li>
 						<li class="nav-item {{($submenu_active == 'disburse-promo-pg-validation') ? 'active open' : ''}}">
 							<a href="{{url('disburse/rule-promo-payment-gateway/validation')}}" class="nav-link ">
 								<span class="title">Promo Payment Gateway Validation</span>

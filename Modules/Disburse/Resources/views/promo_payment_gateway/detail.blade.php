@@ -83,7 +83,31 @@
         }
 
         function changeCashbackType(val) {
-            $('#maximum_cashback').val('');
+            if(val == 'Nominal'){
+                document.getElementById('cashback_nominal').style.display = 'block';
+                document.getElementById('cashback_percent_value').style.display = 'none';
+                document.getElementById('maximum_cashback').style.display = 'none';
+
+                $("#input_cashback_nominal").prop('disabled', false);
+                $("#input_cashback_percent_value").prop('disabled', true);
+                $("#input_maximum_cashback").prop('disabled', true);
+
+                document.getElementById('input_cashback_nominal').style.required = false;
+                document.getElementById('input_cashback_percent_value').style.required = true;
+                document.getElementById('input_maximum_cashback').style.required = true;
+            }else{
+                document.getElementById('cashback_nominal').style.display = 'none';
+                document.getElementById('cashback_percent_value').style.display = 'block';
+                document.getElementById('maximum_cashback').style.display = 'block';
+
+                $("#input_cashback_nominal").prop('disabled', true);
+                $("#input_cashback_percent_value").prop('disabled', false);
+                $("#input_maximum_cashback").prop('disabled', false);
+
+                document.getElementById('input_cashback_nominal').style.required = true;
+                document.getElementById('input_cashback_percent_value').style.required = false;
+                document.getElementById('input_maximum_cashback').style.required = false;
+            }
             $('#charged_type').val(val);
         }
 
@@ -121,6 +145,39 @@
                                     });
                                 });
                         })
+                    });
+
+                    $(".sweetalert-validate").each(function() {
+                        var token  	= "{{ csrf_token() }}";
+                        let column 	= $(this).parents('tr');
+                        let id     	= $(this).data('id');
+                        let name    = $(this).data('name');
+                        $(this).click(function() {
+                            swal({
+                                    title: name+"\n\nAre you sure want to mark as valid this rule promo payment gateway?",
+                                    text: "Your will not be able to recover this data!",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonClass: "btn-primary",
+                                    confirmButtonText: "Yes, start it!",
+                                    closeOnConfirm: false
+                                },
+                                function(){
+                                    $.ajax({
+                                        type : "POST",
+                                        url : "{{ url('disburse/rule-promo-payment-gateway/mark-as-valid') }}",
+                                        data : "_token="+token+"&id_rule_promo_payment_gateway="+id,
+                                        success : function(result) {
+                                            if (result.status == "success") {
+                                                swal("Success!", "Success to mark as valid.", "success")
+                                                location.href = "{{url('disburse/rule-promo-payment-gateway/detail')}}/"+id;
+                                            }else {
+                                                swal("Error!", "Something went wrong. Failed to mark as valid.", "error")
+                                            }
+                                        }
+                                    });
+                                });
+                        })
                     })
                 }
             }
@@ -152,22 +209,90 @@
         </ul>
     </div><br>
 
+    <a href="{{url('disburse/rule-promo-payment-gateway')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
+
     @include('layouts.notifications')
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 red">
+                <div class="visual">
+                    <i class="fa fa-bar-chart-o"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ $summary['total_transaction']??0 }}">{{ number_format($summary['total_transaction']??0) }}</span>
+                    </div>
+                    <div class="desc"> Total Transaction </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 green">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ $summary['total_amount']??0 }}">{{ number_format($summary['total_amount']??0) }}</span>
+                    </div>
+                    <div class="desc"> Total Amount </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 purple">
+                <div class="visual">
+                    <i class="fa fa-globe"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ $summary['total_cashback']??0 }}">{{ number_format($summary['total_cashback']??0) }}</span>
+                    </div>
+                    <div class="desc"> Total Cashback </div>
+                </div>
+            </a>
+        </div>
+    </div>
 
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
                 <span class="caption-subject sbold uppercase font-blue">Detail Rule Promo Payment Gateway</span>
             </div>
-            @if($detail['start_status'] != 1)
+
             <div class="actions">
+                @if($detail['start_status'] != 1)
                 <a class="btn green-jungle sweetalert-start" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"></i> Start Promo</a>
+                @endif
+                @if($detail['validation_status'] != 1)
+                    <a class="btn green sweetalert-validate" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"></i> Mark as valid</a>
+                @endif
             </div>
-            @endif
         </div>
         <div class="portlet-body form">
             <form class="form-horizontal" role="form" action="{{url('disburse/rule-promo-payment-gateway/update')}}/{{$detail['id_rule_promo_payment_gateway']}}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Start Status</label>
+                        <div class="col-md-4">
+                            @if($detail['start_status'] == 1)
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
+                            @else
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not started</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Validation Status</label>
+                        <div class="col-md-4">
+                            @if($detail['validation_status'] == 1)
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #4bbf5e;padding: 5px 12px;color: #fff;">Already to validation</span>
+                            @else
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #d6cece;padding: 5px 12px;color: #fff;">Not yet validated</span>
+                            @endif
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">ID <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="ID rule promo payment gateway" data-container="body"></i>
@@ -182,9 +307,9 @@
                         <label class="col-md-3 control-label">Name <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Name rule promo payment gateway" data-container="body"></i>
                         </label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Name" class="form-control" name="name" value="{{ $detail['name'] }}" required>
+                                <input type="text" placeholder="Name" class="form-control" name="name" value="{{ $detail['name']}}" required>
                             </div>
                         </div>
                     </div>
@@ -209,7 +334,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control datepicker" name="start_date" value="{{ date('d-M-Y', strtotime($detail['start_date'])) }}" required autocomplete="off">
+                                    <input type="text" class="form_datetime form-control datepicker" name="start_date" value="{{ $detail['start_date'] }}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -224,7 +349,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control datepicker" name="end_date" value="{{ date('d-M-Y', strtotime($detail['end_date'])) }}" required autocomplete="off">
+                                    <input type="text" class="form_datetime form-control datepicker" name="end_date" value="{{ $detail['end_date'] }}" required autocomplete="off">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -248,28 +373,44 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Additional Limit
-                            <i class="fa fa-question-circle tooltips" data-original-title="rule tambahan untuk limit promo" data-container="body"></i>
+                        <label class="col-md-3 control-label">Additional Limit Per Day
+                            <i class="fa fa-question-circle tooltips" data-original-title="rule tambahan untuk limit promo per hari" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Limit" class="form-control" name="limit_promo_additional" value="{{ $detail['limit_promo_additional'] }}">
+                                <input type="text" placeholder="Additional Limit Per Day" class="form-control" name="limit_promo_additional_day" value="{{ $detail['limit_promo_additional_day'] }}">
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Additional Limit Per Week
+                            <i class="fa fa-question-circle tooltips" data-original-title="rule tambahan untuk limit promo per minggu" data-container="body"></i>
+                        </label>
                         <div class="col-md-4">
-                            <select  class="form-control select2" name="limit_promo_additional_type" data-placeholder="Type" onchange="changeAdditionalType(this.value)">
-                                <option></option>
-                                <option value="day" @if($detail['limit_promo_additional_type'] == 'day') selected @endif>Limit maximum per day</option>
-                                <option value="week" @if($detail['limit_promo_additional_type'] == 'week') selected @endif>Limit maximum per week</option>
-                                <option value="month" @if($detail['limit_promo_additional_type'] == 'month') selected @endif>Limit maximum per month</option>
-                                <option value="account" @if($detail['limit_promo_additional_type'] == 'account') selected @endif>Limit maximum per account</option>
-                            </select>
+                            <div class="input-icon right">
+                                <input type="text" placeholder="Additional Limit Per Week" class="form-control" name="limit_promo_additional_week" value="{{ $detail['limit_promo_additional_week'] }}">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group" @if($detail['limit_promo_additional_type'] != 'account') style="display: none" @endif id="type_user_limit_per_account">
-                        <label class="col-md-3 control-label">Type user for limit maximum per account
-                            <i class="fa fa-question-circle tooltips" data-original-title="Type user fot limit maximum per account" data-container="body"></i>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Additional Limit Per Month
+                            <i class="fa fa-question-circle tooltips" data-original-title="rule tambahan untuk limit promo per bulan" data-container="body"></i>
                         </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <input type="text" placeholder="Additional Limit Per Month" class="form-control" name="limit_promo_additional_month" value="{{ $detail['limit_promo_additional_month'] }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Additional Limit Per Account
+                            <i class="fa fa-question-circle tooltips" data-original-title="rule tambahan untuk limit promo per akun" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <input type="text" placeholder="Additional Limit Per Account" class="form-control" name="limit_promo_additional_account" value="{{ $detail['limit_promo_additional_account'] }}">
+                            </div>
+                        </div>
                         <div class="col-md-4">
                             <select  class="form-control select2" name="limit_promo_additional_account_type" id="select_additional_account_type" data-placeholder="Type">
                                 <option></option>
@@ -283,36 +424,65 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="jumlah cashback" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
-                            <select  class="form-control select2" name="cashback_type" data-placeholder="Cashback Type" required onchange="changeCashbackType(this.value)">
-                                <option></option>
-                                <option value="Percent" @if($detail['cashback_type'] == 'Percent') selected @endif>Percent</option>
-                                <option value="Nominal" @if($detail['cashback_type'] == 'Nominal') selected @endif>Nominal</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <input type="text" placeholder="Cashback" class="form-control" name="cashback" value="@if($detail['cashback_type'] == 'Nominal') {{ number_format($detail['cashback'],0,",","") }} @else {{ $detail['cashback'] }} @endif" required>
+                            <div class="mt-radio-list">
+                                <label class="mt-radio mt-radio-outline"> Nominal
+                                    <input type="radio" value="Nominal" name="cashback_type" @if($detail['cashback_type'] == "Nominal") checked @endif required onclick="changeCashbackType(this.value)"/>
+                                    <span></span>
+                                </label>
+                                <label class="mt-radio mt-radio-outline"> Percent
+                                    <input type="radio" value="Percent" name="cashback_type" @if($detail['cashback_type'] == "Percent") checked @endif required onclick="changeCashbackType(this.value)"/>
+                                    <span></span>
+                                </label>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" @if($detail['cashback_type'] == 'Percent') style="display: none" @endif id="cashback_nominal">
+                        <label class="col-md-3 control-label">Cashback Nominal
+                            <i class="fa fa-question-circle tooltips" data-original-title="jumlah cashback dalam nominal" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    IDR
+                                </span>
+                                <input type="text" class="form-control price"  id="input_cashback_nominal" placeholder="Cashback Nominal" name="cashback" @if($detail['cashback_type'] == 'Percent') disabled @endif value="{{($detail['cashback_type'] == 'Percent' ? NULL: (int)$detail['cashback'])}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" @if($detail['cashback_type'] == 'Nominal') style="display: none" @endif id="cashback_percent_value">
+                        <label class="col-md-3 control-label">Cashback Percent Value
+                            <i class="fa fa-question-circle tooltips" data-original-title="jumlah cashback dalam persen" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control"  id="input_cashback_percent_value" placeholder="Cashback Percent Value" name="cashback" @if($detail['cashback_type'] == 'Nominal') disabled @endif value="{{($detail['cashback_type'] == 'Nominal' ? NULL: $detail['cashback'])}}">
+                                <span class="input-group-addon">
+                                    %
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" @if($detail['cashback_type'] == 'Nominal') style="display: none" @endif id="maximum_cashback">
                         <label class="col-md-3 control-label">Maximum Cashback
                             <i class="fa fa-question-circle tooltips" data-original-title="maximum cashback" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
-                            <div class="input-icon right">
-                                <input type="text" class="form-control price" id="maximum_cashback" placeholder="Maximum Cashback" name="maximum_cashback" value="{{ $detail['maximum_cashback'] }}">
+                            <div class="input-group">
+                                 <span class="input-group-addon">
+                                    IDR
+                                </span>
+                                <input type="text" class="form-control price"  id="input_maximum_cashback" placeholder="Maximum Cashback" id="maximum_cashback" name="maximum_cashback" @if($detail['cashback_type'] == 'Nominal') disabled value="" @else value="{{ $detail['maximum_cashback'] }}" @endif>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Minimum Transaksi <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="minimum transaksi" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="minimum transaksi yang dibayarkan customer ke Payment Gateway (sudah dikurang diskon dan pembayaran menggunakan point)" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    >=
+                                    IDR
                                 </span>
                                 <input type="text" class="form-control price"  placeholder="Minimum transaksi" name="minimum_transaction" value="{{ $detail['minimum_transaction'] }}" required>
                             </div>
@@ -328,24 +498,44 @@
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Charged <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="pembagian fee untuk pihak payment gateway dan jiwa point" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="pembagian fee promo yang akan ditanggung oleh pihak Payment Gateway dan Jiwa Group" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
-                            <input type="text" placeholder="Charged Payment Gateway" class="form-control" name="charged_payment_gateway" value="@if($detail['charged_type'] == 'Nominal') {{ number_format($detail['charged_payment_gateway'],0,",","") }} @else {{ $detail['charged_payment_gateway'] }} @endif" required>
+                            <div class="input-group">
+                                <input type="text" placeholder="Charged Payment Gateway" class="form-control" name="charged_payment_gateway" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_payment_gateway']:$detail['charged_payment_gateway'])}}" required>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Charged Payment Gateway :  fee yang akan ditanggung oleh Payment Gateway" data-container="body"  style="color: black"></i>
+                                </span>
+                            </div>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" placeholder="Charged Jiwa Group" class="form-control" name="charged_jiwa_group" value="@if($detail['charged_type'] == 'Nominal') {{ number_format($detail['charged_jiwa_group'],0,",","") }} @else {{ $detail['charged_jiwa_group'] }} @endif" required>
+                            <div class="input-group">
+                                <input type="text" placeholder="Charged Jiwa Group" class="form-control" name="charged_jiwa_group" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_jiwa_group']:$detail['charged_jiwa_group'])}}" required>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Charged Jiwa Group :  fee yang akan ditanggung oleh jiwa group" data-container="body"  style="color: black"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Charged Central & <br>Outlet <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="yang ditanggung pihak central dan outlet" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="pembagian fee promo yang akan ditanggung oleh pihak Jiwa Group dan outlet" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
-                            <input type="text" placeholder="Charged Central" class="form-control" name="charged_central" value="@if($detail['charged_type'] == 'Nominal') {{ number_format($detail['charged_central'],0,",","") }} @else {{ $detail['charged_central'] }} @endif" required>
+                            <div class="input-group">
+                                <input type="text" placeholder="Charged Central" class="form-control" name="charged_central" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_central']:$detail['charged_central'])}}" required>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Charged Central :  fee yang akan ditanggung oleh jiwa group" data-container="body"  style="color: black"></i>
+                                </span>
+                            </div>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" placeholder="Charged Outlet" class="form-control" name="charged_outlet" value="@if($detail['charged_type'] == 'Nominal') {{ number_format($detail['charged_outlet'],0,",","") }} @else {{ $detail['charged_outlet'] }} @endif" required>
+                            <div class="input-group">
+                                <input type="text" placeholder="Charged Outlet" class="form-control" name="charged_outlet" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_outlet']:$detail['charged_outlet'])}}" required>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Charged Outlet :  fee yang akan ditanggung oleh outlet" data-container="body"  style="color: black"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">

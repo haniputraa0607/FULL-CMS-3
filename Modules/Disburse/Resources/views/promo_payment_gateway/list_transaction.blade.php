@@ -1,3 +1,7 @@
+<?php
+use App\Lib\MyHelper;
+$grantedFeature     = session('granted_features');
+?>
 @extends('layouts.main')
 
 @section('page-style')
@@ -11,6 +15,7 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
@@ -25,6 +30,7 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('content')
@@ -50,103 +56,71 @@
 
     @include('layouts.notifications')
 
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue"> Promo Payment Gateway Validation Report Detail</span>
-            </div>
-        </div>
-        <div class="portlet-body">
-            <table style="width: 100%;">
-                <tr>
-                    <td width="25%">Validation by</td>
-                    <td>: {{$detail['admin_name']}} ({{date('d M Y H:i', strtotime($detail['created_at']))}})</td>
-                </tr>
-                <tr>
-                    <td width="25%">ID</td>
-                    <td>: {{$detail['promo_payment_gateway_code']}}</td>
-                </tr>
-                <tr>
-                    <td width="25%">Name</td>
-                    <td>: {{$detail['name']}}</td>
-                </tr>
-                <tr>
-                    <td width="25%">Reference by</td>
-                    <td>:
-                        @if($detail['reference_by'] == 'transaction_receipt_number')
-                            Receipt Number
-                        @else
-                            ID Payment
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td>File</td>
-                    <td>: <a href="{{url('disburse/rule-promo-payment-gateway/validation/report/download', $detail['id_rule_promo_payment_gateway'])}}"><i class="fa fa-download"></i> Download File</a></td>
-                </tr>
-                <tr>
-                    <td>Periode</td>
-                    <td>: {{date('d-M-Y', strtotime($detail['start_date']))}} / {{date('d-M-Y', strtotime($detail['end_date']))}}</td>
-                </tr>
-                <tr>
-                    <td>Correct Get Promo</td>
-                    <td>: {{$detail['correct_get_promo']}}</td>
-                </tr>
-                <tr>
-                    <td>Not Get Promo</td>
-                    <td>: {{$detail['not_get_promo']}}</td>
-                </tr>
-                <tr>
-                    <td>Must Get Promo</td>
-                    <td>: {{$detail['must_get_promo']}}</td>
-                </tr>
-                <tr>
-                    <td>Wrong Get Promo</td>
-                    <td>: {{$detail['wrong_cashback']}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+    <?php
+    $date_start = '';
+    $date_end = '';
+
+    if(Session::has('filter-list-promo-pg-list-trx')){
+        $search_param = Session::get('filter-list-promo-pg-list-trx');
+        if(isset($search_param['rule'])){
+            $rule = $search_param['rule'];
+        }
+
+        if(isset($search_param['conditions'])){
+            $conditions = $search_param['conditions'];
+        }
+    }
+    ?>
+
+    <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
+        {{ csrf_field() }}
+        @include('disburse::promo_payment_gateway.filter_list_trx')
+        <br>
+    </form>
 
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue"> List Transaction</span>
+                <span class="caption-subject sbold uppercase font-blue">Promo Payment Gateway List Transaction</span>
             </div>
         </div>
         <div class="portlet-body form">
-            <table class="table table-striped table-bordered table-hover dt-responsive" id="data_list">
-                <thead>
-                <tr>
-                    <th> Receipt Number </th>
-                    <th> Validation Status </th>
-                    <th> Cashback New </th>
-                    <th> Cashback Old </th>
-                </tr>
-                </thead>
-                <tbody>
-                @if(!empty($detail['list_detail']))
-                    @foreach($detail['list_detail'] as $key => $res)
-                        <tr style="background-color: #fbfbfb;">
-                            <?php
-                            $status = [
-                                'correct_get_promo' => 'Correct Get Promo',
-                                'not_get_promo' => 'Not Get Promo',
-                                'must_get_promo' => 'Must Get Promo'
-                            ];
-                            ?>
-                            <td> {{ $res['transaction_receipt_number'] }} </td>
-                            <td> {{ $status[$res['validation_status']]??''}} </td>
-                            <td> {{ $res['new_cashback'] }} </td>
-                            <td> {{ $res['old_cashback'] }} </td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr style="text-align: center"><td colspan="5">Data Not Available</td></tr>
-                @endif
-                </tbody>
-            </table>
+            <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
+                <table class="table table-striped table-bordered table-hover dt-responsive" id="data_list">
+                    <thead>
+                    <tr>
+                        <th> Promo </th>
+                        <th> Customer name</th>
+                        <th> Customer phone</th>
+                        <th> Customer account PG</th>
+                        <th> Receipt number </th>
+                        <th> Amount </th>
+                        <th> Chasback Received </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(!empty($data))
+                        @foreach($data as $key => $res)
+                            <tr style="background-color: #fbfbfb;">
+                                <td> {{ $res['name'] }} </td>
+                                <td> {{ $res['customer_name'] }} </td>
+                                <td> {{ $res['customer_phone'] }} </td>
+                                <td> {{ $res['payment_gateway_user'] }} </td>
+                                <td> <a target="_blank" href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/all">{{ $res['transaction_receipt_number'] }}</a> </td>
+                                <td> {{ number_format($res['amount'],2,",",".") }} </td>
+                                <td> {{ number_format($res['total_received_cashback'],2,",",".") }} </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr style="text-align: center"><td colspan="10">Data Not Available</td></tr>
+                    @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
+        @if ($dataPaginator)
+            {{ $dataPaginator->links() }}
+        @endif
     </div>
 
 @endsection

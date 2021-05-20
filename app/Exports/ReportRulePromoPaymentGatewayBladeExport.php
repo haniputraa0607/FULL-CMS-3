@@ -19,7 +19,8 @@ class ReportRulePromoPaymentGatewayBladeExport implements FromView
     {
         return view('disburse::promo_payment_gateway.export_list_transaction', [
             'detail' => $this->data['detail'],
-            'data' => $this->data['list_trx']
+            'data' => $this->data['list_trx'],
+            'summary' => $this->data['summary']
         ]);
     }
 }

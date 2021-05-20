@@ -103,6 +103,28 @@ $grantedFeature     = session('granted_features');
 
     @include('layouts.notifications')
 
+    <?php
+    $date_start = '';
+    $date_end = '';
+
+    if(Session::has('filter-list-rule-promo-pg')){
+        $search_param = Session::get('filter-list-rule-promo-pg');
+        if(isset($search_param['rule'])){
+            $rule = $search_param['rule'];
+        }
+
+        if(isset($search_param['conditions'])){
+            $conditions = $search_param['conditions'];
+        }
+    }
+    ?>
+
+    <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
+        {{ csrf_field() }}
+        @include('disburse::promo_payment_gateway.filter_rule')
+        <br>
+    </form>
+
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
@@ -114,7 +136,8 @@ $grantedFeature     = session('granted_features');
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th style="width: 100px"> Status Start </th>
+                        <th style="width: 100px"> Start Status </th>
+                        <th style="width: 100px"> Validation Status </th>
                         <th style="width: 100px"> ID </th>
                         <th style="width: 100px"> Name </th>
                         <th style="width: 100px"> Payment Gateway </th>
@@ -130,9 +153,16 @@ $grantedFeature     = session('granted_features');
                             <tr>
                                 <td>
                                     @if($value['start_status'] == 1)
-                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Already to started</span>
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
                                     @else
                                         <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not started</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($value['validation_status'] == 1)
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #4bbf5e;padding: 5px 12px;color: #fff;">Already to validation</span>
+                                    @else
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #d6cece;padding: 5px 12px;color: #fff;">Not yet validated</span>
                                     @endif
                                 </td>
                                 <td>{{$value['promo_payment_gateway_code']}}</td>
@@ -159,6 +189,9 @@ $grantedFeature     = session('granted_features');
                 </table>
             </div>
         </div>
+        @if ($dataPaginator)
+            {{ $dataPaginator->links() }}
+        @endif
     </div>
 
 @endsection
