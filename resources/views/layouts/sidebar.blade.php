@@ -1118,7 +1118,7 @@
 			</li>
 			@endif
 
-			@if(MyHelper::hasAccess([306,307,308,309], $grantedFeature))
+			@if(MyHelper::hasAccess([316,317,318,319], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'response-with-code') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="fa fa-qrcode"></i>
@@ -1126,7 +1126,7 @@
 						<span class="arrow {{($menu_active == 'response-with-code') ? 'open' : ''}}"></span>
 					</a>
 					<ul class="sub-menu">
-						@if(MyHelper::hasAccess([308], $grantedFeature))
+						@if(MyHelper::hasAccess([318], $grantedFeature))
 							<li class="nav-item {{($submenu_active == 'order-taken-with-code') ? 'active open' : ''}}">
 								<a href="{{url('transaction/autoresponse/order-taken-with-code')}}" class="nav-link ">
 									<span class="title">[Response] Order Taken With Code</span>
@@ -1138,14 +1138,14 @@
 								</a>
 							</li>
 						@endif
-						@if(MyHelper::hasAccess([307], $grantedFeature))
+						@if(MyHelper::hasAccess([317], $grantedFeature))
 							<li class="nav-item {{($submenu_active == 'response-with-code-new') ? 'active open' : ''}}">
 								<a href="{{url('response-with-code/create')}}" class="nav-link ">
 									<span class="title">New Code</span>
 								</a>
 							</li>
 						@endif
-						@if(MyHelper::hasAccess([306,308,309], $grantedFeature))
+						@if(MyHelper::hasAccess([316,318,319], $grantedFeature))
 							<li class="nav-item {{($submenu_active == 'response-with-code-list') ? 'active open' : ''}}">
 								<a href="{{url('response-with-code')}}" class="nav-link ">
 									<span class="title">Code List</span>
