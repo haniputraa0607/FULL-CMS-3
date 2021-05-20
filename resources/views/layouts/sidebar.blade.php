@@ -1118,6 +1118,44 @@
 			</li>
 			@endif
 
+			@if(MyHelper::hasAccess([306,307,308,309], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'response-with-code') ? 'active' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-qrcode"></i>
+						<span class="title">Response With Code</span>
+						<span class="arrow {{($menu_active == 'response-with-code') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([308], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'order-taken-with-code') ? 'active open' : ''}}">
+								<a href="{{url('transaction/autoresponse/order-taken-with-code')}}" class="nav-link ">
+									<span class="title">[Response] Order Taken With Code</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'order-taken-delivery-with-code') ? 'active open' : ''}}">
+								<a href="{{url('transaction/autoresponse/order-taken-delivery-with-code')}}" class="nav-link ">
+									<span class="title">[Response] Order Taken Devilery With Code</span>
+								</a>
+							</li>
+						@endif
+						@if(MyHelper::hasAccess([307], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'response-with-code-new') ? 'active open' : ''}}">
+								<a href="{{url('response-with-code/create')}}" class="nav-link ">
+									<span class="title">New Code</span>
+								</a>
+							</li>
+						@endif
+						@if(MyHelper::hasAccess([306,308,309], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'response-with-code-list') ? 'active open' : ''}}">
+								<a href="{{url('response-with-code')}}" class="nav-link ">
+									<span class="title">Code List</span>
+								</a>
+							</li>
+						@endif
+					</ul>
+				</li>
+			@endif
+
 			@if(MyHelper::hasAccess([299], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'failed-void-payment') ? 'active open' : ''}}">
 					<a href="{{url('transaction/failed-void-payment')}}" class="nav-link ">

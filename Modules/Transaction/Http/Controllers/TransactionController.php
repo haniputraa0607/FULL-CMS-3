@@ -249,7 +249,26 @@ class TransactionController extends Controller
                     ['value' => 'Subcription','title' => 'Subcription']
                 ];
                 break;
-
+            case 'order-taken-with-code':
+                $data['menu_active'] = 'response-with-code';
+                $data['submenu_active'] = 'order-taken-with-code';
+                $data['click_inbox'] = [
+                    ['value' => "History Transaction",'title' => 'History Transaction']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'History Transaction','title' => 'History Transaction']
+                ];
+                break;
+            case 'order-taken-delivery-with-code':
+                $data['menu_active'] = 'response-with-code';
+                $data['submenu_active'] = 'order-taken-delivery-with-code';
+                $data['click_inbox'] = [
+                    ['value' => "History Transaction",'title' => 'History Transaction']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'History Transaction','title' => 'History Transaction']
+                ];
+                break;
             default:
                 $data['click_inbox'] = [
                     ['value' => "History Transaction",'title' => 'History Transaction']
