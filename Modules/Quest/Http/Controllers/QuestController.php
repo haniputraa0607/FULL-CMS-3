@@ -19,9 +19,58 @@ class QuestController extends Controller
             'title'          => 'Quest',
             'sub_title'      => 'Quest List',
             'menu_active'    => 'quest',
-            'submenu_active' => 'quest-list'
+            'submenu_active' => 'quest-list',
+            'filter_title'   => 'Filter Quest',
+            // 'filter_date'    => true
         ];
-        if ($request->method() == 'POST') {
+        $post = $request->all();
+
+        if(session('list_quest_filter')){
+            $extra=session('list_quest_filter');
+            $data['rule']=array_map('array_values', $extra['rule']);
+            $data['operator']=$extra['operator'];
+        } else{
+            $extra=[
+                'rule' => [],
+                'operator' => ''
+            ];
+            $data['rule']=array_map('array_values', $extra['rule']);
+            $data['operator']=$extra['operator'];
+            $data['hide_record_total']=1;
+        }
+        
+        $dateRange = [];
+        foreach ($data['rule']??[] as $rule) {
+            if ($rule[0] == 'transaction_date') {
+                if ($rule[1] == '<=') {
+                    $dateRange[0] = $rule[2];
+                } elseif ($rule[1] == '>=') {
+                    $dateRange[1] = $rule[2];
+                }
+            }
+        }
+
+        if (count($dateRange) == 2 && $dateRange[0] == $dateRange[1] && $dateRange[0] == date('Y-m-d')) {
+            $is_today = true;
+        }
+
+        $extra['rule'][] = [
+            'subject' => 'id_outlet',
+            'operator' => '=',
+            'parameter' => session('id_outlet'),
+            'hide' => '1'
+        ];
+        if ($request->wantsJson()) {
+            // return \MyHelper::apiPost('franchise/report-transaction/product', $extra + $request->all());
+            $data = MyHelper::post('quest', $post)['result'] ?? [];
+            $data['recordsFiltered'] = $data['total'] ?? 0;
+            $data['recordsTotal'] = $data['total'] ?? 0;
+            $data['draw'] = $request->draw;
+
+            return $data;
+        }
+
+        if ($request->wantsJson()) {
             $post = $request->except('_token');
             $raw_data = MyHelper::post('quest', $post)['result'] ?? [];
             $data['data'] = $raw_data['data'];
@@ -34,6 +83,41 @@ class QuestController extends Controller
         }
 
         return view('quest::index', $data);
+    }
+
+    /**
+     * apply filter.
+     * @return Response
+     */
+    public function filter(Request $request)
+    {
+        $post = $request->all();
+
+        if(($post['rule']??false) && !isset($post['draw'])){
+            if (($post['filter_type'] ?? false) == 'today') {
+                $post['rule'][9998] = [
+                    'subject' => 'transaction_date',
+                    'operator' => '>=',
+                    'parameter' => date('Y-m-d'),
+                    'hide' => '1',
+                ];
+                $post['rule'][9999] = [
+                    'subject' => 'transaction_date',
+                    'operator' => '<=',
+                    'parameter' => date('Y-m-d'),
+                    'hide' => '1',
+                ];
+            }
+            session(['list_quest_filter'=>$post]);
+            return back();
+        }
+
+        if($post['clear']??false){
+            session(['list_quest_filter'=>null]);
+            return back();
+        }
+
+        return abort(404);
     }
 
     /**
