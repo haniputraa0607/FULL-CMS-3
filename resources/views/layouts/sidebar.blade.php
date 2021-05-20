@@ -2106,7 +2106,7 @@
 					</a>
 					<ul class="sub-menu">
 						@if(MyHelper::hasAccess([306,307,308,309,310], $grantedFeature))
-							<li class="nav-item {{(strpos($submenu_active , 'quest-voucher') !== false) ? 'active open' : ''}}">
+							<li class="nav-item {{(strpos($submenu_active , 'quest-voucher') !== false) &&  $submenu_active != 'quest-autoresponse-receive-quest-voucher'? 'active open' : ''}}">
 								<a href="javascript:;" class="nav-link nav-toggle">
 									<span class="title">Quest Voucher</span>
 									<span class="arrow"></span>

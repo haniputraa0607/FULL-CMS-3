@@ -212,6 +212,34 @@ class AutocrmController extends Controller
             ['value' => 'Home','title' => 'Home']
         ];
 
+        switch ($subject) {
+        	case 'receive-quest-point':
+                $data['click_inbox'] = [
+                    ['value' => "History Point",'title' => 'History Point'],
+                    ['value' => "Quest",'title' => 'Quest']
+                ];
+                $data['click_notification'] = [
+                    ['value' => "History Point",'title' => 'History Point'],
+                    ['value' => "Quest",'title' => 'Quest']
+                ];
+                break;
+
+            case 'receive-quest-voucher':
+                $data['click_inbox'] = [
+                    ['value' => "Voucher",'title' => 'Voucher'],
+                    ['value' => "Quest",'title' => 'Quest']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher','title' => 'Voucher'],
+                    ['value' => "Quest",'title' => 'Quest']
+                ];
+                break;
+
+        	default:
+        		# code...
+        		break;
+        }
+
 		if($auto == null) return back()->withErrors(['No such response']);
 		$data['data'] = $auto;
 		if($test['status'] == 'success'){
