@@ -88,6 +88,10 @@
 						<input type="text" class="form-control" value="{{date('d F Y H:i', strtotime($result['push_sent_send_at']))}}" readonly>
 					</div>
 					<div class="form-group">
+						<label>Click At</label>
+						<input type="text" class="form-control" value="{{ !empty($result['click_at']) ? date('d F Y H:i', strtotime($result['click_at'])) : null }}" readonly>
+					</div>
+					<div class="form-group">
 						<label>Title</label>
 						<input type="text" class="form-control" value="{{$result['push_sent_subject']}}" readonly>
 					</div>

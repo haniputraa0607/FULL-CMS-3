@@ -528,7 +528,7 @@ $configs    		= session('configs');
 	//end whatsapp content
 	$(function(){
 		$('.select-deals').change(function(){
-			var obj = '<?php echo json_encode($deals); ?>'
+			var obj = '<?php echo json_encode($deals_all); ?>'
 			var dealsList = JSON.parse(obj);
 
 			var id = $("option:selected", this).attr('data-id');
@@ -811,7 +811,7 @@ $configs    		= session('configs');
 														{{$name}}
 													@elseif($rule['subject'] == 'Deals')
 														<?php $name = null; ?>
-														@foreach($deals as $val)
+														@foreach($deals_all as $val)
 															@if($val['id_deals'] == $rule['parameter'])
 																<?php $name = $val['deals_title']; ?>
 															@endif

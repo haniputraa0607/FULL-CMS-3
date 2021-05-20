@@ -212,7 +212,7 @@ class PromotionController extends Controller
 				$data['api_key_whatsapp'] = null;
 			}
 
-            $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
+            $data['deals_all'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
             $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
             $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
 

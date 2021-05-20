@@ -895,4 +895,61 @@ class CampaignController extends Controller
 
         return $delete;
     }
+
+    public function pushOutboxV2(Request $request, $page = null)
+    {
+		$data = [ 'title'             => 'Campaign Push Notification Outbox List',
+				  'menu_active'       => 'campaign',
+				  'submenu_active'    => 'campaign-push-outbox'
+				];
+
+		$post = $request->except(['_token']);
+        $page = 1;
+        if(Session::has('search-campaign-push') && !empty($post) && !isset($post['filter'])){
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('search-campaign-push');
+        }else{
+            Session::forget('search-campaign-push');
+            $filter = true;
+        }
+
+        $post['page'] = $post['page']??$page;
+
+		$action = MyHelper::post('campaign/push/outbox/list', $post);
+
+        if (isset($action['status']) && $action['status'] == "success") {
+            if (!empty($action['result']['data'])) {
+                foreach ($action['result']['data'] as $key => $val) {
+                    $action['result']['data'][$key]['id_campaign_push_sent'] = MyHelper::createSlug($val['id_campaign_push_sent'], $val['created_at']);
+					$action['result']['data'][$key]['id_campaign'] = MyHelper::createSlug($val['id_campaign'], $val['created_at']);
+					$action['result']['data'][$key]['id_user'] = MyHelper::createSlug($val['id_user'], $val['created_at']);
+                }
+            }
+            $data['campaignPush']     = $action['result']['data'];
+            $data['campaignPushTotal']     = $action['result']['total'];
+            $data['campaignPushPerPage']   = $action['result']['from'];
+            $data['campaignPushUpTo']      = $action['result']['from'] + count($action['result']['data'])-1;
+            $data['campaignPushPaginator'] = new LengthAwarePaginator($action['result']['data'], $action['result']['total'], $action['result']['per_page'], $action['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['campaignPush']          = [];
+            $data['campaignPushTotal']     = 0;
+            $data['campaignPushPerPage']   = 0;
+            $data['campaignPushUpTo']      = 0;
+            $data['campaignPushPaginator'] = false;
+        }
+
+        if(isset($post['push_sent_subject']) && !empty($post['push_sent_subject'])){
+            Session::put('search-campaign-push',['push_sent_subject' => $post['push_sent_subject']]);
+
+            if ($filter ?? false) {
+            	return redirect('campaign/push/outbox?page=1');
+            }
+        }
+
+		$data['post'] = $post;
+
+		return view('campaign::push-outbox', $data);
+    }
 }
