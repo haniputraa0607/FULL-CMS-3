@@ -2106,7 +2106,7 @@
 					</a>
 					<ul class="sub-menu">
 						@if(MyHelper::hasAccess([306,307,308,309,310], $grantedFeature))
-							<li class="nav-item {{(strpos($submenu_active , 'quest-voucher') !== false) ? 'active open' : ''}}">
+							<li class="nav-item {{(strpos($submenu_active , 'quest-voucher') !== false) &&  $submenu_active != 'quest-autoresponse-receive-quest-voucher'? 'active open' : ''}}">
 								<a href="javascript:;" class="nav-link nav-toggle">
 									<span class="title">Quest Voucher</span>
 									<span class="arrow"></span>
@@ -2163,6 +2163,11 @@
 						</li>
 						@endif
 						@if(MyHelper::hasAccess([122], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'quest-autoresponse-quest-completed') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/quest/quest-completed')}}" class="nav-link ">
+								<span class="title">[Response] Quest Completed</span>
+							</a>
+						</li>
 						<li class="nav-item {{($submenu_active == 'quest-autoresponse-receive-quest-point') ? 'active open' : ''}}">
 							<a href="{{url('autoresponse/quest/receive-quest-point')}}" class="nav-link ">
 								<span class="title">[Response] Receive Quest Point</span>

@@ -20,15 +20,19 @@
                                                 <span class="sale-info"> Status 
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
-                                                @if ($data['quest']['stop_at'])
-                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Stopped</span>
-                                                @elseif ($data['quest']['date_start'] < date('Y-m-d H:i:s') && $data['quest']['is_complete'])
-                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                                                @elseif (!is_null($data['quest']['date_end']) && $data['quest']['date_end'] > date('Y-m-d H:i:s') && $data['quest']['is_complete'])
-                                                    <span class="sale-num sbold badge badge-pill" style="font-size: 20px!important;height: 30px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
-                                                @else
-                                                    <span class="sale-num sbold badge badge-pill secondary" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Not Started</span>
-                                                @endif
+                                                <?php
+                                                    if ($data['quest']['stop_at']) {
+                                                        echo '<span class="sale-num sbold badge badge-pill badge bg-red" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Stop</span>';
+                                                    } else if (!$data['quest']['is_complete']) {
+                                                        echo '<span class="sale-num sbold badge badge-pill badge badge-secondary" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Pending</span>';
+                                                    } else if ($data['quest']['date_start'] > date('Y-m-d H:i:s')) {
+                                                        echo '<span class="sale-num sbold badge badge-pill badge bg-yellow" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">Not Started</span>';
+                                                    } else if ($data['quest']['publish_end'] >= date('Y-m-d H:i:s')) {
+                                                        echo '<span class="sale-num sbold badge badge-pill badge bg-green-jungle" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">On Going</span>';
+                                                    } else if ($data['quest']['publish_end'] < date('Y-m-d H:i:s')) {
+                                                        echo '<span class="sale-num sbold badge badge-pill badge bg-red" style="font-size: 20px!important;height: 30px!important;padding: 5px 12px;color: #fff;">End</span>';
+                                                    }
+                                                ?>
                                             </li>
                                             <li>
                                                 <span class="sale-info"> Autoclaim 
