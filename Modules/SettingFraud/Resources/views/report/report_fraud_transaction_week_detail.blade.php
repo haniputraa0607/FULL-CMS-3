@@ -168,7 +168,6 @@
                             <th scope="col"> Outlet </th>
                             <th scope="col"> Transaction Date </th>
                             <th scope="col"> Transaction Time </th>
-                            <th scope="col"> Point </th>
                             <th scope="col"> Grand Total </th>
                         </tr>
                         </thead>
@@ -201,7 +200,6 @@
                                     <td>{{$val['outlet']['outlet_name']}}</td>
                                     <td>{{date("d F Y", strtotime($val['transaction_date']))}}</td>
                                     <td>{{date("H:i", strtotime($val['transaction_date']))}}</td>
-                                    <td>{{$val['balance']}}</td>
                                     <td>{{ number_format($val['transaction_grandtotal'], 2) }}</td>
                                 </tr>
                             @endforeach
