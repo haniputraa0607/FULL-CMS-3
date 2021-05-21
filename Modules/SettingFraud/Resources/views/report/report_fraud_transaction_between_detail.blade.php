@@ -269,7 +269,6 @@
                             <th scope="col"> User Name </th>
                             <th scope="col"> User Phone </th>
                             <th scope="col"> Outlet </th>
-                            <th scope="col"> Point </th>
                             <th scope="col"> Grand Total </th>
                         </tr>
                         </thead>
@@ -281,7 +280,6 @@
                                     <td>{{$val['user']['name']}}</td>
                                     <td>{{$val['user']['phone']}}</td>
                                     <td>{{$val['outlet_name']}}</td>
-                                    <td>{{$val['transaction_cashback_earned']}}</td>
                                     <td>{{ number_format($val['transaction_grandtotal'], 2) }}</td>
                                 </tr>
                             @endforeach
