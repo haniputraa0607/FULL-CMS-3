@@ -61,6 +61,7 @@ $grantedFeature     = session('granted_features');
                 ['>=','>=']
             ],
             opsi:[],
+            type:'date'
         },
         name:{
             display:'Name',
@@ -75,10 +76,11 @@ $grantedFeature     = session('granted_features');
             display:'Status',
             operator:[],
             opsi:[
+                ['pending', 'Pending'],
                 ['not_started', 'Not Started'],
-                ['started', 'Started'],
-                ['ended', 'Ended'],
-                ['stopped', 'Stopped'],
+                ['on_going', 'On Going'],
+                ['end', 'End'],
+                ['stop', 'Stop'],
             ],
             type:'multiple_select',
             placeholder: 'Select Quest Status'
@@ -95,8 +97,9 @@ $grantedFeature     = session('granted_features');
         benefit_deals:{
             display:'Benefit Deals',
             operator:[],
-            opsi:[
-            ],
+            opsi:{!!json_encode(array_map(function($item) {
+                return [$item['id_deals'], $item['deals_title']];
+            }, $deals))!!},
             type:'multiple_select',
             placeholder: 'Select Benefit Deals'
         },
@@ -178,7 +181,8 @@ $grantedFeature     = session('granted_features');
                             return '<span class="badge bg-red">End</span>'
                         }
                         return '';
-                    }
+                    },
+                    orderable: false
                 },
                 {
                     data: 'publish_start',
@@ -211,7 +215,8 @@ $grantedFeature     = session('granted_features');
                             <a href="javascript:;" onclick="removeQuest(this, ${value})" class="btn red btn-sm"> Remove </a>
                             @endif
                         `;
-                    }
+                    },
+                    orderable: false
                 },
             ],
             searching: false
