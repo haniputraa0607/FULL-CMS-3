@@ -61,7 +61,7 @@
 				html += `<optgroup label="${i}">`;
 				rules[i].forEach(x => {
 					if (rule.type == 'multiple_select') {
-						if(selected.includes(x[0])){
+						if(selected.includes(x[0].toString())){
 							html += optionWriter(x[0],x[1],'selected');
 						}else{
 							html += optionWriter(x[0],x[1]);
@@ -78,10 +78,18 @@
 			}
 		} else {
 			rules.forEach(function(x){
-				if(selected==x[0]){
-					html+=optionWriter(x[0],x[1],'selected');
-				}else{
-					html+=optionWriter(x[0],x[1]);
+				if (rule.type == 'multiple_select') {
+					if(selected.includes(x[0].toString())){
+						html += optionWriter(x[0],x[1],'selected');
+					}else{
+						html += optionWriter(x[0],x[1]);
+					}
+				} else {
+					if(selected==x[0]){
+						html += optionWriter(x[0],x[1],'selected');
+					}else{
+						html += optionWriter(x[0],x[1]);
+					}
 				}
 			});
 		}
