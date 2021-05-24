@@ -116,5 +116,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'response
     Route::post('update/{id}', [ 'middleware' => 'feature_control:308', 'uses' => 'AutoresponseCodeController@update']);
     Route::post('delete/code', [ 'middleware' => 'feature_control:309', 'uses' => 'AutoresponseCodeController@deleteCode']);
     Route::post('delete/autoresponse-code', [ 'middleware' => 'feature_control:309', 'uses' => 'AutoresponseCodeController@deleteAutoresponsecode']);
+    Route::get('export-example', [ 'uses' => 'AutoresponseCodeController@exportExample']);
 });
 
