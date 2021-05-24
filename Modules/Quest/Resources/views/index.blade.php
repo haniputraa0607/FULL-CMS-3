@@ -105,9 +105,15 @@ $grantedFeature     = session('granted_features');
         },
         benefit_point:{
             display:'Benefit Point',
-            operator:[],
+            operator:[
+                ['=','='],
+                ['<','<'],
+                ['>','>'],
+                ['<=','<='],
+                ['>=','>=']
+            ],
             opsi:[],
-            type:'Number',
+            type:'number',
             append_text:'Point'
         },
         user_type:{
