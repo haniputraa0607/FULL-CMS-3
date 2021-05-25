@@ -869,7 +869,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 								<div class="col-md-9">
 									<select name="autocrm_push_clickto" id="autocrm_push_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'push')">
 										@foreach($click_notification as $val)
-											<option value="{{$val['value']}}" @if(isset($result['autocrm_push_clickto']) && $result['autocrm_push_clickto'] == $val['value']) selected @endif>{{$val['title']}}</option>
+											<option value="{{$val['value']}}" @if(isset($data['autocrm_push_clickto']) && $data['autocrm_push_clickto'] == $val['value']) selected @endif>{{$val['title']}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -954,7 +954,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 								<div class="col-md-9">
 									<select name="autocrm_inbox_clickto" id="autocrm_inbox_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
 										@foreach($click_inbox as $val)
-											<option value="{{$val['value']}}" @if(isset($result['autocrm_inbox_clickto']) && $result['autocrm_inbox_clickto'] == $val['value']) selected @endif>{{$val['title']}}</option>
+											<option value="{{$val['value']}}" @if(isset($data['autocrm_inbox_clickto']) && $data['autocrm_inbox_clickto'] == $val['value']) selected @endif>{{$val['title']}}</option>
 										@endforeach
 									</select>
 								</div>
