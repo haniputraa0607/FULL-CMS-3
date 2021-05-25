@@ -347,6 +347,11 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-4">Charged Payment Gateway</div>
+                        <div class="col-md-4">Charged Jiwa Group</div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Charged <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="pembagian fee promo yang akan ditanggung oleh pihak Payment Gateway dan Jiwa Group" data-container="body"></i>
                         </label>
@@ -366,6 +371,11 @@
                                 </span>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-4">Charged Central</div>
+                        <div class="col-md-4">Charged Outlet</div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Charged Central & <br>Outlet <span class="required" aria-required="true"> * </span>

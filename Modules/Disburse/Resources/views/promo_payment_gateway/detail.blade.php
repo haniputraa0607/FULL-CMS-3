@@ -121,8 +121,9 @@
                         let name    = $(this).data('name');
                         $(this).click(function() {
                             swal({
-                                    title: name+"\n\nAre you sure want to start this rule promo payment gateway?",
-                                    text: "Your will not be able to recover this data!",
+                                    title: name+"\n\n Pastikan rule yang diinputkan pada promo yang dibuat sudah sesuai,\n" +
+                                        "karena data promo yang sudah di-start tidak dapat diubah lagi!",
+                                    text: "",
                                     type: "warning",
                                     showCancelButton: true,
                                     confirmButtonClass: "btn-primary",
@@ -265,7 +266,7 @@
                 @if($detail['start_status'] != 1)
                 <a class="btn green-jungle sweetalert-start" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"></i> Start Promo</a>
                 @endif
-                @if($detail['validation_status'] != 1)
+                @if($detail['start_status']== 1 && $detail['validation_status'] != 1 && $detail['start_date'] <= date('Y-m-d'))
                     <a class="btn green sweetalert-validate" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"></i> Mark as valid</a>
                 @endif
             </div>
@@ -276,10 +277,14 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label">Start Status</label>
                         <div class="col-md-4">
-                            @if($detail['start_status'] == 1)
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                            @else
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not started</span>
+                            @if(empty($detail['start_status']))
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #d6cece;padding: 5px 12px;color: #fff;">Pending</span>
+                            @elseif( !empty($detail['end_date']) && $detail['end_date'] < date('Y-m-d') )
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
+                            @elseif( empty($detail['start_date']) || $detail['start_date'] <= date('Y-m-d') )
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">On Going</span>
+                            @elseif($detail['start_date'] > date('Y-m-d'))
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #fef647;padding: 5px 12px;color: #fff;">Not Started</span>
                             @endif
                         </div>
                     </div>
@@ -497,6 +502,11 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-4">Charged Payment Gateway</div>
+                        <div class="col-md-4">Charged Jiwa Group</div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Charged <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="pembagian fee promo yang akan ditanggung oleh pihak Payment Gateway dan Jiwa Group" data-container="body"></i>
                         </label>
@@ -516,6 +526,11 @@
                                 </span>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-4">Charged Central</div>
+                        <div class="col-md-4">Charged Outlet</div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Charged Central & <br>Outlet <span class="required" aria-required="true"> * </span>

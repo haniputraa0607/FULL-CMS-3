@@ -63,6 +63,13 @@
                 <span class="caption-subject sbold uppercase font-blue">Promo Payment Gateway Validation</span>
             </div>
         </div>
+        <div class="m-heading-1 border-green m-bordered">
+            <ul>
+                <li><p>Feature ini digunakan untuk memvalidasi promo pada transaksi. Data yang ada pada excel hanya data transaksi yang mendapatkan promo.</p></li>
+                <li><p>Validasi cashback ada 2 pilihan yaitu "Check Cashback" dan "Not Check Cashback".
+                    Jika memilih "Not Check Cashback" maka data cashback tidak wajib untuk dimasukkan pada excel.</p></li>
+            </ul>
+        </div>
         <div class="portlet-body form">
             <form class="form-horizontal" role="form" id="form-validation" action="{{url('disburse/rule-promo-payment-gateway/validation')}}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
@@ -115,6 +122,18 @@
                                 <option></option>
                                 <option value="transaction_receipt_number" @if(old('reference_by') == 'transaction_receipt_number') selected @endif>Receipt Number</option>
                                 <option value="id_payment" @if(old('reference_by') == 'id_payment') selected @endif>ID Payment Gateway</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Validation Cashback Type <span class="text-danger">*</span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="proses validasi akan mengecek data cashback atau tidak" data-container="body"></i>
+                        </label>
+                        <div class="col-md-5">
+                            <select  class="form-control select2" id="validation_cashback_type" name="validation_cashback_type" data-placeholder="Select Validation Cashback Type" required>
+                                <option></option>
+                                <option value="Check Cashback" @if(old('validation_cashback_type') == 'Check Cashback') selected @endif>Check Cashback</option>
+                                <option value="Not Check Cashback" @if(old('validation_cashback_type') == 'Not Check Cashback') selected @endif>Not Check Cashback</option>
                             </select>
                         </div>
                     </div>
