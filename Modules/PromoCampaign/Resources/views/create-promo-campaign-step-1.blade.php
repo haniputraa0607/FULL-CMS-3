@@ -60,11 +60,9 @@
     	let arr = [];
     	do {
 			permut = permut * total_set;
-			console.log([permut, total_set]);
 			total_set -= 1; 
 		}
 		while (total_set > limit);
-		console.log(permut, total_set, each);
 
 		return permut;
     }
@@ -165,7 +163,8 @@
 				$(':input[type="submit"]').prop('disabled', false);
 				$('#totalCoupon').removeClass( "has-error" );
 				$('#alertTotalCoupon').hide();
-				$('#singleCode').show()
+				$('#singleCode').show().find('input').prop('required', true);
+				$('#multipleCode').hide().find('input').prop('required', false);
 				$('#singlePromoCode').prop('required', true);
 				$('#singlePromoCode').keyup(function() {	
 					$('#singlePromoCode').val(function () {
@@ -196,7 +195,8 @@
 					});
 				}, 1000));
 			} else {
-				$('#multipleCode').show()
+				$('#singleCode').hide().find('input').prop('required', false);
+				$('#multipleCode').show().find('input').prop('required', true);
 				$('#number_last_code').show()
 				$('input[name=total_coupon]').val('')
 				$('#multipleNumberLastCode').prop('required', true);
@@ -296,7 +296,6 @@
 						maxCharDigit = 28;
 						// hitungKemungkinan = Math.pow(maxCharDigit, $('#multipleNumberLastCode').val())
 						hitungKemungkinan = permut(maxCharDigit, $('#multipleNumberLastCode').val());
-						console.log([hitungKemungkinan, $('#multipleNumberLastCode').val(), $('input[name=total_coupon]').inputmask('unmaskedvalue')]);
 						if (hitungKemungkinan >= $('input[name=total_coupon]').inputmask('unmaskedvalue')) {
 							$(':input[type="submit"]').prop('disabled', false);
 							$('#totalCoupon').removeClass( "has-error" );
@@ -610,6 +609,14 @@
 									<p id="alertSinglePromoCode" style="display: none;" class="help-block">Kode sudah pernah dibuat!</p>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="control-label">Limit Usage (Penggunaan Per User)</label>
+								<span class="required" aria-required="true"> * </span>
+								<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo untuk tiap user. Tulis 0 jika tidak ada limit." data-container="body"></i>
+								<div class="input-group col-md-12">
+									<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" value="{{ old('limitation_usage') ?? $result['limitation_usage'] ?? null }}" autocomplete="off">
+								</div>
+							</div>
 						</div>
 						<div id="multipleCode">
 							<div class="form-group" id="alertMultipleCode">
@@ -643,13 +650,19 @@
 									<span id="exampleCode2"></span>
 								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label">Limit Usage (Penggunaan Per User)</label>
-							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo untuk tiap user. Tulis 0 jika tidak ada limit." data-container="body"></i>
-							<div class="input-group col-md-12">
-								<input required type="text" class="form-control digit_mask" name="limitation_usage" placeholder="Limit Usage" value="{{ old('limitation_usage') ?? $result['limitation_usage'] ?? null }}" autocomplete="off">
+							<div class="form-group">
+								<label class="control-label">User Limit (Penggunaan Per User)</label>
+								<i class="fa fa-question-circle tooltips" data-original-title="Limit berapa kali satu user dapat menggunakan kode promo yang berbeda. Tulis 0 jika tidak ada limit." data-container="body"></i>
+								<div class="input-group col-md-12">
+									<input required type="text" class="form-control digit_mask" name="user_limit" placeholder="User Limit" value="{{ old('user_limit') ?? $result['user_limit'] ?? null }}" autocomplete="off">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label">Code Limit (Penggunaan Per Code)</label>
+								<i class="fa fa-question-circle tooltips" data-original-title="Limit berapa kali satu kode promo dapat digunakan. Tulis 0 jika tidak ada limit." data-container="body"></i>
+								<div class="input-group col-md-12">
+									<input required type="text" class="form-control digit_mask" name="code_limit" placeholder="Code Limit" value="{{ old('code_limit') ?? $result['code_limit'] ?? null }}" autocomplete="off">
+								</div>
 							</div>
 						</div>
 						<div class="form-group" id="totalCoupon">
