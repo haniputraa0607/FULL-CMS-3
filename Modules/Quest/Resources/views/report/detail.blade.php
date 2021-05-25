@@ -145,7 +145,7 @@
             <div class="portlet profile-info portlet light bordered info-section">
                 <div class="portlet-title" style="display: flex;">
                     <span class="caption font-blue sbold uppercase">
-                        &nbsp;&nbsp;{{$detail['info']['name']}}
+                        {{$detail['info']['name']}}
                     </span>
                 </div>
                 <div class="portlet sale-summary">
