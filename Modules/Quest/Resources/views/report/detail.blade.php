@@ -18,6 +18,9 @@
         .font-black {
             color: #333!important;
         }
+        .rule-child-section {
+        	overflow-y: scroll;
+        }
     </style>
 @endsection
 
@@ -43,6 +46,7 @@
     <script>
         $(document).ready(function () {
             datatables();
+            setRuleHeight();
         });
 
         function datatables(){
@@ -104,6 +108,12 @@
             });
         }
 
+        function setRuleHeight(){
+        	let info_section_height = $('.info-section').height();
+            $('.rule-section').height(info_section_height);
+            $('.rule-child-section').height(info_section_height-75);
+        }
+
     </script>
 @endsection
 
@@ -132,9 +142,8 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div class="portlet profile-info portlet light bordered">
+            <div class="portlet profile-info portlet light bordered info-section">
                 <div class="portlet-title" style="display: flex;">
-                	<img src="{{ env('STORAGE_URL_API').$detail['info']['image'] }}" style="width: 40px;height: 40px;" class="img-responsive" alt="">
                     <span class="caption font-blue sbold uppercase">
                         &nbsp;&nbsp;{{$detail['info']['name']}}
                     </span>
@@ -201,6 +210,14 @@
                             	{{ $detail['info']['total_user_complete'] }}
                             </span>
                         </li>
+                        <li>
+                        	<span class="sale-info"> Image
+                                <i class="fa fa-img-up"></i>
+                            </span>
+                            <span class="sale-num font-black">
+                        		<img src="{{ env('STORAGE_URL_API').$detail['info']['image'] }}" style="width: 150px;" class="img-responsive" alt="">
+                            </span>
+                        </li>
                     	<li>
                             <span class="sale-info"> Short Description
                                 <i class="fa fa-img-up"></i>
@@ -212,41 +229,13 @@
 	                </ul>
                 </div>
             </div>
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <span class="caption-subject font-blue sbold uppercase">List User</span>
-                    </div>
-                    <div style="text-align: right" id="export-excel">
-                        <a class="btn btn-primary" href="{{ url('quest/report/list-user/'.$detail['info']['id_quest_enc']) }}?export=1"><i class="fa fa-file-export"></i> Export Excel</a>
-                    </div>
-                </div>
-                <div class="portlet-body form">
-                    <table class="table table-striped table-bordered table-hover" id="tableListUser">
-                        <thead>
-                        <tr>
-                            <th scope="col" width="30%"> Name </th>
-                            <th scope="col" width="30%"> Phone </th>
-                            <th scope="col" width="30%"> Email </th>
-                            <th scope="col" width="30%"> Date Claim </th>
-                            <th scope="col" width="30%"> Date Complete </th>
-                            <th scope="col" width="10%"> Date Claim Benefit </th>
-                            <th scope="col" width="25%"> Status </th>
-                            <th scope="col" width="25%"> Claim Benefit Status </th>
-                            <th scope="col" width="25%"> Total Rule Complete</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbodyListUser"></tbody>
-                    </table>
-                </div>
-            </div>
         </div>
         <div class="col-md-6 profile-info">
-        	<div class="profile-info portlet light bordered">
+        	<div class="profile-info portlet light bordered rule-section">
         		<div class="portlet-title"> 
         			<span class="caption font-blue sbold uppercase">{{$detail['info']['name']}} Rule </span>
         		</div>
-        		<div class="portlet-body row">
+        		<div class="portlet-body row rule-child-section">
         			@foreach ($detail['rule'] as $item)
 	        			<div class="col-md-12 profile-info">
 	        				<div class="profile-info portlet light bordered">
@@ -348,6 +337,36 @@
         			@endforeach
         		</div>
         	</div>
-        </div>        
+        </div>
+        <div class="col-md-12">
+        	<div class="portlet light bordered list-user-section">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue sbold uppercase">List User</span>
+                    </div>
+                    <div style="text-align: right" id="export-excel">
+                        <a class="btn btn-primary" href="{{ url('quest/report/list-user/'.$detail['info']['id_quest_enc']) }}?export=1"><i class="fa fa-file-export"></i> Export Excel</a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <table class="table table-striped table-bordered table-hover" id="tableListUser">
+                        <thead>
+                        <tr>
+                            <th scope="col" width="30%"> Name </th>
+                            <th scope="col" width="30%"> Phone </th>
+                            <th scope="col" width="30%"> Email </th>
+                            <th scope="col" width="30%"> Date Claim </th>
+                            <th scope="col" width="30%"> Date Complete </th>
+                            <th scope="col" width="10%"> Date Claim Benefit </th>
+                            <th scope="col" width="25%"> Status </th>
+                            <th scope="col" width="25%"> Claim Benefit Status </th>
+                            <th scope="col" width="25%"> Total Rule Complete</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbodyListUser"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>     
     </div>
 @endsection
