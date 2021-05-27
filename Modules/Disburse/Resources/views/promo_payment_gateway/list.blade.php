@@ -152,10 +152,14 @@ $grantedFeature     = session('granted_features');
                         @foreach($data as $value)
                             <tr>
                                 <td>
-                                    @if($value['start_status'] == 1)
-                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>
-                                    @else
-                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Not started</span>
+                                    @if(empty($value['start_status']))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #d6cece;padding: 5px 12px;color: #fff;">Pending</span>
+                                    @elseif( !empty($value['end_date']) && $value['end_date'] < date('Y-m-d') )
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
+                                    @elseif( empty($value['start_date']) || $value['start_date'] <= date('Y-m-d') )
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">On Going</span>
+                                    @elseif($value['start_date'] > date('Y-m-d'))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #fef647;padding: 5px 12px;color: #fff;">Not Started</span>
                                     @endif
                                 </td>
                                 <td>
@@ -174,7 +178,7 @@ $grantedFeature     = session('granted_features');
                                 <td>
                                     @if(MyHelper::hasAccess([312,314], $grantedFeature))
                                         <a target="_blank" class="btn btn-sm green-jungle" href="{{url('disburse/rule-promo-payment-gateway/report', $value['id_rule_promo_payment_gateway'])}}"><i class="fa fa-bar-chart"></i></a>
-                                        <a class="btn btn-sm green" href="{{url('disburse/rule-promo-payment-gateway/detail', $value['id_rule_promo_payment_gateway'])}}"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-sm green" href="{{url('disburse/rule-promo-payment-gateway/detail', $value['id_rule_promo_payment_gateway'])}}"><i class="fa fa-search"></i></a>
                                     @endif
                                     @if(MyHelper::hasAccess([315], $grantedFeature) && $value['start_status'] != 1)
                                         <a class="btn btn-sm red sweetalert-delete btn-primary" data-id="{{ $value['id_rule_promo_payment_gateway'] }}" data-name="{{ $value['name'] }}"><i class="fa fa-trash-o"></i></a>

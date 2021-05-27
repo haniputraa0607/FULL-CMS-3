@@ -141,10 +141,10 @@ $grantedFeature     = session('granted_features');
                         <th style="width: 100px"> Admin Name </th>
                         <th style="width: 100px"> Promo </th>
                         <th style="width: 100px"> Periode </th>
-                        <th style="width: 100px"> Correct Get Promo </th>
-                        <th style="width: 100px"> Not Get Promo </th>
-                        <th style="width: 100px"> Must Get Promo </th>
-                        <th style="width: 100px"> Wrong Cashback </th>
+                        <th style="width: 100px"> Correct Get Promo <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah data yang sesuai untuk transaksi yang mendapatkan promo" data-skin="dark" style="color: #0000007a"></i></th>
+                        <th style="width: 100px"> Not Get Promo <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah transaksi yang di sistem Jiwa+ mendapatkan promo tetapi berdasarkan file validasi dari PG tidak mendapatkan promo (pada sistem Jiwa+ di-update menjadi tidak mendapatkan promo)" data-skin="dark" style="color: #0000007a"></i></th>
+                        <th style="width: 100px"> Must Get Promo <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah transaksi yang di sistem Jiwa+ tidak mendapatkan promo tetapi berdasarkan file validasi dari PG mendapatkan promo (pada sistem Jiwa+ di-update menjadi mendapatkan promo)" data-skin="dark" style="color: #0000007a"></i></th>
+                        <th style="width: 100px"> Wrong Cashback <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah transaksi dengan nilai cashback yang tidak sesuai (nilai cashback di-update berdasarkan nilai cashback dari file validasi)" data-skin="dark" style="color: #0000007a"></i></th>
                         <th style="width: 100px"> Action </th>
                     </tr>
                     </thead>
