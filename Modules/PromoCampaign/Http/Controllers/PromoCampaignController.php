@@ -233,10 +233,10 @@ class PromoCampaignController extends Controller
             $return['recordsTotal'] = $getPromoCampaignCoupon['total'];
             $return['recordsFiltered'] = $getPromoCampaignCoupon['count'];
             $return['data'] = array_map(function($x){
-                $status = $x['usage'] == 0 ? 'Not used' : ($x['usage'] == $x['limitation_usage'] ? 'Used' : 'Available');
+                $status = $x['usage'] == 0 ? 'Not used' : ($x['usage'] == $x['code_limit'] ? 'Used' : 'Available');
                 $used = $x['usage'] != 0 ? $x['usage'] : '';
-                $available = $x['limitation_usage'] != 0 ? $x['limitation_usage'] - $x['usage'] : 'Unlimited';
-                $max_usage = $x['limitation_usage'] != 0 ? $x['limitation_usage'] : 'Unlimited';
+                $available = $x['code_limit'] != 0 ? $x['code_limit'] - $x['usage'] : 'Unlimited';
+                $max_usage = $x['code_limit'] != 0 ? $x['code_limit'] : 'Unlimited';
                 return [
                     $x['promo_code'],
                     $status,

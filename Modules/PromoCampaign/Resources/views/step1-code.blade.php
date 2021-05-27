@@ -1,5 +1,5 @@
 @section('code-info')
-{{-- this is for show static data, data will not send to the server --}}
+{{-- this data is for show only, this data will not be saved --}}
 <div class="col-md-5 disable-form">
 	<div class="portlet light bordered">
 		<div class="portlet-title">
@@ -39,6 +39,14 @@
 							<p id="alertSinglePromoCode" style="display: none;" class="help-block">Kode sudah pernah dibuat!</p>
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="control-label">Limit Usage (Penggunaan Per User)</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo untuk tiap user. Tulis 0 jika tidak ada limit." data-container="body"></i>
+						<div class="input-group col-md-12">
+							<input disabled required type="text" class="form-control digit_mask" placeholder="Limit Usage" value="{{ old('limitation_usage') ?? $result['limitation_usage'] ?? null }}" autocomplete="off">
+						</div>
+					</div>
 				</div>
 			@else
 				<div>
@@ -75,16 +83,23 @@
 						</div>
 					</div>
 					 --}}
+					<div class="form-group">
+						<label class="control-label">User Limit (Penggunaan Per User)</label>
+						<i class="fa fa-question-circle tooltips" data-original-title="Limit berapa kali satu user dapat menggunakan kode promo yang berbeda. Tulis 0 jika tidak ada limit." data-container="body"></i>
+						<div class="input-group col-md-12">
+							<input disabled type="text" class="form-control digit_mask" placeholder="User Limit" value="{{ old('user_limit') ?? $result['user_limit'] ?? null }}" autocomplete="off">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Code Limit (Penggunaan Per Code)</label>
+						<i class="fa fa-question-circle tooltips" data-original-title="Limit berapa kali satu kode promo dapat digunakan. Tulis 0 jika tidak ada limit." data-container="body"></i>
+						<div class="input-group col-md-12">
+							<input disabled type="text" class="form-control digit_mask" placeholder="Code Limit" value="{{ old('code_limit') ?? $result['code_limit'] ?? null }}" autocomplete="off">
+						</div>
+					</div>
 				</div>
 			@endif
-			<div class="form-group">
-				<label class="control-label">Limit Usage (Penggunaan Per User)</label>
-				<span class="required" aria-required="true"> * </span>
-				<i class="fa fa-question-circle tooltips" data-original-title="Limit penggunaan kode promo. Tulis 0 jika tidak ada limit." data-container="body"></i>
-				<div class="input-group col-md-12">
-					<input disabled required type="text" class="form-control digit_mask" placeholder="Limit Usage" value="{{ old('limitation_usage') ?? $result['limitation_usage'] ?? null }}" autocomplete="off">
-				</div>
-			</div>
+
 			<div class="form-group">
 				<label class="control-label">Total Coupon (Jumlah Total Voucher)</label>
 				<span class="required" aria-required="true"> * </span>

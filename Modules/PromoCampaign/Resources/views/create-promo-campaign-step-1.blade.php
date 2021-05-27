@@ -14,6 +14,9 @@
 		.select2-results__option[aria-selected=true] {
 		    display: none;
 		}
+		.text-decoration-none {
+			text-decoration: none!important;
+		}
 	</style>
 @endsection
 

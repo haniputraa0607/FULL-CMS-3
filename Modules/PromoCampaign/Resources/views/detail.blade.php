@@ -469,10 +469,22 @@
                                         <div class="col-md-4 name">Used Coupon</div>
                                         <div class="col-md-8 value">: {{ number_format($result['used_code']??0).' Coupons' }}</div>
                                     </div>
-                                    <div class="row static-info">
-                                        <div class="col-md-4 name">Limitation Usage</div>
-                                        <div class="col-md-8 value">: {{ $result['limitation_usage']??false ? number_format($result['limitation_usage']).' Times usage' : 'Unlimited' }}</div>
-                                    </div>
+                                    @if ( $result['code_type'] == 'Single' )
+	                                    <div class="row static-info">
+	                                        <div class="col-md-4 name">Limit Usage</div>
+	                                        <div class="col-md-8 value">: {{ ($result['limitation_usage'] ?? false) ? number_format($result['limitation_usage']).' Times usage' : 'Unlimited' }}</div>
+	                                    </div>
+	                                @else
+	                                	<div class="row static-info">
+	                                        <div class="col-md-4 name">User Limit</div>
+	                                        <div class="col-md-8 value">: {{ $result['user_limit']??false ? number_format($result['user_limit']).' Different code' : 'Unlimited' }}</div>
+	                                    </div>
+	                                    <div class="row static-info">
+	                                        <div class="col-md-4 name">Code Limit</div>
+	                                        <div class="col-md-8 value">: {{ $result['code_limit']??false ? number_format($result['code_limit']).' Times usage' : 'Unlimited' }}</div>
+	                                    </div>
+                                    @endif
+
                                 {{-- if promo campaign already used --}}
                                 @if( (empty($result['promo_campaign_reports']) || empty($result['step_complete']) || session('level') == 'Super Admin' ) && MyHelper::hasAccess([203], $grantedFeature))
                                 <div class="row static-info">
