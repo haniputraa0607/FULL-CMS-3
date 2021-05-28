@@ -136,26 +136,26 @@ $grantedFeature     = session('granted_features');
                 msg += '- List code or import excel can not be empty. \nPlease fill in one of the data.';
             }
 
-            const object = {};
-            const result = [];
-            if(codes.length > 0){
-
-                codes.forEach(item => {
-                    if(!object[item])
-                object[item] = 0;
-                object[item] += 1;
-            })
-
-                for (const prop in object) {
-                    if(object[prop] >= 2) {
-                        result.push(prop);
-                    }
-                }
-            }
-
-            if(result.length > 0){
-                msg += '- Please remove duplicate code : '+result.join();
-            }
+            // const object = {};
+            // const result = [];
+            // if(codes.length > 0){
+            //
+            //     codes.forEach(item => {
+            //         if(!object[item])
+            //     object[item] = 0;
+            //     object[item] += 1;
+            // })
+            //
+            //     for (const prop in object) {
+            //         if(object[prop] >= 2) {
+            //             result.push(prop);
+            //         }
+            //     }
+            // }
+            //
+            // if(result.length > 0){
+            //     msg += '- Please remove duplicate code : '+result.join();
+            // }
 
             if(msg !== ""){
                 swal("Error!", msg, "error");
