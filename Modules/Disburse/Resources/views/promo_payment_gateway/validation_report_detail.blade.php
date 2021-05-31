@@ -97,6 +97,10 @@
                     <td>: {{$detail['validation_cashback_type']}}</td>
                 </tr>
                 <tr>
+                    <td width="25%">Override MDR Status</td>
+                    <td>: {{($detail['override_mdr_status'] == 1 ? 'Override MDR':'Not Override MDR')}}</td>
+                </tr>
+                <tr>
                     <td>File</td>
                     <td>: <a href="{{url('disburse/rule-promo-payment-gateway/validation/report/download', $detail['id_rule_promo_payment_gateway'])}}"><i class="fa fa-download"></i> Download File</a></td>
                 </tr>

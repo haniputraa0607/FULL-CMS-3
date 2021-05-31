@@ -31,6 +31,14 @@
             'todayHighlight' : true,
             'autoclose' : true
         });
+
+        function changeOverrideMdr(value) {
+            if(value == 1){
+                document.getElementById("div_mdr_type").style.display = "block";
+            }else{
+                document.getElementById("div_mdr_type").style.display = "none";
+            }
+        }
     </script>
 @endsection
 
@@ -134,6 +142,30 @@
                                 <option></option>
                                 <option value="Check Cashback" @if(old('validation_cashback_type') == 'Check Cashback') selected @endif>Check Cashback</option>
                                 <option value="Not Check Cashback" @if(old('validation_cashback_type') == 'Not Check Cashback') selected @endif>Not Check Cashback</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Override MDR Status <span class="text-danger">*</span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="pada proses validasi Anda bisa memilih untuk melakukan override MDR atau tidak" data-container="body"></i>
+                        </label>
+                        <div class="col-md-5">
+                            <select  class="form-control select2" id="override_mdr_status" name="override_mdr_status" data-placeholder="Select Override MDR Status" required onchange="changeOverrideMdr(this.value)">
+                                <option></option>
+                                <option value="1" @if(old('override_mdr_status') == 1) selected @endif>Override MDR</option>
+                                <option value="0" @if(old('override_mdr_status') == 0 && !is_null(old('override_mdr_status'))) selected @endif>Not Override MDR</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: none" id="div_mdr_type">
+                        <label class="col-md-3 control-label">MDR Percent Type <span class="text-danger">*</span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="perhitungan MDR bisa berupa persen atau nominal" data-container="body"></i>
+                        </label>
+                        <div class="col-md-5">
+                            <select  class="form-control select2" id="override_mdr_percent_type" name="override_mdr_percent_type" data-placeholder="Select MDR Percent Type">
+                                <option></option>
+                                <option value="Percent" @if(old('override_mdr_percent_type') == 'Percent') selected @endif>Percent</option>
+                                <option value="Nominal" @if(old('override_mdr_percent_type') == 'Nominal') selected @endif>Nominal</option>
                             </select>
                         </div>
                     </div>
