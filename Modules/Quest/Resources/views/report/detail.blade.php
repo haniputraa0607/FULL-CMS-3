@@ -191,7 +191,7 @@
                                 <i class="fa fa-img-up"></i>
                             </span>
                             <span class="sale-num font-black">
-                            	{{ $detail['info']['total_rule'] }}
+                            	{{ number_format(($detail['info']['total_rule'] ?? 0),0,',','.') }}
                             </span>
                         </li>
                     	<li>
@@ -199,7 +199,7 @@
                                 <i class="fa fa-img-up"></i>
                             </span>
                             <span class="sale-num font-black">
-                            	{{ $detail['info']['total_user'] }}
+                            	{{ number_format(($detail['info']['total_user'] ?? 0),0,',','.') }}
                             </span>
                         </li>
                     	<li>
@@ -207,7 +207,7 @@
                                 <i class="fa fa-img-up"></i>
                             </span>
                             <span class="sale-num font-black">
-                            	{{ $detail['info']['total_user_complete'] }}
+                            	{{ number_format(($detail['info']['total_user_complete'] ?? 0),0,',','.') }}
                             </span>
                         </li>
                         <li>
@@ -327,7 +327,7 @@
 	        								<hr>
 	        								<div class="row static-info">
 	    										<div class="col-md-5 value">Total User Complete</div>
-			        							<div class="col-md-7 value">: {{$item['user_complete']}}</div>
+			        							<div class="col-md-7 value">: {{ number_format( ($item['user_complete'] ?? 0),0,',','.') }}</div>
 			        						</div>
 	        							</div>
 	        						</div>
