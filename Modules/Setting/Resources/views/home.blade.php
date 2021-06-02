@@ -347,7 +347,7 @@
 
 
     // clear banner edit form when modal close
-    $('#modalBannerUpdate').on('hide.bs.modal', function () {
+    $('#modalBannerUpdate').on('hidden.bs.modal', function () {
 		// $('#id_banner').val('');
 		$('#modalBannerUpdate .click-to-news').val('').trigger('change');
 		$('#modalBannerUpdate .click-to-url').val('');
