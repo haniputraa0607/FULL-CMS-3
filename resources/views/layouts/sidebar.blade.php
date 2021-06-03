@@ -1096,6 +1096,11 @@
 								<span class="title">[Response] Delivery Status Update</span>
 							</a>
 						</li>
+						<li class="nav-item {{($submenu_active == 'transaction-autoresponse-delivery-rejected') ? 'active' : ''}}">
+							<a href="{{url('autoresponse/transaction/delivery-rejected')}}" class="nav-link nav-toggle">
+								<span class="title">[Forward] Delivery Rejected</span>
+							</a>
+						</li>
 					@endif
 					@endif
 
