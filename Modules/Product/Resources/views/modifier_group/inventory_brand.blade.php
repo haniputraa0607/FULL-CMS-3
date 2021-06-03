@@ -41,17 +41,25 @@
         </div>
         <div class="portlet-body">
             <form action="{{url()->current()}}" method="post">
-                <table class="table">
+                <table class="table table-striped table-bordered table-hover table-responsive" width="100%">
                     <thead>
                         <tr>
-                            <th style="width: 30%"> Name </th>
-                            <th>Brand</th>
+                            <th> Name </th>
+                            <th> Topping </th>
+                            <th> Brand </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($modifier_groups as $modifier_group)
                         <tr>
                             <td>{{ $modifier_group['name'] }}</td>
+                            <td>
+                                <ul>
+                                    @foreach($modifier_group['product_modifier'] as $pm)
+                                        <li>{{$pm['text']}} ({{$pm['code']}})</li>
+                                    @endforeach
+                                </ul>
+                            </td>
                             <td>
                                 <select class="select2 form-control" multiple name="product_modifier_groups[{{ $modifier_group['id_product_modifier_group'] }}][]">
                                     @foreach($brands as $brand)
