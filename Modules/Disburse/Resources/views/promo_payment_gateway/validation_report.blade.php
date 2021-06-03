@@ -141,6 +141,7 @@ $grantedFeature     = session('granted_features');
                         <th style="width: 100px"> Admin Name </th>
                         <th style="width: 100px"> Promo </th>
                         <th style="width: 100px"> Periode </th>
+                        <th style="width: 100px"> Invalid Data <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah data yang tidak ditemukan dan data payment tidak sesuai rule" data-skin="dark" style="color: #0000007a"></i></th>
                         <th style="width: 100px"> Correct Get Promo <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah data yang sesuai untuk transaksi yang mendapatkan promo" data-skin="dark" style="color: #0000007a"></i></th>
                         <th style="width: 100px"> Not Get Promo <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah transaksi yang di sistem Jiwa+ mendapatkan promo tetapi berdasarkan file validasi dari PG tidak mendapatkan promo (pada sistem Jiwa+ di-update menjadi tidak mendapatkan promo)" data-skin="dark" style="color: #0000007a"></i></th>
                         <th style="width: 100px"> Must Get Promo <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah transaksi yang di sistem Jiwa+ tidak mendapatkan promo tetapi berdasarkan file validasi dari PG mendapatkan promo (pada sistem Jiwa+ di-update menjadi mendapatkan promo)" data-skin="dark" style="color: #0000007a"></i></th>
@@ -168,6 +169,7 @@ $grantedFeature     = session('granted_features');
                                 <td>@if(!empty($value['start_date_periode'])) {{date('d-M-Y', strtotime($value['start_date_periode']))}} @endif
                                     @if(!empty($value['start_date_periode']) || !empty($value['end_date_periode'])) / @endif
                                     @if(!empty($value['end_date_periode'])) {{date('d-M-Y', strtotime($value['end_date_periode']))}} @endif</td>
+                                <td>{{$value['invalid_data']}}</td>
                                 <td>{{$value['correct_get_promo']}}</td>
                                 <td>{{$value['not_get_promo']}}</td>
                                 <td>{{$value['must_get_promo']}}</td>

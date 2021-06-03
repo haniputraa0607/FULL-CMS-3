@@ -72,6 +72,44 @@
             }
         }
 
+        $('.price2').each(function() {
+            var input = $(this).val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $(this).val( function() {
+                return input.toLocaleString( "id" );
+            });
+        });
+
+        $( ".price2" ).on( "keyup", numberFormat);
+        function numberFormat(event){
+            var selection = window.getSelection().toString();
+            if ( selection !== '' ) {
+                return;
+            }
+
+            if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+                return;
+            }
+            var $this = $( this );
+            var input = $this.val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $this.val( function() {
+                return input.toLocaleString( "id" );
+            });
+        }
+
+        $( ".price2" ).on( "blur", checkFormat);
+        function checkFormat(event){
+            var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+            if(!$.isNumeric(data)){
+                $( this ).val("");
+            }
+        }
+
         function changeAdditionalType(val) {
             if(val == 'account'){
                 document.getElementById('type_user_limit_per_account').style.display = 'block';
@@ -121,9 +159,8 @@
                         let name    = $(this).data('name');
                         $(this).click(function() {
                             swal({
-                                    title: name+"\n\n Pastikan rule yang diinputkan pada promo yang dibuat sudah sesuai,\n" +
-                                        "karena data promo yang sudah di-start tidak dapat diubah lagi!",
-                                    text: "",
+                                    title: name+"\n\nAre you sure want to start this rule promo payment gateway?",
+                                    text: "Pastikan rule yang diinputkan pada promo yang dibuat sudah sesuai, karena data promo yang sudah di-start tidak dapat diubah lagi!",
                                     type: "warning",
                                     showCancelButton: true,
                                     confirmButtonClass: "btn-primary",
@@ -155,8 +192,8 @@
                         let name    = $(this).data('name');
                         $(this).click(function() {
                             swal({
-                                    title: name+"\n\nAre you sure want to mark as valid this rule promo payment gateway?",
-                                    text: "Your will not be able to recover this data!",
+                                    title: name+"\n\nAre you sure want to validation completed this rule promo payment gateway?",
+                                    text: "Pastikan semua transaksi yang mendapatkan promo ini sudah dilakukan proses validasi, karena selanjutnya tidak dapat dilakukan validasi lagi untuk promo ini. Dan semua transaksi yang mendapatkan promo akan diproses disburse nya!",
                                     type: "warning",
                                     showCancelButton: true,
                                     confirmButtonClass: "btn-primary",
@@ -263,11 +300,12 @@
             </div>
 
             <div class="actions">
+                <a class="btn purple" target="_blank" href="{{url('disburse/rule-promo-payment-gateway/report', $detail['id_rule_promo_payment_gateway'])}}"><i class="fa fa-bar-chart"></i> Report Promo</a>
                 @if($detail['start_status'] != 1)
-                <a class="btn green-jungle sweetalert-start" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"></i> Start Promo</a>
+                <a class="btn green-jungle sweetalert-start" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"> Start Promo</a>
                 @endif
                 @if($detail['start_status']== 1 && $detail['validation_status'] != 1 && $detail['start_date'] <= date('Y-m-d'))
-                    <a class="btn green sweetalert-validate" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"></i> Mark as valid</a>
+                    <a class="btn green sweetalert-validate" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"> Validation Complete </a>
                 @endif
             </div>
         </div>
@@ -275,7 +313,7 @@
             <form class="form-horizontal" role="form" action="{{url('disburse/rule-promo-payment-gateway/update')}}/{{$detail['id_rule_promo_payment_gateway']}}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Start Status</label>
+                        <label class="col-md-3 control-label">Status</label>
                         <div class="col-md-4">
                             @if(empty($detail['start_status']))
                                 <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #d6cece;padding: 5px 12px;color: #fff;">Pending</span>
@@ -289,12 +327,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Validation Status</label>
+                        <label class="col-md-3 control-label">Validation</label>
                         <div class="col-md-4">
                             @if($detail['validation_status'] == 1)
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #4bbf5e;padding: 5px 12px;color: #fff;">Already to validation</span>
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #4bbf5e;padding: 5px 12px;color: #fff;">Completed</span>
                             @else
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #d6cece;padding: 5px 12px;color: #fff;">Not yet validated</span>
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #d6cece;padding: 5px 12px;color: #fff;">Not Completed</span>
                             @endif
                         </div>
                     </div>
@@ -329,6 +367,30 @@
                                     @foreach($payment_list as $val)
                                         <option value="{{$val['payment_method']}}" @if($detail['payment_gateway'] == $val['payment_method']) selected @endif>{{$val['payment_method']}}</option>
                                     @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Brand
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand yang akan kena promo" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product" name="brands[]" data-placeholder="Select Brand" multiple>
+                                    <option></option>
+                                    @foreach($brands as $val)
+                                        <option value="{{$val['id_brand']}}" @if(in_array($val['id_brand'], array_column($detail['current_brand'], 'id_brand')??[])) selected @endif>{{$val['name_brand']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product" name="operator_brand" data-placeholder="Select">
+                                    <option></option>
+                                    <option value="or" @if($detail['operator_brand'] == 'or') selected @endif>or</option>
+                                    <option value="and" @if($detail['operator_brand'] == 'and') selected @endif>and</option>
                                 </select>
                             </div>
                         </div>
@@ -489,7 +551,7 @@
                                 <span class="input-group-addon">
                                     IDR
                                 </span>
-                                <input type="text" class="form-control price"  placeholder="Minimum transaksi" name="minimum_transaction" value="{{ $detail['minimum_transaction'] }}" required>
+                                <input type="text" class="form-control price2"  placeholder="Minimum transaksi" name="minimum_transaction" value="{{ $detail['minimum_transaction'] }}" required>
                             </div>
                         </div>
                     </div>

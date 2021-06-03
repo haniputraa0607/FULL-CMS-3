@@ -29,7 +29,8 @@
         $('.datepicker').datepicker({
             'format' : 'd-M-yyyy',
             'todayHighlight' : true,
-            'autoclose' : true
+            'autoclose' : true,
+            'endDate' : new Date()
         });
 
         function changeOverrideMdr(value) {
@@ -76,6 +77,7 @@
                 <li><p>Feature ini digunakan untuk memvalidasi promo pada transaksi. Data yang ada pada excel hanya data transaksi yang mendapatkan promo.</p></li>
                 <li><p>Validasi cashback ada 2 pilihan yaitu "Check Cashback" dan "Not Check Cashback".
                     Jika memilih "Not Check Cashback" maka data cashback tidak wajib untuk dimasukkan pada excel.</p></li>
+                <li>Semua disburse untuk transaksi yang mendapatkan promo ini akan di hold terlebih dahulu sampai proses validasi dipastikan sudah selesai semua dengan cara klik button "Validation Complete"</li>
             </ul>
         </div>
         <div class="portlet-body form">
@@ -88,8 +90,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label"> Periode Promo
-                            <i class="fa fa-question-circle tooltips" data-original-title="promo yang akan di validasi dengan tanggal tertentu" data-container="body"></i></label>
+                        <label class="col-md-3 control-label"> Transaction Periode
+                            <i class="fa fa-question-circle tooltips" data-original-title="Periode tanggal transaksi yang akan divalidasi" data-container="body"></i></label>
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
@@ -146,6 +148,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Validation Payment Type <span class="text-danger">*</span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="proses validasi akan mengecek data payment apakah sudah sesuai dengan rule yang dibuat" data-container="body"></i>
+                        </label>
+                        <div class="col-md-5">
+                            <select  class="form-control select2" id="validation_payment_type" name="validation_payment_type" data-placeholder="Select Validation Payment Type" required>
+                                <option></option>
+                                <option value="Check" @if(old('validation_payment_type') == 'Check') selected @endif>Check</option>
+                                <option value="Not Check" @if(old('validation_payment_type') == 'Not Check') selected @endif>Not Check</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Override MDR Status <span class="text-danger">*</span>
                             <i class="fa fa-question-circle tooltips" data-original-title="pada proses validasi Anda bisa memilih untuk melakukan override MDR atau tidak" data-container="body"></i>
                         </label>
@@ -153,11 +167,11 @@
                             <select  class="form-control select2" id="override_mdr_status" name="override_mdr_status" data-placeholder="Select Override MDR Status" required onchange="changeOverrideMdr(this.value)">
                                 <option></option>
                                 <option value="1" @if(old('override_mdr_status') == 1) selected @endif>Override MDR</option>
-                                <option value="0" @if(old('override_mdr_status') == 0 && !is_null(old('override_mdr_status'))) selected @endif>Not Override MDR</option>
+                                <option value="0" @if(old('override_mdr_status') == 0 || !is_null(old('override_mdr_status'))) selected @endif>Not Override MDR</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" style="display: none" id="div_mdr_type">
+                    <div class="form-group" @if(old('override_mdr_status') == 0) style="display: none" @endif id="div_mdr_type">
                         <label class="col-md-3 control-label">MDR Percent Type <span class="text-danger">*</span>
                             <i class="fa fa-question-circle tooltips" data-original-title="perhitungan MDR bisa berupa persen atau nominal" data-container="body"></i>
                         </label>

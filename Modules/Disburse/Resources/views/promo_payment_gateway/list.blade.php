@@ -136,8 +136,8 @@ $grantedFeature     = session('granted_features');
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th style="width: 100px"> Start Status </th>
-                        <th style="width: 100px"> Validation Status </th>
+                        <th style="width: 100px"> Status </th>
+                        <th style="width: 100px"> Validation </th>
                         <th style="width: 100px"> ID </th>
                         <th style="width: 100px"> Name </th>
                         <th style="width: 100px"> Payment Gateway </th>
@@ -164,9 +164,9 @@ $grantedFeature     = session('granted_features');
                                 </td>
                                 <td>
                                     @if($value['validation_status'] == 1)
-                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #4bbf5e;padding: 5px 12px;color: #fff;">Already to validation</span>
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #4bbf5e;padding: 5px 12px;color: #fff;">Completed</span>
                                     @else
-                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #d6cece;padding: 5px 12px;color: #fff;">Not yet validated</span>
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #d6cece;padding: 5px 12px;color: #fff;">Not Completed</span>
                                     @endif
                                 </td>
                                 <td>{{$value['promo_payment_gateway_code']}}</td>
@@ -177,7 +177,7 @@ $grantedFeature     = session('granted_features');
                                 <td>{{$value['limit_promo_total']}}</td>
                                 <td>
                                     @if(MyHelper::hasAccess([312,314], $grantedFeature))
-                                        <a target="_blank" class="btn btn-sm green-jungle" href="{{url('disburse/rule-promo-payment-gateway/report', $value['id_rule_promo_payment_gateway'])}}"><i class="fa fa-bar-chart"></i></a>
+                                        <a target="_blank" class="btn btn-sm purple" href="{{url('disburse/rule-promo-payment-gateway/report', $value['id_rule_promo_payment_gateway'])}}"><i class="fa fa-bar-chart"></i></a>
                                         <a class="btn btn-sm green" href="{{url('disburse/rule-promo-payment-gateway/detail', $value['id_rule_promo_payment_gateway'])}}"><i class="fa fa-search"></i></a>
                                     @endif
                                     @if(MyHelper::hasAccess([315], $grantedFeature) && $value['start_status'] != 1)

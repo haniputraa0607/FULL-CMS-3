@@ -105,7 +105,13 @@ $grantedFeature     = session('granted_features');
                                 <td> {{ $res['name'] }} </td>
                                 <td> {{ $res['customer_name'] }} </td>
                                 <td> {{ $res['customer_phone'] }} </td>
-                                <td> {{ $res['payment_gateway_user'] }} </td>
+                                <td>
+                                    @if(!empty($res['user_contact']))
+                                        {{ $res['user_contact'] }}
+                                    @elseif(!empty($res['user_id_hash']))
+                                        {{ $res['user_id_hash'] }}
+                                    @endif
+                                </td>
                                 <td> <a target="_blank" href="{{ url('transaction/detail') }}/{{ $res['id_transaction'] }}/all">{{ $res['transaction_receipt_number'] }}</a> </td>
                                 <td> {{ number_format($res['amount'],2,",",".") }} </td>
                                 <td> {{ number_format($res['total_received_cashback'],2,",",".") }} </td>

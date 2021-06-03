@@ -25,8 +25,8 @@
 			var operator = "conditions["+index+"][operator]";
 			var operator_value = document.getElementsByName(operator)[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
-			operator_value.options[operator_value.options.length] = new Option('Already to validation', '1');
-			operator_value.options[operator_value.options.length] = new Option('Not yet validated', '0');
+			operator_value.options[operator_value.options.length] = new Option('Completed', '1');
+			operator_value.options[operator_value.options.length] = new Option('Not Completed', '0');
 
             var parameter = "conditions["+index+"][parameter]";
             document.getElementsByName(parameter)[0].type = 'hidden';
@@ -84,8 +84,8 @@
 													<option value="promo_payment_gateway_code" @if ($con['subject'] == 'promo_payment_gateway_code') selected @endif>ID</option>
 													<option value="name" @if ($con['subject'] == 'name') selected @endif>Name</option>
 													<option value="payment_gateway" @if ($con['subject'] == 'payment_gateway') selected @endif>Payment Gateway</option>
-													<option value="start_status" @if ($con['subject'] == 'start_status') selected @endif>Start Status</option>
-													<option value="validation_status" @if ($con['subject'] == 'validation_status') selected @endif>Validation Status</option>
+													<option value="start_status" @if ($con['subject'] == 'start_status') selected @endif>Status</option>
+													<option value="validation_status" @if ($con['subject'] == 'validation_status') selected @endif>Validation</option>
 												</select>
 											</div>
 											<div class="col-md-4">
@@ -98,8 +98,8 @@
 														<option value="1" @if ($con['operator'] == '1') selected @endif>Started</option>
 														<option value="0" @if ($con['operator']  == '0') selected @endif>Not Started</option>
 													@elseif($con['subject'] == 'validation_status')
-														<option value="1" @if ($con['operator'] == '1') selected @endif>Already to validation</option>
-														<option value="0" @if ($con['operator']  == '0') selected @endif>Not yet validated</option>
+														<option value="1" @if ($con['operator'] == '1') selected @endif>Completed</option>
+														<option value="0" @if ($con['operator']  == '0') selected @endif>Not Completed</option>
 													@else
 														<option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
 														<option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>
@@ -132,8 +132,8 @@
 													<option value="promo_payment_gateway_code">ID</option>
 													<option value="name">Name</option>
 													<option value="payment_gateway">Payment Gateway</option>
-													<option value="start_status">Start Status</option>
-													<option value="validation_status">Validation Status</option>
+													<option value="start_status">Status</option>
+													<option value="validation_status">Validation</option>
 												</select>
 											</div>
 											<div class="col-md-4">
@@ -165,8 +165,8 @@
 											<option value="promo_payment_gateway_code">ID</option>
 											<option value="name">Name</option>
 											<option value="payment_gateway">Payment Gateway</option>
-											<option value="start_status">Start Status</option>
-											<option value="validation_status">Validation Status</option>
+											<option value="start_status">Status</option>
+											<option value="validation_status">Validation</option>
 										</select>
 									</div>
 									<div class="col-md-4">
