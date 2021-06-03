@@ -80,7 +80,7 @@
                 <thead>
                     <tr>
                         <th> Name </th>
-                        <th> Topping </th>
+                        <th> Child </th>
                         <th> Assign Product </th>
                         <th> Assign Product Variant </th>
                         @if(MyHelper::hasAccess([287,285,286], $grantedFeature))

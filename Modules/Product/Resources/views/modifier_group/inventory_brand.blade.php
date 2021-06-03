@@ -45,7 +45,7 @@
                     <thead>
                         <tr>
                             <th> Name </th>
-                            <th> Topping </th>
+                            <th> Child </th>
                             <th> Brand </th>
                         </tr>
                     </thead>

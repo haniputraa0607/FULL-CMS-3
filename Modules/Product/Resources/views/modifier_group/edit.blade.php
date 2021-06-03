@@ -235,10 +235,10 @@
                         </div>
                     </div>
                     <div class="form-group" id="div_list_product_variant">
-                        <label for="multiple" class="control-label col-md-3">Add Product Variant NON PRICE (NO SKU)
+                        <label for="multiple" class="control-label col-md-3">Add Child
                         </label>
                         <div class="col-md-5">
-                            <a class="btn green" onclick="addModifier()">Add Product Variant NON PRICE (NO SKU) <i class="fa fa-plus-circle"></i></a>
+                            <a class="btn green" onclick="addModifier()">Add Child <i class="fa fa-plus-circle"></i></a>
                         </div>
                     </div>
                     <div id="list_modifier">
