@@ -191,6 +191,9 @@ class AutocrmController extends Controller
 			case 'create-news':
 				$data['forwardOnly'] = true;
 				break;
+			case 'delivery-rejected':
+				$data['forwardOnly'] = true;
+				break;
 			case 'outlet-pin-sent':
 				$data['active_response'] = ['email'];
 				$test['result'] = [];
