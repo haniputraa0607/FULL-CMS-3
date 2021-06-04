@@ -319,6 +319,8 @@
                 allowClear: true,
             });
 
+            $('.select2_rule').select2();
+
             $(".file").change(function(e) {
                 console.log($(this))
                 var btnRemove = $(this).parent().next()[0]
@@ -640,14 +642,14 @@
                                     <i class="fa fa-question-circle tooltips" data-original-title="User Rule Type" data-container="body"></i>
                                 </label>
                                 <div class="col-md-3">
-                                    <select class="form-control select2" name="quest[user_rule_type]" data-placeholder="User Rule Type" required onchange="changeUserRuleType(this.value)">
+                                    <select class="form-control select2_rule" name="quest[user_rule_type]" data-placeholder="User Rule Type" required onchange="changeUserRuleType(this.value)">
                                         <option></option>
                                         <option value="all" {{old('quest.user_rule_type') == 'all' ? 'selected' : ''}}>All User</option>
                                         <option value="with_rule" {{old('quest.user_rule_type') == 'with_rule' ? 'selected' : ''}}>With Rule</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group" id="detail_user_rule" @if(old('quest.user_rule_type') == 'all') style="display: none" @endif>
+                            <div class="form-group" id="detail_user_rule" @if(old('quest.user_rule_type') == 'all' || empty(old('quest.user_rule_type'))) style="display: none" @endif>
                                 <label class="col-md-3 control-label">
                                     User Rule
                                     <span class="required" aria-required="true"> * </span>
@@ -890,7 +892,9 @@
                             <select class="form-control select2" name="quest_benefit[id_deals]" data-placeholder="Select Voucher" required>
                                 <option></option>
                                 @foreach($deals as $deal)
-                                <option value="{{$deal['id_deals']}}" {{old('quest_benefit.id_deals') == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}}</option>
+                                    @if($deal['deals_total_voucher'] > $deal['deals_total_claimed'] || $deal['deals_voucher_type'] == 'Unlimited')
+                                        <option value="{{$deal['id_deals']}}" {{old('quest_benefit.id_deals') == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
