@@ -436,7 +436,9 @@ $show=$show??false;
 		var firstString = index.substring(0, indexof1);
 		var indexof2 = index.indexOf("[");
 		var secondString = index.substring(indexof2+1, index.length);
-		document.getElementById('parameter_select'+firstString+secondString).style.display = 'none';
+		if(document.getElementById('parameter_select'+firstString+secondString)){
+			document.getElementById('parameter_select'+firstString+secondString).style.display = 'none';
+		}
 
 		if(document.getElementById('normalCondition'+indx).style.display === 'none' ){
 			var parameter = "conditions["+index+"][parameter]";
@@ -1498,6 +1500,12 @@ $show=$show??false;
 													$display_special_condition = 'none';
 													$display_normal_condition = 'block';
 													$parameterSelect = "";
+													$parameterSelect .= '<div id="parameter_select'.$q.$indexnya.'" style="display:none">';
+													$parameterSelect .= '<select name="conditions['.$q.']['.$indexnya.'][parameter_select]" class="form-control input-sm select2"  placeholder="Search Operator" style="width:100%">';
+													$parameterSelect .= '<option value="already_claim" '.($row['parameter_select'] == 'already_claim' ? 'selected' : '').'>Already Claim</option>';
+													$parameterSelect .= '<option value="not_yet_claim" '.($row['parameter_select'] == 'not_yet_claim' ? 'selected' : '').'>Not Yet Claim</option>';
+													$parameterSelect .= '</select>';
+													$parameterSelect .= '</div>';
 
 													if($row['subject'] == 'name' || $row['subject'] == 'email' || $row['subject'] == 'phone' || $row['subject'] == 'all_user' ||
 														$row['subject'] == 'r_quartile' || $row['subject'] == 'f_quartile' || $row['subject'] == 'm_quartile' || $row['subject'] == 'RFMScore'){
@@ -1589,6 +1597,7 @@ $show=$show??false;
 														}
 														$parameter .= '<input type="hidden" placeholder="Parameter" class="form-control" name="conditions['.$q.']['.$indexnya.'][parameter]"/>';
 
+														$parameterSelect = "";
 														$parameterSelect .= '<div id="parameter_select'.$q.$indexnya.'">';
 														$parameterSelect .= '<select name="conditions['.$q.']['.$indexnya.'][parameter_select]" class="form-control input-sm select2"  placeholder="Search Operator" style="width:100%">';
 														$parameterSelect .= '<option value="already_claim" '.($row['parameter_select'] == 'already_claim' ? 'selected' : '').'>Already Claim</option>';
