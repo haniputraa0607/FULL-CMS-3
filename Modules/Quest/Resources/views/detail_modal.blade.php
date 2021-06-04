@@ -610,7 +610,9 @@
                             <select class="form-control select2" name="quest_benefit[id_deals]" data-placeholder="Select Voucher" required>
                                 <option></option>
                                 @foreach($deals as $deal)
-                                <option value="{{$deal['id_deals']}}" {{old('quest_benefit.id_deals', $data['quest']['quest_benefit']['id_deals']) == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}}</option>
+                                    @if($deal['deals_total_voucher'] > $deal['deals_total_claimed'] || $deal['deals_voucher_type'] == 'Unlimited')
+                                        <option value="{{$deal['id_deals']}}" {{$data['quest']['quest_benefit']['id_deals'] == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -704,7 +706,7 @@
                                 <i class="fa fa-question-circle tooltips" data-original-title="User Rule" data-container="body"></i>
                             </label>
                             <div class="col-md-3">
-                                <select class="form-control select2" id="user_rule_subject" name="quest[user_rule_subject]" data-placeholder="Rule Subject">
+                                <select class="form-control select2" id="user_rule_subject" name="quest[user_rule_subject]" data-placeholder="Rule Subject" @if(!is_null($data['quest']['user_rule_subject'])) required @endif>
                                     <option></option>
                                     <option value="r_quartile" {{$data['quest']['user_rule_subject'] == 'r_quartile' ? 'selected' : ''}}>R</option>
                                     <option value="f_quartile" {{$data['quest']['user_rule_subject'] == 'f_quartile' ? 'selected' : ''}}>F</option>
@@ -713,7 +715,7 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <select class="form-control select2" id="user_rule_operator" name="quest[user_rule_operator]" data-placeholder="Rule Operator">
+                                <select class="form-control select2" id="user_rule_operator" name="quest[user_rule_operator]" data-placeholder="Rule Operator" @if(!is_null($data['quest']['user_rule_subject'])) required @endif>
                                     <option></option>
                                     <option value=">" {{$data['quest']['user_rule_operator'] == '>' ? 'selected' : ''}}>></option>
                                     <option value=">=" {{$data['quest']['user_rule_operator'] == '>=' ? 'selected' : ''}}>>=</option>
@@ -723,7 +725,7 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <input type="text" name="quest[user_rule_parameter]" id="user_rule_parameter" class="form-control" placeholder="Rule Param" value="{{$data['quest']['user_rule_parameter']}}">
+                                <input type="text" name="quest[user_rule_parameter]" id="user_rule_parameter" class="form-control" placeholder="Rule Param" value="{{$data['quest']['user_rule_parameter']}}" @if(!is_null($data['quest']['user_rule_subject'])) required @endif>
                             </div>
                         </div>
                         <div class="form-group">
