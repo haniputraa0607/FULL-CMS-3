@@ -70,6 +70,44 @@
             }
         }
 
+        $('.price2').each(function() {
+            var input = $(this).val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $(this).val( function() {
+                return input.toLocaleString( "id" );
+            });
+        });
+
+        $( ".price2" ).on( "keyup", numberFormat);
+        function numberFormat(event){
+            var selection = window.getSelection().toString();
+            if ( selection !== '' ) {
+                return;
+            }
+
+            if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+                return;
+            }
+            var $this = $( this );
+            var input = $this.val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $this.val( function() {
+                return input.toLocaleString( "id" );
+            });
+        }
+
+        $( ".price2" ).on( "blur", checkFormat);
+        function checkFormat(event){
+            var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+            if(!$.isNumeric(data)){
+                $( this ).val("");
+            }
+        }
+
         function changeAdditionalType(val) {
             if(val == 'account'){
                 document.getElementById('type_user_limit_per_account').style.display = 'block';
@@ -174,6 +212,30 @@
                                     @foreach($payment_list as $val)
                                         <option value="{{$val['payment_method']}}" @if(old('payment_gateway') == $val['payment_method']) selected @endif>{{$val['payment_method']}}</option>
                                     @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Brand
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand yang akan kena promo" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product" name="brands[]" data-placeholder="Select Brand" multiple>
+                                    <option></option>
+                                    @foreach($brands as $val)
+                                        <option value="{{$val['id_brand']}}" @if(!empty(old('brands')) && in_array($val['id_brand'], old('brands')) >= 0) selected @endif>{{$val['name_brand']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <select  class="form-control select2 select2-multiple-product" name="operator_brand" data-placeholder="Select">
+                                    <option></option>
+                                    <option value="or" @if(old('operator_brand') == 'or') selected @endif>or</option>
+                                    <option value="and" @if(old('operator_brand') == 'and') selected @endif>and</option>
                                 </select>
                             </div>
                         </div>
@@ -334,7 +396,7 @@
                                 <span class="input-group-addon">
                                     IDR
                                 </span>
-                                <input type="text" class="form-control price"  placeholder="Minimum transaksi" name="minimum_transaction" value="{{ old('minimum_transaction') }}" required>
+                                <input type="text" class="form-control price2"  placeholder="Minimum transaksi" name="minimum_transaction" value="{{ old('minimum_transaction') }}" required>
                             </div>
                         </div>
                     </div>

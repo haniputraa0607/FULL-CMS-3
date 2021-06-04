@@ -76,6 +76,7 @@ class RulePromoPaymentGatewayController extends Controller
             'menu_active'    => 'disburse-promo-pg',
             'submenu_active' => 'disburse-promo-pg-new',
         ];
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
         $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
         return view('disburse::promo_payment_gateway.create', $data);
     }
@@ -98,6 +99,7 @@ class RulePromoPaymentGatewayController extends Controller
             'menu_active'    => 'disburse-promo-pg',
             'submenu_active' => 'disburse-promo-pg-list',
         ];
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
         $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
         $data['detail'] = MyHelper::post('disburse/rule-promo-payment-gateway/detail', ['id_rule_promo_payment_gateway'=> $id])['result']??[];
         $data['summary'] = MyHelper::post('disburse/rule-promo-payment-gateway/summary', ['id_rule_promo_payment_gateway'=> $id])['result']??[];
@@ -205,6 +207,21 @@ class RulePromoPaymentGatewayController extends Controller
                     $path = $request->file('import_file')->getRealPath();
                     $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
                     if(!empty($data)){
+                        //cek format data
+                        foreach ($data[0] as $val){
+                            if(!isset($val['id_reference']) || !isset($val['amount'])){
+                                return redirect('disburse/rule-promo-payment-gateway/validation')->withErrors(['Invalid format please check example'])->withInput();
+                            }
+
+                            if($post['validation_cashback_type'] == 'Check Cashback' && !isset($val['cashback'])){
+                                return redirect('disburse/rule-promo-payment-gateway/validation')->withErrors(['Data cashback not found'])->withInput();
+                            }
+
+                            if($post['override_mdr_status'] == 1 && !isset($val['mdr'])){
+                                return redirect('disburse/rule-promo-payment-gateway/validation')->withErrors(['Data mdr not found'])->withInput();
+                            }
+                        }
+
                         $post['data'] = $data;
                         $import = MyHelper::post('disburse/rule-promo-payment-gateway/validation/import', $post);
                         if(isset($import['status']) && $import['status'] == 'success'){
@@ -284,22 +301,26 @@ class RulePromoPaymentGatewayController extends Controller
             [
                 'id_reference' => '0000001',
                 'amount' => 50000,
-                'cashback' => 5000
+                'cashback' => 5000,
+                'mdr' => 500
             ],
             [
                 'id_reference' => '0000002',
                 'amount' => 60000,
-                'cashback' => 4000
+                'cashback' => 4000,
+                'mdr' => 100
             ],
             [
                 'id_reference' => '0000003',
                 'amount' => 50000,
-                'cashback' => 3000
+                'cashback' => 3000,
+                'mdr' => 125
             ],
             [
                 'id_reference' => '0000004',
                 'amount' => 100000,
-                'cashback' => 5000
+                'cashback' => 5000,
+                'mdr' => 500
             ],
         ];
         $data = new MultisheetExport($arr);

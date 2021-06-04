@@ -97,6 +97,10 @@
                     <td>: {{$detail['validation_cashback_type']}}</td>
                 </tr>
                 <tr>
+                    <td width="25%">Override MDR Status</td>
+                    <td>: {{($detail['override_mdr_status'] == 1 ? 'Override MDR':'Not Override MDR')}}</td>
+                </tr>
+                <tr>
                     <td>File</td>
                     <td>: <a href="{{url('disburse/rule-promo-payment-gateway/validation/report/download', $detail['id_rule_promo_payment_gateway'])}}"><i class="fa fa-download"></i> Download File</a></td>
                 </tr>
@@ -109,8 +113,24 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <a class="dashboard-stat dashboard-stat-v2 red">
+                <div class="text-left" style="margin-left: 5%">
+                    <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah data yang tidak ditemukan dan data payment tidak sesuai" data-skin="dark" style="color: #FFFFFF;"></i>
+                </div>
+                <div class="visual">
+                    <i class="fa fa-bar-chart-o"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ $detail['invalid_data']??0 }}">{{ number_format($detail['invalid_data']??0) }}</span>
+                    </div>
+                    <div class="desc"> Invalid Data </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 blue">
                 <div class="text-left" style="margin-left: 5%">
                     <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah data yang sesuai untuk transaksi yang mendapatkan promo" data-skin="dark" style="color: #FFFFFF;"></i>
                 </div>
@@ -125,7 +145,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <a class="dashboard-stat dashboard-stat-v2 green">
                 <div class="text-left" style="margin-left: 5%">
                     <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah transaksi yang di sistem Jiwa+ mendapatkan promo tetapi berdasarkan file validasi dari PG tidak mendapatkan promo (pada sistem Jiwa+ di-update menjadi tidak mendapatkan promo)" data-skin="dark" style="color: #FFFFFF;"></i>
@@ -141,7 +161,9 @@
                 </div>
             </a>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <a class="dashboard-stat dashboard-stat-v2 purple">
                 <div class="text-left" style="margin-left: 5%">
                     <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah transaksi yang di sistem Jiwa+ tidak mendapatkan promo tetapi berdasarkan file validasi dari PG mendapatkan promo (pada sistem Jiwa+ di-update menjadi mendapatkan promo)" data-skin="dark" style="color: #FFFFFF;"></i>
@@ -157,8 +179,8 @@
                 </div>
             </a>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <a class="dashboard-stat dashboard-stat-v2 blue">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 red">
                 <div class="text-left" style="margin-left: 5%">
                     <i class="fa fa-info-circle tooltips" data-toggle="tooltip" data-placement="top" title="Jumlah transaksi dengan nilai cashback yang tidak sesuai (nilai cashback di-update berdasarkan nilai cashback dari file validasi)" data-skin="dark" style="color: #FFFFFF;"></i>
                 </div>
@@ -186,7 +208,8 @@
                 <thead>
                 <tr>
                     <th> Receipt Number </th>
-                    <th> Validation Status </th>
+                    <th> Reference ID </th>
+                    <th> Validation </th>
                     <th> Cashback New </th>
                     <th> Cashback Old </th>
                 </tr>
@@ -199,13 +222,15 @@
                             $status = [
                                 'correct_get_promo' => 'Correct Get Promo',
                                 'not_get_promo' => 'Not Get Promo',
-                                'must_get_promo' => 'Must Get Promo'
+                                'must_get_promo' => 'Must Get Promo',
+                                'invalid_data' => 'Invalid Data'
                             ];
                             ?>
                             <td> {{ $res['transaction_receipt_number'] }} </td>
+                            <td> {{ $res['reference_id'] }} </td>
                             <td> {{ $status[$res['validation_status']]??''}} </td>
-                            <td> {{ $res['new_cashback'] }} </td>
-                            <td> {{ $res['old_cashback'] }} </td>
+                            <td> @if($detail['validation_cashback_type'] == 'Check Cashback') {{number_format($res['new_cashback'],2,",",".")}} @endif</td>
+                            <td> @if($detail['validation_cashback_type'] == 'Check Cashback') {{number_format($res['old_cashback'],2,",",".")}} @endif</td>
                         </tr>
                     @endforeach
                 @else
