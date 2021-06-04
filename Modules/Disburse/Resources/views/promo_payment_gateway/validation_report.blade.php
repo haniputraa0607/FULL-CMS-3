@@ -163,7 +163,7 @@ $grantedFeature     = session('granted_features');
                                     ?>
                                     <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: {{$color[$value['processing_status']]??''}};padding: 5px 12px;color: #fff;">{{$value['processing_status']}}</span>
                                 </td>
-                                <td>{{date('d-M-Y H:i', strtotime($value['created_at']))}}</td>
+                                <td>{{date('d-M-Y H:i', strtotime($value['date_validation']))}}</td>
                                 <td>{{$value['admin_name']}}</td>
                                 <td>{{$value['name']}}</td>
                                 <td>@if(!empty($value['start_date_periode'])) {{date('d-M-Y', strtotime($value['start_date_periode']))}} @endif

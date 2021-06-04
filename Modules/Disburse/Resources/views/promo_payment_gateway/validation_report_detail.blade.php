@@ -72,7 +72,7 @@
                 </tr>
                 <tr>
                     <td width="25%">Validation by</td>
-                    <td>: {{$detail['admin_name']}} ({{date('d M Y H:i', strtotime($detail['created_at']))}})</td>
+                    <td>: {{$detail['admin_name']}} ({{date('d M Y H:i', strtotime($detail['date_validation']))}})</td>
                 </tr>
                 <tr>
                     <td width="25%">ID</td>
@@ -102,7 +102,7 @@
                 </tr>
                 <tr>
                     <td>File</td>
-                    <td>: <a href="{{url('disburse/rule-promo-payment-gateway/validation/report/download', $detail['id_rule_promo_payment_gateway'])}}"><i class="fa fa-download"></i> Download File</a></td>
+                    <td>: <a href="{{url('disburse/rule-promo-payment-gateway/validation/report/download', $detail['id_promo_payment_gateway_validation'])}}"><i class="fa fa-download"></i> Download File</a></td>
                 </tr>
                 <tr>
                     <td>Periode</td>
@@ -210,6 +210,7 @@
                     <th> Receipt Number </th>
                     <th> Reference ID </th>
                     <th> Validation </th>
+                    <th> Notes </th>
                     <th> Cashback New </th>
                     <th> Cashback Old </th>
                 </tr>
@@ -229,6 +230,7 @@
                             <td> {{ $res['transaction_receipt_number'] }} </td>
                             <td> {{ $res['reference_id'] }} </td>
                             <td> {{ $status[$res['validation_status']]??''}} </td>
+                            <td> {{ $res['notes']}} </td>
                             <td> @if($detail['validation_cashback_type'] == 'Check Cashback') {{number_format($res['new_cashback'],2,",",".")}} @endif</td>
                             <td> @if($detail['validation_cashback_type'] == 'Check Cashback') {{number_format($res['old_cashback'],2,",",".")}} @endif</td>
                         </tr>

@@ -310,6 +310,9 @@
             </div>
         </div>
         <div class="portlet-body form">
+            <div class="m-heading-1 border-green m-bordered">
+                <p>Semua disburse untuk transaksi yang mendapatkan promo ini akan di hold terlebih dahulu sampai proses validasi dipastikan sudah selesai semua dengan cara klik button "Validation Complete"</p>
+            </div>
             <form class="form-horizontal" role="form" action="{{url('disburse/rule-promo-payment-gateway/update')}}/{{$detail['id_rule_promo_payment_gateway']}}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
