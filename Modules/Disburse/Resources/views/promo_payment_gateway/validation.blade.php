@@ -77,7 +77,6 @@
                 <li><p>Feature ini digunakan untuk memvalidasi promo pada transaksi. Data yang ada pada excel hanya data transaksi yang mendapatkan promo.</p></li>
                 <li><p>Validasi cashback ada 2 pilihan yaitu "Check Cashback" dan "Not Check Cashback".
                     Jika memilih "Not Check Cashback" maka data cashback tidak wajib untuk dimasukkan pada excel.</p></li>
-                <li>Semua disburse untuk transaksi yang mendapatkan promo ini akan di hold terlebih dahulu sampai proses validasi dipastikan sudah selesai semua dengan cara klik button "Validation Complete"</li>
             </ul>
         </div>
         <div class="portlet-body form">
@@ -144,18 +143,6 @@
                                 <option></option>
                                 <option value="Check Cashback" @if(old('validation_cashback_type') == 'Check Cashback') selected @endif>Check Cashback</option>
                                 <option value="Not Check Cashback" @if(old('validation_cashback_type') == 'Not Check Cashback') selected @endif>Not Check Cashback</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Validation Payment Type <span class="text-danger">*</span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="proses validasi akan mengecek data payment apakah sudah sesuai dengan rule yang dibuat" data-container="body"></i>
-                        </label>
-                        <div class="col-md-5">
-                            <select  class="form-control select2" id="validation_payment_type" name="validation_payment_type" data-placeholder="Select Validation Payment Type" required>
-                                <option></option>
-                                <option value="Check" @if(old('validation_payment_type') == 'Check') selected @endif>Check</option>
-                                <option value="Not Check" @if(old('validation_payment_type') == 'Not Check') selected @endif>Not Check</option>
                             </select>
                         </div>
                     </div>

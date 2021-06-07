@@ -227,7 +227,7 @@ class RulePromoPaymentGatewayController extends Controller
                         if(isset($import['status']) && $import['status'] == 'success'){
                             return redirect('disburse/rule-promo-payment-gateway/validation/report')->withSuccess(['Success upload data']);
                         }else{
-                            return redirect('disburse/rule-promo-payment-gateway/validation')->withErrors(['Failed import data'])->withInput();
+                            return redirect('disburse/rule-promo-payment-gateway/validation')->withErrors($import['messages']??['Failed import data'])->withInput();
                         }
                     }
             }
