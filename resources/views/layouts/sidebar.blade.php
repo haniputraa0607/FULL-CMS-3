@@ -1139,7 +1139,7 @@
 							</li>
 							<li class="nav-item {{($submenu_active == 'order-taken-delivery-with-code') ? 'active open' : ''}}">
 								<a href="{{url('transaction/autoresponse/order-taken-delivery-with-code')}}" class="nav-link ">
-									<span class="title">[Response] Order Taken Devilery With Code</span>
+									<span class="title">[Response] Order Taken Delivery With Code</span>
 								</a>
 							</li>
 						@endif

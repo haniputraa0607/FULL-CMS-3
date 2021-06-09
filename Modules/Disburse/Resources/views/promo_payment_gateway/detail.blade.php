@@ -223,6 +223,22 @@
         jQuery(document).ready(function() {
             SweetAlert.init()
         });
+
+        function changePayment(val) {
+            $('#select_additional_account_type').empty();
+            if(val.toLowerCase() == 'gopay'){
+                var html = '';
+                html += '<option></option>';
+                html += '<option value="Jiwa+">Jiwa+</option>';
+                $('#select_additional_account_type').append(html);
+            }else{
+                var html = '';
+                html += '<option></option>';
+                html += '<option value="Jiwa+">Jiwa+</option>';
+                html += '<option value="Payment Gateway">Payment Gateway</option>';
+                $('#select_additional_account_type').append(html);
+            }
+        }
     </script>
 @endsection
 
@@ -304,7 +320,7 @@
                 @if($detail['start_status'] != 1)
                 <a class="btn green-jungle sweetalert-start" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"> Start Promo</a>
                 @endif
-                @if($detail['start_status']== 1 && $detail['validation_status'] != 1 && $detail['start_date'] <= date('Y-m-d'))
+                @if($detail['start_status']== 1 && $detail['validation_status'] != 1 && $detail['end_date'] < date('Y-m-d'))
                     <a class="btn green sweetalert-validate" data-id="{{$detail['id_rule_promo_payment_gateway']}}" data-name="{{ $detail['name'] }}"> Validation Complete </a>
                 @endif
             </div>
@@ -365,7 +381,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <select  class="form-control select2 select2-multiple-product" name="payment_gateway" data-placeholder="Select" required>
+                                <select  class="form-control select2 select2-multiple-product" name="payment_gateway" data-placeholder="Select" required onchange="changePayment(this.value)">
                                     <option></option>
                                     @foreach($payment_list as $val)
                                         <option value="{{$val['payment_method']}}" @if($detail['payment_gateway'] == $val['payment_method']) selected @endif>{{$val['payment_method']}}</option>
