@@ -146,6 +146,22 @@
             }
             $('#charged_type').val(val);
         }
+
+        function changePayment(val) {
+            $('#select_additional_account_type').empty();
+            if(val.toLowerCase() == 'gopay'){
+                var html = '';
+                html += '<option></option>';
+                html += '<option value="Jiwa+">Jiwa+</option>';
+                $('#select_additional_account_type').append(html);
+            }else{
+                var html = '';
+                html += '<option></option>';
+                html += '<option value="Jiwa+">Jiwa+</option>';
+                html += '<option value="Payment Gateway">Payment Gateway</option>';
+                $('#select_additional_account_type').append(html);
+            }
+        }
     </script>
 @endsection
 
@@ -207,7 +223,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <select  class="form-control select2 select2-multiple-product" name="payment_gateway" data-placeholder="Select" required>
+                                <select  class="form-control select2 select2-multiple-product" name="payment_gateway" data-placeholder="Select" required onchange="changePayment(this.value)">
                                     <option></option>
                                     @foreach($payment_list as $val)
                                         <option value="{{$val['payment_method']}}" @if(old('payment_gateway') == $val['payment_method']) selected @endif>{{$val['payment_method']}}</option>
@@ -348,7 +364,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" style="display: none" id="cashback_nominal">
+                    <div class="form-group" @if(old('cashback_type') == "Percent") style="display: none" @endif id="cashback_nominal">
                         <label class="col-md-3 control-label">Cashback Nominal
                             <i class="fa fa-question-circle tooltips" data-original-title="jumlah cashback dalam nominal" data-container="body"></i>
                         </label>
@@ -357,24 +373,24 @@
                                 <span class="input-group-addon">
                                     IDR
                                 </span>
-                                <input type="text" class="form-control price"  id="input_cashback_nominal" placeholder="Cashback Nominal" name="cashback" value="{{ old('cashback') }}" disabled>
+                                <input type="text" class="form-control price"  id="input_cashback_nominal" placeholder="Cashback Nominal" name="cashback" value="{{ old('cashback') }}" @if(old('cashback_type') == "Percent") disabled @endif>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" style="display: none" id="cashback_percent_value">
+                    <div class="form-group" @if(old('cashback_type') == "Nominal") style="display: none" @endif id="cashback_percent_value">
                         <label class="col-md-3 control-label">Cashback Percent Value
                             <i class="fa fa-question-circle tooltips" data-original-title="jumlah cashback dalam persen" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-group">
-                                <input type="text" class="form-control"  id="input_cashback_percent_value" placeholder="Cashback Percent Value" name="cashback" value="{{ old('cashback') }}" disabled>
+                                <input type="text" class="form-control"  id="input_cashback_percent_value" placeholder="Cashback Percent Value" name="cashback" value="{{ old('cashback') }}" @if(old('cashback_type') == "Nominal") disabled @endif>
                                 <span class="input-group-addon">
                                     %
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" style="display: none" id="maximum_cashback">
+                    <div class="form-group" @if(old('cashback_type') == "Nominal") style="display: none" @endif id="maximum_cashback">
                         <label class="col-md-3 control-label">Maximum Cashback
                             <i class="fa fa-question-circle tooltips" data-original-title="maximum cashback" data-container="body"></i>
                         </label>
@@ -383,7 +399,7 @@
                                  <span class="input-group-addon">
                                     IDR
                                 </span>
-                                <input type="text" class="form-control price"  id="input_maximum_cashback" placeholder="Maximum Cashback" id="maximum_cashback" name="maximum_cashback" value="{{ old('maximum_cashback') }}" disabled>
+                                <input type="text" class="form-control price"  id="input_maximum_cashback" placeholder="Maximum Cashback" id="maximum_cashback" name="maximum_cashback" value="{{ old('maximum_cashback') }}" @if(old('cashback_type') == "Nominal") disabled @endif>
                             </div>
                         </div>
                     </div>
