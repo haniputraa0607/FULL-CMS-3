@@ -146,6 +146,7 @@ $grantedFeature     = session('granted_features');
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
+                        <th style="width: 100px"> Status </th>
                         <th style="width: 100px"> Name </th>
                         <th style="width: 100px"> Periode Start </th>
                         <th style="width: 100px"> Periode End </th>
@@ -158,6 +159,17 @@ $grantedFeature     = session('granted_features');
                     @if (!empty($data))
                         @foreach($data as $value)
                             <tr>
+                                <td>
+                                    @if(!empty($value['autoresponse_code_periode_end']) && $value['autoresponse_code_periode_end'] < date('Y-m-d') )
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
+                                    @elseif($value['is_stop'] == 1 && (empty($value['autoresponse_code_periode_start']) || $value['autoresponse_code_periode_start'] <= date('Y-m-d')))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Stop</span>
+                                    @elseif($value['is_stop'] == 0 && (empty($value['autoresponse_code_periode_start']) || $value['autoresponse_code_periode_start'] <= date('Y-m-d')))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">On Going</span>
+                                    @elseif($value['autoresponse_code_periode_start'] > date('Y-m-d'))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #fef647;padding: 5px 12px;color: #fff;">Not Started</span>
+                                    @endif
+                                </td>
                                 <td>{{$value['autoresponse_code_name']}}</td>
                                 <td>{{date('d M Y', strtotime($value['autoresponse_code_periode_start']))}}</td>
                                 <td>{{date('d M Y', strtotime($value['autoresponse_code_periode_end']))}}</td>

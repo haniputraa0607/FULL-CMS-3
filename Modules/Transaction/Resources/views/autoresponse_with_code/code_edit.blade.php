@@ -132,9 +132,9 @@ $grantedFeature     = session('granted_features');
                 msg += '- Payment Method can not be empty \n';
             }
 
-            if(codes.length <= 0 && file == ""){
-                msg += '- List code or import excel can not be empty. \nPlease fill in one of the data.';
-            }
+            // if(codes.length <= 0 && file == ""){
+            //     msg += '- List code or import excel can not be empty. \nPlease fill in one of the data.';
+            // }
 
             // const object = {};
             // const result = [];
@@ -211,6 +211,21 @@ $grantedFeature     = session('granted_features');
                 <div class="tab-pane active" id="detail">
                     <form class="form-horizontal" role="form" id="from_autoresponse" action="{{url('response-with-code/update')}}/{{$result['id_autoresponse_code']}}" method="post" enctype="multipart/form-data">
                         <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Status
+                                </label>
+                                <div class="col-md-5">
+                                    @if(!empty($result['autoresponse_code_periode_end']) && $result['autoresponse_code_periode_end'] < date('Y-m-d') )
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Ended</span>
+                                    @elseif($result['is_stop'] == 1 && (empty($result['autoresponse_code_periode_start']) || $result['autoresponse_code_periode_start'] <= date('Y-m-d')))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Stop</span>
+                                    @elseif($result['is_stop'] == 0 && (empty($result['autoresponse_code_periode_start']) || $result['autoresponse_code_periode_start'] <= date('Y-m-d')))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">On Going</span>
+                                    @elseif($result['autoresponse_code_periode_start'] > date('Y-m-d'))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #fef647;padding: 5px 12px;color: #fff;">Not Started</span>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Name <span class="required" aria-required="true"> * </span>
                                     <i class="fa fa-question-circle tooltips" data-original-title="Nama" data-container="body"></i>
