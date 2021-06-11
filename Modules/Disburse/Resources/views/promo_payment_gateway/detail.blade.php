@@ -346,7 +346,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Validation</label>
+                        <label class="col-md-3 control-label">Validation
+                            <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="status validasi promo:
+                            <br>1. not completed :
+                                Promo belum validasi atau validasi belum selesai dilakukan oleh admin.
+                                Disburse untuk transaksi yang mendapatkan promo akan di hold terlebih dahulu.
+                            <br>2. completed :
+                                promo sudah dilakukan validasi oleh admin dan sudah dikonfirmasi bahwa proses validasi sudah lengkap.
+                                Disburse untuk transaksi yang mendapatkan promo bisa diproses." data-container="body"  style="color: black"></i>
+                        </label>
                         <div class="col-md-4">
                             @if($detail['validation_status'] == 1)
                                 <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #4bbf5e;padding: 5px 12px;color: #fff;">Completed</span>
@@ -361,7 +369,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="ID" class="form-control" name="promo_payment_gateway_code" value="{{ $detail['promo_payment_gateway_code'] }}" required>
+                                <input type="text" placeholder="ID" class="form-control" name="promo_payment_gateway_code" value="{{ $detail['promo_payment_gateway_code'] }}" required @if($detail['start_status'] == 1) disabled @endif>
                             </div>
                         </div>
                     </div>
@@ -371,7 +379,7 @@
                         </label>
                         <div class="col-md-8">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Name" class="form-control" name="name" value="{{ $detail['name']}}" required>
+                                <input type="text" placeholder="Name" class="form-control" name="name" value="{{ $detail['name']}}" required @if($detail['start_status'] == 1) disabled @endif>
                             </div>
                         </div>
                     </div>
@@ -381,7 +389,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <select  class="form-control select2 select2-multiple-product" name="payment_gateway" data-placeholder="Select" required onchange="changePayment(this.value)">
+                                <select  class="form-control select2 select2-multiple-product" name="payment_gateway" data-placeholder="Select" required onchange="changePayment(this.value)" @if($detail['start_status'] == 1) disabled @endif>
                                     <option></option>
                                     @foreach($payment_list as $val)
                                         <option value="{{$val['payment_method']}}" @if($detail['payment_gateway'] == $val['payment_method']) selected @endif>{{$val['payment_method']}}</option>
@@ -396,7 +404,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <select  class="form-control select2 select2-multiple-product" name="brands[]" data-placeholder="Select Brand" multiple>
+                                <select  class="form-control select2 select2-multiple-product" name="brands[]" data-placeholder="Select Brand" multiple @if($detail['start_status'] == 1) disabled @endif>
                                     <option></option>
                                     @foreach($brands as $val)
                                         <option value="{{$val['id_brand']}}" @if(in_array($val['id_brand'], array_column($detail['current_brand'], 'id_brand')??[])) selected @endif>{{$val['name_brand']}}</option>
@@ -406,10 +414,10 @@
                         </div>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <select  class="form-control select2 select2-multiple-product" name="operator_brand" data-placeholder="Select">
+                                <select  class="form-control select2 select2-multiple-product" name="operator_brand" data-placeholder="Select" @if($detail['start_status'] == 1) disabled @endif>
                                     <option></option>
-                                    <option value="or" @if($detail['operator_brand'] == 'or') selected @endif>or</option>
-                                    <option value="and" @if($detail['operator_brand'] == 'and') selected @endif>and</option>
+                                    <option value="or" @if($detail['operator_brand'] == 'or') selected @endif>one of the selected brand must exist</option>
+                                    <option value="and" @if($detail['operator_brand'] == 'and') selected @endif>all selected brand must exist</option>
                                 </select>
                             </div>
                         </div>
@@ -420,7 +428,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control datepicker" name="start_date" value="{{ $detail['start_date'] }}" required autocomplete="off">
+                                    <input type="text" class="form_datetime form-control datepicker" name="start_date" value="{{ $detail['start_date'] }}" required autocomplete="off" @if($detail['start_status'] == 1) disabled @endif>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -435,7 +443,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <div class="input-group">
-                                    <input type="text" class="form_datetime form-control datepicker" name="end_date" value="{{ $detail['end_date'] }}" required autocomplete="off">
+                                    <input type="text" class="form_datetime form-control datepicker" name="end_date" value="{{ $detail['end_date'] }}" required autocomplete="off" @if($detail['start_status'] == 1) disabled @endif>
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
                                             <i class="fa fa-calendar"></i>
@@ -450,11 +458,11 @@
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Total Limit <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="total jumlah promo yang akan diberikan" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="total jumlah promo yang akan diberikan.jika promo unlitimed silahkan isi dengan angka 0" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Total limit" class="form-control" name="limit_promo_total" value="{{ $detail['limit_promo_total'] }}" required>
+                                <input type="text" placeholder="Total limit" class="form-control" name="limit_promo_total" value="{{ $detail['limit_promo_total'] }}" required @if($detail['start_status'] == 1) disabled @endif>
                             </div>
                         </div>
                     </div>
@@ -464,7 +472,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Additional Limit Per Day" class="form-control" name="limit_promo_additional_day" value="{{ $detail['limit_promo_additional_day'] }}">
+                                <input type="text" placeholder="Additional Limit Per Day" class="form-control" name="limit_promo_additional_day" value="{{ $detail['limit_promo_additional_day'] }}" @if($detail['start_status'] == 1) disabled @endif>
                             </div>
                         </div>
                     </div>
@@ -474,7 +482,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Additional Limit Per Week" class="form-control" name="limit_promo_additional_week" value="{{ $detail['limit_promo_additional_week'] }}">
+                                <input type="text" placeholder="Additional Limit Per Week" class="form-control" name="limit_promo_additional_week" value="{{ $detail['limit_promo_additional_week'] }}" @if($detail['start_status'] == 1) disabled @endif>
                             </div>
                         </div>
                     </div>
@@ -484,7 +492,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Additional Limit Per Month" class="form-control" name="limit_promo_additional_month" value="{{ $detail['limit_promo_additional_month'] }}">
+                                <input type="text" placeholder="Additional Limit Per Month" class="form-control" name="limit_promo_additional_month" value="{{ $detail['limit_promo_additional_month'] }}" @if($detail['start_status'] == 1) disabled @endif>
                             </div>
                         </div>
                     </div>
@@ -494,15 +502,20 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Additional Limit Per Account" class="form-control" name="limit_promo_additional_account" value="{{ $detail['limit_promo_additional_account'] }}">
+                                <input type="text" placeholder="Additional Limit Per Account" class="form-control" name="limit_promo_additional_account" value="{{ $detail['limit_promo_additional_account'] }}" @if($detail['start_status'] == 1) disabled @endif>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <select  class="form-control select2" name="limit_promo_additional_account_type" id="select_additional_account_type" data-placeholder="Type">
-                                <option></option>
-                                <option value="Jiwa+" @if($detail['limit_promo_additional_account_type'] == 'Jiwa+') selected @endif>Jiwa+</option>
-                                <option value="Payment Gateway" @if($detail['limit_promo_additional_account_type'] == 'Payment Gateway') selected @endif>Payment Gateway</option>
-                            </select>
+                            <div class="input-group">
+                                <select  class="form-control select2" name="limit_promo_additional_account_type" id="select_additional_account_type" data-placeholder="Type" @if($detail['start_status'] == 1) disabled @endif>
+                                    <option></option>
+                                    <option value="Jiwa+" @if($detail['limit_promo_additional_account_type'] == 'Jiwa+') selected @endif>Jiwa+</option>
+                                    <option value="Payment Gateway" @if($detail['limit_promo_additional_account_type'] == 'Payment Gateway') selected @endif>Payment Gateway</option>
+                                </select>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="Jiwa+ : pengecekan limit user akan dilihat dari database milik jiwa+. <br>Payment Gateway : pengecekan limit user akan dilihat dari data user yang didapatkan dari payment gateway" data-container="body"  style="color: black"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -512,11 +525,11 @@
                         <div class="col-md-4">
                             <div class="mt-radio-list">
                                 <label class="mt-radio mt-radio-outline"> Nominal
-                                    <input type="radio" value="Nominal" name="cashback_type" @if($detail['cashback_type'] == "Nominal") checked @endif required onclick="changeCashbackType(this.value)"/>
+                                    <input type="radio" value="Nominal" name="cashback_type" @if($detail['cashback_type'] == "Nominal") checked @endif required onclick="changeCashbackType(this.value)" @if($detail['start_status'] == 1) disabled @endif>
                                     <span></span>
                                 </label>
                                 <label class="mt-radio mt-radio-outline"> Percent
-                                    <input type="radio" value="Percent" name="cashback_type" @if($detail['cashback_type'] == "Percent") checked @endif required onclick="changeCashbackType(this.value)"/>
+                                    <input type="radio" value="Percent" name="cashback_type" @if($detail['cashback_type'] == "Percent") checked @endif required onclick="changeCashbackType(this.value)" @if($detail['start_status'] == 1) disabled @endif>
                                     <span></span>
                                 </label>
                             </div>
@@ -531,7 +544,7 @@
                                 <span class="input-group-addon">
                                     IDR
                                 </span>
-                                <input type="text" class="form-control price"  id="input_cashback_nominal" placeholder="Cashback Nominal" name="cashback" @if($detail['cashback_type'] == 'Percent') disabled @endif value="{{($detail['cashback_type'] == 'Percent' ? NULL: (int)$detail['cashback'])}}">
+                                <input type="text" class="form-control price"  id="input_cashback_nominal" placeholder="Cashback Nominal" name="cashback" @if($detail['cashback_type'] == 'Percent' || $detail['start_status'] == 1) disabled @endif value="{{($detail['cashback_type'] == 'Percent' ? NULL: (int)$detail['cashback'])}}">
                             </div>
                         </div>
                     </div>
@@ -541,7 +554,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-group">
-                                <input type="text" class="form-control"  id="input_cashback_percent_value" placeholder="Cashback Percent Value" name="cashback" @if($detail['cashback_type'] == 'Nominal') disabled @endif value="{{($detail['cashback_type'] == 'Nominal' ? NULL: $detail['cashback'])}}">
+                                <input type="text" class="form-control"  id="input_cashback_percent_value" placeholder="Cashback Percent Value" name="cashback" @if($detail['cashback_type'] == 'Nominal' || $detail['start_status'] == 1) disabled @endif value="{{($detail['cashback_type'] == 'Nominal' ? NULL: $detail['cashback'])}}" >
                                 <span class="input-group-addon">
                                     %
                                 </span>
@@ -557,7 +570,7 @@
                                  <span class="input-group-addon">
                                     IDR
                                 </span>
-                                <input type="text" class="form-control price"  id="input_maximum_cashback" placeholder="Maximum Cashback" id="maximum_cashback" name="maximum_cashback" @if($detail['cashback_type'] == 'Nominal') disabled value="" @else value="{{ $detail['maximum_cashback'] }}" @endif>
+                                <input type="text" class="form-control price"  id="input_maximum_cashback" placeholder="Maximum Cashback" id="maximum_cashback" name="maximum_cashback" @if($detail['cashback_type'] == 'Nominal') disabled value="" @else value="{{ $detail['maximum_cashback'] }}" @endif @if($detail['start_status'] == 1) disabled @endif>
                             </div>
                         </div>
                     </div>
@@ -570,7 +583,7 @@
                                 <span class="input-group-addon">
                                     IDR
                                 </span>
-                                <input type="text" class="form-control price2"  placeholder="Minimum transaksi" name="minimum_transaction" value="{{ $detail['minimum_transaction'] }}" required>
+                                <input type="text" class="form-control price2"  placeholder="Minimum transaksi" name="minimum_transaction" value="{{ $detail['minimum_transaction'] }}" required @if($detail['start_status'] == 1) disabled @endif>
                             </div>
                         </div>
                     </div>
@@ -579,7 +592,7 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="tipe charged" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
-                            <input type="text" placeholder="Charged Type" class="form-control" id="charged_type" name="charged_type" value="{{ $detail['charged_type'] }}" readonly>
+                            <input type="text" placeholder="Charged Type" class="form-control" id="charged_type" name="charged_type" value="{{ $detail['charged_type'] }}" readonly @if($detail['start_status'] == 1) disabled @endif>
                         </div>
                     </div>
                     <div class="form-group">
@@ -593,7 +606,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-group">
-                                <input type="text" placeholder="Charged Payment Gateway" class="form-control" name="charged_payment_gateway" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_payment_gateway']:$detail['charged_payment_gateway'])}}" required>
+                                <input type="text" placeholder="Charged Payment Gateway" class="form-control" name="charged_payment_gateway" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_payment_gateway']:$detail['charged_payment_gateway'])}}" required @if($detail['start_status'] == 1) disabled @endif>
                                 <span class="input-group-addon">
                                     <i class="fa fa-question-circle tooltips" data-original-title="Charged Payment Gateway :  fee yang akan ditanggung oleh Payment Gateway" data-container="body"  style="color: black"></i>
                                 </span>
@@ -601,7 +614,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="input-group">
-                                <input type="text" placeholder="Charged Jiwa Group" class="form-control" name="charged_jiwa_group" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_jiwa_group']:$detail['charged_jiwa_group'])}}" required>
+                                <input type="text" placeholder="Charged Jiwa Group" class="form-control" name="charged_jiwa_group" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_jiwa_group']:$detail['charged_jiwa_group'])}}" required @if($detail['start_status'] == 1) disabled @endif>
                                 <span class="input-group-addon">
                                     <i class="fa fa-question-circle tooltips" data-original-title="Charged Jiwa Group :  fee yang akan ditanggung oleh jiwa group" data-container="body"  style="color: black"></i>
                                 </span>
@@ -619,7 +632,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-group">
-                                <input type="text" placeholder="Charged Central" class="form-control" name="charged_central" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_central']:$detail['charged_central'])}}" required>
+                                <input type="text" placeholder="Charged Central" class="form-control" name="charged_central" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_central']:$detail['charged_central'])}}" required @if($detail['start_status'] == 1) disabled @endif>
                                 <span class="input-group-addon">
                                     <i class="fa fa-question-circle tooltips" data-original-title="Charged Central :  fee yang akan ditanggung oleh jiwa group" data-container="body"  style="color: black"></i>
                                 </span>
@@ -627,7 +640,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="input-group">
-                                <input type="text" placeholder="Charged Outlet" class="form-control" name="charged_outlet" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_outlet']:$detail['charged_outlet'])}}" required>
+                                <input type="text" placeholder="Charged Outlet" class="form-control" name="charged_outlet" value="{{($detail['charged_type'] == 'Nominal'?(int)$detail['charged_outlet']:$detail['charged_outlet'])}}" required @if($detail['start_status'] == 1) disabled @endif>
                                 <span class="input-group-addon">
                                     <i class="fa fa-question-circle tooltips" data-original-title="Charged Outlet :  fee yang akan ditanggung oleh outlet" data-container="body"  style="color: black"></i>
                                 </span>
@@ -636,10 +649,12 @@
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">MDR Setting <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="rule untuk perhitungan mdr" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="Total Amount PG : Perhitungan MDR akan di ambil dari total yang di bayarkan customer ke payment gateway.
+                                    <br>Total Amount PG - Cashback Jiwa Group : perhitungan MDR akan diambil dari total yang di bayarkan customer dikurangi dengan cashback yang ditanggung oleh jiwa group.
+                                    <br>Total Amount PG - Total Cashback Customer : perhitungan MDR akan diambil dari total yang di bayarkan customer dikurangi dengan total cashback yang didapatkan customer." data-container="body"  style="color: black"></i>
                         </label>
                         <div class="col-md-5">
-                            <select  class="form-control select2" name="mdr_setting" data-placeholder="MDR Setting" required>
+                            <select  class="form-control select2" name="mdr_setting" data-placeholder="MDR Setting" required @if($detail['start_status'] == 1) disabled @endif>
                                 <option></option>
                                 <option value="Total Amount PG" @if($detail['mdr_setting'] == 'Total Amount PG') selected @endif>Total Amount PG</option>
                                 <option value="Total Amount PG - Cashback Jiwa Group" @if($detail['mdr_setting'] == 'Total Amount PG - Cashback Jiwa Group') selected @endif>Total Amount PG - Cashback Jiwa Group</option>

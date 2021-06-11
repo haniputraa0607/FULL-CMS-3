@@ -250,8 +250,8 @@
                             <div class="input-icon right">
                                 <select  class="form-control select2 select2-multiple-product" name="operator_brand" data-placeholder="Select">
                                     <option></option>
-                                    <option value="or" @if(old('operator_brand') == 'or') selected @endif>or</option>
-                                    <option value="and" @if(old('operator_brand') == 'and') selected @endif>and</option>
+                                    <option value="or" @if(old('operator_brand') == 'or') selected @endif>one of the selected brand must exist</option>
+                                    <option value="and" @if(old('operator_brand') == 'and') selected @endif>all selected brand must exist</option>
                                 </select>
                             </div>
                         </div>
@@ -292,7 +292,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Total Limit <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="total jumlah promo yang akan diberikan" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="total jumlah promo yang akan diberikan. jika promo unlitimed silahkan isi dengan angka 0" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
@@ -340,11 +340,16 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <select  class="form-control select2" name="limit_promo_additional_account_type" id="select_additional_account_type" data-placeholder="Type">
-                                <option></option>
-                                <option value="Jiwa+" @if(old('limit_promo_additional_account_type') == 'Jiwa+') selected @endif>Jiwa+</option>
-                                <option value="Payment Gateway" @if(old('limit_promo_additional_account_type') == 'Payment Gateway') selected @endif>Payment Gateway</option>
-                            </select>
+                            <div class="input-group">
+                                <select  class="form-control select2" name="limit_promo_additional_account_type" id="select_additional_account_type" data-placeholder="Type">
+                                    <option></option>
+                                    <option value="Jiwa+" @if(old('limit_promo_additional_account_type') == 'Jiwa+') selected @endif>Jiwa+</option>
+                                    <option value="Payment Gateway" @if(old('limit_promo_additional_account_type') == 'Payment Gateway') selected @endif>Payment Gateway</option>
+                                </select>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="Jiwa+ : pengecekan limit user akan dilihat dari database milik jiwa+. <br>Payment Gateway : pengecekan limit user akan dilihat dari data user yang didapatkan dari payment gateway" data-container="body"  style="color: black"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -478,7 +483,9 @@
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">MDR Setting <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="rule untuk perhitungan mdr" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="Total Amount PG : Perhitungan MDR akan di ambil dari total yang di bayarkan customer ke payment gateway.
+                                    <br>Total Amount PG - Cashback Jiwa Group : perhitungan MDR akan diambil dari total yang di bayarkan customer dikurangi dengan cashback yang ditanggung oleh jiwa group.
+                                    <br>Total Amount PG - Total Cashback Customer : perhitungan MDR akan diambil dari total yang di bayarkan customer dikurangi dengan total cashback yang didapatkan customer." data-container="body"  style="color: black"></i>
                         </label>
                         <div class="col-md-5">
                             <select  class="form-control select2" name="mdr_setting" data-placeholder="MDR Setting" required>
