@@ -349,7 +349,7 @@
                         <label class="col-md-3 control-label">Validation
                             <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="status validasi promo:
                             <br>1. not completed :
-                                Promo belum validasi atau validasi belum selesai dilakukan oleh admin.
+                                Promo belum divalidasi atau validasi belum selesai dilakukan oleh admin.
                                 Disburse untuk transaksi yang mendapatkan promo akan di hold terlebih dahulu.
                             <br>2. completed :
                                 promo sudah dilakukan validasi oleh admin dan sudah dikonfirmasi bahwa proses validasi sudah lengkap.
