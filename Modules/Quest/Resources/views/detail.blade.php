@@ -921,6 +921,24 @@
                 $("#user_rule_parameter").prop('required', true);
             }
         }
+
+        var unsaved = false;
+
+        $("#quest-content-container").on('change', ':input, .note-editable', function(){ //triggers change in all input fields including text type
+            unsaved = true;
+        });
+
+        $("#quest-content-container").on("summernote.change", ".summernote", function (e) {   // callback as jquery custom event 
+            unsaved = true;
+        });
+
+        function unloadPage(){ 
+            if(unsaved){
+                return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+            }
+        }
+
+        window.onbeforeunload = unloadPage;
     </script>
 @endsection
 
