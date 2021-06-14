@@ -148,7 +148,7 @@
 			var minDate = new Date(selected.date.valueOf());
 			$('#start_date').datetimepicker('setEndDate', minDate);
 		});
-		$('#singleCode').hide()
+		$('#singleCode, #totalCoupon').hide()
 		$('#multipleCode').hide()
 		$('#exampleCode').hide()
 		var maxChar = 15
@@ -164,6 +164,8 @@
 			$('#multiplePrefixCode').val('')
 			if (code == 'Single') {
 				$(':input[type="submit"]').prop('disabled', false);
+				$('#totalCoupon, #total-tooltip-single').show();
+				$('#total-tooltip-multiple').hide();
 				$('#totalCoupon').removeClass( "has-error" );
 				$('#alertTotalCoupon').hide();
 				$('#singleCode').show().find('input').prop('required', true);
@@ -200,7 +202,8 @@
 			} else {
 				$('#singleCode').hide().find('input').prop('required', false);
 				$('#multipleCode').show().find('input').prop('required', true);
-				$('#number_last_code').show()
+				$('#number_last_code, #totalCoupon, #total-tooltip-multiple').show()
+				$('#total-tooltip-single').hide()
 				$('input[name=total_coupon]').val('')
 				$('#multipleNumberLastCode').prop('required', true);
 				$('#multiplePrefixCode').keyup(function() {	
@@ -296,10 +299,10 @@
 
 				$('input[name=total_coupon], #multipleNumberLastCode').keyup(function() {
 					if (code == 'Multiple') {
-						maxCharDigit = 28;
-						// hitungKemungkinan = Math.pow(maxCharDigit, $('#multipleNumberLastCode').val())
-						hitungKemungkinan = permut(maxCharDigit, $('#multipleNumberLastCode').val());
-						if (hitungKemungkinan >= $('input[name=total_coupon]').inputmask('unmaskedvalue')) {
+						let maxCharDigit = 28;
+						let hitungKemungkinan 	= permut(maxCharDigit, $('#multipleNumberLastCode').val());
+						let totalCoupon 		= parseInt($('input[name=total_coupon]').inputmask('unmaskedvalue'));
+						if (hitungKemungkinan >= totalCoupon && totalCoupon != 0) {
 							$(':input[type="submit"]').prop('disabled', false);
 							$('#totalCoupon').removeClass( "has-error" );
 							$('#alertTotalCoupon').hide();
@@ -671,7 +674,8 @@
 						<div class="form-group" id="totalCoupon">
 							<label class="control-label">Total Coupon (Jumlah Total Voucher)</label>
 							<span class="required" aria-required="true"> * </span>
-							<i class="fa fa-question-circle tooltips" data-original-title="Total kode kupon yang dibuat" data-container="body"></i>
+							<i class="fa fa-question-circle tooltips" data-original-title="Total kode kupon yang dibuat." data-container="body" id="total-tooltip-multiple" style="display: none"></i>
+							<i class="fa fa-question-circle tooltips" data-original-title="Total kode kupon yang dibuat. Tulis 0 jika tidak ada limit." data-container="body" id="total-tooltip-single" style="display: none"></i>
 							<div class="input-group col-md-12">
 								<input required type="text" class="form-control digit_mask" name="total_coupon" placeholder="Total Coupon" value="{{ old('total_coupon') ?? $result['total_coupon'] ?? null }}" autocomplete="off">
 								<p id="alertTotalCoupon" style="display: none;" class="help-block">Generate Random Total Coupon sangat tidak memungkinkan!</p>
