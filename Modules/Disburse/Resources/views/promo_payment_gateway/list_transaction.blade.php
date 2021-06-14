@@ -95,7 +95,7 @@ $grantedFeature     = session('granted_features');
                         <th> Customer account PG</th>
                         <th> Receipt number </th>
                         <th> Amount </th>
-                        <th> Chasback Received </th>
+                        <th> Cashback Received </th>
                     </tr>
                     </thead>
                     <tbody>

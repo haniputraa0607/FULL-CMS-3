@@ -217,7 +217,7 @@
                     <div class="form-group">
                         <label class="col-md-3  control-label">Import List Code
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Anda bisa menggunakan file excel untuk memasukkan data code" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Anda bisa menggunakan file excel untuk memasukkan data code. Satu kode hanya berlaku untuk 1 user." data-container="body"></i>
                         </label>
                         <div class="col-md-5">
                             <div class="fileinput fileinput-new text-left" data-provides="fileinput">

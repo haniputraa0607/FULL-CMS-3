@@ -72,7 +72,7 @@
                 </tr>
                 <tr>
                     <td>Brands</td>
-                    <td>: {{implode(',',array_column($detail['current_brand'], 'name_brand'))}}</td>
+                    <td>: {{implode(',',array_column($detail['current_brand'], 'name_brand'))}} @if($detail['operator_brand'] == 'or') (one of the selected brand must exist) @else (all selected brand must exist) @endif </td>
                 </tr>
                 <tr>
                     <td>Periode</td>
