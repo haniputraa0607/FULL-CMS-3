@@ -315,6 +315,8 @@
         }
 
         $(document).ready(function() {
+            $("body").tooltip({ selector: '.tooltips' });
+
             $('.select2').select2({
                 allowClear: true,
             });

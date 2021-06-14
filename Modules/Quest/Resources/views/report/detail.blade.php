@@ -137,6 +137,9 @@
             @endif
         </ul>
     </div><br>
+	<div class="form-group">	
+		<a href="{{url('quest/detail/'.$detail['info']['id_quest'])}}" class="btn blue"><i class="fa fa-chevron-left"></i> Back to Quest Detail</a>
+	</div>
 
     @include('layouts.notifications')
 
