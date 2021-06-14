@@ -120,7 +120,7 @@
                 </tr>
                 <tr>
                     <td>Charged Central</td>
-                    <td>: @if($detail['charged_type'] == 'Nominal') IDR {{number_format((int)$detail['charged_outlet'])}} @else {{$detail['charged_outlet']}} % @endif</td>
+                    <td>: @if($detail['charged_type'] == 'Nominal') IDR {{number_format((int)$detail['charged_central'])}} @else {{$detail['charged_central']}} % @endif</td>
                 </tr>
                 <tr>
                     <td>Charged Outlet</td>
