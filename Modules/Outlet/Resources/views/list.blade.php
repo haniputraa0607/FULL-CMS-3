@@ -75,12 +75,6 @@
                        columns: "thead th:not(.noExport)"
                   },
                 }],
-                responsive: {
-                    details: {
-                        type: "column",
-                        target: "tr"
-                    }
-                },
                 order: [],
                 lengthMenu: [
                     [5, 10, 15, 20, -1],
@@ -226,7 +220,7 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+            <table class="table table-striped table-bordered table-hover" width="100%" id="sample_1">
                 <thead>
                     <tr>
                         <th> Status Mitra</th>
