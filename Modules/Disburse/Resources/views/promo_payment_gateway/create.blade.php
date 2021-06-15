@@ -291,6 +291,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Maximum Total Cashback <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="maximum total cashback yang akan diberikan" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <input type="text" placeholder="Total limit" class="form-control price2" name="maximum_total_cashback" value="{{ old('maximum_total_cashback') }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Total Limit <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="total jumlah promo yang akan diberikan. jika promo unlitimed silahkan isi dengan angka 0" data-container="body"></i>
                         </label>
