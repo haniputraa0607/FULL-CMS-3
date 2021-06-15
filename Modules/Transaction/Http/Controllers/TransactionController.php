@@ -1814,4 +1814,35 @@ class TransactionController extends Controller
         $response = MyHelper::post('transaction/retry-void-payment/retry', $post);
         return $response;
     }
+
+    /*================ Start Setting Delivery ================*/
+    public function availableDelivery(Request $request) {
+        $data = [
+            'title'          => 'Transaction',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Setting Delivery Method',
+            'submenu_active' => 'setting-delivery-method'
+        ];
+        $get = MyHelper::get('transaction/be/available-delivery');
+        $data['default_delivery'] = $get['result']['default_delivery']??[];
+        $data['delivery'] = $get['result']['delivery']??[];
+        return view('transaction::setting.available_delivery', $data);
+    }
+    public function availableDeliveryUpdate(Request $request) {
+        $post = $request->except('_token');
+        $delivery = [];
+        foreach ($request->delivery as $code => $val) {
+            $delivery[] = [
+                'code' => $code,
+                'available_status' => $val['available_status']??0
+            ];
+        }
+        $data = MyHelper::post('transaction/available-delivery/update',['delivery' => $delivery]);
+        if (($data['status']??false) == 'success') {
+            return back()->withSuccess(['Success update setting']);
+        } else {
+            return back()->withErrors(['Failed update setting']);
+        }
+    }
+    /*================ End Setting Delivery ================*/
 }

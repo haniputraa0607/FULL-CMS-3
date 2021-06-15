@@ -1239,6 +1239,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([250], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'setting-delivery-method') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/available-delivery')}}" class="nav-link ">
+								<span class="title">Setting Delivery Method</span>
+							</a>
+						</li>
+					@endif
 					@if(MyHelper::hasAccess([79], $configs))
 					<li class="nav-item {{($submenu_active == 'free-delivery') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/free-delivery')}}" class="nav-link ">
