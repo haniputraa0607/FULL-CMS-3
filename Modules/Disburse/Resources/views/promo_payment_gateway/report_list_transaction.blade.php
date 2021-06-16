@@ -79,6 +79,10 @@
                     <td>: {{date('d-M-Y', strtotime($detail['start_date']))}} / {{date('d-M-Y', strtotime($detail['end_date']))}}</td>
                 </tr>
                 <tr>
+                    <td>Maximum Total Cashback</td>
+                    <td>: {{number_format($detail['maximum_total_cashback'])}}</td>
+                </tr>
+                <tr>
                     <td>Total Limit</td>
                     <td>: {{$detail['limit_promo_total']}}</td>
                 </tr>
@@ -192,6 +196,7 @@
                 <table class="table table-striped table-bordered table-hover dt-responsive" id="data_list">
                     <thead>
                     <tr>
+                        <th> Transaction date</th>
                         <th> Customer name</th>
                         <th> Customer phone</th>
                         <th> Customer account PG</th>
@@ -204,6 +209,7 @@
                     @if(!empty($data))
                         @foreach($data as $key => $res)
                             <tr style="background-color: #fbfbfb;">
+                                <td> {{date('d M Y H:i', strtotime($res['transaction_date']))}} </td>
                                 <td> {{ $res['customer_name'] }} </td>
                                 <td> {{ $res['customer_phone'] }} </td>
                                 <td>
