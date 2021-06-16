@@ -29,6 +29,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::post('import-brand', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@importBrand']);
     Route::get('export/brand-outlet', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@exportBrandOutle']);
     Route::get('export-city', 'OutletController@exportDataCity');
+    Route::post('import-delivery', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@importDelivery']);
+    Route::get('export/delivery-outlet', ['middleware' => 'feature_control:32', 'uses' => 'OutletController@exportDeliveryOutlet']);
+    Route::any('delivery-outlet-ajax', 'OutletController@deliveryOutletAjax');
     Route::any('autoresponse/{name}', 'OutletController@autoresponse');
 
     Route::get('max-order/{outlet_code?}', ['middleware' => 'feature_control:197', 'uses' => 'OutletController@maxOrder']);

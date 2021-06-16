@@ -2,6 +2,29 @@
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
+    Route::get('/setting/cashback', 'TransactionSettingController@list');
+    Route::post('/setting/cashback/update', 'TransactionSettingController@update');
+    Route::get('/setting/cashback-calculation', 'TransactionSettingController@cashbackCalculation');
+    Route::post('/setting/cashback-calculation', 'TransactionSettingController@cashbackCalculationUpdate');
+    Route::any('/setting/free-delivery', 'TransactionController@freeDelivery');
+    Route::any('/setting/go-send-package-detail', 'TransactionController@goSendPackageDetail');
+    Route::get('/setting/available-payment', 'TransactionController@availablePayment');
+    Route::post('/setting/available-payment', 'TransactionController@availablePaymentUpdate');
+    Route::get('/setting/refund-reject-order', 'TransactionSettingController@refundRejectOrder');
+    Route::post('/setting/refund-reject-order', 'TransactionSettingController@updateRefundRejectOrder');
+    Route::get('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@autoReject']);
+    Route::post('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@updateAutoReject']);
+    Route::any('/setting/timer-payment-gateway', 'TransactionController@timerPaymentGateway');
+
+    //===== setting delivery =====//
+    Route::get('/setting/available-delivery', 'TransactionController@availableDelivery');
+    Route::post('/setting/available-delivery', 'TransactionController@availableDeliveryUpdate');
+    Route::any('/setting/delivery-outlet/detail/{code}', 'TransactionController@deliveryOutletDetail');
+    Route::get('/setting/delivery-outlet', 'TransactionController@deliveryOutlet');
+});
+
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
+{
     Route::get('/setting/rule', 'TransactionController@ruleTransaction');
     Route::post('/setting/rule/update', 'TransactionController@ruleTransactionUpdate');
     Route::get('/internalcourier', 'TransactionController@internalCourier');
@@ -40,25 +63,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::get('/admin/{receipt}/{phone}', 'TransactionController@adminOutlet');
     Route::get('/admin/{type}/{status}/{receipt}/{id}', 'TransactionController@adminOutletConfirm');
 
-});
-
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
-{
-    Route::get('/setting/cashback', 'TransactionSettingController@list');
-    Route::post('/setting/cashback/update', 'TransactionSettingController@update');
-    Route::get('/setting/cashback-calculation', 'TransactionSettingController@cashbackCalculation');
-    Route::post('/setting/cashback-calculation', 'TransactionSettingController@cashbackCalculationUpdate');
-    Route::any('/setting/free-delivery', 'TransactionController@freeDelivery');
-    Route::any('/setting/go-send-package-detail', 'TransactionController@goSendPackageDetail');
-    Route::get('/setting/available-payment', 'TransactionController@availablePayment');
-    Route::post('/setting/available-payment', 'TransactionController@availablePaymentUpdate');
-    Route::get('/setting/refund-reject-order', 'TransactionSettingController@refundRejectOrder');
-    Route::post('/setting/refund-reject-order', 'TransactionSettingController@updateRefundRejectOrder');
-    Route::get('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@autoReject']);
-    Route::post('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@updateAutoReject']);
-    Route::any('/setting/timer-payment-gateway', 'TransactionController@timerPaymentGateway');
-    Route::get('/setting/available-delivery', 'TransactionController@availableDelivery');
-    Route::post('/setting/available-delivery', 'TransactionController@availableDeliveryUpdate');
 });
 
 Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()

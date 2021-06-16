@@ -1820,8 +1820,9 @@ class TransactionController extends Controller
         $data = [
             'title'          => 'Transaction',
             'menu_active'    => 'order',
-            'sub_title'      => 'Setting Delivery Method',
-            'submenu_active' => 'setting-delivery-method'
+            'sub_title'      => 'Available Delivery',
+            'submenu_active' => 'delivery-method',
+            'child_active' => 'delivery-method-available'
         ];
         $get = MyHelper::get('transaction/be/available-delivery');
         $data['default_delivery'] = $get['result']['default_delivery']??[];
@@ -1842,6 +1843,44 @@ class TransactionController extends Controller
             return back()->withSuccess(['Success update setting']);
         } else {
             return back()->withErrors(['Failed update setting']);
+        }
+    }
+
+    public function deliveryOutlet(){
+        $data = [
+            'title'          => 'Transaction',
+            'menu_active'    => 'order',
+            'sub_title'      => 'Delivery',
+            'submenu_active' => 'delivery-method',
+            'child_active' => 'delivery-method-available'
+        ];
+        $data['delivery'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery']??[];
+        return view('transaction::setting.delivery_outlet_list', $data);
+    }
+
+    public function deliveryOutletDetail(Request $request, $code){
+        $post = $request->except('_token');
+
+        if(empty($post)){
+            $data = [
+                'title'          => 'Transaction',
+                'menu_active'    => 'order',
+                'sub_title'      => 'Limitation Delivery Outlet',
+                'submenu_active' => 'delivery-method',
+                'child_active' => 'delivery-method-outlet',
+                'code' => $code
+            ];
+            $data['outlets_available'] = MyHelper::post('outlet/delivery-outlet/bycode', ['code' => $code])['result']??[];
+            return view('transaction::setting.delivery_outlet_detail', $data);
+        }else{
+            $post['id_outlet'] = str_replace('[', '', $post['id_outlet']);
+            $post['id_outlet'] = str_replace(']', '', $post['id_outlet']);
+            $update = MyHelper::post('outlet/delivery-outlet/update', ['code' => $code, 'id_outlet' => explode(',',$post['id_outlet'][0]??[])]);
+            if (($update['status']??false) == 'success') {
+                return back()->withSuccess(['Success update setting']);
+            } else {
+                return back()->withErrors($update['messages']??['Failed update setting']);
+            }
         }
     }
     /*================ End Setting Delivery ================*/

@@ -79,7 +79,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class=" icon-layers font-green"></i>
-            <span class="caption-subject font-green bold uppercase">Setting Delivery Method</span>
+            <span class="caption-subject font-green bold uppercase">Available Delivery</span>
         </div>
     </div>
     <div class="portlet-body">
@@ -100,11 +100,12 @@
                     </div>
                 </div>
 
-                <div class="alert alert-info">Drag [<i class="fa fa-ellipsis-h" style="transform: rotate(90deg);"></i>] handle button to reorder delivery method</div>
+                <div class="alert alert-info">Drag [<i class="fa fa-ellipsis-h" style="transform: rotate(90deg);"></i>] handle button to reorder delivery</div>
                 <table class="table">
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>Delivery Code</th>
                         <th>Delivery Method</th>
                         <th>Delivery Name</th>
                         <th>Status</th>
@@ -114,6 +115,7 @@
                     @foreach($delivery as $key => $val)
                         <tr>
                             <td class="sortable-handle"><i class="fa fa-ellipsis-h" style="transform: rotate(90deg);"></i></td>
+                            <td>{{$val['code']}}</td>
                             <td>{{ucfirst($val['delivery_method'])}}</td>
                             <td>{{$val['delivery_name']}}</td>
                             <td>
