@@ -1837,7 +1837,7 @@ class TransactionController extends Controller
                 'available_status' => $val['available_status']??0
             ];
         }
-        $data = MyHelper::post('transaction/available-delivery/update',['delivery' => $delivery]);
+        $data = MyHelper::post('transaction/available-delivery/update',['delivery' => $delivery, 'default_delivery' => $post['default_delivery']]);
         if (($data['status']??false) == 'success') {
             return back()->withSuccess(['Success update setting']);
         } else {

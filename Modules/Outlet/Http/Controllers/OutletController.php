@@ -98,7 +98,7 @@ class OutletController extends Controller
             // province
             $data['province'] = $this->getPropinsi();
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-
+            $data['delivery'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery']??[];
             return view('outlet::create', $data);
         }
         else {

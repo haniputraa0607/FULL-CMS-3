@@ -1,6 +1,8 @@
 @extends('layouts.main')
 
 @section('page-style')
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 <style type="text/css">
     .sortable-handle {
         cursor: move;
@@ -12,6 +14,8 @@
 @endsection
 
 @section('page-script')
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
 <script>
     var unsaved = false;
     function recolor() {
@@ -79,32 +83,48 @@
         </div>
     </div>
     <div class="portlet-body">
-        <div class="alert alert-info">Drag [<i class="fa fa-ellipsis-h" style="transform: rotate(90deg);"></i>] handle button to reorder delivery method</div>
         <form class="form-horizontal" action="{{ url('transaction/setting/available-delivery') }}" method="post" id="form">
             {{ csrf_field() }}
-            <table class="table">
-                <thead>
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" style="text-align: left">Default <span class="required" aria-required="true"> * </span>
+                        <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="- By price: default yang terpilih adalah yang memiliki biaya termurah
+                            <br>- Selected: delivery yang terpilih akan berdasarkan susunan dari urutan" data-container="body"></i>
+                    </label>
+                    <div class="col-md-4">
+                        <select  class="form-control select2" name="default_delivery" data-placeholder="Select Default">
+                            <option></option>
+                            <option value="price" @if($default_delivery == 'price') selected @endif>By Price</option>
+                            <option value="selected" @if($default_delivery == 'selected') selected @endif>Selected</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">Drag [<i class="fa fa-ellipsis-h" style="transform: rotate(90deg);"></i>] handle button to reorder delivery method</div>
+                <table class="table">
+                    <thead>
                     <tr>
                         <th>#</th>
                         <th>Delivery Method</th>
                         <th>Delivery Name</th>
                         <th>Status</th>
                     </tr>
-                </thead>
-                <tbody class="sortable">
+                    </thead>
+                    <tbody class="sortable">
                     @foreach($delivery as $key => $val)
-                    <tr>
-                        <td class="sortable-handle"><i class="fa fa-ellipsis-h" style="transform: rotate(90deg);"></i></td>
-                        <td>{{ucfirst($val['delivery_method'])}}</td>
-                        <td>{{$val['delivery_name']}}</td>
-                        <td>
-                            <input type="checkbox" name="delivery[{{$val['code']}}][available_status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Enable" data-off-color="default" data-off-text="Disable" value="1" @if($val['available_status'] == 1) checked @endif>
-                        </td>
-                        <input type="hidden" name="delivery[{{$val['code']}}][dummy]">
-                    </tr>
+                        <tr>
+                            <td class="sortable-handle"><i class="fa fa-ellipsis-h" style="transform: rotate(90deg);"></i></td>
+                            <td>{{ucfirst($val['delivery_method'])}}</td>
+                            <td>{{$val['delivery_name']}}</td>
+                            <td>
+                                <input type="checkbox" name="delivery[{{$val['code']}}][available_status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Enable" data-off-color="default" data-off-text="Disable" value="1" @if($val['available_status'] == 1) checked @endif>
+                            </td>
+                            <input type="hidden" name="delivery[{{$val['code']}}][dummy]">
+                        </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
             <div class="form-actions text-center">
                 <button onclick="unsaved=false" class="btn green">
                     <i class="fa fa-check"></i> Save</button>
