@@ -292,7 +292,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Maximum Total Cashback <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="maximum total cashback yang akan diberikan" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="maximum total cashback yang akan diberikan. jika promo tidak memiliki maximum cashback silahkan isi dengan angka 0" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
