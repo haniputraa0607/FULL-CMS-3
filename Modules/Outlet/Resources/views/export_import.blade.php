@@ -176,6 +176,11 @@ $configs    		= session('configs');
                         <a data-toggle="tab" href="#tab_4-4"><i class="fa fa-database"></i> Import Brand Outlet </a>
                     </li>
                     @endif
+                    @if(MyHelper::hasAccess([13], $configs))
+                        <li>
+                            <a data-toggle="tab" href="#tab_5-5"><i class="fa fa-database"></i> Import Delivery Outlet </a>
+                        </li>
+                    @endif
                 </ul>
             </div>
             <div class="col-md-9">
@@ -384,6 +389,96 @@ $configs    		= session('configs');
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">File Brand Outlet <span class="required" aria-required="true"> * </span></label>
                                                         <div class="col-md-9">
+                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                <div class="input-group input-large">
+                                                                    <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                                                        <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                                                                        <span class="fileinput-filename"> </span>
+                                                                    </div>
+                                                                    <span class="input-group-addon btn default btn-file">
+                                                <span class="fileinput-new"> Select file </span>
+                                                <span class="fileinput-exists"> Change </span>
+                                                <input type="file" name="import_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required> </span>
+                                                                    <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-actions">
+                                                    {{ csrf_field() }}
+                                                    <div class="row">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                            <button type="submit" class="btn green">Import</button>
+                                                            <!-- <button type="button" class="btn default">Cancel</button> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        @endif
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div id="tab_5-5" class="tab-pane">
+                        @if(MyHelper::hasAccess([32], $grantedFeature))
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <span class="caption-subject font-yellow sbold uppercase">Import Delivery Outlet (Only in excel format)</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    <div class="m-heading-1 border-green m-bordered">
+                                        <p>Anda bisa mengubah data delivery outlet dengan contoh format excel dibawah ini. Data yang dibutuhkan untuk import delivery adalah delivery code dan outlet code.</p><br>
+                                        Contoh data : <br><br>
+                                        <table class="table table-striped table-bordered table-hover dt-responsive" width="30%">
+                                            <thead>
+                                            <tr>
+                                                <th> code_outlet </th>
+                                                <th> delivery_1 </th>
+                                                <th> delivery_2 </th>
+                                                <th> delivery_3 </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td> a01 </td>
+                                                <td> YES </td>
+                                                <td> NO </td>
+                                                <td> YES </td>
+                                            </tr>
+                                            <tr>
+                                                <td> a02 </td>
+                                                <td> NO </td>
+                                                <td> NO </td>
+                                                <td> YES </td>
+                                            </tr>
+                                            <tr>
+                                                <td> a03 </td>
+                                                <td> YES </td>
+                                                <td> NO </td>
+                                                <td> YES </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    @if(MyHelper::hasAccess([2], $configs))
+                                        @if(MyHelper::hasAccess([32], $grantedFeature))
+                                            <form class="form-horizontal" role="form" action="{{url('outlet/import-delivery')}}" method="post" enctype="multipart/form-data">
+                                                <div class="form-body">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label">Export Delivery</label>
+                                                        <div class="col-md-8">
+                                                            <a href= "{{url('outlet/export/delivery-outlet')}}"> <i class="fa fa-file-excel-o"></i> Delivery </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label">File Delivery Outlet <span class="required" aria-required="true"> * </span></label>
+                                                        <div class="col-md-8">
                                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                 <div class="input-group input-large">
                                                                     <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">

@@ -98,7 +98,7 @@ class OutletController extends Controller
             // province
             $data['province'] = $this->getPropinsi();
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-
+            $data['delivery'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery']??[];
             return view('outlet::create', $data);
         }
         else {
@@ -181,6 +181,7 @@ class OutletController extends Controller
 
             $outlet = MyHelper::post('outlet/be/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+            $data['delivery'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery']??[];
             // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
@@ -1299,5 +1300,92 @@ class OutletController extends Controller
             ];
         },$dataOutlet);
         return Excel::download(new ArrayExport($dataOutlet,'Outlet PIN'),date('YmdHis').'_Outlet_PIN.xlsx');
+    }
+
+    public function exportDeliveryOutlet(){
+        $deliveries = MyHelper::get('transaction/be/available-delivery')['result']['delivery']??[];
+        $codeOutlet =  MyHelper::get('outlet/list/code');
+
+        $data = [];
+        if(isset($codeOutlet['status']) && $codeOutlet['status'] == 'success'){
+            $count = count($codeOutlet['result']);
+            $result = $codeOutlet['result'];
+            for($i=0;$i<$count;$i++){
+                $data[$i]['code_outlet'] = $result[$i]['outlet_code'];
+                $delivery = $result[$i]['delivery_outlet'];
+                foreach ($deliveries as $value){
+                    $check = array_search($value['code'], array_column($delivery, 'code'));
+
+                    if($check !== false){
+                        $data[$i][$value['code']] = 'YES';
+                    }else{
+                        $data[$i][$value['code']] = 'NO';
+                    }
+
+                }
+            }
+        }
+
+        $dataExport['All Type'] = $data;
+        $dataExport = new MultisheetExport($dataExport);
+        return Excel::download($dataExport,'Data_Delivery_Outlet_'.date('Ymdhis').'.xls');
+    }
+
+    function importDelivery(Request $request) {
+        $post = $request->except('_token');
+
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Outlet',
+                'sub_title'      => 'Export & Import Outlet',
+                'menu_active'    => 'outlet',
+                'submenu_active' => 'outlet-export-import',
+            ];
+            $data['delivery'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery']??[];
+            return view('outlet::export_import', $data);
+        }else{
+            if($request->file('import_file')){
+
+                $path = $request->file('import_file')->getRealPath();
+                $name = $request->file('import_file')->getClientOriginalName();
+                $dataimport = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
+                $save = MyHelper::post('outlet/import-delivery', ['data_import' => $dataimport]);
+
+                if (isset($save['status']) && $save['status'] == "success") {
+                    return parent::redirect($save, $save['message'], 'outlet/list');
+                }else {
+                    if (isset($save['errors'])) {
+                        return back()->withErrors($save['errors'])->withInput();
+                    }
+
+                    if (isset($save['status']) && $save['status'] == "fail") {
+                        return back()->withErrors($save['messages'])->withInput();
+                    }
+                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+                }
+                return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+            }else{
+                return back()->withErrors(['File is required.'])->withInput();
+            }
+        }
+    }
+
+    function deliveryOutletAjax(Request $request){
+        $post = $request->except('_token');
+        $draw = $post["draw"];
+        $list = MyHelper::post('outlet/delivery-outlet-ajax', $post);
+
+        if(isset($list['status']) && isset($list['status']) == 'success'){
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = $list['total'];
+            $arr_result['recordsFiltered'] = $list['total'];
+            $arr_result['data'] = $list['result'];
+        }else{
+            $arr_result['draw'] = $draw;
+            $arr_result['recordsTotal'] = 0;
+            $arr_result['recordsFiltered'] = 0;
+            $arr_result['data'] = array();
+        }
+        return response()->json($arr_result);
     }
 }

@@ -1239,6 +1239,26 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([250], $grantedFeature))
+						<li class="nav-item {{($submenu_active == 'delivery-method') ? 'active open' : ''}}">
+							<a href="javascript:;" class="nav-link nav-toggle">
+								<span class="title">Delivery Method</span>
+								<span class="arrow"></span>
+							</a>
+							<ul class="sub-menu">
+								<li class="nav-item {{(isset($child_active) && $child_active == 'delivery-method-available') ? 'active open' : ''}}">
+									<a href="{{url('transaction/setting/available-delivery')}}" class="nav-link ">
+										<span class="title">Available Delivery</span>
+									</a>
+								</li>
+								<li class="nav-item {{(isset($child_active) && $child_active == 'delivery-method-outlet') ? 'active open' : ''}}">
+									<a href="{{url('transaction/setting/delivery-outlet')}}" class="nav-link ">
+										<span class="title">Limitation Delivery for Outlet</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					@endif
 					@if(MyHelper::hasAccess([79], $configs))
 					<li class="nav-item {{($submenu_active == 'free-delivery') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/free-delivery')}}" class="nav-link ">

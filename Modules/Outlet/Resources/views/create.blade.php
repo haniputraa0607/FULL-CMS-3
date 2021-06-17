@@ -689,6 +689,19 @@
                         </div>
                     </div>
 
+                    @foreach($delivery as $val)
+                        <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    {{$val['delivery_name']}}
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="checkbox" name="delivery_outlet[{{$val['code']}}]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1">
+                            </div>
+                        </div>
+                    @endforeach
+
                     <hr>
                     <h4>Maps</h4>
 

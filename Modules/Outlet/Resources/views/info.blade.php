@@ -255,6 +255,18 @@
                 <input type="checkbox" name="plastic_used_status" @if(old('plastic_used_status',$val['plastic_used_status']) == 'Active') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="Active">
             </div>
         </div>
+        @foreach($delivery as $dev)
+            <div class="form-group">
+                <div class="input-icon right">
+                    <label class="col-md-3 control-label">
+                        {{$dev['delivery_name']}}
+                    </label>
+                </div>
+                <div class="col-md-9">
+                    <input type="checkbox" name="delivery_outlet[{{$dev['code']}}]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" @if(in_array($dev['code'],array_column($val['delivery_outlet'],'code'))) checked @endif>
+                </div>
+            </div>
+        @endforeach
 
         <hr>
         <h4>Maps</h4>
