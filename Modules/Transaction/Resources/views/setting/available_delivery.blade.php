@@ -100,67 +100,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="input-icon right">
-                        <label class="col-md-2 control-label">
-                            Length
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan panjang rata-rata produk, satuan dalam cm" data-container="body"></i>
-                        </label>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="length" value="{{ $dimension_delivery['length']??0 }}" placeholder="Length" required>
-                            <span class="input-group-addon"> cm </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-icon right">
-                        <label class="col-md-2 control-label">
-                            Width
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan lebar rata-rata produk, satuan dalam cm" data-container="body"></i>
-                        </label>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="width" value="{{ $dimension_delivery['width']??0 }}" placeholder="Width" required>
-                            <span class="input-group-addon"> cm </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-icon right">
-                        <label class="col-md-2 control-label">
-                            Height
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan tinggi rata-rata produk, satuan dalam cm" data-container="body"></i>
-                        </label>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="height" value="{{ $dimension_delivery['height']??0 }}" placeholder="Height" required>
-                            <span class="input-group-addon"> cm </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-icon right">
-                        <label class="col-md-2 control-label">
-                            Weight
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan bobot rata-rata produk, satuan dalam kg" data-container="body"></i>
-                        </label>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="weight" value="{{ $dimension_delivery['weight']??0 }}" placeholder="Weight" required>
-                            <span class="input-group-addon"> kg </span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="alert alert-info">Drag [<i class="fa fa-ellipsis-h" style="transform: rotate(90deg);"></i>] handle button to reorder delivery</div>
                 <table class="table">
                     <thead>

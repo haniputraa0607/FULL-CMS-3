@@ -21,6 +21,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::post('/setting/available-delivery', 'TransactionController@availableDeliveryUpdate');
     Route::any('/setting/delivery-outlet/detail/{code}', 'TransactionController@deliveryOutletDetail');
     Route::get('/setting/delivery-outlet', 'TransactionController@deliveryOutlet');
+    Route::get('/setting/package-detail-delivery', 'TransactionController@packageDetailDelivery');
+    Route::post('/setting/package-detail-delivery', 'TransactionController@packageDetailDelivery');
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
