@@ -104,7 +104,6 @@
                     arrOutlet.push(data);
                 }
             }
-            console.log(arrOutlet);
             $('#input_outlet').val(arrOutlet);
         }
     </script>

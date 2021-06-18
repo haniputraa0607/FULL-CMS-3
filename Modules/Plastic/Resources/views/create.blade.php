@@ -162,6 +162,51 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-4 control-label">
+                                Length
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan panjang plastik, satuan dalam cm" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="product_length" value="{{ old('product_length') }}" placeholder="Length" required>
+                                <span class="input-group-addon"> cm </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-4 control-label">
+                                Width
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan lebar plastik, satuan dalam cm" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="product_width" value="{{ old('product_width') }}" placeholder="Width" required>
+                                <span class="input-group-addon"> cm </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-4 control-label">
+                                Height
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan tinggi plastik, satuan dalam cm" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="product_height" value="{{ old('product_height') }}" placeholder="Height" required>
+                                <span class="input-group-addon"> cm </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-4 control-label">Visible
                             <i class="fa fa-question-circle tooltips" data-original-title="Setting apakah produk plastik akan ditampilkan di aplikasi" data-container="body"></i>
                         </label>

@@ -1826,6 +1826,7 @@ class TransactionController extends Controller
         ];
         $get = MyHelper::get('transaction/be/available-delivery');
         $data['default_delivery'] = $get['result']['default_delivery']??[];
+        $data['dimension_delivery'] = $get['result']['dimension_delivery']??[];
         $data['delivery'] = $get['result']['delivery']??[];
         return view('transaction::setting.available_delivery', $data);
     }
@@ -1835,10 +1836,16 @@ class TransactionController extends Controller
         foreach ($request->delivery as $code => $val) {
             $delivery[] = [
                 'code' => $code,
-                'available_status' => $val['available_status']??0
+                'available_status' => $val['available_status']??0,
+                'description' => $val['description']??""
             ];
         }
-        $data = MyHelper::post('transaction/available-delivery/update',['delivery' => $delivery, 'default_delivery' => $post['default_delivery']]);
+
+        $data = MyHelper::post('transaction/available-delivery/update',['delivery' => $delivery, 'default_delivery' => $post['default_delivery'],
+                'length' => $post['length']??0,
+                'width' => $post['width']??0,
+                'height' => $post['height']??0,
+                'weight' => $post['weight']??0]);
         if (($data['status']??false) == 'success') {
             return back()->withSuccess(['Success update setting']);
         } else {
