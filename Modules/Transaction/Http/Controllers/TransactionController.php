@@ -1826,7 +1826,6 @@ class TransactionController extends Controller
         ];
         $get = MyHelper::get('transaction/be/available-delivery');
         $data['default_delivery'] = $get['result']['default_delivery']??[];
-        $data['dimension_delivery'] = $get['result']['dimension_delivery']??[];
         $data['delivery'] = $get['result']['delivery']??[];
         return view('transaction::setting.available_delivery', $data);
     }
@@ -1841,11 +1840,7 @@ class TransactionController extends Controller
             ];
         }
 
-        $data = MyHelper::post('transaction/available-delivery/update',['delivery' => $delivery, 'default_delivery' => $post['default_delivery'],
-                'length' => $post['length']??0,
-                'width' => $post['width']??0,
-                'height' => $post['height']??0,
-                'weight' => $post['weight']??0]);
+        $data = MyHelper::post('transaction/available-delivery/update',['delivery' => $delivery, 'default_delivery' => $post['default_delivery']]);
         if (($data['status']??false) == 'success') {
             return back()->withSuccess(['Success update setting']);
         } else {
@@ -1888,6 +1883,33 @@ class TransactionController extends Controller
             } else {
                 return back()->withErrors($update['messages']??['Failed update setting']);
             }
+        }
+    }
+
+    function packageDetailDelivery(Request $request){
+        $post = $request->except('_token');
+
+        if(!empty($post)){
+            $update = MyHelper::post('transaction/setting/package-detail-delivery', $post);
+            if (isset($update['status']) && $update['status'] == 'success') {
+                return redirect('transaction/setting/package-detail-delivery')->with(['success' => ['Update Success']]);
+            } else {
+                return redirect('transaction/setting/package-detail-delivery')->withErrors(['Update failed']);
+            }
+        }else{
+            $data = [
+                'title'          => 'Order',
+                'menu_active'    => 'order',
+                'sub_title'      => 'Setting Package Detail Delivery',
+                'submenu_active' => 'package-detail-delivery'
+            ];
+
+            $request = MyHelper::get('transaction/setting/package-detail-delivery');
+            if (isset($request['status']) && $request['status'] == 'success') {
+                $data['result'] = $request['result'];
+            }
+
+            return view('transaction::setting.package_detail_delivery', $data);
         }
     }
     /*================ End Setting Delivery ================*/

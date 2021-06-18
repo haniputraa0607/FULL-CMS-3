@@ -1266,10 +1266,10 @@
 						</a>
 					</li>
 					@endif
-					@if(MyHelper::hasAccess([80], $configs))
-					<li class="nav-item {{($submenu_active == 'go-send-package-detail') ? 'active open' : ''}}">
-						<a href="{{url('transaction/setting/go-send-package-detail')}}" class="nav-link ">
-							<span class="title">Setting GO-SEND Package Detail</span>
+					@if(MyHelper::hasAccess([13], $configs))
+					<li class="nav-item {{($submenu_active == 'package-detail-delivery') ? 'active open' : ''}}">
+						<a href="{{url('transaction/setting/package-detail-delivery')}}" class="nav-link ">
+							<span class="title">Setting Package Detail Delivery</span>
 						</a>
 					</li>
 					@endif
