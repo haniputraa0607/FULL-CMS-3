@@ -56,14 +56,12 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="/">Home</a>
+            <a href="/">Order</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>{{ $title }}</span>
-            @if (!empty($sub_title))
+            <span>Delivery Settings</span>
             <i class="fa fa-circle"></i>
-            @endif
         </li>
         @if (!empty($sub_title))
         <li>

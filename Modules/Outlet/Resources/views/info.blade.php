@@ -263,7 +263,17 @@
                     </label>
                 </div>
                 <div class="col-md-9">
-                    <input type="checkbox" name="delivery_outlet[{{$dev['code']}}]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" @if(in_array($dev['code'],array_column($val['delivery_outlet'],'code'))) checked @endif>
+                    <?php
+                        $key = array_search($dev['code'], array_column($val['delivery_outlet'],'code'));
+                        $checked = '';
+                        if($key === false){
+                            $checked = 'checked';
+                        }else if($val['delivery_outlet'][$key]['available_status'] == 1){
+                            $checked = 'checked';
+                        }
+                    ?>
+                    <input type="hidden" name="delivery_outlet[{{$dev['code']}}]" value="0">
+                    <input type="checkbox" name="delivery_outlet[{{$dev['code']}}]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" {{$checked}}>
                 </div>
             </div>
         @endforeach

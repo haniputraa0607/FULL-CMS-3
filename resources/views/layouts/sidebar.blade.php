@@ -1239,37 +1239,10 @@
 						</a>
 					</li>
 					@endif
-					@if(MyHelper::hasAccess([250], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'delivery-method') ? 'active open' : ''}}">
-							<a href="javascript:;" class="nav-link nav-toggle">
-								<span class="title">Delivery Method</span>
-								<span class="arrow"></span>
-							</a>
-							<ul class="sub-menu">
-								<li class="nav-item {{(isset($child_active) && $child_active == 'delivery-method-available') ? 'active open' : ''}}">
-									<a href="{{url('transaction/setting/available-delivery')}}" class="nav-link ">
-										<span class="title">Available Delivery</span>
-									</a>
-								</li>
-								<li class="nav-item {{(isset($child_active) && $child_active == 'delivery-method-outlet') ? 'active open' : ''}}">
-									<a href="{{url('transaction/setting/delivery-outlet')}}" class="nav-link ">
-										<span class="title">Limitation Delivery for Outlet</span>
-									</a>
-								</li>
-							</ul>
-						</li>
-					@endif
 					@if(MyHelper::hasAccess([79], $configs))
 					<li class="nav-item {{($submenu_active == 'free-delivery') ? 'active open' : ''}}">
 						<a href="{{url('transaction/setting/free-delivery')}}" class="nav-link ">
 							<span class="title">Setting Free Delivery</span>
-						</a>
-					</li>
-					@endif
-					@if(MyHelper::hasAccess([13], $configs))
-					<li class="nav-item {{($submenu_active == 'package-detail-delivery') ? 'active open' : ''}}">
-						<a href="{{url('transaction/setting/package-detail-delivery')}}" class="nav-link ">
-							<span class="title">Setting Package Detail Delivery</span>
 						</a>
 					</li>
 					@endif
@@ -1310,6 +1283,45 @@
 					@endif
 				</ul>
 			</li>
+			@endif
+
+			@if(MyHelper::hasAccess([250], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'delivery-settings') ? 'active' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-truck"></i>
+						<span class="title">Delivery Settings</span>
+						<span class="arrow {{($menu_active == 'delivery-settings') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						<li class="nav-item {{($submenu_active == 'delivery-setting-available') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/available-delivery')}}" class="nav-link ">
+								<span class="title">Available Delivery</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'delivery-setting-upload-image') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/delivery-upload-image')}}" class="nav-link ">
+								<span class="title">Upload Logo Delivery</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'delivery-setting-outlet') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/delivery-outlet')}}" class="nav-link ">
+								<span class="title">Limitation Delivery Outlet</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'delivery-setting-outlet-import') ? 'active open' : ''}}">
+							<a href="{{url('transaction/setting/delivery-outlet/import')}}" class="nav-link ">
+								<span class="title">Import Delivery Outlet</span>
+							</a>
+						</li>
+						@if(MyHelper::hasAccess([13], $configs))
+							<li class="nav-item {{($submenu_active == 'delivery-setting-package-detail') ? 'active open' : ''}}">
+								<a href="{{url('transaction/setting/package-detail-delivery')}}" class="nav-link ">
+									<span class="title">Setting Package Detail Delivery</span>
+								</a>
+							</li>
+						@endif
+					</ul>
+				</li>
 			@endif
 
 			@if(MyHelper::hasAccess([116], $configs))

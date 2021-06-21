@@ -21,7 +21,7 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/prices.js')}}"></script>
 
     <script>
-        var arrOutlet = <?php echo json_encode($outlets_available)?>;
+        var arrOutletNotAvailable = <?php echo json_encode($delivery_outlet_not_available)?>;
         $(document).ready(function () {
             loadTable();
         });
@@ -64,16 +64,16 @@
                     {
                         targets: 1,
                         render: function ( data, type, row, meta ) {
-                            var status = 0;
+                            var status = 1;
 
                             for(var i=0;i<row.delivery_outlet.length;i++){
-                                if(row.delivery_outlet[i]['code'] == code){
-                                    status = 1;
+                                if(row.delivery_outlet[i]['code'] == code && row.delivery_outlet[i]['available_status'] == 0){
+                                    status = 0;
                                 }
                             }
 
-                            if(arrOutlet.indexOf(data) >= 0){
-                                status = 1;
+                            if(arrOutletNotAvailable.indexOf(data) >= 0){
+                                status = 0;
                             }
 
                             if(status == 1){
@@ -94,17 +94,17 @@
         function inputOutlet(data) {
             var state = $('#switch_'+data).prop('checked');
             if(state == false){
-                var index = arrOutlet.indexOf(data);
-                if (index > -1) {
-                    arrOutlet.splice(index, 1);
+                var index = arrOutletNotAvailable.indexOf(data);
+                if (index < 0) {
+                    arrOutletNotAvailable.push(data);
                 }
             }else{
-                var index = arrOutlet.indexOf(data);
-                if (index < 0) {
-                    arrOutlet.push(data);
+                var index = arrOutletNotAvailable.indexOf(data);
+                if (index > -1) {
+                    arrOutletNotAvailable.splice(index, 1);
                 }
             }
-            $('#input_outlet').val(arrOutlet);
+            $('#input_outlet').val(arrOutletNotAvailable);
         }
     </script>
 @endsection
@@ -113,14 +113,12 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="/">Home</a>
+            <a href="/">Order</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>{{ $title }}</span>
-            @if (!empty($sub_title))
+            <span>Delivery Settings</span>
             <i class="fa fa-circle"></i>
-            @endif
         </li>
         @if (!empty($sub_title))
         <li>
@@ -130,13 +128,15 @@
     </ul>
 </div><br>
 
+<a href="{{url('transaction/setting/delivery-outlet')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
+
 @include('layouts.notifications')
 
 <div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption">
             <i class=" icon-layers font-green"></i>
-            <span class="caption-subject font-green bold uppercase">Limitation Delivery Outlet</span>
+            <span class="caption-subject font-green bold uppercase">Limitation Delivery Outlet @if(!empty(explode('_',$code)['1']??''))({{explode('_',$code)['1']}}) @else <?php echo '('.$code.')'?> @endif</span>
         </div>
     </div>
     <div class="portlet-body">
@@ -150,7 +150,7 @@
                 </thead>
                 <tbody id="tableListOutletBody"></tbody>
             </table>
-            <input type="hidden" name="id_outlet[]" id="input_outlet" value="{{json_encode($outlets_available)}}">
+            <input type="hidden" name="id_outlet[]" id="input_outlet" value="{{json_encode($delivery_outlet_not_available)}}">
             <div class="form-actions text-center">
                 {{ csrf_field() }}
                 <button type="submit" class="btn blue">Submit</button>
