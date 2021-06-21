@@ -697,7 +697,8 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <input type="checkbox" name="delivery_outlet[{{$val['code']}}]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1">
+                                <input type="hidden" name="delivery_outlet[{{$val['code']}}]" value="0">
+                                <input type="checkbox" name="delivery_outlet[{{$val['code']}}]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" checked>
                             </div>
                         </div>
                     @endforeach

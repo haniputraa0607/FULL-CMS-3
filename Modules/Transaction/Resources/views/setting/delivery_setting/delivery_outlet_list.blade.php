@@ -4,14 +4,12 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="/">Home</a>
+            <a href="/">Order</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>{{ $title }}</span>
-            @if (!empty($sub_title))
+            <span>Delivery Settings</span>
             <i class="fa fa-circle"></i>
-            @endif
         </li>
         @if (!empty($sub_title))
         <li>
@@ -27,7 +25,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class=" icon-layers font-green"></i>
-            <span class="caption-subject font-green bold uppercase">Delivery Method</span>
+            <span class="caption-subject font-green bold uppercase">List Delivery</span>
         </div>
     </div>
     <div class="portlet-body">
@@ -36,6 +34,9 @@
             <tr>
                 <th>Delivery Method</th>
                 <th>Delivery Name</th>
+                <th>Status</th>
+                <th>Outlet Delivery ON</th>
+                <th>Outlet Delivery OFF</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -44,6 +45,9 @@
                 <tr>
                     <td>{{ucfirst($value['delivery_method'])}}</td>
                     <td>{{$value['delivery_name']}}</td>
+                    <td>@if($value['available_status'] == 1) Enable @else Disable @endif</td>
+                    <td>{{number_format($value['count_outlet_on'])}}</td>
+                    <td>{{number_format($value['count_outlet_off'])}}</td>
                     <td>
                         <a href="{{ url('transaction/setting/delivery-outlet/detail') }}/{{$value['code']}}" class="btn btn-sm blue"><i class="fa fa-pencil"></i></a>
                     </td>

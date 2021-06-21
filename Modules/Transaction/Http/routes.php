@@ -19,8 +19,13 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     //===== setting delivery =====//
     Route::get('/setting/available-delivery', 'TransactionController@availableDelivery');
     Route::post('/setting/available-delivery', 'TransactionController@availableDeliveryUpdate');
-    Route::any('/setting/delivery-outlet/detail/{code}', 'TransactionController@deliveryOutletDetail');
+    Route::get('/setting/delivery-upload-image', 'TransactionController@deliveryUploadImage');
+    Route::post('/setting/delivery-upload-image/save', 'TransactionController@deliveryUploadImage');
     Route::get('/setting/delivery-outlet', 'TransactionController@deliveryOutlet');
+    Route::any('/setting/delivery-outlet/detail/{code}', 'TransactionController@deliveryOutletDetail');
+    Route::get('/setting/delivery-outlet/import', 'TransactionController@deliveryOutletImport');
+    Route::post('/setting/delivery-outlet/import-save', 'TransactionController@deliveryOutletImport');
+    Route::get('/setting/export/delivery-outlet', 'TransactionController@exportDeliveryOutlet');
     Route::get('/setting/package-detail-delivery', 'TransactionController@packageDetailDelivery');
     Route::post('/setting/package-detail-delivery', 'TransactionController@packageDetailDelivery');
 });

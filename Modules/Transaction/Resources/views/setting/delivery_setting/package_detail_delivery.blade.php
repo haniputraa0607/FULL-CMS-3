@@ -1,7 +1,4 @@
 @extends('layouts.main')
-
-@section('page-style')
-@endsection
     
 @section('page-script')
     <script>
@@ -10,6 +7,44 @@
             var textvaluebaru = textvalue+" "+param;
             $('#package-detail').val(textvaluebaru);
         }
+
+        $('.price').each(function() {
+            var input = $(this).val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $(this).val( function() {
+                return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+            });
+        });
+
+        $( ".price" ).on( "keyup", numberFormat);
+        function numberFormat(event){
+            var selection = window.getSelection().toString();
+            if ( selection !== '' ) {
+                return;
+            }
+
+            if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+                return;
+            }
+            var $this = $( this );
+            var input = $this.val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $this.val( function() {
+                return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+            });
+        }
+
+        $( ".price" ).on( "blur", checkFormat);
+        function checkFormat(event){
+            var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+            if(!$.isNumeric(data)){
+                $( this ).val("");
+            }
+        }
     </script>
 @endsection
 
@@ -17,14 +52,12 @@
 	<div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
-                <a href="/">Home</a>
+                <a href="/">Order</a>
                 <i class="fa fa-circle"></i>
             </li>
             <li>
-                <span>{{ $title }}</span>
-                @if (!empty($sub_title))
-                    <i class="fa fa-circle"></i>
-                @endif
+                <span>Delivery Settings</span>
+                <i class="fa fa-circle"></i>
             </li>
             @if (!empty($sub_title))
             <li>
@@ -52,7 +85,7 @@
                         <label class="col-md-3 control-label">
                             Package name
                         <span class="required" aria-required="true"> * </span>  
-                            <i class="fa fa-question-circle tooltips" data-original-title="Informasi yang akan dikirimkan ke pihak delivery digunakan untuk go-send dan we help you" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Informasi yang akan dikirimkan ke pihak delivery digunakan untuk GoSend dan wehelpyou" data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-8">
@@ -72,7 +105,7 @@
                         <label class="col-md-3 control-label">
                             Package description
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Informasi deskripsi yang akan dikirimkan ke pihak delivery digunakan untuk go-send dan we help you" data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Informasi deskripsi yang akan dikirimkan ke pihak delivery digunakan untuk GoSend dan wehelpyou" data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-8">
@@ -85,12 +118,12 @@
                         <label class="col-md-3 control-label">
                             Length
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan panjang rata-rata produk, satuan dalam cm. Digunakan untuk kebutuhan we help you." data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan panjang rata-rata produk, satuan dalam cm. Digunakan untuk kebutuhan wehelpyou." data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="length" value="{{ $result['length']??0 }}" placeholder="Length" required>
+                            <input type="text" class="form-control price" name="length" value="{{ $result['length']??0 }}" placeholder="Length" required>
                             <span class="input-group-addon"> cm </span>
                         </div>
                     </div>
@@ -100,12 +133,12 @@
                         <label class="col-md-3 control-label">
                             Width
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan lebar rata-rata produk, satuan dalam cm. Digunakan untuk kebutuhan we help you." data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan lebar rata-rata produk, satuan dalam cm. Digunakan untuk kebutuhan wehelpyou." data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="width" value="{{ $result['width']??0 }}" placeholder="Width" required>
+                            <input type="text" class="form-control price" name="width" value="{{ $result['width']??0 }}" placeholder="Width" required>
                             <span class="input-group-addon"> cm </span>
                         </div>
                     </div>
@@ -115,12 +148,12 @@
                         <label class="col-md-3 control-label">
                             Height
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan tinggi rata-rata produk, satuan dalam cm. Digunakan untuk kebutuhan we help you." data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan tinggi rata-rata produk, satuan dalam cm. Digunakan untuk kebutuhan wehelpyou." data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="height" value="{{ $result['height']??0 }}" placeholder="Height" required>
+                            <input type="text" class="form-control price" name="height" value="{{ $result['height']??0 }}" placeholder="Height" required>
                             <span class="input-group-addon"> cm </span>
                         </div>
                     </div>
@@ -130,13 +163,13 @@
                         <label class="col-md-3 control-label">
                             Weight
                             <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan bobot rata-rata produk, satuan dalam kg. Digunakan untuk kebutuhan we help you." data-container="body"></i>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan bobot rata-rata produk, satuan dalam gram. Digunakan untuk kebutuhan wehelpyou." data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="weight" value="{{ $result['weight']??0 }}" placeholder="Weight" required>
-                            <span class="input-group-addon"> kg </span>
+                            <input type="text" class="form-control price" name="weight" value="{{ $result['weight']??0 }}" placeholder="Weight" required>
+                            <span class="input-group-addon"> gram </span>
                         </div>
                     </div>
                 </div>
