@@ -407,17 +407,23 @@ $configs = session('configs');
             </label>
         </div>
         <div class="col-md-9">
+			@php
+				$shipment_list = [
+					[
+						'code' => 'Pickup Order',
+						'delivery_name' => 'Pickup Order'
+					]
+				];
+				$shipment_list = array_merge($shipment_list, $delivery_list);
+				$selected_shipment = [];
+				if (old('shipment_method')) {
+					$selected_shipment = old('shipment_method');
+				}
+				elseif (!empty($subscription['subscription_shipment_method'])) {
+					$selected_shipment = array_column($subscription['subscription_shipment_method'], 'shipment_method');
+				}
+			@endphp
             <select name="shipment_method[]" class="form-control select2 select2-hidden-accessible col-md-6" multiple="" tabindex="-1" aria-hidden="true" data-placeholder="Select Shipment">
-				@php
-					$shipment_list = ['Pickup Order','GO-SEND'];
-					$selected_shipment = [];
-					if (old('shipment_method')) {
-						$selected_shipment = old('shipment_method');
-					}
-					elseif (!empty($subscription['subscription_shipment_method'])) {
-						$selected_shipment = array_column($subscription['subscription_shipment_method'], 'shipment_method');
-					}
-				@endphp
 
             	<option value="all" 
             		@if (old('shipment_method'))
@@ -430,12 +436,9 @@ $configs = session('configs');
 
                 @if (!empty($shipment_list))
                     @foreach($shipment_list as $shipment)
-                        <option value="{{ $shipment }}" 
-                        	@if ( $selected_shipment??false ) 
-                        		@if( in_array($shipment, $selected_shipment) ) selected 
-                        		@endif 
-                        	@endif
-                        >{{ $shipment }}</option>
+                        <option value="{{ $shipment['code'] }}" @if( in_array($shipment['code'], $selected_shipment) ) selected @endif >
+                        	{{ $shipment['delivery_name'] }}
+                        </option>
                     @endforeach
                 @endif
 			</select>

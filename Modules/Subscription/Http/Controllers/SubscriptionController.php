@@ -357,7 +357,8 @@ class SubscriptionController extends Controller
 
             $post['select'] = ['id_outlet','outlet_code','outlet_name'];
             $outlets = MyHelper::post('outlet/ajax_handler', $post);
-            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
+            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result'] ?? [];
+            $data['delivery_list'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery'] ?? [];
             
             if (!empty($outlets['result'])) {
                 $data['outlets'] = $outlets['result'];
@@ -518,9 +519,10 @@ class SubscriptionController extends Controller
             $data['rule'] = $filter;
         }
 
-        $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
+        $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result'] ?? [];
+        $data['delivery_list'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery'] ?? [];
         
-        $data['operator']=$post['operator']??'and';
+        $data['operator'] = $post['operator'] ?? 'and';
 
         return view('subscription::detailv2', $data);
 

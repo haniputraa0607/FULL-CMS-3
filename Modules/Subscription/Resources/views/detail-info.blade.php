@@ -197,6 +197,12 @@ $grantedFeature     = session('granted_features');
 	                    </div>
 	                </div>
                 @endif
+                @php
+					$delivery_list_text = [];
+					foreach ($delivery_list ?? [] as $value) {
+						$delivery_list_text[$value['code']] = $value['delivery_name'];
+					}
+				@endphp
                 <div class="row static-info">
 				    <div class="col-md-4 name">Shipment Method</div>
 				    <div class="col-md-1 value">:</div>
@@ -205,7 +211,7 @@ $grantedFeature     = session('granted_features');
 				            <div>All Shipment</div>
 				        @elseif ($subscription['is_all_shipment'] == '0')
 				        	@foreach ($subscription['subscription_shipment_method'] as $val)
-				        		<div style="margin-bottom: 10px">{{ '- '.$val['shipment_method'] }}</div>
+				        		<div style="margin-bottom: 10px">{{ '- '.($delivery_list_text[$val['shipment_method']] ?? $val['shipment_method']) }}</div>
 				        	@endforeach
 				        @else
 				            -
@@ -215,7 +221,7 @@ $grantedFeature     = session('granted_features');
 
 				@php
 					$payment_list_text = [];
-					foreach ($payment_list??[] as $key => $value) {
+					foreach ($payment_list ?? [] as $value) {
 						$payment_list_text[$value['payment_method']] = $value['text'];
 					}
 				@endphp

@@ -724,7 +724,9 @@ class DealsController extends Controller
 		$getCourier = MyHelper::get('courier/list?log_save=0');
 		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
 
-		$data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
+		$data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result'] ?? [];
+
+		$data['delivery_list'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery'] ?? [];
 
 		// $getProduct = MyHelper::get('product/be/list?log_save=0');
 		// if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
@@ -824,7 +826,8 @@ class DealsController extends Controller
 	        if (isset($deals['status']) && $deals['status'] == 'success') {
 
 	            $data['result'] = $deals['result'];
-	            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
+	            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result'] ?? [];
+	            $data['delivery_list'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery'] ?? [];
 
 	        } else {
 
