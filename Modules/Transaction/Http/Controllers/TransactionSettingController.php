@@ -137,7 +137,7 @@ class TransactionSettingController extends Controller
             $data['result'] = [];
         }
 
-        return view('transaction::setting.forward_wehelpyou', $data);
+        return view('transaction::setting.delivery_setting.forward_wehelpyou', $data);
     }
 
     public function updateForwardWeHelpYouLowBalance(Request $request)

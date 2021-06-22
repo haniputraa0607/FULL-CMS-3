@@ -79,18 +79,16 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="/">Home</a>
+            <a href="/">Order</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>{{ $title }}</span>
-            @if (!empty($sub_title))
+            <span>Delivery Settings</span>
             <i class="fa fa-circle"></i>
-            @endif
         </li>
         @if (!empty($sub_title))
         <li>
-            <span>{{ $sub_title }}</span>
+            <span>[Forward] WeHelpYou Low Balance</span>
         </li>
         @endif
     </ul>
@@ -103,7 +101,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class=" icon-layers font-green"></i>
-            <span class="caption-subject font-green bold uppercase">Setting Refund Reject Order</span>
+            <span class="caption-subject font-green bold uppercase">[Forward] WeHelpYou Low Balance</span>
         </div>
     </div>
     <div class="portlet-body form">
