@@ -2,6 +2,7 @@
 
 namespace Modules\Transaction\Http\Controllers;
 
+use App\Exports\MultisheetExport;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Lib\MyHelper;
 use Session;
+use Excel;
+use App\Imports\FirstSheetOnlyImport;
 
 class TransactionController extends Controller
 {
@@ -1819,15 +1822,14 @@ class TransactionController extends Controller
     public function availableDelivery(Request $request) {
         $data = [
             'title'          => 'Transaction',
-            'menu_active'    => 'order',
+            'menu_active'    => 'delivery-settings',
             'sub_title'      => 'Available Delivery',
-            'submenu_active' => 'delivery-method',
-            'child_active' => 'delivery-method-available'
+            'submenu_active' => 'delivery-setting-available'
         ];
         $get = MyHelper::get('transaction/be/available-delivery');
         $data['default_delivery'] = $get['result']['default_delivery']??[];
         $data['delivery'] = $get['result']['delivery']??[];
-        return view('transaction::setting.available_delivery', $data);
+        return view('transaction::setting.delivery_setting.available_delivery', $data);
     }
     public function availableDeliveryUpdate(Request $request) {
         $post = $request->except('_token');
@@ -1851,13 +1853,12 @@ class TransactionController extends Controller
     public function deliveryOutlet(){
         $data = [
             'title'          => 'Transaction',
-            'menu_active'    => 'order',
-            'sub_title'      => 'Delivery',
-            'submenu_active' => 'delivery-method',
-            'child_active' => 'delivery-method-available'
+            'menu_active'    => 'delivery-settings',
+            'sub_title'      => 'Limitation Delivery Outlet',
+            'submenu_active' => 'delivery-setting-outlet'
         ];
-        $data['delivery'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery']??[];
-        return view('transaction::setting.delivery_outlet_list', $data);
+        $data['delivery'] = MyHelper::get('outlet/list-delivery/count-outlet')['result']??[];
+        return view('transaction::setting.delivery_setting.delivery_outlet_list', $data);
     }
 
     public function deliveryOutletDetail(Request $request, $code){
@@ -1866,14 +1867,20 @@ class TransactionController extends Controller
         if(empty($post)){
             $data = [
                 'title'          => 'Transaction',
-                'menu_active'    => 'order',
-                'sub_title'      => 'Limitation Delivery Outlet',
-                'submenu_active' => 'delivery-method',
-                'child_active' => 'delivery-method-outlet',
+                'menu_active'    => 'delivery-settings',
+                'sub_title'      => 'Limitation Delivery Outlet Detail',
+                'submenu_active' => 'delivery-setting-outlet',
                 'code' => $code
             ];
-            $data['outlets_available'] = MyHelper::post('outlet/delivery-outlet/bycode', ['code' => $code])['result']??[];
-            return view('transaction::setting.delivery_outlet_detail', $data);
+            $data['delivery_outlet'] = MyHelper::post('outlet/delivery-outlet/bycode', ['code' => $code])['result']??[];
+            $notAvailable = [];
+            foreach ($data['delivery_outlet'] as $val){
+                if($val['code'] == $code && $val['available_status'] == 0){
+                    $notAvailable[] = $val['id_outlet'];
+                }
+            }
+            $data['delivery_outlet_not_available'] = $notAvailable;
+            return view('transaction::setting.delivery_setting.delivery_outlet_detail', $data);
         }else{
             $post['id_outlet'] = str_replace('[', '', $post['id_outlet']);
             $post['id_outlet'] = str_replace(']', '', $post['id_outlet']);
@@ -1899,9 +1906,9 @@ class TransactionController extends Controller
         }else{
             $data = [
                 'title'          => 'Order',
-                'menu_active'    => 'order',
-                'sub_title'      => 'Setting Package Detail Delivery',
-                'submenu_active' => 'package-detail-delivery'
+                'menu_active'    => 'delivery-settings',
+                'sub_title'      => 'Package Detail Delivery',
+                'submenu_active' => 'delivery-setting-package-detail'
             ];
 
             $request = MyHelper::get('transaction/setting/package-detail-delivery');
@@ -1909,7 +1916,110 @@ class TransactionController extends Controller
                 $data['result'] = $request['result'];
             }
 
-            return view('transaction::setting.package_detail_delivery', $data);
+            return view('transaction::setting.delivery_setting.package_detail_delivery', $data);
+        }
+    }
+
+    function deliveryOutletImport(Request $request){
+        $post = $request->except('_token');
+
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Order',
+                'menu_active'    => 'delivery-settings',
+                'sub_title'      => 'Import Delivery Outlet',
+                'submenu_active' => 'delivery-setting-outlet-import'
+            ];
+            return view('transaction::setting.delivery_setting.delivery_outlet_export_import', $data);
+        }else{
+            if($request->file('import_file')){
+
+                $path = $request->file('import_file')->getRealPath();
+                $name = $request->file('import_file')->getClientOriginalName();
+                $dataimport = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
+                $save = MyHelper::post('outlet/import-delivery', ['data_import' => $dataimport]);
+
+                if (isset($save['status']) && $save['status'] == "success") {
+                    return back()->withSuccess([$save['message']??'Success update setting']);
+                }else {
+                    if (isset($save['errors'])) {
+                        return back()->withErrors($save['errors'])->withInput();
+                    }
+
+                    if (isset($save['status']) && $save['status'] == "fail") {
+                        return back()->withErrors($save['messages'])->withInput();
+                    }
+                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+                }
+            }else{
+                return back()->withErrors(['File is required.'])->withInput();
+            }
+        }
+    }
+
+    public function exportDeliveryOutlet(){
+        $deliveries = MyHelper::get('transaction/be/available-delivery')['result']['delivery']??[];
+        $codeOutlet =  MyHelper::get('outlet/list/code');
+
+        $data = [];
+        if(isset($codeOutlet['status']) && $codeOutlet['status'] == 'success'){
+            $count = count($codeOutlet['result']);
+            $result = $codeOutlet['result'];
+            for($i=0;$i<$count;$i++){
+                $data[$i]['outlet_name'] = $result[$i]['outlet_name'];
+                $data[$i]['outlet_code'] = $result[$i]['outlet_code'];
+                $delivery = $result[$i]['delivery_outlet'];
+                foreach ($deliveries as $value){
+                    $check = array_search($value['code'], array_column($delivery, 'code'));
+
+                    if($check !== false && $delivery[$check]['available_status'] == 0){
+                        $data[$i][$value['code']] = 'NO';
+                    }else{
+                        $data[$i][$value['code']] = 'YES';
+                    }
+
+                }
+            }
+        }
+
+        $dataExport['All Type'] = $data;
+        $dataExport = new MultisheetExport($dataExport);
+        return Excel::download($dataExport,'Data_Delivery_Outlet_'.date('Ymdhis').'.xls');
+    }
+
+    public function deliveryUploadImage(Request $request){
+        $post = $request->except('_token');
+
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Order',
+                'menu_active'    => 'delivery-settings',
+                'sub_title'      => 'Delivery Upload Image',
+                'submenu_active' => 'delivery-setting-upload-image'
+            ];
+            $getData = MyHelper::get('transaction/setting/image-delivery')['result']??[];
+            $data['default_image_delivery'] = $getData['default_image_delivery']??"";
+            $data['delivery'] = $getData['delivery']??[];
+            return view('transaction::setting.delivery_setting.upload_image_delivery', $data);
+        }else{
+            $postdt = [];
+            if(!empty($post['image_default'])){
+                $postdt['image_default'] = MyHelper::encodeImage($post['image_default']);
+            }
+            if(!empty($post['images'])){
+                foreach($post['images'] as $key => $value){
+                    if(!empty($value)){
+                        $postdt['images'][$key] = MyHelper::encodeImage($value);
+                    }
+                }
+            }
+
+            $uploadImage = MyHelper::post('transaction/setting/image-delivery', $postdt);
+            if (isset($uploadImage['status']) && $uploadImage['status'] == "success") {
+                return redirect('transaction/setting/delivery-upload-image')->withSuccess(['Success upload image']);
+            }else {
+                return redirect('transaction/setting/delivery-upload-image')->withErrors($uploadImage['messages']??['Something when wrong. Failed upload image.'])->withInput();
+            }
         }
     }
     /*================ End Setting Delivery ================*/
