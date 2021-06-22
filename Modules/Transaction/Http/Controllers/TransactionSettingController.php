@@ -114,7 +114,7 @@ class TransactionSettingController extends Controller
     {
         $data = [
             'title'          => 'Setting',
-            'menu_active'    => 'order',
+            'menu_active'    => 'delivery-settings',
             'sub_title'      => '[Forward] WeHelpYou Low Balance',
             'submenu_active' => 'delivery-method',
             'child_active' => 'forward-wehelpyou'
