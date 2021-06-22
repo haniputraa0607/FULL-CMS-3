@@ -1256,6 +1256,11 @@
 										<span class="title">Limitation Delivery for Outlet</span>
 									</a>
 								</li>
+								<li class="nav-item {{(isset($child_active) && $child_active == 'forward-wehelpyou') ? 'active open' : ''}}">
+									<a href="{{url('transaction/setting/forward-why-low-balance')}}" class="nav-link ">
+										<span class="title">[Forward] WeHelpYou Low Balance</span>
+									</a>
+								</li>
 							</ul>
 						</li>
 					@endif
