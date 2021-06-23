@@ -111,7 +111,7 @@
                         <span class="btn default btn-file">
                         <span class="fileinput-new" style="font-size: 12px"> Select image </span>
                         <span class="fileinput-exists"> Change </span>
-                        <input type="file" accept="image/png" name="image_default" class="file" data-type="image_default" @if(empty($default_image_delivery)) required @endif> </span>
+                        <input type="file" accept="image/*" name="image_default" class="file" data-type="image_default" @if(empty($default_image_delivery)) required @endif> </span>
                             <a href="javascript:;" id="removeImage_image_default" class="btn red default fileinput-exists" data-dismiss="fileinput"> Remove </a>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                                 <span class="btn default btn-file">
                                 <span class="fileinput-new" style="font-size: 12px"> Select image </span>
                                 <span class="fileinput-exists"> Change </span>
-                                <input type="file" accept="image/png" name="images[{{$value['code']}}]" class="file" data-type="{{$value['code']}}"> </span>
+                                <input type="file" accept="image/*" name="images[{{$value['code']}}]" class="file" data-type="{{$value['code']}}"> </span>
                                 <a href="javascript:;" id="removeImage_{{$value['code']}}" class="btn red default fileinput-exists" data-dismiss="fileinput"> Remove </a>
                             </div>
                         </div>
