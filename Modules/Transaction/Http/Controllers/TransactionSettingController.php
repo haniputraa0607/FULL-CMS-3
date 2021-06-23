@@ -110,6 +110,60 @@ class TransactionSettingController extends Controller
         }
     }
 
+    public function forwardWeHelpYouLowBalance(Request $request)
+    {
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'delivery-settings',
+            'sub_title'      => '[Forward] WeHelpYou Low Balance',
+            'submenu_active' => 'delivery-method',
+            'child_active' => 'forward-wehelpyou'
+        ];
+
+        $data['wehelpyou_limit_balance'] = MyHelper::post('setting', ['key' => 'wehelpyou_limit_balance'])['result']['value']??0;
+
+        $get = MyHelper::post('autocrm/list',['autocrm_title'=>'WeHelpYou Low Balance']);
+        if(isset($get['status']) && $get['status'] == 'success'){
+            $data['result'] = $get['result'];
+
+            $data['textreplaces'] = [];
+
+            $custom = [];
+            if (isset($get['result']['custom_text_replace'])) {
+                $custom = explode(';', $get['result']['custom_text_replace']);
+            }
+            $data['custom'] = $custom;
+        }else{
+            $data['result'] = [];
+        }
+
+        return view('transaction::setting.delivery_setting.forward_wehelpyou', $data);
+    }
+
+    public function updateForwardWeHelpYouLowBalance(Request $request)
+    {
+        $sendData = [
+            'wehelpyou_limit_balance' => ['value', $request->wehelpyou_limit_balance],
+        ];
+        $data = MyHelper::post('setting/update2', ['update' => $sendData]);
+
+        $updateAutocrm = [
+            'id_autocrm' => $request->id_autocrm,
+            'autocrm_forward_toogle' => '1',
+            'autocrm_forward_email' => $request->autocrm_forward_email,
+            'autocrm_forward_email_subject' => $request->autocrm_forward_email_subject,
+            'autocrm_forward_email_content' => $request->autocrm_forward_email_content,
+        ];
+        
+        $query = MyHelper::post('autocrm/update', $updateAutocrm);
+
+        if (($data['status']??false) == 'success') {
+            return back()->withSuccess(['Success update']);
+        } else{
+            return back()->withErrors(['Update failed']);
+        }
+    }
+
     public function autoReject(Request $request)
     {
         $data = [
