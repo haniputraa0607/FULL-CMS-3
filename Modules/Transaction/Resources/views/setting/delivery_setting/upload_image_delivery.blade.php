@@ -44,7 +44,7 @@
                         toastr.warning("Please check dimension of your photo. Recommended dimensions are 1:1");
                         $("#removeImage_"+type).trigger( "click" );
                     }
-                    if (this.width != 200 ||  this.height != 200) {
+                    if (this.width > 200 ||  this.height > 200) {
                         toastr.warning("Please check dimension of your photo. The maximum height and width 200px.");
                         $("#removeImage_"+type).trigger( "click" );
                     }
