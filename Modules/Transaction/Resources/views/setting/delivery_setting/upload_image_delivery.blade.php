@@ -45,11 +45,11 @@
                         $("#removeImage_"+type).trigger( "click" );
                     }
                     if (this.width != 200 ||  this.height != 200) {
-                        toastr.warning("Please check dimension of your photo. The maximum height and width 100px.");
+                        toastr.warning("Please check dimension of your photo. The maximum height and width 200px.");
                         $("#removeImage_"+type).trigger( "click" );
                     }
-                    if (size > 10) {
-                        toastr.warning("The maximum size is 10 KB");
+                    if (size > 30) {
+                        toastr.warning("The maximum size is 30 KB");
                         $("#removeImage_"+type).trigger( "click" );
                     }
                 };
@@ -93,12 +93,16 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">Image Default <span class="required" aria-required="true"> * </span>
                     <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="gambar default akan muncul ketika gambar logo pada delivery kosong" data-container="body"></i>
+                    <div style="color: #e02222;font-size: 12px;margin-top: 4%;">
+                        max dimension 200 x 200 <br>
+                        max size 30 KB <br>
+                    </div>
                 </label>
                 <div class="col-md-4">
                     <div class="fileinput fileinput-new" data-provides="fileinput" style="margin-top: 2%;">
                         <div class="fileinput-new thumbnail" style="width: 40px; height: 40px;">
                             @if(isset($default_image_delivery) && $default_image_delivery != "")
-                                <img src="{{$default_image_delivery}}" id="preview_image_default" />
+                                <img src="{{$default_image_delivery.'?='.time()}}" id="preview_image_default" />
                             @endif
                         </div>
 
@@ -115,12 +119,17 @@
             </div>
             @foreach($delivery as $key => $value)
                 <div class="form-group">
-                    <label class="col-md-3 control-label">{{ucfirst($value['delivery_method'])}} - {{$value['delivery_name']}}</label>
+                    <label class="col-md-3 control-label">{{ucfirst($value['delivery_method'])}} - {{$value['delivery_name']}}
+                        <div style="color: #e02222;font-size: 12px;margin-top: 4%;">
+                            max dimension 200 x 200 <br>
+                            max size 30 KB <br>
+                        </div>
+                    </label>
                     <div class="col-md-4">
                         <div class="fileinput fileinput-new" data-provides="fileinput" style="margin-top: 2%;">
                             <div class="fileinput-new thumbnail" style="width: 40px; height: 40px;">
                                 @if(isset($value['logo']) && $value['logo'] != "")
-                                    <img src="{{$value['logo']}}" id="preview_{{$value['code']}}" />
+                                    <img src="{{$value['logo'].'?='.time()}}" id="preview_{{$value['code']}}" />
                                 @endif
                             </div>
 
