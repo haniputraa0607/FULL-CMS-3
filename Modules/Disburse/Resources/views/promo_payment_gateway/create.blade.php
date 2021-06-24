@@ -296,7 +296,7 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Total limit" class="form-control price2" name="maximum_total_cashback" value="{{ old('maximum_total_cashback') }}" required>
+                                <input type="text" placeholder="Maximum Total Cashback" class="form-control price2" name="maximum_total_cashback" value="{{ old('maximum_total_cashback') }}" required>
                             </div>
                         </div>
                     </div>
@@ -307,6 +307,16 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <input type="text" placeholder="Total limit" class="form-control" name="limit_promo_total" value="{{ old('limit_promo_total') }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Limit per user per day <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="limitasi penggunaan promo pada tiap user perhari. jika promo unlitimed silahkan isi dengan angka 0" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <input type="text" placeholder="Limit per user per day" class="form-control" name="limit_per_user_per_day" value="{{ old('limit_per_user_per_day') }}" required>
                             </div>
                         </div>
                     </div>

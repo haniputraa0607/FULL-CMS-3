@@ -87,6 +87,10 @@
                     <td>: {{$detail['limit_promo_total']}}</td>
                 </tr>
                 <tr>
+                    <td>Limit user per day</td>
+                    <td>: {{$detail['limit_per_user_per_day']}}</td>
+                </tr>
+                <tr>
                     <td>Additional Limit Day</td>
                     <td>: {{$detail['limit_promo_additional_day']}}</td>
                 </tr>
