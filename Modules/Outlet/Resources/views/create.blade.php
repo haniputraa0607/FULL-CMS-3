@@ -430,7 +430,7 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="password" class="form-control" name="outlet_pin" placeholder="Outlet PIN">
+                            <input type="password" class="form-control" name="outlet_pin" placeholder="Outlet PIN" maxlength="6">
                         </div>
                     </div>
 
@@ -442,7 +442,7 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <input type="password" class="form-control" name="outlet_pin_confirmation" placeholder="Re-type PIN">
+                            <input type="password" class="form-control" name="outlet_pin_confirmation" placeholder="Re-type PIN" maxlength="6">
                         </div>
                     </div>
 
