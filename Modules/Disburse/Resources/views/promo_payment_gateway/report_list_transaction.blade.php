@@ -87,6 +87,10 @@
                     <td>: {{$detail['limit_promo_total']}}</td>
                 </tr>
                 <tr>
+                    <td>Limit user per day</td>
+                    <td>: {{$detail['limit_per_user_per_day']}}</td>
+                </tr>
+                <tr>
                     <td>Additional Limit Day</td>
                     <td>: {{$detail['limit_promo_additional_day']}}</td>
                 </tr>
@@ -196,6 +200,7 @@
                 <table class="table table-striped table-bordered table-hover dt-responsive" id="data_list">
                     <thead>
                     <tr>
+                        <th> Status </th>
                         <th> Transaction date</th>
                         <th> Customer name</th>
                         <th> Customer phone</th>
@@ -209,6 +214,13 @@
                     @if(!empty($data))
                         @foreach($data as $key => $res)
                             <tr style="background-color: #fbfbfb;">
+                                <td>
+                                    @if(!empty($res['reject_at']))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Rejected</span>
+                                    @else
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Success</span>
+                                    @endif
+                                </td>
                                 <td> {{date('d M Y H:i', strtotime($res['transaction_date']))}} </td>
                                 <td> {{ $res['customer_name'] }} </td>
                                 <td> {{ $res['customer_phone'] }} </td>

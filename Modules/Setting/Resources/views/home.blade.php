@@ -738,7 +738,7 @@
 										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 											<div class="fileinput-new thumbnail">
 												@if(isset($default_home['default_home_splash_screen']))
-													<img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_splash_screen']}}?" alt="">
+													<img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_splash_screen']}}?updated_at={{time()}}" alt="">
 												@else
 													<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 												@endif

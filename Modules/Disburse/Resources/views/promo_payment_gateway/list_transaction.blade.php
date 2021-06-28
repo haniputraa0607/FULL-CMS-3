@@ -89,6 +89,7 @@ $grantedFeature     = session('granted_features');
                 <table class="table table-striped table-bordered table-hover dt-responsive" id="data_list">
                     <thead>
                     <tr>
+                        <th> Status </th>
                         <th> Promo </th>
                         <th> Customer name</th>
                         <th> Customer phone</th>
@@ -102,6 +103,13 @@ $grantedFeature     = session('granted_features');
                     @if(!empty($data))
                         @foreach($data as $key => $res)
                             <tr style="background-color: #fbfbfb;">
+                                <td>
+                                    @if(!empty($res['reject_at']))
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Rejected</span>
+                                    @else
+                                        <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Success</span>
+                                    @endif
+                                </td>
                                 <td> {{ $res['name'] }} </td>
                                 <td> {{ $res['customer_name'] }} </td>
                                 <td> {{ $res['customer_phone'] }} </td>

@@ -436,7 +436,7 @@
                         <div class="col-12 text-11-7px text-grey-white space-nice text-center WorkSans">{{ $data['outlet']['outlet_address'] }}</div>
                     </div>
 
-                    @if(isset($data['detail']['order_id_qrcode']))
+                    @if(isset($data['detail']['order_id_qrcode']) && $data['trasaction_type'] == 'Pickup Order')
                         <div class="col-12 WorkSans-Bold text-14px space-text text-black-grey-light">Kode Pickup</div>
 
                         <div style="width: 135px;height: 135px;margin: 0 auto;" data-toggle="modal" data-target="#exampleModal">
