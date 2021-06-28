@@ -234,7 +234,7 @@ class TransactionSettingController extends Controller
                 'cashback_earned_text' => [
                 	'label' => 'Cashback Earned',
                 	'tooltip' => 'Teks yang akan tampil pada halaman checkout saat customer mendapatkan point cashback',
-                	'value' => MyHelper::post('setting',['key'=>'cashback_earned_text'])['result']['value_text'] ?? 'Point yang akan didapatkan',
+                	'value' => MyHelper::post('setting',['key'=>'cashback_earned_text'])['result']['value'] ?? 'Point yang akan didapatkan',
                 	'text_replaces' => []
                 ]
             ];
@@ -245,7 +245,7 @@ class TransactionSettingController extends Controller
 
             $update = MyHelper::post('setting/update2', [
             	'update' => [
-                    'cashback_earned_text' => ['value_text', $request->cashback_earned_text]
+                    'cashback_earned_text' => ['value', $request->cashback_earned_text]
                 ]
             ]);
 
