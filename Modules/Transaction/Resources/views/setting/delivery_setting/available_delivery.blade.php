@@ -107,7 +107,8 @@
                         <th>Delivery Method</th>
                         <th>Delivery Name</th>
                         <th>Description</th>
-                        <th>Status</th>
+                        <th>Show Status</th>
+                        <th>Available Status</th>
                     </tr>
                     </thead>
                     <tbody class="sortable">
@@ -119,6 +120,10 @@
                             <td>{{$val['delivery_name']}}</td>
                             <td>
                                 <textarea name="delivery[{{$val['code']}}][description]" class="form-control">{{$val['description']}}</textarea>
+                            </td>
+                            <td>
+                                <input type="hidden" name="delivery[{{$val['code']}}][show_status]" value="0">
+                                <input type="checkbox" name="delivery[{{$val['code']}}][show_status]" class="make-switch" data-size="small" data-on-color="info" data-on-text="Show" data-off-color="default" data-off-text="Hide" value="1" @if($val['show_status'] == 1) checked @endif>
                             </td>
                             <td>
                                 <input type="checkbox" name="delivery[{{$val['code']}}][available_status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Enable" data-off-color="default" data-off-text="Disable" value="1" @if($val['available_status'] == 1) checked @endif>

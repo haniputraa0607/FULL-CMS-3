@@ -1826,7 +1826,7 @@ class TransactionController extends Controller
             'sub_title'      => 'Available Delivery',
             'submenu_active' => 'delivery-setting-available'
         ];
-        $get = MyHelper::get('transaction/be/available-delivery');
+        $get = MyHelper::post('transaction/be/available-delivery', ['all' => 1]);
         $data['default_delivery'] = $get['result']['default_delivery']??[];
         $data['delivery'] = $get['result']['delivery']??[];
         return view('transaction::setting.delivery_setting.available_delivery', $data);
@@ -1837,6 +1837,7 @@ class TransactionController extends Controller
         foreach ($request->delivery as $code => $val) {
             $delivery[] = [
                 'code' => $code,
+                'show_status' => $val['show_status']??0,
                 'available_status' => $val['available_status']??0,
                 'description' => $val['description']??""
             ];
@@ -1864,7 +1865,7 @@ class TransactionController extends Controller
     public function deliveryOutletDetail(Request $request, $code){
         $post = $request->except('_token');
 
-        if(empty($post)){
+        if(empty($post['id_outlet'])){
             $data = [
                 'title'          => 'Transaction',
                 'menu_active'    => 'delivery-settings',
@@ -1880,13 +1881,15 @@ class TransactionController extends Controller
                 }
             }
             $data['delivery_outlet_not_available'] = $notAvailable;
+            $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result']??[];
+            $data['id_outlet_group_filter'] = $post['outlet_group_filter']??null;
             return view('transaction::setting.delivery_setting.delivery_outlet_detail', $data);
         }else{
             $post['id_outlet'] = str_replace('[', '', $post['id_outlet']);
             $post['id_outlet'] = str_replace(']', '', $post['id_outlet']);
             $update = MyHelper::post('outlet/delivery-outlet/update', ['code' => $code, 'id_outlet' => explode(',',$post['id_outlet'][0]??[])]);
             if (($update['status']??false) == 'success') {
-                return back()->withSuccess(['Success update setting']);
+                return redirect('transaction/setting/delivery-outlet/detail/'.$code.(!empty($post['id_outlet_group_filter']) ? '?outlet_group_filter='.$post['id_outlet_group_filter']:''))->withSuccess(['Success update setting']);
             } else {
                 return back()->withErrors($update['messages']??['Failed update setting']);
             }

@@ -23,6 +23,7 @@
     <script>
         var arrOutletNotAvailable = <?php echo json_encode($delivery_outlet_not_available)?>;
         $(document).ready(function () {
+            $("#outlet_group_filter").val(<?php echo $id_outlet_group_filter?>)
             loadTable();
         });
 
@@ -38,7 +39,8 @@
             }
 
             var data = {
-                _token : token
+                _token : token,
+                "id_outlet_group_filter" : $("#outlet_group_filter").val()
             };
 
             $('#tableListOutlet').DataTable( {
@@ -50,7 +52,7 @@
                 "iDisplayLength": data_display,
                 "bProcessing": true,
                 "serverSide": true,
-                "searching": true,
+                "searching": false,
                 "ajax": {
                     url : url,
                     dataType: "json",
@@ -141,6 +143,21 @@
     </div>
     <div class="portlet-body">
         <form class="form-horizontal" action="{{ url('transaction/setting/delivery-outlet/detail',$code) }}" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <select class="form-control select2" id="outlet_group_filter" name="id_outlet_group_filter" data-placeholder="Select" required>
+                        <option></option>
+                        <option value="0" @if(empty($id_outlet_group_filter)) selected @endif>All Outlet</option>
+                        @foreach($outlet_group_filter as $filter)
+                            <option value="{{$filter['id_outlet_group']}}" @if($id_outlet_group_filter == $filter['id_outlet_group']) selected @endif>{{$filter['outlet_group_name']}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary btn-sm" onclick="loadTable()"> Show Outlet</a>
+                </div>
+            </div>
+            <br>
             <table class="table table-striped table-bordered table-hover" width="100%" id="tableListOutlet">
                 <thead>
                 <tr>
