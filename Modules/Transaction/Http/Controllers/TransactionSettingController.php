@@ -219,4 +219,41 @@ class TransactionSettingController extends Controller
             return back()->withErrors(['Update failed']);
         }
     }
+
+    public function updateTransactionMessages(Request $request)
+    {
+    	if (empty($request->all())) {
+    		$data = [
+    			'title'          => 'Order',
+    			'menu_active'    => 'order',
+    			'sub_title'      => 'Transaction Messages',
+    			'submenu_active' => 'transaction-messages'
+    		];
+
+            $data['messages'] = [
+                'cashback_earned_text' => [
+                	'label' => 'Cashback Earned',
+                	'tooltip' => 'Teks yang akan tampil pada halaman checkout saat customer mendapatkan point cashback',
+                	'value' => MyHelper::post('setting',['key'=>'cashback_earned_text'])['result']['value'] ?? 'Point yang akan didapatkan',
+                	'text_replaces' => []
+                ]
+            ];
+
+            return view('transaction::setting.transaction_messages', $data);
+
+    	} else {
+
+            $update = MyHelper::post('setting/update2', [
+            	'update' => [
+                    'cashback_earned_text' => ['value', $request->cashback_earned_text]
+                ]
+            ]);
+
+            if (($update['status'] ?? false) == 'success'){
+                return back()->with('success', ['Transaction messages has been updated']);
+            }else{
+                return back()->withErrors($update['messages'] ?? ['Update failed']);
+            }
+    	}
+    }
 }

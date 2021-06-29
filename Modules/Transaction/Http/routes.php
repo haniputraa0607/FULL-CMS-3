@@ -17,6 +17,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::get('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@autoReject']);
     Route::post('/setting/auto-reject', ['middleware' => 'feature_control:262', 'uses' => 'TransactionSettingController@updateAutoReject']);
     Route::any('/setting/timer-payment-gateway', 'TransactionController@timerPaymentGateway');
+    Route::get('/setting/transaction-messages', 'TransactionSettingController@updateTransactionMessages');
+    Route::post('/setting/transaction-messages', 'TransactionSettingController@updateTransactionMessages');
 
     //===== setting delivery =====//
     Route::get('/setting/available-delivery', 'TransactionController@availableDelivery');

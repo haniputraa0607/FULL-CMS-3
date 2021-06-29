@@ -1281,6 +1281,13 @@
 						</a>
 					</li>
 					@endif
+					@if(MyHelper::hasAccess([321], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'transaction-messages') ? 'active' : ''}}">
+						<a href="{{url('transaction/setting/transaction-messages')}}" class="nav-link nav-toggle">
+							<span class="title">Transaction Messages</span>
+						</a>
+					</li>
+					@endif
 				</ul>
 			</li>
 			@endif
