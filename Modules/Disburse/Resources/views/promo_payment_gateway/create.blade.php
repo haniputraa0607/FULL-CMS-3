@@ -306,17 +306,17 @@
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Total limit" class="form-control" name="limit_promo_total" value="{{ old('limit_promo_total') }}" required>
+                                <input type="text" placeholder="Total Limit" class="form-control" name="limit_promo_total" value="{{ old('limit_promo_total') }}" required>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Limit per user per day <span class="required" aria-required="true"> * </span>
+                        <label class="col-md-3 control-label">Limit Per User Per Day <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="limitasi penggunaan promo pada tiap user perhari. jika promo unlitimed silahkan isi dengan angka 0" data-container="body"></i>
                         </label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Limit per user per day" class="form-control" name="limit_per_user_per_day" value="{{ old('limit_per_user_per_day') }}" required>
+                                <input type="text" placeholder="Limit Per User Per Day" class="form-control" name="limit_per_user_per_day" value="{{ old('limit_per_user_per_day') }}" required>
                             </div>
                         </div>
                     </div>
