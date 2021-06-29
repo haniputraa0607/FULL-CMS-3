@@ -19,11 +19,11 @@
 @section('promo-shipment-method')
 @php
 	$shipment_method = array_column($data[$promo_source.'_shipment_method'], 'shipment_method');
-	$delivery_list = ['GO-SEND'];
-	$is_delivery = count(array_intersect($shipment_method, $delivery_list)) > 0;
+	// $delivery_list = ['GO-SEND'];
+	// $is_delivery = count(array_intersect($shipment_method, $delivery_list)) > 0;
 @endphp
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<label class="control-label">Shipment method</label>
 		<i class="fa fa-question-circle tooltips" data-original-title="Pilih metode shipment" data-container="body" data-html="true"></i>
 		<div class="mt-radio-inline">
@@ -46,10 +46,12 @@
 	                <input class="input-selected-shipment" type="checkbox" value="Pickup Order" name="shipment_method[]" @if (in_array('Pickup Order', $shipment_method)) checked @endif> Pickup Order
 	                <span></span>
 	            </label>
-	            <label class="mt-checkbox mt-checkbox-outline">
-	                <input class="input-selected-shipment" type="checkbox" value="GO-SEND" name="shipment_method[]" @if (in_array('GO-SEND', $shipment_method)) checked @endif> GO-SEND
-	                <span></span>
-	            </label>
+	            @foreach ($delivery_list as $delivery)
+		            <label class="mt-checkbox mt-checkbox-outline">
+		                <input class="input-selected-shipment" type="checkbox" value="{{ $delivery['code'] }}" name="shipment_method[]" @if (in_array($delivery['code'], $shipment_method)) checked @endif> {{ $delivery['delivery_name'] }}
+		                <span></span>
+		            </label>
+	            @endforeach
 	            {{-- <label class="mt-checkbox mt-checkbox-outline">
 	                <input class="input-selected-shipment" type="checkbox" value="Delivery"	 id="checkbox-shipment-delivery" @if ($is_delivery) checked @endif> Delivery
 	                <span></span>

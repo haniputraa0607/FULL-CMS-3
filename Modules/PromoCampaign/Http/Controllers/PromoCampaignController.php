@@ -164,23 +164,27 @@ class PromoCampaignController extends Controller
                 'result'            => $result['result']
             ];
 
-            $data['rule']=$post['rule']??[];
+            $data['rule']=$post['rule'] ?? [];
             if (isset($data['rule'])) {
                 $filter = array_map(function ($x) {
                     return [$x['subject'], $x['operator'] ?? '', $x['parameter']];
                 }, $data['rule']);
                 $data['rule'] = $filter;
             }
-            $data['rule2']=$post['rule2']??[];
+
+            $data['rule2']=$post['rule2'] ?? [];
             if (isset($data['rule2'])) {
                 $filter = array_map(function ($x) {
                     return [$x['subject'], $x['operator'] ?? '', $x['parameter']];
                 }, $data['rule2']);
                 $data['rule2'] = $filter;
             }
+
             $outlets = MyHelper::post('outlet/list', $post);
-            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
-            $outlets = isset($outlets['status'])&&isset($outlets['status'])=='success'?$outlets['result']:[];
+            $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result'] ?? [];
+            $data['delivery_list'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery'] ?? [];
+
+            $outlets = isset($outlets['status']) && isset($outlets['status']) == 'success' ? $outlets['result'] : [];
             $data['outlets'] = array_map(function($x){return [$x['id_outlet'],$x['outlet_name']];},$outlets);
             $data['operator']=$post['operator']??'and';
             $data['operator2']=$post['operator2']??'and';
@@ -342,7 +346,8 @@ class PromoCampaignController extends Controller
 
                 $data['result'] = $get_data['result'];
                 $data['result']['id_promo_campaign'] = $slug;
-            	$data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result']??[];
+            	$data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result'] ?? [];
+            	$data['delivery_list'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery'] ?? [];
 
             } else {
 
