@@ -46,7 +46,7 @@ $configs    		= session('configs');
         <div class="portlet light bordered">
             <div class="portlet-title">
                 <div class="caption">
-                    <span class="caption-subject font-green sbold uppercase">Import Delivery Outlet (Only in excel format)</span>
+                    <span class="caption-subject font-green sbold uppercase">Import/Export Outlet Availability (Only in excel format)</span>
                 </div>
             </div>
             <div class="portlet-body form">
@@ -57,29 +57,33 @@ $configs    		= session('configs');
                         <thead>
                         <tr>
                             <th> outlet_code </th>
-                            <th> delivery_1 </th>
-                            <th> delivery_2 </th>
-                            <th> delivery_3 </th>
+                            <th> delivery_1 (Show/Hide)</th>
+                            <th> delivery_1 (Enable/Disable)</th>
+                            <th> delivery_2 (Show/Hide)</th>
+                            <th> delivery_2 (Enable/Disable)</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td> a01 </td>
-                            <td> YES </td>
-                            <td> NO </td>
-                            <td> YES </td>
+                            <td> Show </td>
+                            <td> Enable </td>
+                            <td> Hide </td>
+                            <td> Disable </td>
                         </tr>
                         <tr>
                             <td> a02 </td>
-                            <td> NO </td>
-                            <td> NO </td>
-                            <td> YES </td>
+                            <td> Hide </td>
+                            <td> Disable </td>
+                            <td> Show </td>
+                            <td> Disable </td>
                         </tr>
                         <tr>
                             <td> a03 </td>
-                            <td> YES </td>
-                            <td> NO </td>
-                            <td> YES </td>
+                            <td> Hide </td>
+                            <td> Disable </td>
+                            <td> Show </td>
+                            <td> Disable </td>
                         </tr>
                         </tbody>
                     </table>

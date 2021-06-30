@@ -262,7 +262,20 @@
                         {{$dev['delivery_name']}}
                     </label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-2">
+                    <?php
+                    $key = array_search($dev['code'], array_column($val['delivery_outlet'],'code'));
+                    $checked = '';
+                    if($key === false){
+                        $checked = 'checked';
+                    }else if($val['delivery_outlet'][$key]['show_status'] == 1){
+                        $checked = 'checked';
+                    }
+                    ?>
+                    <input type="hidden" name="delivery_outlet[{{$dev['code']}}][show_status]" value="0">
+                    <input type="checkbox" name="delivery_outlet[{{$dev['code']}}][show_status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Show" data-off-color="default" data-off-text="Hide" value="1" {{$checked}}>
+                </div>
+                <div class="col-md-3">
                     <?php
                         $key = array_search($dev['code'], array_column($val['delivery_outlet'],'code'));
                         $checked = '';
@@ -272,8 +285,8 @@
                             $checked = 'checked';
                         }
                     ?>
-                    <input type="hidden" name="delivery_outlet[{{$dev['code']}}]" value="0">
-                    <input type="checkbox" name="delivery_outlet[{{$dev['code']}}]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="On" data-off-color="default" data-off-text="Off" value="1" {{$checked}}>
+                    <input type="hidden" name="delivery_outlet[{{$dev['code']}}][available_status]" value="0">
+                    <input type="checkbox" name="delivery_outlet[{{$dev['code']}}][available_status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Enable" data-off-color="default" data-off-text="Disable" value="1" {{$checked}}>
                 </div>
             </div>
         @endforeach

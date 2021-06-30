@@ -1312,12 +1312,12 @@
 						</li>
 						<li class="nav-item {{($submenu_active == 'delivery-setting-outlet') ? 'active open' : ''}}">
 							<a href="{{url('transaction/setting/delivery-outlet')}}" class="nav-link ">
-								<span class="title">Limitation Delivery Outlet</span>
+								<span class="title">Outlet Availability</span>
 							</a>
 						</li>
 						<li class="nav-item {{($submenu_active == 'delivery-setting-outlet-import') ? 'active open' : ''}}">
 							<a href="{{url('transaction/setting/delivery-outlet/import')}}" class="nav-link ">
-								<span class="title">Import Delivery Outlet</span>
+								<span class="title">Import/Export Outlet Availability</span>
 							</a>
 						</li>
 						@if(MyHelper::hasAccess([13], $configs))
