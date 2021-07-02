@@ -27,6 +27,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::post('/setting/delivery-upload-image/save', 'TransactionController@deliveryUploadImage');
     Route::get('/setting/delivery-outlet', 'TransactionController@deliveryOutlet');
     Route::any('/setting/delivery-outlet/detail/{code}', 'TransactionController@deliveryOutletDetail');
+    Route::post('/setting/delivery-outlet/all/{code}', 'TransactionController@deliveryOutletUpdateAll');
     Route::get('/setting/delivery-outlet/import', 'TransactionController@deliveryOutletImport');
     Route::post('/setting/delivery-outlet/import-save', 'TransactionController@deliveryOutletImport');
     Route::get('/setting/export/delivery-outlet', 'TransactionController@exportDeliveryOutlet');

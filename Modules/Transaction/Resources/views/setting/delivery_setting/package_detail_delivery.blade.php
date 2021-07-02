@@ -116,14 +116,14 @@
                 <div class="form-group">
                     <div class="input-icon right">
                         <label class="col-md-3 control-label">
-                            Length
+                            Length/item
                             <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Masukkan panjang rata-rata produk, satuan dalam cm. Digunakan untuk kebutuhan wehelpyou." data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control price" name="length" value="{{ $result['length']??0 }}" placeholder="Length" required>
+                            <input type="text" class="form-control price" name="length" value="{{ $result['length']??0 }}" placeholder="Length/item" required>
                             <span class="input-group-addon"> cm </span>
                         </div>
                     </div>
@@ -131,14 +131,14 @@
                 <div class="form-group">
                     <div class="input-icon right">
                         <label class="col-md-3 control-label">
-                            Width
+                            Width/item
                             <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Masukkan lebar rata-rata produk, satuan dalam cm. Digunakan untuk kebutuhan wehelpyou." data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control price" name="width" value="{{ $result['width']??0 }}" placeholder="Width" required>
+                            <input type="text" class="form-control price" name="width" value="{{ $result['width']??0 }}" placeholder="Width/item" required>
                             <span class="input-group-addon"> cm </span>
                         </div>
                     </div>
@@ -146,14 +146,14 @@
                 <div class="form-group">
                     <div class="input-icon right">
                         <label class="col-md-3 control-label">
-                            Height
+                            Height/item
                             <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Masukkan tinggi rata-rata produk, satuan dalam cm. Digunakan untuk kebutuhan wehelpyou." data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control price" name="height" value="{{ $result['height']??0 }}" placeholder="Height" required>
+                            <input type="text" class="form-control price" name="height" value="{{ $result['height']??0 }}" placeholder="Height/item" required>
                             <span class="input-group-addon"> cm </span>
                         </div>
                     </div>
@@ -161,14 +161,14 @@
                 <div class="form-group">
                     <div class="input-icon right">
                         <label class="col-md-3 control-label">
-                            Weight
+                            Weight/item
                             <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Masukkan bobot rata-rata produk, satuan dalam gram. Digunakan untuk kebutuhan wehelpyou." data-container="body"></i>
                         </label>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control price" name="weight" value="{{ $result['weight']??0 }}" placeholder="Weight" required>
+                            <input type="text" class="form-control price" name="weight" value="{{ $result['weight']??0 }}" placeholder="Weight/item" required>
                             <span class="input-group-addon"> gram </span>
                         </div>
                     </div>

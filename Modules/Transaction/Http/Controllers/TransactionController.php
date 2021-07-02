@@ -1855,7 +1855,7 @@ class TransactionController extends Controller
         $data = [
             'title'          => 'Transaction',
             'menu_active'    => 'delivery-settings',
-            'sub_title'      => 'Limitation Delivery Outlet',
+            'sub_title'      => 'Outlet Availability',
             'submenu_active' => 'delivery-setting-outlet'
         ];
         $data['delivery'] = MyHelper::get('outlet/list-delivery/count-outlet')['result']??[];
@@ -1865,35 +1865,52 @@ class TransactionController extends Controller
     public function deliveryOutletDetail(Request $request, $code){
         $post = $request->except('_token');
 
-        if(empty($post['id_outlet'])){
+        if(!isset($post['id_outlet_not_available'])){
             $data = [
                 'title'          => 'Transaction',
                 'menu_active'    => 'delivery-settings',
-                'sub_title'      => 'Limitation Delivery Outlet Detail',
+                'sub_title'      => 'Outlet Availability Detail',
                 'submenu_active' => 'delivery-setting-outlet',
                 'code' => $code
             ];
             $data['delivery_outlet'] = MyHelper::post('outlet/delivery-outlet/bycode', ['code' => $code])['result']??[];
             $notAvailable = [];
+            $hide = [];
             foreach ($data['delivery_outlet'] as $val){
                 if($val['code'] == $code && $val['available_status'] == 0){
                     $notAvailable[] = $val['id_outlet'];
                 }
+
+                if($val['code'] == $code && $val['show_status'] == 0){
+                    $hide[] = $val['id_outlet'];
+                }
             }
             $data['delivery_outlet_not_available'] = $notAvailable;
+            $data['delivery_outlet_hide'] = $hide;
             $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result']??[];
             $data['id_outlet_group_filter'] = $post['outlet_group_filter']??null;
             return view('transaction::setting.delivery_setting.delivery_outlet_detail', $data);
         }else{
-            $post['id_outlet'] = str_replace('[', '', $post['id_outlet']);
-            $post['id_outlet'] = str_replace(']', '', $post['id_outlet']);
-            $update = MyHelper::post('outlet/delivery-outlet/update', ['code' => $code, 'id_outlet' => explode(',',$post['id_outlet'][0]??[])]);
+            $post['id_outlet_not_available'] = str_replace('[', '', $post['id_outlet_not_available']);
+            $post['id_outlet_not_available'] = str_replace(']', '', $post['id_outlet_not_available']);
+            $post['id_outlet_hide'] = str_replace('[', '', $post['id_outlet_hide']);
+            $post['id_outlet_hide'] = str_replace(']', '', $post['id_outlet_hide']);
+            $update = MyHelper::post('outlet/delivery-outlet/update', ['code' => $code, 'id_outlet_not_available' => explode(',',$post['id_outlet_not_available'][0]??[]),
+                'id_outlet_hide' => explode(',',$post['id_outlet_hide'][0]??[])]);
             if (($update['status']??false) == 'success') {
                 return redirect('transaction/setting/delivery-outlet/detail/'.$code.(!empty($post['id_outlet_group_filter']) ? '?outlet_group_filter='.$post['id_outlet_group_filter']:''))->withSuccess(['Success update setting']);
             } else {
                 return back()->withErrors($update['messages']??['Failed update setting']);
             }
         }
+    }
+
+    function deliveryOutletUpdateAll(Request $request, $code){
+        $post = $request->except('_token');
+        $post['code'] = $code;
+        $update = MyHelper::post('outlet/delivery-outlet/all/update', $post);
+
+        return $update;
     }
 
     function packageDetailDelivery(Request $request){
@@ -1930,7 +1947,7 @@ class TransactionController extends Controller
             $data = [
                 'title'          => 'Order',
                 'menu_active'    => 'delivery-settings',
-                'sub_title'      => 'Import Delivery Outlet',
+                'sub_title'      => 'Import/Export Outlet Availability',
                 'submenu_active' => 'delivery-setting-outlet-import'
             ];
             return view('transaction::setting.delivery_setting.delivery_outlet_export_import', $data);
@@ -1975,10 +1992,16 @@ class TransactionController extends Controller
                 foreach ($deliveries as $value){
                     $check = array_search($value['code'], array_column($delivery, 'code'));
 
-                    if($check !== false && $delivery[$check]['available_status'] == 0){
-                        $data[$i][$value['code']] = 'NO';
+                    if($check !== false && $delivery[$check]['show_status'] == 0){
+                        $data[$i][$value['code'].'(Show/Hide)'] = 'Hide';
                     }else{
-                        $data[$i][$value['code']] = 'YES';
+                        $data[$i][$value['code'].'(Show/Hide)'] = 'Show';
+                    }
+
+                    if($check !== false && $delivery[$check]['available_status'] == 0){
+                        $data[$i][$value['code'].'(Enable/Disable)'] = 'Disable';
+                    }else{
+                        $data[$i][$value['code'].'(Enable/Disable)'] = 'Enable';
                     }
 
                 }
