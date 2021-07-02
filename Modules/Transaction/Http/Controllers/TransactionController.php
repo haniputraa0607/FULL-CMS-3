@@ -1865,7 +1865,16 @@ class TransactionController extends Controller
     public function deliveryOutletDetail(Request $request, $code){
         $post = $request->except('_token');
 
-        if(!isset($post['id_outlet_not_available'])){
+        if(!empty($post['submit_all'])){
+            $post['code'] = $code;
+            $update = MyHelper::post('outlet/delivery-outlet/all/update', $post);
+
+            if (($update['status']??false) == 'success') {
+                return redirect('transaction/setting/delivery-outlet/detail/'.$code)->withSuccess(['Success update setting']);
+            } else {
+                return redirect('transaction/setting/delivery-outlet/detail/'.$code)->withErrors($update['messages']??['Failed update setting']);
+            }
+        }elseif(!isset($post['id_outlet_not_available'])){
             $data = [
                 'title'          => 'Transaction',
                 'menu_active'    => 'delivery-settings',
@@ -1888,7 +1897,19 @@ class TransactionController extends Controller
             $data['delivery_outlet_not_available'] = $notAvailable;
             $data['delivery_outlet_hide'] = $hide;
             $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result']??[];
-            $data['id_outlet_group_filter'] = $post['outlet_group_filter']??null;
+
+            $data['city'] = MyHelper::get('city/list')['result']??[];
+            $data['province'] = MyHelper::get('province/list')['result']??[];
+            $data['filter_type'] = $post['filter_type']??'';
+
+            $data['id_outlet_group_filter'] = null;
+            $data['conditions'] = [];
+
+            if($data['filter_type'] == 'conditions'){
+                $data['conditions'] = $post['conditions']??[];
+            }elseif($data['filter_type'] == 'outlet_group'){
+                $data['id_outlet_group_filter'] = $post['id_outlet_group_filter']??null;
+            }
             return view('transaction::setting.delivery_setting.delivery_outlet_detail', $data);
         }else{
             $post['id_outlet_not_available'] = str_replace('[', '', $post['id_outlet_not_available']);

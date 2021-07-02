@@ -10,7 +10,12 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
+@section('page-plugin')
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+@endsection
+
 @section('page-script')
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
@@ -37,13 +42,18 @@
             var url = "{{url('outlet/delivery-outlet-ajax')}}";
             var tab = $.fn.dataTable.isDataTable( '#tableListOutlet' );
             var code = '{{$code}}';
+            var conditions = <?php echo json_encode($conditions)?>;
+            var id_outlet_group_filter = "{{$id_outlet_group_filter}}";
+            var filter_type = "{{$filter_type}}";
             if(tab){
                 $('#tableListOutlet').DataTable().destroy();
             }
 
             var data = {
                 _token : token,
-                "id_outlet_group_filter" : $("#outlet_group_filter").val()
+                "id_outlet_group_filter" : id_outlet_group_filter,
+                "conditions" : conditions,
+                "filter_type" : filter_type
             };
 
             $('#tableListOutlet').DataTable( {
@@ -152,47 +162,17 @@
         }
         
         function submitForAll() {
-            var gruop_filter = $('#outlet_group_filter').select2('data');
-            var text = gruop_filter[0].text;
-            var id = gruop_filter[0].id;
-
-            var show_status = 1;
-            if($('#show_status_all').prop('checked') == false){
-                show_status = 0;
-            }
-
-            var available_status = 1;
-            if($('#available_status_all').prop('checked') == false){
-                available_status = 0;
-            }
             swal({
-                    title: "\n\nAre you sure want to update with filter : \n"+text+" ?",
+                    title: "\n\nAre you sure want to update with filter selected ?",
                     text: "Your will not be able to recover this!",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Yes, delete it!",
+                    confirmButtonText: "Yes, update it!",
                     closeOnConfirm: false
                 },
                 function(){
-                    $.ajax({
-                        type : "POST",
-                        url : "{{ url('transaction/setting/delivery-outlet/all', $code) }}",
-                        data : {
-                            _token : "{{ csrf_token() }}",
-                            "show_status" : show_status,
-                            "available_status" : available_status,
-                            "id_outlet_group_filter" : id
-                        },
-                        success : function(result) {
-                            if (result.status == "success") {
-                                swal("Updated!", "Success update data outlet.", "success")
-                                location.href = "{{url('transaction/setting/delivery-outlet/detail', $code)}}"+"?outlet_group_filter="+id;
-                            }else {
-                                swal("Error!", "Something went wrong. Failed to update data outlet.", "error")
-                            }
-                        }
-                    });
+                    $('#form_filter').attr('action', "?submit_all=1").submit();
                 });
         }
     </script>
@@ -221,10 +201,14 @@
 
 @include('layouts.notifications')
 
+<form role="form" id="form_filter" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
+    {{ csrf_field() }}
+    @include('transaction::setting.delivery_setting.filter_delivery_outlet_detail')
+    <br>
+
 <div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption">
-            <i class=" icon-layers font-green"></i>
             <span class="caption-subject font-green bold uppercase">Outlet Availability @if(!empty(explode('_',$code)['1']??''))({{explode('_',$code)['1']}}) @else <?php echo '('.$code.')'?> @endif</span>
         </div>
     </div>
@@ -232,36 +216,21 @@
         <div class="m-heading-1 border-yellow-lemon m-bordered">
             <p><b>Submit for all</b> : data outlet yang akan diubah adalah data berdasarkan filter yang terpilih.</p>
         </div>
+        <div class="row">
+            <div class="col-md-2">
+                <input type="checkbox" class="make-switch text-nowrap" id="show_status_all" name="show_status_all" data-size="small" data-on-color="info" data-on-text="Show" data-off-color="default" data-off-text="Hide" value="1" checked>
+            </div>
+            <div class="col-md-2" style="margin-left: -1.5%">
+                <input type="checkbox" class="make-switch" data-size="small" id="available_status_all" name="available_status_all" data-on-color="info" data-on-text="Enable" data-off-color="default" data-off-text="Disbale" value="1" checked>
+            </div>
+            <div class="col-md-3" style="margin-left: 1.5%">
+                <a class="btn btn-success btn-sm" onclick="submitForAll()"> Submit For All</a>
+            </div>
+        </div>
+</form>
+        <br>
 
         <form class="form-horizontal" action="{{ url('transaction/setting/delivery-outlet/detail',$code) }}" method="post">
-            <div class="row">
-                <div class="col-md-4">
-                    <select class="form-control select2" id="outlet_group_filter" name="id_outlet_group_filter" data-placeholder="Select" required>
-                        <option></option>
-                        <option value="0" @if(empty($id_outlet_group_filter)) selected @endif>All Outlet</option>
-                        @foreach($outlet_group_filter as $filter)
-                            <option value="{{$filter['id_outlet_group']}}" @if($id_outlet_group_filter == $filter['id_outlet_group']) selected @endif>{{$filter['outlet_group_name']}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <a class="btn btn-primary btn-sm" onclick="loadTable()"> Show Outlet</a>
-                </div>
-            </div>
-            <br>
-            <br>
-            <div class="row">
-                <div class="col-md-2">
-                    <input type="checkbox" class="make-switch text-nowrap" id="show_status_all" data-size="small" data-on-color="info" data-on-text="Show" data-off-color="default" data-off-text="Hide" value="1" checked>
-                </div>
-                <div class="col-md-2" style="margin-left: -1.5%">
-                    <input type="checkbox" class="make-switch" data-size="small" id="available_status_all" data-on-color="info" data-on-text="Enable" data-off-color="default" data-off-text="Disbale" value="1" checked>
-                </div>
-                <div class="col-md-3" style="margin-left: 1.5%">
-                    <a class="btn btn-success btn-sm" onclick="submitForAll()"> Submit For All</a>
-                </div>
-            </div>
-            <br>
             <table class="table table-striped table-bordered table-hover" width="100%" id="tableListOutlet">
                 <thead>
                 <tr>
