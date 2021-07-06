@@ -784,7 +784,7 @@ class CampaignController extends Controller
 		if($action['status'] == 'success'){
 			return redirect('campaign/step3/'.$id_campaign);
 		} else{
-			return back()->withErrors($action['messages']);
+			return back()->withErrors($action['messages']??"Something went wrong, please try again");
 		}
     }
 
@@ -837,7 +837,7 @@ class CampaignController extends Controller
 
 			return view('campaign::create-step-3', $data);
 		} else{
-			return back()->withErrors($action['messages']);
+			return back()->withErrors($action['messages']??"Something went wrong, please try again");
 		}
     }
 
