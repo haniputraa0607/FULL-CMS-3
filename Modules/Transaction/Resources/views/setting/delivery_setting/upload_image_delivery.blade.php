@@ -102,7 +102,7 @@
                     <div class="fileinput fileinput-new" data-provides="fileinput" style="margin-top: 2%;">
                         <div class="fileinput-new thumbnail" style="width: 40px; height: 40px;">
                             @if(isset($default_image_delivery) && $default_image_delivery != "")
-                                <img src="{{$default_image_delivery.'?='.time()}}" id="preview_image_default" />
+                                <img src="{{$default_image_delivery}}" id="preview_image_default" />
                             @endif
                         </div>
 
