@@ -160,19 +160,30 @@
                 {
                     data: 'transaction_receipt_number',
                     render: function(value, type, row) {
+                    	let tooltipTemplate = '<i class="fa fa-question-circle tooltips" data-original-title="%tooltip_text%" data-container="body"></i>';
+                    	let tooltipRetry = tooltipTemplate.replace('%tooltip_text%', 'Mengirim ulang permintaan refund ke payment gateway, hanya tersedia untuk beberapa payment gateway yang mendukung (shopeepay, midtrans)');
+                    	let tooltipConfirmProcess = tooltipTemplate.replace('%tooltip_text%', 'Konfirmasi refund yang dilakukan secara manual diluar sistem. ketika diklik akan muncul popup berisi form yang perlu diisi');
+                    	let tooltipDetailTransaction = tooltipTemplate.replace('%tooltip_text%', 'Halaman detail transaksi');
+                    	let tooltipDetailRefund = tooltipTemplate.replace('%tooltip_text%', 'Detail dari hasil pengisian form confirm process');
+
                         const buttons = [
-                            `<button type="button" class="btn ${row.need_manual_void == 1 ? 'yellow confirm-btn' : 'green detail-btn'} btn-sm btn-outline" data-data='${JSON.stringify(row)}'>${row.need_manual_void == 1 ? 'Confirm Process' : 'Detail Refund'}</button>`,
-                            `<a class="btn blue btn-sm btn-outline" href="{{url('transaction/detail')}}/${row.id_transaction}/${row.trasaction_type == 'Pickup Order' ? 'pickup order' : 'delivery'}">Detail Transaction</a>`
+                            `<button type="button" class="btn ${row.need_manual_void == 1 ? 'yellow confirm-btn' : 'green detail-btn'} btn-sm btn-outline" data-data='${JSON.stringify(row)}'>${row.need_manual_void == 1 ? 'Confirm Process' : 'Detail Refund'} ${row.need_manual_void == 1 ? tooltipConfirmProcess : tooltipDetailRefund}</button>`,
+                            `<a class="btn blue btn-sm btn-outline" href="{{url('transaction/detail')}}/${row.id_transaction}/${row.trasaction_type == 'Pickup Order' ? 'pickup order' : 'delivery'}">Detail Transaction ${tooltipDetailTransaction}</a>`
                         ];
                         if (['shopeepay', 'midtrans'].includes(row.trasaction_payment_type.toLowerCase()) && row.need_manual_void == '1') {
-                            buttons.unshift(`<button type="button" class="btn green btn-sm btn-outline retry-btn" data-data='${JSON.stringify(row)}'>Retry</button>`);
+                            buttons.unshift(`<button type="button" class="btn green btn-sm btn-outline retry-btn" data-data='${JSON.stringify(row)}'>Retry ${tooltipRetry}</button>`);
                         }
+
                         return buttons.join('');
                     }
                 },
             ],
-            searching: false
+            searching: false,
+            drawCallback: function( oSettings ) {
+                $('.tooltips').tooltip();
+            },
         });
+		
 
         $('#table-failed-void').on('click', '.confirm-btn', function() {
             $('#modal-confirm :input').val(null);
@@ -278,8 +289,8 @@
                 <th>Payment Reference Number</th>
                 <th>Grandtotal</th>
                 <th>Manual Refund</th>
-                <th>Failed Void Reason</th>
-                <th>Status</th>
+                <th>Failed Void Reason <i class="fa fa-question-circle tooltips" data-original-title="Alasan refund dari pihak payment gateway" data-container="body"></i></th>
+                <th>Status <i class="fa fa-question-circle tooltips" data-original-title="processed/unprocessed </br> <p class='text-left'>unprocessed : memerlukan tindakan admin </br></br> processed : refund sudah diproses admin secara manual</p>" data-container="body" data-html="true"></i></th>
                 <th>Action</th>
               </tr>
             </thead>
