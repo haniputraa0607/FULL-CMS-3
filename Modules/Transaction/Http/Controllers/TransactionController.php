@@ -1821,7 +1821,7 @@ class TransactionController extends Controller
     /*================ Start Setting Delivery ================*/
     public function availableDelivery(Request $request) {
         $data = [
-            'title'          => 'Transaction',
+            'title'          => 'Available Delivery',
             'menu_active'    => 'delivery-settings',
             'sub_title'      => 'Available Delivery',
             'submenu_active' => 'delivery-setting-available'
