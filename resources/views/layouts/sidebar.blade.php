@@ -1481,6 +1481,14 @@
 					</a>
 				</li>
 			@endif
+			@if(MyHelper::hasAccess([322], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'report-wehelpyou') ? 'active open' : ''}}">
+					<a href="{{url('report/wehelpyou')}}" class="nav-link nav-toggle">
+						<i class="fa fa-truck"></i>
+						<span class="title">Report Wehelpyou</span>
+					</a>
+				</li>
+			@endif
 			@if(MyHelper::hasAccess([263], $grantedFeature))
 				<li class="nav-item {{($menu_active == 'report-payment') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">

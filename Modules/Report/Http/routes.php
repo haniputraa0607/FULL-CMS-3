@@ -44,6 +44,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'report',
     Route::any('gosend', [ 'uses' => 'ReportGosend@index']);
     Route::any('gosend/export', [ 'uses' => 'ReportGosend@export']);
 
+    // REPORT WEHELPYOU
+    Route::any('wehelpyou', ['uses' => 'ReportWehelpyou@index']);
+    Route::any('wehelpyou/export', ['uses' => 'ReportWehelpyou@export']);
+
     // REPORT PAYMENT
     Route::any('payment/list-export', [ 'uses' => 'ReportPayment@listExport']);
     Route::any('payment/export-action/{action}/{id}', [ 'uses' => 'ReportPayment@actionExport']);
