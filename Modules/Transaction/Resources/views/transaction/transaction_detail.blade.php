@@ -400,7 +400,8 @@
                         $html = '<div class="kotak-full" style="background-color: #ffffff;padding: 20px; height: 65px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
                     }else{
                         $data['transaction_status_text'] = str_replace('PESANAN', 'ORDER', $data['transaction_status_text']);
-                        if(isset($data['detail']['reject_reason'])){
+                        $data['transaction_status_text'] = str_replace("\n", '<br>', $data['transaction_status_text']);
+                        /* if(isset($data['detail']['reject_reason'])){
                             switch($data['detail']['reject_reason']){
                                 case 'auto reject order by system [no driver]':
                                     $data['transaction_status_text'] = $data['transaction_status_text'].' OTOMATIS<br>GAGAL MENEMUKAN DRIVER';
@@ -415,7 +416,7 @@
                                     $data['transaction_status_text'] = $data['transaction_status_text'].'<br>'.strtoupper($data['detail']['reject_reason']);
                                 break;
                             }
-                        }
+                        } */
                         $html = '<div class="kotak-full" style="background-color: '.$bg[$data['transaction_status']].';padding: 20px; box-shadow: 0 3.3px 6.7px #b3b3b3;">';
                     }
 
