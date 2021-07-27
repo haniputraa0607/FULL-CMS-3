@@ -177,7 +177,12 @@
                     tmpBrand.set(key_name, data_product[a].id_brand);
                     i++;
                 }
-                loadOutlet(outlet_selected);
+                if(outlet_selected){
+                    loadOutlet(outlet_selected);
+                }else{
+                    loadOutlet();
+                }
+
             }else{
                 i=1;
             }
