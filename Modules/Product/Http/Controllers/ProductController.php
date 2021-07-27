@@ -993,19 +993,20 @@ class ProductController extends Controller
         $post = $request->except('_token');
         if(isset($post['clear'])){
             session::forget('product_price_filter');
+        	unset($post['page']);
         }
 
-        if (session('product_price_filter')) {
+        if ((isset($post['rule']) || isset($post['operator']) )) {
+        	unset($post['page']);
+            session(['product_price_filter' => $post]);
+            $data['rule']     = array_map('array_values', $post['rule']);
+            $data['operator'] = $post['operator'];
+        } elseif (session('product_price_filter')) {
             $filter             = session('product_price_filter');
             $data['rule']     = array_map('array_values', $filter['rule']);
             $data['operator'] = $filter['operator'];
-        } else {
-            if((isset($post['rule']) || isset($post['operator']) )){
-                session(['product_price_filter' => $post]);
-                $data['rule']     = array_map('array_values', $post['rule']);
-                $data['operator'] = $post['operator'];
-            }
         }
+
         if(isset($post['page'])){
             $page = $post['page'];
             unset($post['page']);
