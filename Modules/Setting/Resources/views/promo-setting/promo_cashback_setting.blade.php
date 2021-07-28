@@ -57,6 +57,7 @@ $grantedFeature     = session('granted_features');
 	            $('#promo-code-false').show();
 	        }
 	    });
+
 	    $('#voucher-online-checkbox').on('switchChange.bootstrapSwitch',function(){
 	        var state=$(this).bootstrapSwitch('state');
 	        if(state){
@@ -67,6 +68,7 @@ $grantedFeature     = session('granted_features');
 	            $('#voucher-online-false').show();
 	        }
 	    });
+
 	    $('#voucher-offline-checkbox').on('switchChange.bootstrapSwitch',function(){
 	        var state=$(this).bootstrapSwitch('state');
 	        if(state){
@@ -89,10 +91,22 @@ $grantedFeature     = session('granted_features');
 	        }
 	    });
 
+	    $('#bundling-checkbox').on('switchChange.bootstrapSwitch',function(){
+	        var state=$(this).bootstrapSwitch('state');
+	        if(state){
+	            $('#bundling-true').show();
+	            $('#bundling-false').hide();
+	        }else{
+	            $('#bundling-true').hide();
+	            $('#bundling-false').show();
+	        }
+	    });
+
 	    $('#promo-code-checkbox').trigger('switchChange.bootstrapSwitch');
 	    $('#voucher-online-checkbox').trigger('switchChange.bootstrapSwitch');
 	    $('#voucher-offline-checkbox').trigger('switchChange.bootstrapSwitch');
 	    $('#subscription-checkbox').trigger('switchChange.bootstrapSwitch');
+	    $('#bundling-checkbox').trigger('switchChange.bootstrapSwitch');
     </script>
 
 @endsection
@@ -139,8 +153,8 @@ $grantedFeature     = session('granted_features');
 							<div class="form-group">
 	                    		<span style="margin-right: 5px;">:</span>
 	                            <input type="checkbox" id="promo-code-checkbox" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" value="1" name="promo_code_cashback" @if(old('promo_code_cashback')=='1' || !empty($cashback['promo code get point'])) checked @endif>
-	                            <span class="help-block" id="promo-code-true" style="margin-left: 12px;"> Customer <span class="text-success font-weight-bold">will get</span> cashback when making transactions using Promo Code </span>
-	                            <span class="help-block" id="promo-code-false" style="margin-left: 12px;"> Customer <span class="text-danger font-weight-bold">will not get</span> cashback when making transactions using Promo Code </span>
+	                            <span class="help-block" id="promo-code-true" style="margin-left: 12px;"> Customer <span class="text-success font-weight-bold"><b>will get</b></span> cashback when making transactions using Promo Code </span>
+	                            <span class="help-block" id="promo-code-false" style="margin-left: 12px;"> Customer <span class="text-danger font-weight-bold"><b>will not get</b></span> cashback when making transactions using Promo Code </span>
 	                        </div>
 	                    </div>
 					</div>
@@ -154,8 +168,8 @@ $grantedFeature     = session('granted_features');
 							<div class="form-group">
 	                    		<span style="margin-right: 5px;">:</span>
 	                            <input type="checkbox" id="voucher-online-checkbox" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" value="1" name="voucher_online_cashback" @if(old('voucher_online_cashback')=='1' || !empty($cashback['voucher online get point'])) checked @endif>
-	                            <span class="help-block" id="voucher-online-true" style="margin-left: 12px;"> Customer <span class="text-success font-weight-bold">will get</span> cashback when making transactions using Voucher Online </span>
-	                            <span class="help-block" id="voucher-online-false" style="margin-left: 12px;"> Customer <span class="text-danger font-weight-bold">will not get</span> cashback when making transactions using Voucher Online </span>
+	                            <span class="help-block" id="voucher-online-true" style="margin-left: 12px;"> Customer <span class="text-success font-weight-bold"><b>will get</b></span> cashback when making transactions using Voucher Online </span>
+	                            <span class="help-block" id="voucher-online-false" style="margin-left: 12px;"> Customer <span class="text-danger font-weight-bold"><b>will not get</b></span> cashback when making transactions using Voucher Online </span>
 	                        </div>
 	                    </div>
 					</div>
@@ -170,8 +184,8 @@ $grantedFeature     = session('granted_features');
 							<div class="form-group">
 	                    		<span style="margin-right: 5px;">:</span>
 	                            <input type="checkbox" id="voucher-offline-checkbox" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" value="1" name="voucher_offline_cashback" @if(old('voucher_offline_cashback')=='1' || !empty($cashback['voucher offline get point'])) checked @endif>
-	                            <span class="help-block" id="voucher-offline-true" style="margin-left: 12px;"> Customer <span class="text-success font-weight-bold">will get</span> cashback when making transactions using Voucher Offline </span>
-	                            <span class="help-block" id="voucher-offline-false" style="margin-left: 12px;"> Customer <span class="text-danger font-weight-bold">will not get</span> cashback when making transactions using Voucher Offline </span>
+	                            <span class="help-block" id="voucher-offline-true" style="margin-left: 12px;"> Customer <span class="text-success font-weight-bold"><b>will get</b></span> cashback when making transactions using Voucher Offline </span>
+	                            <span class="help-block" id="voucher-offline-false" style="margin-left: 12px;"> Customer <span class="text-danger font-weight-bold"><b>will not get</b></span> cashback when making transactions using Voucher Offline </span>
 	                        </div>
 	                    </div>
 					</div>
@@ -185,8 +199,22 @@ $grantedFeature     = session('granted_features');
 							<div class="form-group">
 	                    		<span style="margin-right: 5px;">:</span>
 	                            <input type="checkbox" id="subscription-checkbox" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" value="1" name="subscription_cashback" @if(old('subscription_cashback')=='1' || !empty($cashback['subscription get point'])) checked @endif>
-	                            <span class="help-block" id="subscription-true" style="margin-left: 12px;"> Customer <span class="text-success font-weight-bold">will get</span> cashback when making transactions using Subscription </span>
-	                            <span class="help-block" id="subscription-false" style="margin-left: 12px;"> Customer <span class="text-danger font-weight-bold">will not get</span> cashback when making transactions using Subscription </span>
+	                            <span class="help-block" id="subscription-true" style="margin-left: 12px;"> Customer <span class="text-success font-weight-bold"><b>will get</b></span> cashback when making transactions using Subscription </span>
+	                            <span class="help-block" id="subscription-false" style="margin-left: 12px;"> Customer <span class="text-danger font-weight-bold"><b>will not get</b></span> cashback when making transactions using Subscription </span>
+	                        </div>
+	                    </div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-3 control-label text-left" style="text-align: left;">Bundling
+	                        <span class="required" aria-required="true"> * </span>
+	                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih apakah produk bundling akan diikutsertakan dalam perhitungan cashback atau tidak" data-container="body"></i>
+	                    </label>
+	                    <div class="col-md-9">
+							<div class="form-group">
+	                    		<span style="margin-right: 5px;">:</span>
+	                            <input type="checkbox" id="bundling-checkbox" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Active" data-off-color="default" data-off-text="Inactive" value="1" name="bundling_cashback" @if(old('bundling_cashback')=='1' || !empty($cashback['cashback_include_bundling'])) checked @endif>
+	                            <span class="help-block" id="bundling-true" style="margin-left: 12px;"> Bundling products <span class="text-success font-weight-bold"><b>will be included</b></span> in the cashback calculation </span>
+	                            <span class="help-block" id="bundling-false" style="margin-left: 12px;"> Bundling products <span class="text-danger font-weight-bold"><b>will not be included</b></span> in the cashback calculation </span>
 	                        </div>
 	                    </div>
 					</div>
