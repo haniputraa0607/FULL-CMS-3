@@ -40,6 +40,13 @@
             </div>
         </div>
         <div class="portlet-body">
+        	<div class="m-heading-1 border-green m-bordered">
+		        <li>Halaman ini digunakan untuk menampilkan product Variant NON PRICE (NO SKU) pada menu pengaturan stok di outlet apps.</li>
+		        <li>Product Variant NON PRICE (NO SKU) hanya akan tampil pada outlet yang memiliki brand yang dipilih.</li>
+	        	<li>Name : nama product Variant NON PRICE (NO SKU)</li> 
+	        	<li>Child : pembagian dari product Variant NON PRICE (NO SKU) menjadi turunan yang lebih spesifik</li>
+	        	<li>Brand : brand yang akan menjadi acuan untuk menampilkan product Variant NON PRICE (NO SKU) di menu pengaturan stok outlet apps</li>
+		    </div>
             <form action="{{url()->current()}}" method="post">
                 <table class="table table-striped table-bordered table-hover table-responsive" width="100%">
                     <thead>
