@@ -40,6 +40,12 @@
             </div>
         </div>
         <div class="portlet-body">
+        	<div class="m-heading-1 border-green m-bordered">
+		        <li>Halaman ini digunakan untuk menampilkan topping pada menu pengaturan stok di outlet apps.</li>
+		        <li>Topping hanya akan tampil pada outlet yang memiliki brand yang dipilih.</li>
+	        	<li>Topping : nama topping</li> 
+	        	<li>Brand : brand yang akan menjadi acuan untuk menampilkan topping di menu pengaturan stok outlet apps</li>
+		    </div>
             <form action="{{url()->current()}}" method="post">
                 <table class="table">
                     <thead>
