@@ -130,7 +130,7 @@
                         </td>
                         <td>{{$val['order_id']}}</td>
                         <td>{{number_format($val['transaction_grandtotal'])}}</td>
-                        <td>{{number_format($val['transaction_shipment_go_send'])}}</td>
+                        <td>{{number_format($val['transaction_shipment_go_send'] + $val['transaction_shipment'])}}</td>
                         <td>
                             Name : {{$val['destination_name']}}<br>
                             Phone : {{$val['destination_phone']}}<br>
