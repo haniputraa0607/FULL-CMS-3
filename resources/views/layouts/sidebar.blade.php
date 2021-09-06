@@ -2230,6 +2230,11 @@
 								<span class="title">[Response] Receive Quest Voucher</span>
 							</a>
 						</li>
+						<li class="nav-item {{($submenu_active == 'quest-autoresponse-quest-voucher-ended') ? 'active open' : ''}}">
+							<a href="{{url('autoresponse/quest/quest-voucher-ended')}}" class="nav-link ">
+								<span class="title">[Response] Quest Voucher Ended</span>
+							</a>
+						</li>
 						@endif
 					</ul>
 				</li>

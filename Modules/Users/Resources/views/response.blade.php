@@ -701,7 +701,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 					@endif
 
 					@if($subject != 'email-verify' && $subject != 'new-user-franchise' && $subject != 'reset-password-user-franchise')
-						<hr>
+						@if($subject != 'quest-voucher-ended') <hr> @endif
 						@if(MyHelper::hasAccess([39], $configs) && in_array('sms', $active_response))
 							<h4>SMS</h4>
 							<div class="form-group" >
