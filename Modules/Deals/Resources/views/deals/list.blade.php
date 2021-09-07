@@ -240,7 +240,7 @@ $grantedFeature     = session('granted_features');
                                 <td class="middle-center">
 	                                @if ( empty($value['step_complete']) )
 	                                    <a href="{{url('deals/step2', $value['id_deals'])??'#'}}"><span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #F4D03F;padding: 5px 12px;color: #fff;">Not Complete</span></a>
-	                                @elseif( !empty($date_end) && $date_end < $now )
+	                                @elseif( (!empty($date_end) && $date_end < $now) || (!empty($value['deals_voucher_expired']) && $value['deals_voucher_expired'] < $now))
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #ACB5C3;padding: 5px 12px;color: #fff;">Ended</span>
 	                                @elseif( empty($date_start) || $date_start <= $now )
 	                                    <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Started</span>

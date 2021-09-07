@@ -215,6 +215,13 @@ class AutocrmController extends Controller
             ['value' => 'Home','title' => 'Home']
         ];
 
+        if($auto == null) return back()->withErrors(['No such response']);
+        $data['data'] = $auto;
+        if($test['status'] == 'success'){
+            $data['textreplaces'] = $test['result'];
+            $data['subject'] = $subject;
+        }
+
         switch ($subject) {
         	case 'receive-quest-point':
                 $data['click_inbox'] = [
@@ -246,18 +253,22 @@ class AutocrmController extends Controller
                     ['value' => "Quest",'title' => 'Quest']
                 ];
             	break;
-
+            case 'quest-voucher-ended':
+                $data['click_inbox'] = [
+                    ['value' => "Voucher Quest",'title' => 'Voucher'],
+                    ['value' => "Quest",'title' => 'Quest']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher Quest','title' => 'Voucher'],
+                    ['value' => "Quest",'title' => 'Quest']
+                ];
+                $data['active_response'] = ['push', 'inbox', 'forward'];
+                $data['textreplaces'] = [];
+                break;
         	default:
         		# code...
         		break;
         }
-
-		if($auto == null) return back()->withErrors(['No such response']);
-		$data['data'] = $auto;
-		if($test['status'] == 'success'){
-			$data['textreplaces'] = $test['result'];
-			$data['subject'] = $subject;
-		}
 
 		$getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
 		if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
