@@ -1837,6 +1837,7 @@ class TransactionController extends Controller
         foreach ($request->delivery as $code => $val) {
             $delivery[] = [
                 'code' => $code,
+                'delivery_name' => $val['delivery_name']??"",
                 'show_status' => $val['show_status']??0,
                 'available_status' => $val['available_status']??0,
                 'description' => $val['description']??""

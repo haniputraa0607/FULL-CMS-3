@@ -117,7 +117,8 @@
                             <td class="sortable-handle"><i class="fa fa-ellipsis-h" style="transform: rotate(90deg);"></i></td>
                             <td>{{$val['code']}}</td>
                             <td>{{ucfirst($val['delivery_method'])}}</td>
-                            <td>{{$val['delivery_name']}}</td>
+                            <td>
+                            <textarea name="delivery[{{$val['code']}}][delivery_name]" class="form-control">{{$val['delivery_name']}}</textarea>
                             <td>
                                 <textarea name="delivery[{{$val['code']}}][description]" class="form-control">{{$val['description']}}</textarea>
                             </td>
