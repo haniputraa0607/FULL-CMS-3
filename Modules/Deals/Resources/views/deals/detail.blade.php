@@ -5,6 +5,8 @@
         $rpage = 'promotion/deals';
 	}elseif($deals_type == 'WelcomeVoucher'){
         $rpage = 'welcome-voucher';
+    }elseif($deals_type == 'Quest'){
+        $rpage = 'quest-voucher';
     }else{
         $rpage = $deals_type=='Deals'?'deals':'inject-voucher';
     }

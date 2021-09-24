@@ -181,7 +181,8 @@ $grantedFeature     = session('granted_features');
                 @if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
                 (MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
                 (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
-                (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
+                (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden') ||
+                (MyHelper::hasAccess([309], $grantedFeature) && $deals_type == 'Quest'))
                 <div class="row static-info text-center">
                     <div class="col-md-11 value">
                         <a class="btn blue" href="{{ url('/'.$rpage)}}/step1/{{$deals['id_deals']}}">Edit Detail</a>
@@ -225,7 +226,8 @@ $grantedFeature     = session('granted_features');
                         @if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
                         (MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
                         (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
-                        (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
+                        (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden')||
+                        (MyHelper::hasAccess([309], $grantedFeature) && $deals_type == 'Quest'))
                         <div class="row static-info">
                             <div class="col-md-11 value">
                                 <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
@@ -637,7 +639,8 @@ $grantedFeature     = session('granted_features');
                     @if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
                     (MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
                     (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
-                    (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
+                    (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden')||
+                    (MyHelper::hasAccess([309], $grantedFeature) && $deals_type == 'Quest'))
                     <div class="row static-info">
                         <div class="col-md-11 value">
                             <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Edit Rule</a>
@@ -652,7 +655,8 @@ $grantedFeature     = session('granted_features');
                 @if((MyHelper::hasAccess([112], $grantedFeature) && $deals_type == 'Promotion') ||
                     (MyHelper::hasAccess([75], $grantedFeature) && $deals_type == 'Deals') ||
                     (MyHelper::hasAccess([190], $grantedFeature) && $deals_type == 'WelcomeVoucher') ||
-                    (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden'))
+                    (MyHelper::hasAccess([80], $grantedFeature) && $deals_type == 'Hidden')||
+                    (MyHelper::hasAccess([309], $grantedFeature) && $deals_type == 'Quest'))
                 <div class="row static-info">
                     <div class="col-md-11 value">
                         <a class="btn blue" href="{{ url('/'.$rpage)}}/step2/{{$deals['id_deals']}}">Create Rule</a>
