@@ -60,6 +60,9 @@
         .select2-container {
             width: 100% !important;
         }
+        .tooltip {
+            z-index: 100000000; 
+        }
 	</style>
 @endsection
 

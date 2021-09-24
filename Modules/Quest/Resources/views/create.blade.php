@@ -36,7 +36,7 @@
                                 <label class="col-md-3 control-label">
                                     Name
                                     <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Nama rule quest" data-container="body"></i>
                                 </label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" name="detail[${counter_rule}][name]" placeholder="Detail Quest" required maxlength="40" value="">
@@ -58,7 +58,12 @@
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
                                     Total Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select quest rule" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="Syarat penyelesaian quest secara global.<br/>
+                                            <b>Transaction Nominal</b>: Total Nominal transaksi<br/>
+                                            <b>Transaction Total</b>: Jumlah melakukan transaksi<br/>
+                                            <b>Total Product</b>: Total produk yang dibeli<br/>
+                                            <b>Outlet Different</b>: Transaksi di beberapa outlet<br/>
+                                            <b>Province Different</b>: Transaksi di beberapa provinsi<br/>" data-container="body"></i>
                                     </label>
                                 </div>
                                 <div class="col-md-4">
@@ -80,7 +85,11 @@
                                 <label class="col-md-3 control-label">
                                     Additional Rule
                                     <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="Syarat tambahan penyelesaian quest untuk setiap transaksinya.<br/>
+                                            <b>Transaction</b>: Nominal minimal setiap transaksi<br/>
+                                            <b>Product</b>: Jumlah melakukan transaksi<br/>
+                                            <b>Additional</b>: Outlet / Provinsi dilakukannya transaksi<br/>
+                                    " data-container="body"></i>
                                 </label>
                                 <div class="col-md-9">
                                     <div class="mt-checkbox-inline">
@@ -103,7 +112,7 @@
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
                                     Transaction Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal nominal transaksi" data-container="body"></i>
                                     </label>
                                 </div>
                                 <div class="col-md-4">
@@ -112,7 +121,7 @@
                                             <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[${counter_rule}][trx_nominal]" placeholder="Transaction Nominal">
                                             <span class="input-group-btn">
                                                 <button class="btn default" type="button">
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk yang harus dibeli" data-container="body"></i>
                                                 </button>
                                             </span>
                                         </div>
@@ -124,7 +133,7 @@
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
                                         Product Rule
-                                        <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Produk yang harus dibeli" data-container="body"></i>
                                         </label>
                                     </div>
                                     <div class="col-md-4">
@@ -143,7 +152,7 @@
                                                 <input type="text" class="form-control total_product product_total_rule" name="detail[${counter_rule}][product_total]" placeholder="Total Product">
                                                 <span class="input-group-btn">
                                                     <button class="btn default" type="button">
-                                                        <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                                        <i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk yang harus dibeli" data-container="body"></i>
                                                     </button>
                                                 </span>
                                             </div>
@@ -154,7 +163,7 @@
                                     <div class="input-icon right">
                                         <label class="col-md-3 control-label">
                                         Product Variant Rule
-                                        <i class="fa fa-question-circle tooltips" data-original-title="Select a product variant. leave blank, if the quest is not based on the product variant" data-container="body"></i>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Produk varian yang harus dibeli" data-container="body"></i>
                                         </label>
                                     </div>
                                     <div class="col-4">
@@ -178,7 +187,7 @@
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
                                     Additional Rule
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Outlet/provinsi tempat transaksi" data-container="body"></i>
                                     </label>
                                 </div>
                                 <div class="col-md-4">
@@ -225,7 +234,7 @@
                                 <label class="col-md-3 control-label">
                                     Transaction Nominal
                                     <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Transaction Nominal" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah nominal transaksi untuk menyelesaikan quest" data-container="body"></i>
                                 </label>
                                 <div class="col-md-8">
                                     <div class="input-icon right">
@@ -237,7 +246,7 @@
                                 <label class="col-md-3 control-label">
                                     Transaction Total
                                     <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Transaction Total" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah transaksi untuk menyelesaikan quest" data-container="body"></i>
                                 </label>
                                 <div class="col-md-8">
                                     <div class="input-icon right">
@@ -249,7 +258,7 @@
                                 <label class="col-md-3 control-label">
                                     Product Total
                                     <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Product Total" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk yang harus dibeli untuk menyelesaikan quest" data-container="body"></i>
                                 </label>
                                 <div class="col-md-8">
                                     <div class="input-icon right">
@@ -261,7 +270,7 @@
                                 <label class="col-md-3 control-label">
                                     Outlet Total
                                     <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Outlet Total" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah outlet tempat transaksi untuk menyelesaikan quest" data-container="body"></i>
                                 </label>
                                 <div class="col-md-8">
                                     <div class="input-icon right">
@@ -273,7 +282,7 @@
                                 <label class="col-md-3 control-label">
                                     Province Total
                                     <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Province Total" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah provinsi tempat transaksi untuk menyelesaikan quest" data-container="body"></i>
                                 </label>
                                 <div class="col-md-8">
                                     <div class="input-icon right">
@@ -948,10 +957,10 @@
                                                 <label class="col-md-3 control-label">
                                                     Name
                                                     <span class="required" aria-required="true"> * </span>
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Nama rule quest" data-container="body"></i>
                                                 </label>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" name="detail[{{$index}}][name]" placeholder="Detail Quest" required maxlength="40" value="{{$detail['name'] ?? ''}}">
+                                                    <input type="text" class="form-control" name="detail[{{$index}}][name]" placeholder="Detail Quest Name" required maxlength="40" value="{{$detail['name'] ?? ''}}">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -970,7 +979,12 @@
                                                 <div class="input-icon right">
                                                     <label class="col-md-3 control-label">
                                                     Total Rule
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Select quest rule" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips"  data-html="true" data-original-title="Syarat penyelesaian quest secara global.<br/>
+                                            <b>Transaction Nominal</b>: Total Nominal transaksi<br/>
+                                            <b>Transaction Total</b>: Jumlah melakukan transaksi<br/>
+                                            <b>Total Product</b>: Total produk yang dibeli<br/>
+                                            <b>Outlet Different</b>: Transaksi di beberapa outlet<br/>
+                                            <b>Province Different</b>: Transaksi di beberapa provinsi<br/>" data-container="body"></i>
                                                     </label>
                                                 </div>
                                                 <div class="col-md-4">
@@ -992,7 +1006,11 @@
                                                 <label class="col-md-3 control-label">
                                                     Additional Rule
                                                     <span class="required" aria-required="true"> * </span>
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Detail Quest Name" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-html="true" data-original-title="Syarat tambahan penyelesaian quest untuk setiap transaksinya.<br/>
+                                                            <b>Transaction</b>: Nominal minimal setiap transaksi<br/>
+                                                            <b>Product</b>: Jumlah melakukan transaksi<br/>
+                                                            <b>Additional</b>: Outlet / Provinsi dilakukannya transaksi<br/>
+                                                    " data-container="body"></i>
                                                 </label>
                                                 <div class="col-md-9">
                                                     <div class="mt-checkbox-inline">
@@ -1015,7 +1033,7 @@
                                                 <div class="input-icon right">
                                                     <label class="col-md-3 control-label">
                                                     Transaction Rule
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input transaction rule. leave blank, if the quest is not based on the transaction" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah minimal nominal transaksi" data-container="body"></i>
                                                     </label>
                                                 </div>
                                                 <div class="col-md-4">
@@ -1024,7 +1042,7 @@
                                                             <input type="text" class="form-control digit_mask nominal_transaksi" name="detail[{{$index}}][trx_nominal]" placeholder="Transaction Nominal" value="{{$detail['trx_nominal'] ?? ''}}">
                                                             <span class="input-group-btn">
                                                                 <button class="btn default" type="button">
-                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk yang harus dibeli" data-container="body"></i>
                                                                 </button>
                                                             </span>
                                                         </div>
@@ -1036,7 +1054,7 @@
                                                     <div class="input-icon right">
                                                         <label class="col-md-3 control-label">
                                                         Product Rule
-                                                        <i class="fa fa-question-circle tooltips" data-original-title="Select a product. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                                        <i class="fa fa-question-circle tooltips" data-original-title="Produk yang harus dibeli" data-container="body"></i>
                                                         </label>
                                                     </div>
                                                     <div class="col-md-4">
@@ -1055,7 +1073,7 @@
                                                                 <input type="text" class="form-control total_product product_total_rule" name="detail[{{$index}}][product_total]" placeholder="Total Product" value="{{$detail['product_total'] ?? ''}}">
                                                                 <span class="input-group-btn">
                                                                     <button class="btn default" type="button">
-                                                                        <i class="fa fa-question-circle tooltips" data-original-title="Input total product, if quest reward by product" data-container="body"></i>
+                                                                        <i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk yang harus dibeli" data-container="body"></i>
                                                                     </button>
                                                                 </span>
                                                             </div>
@@ -1066,7 +1084,7 @@
                                                     <div class="input-icon right">
                                                         <label class="col-md-3 control-label">
                                                         Product Variant Rule
-                                                        <i class="fa fa-question-circle tooltips" data-original-title="Select a product variant. leave blank, if the quest is not based on the product variant" data-container="body"></i>
+                                                        <i class="fa fa-question-circle tooltips" data-original-title="Produk variant yang harus dibeli" data-container="body"></i>
                                                         </label>
                                                     </div>
                                                     <div class="col-4">
@@ -1090,7 +1108,7 @@
                                                 <div class="input-icon right">
                                                     <label class="col-md-3 control-label">
                                                     Additional Rule
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Select a outlet. leave blank, if the quest is not based on the product" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Outlet tempat transaksi" data-container="body"></i>
                                                     </label>
                                                 </div>
                                                 <div class="col-md-4">
@@ -1104,7 +1122,7 @@
                                                 </div>
                                                 <div class="col-md-4 select_province">
                                                     <div class="input-icon right">
-                                                        <select class="form-control select2 id_province province_total_rule" data-placeholder="Select Province" name="detail[{{$index}}][id_province]">
+                                                        <select class="form-control select2 id_province province_total_rule" data-placeholder="Provinsi tempat transaksi" name="detail[{{$index}}][id_province]">
                                                             <option></option>
                                                             @foreach ($province as $item)
                                                                 <option value="{{$item['id_province']}}" {{($detail['id_province'] ?? '') == $item['id_province'] ? 'selected': ''}}>{{$item['province_name']}}</option>
@@ -1137,7 +1155,7 @@
                                                 <label class="col-md-3 control-label">
                                                     Transaction Nominal
                                                     <span class="required" aria-required="true"> * </span>
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Transaction Nominal" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Nominal transaksi untuk menyelesaikan quest" data-container="body"></i>
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
@@ -1149,7 +1167,7 @@
                                                 <label class="col-md-3 control-label">
                                                     Transaction Total
                                                     <span class="required" aria-required="true"> * </span>
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Transaction Total" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah transaksi untuk menyelesaikan quest" data-container="body"></i>
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
@@ -1161,7 +1179,7 @@
                                                 <label class="col-md-3 control-label">
                                                     Product Total
                                                     <span class="required" aria-required="true"> * </span>
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Product Total" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah produk yang harus dibeli untuk menyelesaikan quest" data-container="body"></i>
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
@@ -1173,7 +1191,7 @@
                                                 <label class="col-md-3 control-label">
                                                     Outlet Total
                                                     <span class="required" aria-required="true"> * </span>
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Outlet Total" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah outlet tempat transaksi untuk menyelesaikan quest" data-container="body"></i>
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
@@ -1185,7 +1203,7 @@
                                                 <label class="col-md-3 control-label">
                                                     Province Total
                                                     <span class="required" aria-required="true"> * </span>
-                                                    <i class="fa fa-question-circle tooltips" data-original-title="Province Total" data-container="body"></i>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Jumlah provinsi tempat transaksi untuk menyelesaikan quest" data-container="body"></i>
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon right">
