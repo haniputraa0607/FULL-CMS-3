@@ -111,7 +111,8 @@
 			var operator_value = document.getElementsByName(operator)[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			operator_value.options[operator_value.options.length] = new Option('Pickup Order', 'Customer');
-			operator_value.options[operator_value.options.length] = new Option('Delivery', 'GO-SEND');
+			operator_value.options[operator_value.options.length] = new Option('Delivery GO-SEND', 'GO-SEND');
+			operator_value.options[operator_value.options.length] = new Option('Delivery WeHelpYou', 'Wehelpyou');
 			
 			var parameter = "conditions["+index+"][parameter]";
 			document.getElementsByName(parameter)[0].type = 'hidden';
@@ -239,7 +240,8 @@
 												<option value="reject_at" @if ($con['operator'] == 'reject_at') selected @endif>Reject</option>
 											@elseif ($con['subject'] == 'pickup_by')
 												<option value="Customer" @if ($con['operator'] == 'Customer') selected @endif>Pickup Order</option>
-												<option value="GO-SEND" @if ($con['operator'] == 'GO-SEND') selected @endif>Delivery</option>
+												<option value="GO-SEND" @if ($con['operator'] == 'GO-SEND') selected @endif>Delivery GO-SEND</option>
+												<option value="Wehelpyou" @if ($con['operator'] == 'Wehelpyou') selected @endif>Delivery Wehelpyou</option>
 											@elseif ($con['subject'] == 'courier')
 												<option value="psc" @if ($con['operator'] == 'psc') selected @endif>psc</option>
 												<option value="jne" @if ($con['operator'] == 'jne') selected @endif>jne</option>
@@ -331,7 +333,7 @@
 									</div>
 									<div class="col-md-4">
 									<select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" onChange="changeSubject(this.name)" style="width:100%">
-										<option value="=" selected>=</option>ororororor
+										<option value="=" selected>=</option>
 										<option value="like">Like</option>
 									</select>
 									</div>
