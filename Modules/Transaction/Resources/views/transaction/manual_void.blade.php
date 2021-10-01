@@ -161,7 +161,7 @@
                     data: 'transaction_receipt_number',
                     render: function(value, type, row) {
                     	let tooltipTemplate = '<i class="fa fa-question-circle tooltips" data-original-title="%tooltip_text%" data-container="body"></i>';
-                    	let tooltipRetry = tooltipTemplate.replace('%tooltip_text%', 'Mengirim ulang permintaan refund ke payment gateway, hanya tersedia untuk beberapa payment gateway yang mendukung (shopeepay, midtrans)');
+                    	let tooltipRetry = tooltipTemplate.replace('%tooltip_text%', 'Mengirim ulang permintaan refund ke payment gateway, hanya tersedia untuk beberapa payment gateway yang mendukung (shopeepay, midtrans) dapat dilakukan hingga H+365');
                     	let tooltipConfirmProcess = tooltipTemplate.replace('%tooltip_text%', 'Konfirmasi refund yang dilakukan secara manual diluar sistem. ketika diklik akan muncul popup berisi form yang perlu diisi');
                     	let tooltipDetailTransaction = tooltipTemplate.replace('%tooltip_text%', 'Halaman detail transaksi');
                     	let tooltipDetailRefund = tooltipTemplate.replace('%tooltip_text%', 'Detail dari hasil pengisian form confirm process');
