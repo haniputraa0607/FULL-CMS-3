@@ -601,6 +601,9 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 				@else
 					Auto Response {{str_replace('_','-',str_replace('-',' ',$subject))}}
 				@endif
+				@if($forwardOnly??false)
+				<i class="fa fa-question-circle tooltips" data-original-title="Email yang akan dikirimkan ke admin saat ada tindakan {{str_replace('_','-',str_replace('-',' ',$subject))}}" data-container="body"></i>
+				@endif
 			</span>
 		</div>
 	</div>
