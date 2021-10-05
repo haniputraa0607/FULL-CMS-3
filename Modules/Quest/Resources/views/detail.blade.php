@@ -1031,7 +1031,7 @@
                             </form>
                         @endif
                     @endif
-                    @if($data['quest']['autoclaim_quest'] && $data['quest']['is_complete'])
+                    @if($data['quest']['autoclaim_quest'] && $data['quest']['is_complete'] && $data['quest']['publish_end'] >= date('Y-m-d H:i:s') && !$data['quest']['stop_at'])
                     <a href="{{url('quest/detail/' . $data['quest']['id_quest'] . '/reclaim')}}" style="float: right; margin-left: 5px;" class="btn btn-warning">Retry autoclaim</a>
                     @endif
                     <a href="{{url('quest/report/detail/'.$data['quest']['id_quest_encripted'])}}" style="float: right; " class="btn btn-info">Report Detail Quest</a>
