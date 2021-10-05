@@ -317,4 +317,13 @@ class QuestController extends Controller
         }
         return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
     }
+
+    public function reclaim(Request $request, $slug)
+    {
+        $result = MyHelper::post('quest/trigger-manual-autoclaim', ['id_quest' => $slug]);
+        if (($result['status'] ?? false) == 'success') {
+            return redirect('quest/detail/'.$slug)->withSuccess($result['messages'] ?? ['Success']);
+        }
+        return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
+    }
 }
