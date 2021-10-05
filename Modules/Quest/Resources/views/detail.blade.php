@@ -1031,6 +1031,9 @@
                             </form>
                         @endif
                     @endif
+                    @if($data['quest']['autoclaim_quest'] && $data['quest']['is_complete'])
+                    <a href="{{url('quest/detail/' . $data['quest']['id_quest'] . '/reclaim')}}" style="float: right; margin-left: 5px;" class="btn btn-info">Retry autoclaim</a>
+                    @endif
                     <a href="{{url('quest/report/detail/'.$data['quest']['id_quest_encripted'])}}" style="float: right; " class="btn btn-info">Report Detail Quest</a>
                     <ul class="nav nav-tabs">
                         <li class="active">
