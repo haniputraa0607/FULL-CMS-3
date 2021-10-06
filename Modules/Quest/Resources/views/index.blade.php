@@ -218,7 +218,7 @@ $grantedFeature     = session('granted_features');
                         return `
                             <a href="{{url('quest/detail')}}/${value}" class="btn blue btn-sm" style="margin-bottom:5px">Detail</a>
                             @if(MyHelper::hasAccess([225], $grantedFeature))
-                            <a href="javascript:;" onclick="removeQuest(this, ${value})" class="btn red btn-sm"> Remove </a>
+                            ${row.is_complete ? '' : `<a href="javascript:;" onclick="removeQuest(this, ${value})" class="btn red btn-sm"> Remove </a>`}
                             @endif
                         `;
                     },
