@@ -141,7 +141,7 @@
                                             <select class="form-control select2 id_product" data-placeholder="Select Product" name="detail[${counter_rule}][id_product]">
                                                 <option></option>
                                                 @foreach ($product as $item)
-                                                    <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
+                                                    <option value="{{$item['id_product']}}">{{$item['product_code'] ?? ''}} - {{$item['product_name']}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -1062,7 +1062,7 @@
                                                             <select class="form-control select2 id_product" data-placeholder="Select Product" name="detail[{{$index}}][id_product]">
                                                                 <option></option>
                                                                 @foreach ($product as $item)
-                                                                    <option value="{{$item['id_product']}}" {{($detail['id_product'] ?? '') == $item['id_product'] ? 'selected': ''}}>{{$item['product_name']}}</option>
+                                                                    <option value="{{$item['id_product']}}" {{($detail['id_product'] ?? '') == $item['id_product'] ? 'selected': ''}}>{{$item['product_code'] ?? ''}} - {{$item['product_name']}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
