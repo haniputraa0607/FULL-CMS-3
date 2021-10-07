@@ -737,7 +737,7 @@ $show=$show??false;
 			<?php
 					foreach($quest??[] as $row){
 					?>
-					operator_value.options[operator_value.options.length] = new Option('<?php echo $row['name']; ?>', '<?php echo $row['id_quest']; ?>');
+					operator_value.options[operator_value.options.length] = new Option('<?php echo addslashes($row['name']); ?>', '<?php echo $row['id_quest']; ?>');
 					<?php
 					}
 					?>
