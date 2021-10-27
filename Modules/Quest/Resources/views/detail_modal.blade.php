@@ -117,7 +117,7 @@
                                                         <select class="form-control select2 id_product" data-placeholder="Select Product" name="detail[0][id_product]">
                                                             <option></option>
                                                             @foreach ($product as $item)
-                                                                <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
+                                                                <option value="{{$item['id_product']}}">{{$item['product_code'] ?? ''}} - {{$item['product_name']}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -413,7 +413,7 @@
                                                 <select class="form-control select2 id_product" data-placeholder="Select Product" name="id_product">
                                                     <option></option>
                                                     @foreach ($product as $item)
-                                                        <option value="{{$item['id_product']}}">{{$item['product_name']}}</option>
+                                                        <option value="{{$item['id_product']}}">{{$item['product_code'] ?? ''}} - {{$item['product_name']}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
