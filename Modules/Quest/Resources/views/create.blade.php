@@ -904,7 +904,7 @@
                                 <option></option>
                                 @foreach($deals as $deal)
                                     @if($deal['deals_total_voucher'] > $deal['deals_total_claimed'] || $deal['deals_voucher_type'] == 'Unlimited')
-                                        <option value="{{$deal['id_deals']}}" {{old('quest_benefit.id_deals') == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}}</option>
+                                        <option value="{{$deal['id_deals']}}" {{old('quest_benefit.id_deals') == $deal['id_deals'] ? 'selected' : ''}}>{{$deal['deals_title']}} ({{($deal['deals_voucher_expired'] ?? null) ? date('d F Y H:i', strtotime($deal['deals_voucher_expired'])) : ($deal['deals_voucher_duration'] ?? '-') . ' days'}})</option>
                                     @endif
                                 @endforeach
                             </select>
