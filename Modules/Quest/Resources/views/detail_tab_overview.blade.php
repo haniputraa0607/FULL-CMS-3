@@ -192,7 +192,7 @@
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
                                                 <span class="sale-num font-black">
-                                                    {{$data['quest']['quest_benefit']['deals']['deals_title']}}
+                                                    {{$data['quest']['quest_benefit']['deals']['deals_title']}} ({{$data['quest']['quest_benefit']['deals']['deals_voucher_expired'] ? date('d F Y H:i', strtotime($data['quest']['quest_benefit']['deals']['deals_voucher_expired'])) : ($data['quest']['quest_benefit']['deals']['deals_voucher_duration'] ?? null) . ' days'}})
                                                 </span>
                                             </li>
                                             @else
