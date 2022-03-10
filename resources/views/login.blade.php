@@ -95,7 +95,7 @@
             <!-- END LOGIN FORM -->
 
         </div>
-        <div class="copyright" style="color: #fff"> Copyright © 2019 Technopartner Indonesia</div>
+        <div class="copyright" style="color: #fff"> Copyright © 2022 Technopartner Indonesia</div>
         <!--[if lt IE 9]>
 <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/respond.min.js')}}"></script>
 <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/excanvas.min.js')}}"></script>
