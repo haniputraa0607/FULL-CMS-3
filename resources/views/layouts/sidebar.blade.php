@@ -136,7 +136,7 @@
 			</li>
 
 			@if(MyHelper::hasAccess([5], $configs))
-			@if(MyHelper::hasAccess([9], $grantedFeature))
+			@if(MyHelper::hasAccess([9], $grantedFeature) && false)
 			<li class="nav-item {{($menu_active == 'admin-outlet') ? 'active open' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
 					<i class="icon-eye"></i>
@@ -177,12 +177,12 @@
 		@endif
 
 		@if($level == "Super Admin")
-		<li class="nav-item {{($menu_active == 'expired-qrcode') ? 'active' : ''}}">
+{{-- 		<li class="nav-item {{($menu_active == 'expired-qrcode') ? 'active' : ''}}">
 			<a href="{{url('setting/qrcode_expired')}}" class="nav-link">
 				<i class="fa fa-qrcode"></i>
 				<span class="title">Setting Expired QR Code</span>
 			</a>
-		</li>
+		</li> --}}
 
 		<li class="nav-item {{($menu_active == 'count-login-failed') ? 'active' : ''}}">
 			<a href="{{url('setting/count_login_failed')}}" class="nav-link">
@@ -674,7 +674,7 @@
 			</li>
 			@endif
 
-			@if(MyHelper::hasAccess([48,49,50,51,52], $grantedFeature))
+			@if(MyHelper::hasAccess([48,49,50,51,52], $grantedFeature) && false)
 				<li class="nav-item {{($menu_active == 'product-plastic') ? 'active' : ''}}">
 					<a href="javascript:;" class="nav-link nav-toggle">
 						<i class="icon-wallet"></i>
@@ -766,7 +766,7 @@
 				</li>
 			@endif
 
-			@if(MyHelper::hasAccess([91], $configs)&&MyHelper::hasAccess([180,181,182,183,184,185,186], $grantedFeature))
+			@if(MyHelper::hasAccess([91], $configs)&&MyHelper::hasAccess([180,181,182,183,184,185,186], $grantedFeature) && false)
 			<li class="nav-item {{($menu_active == 'product-modifier') ? 'active' : ''}}">
 				<a href="javascript:;" class="nav-link nav-toggle">
 					<i class="fa fa-puzzle-piece"></i>
@@ -980,7 +980,7 @@
 
 		@endif
 
-		@if(MyHelper::hasAccess([58,59,60,61,62,63,64,66,69,71,299], $grantedFeature))
+		@if(MyHelper::hasAccess([58,59,60,61,62,63,64,66,69,71,299], $grantedFeature) && false)
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #d2ac67;font-weight: 600;">Order</h3>
 			</li>
@@ -1517,7 +1517,7 @@
 			@endif
 		@endif
 
-		@if(MyHelper::hasAccess([274,275,276], $grantedFeature))
+		@if(MyHelper::hasAccess([274,275,276], $grantedFeature) && false)
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #d2ac67;font-weight: 600;">Invalid Transaction</h3>
 			</li>
@@ -1559,7 +1559,7 @@
 			@endif
 		@endif
 
-		@if(MyHelper::hasAccess([25], $configs) || MyHelper::hasAccess([26], $configs))
+		@if((MyHelper::hasAccess([25], $configs) || MyHelper::hasAccess([26], $configs)) && false)
 			@if(MyHelper::hasAccess([72,73,74,75,76,77,78,79,80,81,97], $grantedFeature))
 				<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 					<h3 class="uppercase" style="color: #d2ac67;font-weight: 600;">Promo</h3>
@@ -2281,7 +2281,7 @@
 				</li>
 			@endif
 
-		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature))
+		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature) && false)
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #d2ac67;font-weight: 600;">CRM</h3>
 			</li>
@@ -2619,7 +2619,7 @@
 			</li>
 		@endif
 
-		@if(MyHelper::hasAccess([273], $grantedFeature))
+		@if(MyHelper::hasAccess([273], $grantedFeature) && false)
 			<li class="nav-item {{($menu_active == 'setting-outlet-apps') ? 'active' : ''}}">
 				<a href="{{url('setting/outletapp')}}" class="nav-link">
 					<i class="fa fa-tablet"></i>
@@ -2924,7 +2924,7 @@
 			@endif -->
 		@endif
 
-		@if(MyHelper::hasAccess([234], $grantedFeature))
+		@if(MyHelper::hasAccess([234], $grantedFeature) && false)
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #d2ac67;font-weight: 600;">Disburse</h3>
 			</li>
@@ -3010,7 +3010,7 @@
 				</li>
 			@endif
 		@endif
-		@if(MyHelper::hasAccess([125,126,127,128,129,271], $grantedFeature))
+		@if(MyHelper::hasAccess([125,126,127,128,129,271], $grantedFeature) && false)
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #d2ac67;font-weight: 600;">Report</h3>
 			</li>
