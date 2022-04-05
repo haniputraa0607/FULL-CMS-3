@@ -48,9 +48,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 */
 	Route::group(['prefix' => 'category'], function() {
     	Route::get('/', ['middleware' => 'feature_control:43', 'uses' => 'CategoryController@categoryList']);
-    	Route::any('edit/{id}', ['middleware' => 'feature_control:44', 'uses' => 'CategoryController@update']);
-    	Route::any('create', ['middleware' => 'feature_control:45', 'uses' => 'CategoryController@create']);
-    	Route::post('delete', ['middleware' => 'feature_control:47', 'uses' => 'CategoryController@delete']);
+    	Route::get('edit/{id}', ['middleware' => 'feature_control:44', 'uses' => 'CategoryController@edit']);
+        Route::post('update/{id}', ['middleware' => 'feature_control:44', 'uses' => 'CategoryController@update']);
+    	Route::any('create', ['middleware' => 'feature_control:45', 'uses' => 'CategoryController@store']);
+    	Route::post('delete/{id}', ['middleware' => 'feature_control:47', 'uses' => 'CategoryController@delete']);
 		/* position/ order */
 		Route::post('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'CategoryController@positionCategoryAssign']);
 	});

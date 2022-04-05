@@ -538,14 +538,7 @@
 					<span class="arrow {{($menu_active == 'product') ? 'open' : ''}}"></span>
 				</a>
 				<ul class="sub-menu">
-					@if(MyHelper::hasAccess([45], $grantedFeature))
-					<li class="nav-item {{($submenu_active == 'product-category-new') ? 'active open' : ''}}">
-						<a href="{{url('product/category/create')}}" class="nav-link ">
-							<span class="title">New Category</span>
-						</a>
-					</li>
-					@endif
-					@if(MyHelper::hasAccess([43], $grantedFeature))
+					@if(MyHelper::hasAccess([45,43], $grantedFeature))
 					<li class="nav-item {{($submenu_active == 'product-category-list') ? 'active open' : ''}}">
 						<a href="{{url('product/category')}}" class="nav-link ">
 							<span class="title">Category List</span>
