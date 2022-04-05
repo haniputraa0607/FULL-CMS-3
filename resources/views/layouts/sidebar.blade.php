@@ -68,11 +68,6 @@
 										<span class="title">[Response] Pin Sent</span>
 									</a>
 								</li>
-								<li class="nav-item {{($submenu_active == 'user-autoresponse-pin-create') ? 'active open' : ''}}">
-									<a href="{{url('user/autoresponse/pin-create')}}" class="nav-link ">
-										<span class="title">[Response] Pin Create</span>
-									</a>
-								</li>
 							@endif
 							@if(MyHelper::hasAccess([42], $configs))
 								<li class="nav-item {{($submenu_active == 'user-autoresponse-pin-verify') ? 'active open' : ''}}">
