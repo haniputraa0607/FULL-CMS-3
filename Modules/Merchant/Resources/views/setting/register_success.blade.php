@@ -1,4 +1,4 @@
-@extends('layouts.main-closed')
+@extends('layouts.main')
 
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
