@@ -2,184 +2,124 @@
 
 namespace Modules\Product\Http\Controllers;
 
+use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-// use Illuminate\Routing\Controller;
-use App\Http\Controllers\Controller;
-
-use App\Lib\MyHelper;
+use Illuminate\Routing\Controller;
 
 class CategoryController extends Controller
 {
-    function __construct() {
-        date_default_timezone_set('Asia/Jakarta');
-    }
-
     /**
-     * create category
+     * Display a listing of the resource.
+     * @return Response
      */
-    function create(Request $request) {
-        
-        $post = $request->except('_token');
-
-        if (empty($post)) {
-            $data = [
-                'title'          => 'Product',
-                'sub_title'      => 'New Category',
-                'menu_active'    => 'product',
-                'submenu_active' => 'product-category-new',
-            ];
-
-            /**
-             * category parent
-             */
-            $catParent = MyHelper::post('product/category/be/list', ['id_parent_category' => 0]);
-
-            if (isset($catParent['status']) && $catParent['status'] == "success") {
-                $data['parent'] = $catParent['result'];
-            }
-            else {
-                $data['parent'] = [];
-            }
-
-            return view('product::category.create',$data);
-        }
-        else {
-
-            if (isset($post['id_parent_category']) && $post['id_parent_category'] == 0) {
-                unset($post['id_parent_category']);
-            }
-
-            if (isset($post['product_category_photo']) && !empty($post['product_category_photo'])) {
-                $post['product_category_photo'] = MyHelper::encodeImage($post['product_category_photo']);
-            }
-
-            $save = MyHelper::post('product/category/create', $post);
-
-            return parent::redirect($save, 'Category has been created.', 'product/category');
-        }
-    }
-
-    /**
-     * list category
-     */
-    function categoryList(Request $request) {
+    public function categoryList(Request $request)
+    {
         $data = [
-            'title'          => 'Product',
-            'sub_title'      => 'List Category',
+            'title'          => 'Category',
+            'sub_title'      => 'Category List',
             'menu_active'    => 'product',
-            'submenu_active' => 'product-category-list',
+            'submenu_active' => 'product-category-list'
         ];
 
-        /**
-         * category product list
-         */
-        $category = MyHelper::get('product/category/be/list');
-        // print_r($category); exit();
+        $data['get_category'] = MyHelper::post('product/category/be/list',$request->all())['result']??[];
 
-        if (isset($category['status']) && $category['status'] == "success") {
-            $data['category'] = $category['result'];
-        }
-        else {
-            $data['category'] = [];
+        $data['category'] = json_encode([]);
+        if(!empty($data['get_category'])){
+            $data['category'] = json_encode($this->buildTree($data['get_category']));
         }
 
         return view('product::category.list', $data);
     }
 
+    function buildTree(array $elements, $parentId = 0) {
+        $branch = array();
+
+        foreach ($elements as $element) {
+            if ($element['id_parent_category'] == $parentId) {
+                $children = $this->buildTree($elements, $element['id_product_category']);
+                if ($children) {
+                    $element['children'] = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+
+        return $branch;
+    }
+
     /**
-     * category update
+     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return Response
      */
-    function update(Request $request, $id) {
+    public function store(Request $request)
+    {
+        $post = $request->all();
+        $store = MyHelper::post('product/category/create', $post);
+
+        if(($store['status']??'')=='success'){
+            return redirect('product/category')->with('success',['Create Category Success']);
+        }else{
+            return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
         $data = [
-            'title'          => 'Product',
+            'title'          => 'Category',
             'sub_title'      => 'Update Category',
             'menu_active'    => 'product',
-            'submenu_active' => 'product-category-list',
+            'submenu_active' => 'role'
         ];
 
-        /**
-         * category product
-         */
-        $category = MyHelper::post('product/category/be/list', ['id_product_category' => $id]);
+        $post['id_product_category'] = $id;
+        $get_data = MyHelper::post('product/category/edit', $post);
 
-        if (isset($category['status']) && $category['status'] == "success") {
-            $data['category'] = $category['result'];
-        }
-        else {
-            $e = ['e' => 'Data category not found.'];
-            return back()->witherrors($e);
+        $data['all_parent'] = [];
+        $data['category'] = [];
+        if(($get_data['status']??'')=='success'){
+            $data['all_parent'] = $get_data['result']['all_parent'];
+            $data['category'] = $get_data['result']['category'];
         }
 
-        /**
-         * cek pos
-         */
-        $post = $request->except('_token');
-
-        if (empty($post)) {
-            /**
-             * category product list
-             */
-            $category = MyHelper::post('product/category/be/list', ['id_parent_category' => 0]);
-
-            if (isset($category['status']) && $category['status'] == "success") {
-                $data['parent'] = $category['result'];
-            }
-            else {
-                $data['parent'] = [];
-            }
-
-            // print_r($data); exit();
-            return view('product::category.update', $data);
-        }
-        else {
-            if (isset($post['id_parent_category']) && $post['id_parent_category'] == 0) {
-                $post['id_parent_category'] = null;
-                // unset($post['id_parent_category']);
-            }
-
-            if (isset($post['product_category_photo']) && !empty($post['product_category_photo'])) {
-                $post['product_category_photo'] = MyHelper::encodeImage($post['product_category_photo']);
-            }
-
-            
-
-            $save = MyHelper::post('product/category/update', $post);
-// print_r($save); exit();
-            return parent::redirect($save, 'Category has been updated.', 'product/category');
-        }
-
+        return view('product::category.update', $data);
     }
 
     /**
-     * category delete
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
-    function delete(Request $request) {
-        $post = $request->except('_token');
+    public function update(Request $request, $id)
+    {
+        $post = $request->all();
+        $post['id_product_category'] = $id;
 
-        $delete = MyHelper::post('product/category/delete', $post);
+        $update = MyHelper::post('product/category/update', $post);
 
-        if (isset($delete['status']) && $delete['status'] == "success") {
-            return "success";
-        }
-        else {
-            return "fail";
+        if(($update['status']??'')=='success'){
+            return redirect('product/category/edit/'.$id)->with('success',['Updated Category Success']);
+        }else{
+            return back()->withInput()->withErrors($update['messages'] ?? ['Something went wrong']);
         }
     }
 
-    // ajax sort category
-    public function positionCategoryAssign(Request $request)
+    /**
+     * Remove the specified resource from storage.
+     * @param int $id
+     * @return Response
+     */
+    public function delete($id)
     {
-        $post = $request->except('_token');
-        if (!isset($post['category_ids'])) {
-            return [
-                'status' => 'fail',
-                'messages' => ['Category id is required']
-            ];
-        }
-
-        $result = MyHelper::post('product/category/position/assign', $post);
-
+        $result = MyHelper::post('product/category/delete', ['id_product_category' => $id]);
         return $result;
     }
 }
