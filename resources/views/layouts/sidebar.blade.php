@@ -2280,6 +2280,29 @@
 					</ul>
 				</li>
 			@endif
+			@if(MyHelper::hasAccess([323, 324, 325, 326, 327], $grantedFeature))
+				<li class="nav-item {{($menu_active == 'merchant') ? 'active' : ''}}">
+					<a href="javascript:;" class="nav-link nav-toggle">
+						<i class="fa fa-university"></i>
+						<span class="title">Merchant</span>
+						<span class="arrow {{($menu_active == 'merchant') ? 'open' : ''}}"></span>
+					</a>
+					<ul class="sub-menu">
+						@if(MyHelper::hasAccess([326], $grantedFeature))
+							<li class="nav-item {{($submenu_active == 'merchant-setting-register-introduction') ? 'active open' : ''}}">
+								<a href="{{url('merchant/setting/register-introduction')}}" class="nav-link ">
+									<span class="title">Setting Register Introduction</span>
+								</a>
+							</li>
+							<li class="nav-item {{($submenu_active == 'merchant-setting-register-success') ? 'active open' : ''}}">
+								<a href="{{url('merchant/setting/register-success')}}" class="nav-link ">
+									<span class="title">Setting Register Success</span>
+								</a>
+							</li>
+						@endif
+					</ul>
+				</li>
+			@endif
 
 		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature) && false)
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
