@@ -2288,6 +2288,31 @@
 								</a>
 							</li>
 						@endif
+						<li class="nav-item {{($submenu_active == 'merchant-list') ? 'active open' : ''}}">
+							<a href="{{url('merchant')}}" class="nav-link ">
+								<span class="title">Merchant List</span>
+							</a>
+						</li>
+						<li class="nav-item {{($submenu_active == 'merchant-candidate') ? 'active open' : ''}}">
+							<a href="{{url('merchant/candidate')}}" class="nav-link ">
+								<span class="title">Merchant Candidate List</span>
+							</a>
+						</li>
+                        <li class="nav-item {{($submenu_active == 'merchant-autoresponse-register-merchant') ? 'active open' : ''}}">
+                            <a href="{{url('autoresponse/merchant/register-merchant')}}" class="nav-link ">
+                                <span class="title">[Response] Register Merchant</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{($submenu_active == 'merchant-autoresponse-approve-merchant') ? 'active open' : ''}}">
+                            <a href="{{url('autoresponse/merchant/approve-merchant')}}" class="nav-link ">
+                                <span class="title">[Response] Approve Merchant</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{($submenu_active == 'merchant-autoresponse-rejected-merchant') ? 'active open' : ''}}">
+                            <a href="{{url('autoresponse/merchant/rejected-merchant')}}" class="nav-link ">
+                                <span class="title">[Response] Rejected Merchant</span>
+                            </a>
+                        </li>
 					</ul>
 				</li>
 			@endif
