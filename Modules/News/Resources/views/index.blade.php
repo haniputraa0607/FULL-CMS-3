@@ -147,7 +147,7 @@
                         <th> No </th>
                         <th> Title </th>
                         <th> Date Publish </th>
-                        <th> Category </th>
+                        <th> Type </th>
                         @if(MyHelper::hasAccess([20,22,23], $grantedFeature))
                             <th> Action </th>
                         @endif
@@ -172,7 +172,7 @@
                                         {{ date('d F Y', strtotime($value['news_publish_date'])) }} - {{ date('d F Y', strtotime($value['news_expired_date'])) }}
                                     @endif
                                 </td>
-                                <td>{{ $value['news_category']['category_name'] }}</td>
+                                <td>{{ ucfirst(str_replace('_', ' ', $value['news_type'])) }}</td>
                                 @if(MyHelper::hasAccess([20,22,23], $grantedFeature))
                                     <td style="width: 125px;">
                                         @if(MyHelper::hasAccess([23], $grantedFeature))

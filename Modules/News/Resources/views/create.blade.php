@@ -223,6 +223,10 @@
         }
 
         $(document).ready(function() {
+            @if(!empty(old('news_type')))
+               var change_type = '{{old('news_type')}}';
+               changeType(change_type);
+            @endif
             token = '<?php echo csrf_token()?>';
 
             $('.summernote').summernote({
@@ -610,6 +614,32 @@
           var id=$(this).data('id');
           video[id]=$(this).val();
         });
+        
+        function changeType(value) {
+            if(value == 'video'){
+                $('.form-show').hide();
+                $('.form-video-show').show();
+                $('#div_link_video').show();
+                $("#link_video").prop('required',true);
+                $("#field_image_landscape").prop('required',false);
+                $("#news_by").prop('required',false);
+                $('.make-switch').bootstrapSwitch('state', false);
+            }else{
+                $('.form-show').show();
+                $('#div_link_video').hide();
+                $("#link_video").prop('required',false);
+                $("#field_image_landscape").prop('required',true);
+                $("#news_by").prop('required',true);
+            }
+
+            if(value == 'online_class'){
+                $('#featureLocation').bootstrapSwitch('state', false);
+                $('#featureVideo').bootstrapSwitch('state', false);
+                $('#featureOutlet').bootstrapSwitch('state', false);
+                $('#featureProduct').bootstrapSwitch('state', false);
+                $('.form-class-hide').hide();
+            }
+        }
     </script>
 @endsection
 
@@ -644,13 +674,29 @@
         </div>
         <div class="portlet-body m-form__group row">
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
-                    <div class="col-md-4">
-                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
-                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.jpg')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">
-                    </div>
+{{--                    <div class="col-md-4">--}}
+{{--                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">--}}
+{{--                    </div>--}}
                     <div class="col-md-8">
                     <div class="form-body">
                         <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Type
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Tipe artikel" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control select2" name="news_type" required onchange="changeType(this.value)">
+                                    <option></option>
+                                    <option value="video" @if(old('news_type') == 'video') selected @endif>Video</option>
+                                    <option value="article" @if(empty(old('news_type')) || old('news_type') == 'article') selected @endif>Article</option>
+                                    <option value="online_class" @if(old('news_type') == 'online_class') selected @endif> Online Class</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-show form-video-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Post Date
@@ -680,7 +726,7 @@
 							</div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group form-show form-video-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Publish Date
@@ -745,7 +791,20 @@
                             </div>
                         </div> -->
 
-                        <div class="form-group">
+                        <div class="form-group form-show">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    News By
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Nama pengisi artikel/kelas online" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" maxlength="30" name="news_by" id="news_by" value="{{ old('news_by') }}" placeholder="News By" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-show form-video-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 News Title
@@ -758,7 +817,20 @@
                             </div>
                         </div>
 
-                        <div class="form-group" id="selectCategory">
+                        <div class="form-group form-video-show" id="div_link_video" @if(old('news_type') == 'video' || empty(old('news_type'))) style="display: none" @endif>
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Link Video
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Link video" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="link_video" id="link_video" value="{{ old('link_video') }}" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ">
+                            </div>
+                        </div>
+
+                        <!--<div class="form-group" id="selectCategory">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 News Category
@@ -774,7 +846,7 @@
                                   @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div>-->
 
                         <!-- <div class="form-group">
                             <div class="input-icon right">
@@ -806,7 +878,7 @@
                             </div>
                         </div> -->
 
-                        <div class="form-group">
+                        <div class="form-group form-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Image Landscape
@@ -836,7 +908,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
+                        <div class="form-group form-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Content Short
@@ -845,11 +917,11 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News" required>{ { old('news_content_short') } }</textarea>
+                                <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News">{{old('news_content_short')}}</textarea>
                             </div>
-                        </div> -->
+                        </div>
 
-                        <div class="form-group">
+                        <div class="form-group form-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Content Long
@@ -862,8 +934,32 @@
                             </div>
                         </div>
 
+                        <div class="form-group form-show">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Button Text
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Wording button pada detail news" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" maxlength="50" name="news_button_text" value="{{ old('news_button_text') }}" placeholder="Button Text">
+                            </div>
+                        </div>
+
+                        <div class="form-group form-show">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Button Link
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Link pada button" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" maxlength="250" name="news_button_link" value="{{ old('news_button_link') }}" placeholder="Example: meet.google.com/mni-tsxu">
+                            </div>
+                        </div>
+
                         <!-- EVENT DATE -->
-                        <div class="form-group">
+                        <div class="form-group form-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Date
@@ -919,7 +1015,7 @@
                         </div>
 
                         <!-- EVENT TIME -->
-                        <div class="form-group">
+                        <div class="form-group form-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Time
@@ -975,7 +1071,7 @@
                         </div>
 
                         <!-- LOCATION -->
-                        <div class="form-group">
+                        <div class="form-group form-show form-class-hide">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Location
@@ -1059,7 +1155,7 @@
                         </div>
 
                         <!-- VIDEO -->
-                        <div class="form-group">
+                        <div class="form-group form-show form-class-hide">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Video
@@ -1102,7 +1198,7 @@
                         </div>
 
                         <!-- OUTLET -->
-                        <div class="form-group">
+                        <div class="form-group form-show form-class-hide">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Outlet
@@ -1152,7 +1248,7 @@
                         </div>
 
                         <!-- PRODUCT -->
-                        <div class="form-group">
+                        <div class="form-group form-show form-class-hide">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Product

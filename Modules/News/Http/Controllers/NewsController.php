@@ -165,7 +165,10 @@ class NewsController extends Controller
             if(isset($news['news_image_luar'])){
                 $news['news_image_luar']   = MyHelper::encodeImage($news['news_image_luar']);
             }
-            $news['news_image_dalam']  = MyHelper::encodeImage($news['news_image_dalam']);
+
+            if(isset($news['news_image_dalam'])){
+                $news['news_image_dalam']   = MyHelper::encodeImage($news['news_image_dalam']);
+            }
 
             if(isset($post['news_outlet_text'])){
                 $news['news_outlet_text'] = $post['news_outlet_text'];
@@ -265,6 +268,13 @@ class NewsController extends Controller
             else {
                 $data['news'] = $news;
                 $data['categories']    = parent::getData(MyHelper::post('news/be/category', ['admin' => '1']));
+            }
+
+            if(!empty($news[0]['news_type']) &&  $news[0]['news_type'] == 'video'){
+                $data['news'][0]['news_video'] = null;
+                $data['news'][0]['link_video'] = $news[0]['news_video']??null;
+            }else{
+                $data['news'][0]['link_video'] = null;
             }
 
             // get outlet
