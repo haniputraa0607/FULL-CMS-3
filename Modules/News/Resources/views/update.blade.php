@@ -895,7 +895,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group form-show form-video-show">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
                             Content Short
