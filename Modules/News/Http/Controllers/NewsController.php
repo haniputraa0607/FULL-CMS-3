@@ -613,4 +613,33 @@ class NewsController extends Controller
 
         return $result;
     }
+
+    public function featured(Request $request){
+        $post = $request->except('_token');
+
+        if(empty($post)){
+            $data = [
+                'title'          => 'News',
+                'sub_title'      => 'News Featured',
+                'menu_active'    => 'news',
+                'submenu_active' => 'news-featured',
+            ];
+
+            $get = MyHelper::get('news/featured')['result']??[];
+
+            $data['video'] = $get['video']??[];
+            $data['article'] = $get['article']??[];
+            $data['online_class'] = $get['online_class']??[];
+
+            return view('news::featured', $data);
+        }else{
+            $store = MyHelper::post('news/featured', $post);
+
+            if(($store['status']??'')=='success'){
+                return redirect('news/featured')->with('success',['Save Featured Success']);
+            }else{
+                return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
+            }
+        }
+    }
 }

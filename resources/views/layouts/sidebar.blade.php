@@ -314,6 +314,11 @@
 							</a>
 						</li>
 						@endif
+						<li class="nav-item {{($submenu_active == 'news-featured') ? 'active open' : ''}}">
+							<a href="{{url('news/featured')}}" class="nav-link ">
+								<span class="title">News Featured</span>
+							</a>
+						</li>
 {{--						@if(MyHelper::hasAccess([164,166,167], $grantedFeature))--}}
 {{--						<li class="nav-item {{($submenu_active == 'news-category') ? 'active open' : ''}}">--}}
 {{--							<a href="{{url('news/category')}}" class="nav-link ">--}}
@@ -328,13 +333,13 @@
 {{--							</a>--}}
 {{--						</li>--}}
 {{--						@endif--}}
-						@if(MyHelper::hasAccess([22,166], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'news-manage-position') ? 'active open' : ''}}">
-								<a href="{{url('news/position/assign')}}" class="nav-link ">
-									<span class="title">Manage Position</span>
-								</a>
-							</li>
-						@endif
+{{--						@if(MyHelper::hasAccess([22,166], $grantedFeature))--}}
+{{--							<li class="nav-item {{($submenu_active == 'news-manage-position') ? 'active open' : ''}}">--}}
+{{--								<a href="{{url('news/position/assign')}}" class="nav-link ">--}}
+{{--									<span class="title">Manage Position</span>--}}
+{{--								</a>--}}
+{{--							</li>--}}
+{{--						@endif--}}
 						@if(MyHelper::hasAccess([120,122], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'news-autoresponse-create-news') ? 'active open' : ''}}">
 							<a href="{{url('autoresponse/news/create-news')}}" class="nav-link ">
