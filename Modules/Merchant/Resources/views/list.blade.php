@@ -111,12 +111,10 @@
                             @endif
                         </td>
                         <td>
-                            @if($val['merchant_status'] == 'Candidate')
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #9b9e9c;padding: 5px 12px;color: #fff;">Candidate</span>
-                            @elseif($val['merchant_status'] == 'Rejected')
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Rejected</span>
+                            @if($val['merchant_status'] == 'Active')
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #1BBC9B;padding: 5px 12px;color: #fff;">Candidate</span>
                             @else
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #faf21e;padding: 5px 12px;color: #fff;">{{$val['merchant_status'] }}</span>
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #BFBFBF;padding: 5px 12px;color: #fff;">{{$val['merchant_status'] }}</span>
                             @endif
                         </td>
                         <td>{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>
