@@ -314,27 +314,32 @@
 							</a>
 						</li>
 						@endif
-						@if(MyHelper::hasAccess([164,166,167], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'news-category') ? 'active open' : ''}}">
-							<a href="{{url('news/category')}}" class="nav-link ">
-								<span class="title">News Category</span>
+						<li class="nav-item {{($submenu_active == 'news-featured') ? 'active open' : ''}}">
+							<a href="{{url('news/featured')}}" class="nav-link ">
+								<span class="title">News Featured</span>
 							</a>
 						</li>
-						@endif
-						@if(MyHelper::hasAccess([165], $grantedFeature))
-						<li class="nav-item {{($submenu_active == 'news-category-new') ? 'active open' : ''}}">
-							<a href="{{url('news/category/create')}}" class="nav-link ">
-								<span class="title">New News Category</span>
-							</a>
-						</li>
-						@endif
-						@if(MyHelper::hasAccess([22,166], $grantedFeature))
-							<li class="nav-item {{($submenu_active == 'news-manage-position') ? 'active open' : ''}}">
-								<a href="{{url('news/position/assign')}}" class="nav-link ">
-									<span class="title">Manage Position</span>
-								</a>
-							</li>
-						@endif
+{{--						@if(MyHelper::hasAccess([164,166,167], $grantedFeature))--}}
+{{--						<li class="nav-item {{($submenu_active == 'news-category') ? 'active open' : ''}}">--}}
+{{--							<a href="{{url('news/category')}}" class="nav-link ">--}}
+{{--								<span class="title">News Category</span>--}}
+{{--							</a>--}}
+{{--						</li>--}}
+{{--						@endif--}}
+{{--						@if(MyHelper::hasAccess([165], $grantedFeature))--}}
+{{--						<li class="nav-item {{($submenu_active == 'news-category-new') ? 'active open' : ''}}">--}}
+{{--							<a href="{{url('news/category/create')}}" class="nav-link ">--}}
+{{--								<span class="title">New News Category</span>--}}
+{{--							</a>--}}
+{{--						</li>--}}
+{{--						@endif--}}
+{{--						@if(MyHelper::hasAccess([22,166], $grantedFeature))--}}
+{{--							<li class="nav-item {{($submenu_active == 'news-manage-position') ? 'active open' : ''}}">--}}
+{{--								<a href="{{url('news/position/assign')}}" class="nav-link ">--}}
+{{--									<span class="title">Manage Position</span>--}}
+{{--								</a>--}}
+{{--							</li>--}}
+{{--						@endif--}}
 						@if(MyHelper::hasAccess([120,122], $grantedFeature))
 						<li class="nav-item {{($submenu_active == 'news-autoresponse-create-news') ? 'active open' : ''}}">
 							<a href="{{url('autoresponse/news/create-news')}}" class="nav-link ">
