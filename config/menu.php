@@ -61,32 +61,6 @@ return [
 							'active' => '\View::shared("submenu_active") == "user-list"'
 						],
 						[
-							'type' => 'tree',
-							'label' => 'User Role',
-							'children' => [
-								[
-									'label' => 'Job Level List',
-									'url' => 'job-level',
-									'required_features' => [323,325,326,327],
-								],
-								[
-									'label' => 'Departement List',
-									'url' => 'user/departement',
-									'required_features' => [328,329,330,331,332],
-								],
-								[
-									'label' => 'New Role',
-									'url' => 'role/create',
-									'required_features' => [334],
-								],
-								[
-									'label' => 'Role List',
-									'url' => 'role',
-									'required_features' => [333,335,336,337],
-								],
-							],
-						],
-						[
 							'label' => 'Log Activity',
 							'url' => 'user/activity',
 							'required_features' => [7],
@@ -145,11 +119,6 @@ return [
 									'label' => '[Response] Login First Time',
 									'url' => 'user/autoresponse/login-first-time',
 									'required_configs' => [43],
-								],
-								[
-									'label' => '[Response] Claim Point Existing Member',
-									'url' => 'autoresponse/user/claim-point-existing-member',
-									'required_configs' => [41],
 								],
 							],
 						],
@@ -222,38 +191,6 @@ return [
 							'url' => 'autoresponse/balance-resets/report-point-reset',
 						],
 					],
-				],
-				[
-					'type' => 'tree',
-					'label' => 'Employee',
-					'icon' => 'fa fa-users',
-					'children' => [
-						[
-							'type' => 'tree',
-							'label' => 'Office Hours',
-							'children' => [
-								[
-									'label' => 'New Office Hour',
-									'url' => 'employee/office-hours/create',
-									'required_features' => [444],
-								],
-								[
-									'type' => 'group',
-									'required_features' => [442, 443, 445, 446],
-									'children' => [
-										[
-											'label' => 'Office Hour List',
-											'url' => 'employee/office-hours',
-										],
-										[
-											'label' => 'Assigned Office Hour List',
-											'url' => 'employee/office-hours/assign',
-										]
-									]
-								]
-							]
-						]
-					]
 				],
 				[
 					'type' => 'tree',
@@ -476,29 +413,6 @@ return [
 					]
 				],
 				[
-					'label' => 'Office Branch',
-					'icon' => 'fa fa-building-o',
-					'type' => 'tree',
-					'required_configs' => [128],
-					'children' => [
-						[
-							'label' => 'New Office Branch',
-							'url' => 'office-branch/create',
-							'required_features' => [449],
-						],
-						[
-							'label' => 'Office Branch List',
-							'url' => 'office-branch/list',
-							'required_features' => [447],
-						],
-						[
-							'label' => 'Office Holiday Setting',
-							'url' => 'office-branch/holiday',
-							'required_features' => [450],
-						],
-					]
-				],
-				[
 					'label' => 'Product',
 					'icon' => 'icon-wallet',
 					'type' => 'tree',
@@ -641,127 +555,6 @@ return [
 							]
 						],
 					]
-				],
-				[
-					'label' => 'Product Service',
-					'required_features' => [],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Product Service List',
-							'required_features' => [362,366,363,365],
-							'url' => 'product-service'
-						],
-						[
-							'type' => 'group',
-							'required_features' => [363,365],
-							'children' => [
-								[
-									'label' => 'Visible Product Service List',
-									'required_features' => [],
-									'url' => 'product-service/visible'
-								],
-								[
-									'label' => 'Hidden Product Service List',
-									'required_features' => [],
-									'url' => 'product-service/hidden'
-								],
-								[
-									'label' => 'Manage Position',
-									'required_features' => [],
-									'url' => 'product-service/position/assign'
-								],
-							],
-						],
-					],
-					'icon' => 'fa fa-cut'
-				],
-				[
-					'label' => 'Product Academy',
-					'required_features' => [],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Product Academy List',
-							'required_features' => [373, 374, 376, 377],
-							'url' => 'product-academy'
-						],
-						[
-							'type' => 'group',
-							'required_features' => [374, 376],
-							'children' => [
-								[
-									'label' => 'Visible Product Academy List',
-									'required_features' => [],
-									'url' => 'product-academy/visible'
-								],
-								[
-									'label' => 'Hidden Product Academy List',
-									'required_features' => [],
-									'url' => 'product-academy/hidden'
-								],
-								[
-									'label' => 'Manage Position',
-									'required_features' => [],
-									'url' => 'product-academy/position/assign'
-								],
-							],
-						],
-					],
-					'icon' => 'fa fa-graduation-cap'
-				],
-				[
-					'label' => 'Outlet Starter Bundling',
-					'required_features' => [],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Outlet Starter Bundling List',
-							'required_features' => [431],
-							'url' => 'outlet-starter-bundling'
-						],
-						[
-							'label' => 'New Outlet Starter Bundling',
-							'required_features' => [432],
-							'url' => 'outlet-starter-bundling/create'
-						],
-					],
-					'icon' => 'fa fa-dropbox'
-				],
-				[
-					'label' => 'Theory',
-					'required_features' => [],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Category Theory',
-							'required_features' => [],
-							'type' => 'tree',
-							'children' => [
-								[
-									'label' => 'New Category Theory',
-									'required_features' => [438],
-									'url' => 'theory/category/create'
-								],
-								[
-									'label' => 'Category Theory List',
-									'required_features' => [436, 437, 439, 440],
-									'url' => 'theory/category'
-								],
-							],
-						],
-						[
-							'label' => 'New Theory',
-							'required_features' => [438],
-							'url' => 'theory/create'
-						],
-						[
-							'label' => 'Theory List',
-							'required_features' => [436, 437, 439, 440],
-							'url' => 'theory'
-						],
-					],
-					'icon' => 'fa fa-book'
 				],
 				[
 					'label' => 'Topping',
@@ -955,227 +748,6 @@ return [
 						],
 					],
 					'icon' => 'fa fa-coffee'
-				],
-			],
-		],
-		[
-			'type' => 'group',
-			'label' => 'Partner & Hairstylist',
-			'children' => [
-				[
-					'label' => 'Partners',
-					'required_features' => [338],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Partner List',
-							'required_features' => [],
-							'url' => 'businessdev/partners'
-						],
-						[
-							'label' => 'Candidate List',
-							'required_features' => [],
-							'url' => 'businessdev/partners/candidate'
-						],
-						[
-							'label' => 'Request Data Partner List',
-							'required_features' => [],
-							'url' => 'businessdev/partners/request-update'
-						],
-						[
-							'label' => '[Response] Candidate Approved',
-							'required_configs' => [40,121],
-							'required_features' => [],
-							'url' => 'user/autoresponse/updated-candidate-partner-to-partner'
-						],
-					],
-					'icon' => 'fa fa-users'
-				],
-				[
-					'label' => 'Partner Locations',
-					'required_features' => [342],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Location List',
-							'required_features' => [],
-							'url' => 'businessdev/locations'
-						],
-						[
-							'label' => 'Candidate Location List',
-							'required_features' => [],
-							'url' => 'businessdev/locations/candidate'
-						],
-						[
-							'label' => '[Response] Approved Candidate Location',
-							'required_configs' => [40,121],
-							'required_features' => [],
-							'url' => 'user/autoresponse/updated-candidate-location-to-location'
-						],
-					],
-					'icon' => 'fa fa-institution'
-				],
-				[
-					'label' => 'Project',
-					'required_features' => [402],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Project List',
-							'required_features' => [],
-							'url' => 'project'
-						],
-						[
-							'label' => 'Ongoing Project',
-							'required_features' => [],
-							'url' => 'project/process'
-						],
-						[
-							'required_configs' => [40,121],
-							'required_features' => [],
-							'children' => [
-								[
-									'label' => '[Response] New Project',
-									'required_features' => [],
-									'url' => 'user/autoresponse/new-project'
-								],
-								[
-									'label' => '[Response] Update Steps Project',
-									'required_features' => [],
-									'url' => 'user/autoresponse/update-project'
-								],
-								[
-									'label' => '[Response] Approve Project',
-									'required_features' => [],
-									'url' => 'user/autoresponse/approve-project'
-								],
-								[
-									'label' => '[Response] Reject Project',
-									'required_features' => [],
-									'url' => 'user/autoresponse/reject-project'
-								],
-							]
-						],
-					],
-					'icon' => 'fa fa-file'
-				],
-				[
-					'label' => 'Hair Stylist',
-					'required_features' => [347, 348, 349, 350, 353, 354, 355],
-					'type' => 'tree',
-					'icon' => 'fa fa-cut',
-					'children' => [
-						[
-							'label' => 'Category',
-							'required_features' => [],
-							'type' => 'tree',
-							'children' => [
-								[
-									'label' => 'New Category',
-									'required_features' => [],
-									'url' => 'hair-stylist/category/create'
-								],
-								[
-									'label' => 'Category List',
-									'required_features' => [],
-									'url' => 'hair-stylist/category'
-								],
-							],
-						],
-						[
-							'label' => 'Hair Stylist List',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist'
-						],
-						[
-							'label' => 'Candidate List',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/candidate'
-						],
-						[
-							'label' => 'Setting Requirements',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/candidate/setting-requirements'
-						],
-						[
-							'label' => '[Response] Register Candidate Hair Stylist',
-							'required_features' => [],
-							'url' => 'autoresponse/hairstylist/register-candidate-hair-stylist'
-						],
-						[
-							'label' => '[Response] Rejected Candidate Hair Stylist',
-							'required_features' => [],
-							'url' => 'autoresponse/hairstylist/rejected-candidate-hair-stylist'
-						],
-						[
-							'label' => '[Response] Approve Candidate Hair Stylist',
-							'required_features' => [],
-							'url' => 'autoresponse/hairstylist/approve-candidate-hair-stylist'
-						],
-						[
-							'label' => '[Response] Reset Password User Hair Stylist',
-							'required_features' => [],
-							'url' => 'autoresponse/hairstylist/reset-password-user-hair-stylist'
-						],
-					],
-				],
-				[
-					'label' => 'Hair Stylist Schedule',
-					'required_features' => [353, 354, 355, 441],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Create Schedule',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/schedule/create'
-						],
-						[
-							'label' => 'Schedule List',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/schedule'
-						],
-						[
-							'label' => 'Attendance Setting',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/attendance-setting'
-						],
-						[
-							'label' => 'Attendance',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/attendance'
-						],
-						[
-							'label' => 'Attendance Pending',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/attendance-pending'
-						],
-						[
-							'label' => 'Create Request Time Off',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/timeoff/create'
-						],
-						[
-							'label' => 'List Request Time Off',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/timeoff'
-						],
-						[
-							'label' => 'Create Request Overtime',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/overtime/create'
-						],
-						[
-							'label' => 'List Request Overtime',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/overtime'
-						],
-						[
-							'label' => '[Response] Approve Hairstylist Schedule',
-							'required_features' => [],
-							'url' => 'autoresponse/hairstylist-schedule/approve-hairstylist-schedule'
-						],
-					],
-					'icon' => 'fa fa-calendar'
 				],
 			],
 		],
@@ -1386,22 +958,6 @@ return [
 						],
 						[
 							'type' => 'group',
-							'required_features' => [469],
-							'children' => [
-								[
-									'label' => 'Manage Outlet Service',
-									'required_features' => [],
-									'url' => 'transaction/outlet-service/manage'
-								],
-								[
-									'label' => 'Manage Home Service',
-									'required_features' => [],
-									'url' => 'transaction/home-service/manage'
-								],
-							],
-						],
-						[
-							'type' => 'group',
 							'required_features' => [93],
 							'children' => [
 								[
@@ -1464,63 +1020,10 @@ return [
 									'required_features' => [],
 									'url' => 'autoresponse/transaction/delivery-rejected'
 								],
-								[
-									'label' => 'Outlet Service Response',
-									'required_features' => [],
-									'type' => 'tree',
-									'children' => [
-										[
-											'label' => '[Response] Transaction Service Completed',
-											'required_features' => [],
-											'url' => 'autoresponse/transaction-outlet-service-autoresponse/transaction-service-completed'
-										],
-										[
-											'label' => '[Response] Transaction Product Taken',
-											'required_features' => [],
-											'url' => 'autoresponse/transaction-outlet-service-autoresponse/transaction-product-taken'
-										],
-										[
-											'label' => '[Response] HS - Transaction Service Created',
-											'required_features' => [],
-											'url' => 'autoresponse/transaction-outlet-service-autoresponse/mitra-hs---transaction-service-created'
-										],
-										[
-											'label' => '[Response] HS - Transaction Service Rejected',
-											'required_features' => [],
-											'url' => 'autoresponse/transaction-outlet-service-autoresponse/mitra-hs---transaction-service-rejected'
-										],
-										[
-											'label' => '[Response] HS - Transaction Service Completed',
-											'required_features' => [],
-											'url' => 'autoresponse/transaction-outlet-service-autoresponse/mitra-hs---transaction-service-completed'
-										],
-										[
-											'label' => '[Response] SPV - Transaction Product Created',
-											'required_features' => [],
-											'url' => 'autoresponse/transaction-outlet-service-autoresponse/mitra-spv---transaction-product-created'
-										],
-										[
-											'label' => '[Response] SPV - Transaction Product Rejected',
-											'required_features' => [],
-											'url' => 'autoresponse/transaction-outlet-service-autoresponse/mitra-spv---transaction-product-rejected'
-										],
-										[
-											'label' => '[Response] SPV - Transaction Product Taken',
-											'required_features' => [],
-											'url' => 'autoresponse/transaction-outlet-service-autoresponse/mitra-spv---transaction-product-taken'
-										],
-									],
-								],
 							],
 						],
 					],
 					'icon' => 'fa fa-shopping-cart'
-				],
-				[
-					'label' => 'Manual Complete Payment',
-					'required_features' => [469],
-					'url' => 'transaction/complete-payment',
-					'icon' => 'fa fa-check'
 				],
 				[
 					'label' => 'Response With Code',
@@ -1844,162 +1347,6 @@ return [
 						],
 					],
 					'icon' => 'fa fa-star-o'
-				],
-				[
-					'label' => 'Home Service',
-					'required_features' => [389],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Setting',
-							'required_features' => [],
-							'url' => 'transaction/setting/home-service'
-						],
-						[
-							'label' => '[Response] HS - Get Order',
-							'required_features' => [],
-							'url' => 'autoresponse/home-service/home-service-mitra-get-order'
-						],
-						[
-							'label' => '[Response] Update Status',
-							'required_features' => [],
-							'url' => 'autoresponse/home-service/home-service-update-status'
-						],
-					],
-					'icon' => 'fa fa-cut'
-				],
-				[
-					'label' => 'Academy',
-					'required_features' => [376],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Setting Banner',
-							'required_features' => [],
-							'url' => 'academy/setting/banner'
-						],
-						[
-							'label' => 'Setting Installment',
-							'required_features' => [],
-							'url' => 'academy/setting/installment'
-						],
-						[
-							'label' => 'Student List',
-							'required_features' => [],
-							'url' => 'academy/transaction/user/schedule'
-						],
-						[
-							'label' => 'Course',
-							'required_features' => [],
-							'url' => 'academy/transaction/outlet/course'
-						],
-						[
-							'label' => 'Day Off',
-							'required_features' => [],
-							'url' => 'academy/transaction/user/schedule/day-off'
-						],
-						[
-							'label' => 'Installment Deadline Date',
-							'required_features' => [],
-							'url' => 'transaction/setting/academy'
-						],
-						[
-							'label' => '[Response] Academy Course Reminder',
-							'required_features' => [],
-							'url' => 'autoresponse/academy/academy-course-reminder'
-						],
-						[
-							'label' => '[Response] Approve Day Off',
-							'required_features' => [],
-							'url' => 'autoresponse/academy/approve-day-off-user-academy'
-						],
-						[
-							'label' => '[Response] Reject Day Off',
-							'required_features' => [],
-							'url' => 'autoresponse/academy/reject-day-off-user-academy'
-						],
-						[
-							'label' => '[Response] Payment Academy Installment Completed',
-							'required_features' => [],
-							'url' => 'autoresponse/academy/payment-academy-installment-completed'
-						],
-						[
-							'label' => '[Response] Payment Academy Installment Cancelled',
-							'required_features' => [],
-							'url' => 'autoresponse/academy/payment-academy-installment-cancelled'
-						],
-						[
-							'label' => '[Response] Payment Academy Installment Reminder',
-							'required_features' => [],
-							'url' => 'autoresponse/academy/payment-academy-installment-reminder'
-						],
-						[
-							'label' => '[Response] Payment Academy Installment Due Date',
-							'required_features' => [],
-							'url' => 'autoresponse/academy/payment-academy-installment-due-date'
-						],
-					],
-					'icon' => 'fa fa-building-o'
-				],
-				[
-					'label' => 'Online Shop',
-					'required_features' => [390, 391],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => '[Response] Trasaction Online Shope Created',
-							'required_features' => [],
-							'url' => 'autoresponse/online-shop/transaction-online-shop-created'
-						],
-						[
-							'label' => '[Response] Trasaction Online Shope Cancelled',
-							'required_features' => [],
-							'url' => 'autoresponse/online-shop/transaction-online-shop-cancelled'
-						],
-						[
-							'label' => '[Response] Trasaction Online Shope Rejected',
-							'required_features' => [],
-							'url' => 'autoresponse/online-shop/transaction-online-shop-rejected'
-						],
-						[
-							'label' => '[Response] Accepted Online Shop',
-							'required_features' => [],
-							'url' => 'autoresponse/online-shop/accepted-online-shop'
-						],
-						[
-							'label' => '[Response] Ready Online Shop',
-							'required_features' => [],
-							'url' => 'autoresponse/online-shop/ready-online-shop'
-						],
-						[
-							'label' => '[Response] Delivery Online Shop Requested',
-							'required_features' => [],
-							'url' => 'autoresponse/online-shop/delivery-online-shop-requested'
-						],
-						[
-							'label' => '[Response] Transaction Online Shop Complete',
-							'required_features' => [],
-							'url' => 'autoresponse/online-shop/transaction-online-shop-complete'
-						],
-						[
-							'label' => '[Response] Point Received Online Shop',
-							'required_features' => [],
-							'url' => 'autoresponse/online-shop/point-received-online-shop'
-						],
-					],
-					'icon' => 'fa fa-ship'
-				],
-				[
-					'label' => 'Export Commision',
-					'required_features' => [69],
-					'url' => 'hair-stylist/commision/filter',
-					'icon' => 'fa fa-download'
-				],
-				[
-					'label' => 'Export Sales Report',
-					'required_features' => [69],
-					'url' => 'transaction/report/export/sales',
-					'icon' => 'fa fa-download'
 				],
 			],
 		],
@@ -2627,12 +1974,6 @@ return [
 					]
 				],
 				[
-					'label' => 'Contact CS Subject Setting',
-					'required_features' => [470],
-					'url' => 'enquiries/setting/subject',
-					'icon' => 'fa fa-phone'
-				],
-				[
 					'label' => 'Enquiries',
 					'required_features' => [40],
 					'type' => 'tree',
@@ -2798,24 +2139,6 @@ return [
 					'icon' => 'icon-feed'
 				],
 				[
-					'label' => 'Annoucement',
-					'required_features' => [368, 369, 370, 371, 372],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'New Announcement',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/announcement/create'
-						],
-						[
-							'label' => 'Announcement List',
-							'required_features' => [],
-							'url' => 'recruitment/hair-stylist/announcement'
-						],
-					],
-					'icon' => 'fa fa-bullhorn'
-				],
-				[
 					'label' => 'Redirect Complex',
 					'required_configs' => [119],
 					'type' => 'tree',
@@ -2858,40 +2181,11 @@ return [
 					'icon' => 'fa fa-tablet'
 				],
 				[
-					'label' => 'Setting Mitra Apps',
-					'required_features' => [346],
-					'url' => 'setting/mitra-apps',
-					'icon' => 'fa fa-tablet'
-				],
-				[
 					'label' => 'Setting Phone Number',
 					'required_features' => [210],
 					'required_configs' => [94],
 					'url' => 'setting/phone',
 					'icon' => 'fa fa-phone'
-				],
-				[
-					'label' => 'Setting Landing Page',
-					'required_features' => [],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Content Header And Footer Partner',
-							'required_features' => [338],
-							'url' => 'businessdev/setting/partner'
-						],
-						[
-							'label' => 'Content Header And Footer Location',
-							'required_features' => [342],
-							'url' => 'businessdev/setting/location'
-						],
-						[
-							'label' => 'Content Header And Footer Hair Stylist',
-							'required_features' => [347],
-							'url' => 'businessdev/setting/hairstylist'
-						],
-					],
-					'icon' => 'fa fa-user-plus'
 				],
 				[
 					'label' => 'Text Menu',
@@ -3014,48 +2308,6 @@ return [
 					'url' => 'setting/time-expired',
 					'icon' => 'fa fa-envelope'
 				],
-				[
-					'label' => 'Confirmation Letter Logo',
-					'required_features' => [338],
-					'url' => 'setting/logo-confir',
-					'icon' => 'fa fa-image'
-				],
-				[
-					'label' => 'Form Survey',
-					'required_features' => [339,340],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'List Form Survey',
-							'required_features' => [],
-							'url' => 'businessdev/form-survey'
-						],
-						[
-							'label' => 'New Form Survey',
-							'required_features' => [],
-							'url' => 'businessdev/form-survey/new'
-						],
-					],
-					'icon' => 'fa fa-list'
-				],
-				[
-					'label' => 'Icount Setting',
-					'required_features' => [392],
-					'url' => 'setting/setting-icount',
-					'icon' => 'fa fa-gear'
-				],
-				[
-					'label' => 'Setting Global Commission',
-					'required_features' => [423],
-					'url' => 'setting/setting-global-commission',
-					'icon' => 'fa fa-money'
-				],
-				[
-					'label' => 'Setting Attendances Date',
-					'required_features' => [427],
-					'url' => 'setting/setting-attendances-date',
-					'icon' => 'fa fa-location-arrow'
-				],
 			],
 		],
 		[
@@ -3109,12 +2361,6 @@ return [
 					'required_configs' => [96],
 					'url' => 'delivery-service',
 					'icon' => 'icon-social-dropbox'
-				],
-				[
-					'label' => 'Help Desk',
-					'required_features' => [87],
-					'url' => 'enquiries/create',
-					'icon' => 'fa fa-phone'
 				],
 			],
 		],
