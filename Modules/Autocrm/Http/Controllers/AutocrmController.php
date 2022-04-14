@@ -206,6 +206,12 @@ class AutocrmController extends Controller
 				$data['active_response'] = ['email'];
 				$test['result'] = [];
 					break;
+            case 'register-merchant':
+            case 'rejected-merchant':
+            case 'approve-merchant':
+                $data['menu_active'] = 'merchant';
+                $data['submenu_active'] = 'merchant-autoresponse-'.$subject;
+                break;
 		}
 
         $data['click_inbox'] = [

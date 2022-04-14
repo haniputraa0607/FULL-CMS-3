@@ -3,7 +3,7 @@
 	<div class="page-header-inner container">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-			<a href="index.html" style="height:100%">
+			<a href="index.html" style="height:85%">
 				<img src="{{ env('STORAGE_URL_VIEW') }}{{ ('images/logo.png') }}" alt="logo" class="logo-default"  style="margin: 0; height:100%"/> </a>
 			<div class="menu-toggler sidebar-toggler">
 				<span></span>
