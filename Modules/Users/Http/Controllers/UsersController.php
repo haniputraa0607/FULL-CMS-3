@@ -697,93 +697,72 @@ class UsersController extends Controller
             return view('users::detail', $data);
         }
     }
-    
-    public function showAllLog($phone, Request $request)
+
+    public function showAllLog($phone, $tipe, Request $request)
     {
-		$post = $request->except('_token');
-		if(empty($post)){
-			Session::forget('form_filter_log');
-			// $data['']
-		}
-		
-		$data = [ 'title'             => 'User',
-			'menu_active'       => 'user',
-			'submenu_active'    => 'user-list',
-			'phone'             => $phone,
-			'date_start'     => date('01 F Y 00:00'),
-			'date_end'       => date('d F Y 23:59'),
-			'rule'			=> 'and'
-		];
+        $post = $request->except('_token');
+        if(empty($post)){
+            Session::forget('form_filter_log');
+        }
 
-		if(isset($post['date_start'])){
-			$data['date_start'] = $post['date_start'];
-		}
+        $data = [
+            'title'             => 'User',
+            'menu_active'       => 'user',
+            'submenu_active'    => 'user-list',
+            'phone'             => $phone,
+            'date_start'        => date('01 F Y 00:00'),
+            'date_end'          => date('d F Y 23:59'),
+            'rule'			    => 'and'
+        ];
 
-		if(isset($post['rule'])){
-			$data['rule'] = $post['rule'];
-		}
+        if(isset($post['date_start'])){
+            $data['date_start'] = $post['date_start'];
+        }
 
-		if(isset($post['date_end'])){
-			$data['date_end'] = $post['date_end'];
-		}
+        if(isset($post['rule'])){
+            $data['rule'] = $post['rule'];
+        }
 
-		if(isset($post['conditions'])){
-			Session::put('form_filter_log',$post['conditions']);
-		}else{
-			if(!empty(Session::get('form_filter_log'))){
-				Session::forget('form_filter_log');
-			}
-		}
+        if(isset($post['date_end'])){
+            $data['date_end'] = $post['date_end'];
+        }
 
-		if(!isset($post['pagem'])){
-			$data['pagem'] = 1;
-		}else{
-			$data['pagem'] = $post['pagem'];
-		}
-	
-		if(!isset($post['pageb'])){
-			$data['pageb'] = 1;
-		}else{
-			$data['pageb'] = $post['pageb'];
-		}
+        if(isset($post['conditions'])){
+            Session::put('form_filter_log',$post['conditions']);
+        }
 
-		if(isset($post['page'])){
-			if(isset($post['tipe']) && $post['tipe'] == 'mobile'){
-				$data['pagem'] = $post['page'];
-			}
-			if(isset($post['tipe']) && $post['tipe'] == 'backend'){
-				$data['pageb'] = $post['page'];
-				$data['tipe'] = 'backend';
-			}
-		}
+        if(!empty(Session::get('form_filter_log'))){
+            $data['conditions'] = Session::get('form_filter_log');
+        }else{
+            $data['conditions'] = [];
+        }
 
-		if(!empty(Session::get('form_filter_log'))){
-			$data['conditions'] = Session::get('form_filter_log');
-		}else{
-			$data['conditions'] = [];
-		}
+        $getLog = MyHelper::post('users/log?log_save=0', ['phone' => $phone, 'page' => $post['page']??1, 'pagination' => 1, 'take' => 20, 'conditions' =>$data['conditions'], 'date_start' => $data['date_start'], 'date_end' => $data['date_end'], 'rule' => $data['rule']]);
 
-		$getLog = MyHelper::post('users/log?log_save=0&page='.$data['pagem'], ['phone' => $phone, 'pagination' => 1, 'take' => 20, 'conditions' =>$data['conditions'], 'date_start' => $data['date_start'], 'date_end' => $data['date_end'], 'rule' => $data['rule']]);
+        $data['log']['mobile'] = [];
+        $data['log']['backend'] = [];
+        $data['count'] = ($tipe == 'mobile' ?$getLog['result']['mobile']['total']??0:$getLog['result']['be']['total']??0);
 
-		$data['log']['mobile'] = [];
-		$data['log']['backend'] = [];
+        if(isset($getLog['result']['mobile'])){
+            $data['log']['mobile'] = $getLog['result']['mobile']['data'];
+            $data['mobile_page'] = new LengthAwarePaginator($getLog['result']['mobile']['data'], $getLog['result']['mobile']['total'], $getLog['result']['mobile']['per_page'], $getLog['result']['mobile']['current_page'], ['path' => url('user/log/'.$phone.'/'.$tipe)]);
+        }
+        if(isset($getLog['result']['be'])){
+            $data['log']['backend'] = $getLog['result']['be']['data'];
+            $data['backend_page'] = new LengthAwarePaginator($getLog['result']['be']['data'], $getLog['result']['be']['total'], $getLog['result']['be']['per_page'], $getLog['result']['be']['current_page'], ['path' => url('user/log/'.$phone.'/'.$tipe)]);
+        }
 
-		if(isset($getLog['result']['mobile'])){
-			$data['log']['mobile'] = $getLog['result']['mobile']['data'];
-			$data['mobile_page'] = new LengthAwarePaginator($getLog['result']['mobile']['data'], $getLog['result']['mobile']['total'], $getLog['result']['mobile']['per_page'], $getLog['result']['mobile']['current_page'], ['path' => url('user/log/'.$phone.'?tipe=mobile&pageb='.$data['pageb'])]);
-		} 
-		if(isset($getLog['result']['be'])){
-			$data['log']['backend'] = $getLog['result']['be']['data'];
-			$data['backend_page'] = new LengthAwarePaginator($getLog['result']['be']['data'], $getLog['result']['be']['total'], $getLog['result']['be']['per_page'], $getLog['result']['be']['current_page'], ['path' => url('user/log/'.$phone.'?tipe=backend&pagem='.$data['pagem'])]);
-		} 
+        $profile = MyHelper::post('users/get-detail?log_save=0', ['phone' => $phone]);
+        if(isset($profile['result'])){
+            $data['profile'] = $profile['result'];
+        }
 
-		$profile = MyHelper::post('users/get-detail?log_save=0', ['phone' => $phone]);
-		if(isset($profile['result'])){
-			$data['profile'] = $profile['result'];
-		}
+        if(isset($tipe)){
+            $data['tipe'] = $tipe;
+        }
 
-		return view('users::log_all', $data);
-	}
+        return view('users::log_all', $data);
+    }
 	
     public function showLog($phone, Request $request)
     {
@@ -854,80 +833,83 @@ class UsersController extends Controller
 			return back()->withErrors($deleteUserLog['messages']);
 		}
     }
-	
-	public function activity(Request $request, $page = 1){
+
+    public function activity(Request $request, $page = 1){
         $input = $request->input();
-		$post = $request->except('_token');
-		
-		if(!empty(Session::get('form'))){
-			if(isset($post['take'])) $takes = $post['take'];
-			if(isset($post['order_field'])) $order_fields = $post['order_field'];
-			if(isset($post['order_method'])) $order_methods = $post['order_method'];
-			$post = Session::get('form');
-			
-			if(isset($takes) && isset($order_fields) && isset ($order_methods)){
-				$post['take'] = $takes;
-				$post['order_field'] = $order_fields;
-				$post['order_method'] = $order_methods;
-			}
-		}
-		
-		if(!empty($post)){
-			Session::put('form',$post);
-		}
-		
-		if(isset($post['password'])){
-			$checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
-			if($checkpin['status'] != "success")
-				return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
-			else
-				Session::put('secure','yes');Session::put('secure_last_activity',time());
-		}
-		
-		$data = [ 'title'             => 'User',
-				  'menu_active'       => 'user',
-				  'submenu_active'    => 'user-log'
-				];
+        $post = $request->except('_token');
+
+        if(!empty(Session::get('form')) && !isset($post['password'])){
+            if(isset($post['take'])) $takes = $post['take'];
+            if(isset($post['order_field'])) $order_fields = $post['order_field'];
+            if(isset($post['order_method'])) $order_methods = $post['order_method'];
+            $post = Session::get('form');
+
+            if(isset($takes) && isset($order_fields) && isset ($order_methods)){
+                $post['take'] = $takes;
+                $post['order_field'] = $order_fields;
+                $post['order_method'] = $order_methods;
+            }
+        }
+
+        if(!empty($post) && !isset($post['password'])){
+            Session::put('form',$post);
+        }
+
+        if(isset($post['password'])){
+            $checkpin = MyHelper::post('users/pin/check-backend', array('phone' => Session::get('phone'), 'pin' => $post['password'], 'admin_panel' => 1));
+            if($checkpin['status'] != "success"){
+                return back()->withErrors(['invalid_credentials' => 'Invalid PIN'])->withInput();
+            }
+            else{
+                Session::put('secure','yes');
+                Session::put('secure_last_activity',time());
+            }
+        }
+
+        $data = [ 'title'             => 'User',
+            'menu_active'       => 'user',
+            'submenu_active'    => 'user-log'
+        ];
 
         if(!isset($post['order_field'])) $post['order_field'] = '';
-		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
-		if(!isset($post['take'])) $post['take'] = 10;
-		$post['skip'] = 0 + (($page-1) * $post['take']);
-		
-		$getLog = MyHelper::post('users/activity', $post);
-		
-		if(isset($getLog['status']) && $getLog['status'] == 'success') {
+        if(!isset($post['order_method'])) $post['order_method'] = 'desc';
+        if(!isset($post['take'])) $post['take'] = 10;
+        $post['skip'] = 0 + (($page-1) * $post['take']);
+
+        $getLog = MyHelper::post('users/activity', $post);
+
+        if(isset($getLog['status']) && $getLog['status'] == 'success') {
             $data['content']['mobile'] = $getLog['result']['mobile']['data'];
             $data['content']['be'] = $getLog['result']['be']['data'];
         }else{
-		    $data['content']['mobile'] = null;
+            $data['content']['mobile'] = null;
             $data['content']['be'] = null;
         }
 
-		if(isset($getLog['status']) && $getLog['status'] == 'success') {
+        if(isset($getLog['status']) && $getLog['status'] == 'success') {
             $data['total']['mobile'] = $getLog['result']['mobile']['total'];
             $data['total']['be'] = $getLog['result']['be']['total'];
         }
-		else {
+        else {
             $data['total']['mobile'] = null;
             $data['total']['be'] = null;
         }
-		
-		$data['begin'] = $post['skip'] + 1;
-		$data['last'] = $post['take'] + $post['skip'];
 
-		if($data['total']['mobile'] <= $data['last']) $data['last'] = $data['total']['mobile'];
-		$data['page'] = $page;
-		if(!is_array($data['content']['mobile'])){
-			$data['jumlah'] = null;
-		}else{
-			$data['jumlah'] = count($data['content']['mobile']);
-		}
-		foreach($post as $key => $row){
-			$data[$key] = $row;
-		}
-		
-		$data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
+        $data['begin'] = $post['skip'] + 1;
+        $data['last'] = $post['take'] + $post['skip'];
+
+        if($data['total']['mobile'] <= $data['last']) $data['last'] = $data['total']['mobile'];
+        $data['page'] = $page;
+        if(!is_array($data['content']['mobile'])){
+            $data['jumlah'] = null;
+        }else{
+            $data['jumlah'] = count($data['content']['mobile']);
+        }
+        foreach($post as $key => $row){
+            $data[$key] = $row;
+        }
+
+        $data['table_title'] = "User Log Activity list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']['mobile']." data)";
 
         if (empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)) {
             $data = [
@@ -939,7 +921,7 @@ class UsersController extends Controller
         } else {
             return view('users::log', $data);
         }
-	}
+    }
 	
     public function favorite(Request $request, $phone){
         $post = $request->post();
