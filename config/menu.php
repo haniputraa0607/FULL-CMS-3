@@ -460,11 +460,11 @@ return [
 					'icon' => 'icon-wallet',
 					'type' => 'tree',
 					'children' => [
-//						[
-//							'label' => 'New Category',
-//							'url' => 'product/category/create',
-//							'required_features' => [45],
-//						],
+						[
+							'label' => 'New Category',
+							'url' => 'product/category/create',
+							'required_features' => [45],
+						],
 						[
 							'label' => 'Category List',
 							'url' => 'product/category',
