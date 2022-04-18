@@ -93,9 +93,9 @@
                                         @if($type == 'candidate')
                                         <option value="merchant_completed_step" @if ($con['subject'] == 'merchant_completed_step') selected @endif>Complete Step</option>
                                         @endif
-                                        <option value="merchant_name" @if ($con['subject'] == 'merchant_name') selected @endif>Name</option>
-                                        <option value="merchant_phone" @if ($con['subject'] == 'merchant_phone') selected @endif>Phone</option>
-                                        <option value="merchant_email" @if ($con['subject'] == 'merchant_email') selected @endif>Email</option>
+                                        <option value="outlet_name" @if ($con['subject'] == 'merchant_name') selected @endif>Name</option>
+                                        <option value="outlet_phone" @if ($con['subject'] == 'merchant_phone') selected @endif>Phone</option>
+                                        <option value="outlet_email" @if ($con['subject'] == 'merchant_email') selected @endif>Email</option>
                                         <option value="merchant_pic_name" @if ($con['subject'] == 'merchant_pic_name') selected @endif>PIC Name</option>
                                         <option value="merchant_pic_phone" @if ($con['subject'] == 'merchant_pic_phone') selected @endif>PIC Phone</option>
                                         <option value="merchant_pic_email" @if ($con['subject'] == 'merchant_pic_email') selected @endif>PIC Email</option>
@@ -140,9 +140,9 @@
                                         @if($type == 'candidate')
                                         <option value="merchant_completed_step">Complete Step</option>
                                         @endif
-                                        <option value="merchant_name">Name</option>
-                                        <option value="merchant_phone">Phone</option>
-                                        <option value="merchant_email">Email</option>
+                                        <option value="outlet_name">Name</option>
+                                        <option value="outlet_phone">Phone</option>
+                                        <option value="outlet_email">Email</option>
                                         <option value="merchant_pic_name">PIC Name</option>
                                         <option value="merchant_pic_phone">PIC Phone</option>
                                         <option value="merchant_pic_email">PIC Email</option>
@@ -177,9 +177,9 @@
                                         @if($type == 'candidate')
                                         <option value="merchant_completed_step">Complete Step</option>
                                         @endif
-                                        <option value="merchant_name">Name</option>
-                                        <option value="merchant_phone">Phone</option>
-                                        <option value="merchant_email">Email</option>
+                                        <option value="outlet_name">Name</option>
+                                        <option value="outlet_phone">Phone</option>
+                                        <option value="outlet_email">Email</option>
                                         <option value="merchant_pic_name">PIC Name</option>
                                         <option value="merchant_pic_phone">PIC Phone</option>
                                         <option value="merchant_pic_email">PIC Email</option>

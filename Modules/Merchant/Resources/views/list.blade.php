@@ -107,7 +107,7 @@
                     <tr>
                         <td>
                             @if(MyHelper::hasAccess([324,326], $grantedFeature))
-                                <a class="btn btn-sm btn-info" href="{{ url('merchant/candidate/detail', $val['id_merchant']) }}"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-sm btn-info" href="{{ url('merchant/detail', $val['id_merchant']) }}"><i class="fa fa-edit"></i></a>
                             @endif
                         </td>
                         <td>
@@ -118,9 +118,9 @@
                             @endif
                         </td>
                         <td>{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>
-                        <td>{{$val['merchant_name']}}</td>
-                        <td>{{$val['merchant_email']}}</td>
-                        <td>{{$val['merchant_phone']}}</td>
+                        <td>{{$val['outlet_name']}}</td>
+                        <td>{{$val['outlet_email']}}</td>
+                        <td>{{$val['outlet_phone']}}</td>
                         <td>{{$val['merchant_pic_name']}}</td>
                         <td>{{$val['merchant_pic_phone']}}</td>
                         <td>{{$val['merchant_pic_email']}}</td>
