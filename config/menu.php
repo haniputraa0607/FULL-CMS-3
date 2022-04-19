@@ -125,6 +125,7 @@ return [
 						],
 					],
 				],
+				/** HIDE 
 				[
 					'label' => 'Admin Outlet',
 					'type' => 'tree',
@@ -144,6 +145,7 @@ return [
 						],
 					],
 				],
+				*/
 				[
 					'label' => 'Membership',
 					'url' => 'membership',
@@ -639,6 +641,7 @@ return [
 						],
 					]
 				],
+				/** HIDE 
 				[
 					'label' => 'Topping',
 					'required_features' => [],
@@ -708,6 +711,7 @@ return [
 					],
 					'icon' => 'fa fa-puzzle-piece'
 				],
+				*/
 				[
 					'label' => 'Product Variant NON PRICE (NO SKU)',
 					'required_features' => [],
@@ -1038,6 +1042,7 @@ return [
 			],
 			'icon' => 'fa fa-edit'
 		],
+		/** HIDE 
 		[
 			'type' => 'group',
 			'label' => 'Order',
@@ -2498,6 +2503,7 @@ return [
 				],
 			],
 		],
+		*/
 		[
 			'type' => 'group',
 			'label' => 'Settings',
@@ -2509,6 +2515,7 @@ return [
 					'url' => 'setting/home',
 					'icon' => 'icon-screen-tablet '
 				],
+				/** HIDE 
 				[
 					'label' => 'Setting Outlet Apps',
 					'required_features' => [273],
@@ -2517,6 +2524,7 @@ return [
 					'url' => 'setting/outletapp',
 					'icon' => 'fa fa-tablet'
 				],
+				*/
 				[
 					'label' => 'Setting Phone Number',
 					'required_features' => [210],
@@ -2714,6 +2722,7 @@ return [
 				],
 			],
 		],
+		/** HIDE 
 		[
 			'type' => 'group',
 			'label' => 'Disburse',
@@ -2849,5 +2858,6 @@ return [
 				]
 			]
 		],
+		*/
 	],
 ];
