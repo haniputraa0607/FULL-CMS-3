@@ -310,6 +310,49 @@ return [
 						],
 					]
 				],
+                [
+                    'label' => 'Merchant',
+                    'type' => 'tree',
+                    'icon' => 'fa fa-university',
+                    'required_configs' => [95],
+                    'children' => [
+                        [
+                            'label' => 'Setting Register Introduction',
+                            'url' => 'merchant/setting/register-introduction',
+                            'required_features' => [326],
+                        ],
+                        [
+                            'label' => 'Setting Register Success',
+                            'url' => 'merchant/setting/register-success',
+                            'required_features' => [326],
+                        ],
+                        [
+                            'label' => 'Merchant List',
+                            'url' => 'merchant',
+                            'required_features' => [323,324,325,326,327],
+                        ],
+                        [
+                            'label' => 'Merchant Candidate List',
+                            'url' => 'merchant/candidate',
+                            'required_features' => [323,324,325,326,327],
+                        ],
+                        [
+                            'label' => '[Response] Register Merchant',
+                            'url' => 'autoresponse/merchant/register-merchant',
+                            'required_features' => [326],
+                        ],
+                        [
+                            'label' => '[Response] Approve Merchant',
+                            'url' => 'autoresponse/merchant/approve-merchant',
+                            'required_features' => [326],
+                        ],
+                        [
+                            'label' => '[Response] Rejected Merchant',
+                            'url' => 'autoresponse/merchant/rejected-merchant',
+                            'required_features' => [326],
+                        ],
+                    ]
+                ],
 				[
 					'label' => 'Outlet',
 					'icon' => 'icon-pointer',

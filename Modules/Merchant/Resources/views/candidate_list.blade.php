@@ -166,7 +166,7 @@
                                 <a class="btn btn-sm btn-info" href="{{ url('merchant/candidate/detail', $val['id_merchant']) }}"><i class="fa fa-edit"></i></a>
                             @endif
                             @if(MyHelper::hasAccess([327], $grantedFeature))
-                                <a class="btn btn-sm red sweetalert-delete btn-primary" data-id="{{ $val['id_merchant'] }}" data-name="{{ $val['merchant_name'] }}"><i class="fa fa-trash-o"></i></a>
+                                <a class="btn btn-sm red sweetalert-delete btn-primary" data-id="{{ $val['id_merchant'] }}" data-name="{{ $val['outlet_name'] }}"><i class="fa fa-trash-o"></i></a>
                             @endif
                         </td>
                         <td>
@@ -186,9 +186,9 @@
                             @endif
                         </td>
                         <td>{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>
-                        <td>{{$val['merchant_name']}}</td>
-                        <td>{{$val['merchant_email']}}</td>
-                        <td>{{$val['merchant_phone']}}</td>
+                        <td>{{$val['outlet_name']}}</td>
+                        <td>{{$val['outlet_email']}}</td>
+                        <td>{{$val['outlet_phone']}}</td>
                         <td>{{$val['merchant_pic_name']}}</td>
                         <td>{{$val['merchant_pic_phone']}}</td>
                         <td>{{$val['merchant_pic_email']}}</td>

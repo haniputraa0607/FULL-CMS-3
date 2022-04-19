@@ -130,11 +130,34 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="multiple" class="control-label col-md-3">Data User
+                        </label>
+                        <div class="col-md-8" style="margin-top: 1%">
+                            <table>
+                                <tr>
+                                    <td>Name </td>
+                                    <td>: {{$detail['name']}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phone </td>
+                                    <td>: {{$detail['phone']}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email </td>
+                                    <td>: {{$detail['email']}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Name <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama jam kerja" data-container="body"></i>
                         </label>
-                        <div class="col-md-8">
-                            <input name="merchant_name" class="form-control" required placeholder="Name" value="{{$detail['merchant_name']}}" @if($detail['merchant_status'] == 'Pending' || $detail['merchant_status'] == 'Rejected') readonly @endif>
+                        <div class="col-md-4">
+                            <input name="merchant_name" class="form-control" required placeholder="Name" value="{{$detail['outlet_name']}}" disabled>
+                        </div>
+                        <div class="col-md-4" style="margin-left: -2%">
+                            <a class="btn btn-primary" href="{{url('outlet/detail', $detail['outlet_code'])}}">Detail Outlet</a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -142,7 +165,7 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Nomor ijin usaha" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
-                            <input name="merchant_license_number" class="form-control" maxlength="25" required placeholder="License Number" value="{{$detail['merchant_license_number']}}" @if($detail['merchant_status'] == 'Pending' || $detail['merchant_status'] == 'Rejected') readonly @endif>
+                            <input name="merchant_license_number" class="form-control" maxlength="25" required placeholder="License Number" value="{{$detail['outlet_license_number']}}" disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -150,7 +173,7 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama jam kerja" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
-                            <input name="merchant_email" class="form-control" required placeholder="Name" value="{{$detail['merchant_email']}}" @if($detail['merchant_status'] == 'Pending' || $detail['merchant_status'] == 'Rejected') readonly @endif>
+                            <input name="merchant_email" class="form-control" required placeholder="Name" value="{{$detail['outlet_email']}}" disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -158,7 +181,7 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Nomor telepon perusahaan" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
-                            <input name="merchant_phone" class="form-control" required placeholder="Phone" value="{{$detail['merchant_phone']}}" @if($detail['merchant_status'] == 'Pending' || $detail['merchant_status'] == 'Rejected') readonly @endif>
+                            <input name="merchant_phone" class="form-control" required placeholder="Phone" value="{{$detail['outlet_phone']}}" disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -166,7 +189,7 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Provinsi" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
-                            <select class="form-control select2" name="id_province" @if($detail['merchant_status'] == 'Pending' || $detail['merchant_status'] == 'Rejected') disabled @endif>
+                            <select class="form-control select2" name="id_province" disabled>
                                 <option></option>
                                 @foreach($provinces as $val)
                                     <option value="{{$val['id_province']}}" @if($val['id_province'] == $detail['id_province']) selected @endif>{{$val['province_name']}}</option>
@@ -179,7 +202,7 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Kota" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
-                            <select class="form-control select2" name="id_city" @if($detail['merchant_status'] == 'Pending' || $detail['merchant_status'] == 'Rejected') disabled @endif>
+                            <select class="form-control select2" name="id_city" disabled>
                                 <option></option>
                                 @foreach($cities as $val)
                                     <option value="{{$val['id_city']}}" @if($val['id_city'] == $detail['id_city']) selected @endif>{{$val['city_name']}}</option>
@@ -192,7 +215,7 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Alamat lengkap perusahaan" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
-                            <textarea name="merchant_address" class="form-control" required placeholder="Address" @if($detail['merchant_status'] == 'Pending' || $detail['merchant_status'] == 'Rejected') readonly @endif>{{$detail['merchant_address']}}</textarea>
+                            <textarea name="merchant_address" class="form-control" required placeholder="Address" disabled>{{$detail['outlet_address']}}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -200,7 +223,7 @@
                             <i class="fa fa-question-circle tooltips" data-original-title="Kode pos perusahaan" data-container="body"></i>
                         </label>
                         <div class="col-md-8">
-                            <input name="merchant_postal_code" class="form-control" required placeholder="Postal Code" value="{{$detail['merchant_postal_code']}}" @if($detail['merchant_status'] == 'Pending' || $detail['merchant_status'] == 'Rejected') readonly @endif>
+                            <input name="merchant_postal_code" class="form-control" required placeholder="Postal Code" value="{{$detail['outlet_postal_code']}}" disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -245,8 +268,8 @@
                 @elseif($detail['merchant_status'] == 'Pending')
                     <div class="row" style="text-align: center">
                         {{ csrf_field() }}
-                        <a class="btn red save" data-name="{{ $detail['merchant_name'] }}" data-status="rejected"  @if($detail['merchant_completed_step'] == 0) disabled @endif>Reject</a>
-                        <a class="btn green-jungle save" data-name="{{ $detail['merchant_name'] }}" data-status="approve" @if($detail['merchant_completed_step'] == 0) disabled @endif>Approve</a>
+                        <a class="btn red save" data-name="{{ $detail['outlet_name'] }}" data-status="rejected"  @if($detail['merchant_completed_step'] == 0) disabled @endif>Reject</a>
+                        <a class="btn green-jungle save" data-name="{{ $detail['outlet_name'] }}" data-status="approve" @if($detail['merchant_completed_step'] == 0) disabled @endif>Approve</a>
                     </div>
                 @endif
             </form>
