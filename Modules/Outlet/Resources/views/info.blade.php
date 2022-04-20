@@ -60,6 +60,18 @@
                 <input type="text" class="form-control" name="outlet_name" value="{{ $val['outlet_name'] }}" required placeholder="Outlet Name">
             </div>
         </div>
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    License Number
+                    <span class="required" aria-required="true"> * </span>
+                    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nomor ijin usaha" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="outlet_license_number" value="{{ $val['outlet_license_number'] }}" required placeholder="Outlet License Number">
+            </div>
+        </div>
         @if(MyHelper::hasAccess([95], $configs))
         <div class="form-group">
             <div class="input-icon right">
