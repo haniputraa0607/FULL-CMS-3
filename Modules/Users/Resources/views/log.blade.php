@@ -172,7 +172,6 @@
 									<table class="table table-striped table-bordered table-hover">
 										<thead>
 										<tr>
-											<th scope="col" style="width:450px !important"> No </th>
 											<th scope="col"> Actions </th>
 											<th scope="col"> Date Time </th>
 											<th scope="col"> Name </th>
@@ -196,8 +195,6 @@
 													@else
 														<tr>
 															@endif
-															<td> {{$no+1}}
-															</td>
 															<td>
 																<a class="btn btn-block green btn-xs" onClick="viewLogDetail('{{$data['id_log_activities_apps']}}','apps')" href="#"><i class="icon-pencil"></i> Detail </a>
 																<a class="btn btn-block red btn-xs" href="{{ url('user/delete/logApp', $data['id_log_activities_apps']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>
@@ -246,7 +243,6 @@
 									<table class="table table-striped table-bordered table-hover">
 										<thead>
 										<tr>
-											<th scope="col" style="width:450px !important"> No </th>
 											<th scope="col"> Actions </th>
 											<th scope="col"> Date Time </th>
 											<th scope="col"> Name </th>
@@ -270,8 +266,6 @@
 													@else
 														<tr>
 															@endif
-															<td> {{$no+1}}
-															</td>
 															<td>
 																<a class="btn btn-block green btn-xs" onClick="viewLogDetail('{{$data['id_log_activities_be']}}','be')" href="#"><i class="icon-pencil"></i> Detail </a>
 																<a class="btn btn-block red btn-xs" href="{{ url('user/delete/logBE', $data['id_log_activities_be']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-tag"></i> Delete </a>

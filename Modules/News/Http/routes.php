@@ -10,6 +10,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', '
     Route::post('detail/{id}', ['middleware' => 'feature_control:22', 'uses' => 'NewsController@detail']);
     Route::get('position/assign', 'NewsController@positionAssign');
     Route::post('position/assign', 'NewsController@updatePositionAssign');
+    Route::get('featured', ['uses' => 'NewsController@featured']);
+    Route::post('featured', ['uses' => 'NewsController@featured']);
 
     //category
     Route::group(['prefix'=>'category'],function(){

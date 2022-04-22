@@ -11,20 +11,20 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
-	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
 
@@ -46,7 +46,7 @@
 
 @section('content')
 
-	<div class="page-bar">
+    <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
                 <a href="/">Home</a>
@@ -59,9 +59,9 @@
                 @endif
             </li>
             @if (!empty($sub_title))
-            <li>
-                <span>{{ $sub_title }}</span>
-            </li>
+                <li>
+                    <span>{{ $sub_title }}</span>
+                </li>
             @endif
         </ul>
     </div><br>
@@ -99,7 +99,7 @@
                                 <i class="fa fa-envelope-o"></i> {{$profile['email']}} </li>
                             <li class="list-group-item" style="padding: 5px !important;" title="User Gender">
                                 @if($profile['gender'] == 'Male')<i class="fa fa-male"></i> {{$profile['gender']}} </li>@else<i class="fa fa-female"></i> {{$profile['gender']}} </li>
-                                @endif
+                            @endif
                             <li class="list-group-item" style="padding: 5px !important;" title="User City & Province">
                                 <i class="fa fa-map"></i>
                                 @if(isset($profile['city']['city_name'])){{$profile['city']['city_name']}}@endif
@@ -126,16 +126,16 @@
         </div>
     </div>
 
-    <form role="form" action="{{ url('user/log/'.$phone) }}" method="post">
+    <form role="form" action="{{ url()->current() }}" method="post">
         @include('users::log_all_filter')
     </form>
 
-    @if (!empty($search))
+    @if (!empty($conditions))
         <div class="alert alert-block alert-info fade in">
             <button type="button" class="close" data-dismiss="alert"></button>
             <h4 class="alert-heading">Displaying search result :</h4>
-                <p>{{ $count }}</p><br>
-        <a href="{{ url('user/log') }}" class="btn btn-sm btn-warning">Reset</a>
+            <p>{{ $count }}</p><br>
+            <a href="{{ url()->current() }}" class="btn btn-sm btn-warning">Reset</a>
             <br>
         </div>
     @endif
@@ -149,16 +149,16 @@
         <div class="portlet-body">
             <div class="tabbable-line tabbable-full-width">
                 <ul class="nav nav-tabs">
-                    <li class=" @if(!isset($tipe)) active @endif">
-                        <a href="#log_mobile" data-toggle="tab"> Mobile </a>
+                    <li class=" @if((isset($tipe) && $tipe == 'mobile') || !isset($tipe)) active @endif">
+                        <a href="{{url('user/log/'.$phone.'/mobile')}}"> Mobile </a>
                     </li>
                     <li class=" @if(isset($tipe) && $tipe == 'backend') active @endif">
-                        <a href="#log_backend" data-toggle="tab"> Backend </a>
+                        <a href="{{url('user/log/'.$phone.'/backend')}}"> Backend </a>
                     </li>
                 </ul>
             </div>
             <div class="tab-content" style="margin-top:20px">
-                <div class="tab-pane @if(!isset($tipe)) active @endif" id="log_mobile">
+                <div class="tab-pane @if((isset($tipe) && $tipe == 'mobile') || !isset($tipe)) active @endif" id="log_mobile">
                     <table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
                         <thead>
                         <tr>
@@ -172,40 +172,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @if(!empty($log['mobile']))
-                                @foreach($log['mobile'] as $datalog)
-                                    <tr>
-                                        <td>
-                                            @if(stristr($datalog['useragent'],'iOS'))
-                                                <i class="fa fa-apple"></i>
-                                            @elseif(stristr($datalog['useragent'],'okhttp'))
-                                                <i class="fa fa-android"></i>
-                                            @endif
-                                        </td>
-                                        <td> {{date("d F Y H:i:s", strtotime($datalog['created_at']))}} </td>
-                                        <td>{{$datalog['subject']}}</td>
-                                        <td>{{$datalog['module']}}</td>
-                                        <td>
-                                            @if($datalog['response_status'] == 'fail')
+                        @if(!empty($log['mobile']))
+                            @foreach($log['mobile'] as $datalog)
+                                <tr>
+                                    <td>
+                                        @if(stristr($datalog['useragent'],'iOS'))
+                                            <i class="fa fa-apple"></i>
+                                        @elseif(stristr($datalog['useragent'],'okhttp'))
+                                            <i class="fa fa-android"></i>
+                                        @endif
+                                    </td>
+                                    <td> {{date("d F Y H:i:s", strtotime($datalog['created_at']))}} </td>
+                                    <td>{{$datalog['subject']}}</td>
+                                    <td>{{$datalog['module']}}</td>
+                                    <td>
+                                        @if($datalog['response_status'] == 'fail')
                                             <span class="label label-danger label-sm"> Failed
                                             </span>
-                                            @else
+                                        @else
                                             <span class="label label-success label-sm"> Success
                                             </span>
-                                            @endif
-                                        </td>
-                                        <td>{{$datalog['ip']}}</td>
-                                        <td>
+                                        @endif
+                                    </td>
+                                    <td>{{$datalog['ip']}}</td>
+                                    <td>
                                             <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activities_apps']}}','apps')"> <i class="fa fa-info-circle"></i> Details
-            							</td>
-                                    </tr>
-                                @endforeach
-                            @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
 
                     @if (isset($mobile_page))
-                      {{ $mobile_page->links() }}
+                        {{ $mobile_page->links() }}
                     @endif
                 </div>
 
@@ -213,7 +213,6 @@
                     <table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
                         <thead>
                         <tr>
-                            <th></th>
                             <th>Datetime</th>
                             <th>Module</th>
                             <th>Subject</th>
@@ -223,39 +222,32 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @if(!empty($log['backend']))
-                                @foreach($log['backend'] as $datalog)
-                                    <tr>
-                                        <td>
-                                            @if(stristr($datalog['useragent'],'iOS'))
-                                                <i class="fa fa-apple"></i>
-                                            @elseif(stristr($datalog['useragent'],'okhttp'))
-                                                <i class="fa fa-android"></i>
-                                            @endif
-                                        </td>
-                                        <td> {{date("d F Y H:i:s", strtotime($datalog['created_at']))}} </td>
-                                        <td>{{$datalog['module']}}</td>
-                                        <td>{{$datalog['subject']}}</td>
-                                        <td>
-                                            @if($datalog['response_status'] == 'fail')
+                        @if(!empty($log['backend']))
+                            @foreach($log['backend'] as $datalog)
+                                <tr>
+                                    <td> {{date("d F Y H:i:s", strtotime($datalog['created_at']))}} </td>
+                                    <td>{{$datalog['module']}}</td>
+                                    <td>{{$datalog['subject']}}</td>
+                                    <td>
+                                        @if($datalog['response_status'] == 'fail')
                                             <span class="label label-danger label-sm"> Failed
                                             </span>
-                                            @else
+                                        @else
                                             <span class="label label-success label-sm"> Success
                                             </span>
-                                            @endif
-                                        </td>
-                                        <td>{{$datalog['ip']}}</td>
-                                        <td>
+                                        @endif
+                                    </td>
+                                    <td>{{$datalog['ip']}}</td>
+                                    <td>
                                             <span style="cursor: pointer;" class="label label-info label-sm" onClick="viewLogDetail('{{$datalog['id_log_activities_be']}}', 'be')"> <i class="fa fa-info-circle"></i> Details
-            							</td>
-                                    </tr>
-                                @endforeach
-                            @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                     @if (isset($backend_page))
-                      {{ $backend_page->links() }}
+                        {{ $backend_page->links() }}
                     @endif
                 </div>
             </div>
@@ -264,48 +256,48 @@
     </div>
 
     <div class="modal fade" id="logModal" tabindex="-1" role="basic" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-				<h4 class="modal-title">Request & Response Detail</h4>
-			</div>
-			<div class="modal-body form">
-				<form role="form">
-					<div class="form-body">
-						<div class="form-group">
-							<label>URL</label>
-							<input type="text" class="form-control" readonly id="log-url">
-						</div>
-						<div class="form-group">
-							<label>Status</label>
-							<input type="text" class="form-control" readonly id="log-status">
-						</div>
-						<div class="form-group">
-							<label>IP Address</label>
-							<input type="text" class="form-control" readonly id="log-ip">
-						</div>
-						<div class="form-group">
-							<label>User Agent</label>
-							<input type="text" class="form-control" readonly id="log-useragent">
-						</div>
-						<div class="form-group">
-							<label>Request</label>
-							<textarea class="form-control" rows="4" readonly id="log-request"></textarea>
-						</div>
-						<div class="form-group">
-							<label>Response</label>
-							<textarea class="form-control" rows="4" readonly id="log-response"></textarea>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Request & Response Detail</h4>
+                </div>
+                <div class="modal-body form">
+                    <form role="form">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label>URL</label>
+                                <input type="text" class="form-control" readonly id="log-url">
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <input type="text" class="form-control" readonly id="log-status">
+                            </div>
+                            <div class="form-group">
+                                <label>IP Address</label>
+                                <input type="text" class="form-control" readonly id="log-ip">
+                            </div>
+                            <div class="form-group">
+                                <label>User Agent</label>
+                                <input type="text" class="form-control" readonly id="log-useragent">
+                            </div>
+                            <div class="form-group">
+                                <label>Request</label>
+                                <textarea class="form-control" rows="4" readonly id="log-request"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Response</label>
+                                <textarea class="form-control" rows="4" readonly id="log-response"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 @endsection

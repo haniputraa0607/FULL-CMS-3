@@ -223,6 +223,10 @@
         }
 
         $(document).ready(function() {
+            @if(!empty(old('news_type')))
+               var change_type = '{{old('news_type')}}';
+               changeType(change_type);
+            @endif
             token = '<?php echo csrf_token()?>';
 
             $('.summernote').summernote({
@@ -242,8 +246,22 @@
                 ],
                 callbacks: {
                     onFocus: function() {
-                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/content-long.jpg')}}")
+                        var type = $('#news_type').val();
+
+                        switch(type) {
+                            case "video":
+                                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                                break;
+                            case "article":
+                                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_content.jpg')}}")
+                                break;
+                            case "online_class":
+                                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1_full.jpg')}}")
+                                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_content.jpg')}}")
+                                break;
+                        }
                     },
                     onImageUpload: function(files){
                         sendFile(files[0], $(this).attr('id'));
@@ -412,8 +430,22 @@
             /* OUTLET */
             $('#featureOutlet').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureOutlet', state);
-                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
+                var type = $('#news_type').val();
+
+                switch(type) {
+                    case "video":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                        break;
+                    case "article":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_outlet.jpg')}}")
+                        break;
+                    case "online_class":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2.jpg')}}")
+                        break;
+                }
             });
 
             /* VIDEO */
@@ -424,36 +456,107 @@
                 }else{
                   $('#video-container').html('');
                 }
-                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/video.jpg')}}")
+                var type = $('#news_type').val();
+
+                switch(type) {
+                    case "video":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                        break;
+                    case "article":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_video.jpg')}}")
+                        break;
+                    case "online_class":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2.jpg')}}")
+                        break;
+                }
             });
 
             /* LOCATION */
             $('#featureLocation').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureLocation', state);
-                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.jpg')}}")
+                var type = $('#news_type').val();
+
+                switch(type) {
+                    case "video":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                        break;
+                    case "article":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_featured.jpg')}}")
+                        break;
+                    case "online_class":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2.jpg')}}")
+                        break;
+                }
             });
 
             /* PRODUCT */
             $('#featureProduct').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureProduct', state);
-                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/product.jpg')}}")
+                var type = $('#news_type').val();
+
+                switch(type) {
+                    case "video":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                        break;
+                    case "article":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_product.jpg')}}")
+                        break;
+                    case "online_class":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2.jpg')}}")
+                        break;
+                }
             });
 
             /* DATE */
             $('#featureDate').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureDate', state);
-                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.jpg')}}")
+                var type = $('#news_type').val();
+
+                switch(type) {
+                    case "video":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                        break;
+                    case "article":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_featured.jpg')}}")
+                        break;
+                    case "online_class":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1_full.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_date_time.jpg')}}")
+                        break;
+                }
             });
 
             /* TIME */
             $('#featureTime').on('switchChange.bootstrapSwitch', function(event, state) {
                 actionForm('featureTime', state);
-                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/event.jpg')}}")
+
+                var type = $('#news_type').val();
+
+                switch(type) {
+                    case "video":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                        break;
+                    case "article":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_featured.jpg')}}")
+                        break;
+                    case "online_class":
+                        $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1_full.jpg')}}")
+                        $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_date_time.jpg')}}")
+                        break;
+                }
             });
 
             /* PUBLISH DATE */
@@ -544,25 +647,140 @@
             }
         }
 
+        $('#news_by').focus(function(){
+            var type = $('#news_type').val();
+
+            switch(type) {
+                case "video":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1_video_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2_video_full.jpg')}}")
+                    break;
+                case "article":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_date_by.jpg')}}")
+                    break;
+                case "online_class":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1_time_by.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_full.jpg')}}")
+                    break;
+            }
+
+        })
+
+        $('#link_video').focus(function(){
+            var type = $('#news_type').val();
+
+            switch(type) {
+                case "video":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1_video.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2_video.jpg')}}")
+                    break;
+                case "article":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_title.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_title.jpg')}}")
+                    break;
+                case "online_class":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1_title.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_content.jpg')}}")
+                    break;
+            }
+
+        })
+
         $('#field_title').focus(function(){
-            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/title.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/title2.jpg')}}")
+            var type = $('#news_type').val();
+
+            switch(type) {
+                case "video":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                    break;
+                case "article":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_title.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_title.jpg')}}")
+                    break;
+                case "online_class":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1_title.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_content.jpg')}}")
+                    break;
+            }
+
         })
         $('#field_post_date').focus(function(){
-            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/post-date.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/post-date2.jpg')}}")
+            var type = $('#news_type').val();
+
+            switch(type) {
+                case "video":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                    break;
+                case "article":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_date_by.jpg')}}")
+                    break;
+                case "online_class":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_full.jpg')}}")
+                    break;
+            }
         })
         $('#field_content_short').focus(function(){
-            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/content-short.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news4.jpg')}}")
+            var type = $('#news_type').val();
+
+            switch(type) {
+                case "video":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1_content_short.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2_content_short.jpg')}}")
+                    break;
+                case "article":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_full.jpg')}}")
+                    break;
+                case "online_class":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1_content_short.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_full.jpg')}}")
+                    break;
+            }
         })
         $('#field_image_square').focus(function(){
             $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/image-square.jpg')}}")
             $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news4.jpg')}}")
         })
         $('#field_image_landscape').focus(function(){
-            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/image-landscape2.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/image-landscape.jpg')}}")
+            var type = $('#news_type').val();
+
+            switch(type) {
+                case "video":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                    break;
+                case "article":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2.jpg')}}")
+                    break;
+                case "online_class":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2.jpg')}}")
+                    break;
+            }
+        })
+        $('.news_button').focus(function(){
+            var type = $('#news_type').val();
+
+            switch(type) {
+                case "video":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2_full.jpg')}}")
+                    break;
+                case "article":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_button.jpg')}}")
+                    break;
+                case "online_class":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2_button.jpg')}}")
+                    break;
+            }
         })
         $('.field_event').focus(function(){
             $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
@@ -580,21 +798,42 @@
             $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
             $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
         })
-        $("input[name='publish_type']").change(function(){
-            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.jpg')}}")
-        })
-        $(".field_publish_date").focus(function(){
-            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.jpg')}}")
-        })
+
         $(document).on('focus', '#selectOutlet .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/outlet.jpg')}}")
+            var type = $('#news_type').val();
+
+            switch(type) {
+                case "video":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                    break;
+                case "article":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_outlet.jpg')}}")
+                    break;
+                case "online_class":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2.jpg')}}")
+                    break;
+            }
         })
         $(document).on('focus', '#selectProduct .select2', function (e) {
-            $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news3.jpg')}}")
-            $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/product.jpg')}}")
+            var type = $('#news_type').val();
+
+            switch(type) {
+                case "video":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}")
+                    break;
+                case "article":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1_full.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2_product.jpg')}}")
+                    break;
+                case "online_class":
+                    $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1.jpg')}}")
+                    $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2.jpg')}}")
+                    break;
+            }
         })
         $(document).on('focus', '#selectCategory .select2', function (e) {
             $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}")
@@ -610,6 +849,38 @@
           var id=$(this).data('id');
           video[id]=$(this).val();
         });
+        
+        function changeType(value) {
+            if(value == 'video'){
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_1.jpg')}}");
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_video_2.jpg')}}");
+                $('.form-show').hide();
+                $('.form-video-show').show();
+                $('#div_link_video').show();
+                $("#link_video").prop('required',true);
+                $("#field_image_landscape").prop('required',false);
+                $("#news_by").prop('required',false);
+                $('.make-switch').bootstrapSwitch('state', false);
+            }else{
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1.jpg')}}");
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2.jpg')}}");
+                $('.form-show').show();
+                $('#div_link_video').hide();
+                $("#link_video").prop('required',false);
+                $("#field_image_landscape").prop('required',true);
+                $("#news_by").prop('required',true);
+            }
+
+            if(value == 'online_class'){
+                $('#tutorial1').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_1.jpg')}}");
+                $('#tutorial2').attr('src', "{{env('STORAGE_URL_VIEW') }}{{('img/news/news_online_class_2.jpg')}}");
+                $('#featureLocation').bootstrapSwitch('state', false);
+                $('#featureVideo').bootstrapSwitch('state', false);
+                $('#featureOutlet').bootstrapSwitch('state', false);
+                $('#featureProduct').bootstrapSwitch('state', false);
+                $('.form-class-hide').hide();
+            }
+        }
     </script>
 @endsection
 
@@ -645,12 +916,29 @@
         <div class="portlet-body m-form__group row">
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                     <div class="col-md-4">
-                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
-                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news2.jpg')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">
+                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
+                        <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2.jpg')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">
                     </div>
                     <div class="col-md-8">
                     <div class="form-body">
                         <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Type
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Tipe artikel" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control select2" name="news_type" id="news_type" required onchange="changeType(this.value)">
+                                    <option></option>
+                                    <option value="video" @if(old('news_type') == 'video') selected @endif>Video</option>
+                                    <option value="article" @if(empty(old('news_type')) || old('news_type') == 'article') selected @endif>Article</option>
+                                    <option value="online_class" @if(old('news_type') == 'online_class') selected @endif> Online Class</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-show form-video-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Post Date
@@ -680,7 +968,7 @@
 							</div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group form-show form-video-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Publish Date
@@ -745,7 +1033,20 @@
                             </div>
                         </div> -->
 
-                        <div class="form-group">
+                        <div class="form-group form-show">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    News By
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Nama pengisi artikel/kelas online" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" maxlength="30" name="news_by" id="news_by" value="{{ old('news_by') }}" placeholder="News By" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-show form-video-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 News Title
@@ -758,7 +1059,20 @@
                             </div>
                         </div>
 
-                        <div class="form-group" id="selectCategory">
+                        <div class="form-group form-video-show" id="div_link_video" @if(old('news_type') == 'video' || empty(old('news_type'))) style="display: none" @endif>
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Link Video
+                                    <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Link video" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="link_video" id="link_video" value="{{ old('link_video') }}" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ">
+                            </div>
+                        </div>
+
+                        <!--<div class="form-group" id="selectCategory">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 News Category
@@ -774,7 +1088,7 @@
                                   @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div>-->
 
                         <!-- <div class="form-group">
                             <div class="input-icon right">
@@ -806,7 +1120,7 @@
                             </div>
                         </div> -->
 
-                        <div class="form-group">
+                        <div class="form-group form-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Image Landscape
@@ -836,7 +1150,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
+                        <div class="form-group form-show form-video-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Content Short
@@ -845,11 +1159,11 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News" required>{ { old('news_content_short') } }</textarea>
+                                <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News">{{old('news_content_short')}}</textarea>
                             </div>
-                        </div> -->
+                        </div>
 
-                        <div class="form-group">
+                        <div class="form-group form-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Content Long
@@ -862,8 +1176,32 @@
                             </div>
                         </div>
 
+                        <div class="form-group form-show">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Button Text
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Wording button pada detail news" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control news_button" maxlength="50" name="news_button_text" value="{{ old('news_button_text') }}" placeholder="Button Text">
+                            </div>
+                        </div>
+
+                        <div class="form-group form-show">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                    Button Link
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Link pada button" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control news_button" maxlength="250" name="news_button_link" value="{{ old('news_button_link') }}" placeholder="Example: meet.google.com/mni-tsxu">
+                            </div>
+                        </div>
+
                         <!-- EVENT DATE -->
-                        <div class="form-group">
+                        <div class="form-group form-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Date
@@ -919,7 +1257,7 @@
                         </div>
 
                         <!-- EVENT TIME -->
-                        <div class="form-group">
+                        <div class="form-group form-show">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Time
@@ -975,7 +1313,7 @@
                         </div>
 
                         <!-- LOCATION -->
-                        <div class="form-group">
+                        <div class="form-group form-show form-class-hide">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Location
@@ -1059,7 +1397,7 @@
                         </div>
 
                         <!-- VIDEO -->
-                        <div class="form-group">
+                        <div class="form-group form-show form-class-hide">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Video
@@ -1102,7 +1440,7 @@
                         </div>
 
                         <!-- OUTLET -->
-                        <div class="form-group">
+                        <div class="form-group form-show form-class-hide">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Outlet
@@ -1152,7 +1490,7 @@
                         </div>
 
                         <!-- PRODUCT -->
-                        <div class="form-group">
+                        <div class="form-group form-show form-class-hide">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
                                 Featured Product
