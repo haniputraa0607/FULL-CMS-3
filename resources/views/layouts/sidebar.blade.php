@@ -2269,6 +2269,62 @@
 				</li>
 			@endif
 
+			@if(MyHelper::hasAccess([95], $configs))
+			@if(MyHelper::hasAccess([155,156,157,158,159], $grantedFeature))
+			<li class="nav-item {{($menu_active == 'doctor') ? 'active' : ''}}">
+				<a href="javascript:;" class="nav-link nav-toggle">
+					<i class="icon-badge"></i>
+					<span class="title">Doctor</span>
+					<span class="arrow {{($menu_active == 'doctor') ? 'open' : ''}}"></span>
+				</a>
+				<ul class="sub-menu">
+					@if(MyHelper::hasAccess([156], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'doctor-create') ? 'active open' : ''}}">
+						<a href="{{url('doctor/create')}}" class="nav-link ">
+							<span class="title">New Doctor</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([155,157,158,159], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'doctor-list') ? 'active open' : ''}}">
+						<a href="{{url('doctor')}}" class="nav-link ">
+							<span class="title">List Doctor</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([155,157,158,159], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'doctor-clinic') ? 'active open' : ''}}">
+						<a href="{{url('doctor/clinic')}}" class="nav-link ">
+							<span class="title">Clinic</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([155,157,158,159], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'doctor-service') ? 'active open' : ''}}">
+						<a href="{{url('doctor/service')}}" class="nav-link ">
+							<span class="title">Service</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([155,157,158,159], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'doctor-specialist-category') ? 'active open' : ''}}">
+						<a href="{{url('doctor/specialist-category')}}" class="nav-link ">
+							<span class="title">Specialist Category</span>
+						</a>
+					</li>
+					@endif
+					@if(MyHelper::hasAccess([155,157,158,159], $grantedFeature))
+					<li class="nav-item {{($submenu_active == 'doctor-specialist') ? 'active open' : ''}}">
+						<a href="{{url('doctor/specialist')}}" class="nav-link ">
+							<span class="title">Specialist</span>
+						</a>
+					</li>
+					@endif
+				</ul>
+			</li>
+			@endif
+			@endif
+
 		@if(MyHelper::hasAccess([83,96,97,98,100,103,104,105,106,107,108,109,111], $grantedFeature) && false)
 			<li class="heading" style="height: 50px;padding: 25px 15px 10px;">
 				<h3 class="uppercase" style="color: #d2ac67;font-weight: 600;">CRM</h3>
