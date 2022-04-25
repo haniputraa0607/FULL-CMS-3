@@ -55,7 +55,9 @@ $configs     		= session('configs');
 						<span class="caption-subject font-blue sbold uppercase"><i class="fa fa-list"></i> {{$title}} </span>
 					</div>
 				</div>
+				@if(MyHelper::hasAccess([333], $grantedFeature))
 				<a href="{{ url('doctor/service/create') }}" data-repeater-create="" class="btn btn-info mt-repeater-add" style="margin-left: 20px;"><i class="fa fa-plus"></i> Add Service</a>
+				@endif
 				<div class="portlet-body">
 					<div class="table-scrollable">
 						<table class="table table-striped table-bordered table-hover">
@@ -72,12 +74,16 @@ $configs     		= session('configs');
 								<td>{{$value['doctor_service_name']}}</td>
 								<td>
 									<form action="{{ url('doctor/service', $value['id_doctor_service']) }}" method="POST">
+										@if(MyHelper::hasAccess([346], $grantedFeature))
 										<a href="{{ url('doctor/service', $value['id_doctor_service']) }}/{{'edit'}}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a> 
+										@endif
 										{{--<a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_doctor_service'] }}"><i class="fa fa-trash-o"></i></a>--}}
 									
+										@if(MyHelper::hasAccess([347], $grantedFeature))
 										@csrf
 										@method('DELETE')
 										<button type="submit" class="btn btn-sm red"><i class="fa fa-trash-o"></i></button>
+										@endif
 									</form>
 								</td>
 							</tr>

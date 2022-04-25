@@ -154,8 +154,12 @@ $grantedFeature     = session('granted_features');
 						data: "id_doctor",
 						render: function(value, type, row) {
 							return `
+								@if(MyHelper::hasAccess([330], $grantedFeature))
 								<a href="{{url('doctor')}}/${value}/edit" class="btn yellow btn-sm" style="margin-bottom:5px">Edit</a>
+								@endif
+								@if(MyHelper::hasAccess([331], $grantedFeature))
 								${row.is_complete ? '' : `<a href="javascript:;" onclick="removeDoctor(this, ${value})" class="btn red btn-sm"> Remove </a>`}
+								@endif
 							`;
 						},
 					}

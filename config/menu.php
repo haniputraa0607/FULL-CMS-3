@@ -236,27 +236,36 @@ return [
 					'type' => 'tree',
 					'label' => 'Doctor',
 					'icon' => 'icon-users',
-					'required_features' => [462],
 					'children' => [
 						[
 							'label' => 'New User Doctor',
+							'required_features' => [329],
 							'url' => 'doctor/create',
 						],
 						[
 							'label' => 'Doctor List',
+							'required_features' => [328],
 							'url' => 'doctor',
 						],
 						[
 							'label' => 'Clinic',
+							'required_features' => [332],
 							'url' => 'doctor/clinic',
 						],
 						[
 							'label' => 'Specialist',
+							'required_features' => [336],
 							'url' => 'doctor/specialist',
 						],
 						[
 							'label' => 'Specialist Category',
+							'required_features' => [340],
 							'url' => 'doctor/specialist-category',
+						],
+						[
+							'label' => 'Service',
+							'required_features' => [344],
+							'url' => 'doctor/service',
 						]
 					]
 				],
