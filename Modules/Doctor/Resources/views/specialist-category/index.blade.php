@@ -55,7 +55,9 @@ $configs     		= session('configs');
 						<span class="caption-subject font-blue sbold uppercase"><i class="fa fa-list"></i> {{$title}} </span>
 					</div>
 				</div>
+				@if(MyHelper::hasAccess([341], $grantedFeature))
 				<a href="{{ url('doctor/specialist-category/create') }}" data-repeater-create="" class="btn btn-info mt-repeater-add" style="margin-left: 20px;"><i class="fa fa-plus"></i> Add Specialist Category</a>
+				@endif
 				<div class="portlet-body">
 					<div class="table-scrollable">
 						<table class="table table-striped table-bordered table-hover">
@@ -72,12 +74,16 @@ $configs     		= session('configs');
 								<td>{{$value['doctor_specialist_category_name']}}</td>
 								<td>
 									<form action="{{ url('doctor/specialist-category', $value['id_doctor_specialist_category']) }}" method="POST">
-										<a href="{{ url('doctor/specialist-category', $value['id_doctor_specialist_category']) }}/{{'edit'}}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a> 
+										@if(MyHelper::hasAccess([342], $grantedFeature))
+										<a href="{{ url('doctor/specialist-category', $value['id_doctor_specialist_category']) }}/{{'edit'}}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
+										@endif
 										{{--<a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_doctor_id_doctor_specialist_category'] }}"><i class="fa fa-trash-o"></i></a>--}}
 									
+										@if(MyHelper::hasAccess([343], $grantedFeature))
 										@csrf
 										@method('DELETE')
 										<button type="submit" class="btn btn-sm red"><i class="fa fa-trash-o"></i></button>
+										@endif
 									</form>
 								</td>
 							</tr>
