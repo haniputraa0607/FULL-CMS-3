@@ -229,34 +229,34 @@ return [
 									'url' => 'user/autoresponse-franchise/reset-password-user-franchise',
 								]
 							]
+						]
+					]
+				],
+				[
+					'type' => 'tree',
+					'label' => 'Doctor',
+					'icon' => 'icon-users',
+					'required_features' => [462],
+					'children' => [
+						[
+							'label' => 'New User Doctor',
+							'url' => 'doctor/create',
 						],
 						[
-							'label' => 'Doctor',
-							'type' => 'tree',
-							'icon' => 'icon-users',
-							'required_features' => [],
-							'children' => [
-								[
-									'label' => 'New User Doctor',
-									'url' => 'doctor/create',
-								],
-								[
-									'label' => 'Doctor List',
-									'url' => 'doctor',
-								],
-								[
-									'label' => 'Clinic',
-									'url' => 'doctor/clinic',
-								],
-								[
-									'label' => 'Specialist',
-									'url' => 'doctor/specialist',
-								],
-								[
-									'label' => 'Specialist Category',
-									'url' => 'doctor/specialist-category',
-								]
-							]
+							'label' => 'Doctor List',
+							'url' => 'doctor',
+						],
+						[
+							'label' => 'Clinic',
+							'url' => 'doctor/clinic',
+						],
+						[
+							'label' => 'Specialist',
+							'url' => 'doctor/specialist',
+						],
+						[
+							'label' => 'Specialist Category',
+							'url' => 'doctor/specialist-category',
 						]
 					]
 				],
