@@ -236,7 +236,7 @@ return [
 					'type' => 'tree',
 					'label' => 'Doctor',
 					'icon' => 'icon-users',
-					'required_features' => [462],
+					'required_features' => [328],
 					'children' => [
 						[
 							'label' => 'New User Doctor',
