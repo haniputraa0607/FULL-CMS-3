@@ -55,7 +55,7 @@ $configs     		= session('configs');
 						<span class="caption-subject font-blue sbold uppercase"><i class="fa fa-list"></i> {{$title}} </span>
 					</div>
 				</div>
-				@if(MyHelper::hasAccess([333], $grantedFeature))
+				@if(MyHelper::hasAccess([345], $grantedFeature))
 				<a href="{{ url('doctor/service/create') }}" data-repeater-create="" class="btn btn-info mt-repeater-add" style="margin-left: 20px;"><i class="fa fa-plus"></i> Add Service</a>
 				@endif
 				<div class="portlet-body">
@@ -68,6 +68,7 @@ $configs     		= session('configs');
 							</tr>
 							</thead>
 							<tbody>
+							@if(count($service) > 0)
 							@foreach($service as $key => $value)
 							<tr>
 								<td>{{$key+1}}</td>
@@ -88,6 +89,11 @@ $configs     		= session('configs');
 								</td>
 							</tr>
 							@endforeach
+							@else
+							<tr>
+								<td colspan=2 style="text-align:center;">No data available in table</td>
+							</tr>
+							@endif
 							</tbody>
 						</table>
 					</div>

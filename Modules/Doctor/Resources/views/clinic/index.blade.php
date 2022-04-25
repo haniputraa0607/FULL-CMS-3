@@ -94,6 +94,7 @@ $configs     		= session('configs');
 							</tr>
 							</thead>
 							<tbody>
+							@if(count($clinic) > 0)
 							@foreach($clinic as $key => $value)
 							<tr>
 								<td>{{$key+1}}</td>
@@ -114,6 +115,11 @@ $configs     		= session('configs');
 								</td>
 							</tr>
 							@endforeach
+							@else
+							<tr>
+								<td colspan=2 style="text-align:center;">No data available in table</td>
+							</tr>
+							@endif
 							</tbody>
 						</table>
 					</div>
