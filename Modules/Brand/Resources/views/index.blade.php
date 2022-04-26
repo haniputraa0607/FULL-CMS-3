@@ -234,7 +234,7 @@
                             @endphp
                                 <tr>
                                     <td>{{ $value['code_brand'] }} <input type="hidden" name="order[]" value="{{$value['id_brand']}}"></td>
-                                    <td>{{ $value['name_brand'] }}</td>
+                                    <td>{{ $value['name_brand'] }} {!! !empty($value['default_brand_status']) ? '<span class="badge badge-primary badge-sm">Default</span>' : ''!!}</td>
                                     @if (end($logo) != 'png')
                                         <td>No Logo</td>
                                     @else
