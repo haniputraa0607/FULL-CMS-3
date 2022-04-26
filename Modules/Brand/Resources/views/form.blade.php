@@ -6,6 +6,7 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/skins/all.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
@@ -16,6 +17,7 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
     $(document).ready(function() {
         $('.summernote').summernote({
@@ -101,6 +103,16 @@
             <form class="form-horizontal" role="form" action="{{ url('brand/store') }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
+                        <label for="multiple" class="control-label col-md-3">Default Brand
+                            <i class="fa fa-question-circle tooltips" data-original-title="Default brand pada produk" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8" style="margin-top: 0.7%">
+                            <div class="icheck-list">
+                                <input type="checkbox" class="icheck" name="default_brand_status" @if(!empty($result['default_brand_status'])) checked @endif>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Name
                             <span class="required" aria-required="true"> *
                             </span>
@@ -169,7 +181,7 @@
                                     <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/png" name="logo_brand" class="file" data-jenis="logo_brand" required> </span>
+                                        <input type="file" accept="image/png" name="logo_brand" class="file" data-jenis="logo_brand" @if(empty($result['logo_brand'])) required @endif> </span>
                                     <a href="javascript:;" id="removeLogo" class="btn red default fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                 </div>
                             </div>

@@ -23,9 +23,13 @@ class BrandController extends Controller
         ];
 
         $brand = MyHelper::get('brand');
-
+        $default = MyHelper::get('brand/default')['result']??null;
         if (isset($brand['status']) && $brand['status'] == "success") {
         	foreach ($brand['result'] as $key => $value) {
+                $brand['result'][$key]['default_brand_status'] = 0;
+                if($default == $value['id_brand']){
+                    $brand['result'][$key]['default_brand_status'] = 1;
+                }
 				$brand['result'][$key]['id_brand'] = MyHelper::createSlug($value['id_brand'], $value['created_at']);
 			}
             $data['brand'] = $brand['result'];
