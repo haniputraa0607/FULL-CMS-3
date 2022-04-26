@@ -277,9 +277,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-actions" style="text-align:center;">
-						{{ csrf_field() }}
-						<button type="submit" class="btn blue" id="checkBtn">Create</button>
+					<div class="form-group">
+						<div class="input-icon right">
+							<label class="col-md-3 control-label"> </label>
+						</div>
+						<div class="col-md-9">
+							<div class="form-actions">
+								{{ csrf_field() }}
+								<button type="submit" class="btn blue" id="checkBtn">{{isset($doctor) ? 'Update' : 'Create'}}</button>
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>

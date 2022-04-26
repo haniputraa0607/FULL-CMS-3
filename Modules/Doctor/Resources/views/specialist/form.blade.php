@@ -37,7 +37,7 @@
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Specialist Category Name
 										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="{{env('POINT_NAME', 'Points')}} yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="pilih specialist category untuk specialist" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
 									<select name="id_doctor_specialist_category" class="form-control input-sm select2" data-placeholder="Yes / No" required>
@@ -57,16 +57,23 @@
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Specialist Name
 										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="masukkan nama specialist" data-container="body"></i>
 									</label>
 									<div class="fileinput fileinput-new col-md-4">
 										<input class="form-control" type="text" name="doctor_specialist_name" value="{{ isset($specialist) ? $specialist['doctor_specialist_name'] : old('doctor_specialist_name') }}" required>
 									</div>
 								</div>
 							</div>
-							<div class="form-actions" style="text-align:center">
-								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
+							<div class="form-group">
+								<div class="form-group col-md-12">
+									<label class="col-md-4 control-label"> </label>
+									<div class="col-md-8">
+										<div class="form-actions">
+											{{ csrf_field() }}
+											<button type="submit" class="btn blue" id="checkBtn">{{isset($specialist) ? 'Update' : 'Create'}}</button>
+										</div>
+									</div>
+								</div>
 							</div>
 						</form>
 					</div>
