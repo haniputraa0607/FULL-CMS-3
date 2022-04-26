@@ -93,7 +93,7 @@ $configs     		= session('configs');
 							@endforeach
 							@else
 							<tr>
-								<td colspan=2 style="text-align:center;">No data available in table</td>
+								<td colspan=3 style="text-align:center;">No data available in table</td>
 							</tr>
 							@endif
 							</tbody>

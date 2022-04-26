@@ -250,21 +250,25 @@ return [
 						[
 							'label' => 'Clinic',
 							'required_features' => [332],
+							'active' => '\View::shared("submenu_active") == "doctor-clinic"',
 							'url' => 'doctor/clinic',
 						],
 						[
 							'label' => 'Specialist',
 							'required_features' => [336],
+							'active' => '\View::shared("submenu_active") == "doctor-specialist"',
 							'url' => 'doctor/specialist',
 						],
 						[
 							'label' => 'Specialist Category',
 							'required_features' => [340],
+							'active' => '\View::shared("submenu_active") == "doctor-specialist-category"',
 							'url' => 'doctor/specialist-category',
 						],
 						[
 							'label' => 'Service',
 							'required_features' => [344],
+							'active' => '\View::shared("submenu_active") == "doctor-service"',
 							'url' => 'doctor/service',
 						]
 					]

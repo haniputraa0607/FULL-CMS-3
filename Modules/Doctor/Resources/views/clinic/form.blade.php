@@ -32,21 +32,30 @@
 						@else 
 						<form role="form" class="form-horizontal" action="{{ url('doctor/clinic') }}" method="POST">
 						@endif
-							<div class="form-group col-md-12">
-								<label class="control-label col-md-4">Clinic Name
-									<span class="required" aria-required="true"> * </span>
-									<i class="fa fa-question-circle tooltips" data-original-title=" yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
-								</label>
-								<div class="fileinput fileinput-new col-md-4">
-									@if(isset($clinic))
-									<input class="form-control" type="hidden" name="id_doctor_clinic" value="{{$clinic['id_doctor_clinic']}}" required>
-									@endif
-									<input class="form-control" type="text" name="doctor_clinic_name" value="{{ isset($clinic) ? $clinic['doctor_clinic_name'] : old('doctor_clinic_name') }}" required>
+							<div class="form-group">
+								<div class="form-group col-md-12">
+									<label class="control-label col-md-4">Clinic Name
+										<span class="required" aria-required="true"> * </span>
+										<i class="fa fa-question-circle tooltips" data-original-title="masukkan nama klinik" data-container="body"></i>
+									</label>
+									<div class="fileinput fileinput-new col-md-4">
+										@if(isset($clinic))
+										<input class="form-control" type="hidden" name="id_doctor_clinic" value="{{$clinic['id_doctor_clinic']}}" required>
+										@endif
+										<input class="form-control" type="text" name="doctor_clinic_name" value="{{ isset($clinic) ? $clinic['doctor_clinic_name'] : old('doctor_clinic_name') }}" required>
+									</div>
 								</div>
 							</div>
-							<div class="form-actions" style="text-align:center">
-								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
+							<div class="form-group">
+								<div class="form-group col-md-12">
+									<label class="col-md-4 control-label"> </label>
+									<div class="col-md-8">
+										<div class="form-actions">
+											{{ csrf_field() }}
+											<button type="submit" class="btn blue" id="checkBtn">{{isset($clinic) ? 'Update' : 'Create'}}</button>
+										</div>
+									</div>
+								</div>
 							</div>
 						</form>
 					</div>

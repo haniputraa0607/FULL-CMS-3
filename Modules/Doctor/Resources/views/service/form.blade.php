@@ -32,21 +32,30 @@
 						@else 
 						<form role="form" class="form-horizontal" action="{{ url('doctor/service') }}" method="POST"> 
 						@endif
-							<div class="form-group col-md-12">
-								<label class="control-label col-md-4">Service Name
-									<span class="required" aria-required="true"> * </span>
-									<i class="fa fa-question-circle tooltips" data-original-title="yang diperoleh user ketika melengkapi data profil" data-container="body"></i>
-								</label>
-								<div class="fileinput fileinput-new col-md-4">
-									@if(isset($service))
-									<input class="form-control" type="hidden" name="id_doctor_service" value="{{$service['id_doctor_service']}}" required>
-									@endif
-									<input class="form-control" type="text" name="doctor_service_name" value="{{ isset($service) ? $service['doctor_service_name'] : old('doctor_service_name') }}" required>
+							<div class="form-group">
+								<div class="form-group col-md-12">
+									<label class="control-label col-md-4">Service Name
+										<span class="required" aria-required="true"> * </span>
+										<i class="fa fa-question-circle tooltips" data-original-title="masukkan nama service" data-container="body"></i>
+									</label>
+									<div class="fileinput fileinput-new col-md-4">
+										@if(isset($service))
+										<input class="form-control" type="hidden" name="id_doctor_service" value="{{$service['id_doctor_service']}}" required>
+										@endif
+										<input class="form-control" type="text" name="doctor_service_name" value="{{ isset($service) ? $service['doctor_service_name'] : old('doctor_service_name') }}" required>
+									</div>
 								</div>
 							</div>
-							<div class="form-actions" style="text-align:center">
-								{{ csrf_field() }}
-								<button type="submit" class="btn blue">Submit</button>
+							<div class="form-group">
+								<div class="form-group col-md-12">
+									<label class="col-md-4 control-label"> </label>
+									<div class="col-md-8">
+										<div class="form-actions">
+											{{ csrf_field() }}
+											<button type="submit" class="btn blue" id="checkBtn">{{isset($service) ? 'Update' : 'Create'}}</button>
+										</div>
+									</div>
+								</div>
 							</div>
 						</form>
 					</div>
