@@ -376,6 +376,16 @@ return [
                             'required_features' => [326],
                         ],
                         [
+                            'label' => 'Setting Register Approved',
+                            'url' => 'merchant/setting/register-approved',
+                            'required_features' => [326],
+                        ],
+                        [
+                            'label' => 'Setting Register Rejected',
+                            'url' => 'merchant/setting/register-rejected',
+                            'required_features' => [326],
+                        ],
+                        [
                             'label' => 'Merchant List',
                             'url' => 'merchant',
                             'required_features' => [323,324,325,326,327],
