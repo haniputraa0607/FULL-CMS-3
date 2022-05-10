@@ -313,11 +313,12 @@ return [
 								],
 							],
 						],
-						[
-							'label' => 'Manage Position',
-							'url' => 'news/position/assign',
-							'required_features' => [22,166],
-						],
+                        [
+                            'label' => 'News Featured',
+                            'active' => '\View::shared("submenu_active") == "news-featured"',
+                            'url' => 'news/featured',
+                            'required_features' => [19],
+                        ],
 						[
 							'type' => 'group',
 							'required_features' => [120,122],
