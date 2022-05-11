@@ -37,8 +37,8 @@
         });
 
         $(".file").change(function(e) {
-            var widthImg  = 720;
-            var heightImg = 360;
+            var widthImg  = $('#width').val();
+            var heightImg = $('#height').val();
             var _URL = window.URL || window.webkitURL;
             var image, file;
 
@@ -47,7 +47,7 @@
 
                 image.onload = function() {
                     if (this.width != widthImg ||  this.height != heightImg) {
-                        toastr.warning("Please check dimension of your photo. The maximum height and width 720*360.");
+                        toastr.warning("Please check dimension of your photo. The maximum height and width "+widthImg+"*"+heightImg+".");
                         $("#removeImage").trigger( "click" );
                     }
                 };
@@ -92,27 +92,56 @@
                     </div>
                     <div class="portlet-body">
                         <form role="form" class="form-horizontal" action="{{url()->current()}}" method="POST" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">
-                                    Image<span class="required" aria-required="true">* <br>(720*360) </span>
-                                </label>
-                                <div class="col-md-8">
-                                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                                        <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                            <img src="@if(isset($result['image'])){{$result['image']}}@endif" alt="">
-                                        </div>
-                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 100px;"></div>
-                                        <div>
+                            @if($status == 'introduction')
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">
+                                        Image<span class="required" aria-required="true">* <br>(720*360) </span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
+                                                <img src="@if(isset($result['image'])){{$result['image']}}@endif" alt="">
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 100px;"></div>
+                                            <div>
                                         <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
                                         <input type="file" accept="image/*" class="file" name="image">
                                         </span>
-                                            <a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                <a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <input type="hidden" id="width" value="720">
+                                <input type="hidden" id="height" value="360">
+                            @else
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">
+                                        Image<span class="required" aria-required="true">* <br>(500*500) </span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                                                <img src="@if(isset($result['image'])){{$result['image']}}@endif" alt="">
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
+                                            <div>
+                                        <span class="btn default btn-file">
+                                        <span class="fileinput-new"> Select image </span>
+                                        <span class="fileinput-exists"> Change </span>
+                                        <input type="file" accept="image/*" class="file" name="image">
+                                        </span>
+                                                <a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="width" value="500">
+                                <input type="hidden" id="height" value="500">
+                            @endif
+
                             <div class="form-group">
                                 <label class="col-md-3 control-label">
                                     Title
