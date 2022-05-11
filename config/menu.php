@@ -313,11 +313,12 @@ return [
 								],
 							],
 						],
-						[
-							'label' => 'Manage Position',
-							'url' => 'news/position/assign',
-							'required_features' => [22,166],
-						],
+                        [
+                            'label' => 'News Featured',
+                            'active' => '\View::shared("submenu_active") == "news-featured"',
+                            'url' => 'news/featured',
+                            'required_features' => [19],
+                        ],
 						[
 							'type' => 'group',
 							'required_features' => [120,122],
@@ -373,6 +374,16 @@ return [
                         [
                             'label' => 'Setting Register Success',
                             'url' => 'merchant/setting/register-success',
+                            'required_features' => [326],
+                        ],
+                        [
+                            'label' => 'Setting Register Approved',
+                            'url' => 'merchant/setting/register-approved',
+                            'required_features' => [326],
+                        ],
+                        [
+                            'label' => 'Setting Register Rejected',
+                            'url' => 'merchant/setting/register-rejected',
                             'required_features' => [326],
                         ],
                         [

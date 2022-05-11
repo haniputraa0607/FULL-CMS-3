@@ -299,10 +299,9 @@ class NewsController extends Controller
             if (isset($news['news_image_dalam'])) {
                 $news['news_image_dalam']  = MyHelper::encodeImage($news['news_image_dalam']);
             }
-            
-            $news['news_content_long'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%' ,$news['news_content_long']);
 
             if (isset($news['news_content_long'])) {
+                $news['news_content_long'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%' ,$news['news_content_long']);
                 // remove tag <font>
                 $news['news_content_long'] =preg_replace("/<\\/?font(.|\\s)*?>/",'',$news['news_content_long']);
             }

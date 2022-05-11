@@ -119,7 +119,7 @@
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <input class="form-control" name="title" value="{{$result['title']??''}}">
+                                    <input class="form-control" name="title" value="{{$result['title']??''}}" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -128,18 +128,19 @@
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <textarea class="form-control summernote" name="description">{{$result['description']??''}}</textarea>
+                                    <textarea class="form-control summernote" name="description" required>{{$result['description']??''}}</textarea>
                                 </div>
                             </div>
+                            @if($status != 'rejected')
                             <div class="form-group">
                                 <label class="col-md-3 control-label">
                                     Button Text
-                                    <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-4">
                                     <input class="form-control" name="button_text" value="{{$result['button_text']??''}}">
                                 </div>
                             </div>
+                            @endif
                             <br>
                             <br>
                             <div class="form-actions" style="text-align:center">

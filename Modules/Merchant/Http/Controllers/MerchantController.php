@@ -18,11 +18,12 @@ class MerchantController extends Controller
                 'title'          => 'Merchant',
                 'menu_active'    => 'merchant',
                 'sub_title'      => 'Setting Register Introduction',
-                'submenu_active' => 'merchant-setting-register-introduction'
+                'submenu_active' => 'merchant-setting-register-introduction',
+                'status'        => 'introduction'
             ];
 
             $data['result'] = MyHelper::get('merchant/register/introduction/detail')['result']??[];
-            return view('merchant::setting.register_introduction', $data);
+            return view('merchant::register_page', $data);
 
         } else {
             if(!empty($post['image'])){
@@ -45,11 +46,12 @@ class MerchantController extends Controller
                 'title'          => 'Merchant',
                 'menu_active'    => 'merchant',
                 'sub_title'      => 'Setting Register Success',
-                'submenu_active' => 'merchant-setting-register-success'
+                'submenu_active' => 'merchant-setting-register-success',
+                'status'        => 'success'
             ];
 
             $data['result'] = MyHelper::get('merchant/register/success/detail')['result']??[];
-            return view('merchant::setting.register_success', $data);
+            return view('merchant::register_page', $data);
 
         } else {
             if(!empty($post['image'])){
@@ -59,6 +61,62 @@ class MerchantController extends Controller
 
             if (($update['status'] ?? false) == 'success'){
                 return back()->with('success', ['Register success setting has been updated']);
+            }else{
+                return back()->withErrors($update['messages'] ?? ['Update failed']);
+            }
+        }
+    }
+
+    public function settingRegisterApproved(Request $request){
+        $post = $request->all();
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Merchant',
+                'menu_active'    => 'merchant',
+                'sub_title'      => 'Setting Register Approved',
+                'submenu_active' => 'merchant-setting-register-aproved',
+                'status'        => 'aproved'
+            ];
+
+            $data['result'] = MyHelper::get('merchant/register/approved/detail')['result']??[];
+            return view('merchant::register_page', $data);
+
+        } else {
+            if(!empty($post['image'])){
+                $post['image'] = MyHelper::encodeImage($post['image']);
+            }
+            $update = MyHelper::post('merchant/register/approved/save', $post);
+
+            if (($update['status'] ?? false) == 'success'){
+                return back()->with('success', ['Register approved setting has been updated']);
+            }else{
+                return back()->withErrors($update['messages'] ?? ['Update failed']);
+            }
+        }
+    }
+
+    public function settingRegisterRejected(Request $request){
+        $post = $request->all();
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Merchant',
+                'menu_active'    => 'merchant',
+                'sub_title'      => 'Setting Register Rejected',
+                'submenu_active' => 'merchant-setting-register-rejected',
+                'status'        => 'rejected'
+            ];
+
+            $data['result'] = MyHelper::get('merchant/register/rejected/detail')['result']??[];
+            return view('merchant::register_page', $data);
+
+        } else {
+            if(!empty($post['image'])){
+                $post['image'] = MyHelper::encodeImage($post['image']);
+            }
+            $update = MyHelper::post('merchant/register/rejected/save', $post);
+
+            if (($update['status'] ?? false) == 'success'){
+                return back()->with('success', ['Register rejected setting has been updated']);
             }else{
                 return back()->withErrors($update['messages'] ?? ['Update failed']);
             }
