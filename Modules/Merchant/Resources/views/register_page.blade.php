@@ -87,7 +87,7 @@
                     <div class="portlet-title">
                         <div class="caption font-blue ">
                             <i class="icon-settings font-blue "></i>
-                            <span class="caption-subject bold uppercase">Setting Register Introduction</span>
+                            <span class="caption-subject bold uppercase">Setting Register {{ucfirst($status)}}</span>
                         </div>
                     </div>
                     <div class="portlet-body">
