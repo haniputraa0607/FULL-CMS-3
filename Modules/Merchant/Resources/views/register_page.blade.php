@@ -32,7 +32,12 @@
                     ['insert', ['link']],
                     ['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
                 ],
-                height: 120
+                height: 120,
+                callbacks: {
+                    onKeyup: function (e) {
+                        removeValidation();
+                    }
+                }
             });
         });
 
@@ -47,13 +52,28 @@
 
                 image.onload = function() {
                     if (this.width != widthImg ||  this.height != heightImg) {
-                        toastr.warning("Please check dimension of your photo. The maximum height and width "+widthImg+"*"+heightImg+".");
+                        toastr.warning("Please check dimension of your photo.");
                         $("#removeImage").trigger( "click" );
                     }
                 };
                 image.src = _URL.createObjectURL(file);
             }
         });
+
+        function removeValidation(){
+            $('#validation').remove();
+        }
+
+        $('#myForm').on('submit', function(e) {
+
+            if($('#description').summernote('isEmpty')) {
+                $('#validation').remove();
+                $('#description').parent().append('<p id="validation" style="color: red;margin-top: -2%">Description can not be empty.</p>');
+                e.preventDefault();
+                $('#description').focus();
+                focusSet = true;
+            }
+        })
     </script>
 @endsection
 
@@ -91,7 +111,7 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <form role="form" class="form-horizontal" action="{{url()->current()}}" method="POST" enctype="multipart/form-data">
+                        <form role="form" id="myForm" class="form-horizontal" action="{{url()->current()}}" method="POST" enctype="multipart/form-data">
                             @if($status == 'introduction')
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">
@@ -107,7 +127,7 @@
                                         <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/*" class="file" name="image">
+                                        <input type="file" accept="image/*" class="file" name="image" required>
                                         </span>
                                                 <a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                             </div>
@@ -131,7 +151,7 @@
                                         <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/*" class="file" name="image">
+                                        <input type="file" accept="image/*" class="file" name="image" required>
                                         </span>
                                                 <a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                             </div>
@@ -157,16 +177,17 @@
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <textarea class="form-control summernote" name="description" required>{{$result['description']??''}}</textarea>
+                                    <textarea title="Your Favourite Subject may be JavaScript..." class="form-control summernote" id="description" name="description" required>{{$result['description']??''}}</textarea>
                                 </div>
                             </div>
                             @if($status != 'rejected')
                             <div class="form-group">
                                 <label class="col-md-3 control-label">
                                     Button Text
+                                    <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-4">
-                                    <input class="form-control" name="button_text" value="{{$result['button_text']??''}}">
+                                    <input class="form-control" name="button_text" value="{{$result['button_text']??''}}" required>
                                 </div>
                             </div>
                             @endif

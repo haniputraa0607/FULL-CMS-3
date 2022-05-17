@@ -267,41 +267,6 @@
                 <input type="checkbox" name="plastic_used_status" @if(old('plastic_used_status',$val['plastic_used_status']) == 'Active') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="Active">
             </div>
         </div>
-        @foreach($delivery as $dev)
-            <div class="form-group">
-                <div class="input-icon right">
-                    <label class="col-md-3 control-label">
-                        {{$dev['delivery_name']}}
-                    </label>
-                </div>
-                <div class="col-md-2">
-                    <?php
-                    $key = array_search($dev['code'], array_column($val['delivery_outlet'],'code'));
-                    $checked = '';
-                    if($key === false){
-                        $checked = 'checked';
-                    }else if($val['delivery_outlet'][$key]['show_status'] == 1){
-                        $checked = 'checked';
-                    }
-                    ?>
-                    <input type="hidden" name="delivery_outlet[{{$dev['code']}}][show_status]" value="0">
-                    <input type="checkbox" name="delivery_outlet[{{$dev['code']}}][show_status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Show" data-off-color="default" data-off-text="Hide" value="1" {{$checked}}>
-                </div>
-                <div class="col-md-3">
-                    <?php
-                        $key = array_search($dev['code'], array_column($val['delivery_outlet'],'code'));
-                        $checked = '';
-                        if($key === false){
-                            $checked = 'checked';
-                        }else if($val['delivery_outlet'][$key]['available_status'] == 1){
-                            $checked = 'checked';
-                        }
-                    ?>
-                    <input type="hidden" name="delivery_outlet[{{$dev['code']}}][available_status]" value="0">
-                    <input type="checkbox" name="delivery_outlet[{{$dev['code']}}][available_status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Enable" data-off-color="default" data-off-text="Disable" value="1" {{$checked}}>
-                </div>
-            </div>
-        @endforeach
 
         <hr>
         <h4>Maps</h4>

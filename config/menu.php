@@ -530,11 +530,6 @@ return [
 					'type' => 'tree',
 					'children' => [
 						[
-							'label' => 'New Category',
-							'url' => 'product/category/create',
-							'required_features' => [45],
-						],
-						[
 							'label' => 'Category List',
 							'active' => '\View::shared("submenu_active") == "product-category-list"',
 							'url' => 'product/category',
