@@ -89,18 +89,24 @@ class DoctorController extends Controller
 
         if (isset($clinic['status']) && $clinic['status'] == "success") {
             $data['clinic'] = $clinic['result'];
-        } 
+        } else {
+            $data['clinic'] = [];
+        }
 
         $service = MyHelper::get('doctor/service');
 
         if (isset($service['status']) && $service['status'] == "success") {
             $data['service'] = $service['result'];
+        } else {
+            $data['service'] = [];
         }
 
         $specialist = MyHelper::get('doctor/specialist');
 
         if (isset($specialist['status']) && $specialist['status'] == "success") {
             $data['specialist'] = $specialist['result'];
+        } else {
+            $data['specialist'] = [];
         }
 
         return view('doctor::form', $data);
