@@ -127,7 +127,7 @@
                                         <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/*" class="file" name="image" required>
+                                        <input type="file" accept="image/*" class="file" name="image" @if(empty($result['image'])) required @endif>
                                         </span>
                                                 <a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                             </div>
@@ -151,7 +151,7 @@
                                         <span class="btn default btn-file">
                                         <span class="fileinput-new"> Select image </span>
                                         <span class="fileinput-exists"> Change </span>
-                                        <input type="file" accept="image/*" class="file" name="image" required>
+                                        <input type="file" accept="image/*" class="file" name="image" @if(empty($result['image'])) required @endif>
                                         </span>
                                                 <a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                             </div>
