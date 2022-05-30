@@ -666,6 +666,12 @@ return [
 									'active' => '\View::shared("submenu_active") == "product-photo-default"',
 									'url' => 'product/photo/default'
 								],
+                                [
+                                    'label' => 'Product Recommendation',
+                                    'required_features' => [43],
+                                    'active' => '\View::shared("submenu_active") == "product-recommendation"',
+                                    'url' => 'product/recommendation'
+                                ],
 							],
 						],
 						[
