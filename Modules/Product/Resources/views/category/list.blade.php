@@ -12,6 +12,7 @@ $grantedFeature     = session('granted_features');
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-nestable/jquery.nestable.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .dd-handle:hover{
             background: #fafafa;
@@ -19,6 +20,10 @@ $grantedFeature     = session('granted_features');
             cursor: context-menu;
         }
     </style>
+@endsection
+
+@section('page-plugin')
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
@@ -136,6 +141,18 @@ $grantedFeature     = session('granted_features');
                     '<input class="form-control" type="text" maxlength="200" id="product_category_name_'+i+'" name="data[child]['+i+'][product_category_name]" required placeholder="Enter category name"/>' +
                     '<input class="form-control" type="hidden" name="data[child]['+i+'][parent]" value="'+number+'"/>' +
                     '</div>' +
+                    '<div class="col-md-2">' +
+                    '<div class="fileinput fileinput-new" data-provides="fileinput">' +
+                    '<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 40px; max-height: 40px;"> </div>' +
+                    '<div>' +
+                    '<span class="btn default btn-file">' +
+                    '<span class="fileinput-new" style="font-size: 12px;"> Select Image </span>' +
+                    '<span class="fileinput-exists"> <i class="fa fa-pencil"></i> </span>' +
+                    '<input type="file" accept="image/png" name="data[child]['+i+'][product_category_image]" class="file" data-type="'+i+'"> </span>' +
+                    '<a href="javascript:;" id="removeImage_'+i+'" class="btn red default fileinput-exists" data-dismiss="fileinput"> <i class="fa fa-trash"></i> </a>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
                     '<div class="col-md-3">';
 
                 var value = 1;
@@ -147,7 +164,7 @@ $grantedFeature     = session('granted_features');
                     html +='<a class="btn btn-primary btn" onclick="addChild('+i+')">&nbsp;<i class="fa fa-plus-circle"></i> Child </a>';
                 }
 
-                html += '<a class="btn btn-danger btn" style="margin-left: 2%" onclick="deleteForm('+i+')">&nbsp;<i class="fa fa-trash"></i></a>' +
+                html += '<a class="btn btn-danger btn" style="margin-left: 2%" onclick="deleteForm('+i+')">&nbsp;Delete</a>' +
                         '</div>' +
                         '</div>' +
                         '</div>';
@@ -165,6 +182,35 @@ $grantedFeature     = session('granted_features');
                 array.set('tmp_'+number, value);
             }
         }
+
+        $(".file").change(function(e) {
+            var type      = $(this).data('type');
+            var widthImg  = 0;
+            var heightImg = 0;
+            var _URL = window.URL || window.webkitURL;
+            var image, file;
+
+            if ((file = this.files[0])) {
+                image = new Image();
+                var size = file.size/1024;
+
+                image.onload = function() {
+                    if (this.width !== this.height) {
+                        toastr.warning("Please check dimension of your photo. Recommended dimensions are 1:1");
+                        $("#removeImage_"+type).trigger( "click" );
+                    }
+                    if (this.width > 100 ||  this.height > 100) {
+                        toastr.warning("Please check dimension of your photo. The maximum height and width 100px.");
+                        $("#removeImage_"+type).trigger( "click" );
+                    }
+                    if (size > 5) {
+                        toastr.warning("The maximum size is 10 KB");
+                        $("#removeImage_"+type).trigger( "click" );
+                    }
+                };
+                image.src = _URL.createObjectURL(file);
+            }
+        });
     </script>
 @endsection
 
@@ -199,7 +245,7 @@ $grantedFeature     = session('granted_features');
                 </div>
             </div>
             <div class="portlet-body form">
-                <form class="form-horizontal" role="form" id="form_create_table" action="{{url('product/category/create')}}" method="POST">
+                <form class="form-horizontal" role="form" id="form_create_table" action="{{url('product/category/create')}}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-body">
                         <div id="div_parent_0">
@@ -208,7 +254,19 @@ $grantedFeature     = session('granted_features');
                                 <div class="col-md-4">
                                     <input class="form-control" type="text" maxlength="200" id="product_category_name_0" name="data[0][product_category_name]" required placeholder="Enter product category name"/>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 40px; max-height: 40px;"> </div>
+                                        <div>
+                                            <span class="btn default btn-file">
+                                            <span class="fileinput-new" style="font-size: 12px;"> Select Image </span>
+                                            <span class="fileinput-exists"> <i class="fa fa-pencil"></i> </span>
+                                            <input type="file" accept="image/png" name="data[0][product_category_image]" class="file" data-type="0"> </span>
+                                            <a href="javascript:;" id="removeImage_0" class="btn red default fileinput-exists" data-dismiss="fileinput"> <i class="fa fa-trash"></i> </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
                                     <a class="btn btn-primary" onclick="addChild(0)">&nbsp;<i class="fa fa-plus-circle"></i> Child </a>
                                 </div>
                             </div>
@@ -235,15 +293,15 @@ $grantedFeature     = session('granted_features');
         </div>
         <div class="portlet-body form">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="dd" id="nestable3">
-                        <ol class='dd-list dd3-list'>
+                <div class="dd" id="nestable3">
+                    <ol class='dd-list dd3-list'>
+                        <div class="col-md-6">
                             <div id="product_category"></div>
-                        </ol>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div id="product_category_action"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="product_category_action"></div>
+                        </div>
+                    </ol>
                 </div>
             </div>
         </div>

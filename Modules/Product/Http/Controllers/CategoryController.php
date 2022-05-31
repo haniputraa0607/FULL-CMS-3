@@ -6,6 +6,7 @@ use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use function GuzzleHttp\Promise\queue;
 
 class CategoryController extends Controller
 {
@@ -56,6 +57,18 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $post = $request->all();
+        if(isset($post['data'][0]['product_category_image'])){
+            $post['data'][0]['product_category_image'] = MyHelper::encodeImage($post['data'][0]['product_category_image']);
+        }
+
+        if(!empty($post['data']['child'])){
+            foreach ($post['data']['child'] as $key=>$child){
+                if(!empty($child['product_category_image'])){
+                    $post['data']['child'][$key]['product_category_image'] = MyHelper::encodeImage($child['product_category_image']);
+                }
+            }
+        }
+
         $store = MyHelper::post('product/category/create', $post);
 
         if(($store['status']??'')=='success'){
@@ -102,6 +115,17 @@ class CategoryController extends Controller
     {
         $post = $request->all();
         $post['id_product_category'] = $id;
+        if(!empty($post['product_category_image'])){
+            $post['product_category_image'] = MyHelper::encodeImage($post['product_category_image']);
+        }
+
+        if(!empty($post['child'])){
+            foreach ($post['child'] as $key=>$child){
+                if(!empty($child['product_category_image'])){
+                    $post['child'][$key]['product_category_image'] = MyHelper::encodeImage($child['product_category_image']);
+                }
+            }
+        }
 
         $update = MyHelper::post('product/category/update', $post);
 
