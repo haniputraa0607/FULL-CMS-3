@@ -29,6 +29,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	Route::any('price/{key?}', ['middleware' => ['feature_control:62', 'config_control:11'], 'uses' => 'ProductController@price']);
     Route::any('outlet-detail/{key?}', ['middleware' => ['feature_control:62', 'config_control:11'], 'uses' => 'ProductController@productOutletDetail']);
 	Route::any('category/assign', ['middleware' => ['feature_control:44', 'config_control:11'], 'uses' => 'ProductController@categoryAssign']);
+    Route::any('recommendation', ['uses' => 'ProductController@productRecommendation']);
 
 	Route::get('position/assign', ['middleware' => ['feature_control:44'], 'uses' => 'ProductController@positionAssign']);
 	// ajax for ordering position
