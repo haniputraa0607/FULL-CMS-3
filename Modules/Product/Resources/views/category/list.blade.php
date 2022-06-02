@@ -203,7 +203,7 @@ $grantedFeature     = session('granted_features');
                         toastr.warning("Please check dimension of your photo. The maximum height and width 100px.");
                         $("#removeImage_"+type).trigger( "click" );
                     }
-                    if (size > 5) {
+                    if (size > 10) {
                         toastr.warning("The maximum size is 10 KB");
                         $("#removeImage_"+type).trigger( "click" );
                     }
