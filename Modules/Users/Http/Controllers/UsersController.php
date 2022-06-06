@@ -191,7 +191,10 @@ class UsersController extends Controller
 			if(isset($query['status']) && $query['status'] == 'success'){
 				return back()->withSuccess(['User Create Success']);
 			} else{
-				return back()->withErrors($query['messages']);
+                if(!empty($query['messages'][0])){
+                    $query['messages'][0] = str_replace('pin', 'password', $query['messages'][0]);
+                }
+				return back()->withErrors($query['messages'])->withInput();
 			}
 			
 		} else {
