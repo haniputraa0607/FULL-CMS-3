@@ -971,15 +971,15 @@
                         <a href="#photo" data-toggle="tab"> Photo </a>
                     </li>
                 @endif -->
-                <li>
-                    <a href="#outletsetting" data-toggle="tab"> Outlet Setting</a>
-                </li>
-                <li>
-                    <a href="#outletpricesetting" data-toggle="tab"> Outlet Price Setting</a>
-                </li>
-                <li>
-                    <a href="#visibility" data-toggle="tab"> Visibility </a>
-                </li>
+{{--                <li>--}}
+{{--                    <a href="#outletsetting" data-toggle="tab"> Outlet Setting</a>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <a href="#outletpricesetting" data-toggle="tab"> Outlet Price Setting</a>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <a href="#visibility" data-toggle="tab"> Visibility </a>--}}
+{{--                </li>--}}
 				<!-- <li>
                     <a href="#discount" data-toggle="tab"> Discount </a>
                 </li> -->

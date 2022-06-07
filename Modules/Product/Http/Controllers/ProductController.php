@@ -740,8 +740,8 @@ class ProductController extends Controller
                 $data['outlet']          = [];
                 $data['outletTotal']     = 0;
                 $data['outletPerPage']   = 0;
-                $data['trxUpTo']      = 0;
-                $data['trxPaginator'] = false;
+                $data['outletUpTo']      = 0;
+                $data['outletPaginator'] = false;
             }
 
             $outletsSpecialPrice = MyHelper::post('outlet/be/list/product-special-price', $dtPrice);

@@ -167,11 +167,11 @@ class OutletController extends Controller
     /*
     Detail
     */
-    function detail(Request $request, $code) {
+    function detail(Request $request, $code, $type = null) {
 
         $post = $request->except('_token');
 
-        if (empty($post)) {
+        if (empty($post['outlet_name'])) {
             $data = [
                 'title'          => 'Outlet',
                 'sub_title'      => 'Detail Outlet',
@@ -181,7 +181,7 @@ class OutletController extends Controller
 
             $outlet = MyHelper::post('outlet/be/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
             $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-            $data['delivery'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery']??[];
+            $data['delivery'] = [];
             // return $outlet;
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
@@ -205,6 +205,54 @@ class OutletController extends Controller
             $data['province'] = $this->getPropinsi();
             // return $data;
             // print_r($data); exit();
+            $pageBalance = 1;
+            if($type == 'log-balance'){
+                $pageBalance = $post['page']??1;
+            }
+            $logBalance = MyHelper::post('merchant/balance/list', ['id_outlet' => $data['outlet'][0]['id_outlet'], 'page' => $pageBalance, 'search_key' => $post['search_log_balance']??'']);
+            if (isset($logBalance['status']) && $logBalance['status'] == "success") {
+                $data['data_log_balance']          = $logBalance['result']['data'];
+                $data['data_log_balance_paginator'] = new LengthAwarePaginator($logBalance['result']['data'], $logBalance['result']['total'], $logBalance['result']['per_page'], $logBalance['result']['current_page'], ['path' => url('outlet/detail/'.$code.'/log-balance')]);
+            }else{
+                $data['data_log_balance'] = [];
+                $data['data_log_balance_paginator'] = false;
+            }
+
+            if(!empty($post['search_log_balance'])){
+                Session::put('search_log_balance',$post['search_log_balance']);
+            }
+
+            if(!empty($post['reset'])){
+                Session::forget('search_log_balance');
+                Session::forget('search_list_payment');
+            }
+
+            if($type == 'log-balance' || !empty($post['search_log_balance'])){
+                $data['tipe'] = 'log_balance';
+            }
+
+            $pagePayment = 1;
+            if($type == 'list-payment'){
+                $pagePayment = $post['page']??1;
+            }
+            $listPayment = MyHelper::post('transaction/outlet/list-payment', ['id_outlet' => $data['outlet'][0]['id_outlet'], 'page' => $pagePayment, 'search_key' => $post['search_list_payment']??'']);
+            if (isset($listPayment['status']) && $listPayment['status'] == "success") {
+                $data['data_list_payment']          = $listPayment['result']['data'];
+                $data['data_list_payment_paginator'] = new LengthAwarePaginator($listPayment['result']['data'], $listPayment['result']['total'], $listPayment['result']['per_page'], $listPayment['result']['current_page'], ['path' => url('outlet/detail/'.$code.'/list-payment')]);
+            }else{
+                $data['data_list_payment'] = [];
+                $data['data_list_payment_paginator'] = false;
+            }
+
+            if(!empty($post['search_list_payment'])){
+                Session::put('search_list_payment',$post['search_list_payment']);
+            }
+
+            if($type =='list-payment' || !empty($post['search_list_payment'])){
+                $data['tipe'] = 'list_payment';
+            }
+
+            $data['products'] = MyHelper::post('product/be/list', ['id_outlet' => $data['outlet'][0]['id_outlet'], 'outlet_detail' => 1])['result']??[];
             return view('outlet::detail', $data);
         }
         else {
@@ -286,6 +334,18 @@ class OutletController extends Controller
                 }
                 $post = array_filter($post);
                 $post['status_franchise'] = $status_franchise;
+
+                if(!empty($post['outlet_image_logo_portrait'])){
+                    $post['outlet_image_logo_portrait'] = MyHelper::encodeImage($post['outlet_image_logo_portrait']);
+                }
+
+                if(!empty($post['outlet_image_logo_landscape'])){
+                    $post['outlet_image_logo_landscape'] = MyHelper::encodeImage($post['outlet_image_logo_landscape']);
+                }
+
+                if(!empty($post['outlet_image_cover'])){
+                    $post['outlet_image_cover'] = MyHelper::encodeImage($post['outlet_image_cover']);
+                }
 
                 $save = MyHelper::post('outlet/update', $post);
 

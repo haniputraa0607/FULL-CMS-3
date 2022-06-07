@@ -11,28 +11,12 @@
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
-                QR Code
+                    PIC Name
+                    <i class="fa fa-question-circle tooltips" data-original-title="Kode outlet bersifat unik" data-container="body"></i>
                 </label>
             </div>
-            <div class="col-md-9">
-                <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
-                    <img src="{{$val['qrcode']}}">
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                    Status Mitra
-                    <i class="fa fa-question-circle tooltips" data-original-title="Keterangan outlet ini adalah franchise atau bukan franchise" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-9">
-                <select class="select2 form-control" name="status_franchise">
-                    <option value="1" @if($val['status_franchise'] == 1) selected @endif>Mitra</option>
-                    <option value="0" @if($val['status_franchise'] == 0) selected @endif>Pusat</option>
-                </select>
+            <div class="col-md-9" style="margin-top: 1%">
+                <a target="_blank" href="{{url('merchant/detail', $val['merchant']['id_merchant'])}}">{{$val['merchant']['merchant_pic_name']}}</a>
             </div>
         </div>
 
@@ -159,11 +143,25 @@
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Address
+                <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Alamat lengkap outlet" data-container="body"></i>
                 </label>
             </div>
             <div class="col-md-9">
-                <textarea name="outlet_address" class="form-control" placeholder="Outlet Address">{{ $val['outlet_address'] }}</textarea>
+                <textarea name="outlet_address" class="form-control" placeholder="Outlet Address" required>{{ $val['outlet_address'] }}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    Postal Code
+                    <span class="required" aria-required="true"> * </span>
+                    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan kode post outlet" maxlength="15" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="outlet_postal_code" value="{{ $val['outlet_postal_code'] }}" required placeholder="Postal Code" required>
             </div>
         </div>
 
@@ -171,11 +169,12 @@
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Phone
+                <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Nomor telepon outlet" data-container="body"></i>
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="text" class="form-control" name="outlet_phone" value="{{ $val['outlet_phone'] }}" placeholder="Outlet Phone">
+                <input type="text" class="form-control" name="outlet_phone" value="{{ $val['outlet_phone'] }}" placeholder="Outlet Phone" required>
             </div>
         </div>
 
@@ -183,11 +182,82 @@
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
                 Email
+                <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Alamat email outlet" data-container="body"></i>
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="text" class="form-control" name="outlet_email" value="{{ $val['outlet_email'] }}" placeholder="Outlet Email">
+                <input type="text" class="form-control" name="outlet_email" value="{{ $val['outlet_email'] }}" placeholder="Outlet Email" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">
+                Image Logo Portrait <span class="required" aria-required="true">* <br>(300*300) </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Logo outlet ukuran 300 x 300" data-container="body"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                        <img src="@if(!empty($val['outlet_image_logo_portrait'])){{$val['url_outlet_image_logo_portrait']}}@endif" alt="">
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail" id="image" style="max-width: 200px; max-height: 200px;"></div>
+                    <div>
+                        <span class="btn default btn-file">
+                        <span class="fileinput-new"> Select image </span>
+                        <span class="fileinput-exists"> Change </span>
+                        <input type="file" class="file" id="fieldphoto" accept="image/*" name="outlet_image_logo_portrait" @if(empty($val['outlet_image_logo_portrait'])) required @endif>
+                        </span>
+
+                        <a href="javascript:;" id="remove_fieldphoto" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">
+                Image Logo Landscape<span class="required" aria-required="true">* <br>(maximum height 300) </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Logo outlet maksimal tinggi 300 px" data-container="body"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail" style="width: 300px; height: 150px;">
+                        <img src="@if(!empty($val['outlet_image_logo_landscape'])){{$val['url_outlet_image_logo_landscape']}}@endif" alt="">
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail" id="imageDetail" style="max-width: 300px; max-height: 150px;"></div>
+                    <div>
+                        <span class="btn default btn-file">
+                        <span class="fileinput-new"> Select image </span>
+                        <span class="fileinput-exists"> Change </span>
+                        <input type="file" class="filePhotoDetail" id="fieldphotodetail" accept="image/*" name="outlet_image_logo_landscape" @if(empty($val['outlet_image_logo_landscape'])) required @endif>
+                        </span>
+
+                        <a href="javascript:;" id="remove_fieldphotodetail" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">
+                Image Cover<span class="required" aria-required="true">* <br>(720*360) </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Cover outlet ukuran 730px x 360 px" data-container="body"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail" style="width: 300px; height: 150px;">
+                        <img src="@if(!empty($val['outlet_image_cover'])){{$val['url_outlet_image_cover']}}@endif" alt="">
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail" id="imageCover" style="max-width: 300px; max-height: 150px;"></div>
+                    <div>
+                        <span class="btn default btn-file">
+                        <span class="fileinput-new"> Select image </span>
+                        <span class="fileinput-exists"> Change </span>
+                        <input type="file" class="filePhotoCover" id="fieldphotocover" accept="image/*" name="outlet_image_cover" @if(empty($val['outlet_image_cover'])) required @endif>
+                        </span>
+
+                        <a href="javascript:;" id="remove_fieldphotocover" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                    </div>
+                </div>
             </div>
         </div>
         {{--
@@ -255,18 +325,6 @@
             </div>
         </div>
         @endif
-
-        <div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                    Plastic Status
-                    <i class="fa fa-question-circle tooltips" data-original-title="Jika diaktifkan, maka halaman checkout pada aplikasi akan menampilkan informasi harga plastik" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-9">
-                <input type="checkbox" name="plastic_used_status" @if(old('plastic_used_status',$val['plastic_used_status']) == 'Active') checked @endif  class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive" value="Active">
-            </div>
-        </div>
 
         <hr>
         <h4>Maps</h4>
