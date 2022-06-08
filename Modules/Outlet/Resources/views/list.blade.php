@@ -223,14 +223,12 @@
             <table class="table table-striped table-bordered table-hover" width="100%" id="sample_1">
                 <thead>
                     <tr>
-                        <th> Status Mitra</th>
                         <th> Code </th>
                         <th> Name </th>
                         @if(MyHelper::hasAccess([95], $configs))
                         <th> Brand </th>
                         @endif
                         <th> City </th>
-                        <th> Open - Close </th>
                         <th> Status </th>
                         @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
                             <th> Action </th>
@@ -241,13 +239,6 @@
                     @if (!empty($outlet))
                         @foreach($outlet as $value)
                             <tr>
-                                <td>
-                                    @if($value['status_franchise'] == 1)
-                                        <p style="color: green">Mitra</p>
-                                    @else
-                                        Pusat
-                                    @endif
-                                </td>
                                 <td>{{ $value['outlet_code'] }}</td>
                                 <td>{{ $value['outlet_name'] }}</td>
                                 @if(MyHelper::hasAccess([95], $configs))
@@ -264,11 +255,6 @@
                                 @else
                                     <td>{{ $value['city']['city_name'] }}</td>
                                 @endif
-                                <td>
-                                    @if(!empty($value['today']['open'])){{ date('H:i', strtotime($value['today']['open'])) }}@endif
-                                    @if(!empty($value['today']['open']) && !empty($value['today']['close']))-@endif
-                                    @if(!empty($value['today']['close'])){{ date('H:i', strtotime($value['today']['close'])) }}@endif
-                                </td>
                                 <td>
                                     <input type="checkbox" name="outlet_status" @if($value['outlet_status'] == 'Active') checked @endif data-id="{{ $value['id_outlet'] }}" class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive">
                                     <p style="display: none" id="atr-{{$value['id_outlet']}}">{{$value['outlet_status']}}</p>

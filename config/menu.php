@@ -442,12 +442,12 @@ return [
 							'url' => 'setting/default_outlet',
 							'required_features' => [199],
 						],
-						[
-							'label' => 'QR Code Outlet',
-							'active' => '\View::shared("submenu_active") == "outlet-qrcode"',
-							'url' => 'outlet/qrcode',
-							'required_features' => [24,27],
-						],
+//						[
+//							'label' => 'QR Code Outlet',
+//							'active' => '\View::shared("submenu_active") == "outlet-qrcode"',
+//							'url' => 'outlet/qrcode',
+//							'required_features' => [24,27],
+//						],
 						[
 							'label' => 'Outlet Holiday Setting',
 							'active' => '\View::shared("submenu_active") == "outlet-holiday"',
@@ -480,31 +480,31 @@ return [
 							'active' => '\View::shared("submenu_active") == "outlet-pin-response"',
 							'url' => 'outlet/autoresponse/request_pin',
 							'required_configs' => [5,101],
-							'required_features' => [24,40],
+							'required_features' => [40],
 						],
-						[
-							'type' => 'group',
-							'required_features' => [120,122],
-							'children' => [
-								[
-									'label' => '[Response] Outlet Pin Sent',
-									'url' => 'autoresponse/outlet/outlet-pin-sent',
-									'required_configs' => [134],
-								],
-								[
-									'label' => '[Response] Outlet Pin Sent User Franchise',
-									'url' => 'autoresponse/outlet/outlet-pin-sent-user-franchise',
-								],
-								[
-									'label' => '[Response] Request Admin User Franchise',
-									'url' => 'autoresponse/outlet/request-admin-user-franchise',
-								],
-								[
-									'label' => '[Forward] Incomplete Outlet Data',
-									'url' => 'outlet/autoresponse/incomplete-outlet-data',
-								],
-							],
-						],
+//						[
+//							'type' => 'group',
+//							'required_features' => [120,122],
+//							'children' => [
+//								[
+//									'label' => '[Response] Outlet Pin Sent',
+//									'url' => 'autoresponse/outlet/outlet-pin-sent',
+//									'required_configs' => [134],
+//								],
+//								[
+//									'label' => '[Response] Outlet Pin Sent User Franchise',
+//									'url' => 'autoresponse/outlet/outlet-pin-sent-user-franchise',
+//								],
+//								[
+//									'label' => '[Response] Request Admin User Franchise',
+//									'url' => 'autoresponse/outlet/request-admin-user-franchise',
+//								],
+//								[
+//									'label' => '[Forward] Incomplete Outlet Data',
+//									'url' => 'outlet/autoresponse/incomplete-outlet-data',
+//								],
+//							],
+//						],
 						[
 							'label' => 'Outlet Group Filter',
 							'type' => 'tree',
