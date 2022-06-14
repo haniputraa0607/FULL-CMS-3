@@ -180,6 +180,10 @@ class NewsController extends Controller
                 $news['id_product'] = $post['id_product'];
             }
 
+            if(!isset($post['news_by'])){
+                $news['news_by'] = " ";
+            }
+
             $save = MyHelper::post('news/create', $news);
 
             if (isset($save['status']) && $save['status'] == "success") {
@@ -314,6 +318,10 @@ class NewsController extends Controller
             if (!isset($news['toggle_time'])) {
                 unset($news['news_event_time_start']);
                 unset($news['news_event_time_end']);
+            }
+
+            if(!isset($post['news_by'])){
+                $news['news_by'] = " ";
             }
             
             // update data master news
