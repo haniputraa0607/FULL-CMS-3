@@ -627,7 +627,7 @@ return [
 								[
 									'label' => 'Image List',
 									'required_features' => [],
-									'active' => '\View::shared("child_active") == "home"',
+									'active' => '\View::shared("child_active") == "product-image-list"',
 									'url' => 'product/image/list'
 								],
 							],
