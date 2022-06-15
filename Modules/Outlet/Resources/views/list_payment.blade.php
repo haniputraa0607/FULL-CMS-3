@@ -10,7 +10,7 @@
                     </label>
                 </div>
                 <div class="col-md-7">
-                    <input type="text" class="form-control" name="search_list_payment" required placeholder="Search ..." value="{{Session::get('search_list_payment')}}">
+                    <input type="text" class="form-control" name="search_list_payment" required placeholder="Receipt number" value="{{Session::get('search_list_payment')}}">
                 </div>
                 <div class="col-md-2" style="margin-left: -1%">
                     {{ csrf_field() }}

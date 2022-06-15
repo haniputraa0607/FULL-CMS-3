@@ -169,6 +169,12 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
+            $('#table_product').DataTable( {
+                "pageLength": 15,
+                "lengthChange": false,
+                "ordering": false,
+                "info" : false
+            });
             /* MAPS */
             longNow = "{{ $outlet[0]['outlet_longitude'] }}";
             latNow = "{{ $outlet[0]['outlet_latitude'] }}";

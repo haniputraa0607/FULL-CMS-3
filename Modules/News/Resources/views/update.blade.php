@@ -272,6 +272,9 @@
                                 // console.log(data);
                             }
                         });
+                    },
+                    onKeyup: function (e) {
+                        removeValidation();
                     }
                 }
             });
@@ -616,6 +619,21 @@
             });
             drawVideo();
         });
+
+        function removeValidation(){
+            $('#validation').remove();
+        }
+
+        $('#myForm').on('submit', function(e) {
+
+            if($('#field_content_long').summernote('isEmpty')) {
+                $('#validation').remove();
+                $('#field_content_long').parent().append('<p id="validation" style="color: red;margin-top: -2%">Content long can not be empty.</p>');
+                e.preventDefault();
+                $('#field_content_long').focus();
+                focusSet = true;
+            }
+        })
     </script>
     <script type="text/javascript">
         function actionForm(identity, state) {
@@ -922,7 +940,7 @@
             </div>
         </div>
       @foreach ($news as $value)
-        <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" role="form" id="myForm" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
         <div class="portlet-body m-form__group row">
                 <div class="col-md-4">
                     <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
@@ -1179,7 +1197,7 @@
                             </label>
                         </div>
                         <div class="col-md-9">
-                            <textarea name="news_content_long" id="field_content_long" class="form-control summernote" required><?php echo $value['news_content_long'] ?> </textarea>
+                            <textarea name="news_content_long" id="field_content_long" class="form-control summernote" required>{{$value['news_content_long']}}</textarea>
                         </div>
                     </div>
 

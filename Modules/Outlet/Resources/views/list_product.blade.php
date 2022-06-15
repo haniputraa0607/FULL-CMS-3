@@ -3,9 +3,8 @@ use App\Lib\MyHelper;
 $grantedFeature     = session('granted_features');
 $configs    		= session('configs');
 ?>
-<br>
-<br>
-<table class="table table-striped table-bordered table-hover">
+
+<table class="table table-striped table-bordered table-hover" id="table_product">
     <thead>
     <tr>
         <th> No </th>
