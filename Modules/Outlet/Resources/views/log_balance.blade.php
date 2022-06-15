@@ -60,7 +60,7 @@
                     @endif
 
                     @if(!empty($val['data_bank_account']))
-                        Bank Name : {{$val['data_bank_account']['beneficiary_account']}}<br>
+                        Bank Name : {{$val['data_bank_account']['bank_name']}}<br>
                         Beneficiary Name : {{$val['data_bank_account']['beneficiary_name']}}<br>
                         Beneficiary Number : {{$val['data_bank_account']['beneficiary_account']}}
                     @endif

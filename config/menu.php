@@ -364,7 +364,7 @@ return [
                     'label' => 'Merchant',
                     'type' => 'tree',
                     'icon' => 'fa fa-university',
-                    'required_configs' => [95],
+                    'required_features' => [323,324,325,326,327,348],
                     'children' => [
                         [
                             'label' => 'Setting Register Introduction',
@@ -395,6 +395,11 @@ return [
                             'label' => 'Merchant Candidate List',
                             'url' => 'merchant/candidate',
                             'required_features' => [323,324,325,326,327],
+                        ],
+                        [
+                            'label' => 'Withdrawl',
+                            'url' => 'merchant/withdrawl',
+                            'required_features' => [348],
                         ],
                         [
                             'label' => '[Response] Register Merchant',
