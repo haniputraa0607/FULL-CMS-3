@@ -397,8 +397,8 @@ return [
                             'required_features' => [323,324,325,326,327],
                         ],
                         [
-                            'label' => 'Withdrawl',
-                            'url' => 'merchant/withdrawl',
+                            'label' => 'Withdrawal',
+                            'url' => 'merchant/withdrawal',
                             'required_features' => [348],
                         ],
                         [

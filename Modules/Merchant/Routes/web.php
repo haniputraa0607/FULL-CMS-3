@@ -31,8 +31,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant
     Route::post('candidate/delete/{id}', 'MerchantController@candidateDelete');
 
     //withdrawl
-    Route::get('withdrawl', 'MerchantController@withdrawlList');
-    Route::post('withdrawl', 'MerchantController@withdrawlList');
-    Route::post('withdrawl/completed', 'MerchantController@withdrawlCompleted');
+    Route::get('withdrawal', 'MerchantController@withdrawalList');
+    Route::post('withdrawal', 'MerchantController@withdrawalList');
+    Route::post('withdrawal/completed', 'MerchantController@withdrawalCompleted');
 });
 

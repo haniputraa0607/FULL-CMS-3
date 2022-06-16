@@ -272,31 +272,31 @@ class MerchantController extends Controller
         return $delete;
     }
 
-    public function withdrawlList(Request  $request){
+    public function withdrawalList(Request  $request){
         $post = $request->all();
 
         $data = [
             'title'          => 'Merchant',
-            'sub_title'      => 'Withdrawl List',
+            'sub_title'      => 'Withdrawal List',
             'menu_active'    => 'merchant',
-            'submenu_active' => 'withdrawl-list',
+            'submenu_active' => 'withdrawal-list',
             'title_date_start' => 'Start',
             'title_date_end' => 'End',
             'type' => ''
         ];
 
-        if(Session::has('filter-merchant-withdrawl') && !empty($post) && !isset($post['filter'])){
+        if(Session::has('filter-merchant-withdrawal') && !empty($post) && !isset($post['filter'])){
             $page = 1;
             if(isset($post['page'])){
                 $page = $post['page'];
             }
-            $post = Session::get('filter-merchant-withdrawl');
+            $post = Session::get('filter-merchant-withdrawal');
             $post['page'] = $page;
         }else{
-            Session::forget('filter-merchant-withdrawl');
+            Session::forget('filter-merchant-withdrawal');
         }
 
-        $getList = MyHelper::post('merchant/withdrawl/list',$post);
+        $getList = MyHelper::post('merchant/withdrawal/list',$post);
 
         if (isset($getList['status']) && $getList['status'] == "success") {
             $data['data']          = $getList['result']['data'];
@@ -313,20 +313,20 @@ class MerchantController extends Controller
         }
 
         if($post){
-            Session::put('filter-merchant-withdrawl',$post);
+            Session::put('filter-merchant-withdrawal',$post);
         }
 
-        return view('merchant::withdrawl_list', $data);
+        return view('merchant::withdrawal_list', $data);
     }
 
-    public function withdrawlCompleted(Request $request){
+    public function withdrawalCompleted(Request $request){
         $post = $request->all();
-        $update = MyHelper::post('merchant/withdrawl/completed',$post);
+        $update = MyHelper::post('merchant/withdrawal/completed',$post);
 
         if (isset($update['status']) && $update['status'] == "success") {
-            return redirect('merchant/withdrawl')->withSuccess(['Success change status to completed']);
+            return redirect('merchant/withdrawal')->withSuccess(['Success change status to completed']);
         }else{
-            return redirect('merchant/withdrawl')->withErrors($update['messages']??['Failed change status']);
+            return redirect('merchant/withdrawal')->withErrors($update['messages']??['Failed change status']);
         }
     }
 }

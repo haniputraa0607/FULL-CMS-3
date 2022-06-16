@@ -60,8 +60,8 @@
     $date_start = '';
     $date_end = '';
 
-    if(Session::has('filter-merchant-withdrawl')){
-        $search_param = Session::get('filter-merchant-withdrawl');
+    if(Session::has('filter-merchant-withdrawal')){
+        $search_param = Session::get('filter-merchant-withdrawal');
         if(isset($search_param['date_start'])){
             $date_start = $search_param['date_start'];
         }
@@ -82,7 +82,7 @@
 
     <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
         {{ csrf_field() }}
-        @include('merchant::filter_withdrawl_list')
+        @include('merchant::filter_withdrawal_list')
     </form>
 
     <br>
@@ -105,9 +105,9 @@
                         <div class="modal fade" id="detail_{{$key}}" tabindex="-1" role="basic" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <form class="form-horizontal" role="form" action="{{url('merchant/withdrawl/completed')}}" method="post">
+                                    <form class="form-horizontal" role="form" action="{{url('merchant/withdrawal/completed')}}" method="post">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Detail Withdrawl ({{$val['outlet']}})</h5>
+                                            <h5 class="modal-title">Detail Withdrawal ({{$val['outlet']}})</h5>
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
