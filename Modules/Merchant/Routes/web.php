@@ -22,12 +22,17 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant
     Route::post('setting/register-rejected', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterRejected']);
 
     //merchant management
-    Route::get('/', 'MerchantController@list');
+    Route::any('/', 'MerchantController@list');
     Route::get('detail/{id}', 'MerchantController@detail');
     Route::post('update/{id}', 'MerchantController@update');
     Route::any('candidate', 'MerchantController@candidate');
     Route::get('candidate/detail/{id}', 'MerchantController@detail');
     Route::post('candidate/update/{id}', 'MerchantController@candidateUpdate');
     Route::post('candidate/delete/{id}', 'MerchantController@candidateDelete');
+
+    //withdrawl
+    Route::get('withdrawal', 'MerchantController@withdrawalList');
+    Route::post('withdrawal', 'MerchantController@withdrawalList');
+    Route::post('withdrawal/completed', 'MerchantController@withdrawalCompleted');
 });
 
