@@ -699,6 +699,29 @@ return [
 						],
 					]
 				],
+				[
+					'label' => 'User Rating',
+					'type' => 'tree',
+					'icon' => 'icon-star',
+					'required_configs' => [],
+					'children' => [
+						[
+							'label' => 'User Rating List',
+							'url' => 'user-rating',
+							'required_features' => [],
+						],
+						[
+							'label' => 'User Rating Setting',
+							'url' => 'user-rating/setting',
+							'required_features' => [],
+						],
+						[
+							'label' => '[Response] Rating Doctor',
+							'url' => 'user-rating/autoresponse/doctor',
+							'required_features' => [],
+						],
+					]
+				],
 				/** HIDE 
 				[
 					'label' => 'Topping',
