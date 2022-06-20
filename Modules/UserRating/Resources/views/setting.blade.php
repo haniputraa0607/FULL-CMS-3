@@ -272,7 +272,7 @@
             }
         });
 
-        // hairstylist
+        // doctor
         renderHs();
         $('#btnAddRuleHs').on('click',addRuleHs);
         $('#questionBodyHs').on('click','.deleteRule',function(){
@@ -357,7 +357,7 @@
                 <a href="#tab_rating_option" data-toggle="tab"> Rating Option Outlet </a>
             </li>
             <li>
-                <a href="#tab_rating_option_hs" data-toggle="tab"> Rating Option Hairstylist </a>
+                <a href="#tab_rating_option_hs" data-toggle="tab"> Rating Option Doctor </a>
             </li>
         </ul>
         <div class="tab-content">
@@ -399,7 +399,7 @@
                         </tbody>
                     </table>
                     <div class="text-center">
-                    	<input type="hidden" name="rating_target" value="hairstylist">
+                    	<input type="hidden" name="rating_target" value="doctor">
                         <button class="btn blue" type="button" id="btnAddRuleHs"><i class="fa fa-plus"></i> Add Rule</button>
                         <button class="btn yellow" type="submit" id="btnSaveHs"><i class="fa fa-check"></i> Save</button>
                     </div>
@@ -409,7 +409,7 @@
                 <form action="#" method="POST">
                     @csrf
                     <div class="row">
-                        <label class="col-md-3 control-label text-right">Maximum List Rating <i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal rating yang ditampilkan pada halaman home. Urutan berdasarkan waktu terakhir popup ditampilkan dari terlama menuju ke terbaru " data-container="body"></i></label>
+                        <label class="col-md-3 control-label text-right">Max List Rating <i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimal rating yang ditampilkan pada halaman home. Urutan berdasarkan waktu terakhir popup ditampilkan dari terlama menuju ke terbaru " data-container="body"></i></label>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <div class="input-group">
@@ -435,7 +435,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-md-3 control-label text-right">Maximum Refuse Popup <i class="fa fa-question-circle tooltips" data-original-title="Jumlah penolakan maksimal untuk memberikan rating. Setelah jumlah terlampaui, popup tidak akan ditampilkan lagi sampai ada transaksi baru lagi" data-container="body"></i></label>
+                        <label class="col-md-3 control-label text-right">Max Refuse Popup <i class="fa fa-question-circle tooltips" data-original-title="Jumlah penolakan maksimal untuk memberikan rating. Setelah jumlah terlampaui, popup tidak akan ditampilkan lagi sampai ada transaksi baru lagi" data-container="body"></i></label>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <div class="input-group">

@@ -162,6 +162,10 @@ class SettingController extends Controller
             $span = 'credit_card_payment_gateway';
             $colInput = 4;
             $colLabel = 3;
+        } elseif ($key == 'max_consultation_quota') {
+            $sub = 'max-consultation-quota';
+            $active = 'max-consultation-quota';
+            $subTitle = 'Maximum Consultation Quota';
         }
 
         $data = [
@@ -198,7 +202,15 @@ class SettingController extends Controller
             $data['value'] = $result['value'];
             $data['key'] = 'value';
             return view('setting::default_outlet', $data);
-        }else{
+        } elseif ($key == 'max_consultation_quota') {
+            $request = MyHelper::post('setting', ['key-like' => $key]);
+            if (isset($request['status']) && $request['status'] == 'success') {
+                $data['result'] = $request['result'];
+                return view('setting::max-consultation-quota', $data);
+            } else {
+                return view('setting::max-consultation-quota',$data);
+            }
+        } else{
             $request = MyHelper::post('setting', ['key' => $key]);
 
             if (isset($request['status']) && $request['status'] == 'success') {
@@ -1443,5 +1455,13 @@ class SettingController extends Controller
 
         $result = MyHelper::post('setting/outletapp/splash-screen', $post);
         return parent::redirect($result, 'Splash Screen has been updated.');
+    }
+
+    public function updateMaxConsultationQuota(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $update = MyHelper::post('setting/max-consultation/update', $post);
+        return parent::redirect($update, 'Setting data has been updated.');
     }
 }
